@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.zxjk.duoduo"
-        minSdkVersion 15
+        minSdkVersion 20
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -35,8 +35,9 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     //Retrofit2
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+//    implementation 'com.squareup.retrofit2:converter-scalars:2.4.0'
     //OKHTTP3
     implementation 'com.squareup.okhttp3:okhttp:3.14.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.14.0'
@@ -53,4 +54,6 @@ dependencies {
     implementation 'com.aliyun.dpa:oss-android-sdk:+'
     //utils
     implementation 'com.blankj:utilcodex:1.23.7'
+    //Loading
+    implementation 'com.github.ybq:Android-SpinKit:1.2.0'
 }

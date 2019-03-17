@@ -1,6 +1,7 @@
 package com.zxjk.duoduo.network.rx;
 
 import android.accounts.NetworkErrorException;
+
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -29,6 +30,20 @@ public class RxException {
         private String msg;
 
         ParamsException(String msg) {
+            super(msg);
+            this.msg = msg;
+        }
+
+        @Override
+        public String getMessage() {
+            return msg;
+        }
+    }
+
+    public static class DuplicateLoginExcepiton extends Exception {
+        private String msg;
+
+        DuplicateLoginExcepiton(String msg) {
             super(msg);
             this.msg = msg;
         }

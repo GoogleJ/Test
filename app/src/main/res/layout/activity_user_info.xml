@@ -41,6 +41,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="changeHeadImg"
                 android:padding="10dp">
 
                 <TextView
@@ -61,6 +62,7 @@
                     android:src="@drawable/ic_mine_rightarrow" />
 
                 <ImageView
+                    android:id="@+id/ivUserInfoHead"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_centerVertical="true"
@@ -78,6 +80,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="changeNick"
                 android:paddingLeft="10dp"
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
@@ -101,6 +104,7 @@
                     android:src="@drawable/ic_mine_rightarrow" />
 
                 <TextView
+                    android:id="@+id/tvUserInfoNick"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -119,6 +123,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="changeSex"
                 android:paddingLeft="10dp"
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
@@ -142,6 +147,7 @@
                     android:src="@drawable/ic_mine_rightarrow" />
 
                 <TextView
+                    android:id="@+id/tvUserInfoSex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -183,6 +189,7 @@
                     android:visibility="invisible" />
 
                 <TextView
+                    android:id="@+id/tvUserInfoDUDUNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -201,6 +208,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="myQRCode"
                 android:paddingLeft="10dp"
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
@@ -265,6 +273,7 @@
                     android:visibility="invisible" />
 
                 <TextView
+                    android:id="@+id/tvUserInfoRealName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -306,6 +315,7 @@
                     android:src="@drawable/ic_mine_rightarrow" />
 
                 <TextView
+                    android:id="@+id/tvUserInfoPhone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -324,6 +334,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="changeSign"
                 android:paddingLeft="10dp"
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
@@ -348,6 +359,7 @@
                     android:src="@drawable/ic_mine_rightarrow" />
 
                 <TextView
+                    android:id="@+id/tvUserInfoSign"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -370,6 +382,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="changeEmail"
                 android:paddingLeft="10dp"
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
@@ -394,6 +407,7 @@
                     android:src="@drawable/ic_mine_rightarrow" />
 
                 <TextView
+                    android:id="@+id/tvUserInfoEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -430,6 +444,7 @@
                     android:textSize="15sp" />
 
                 <TextView
+                    android:id="@+id/tvUserInfoWallet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

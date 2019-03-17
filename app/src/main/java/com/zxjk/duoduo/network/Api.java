@@ -23,4 +23,9 @@ public interface Api {
             @Field("pwd") String pwd
     );
 
+    //更新用户信息
+    @POST("duoduo/customer/updateCustomerInfo")
+    @FormUrlEncoded
+    Observable<BaseResponse<LoginResponse>> updateUserInfo(@Field("customerInfo") String customerInfo);
+
 }

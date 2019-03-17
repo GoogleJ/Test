@@ -1,6 +1,8 @@
 package com.zxjk.duoduo.network.response;
 
-public class LoginResponse {
+import java.io.Serializable;
+
+public class LoginResponse implements Serializable {
 
     public String getId() {
         return id;
@@ -268,6 +270,13 @@ public class LoginResponse {
      * 是否实名认证
      */
     private String isAuthentication;
+
+    public LoginResponse(String id) {
+        this.id = id;
+    }
+
+    public LoginResponse() {
+    }
 
     @Override
     public String toString() {

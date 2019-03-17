@@ -18,19 +18,17 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-
+        <activity android:name=".ui.minepage.ChangeSignActivity"></activity>
         <activity android:name=".ui.base.BaseActivity" />
-
-        <activity android:name="com.zxjk.duoduo.ui.HomeActivity">
+        <activity android:name=".ui.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".ui.minepage.SettingActivity" />
         <activity android:name=".ui.minepage.UserInfoActivity" />
-
     </application>
 
 </manifest>

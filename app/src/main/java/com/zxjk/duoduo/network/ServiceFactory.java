@@ -1,7 +1,10 @@
 package com.zxjk.duoduo.network;
 
 import com.zxjk.duoduo.Constant;
+import com.zxjk.duoduo.TestConvert;
+
 import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -38,6 +41,7 @@ public  class ServiceFactory {
         retrofit = new Retrofit.Builder().baseUrl(Constant.BASE_URL)
                 .client(client)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(new TestConvert())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
