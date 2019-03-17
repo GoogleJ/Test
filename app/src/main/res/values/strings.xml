@@ -1,3 +1,105 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">duoduo</string>
+    <string name="edit_phone_number_tip">请输入手机号</string>
+    <string name="edit_password_tip">请输入密码</string>
+    <string name="forget_password">忘记密码</string>
+    <string name="go_register"><![CDATA[去注册>]]></string>
+    <string name="login">登录</string>
+    <string name="edit_mobile_or_password_tip">请输入正确的用户名或密码</string>
+    <string name="edit_code_tip">请输入正确的验证码</string>
+    <string name="text_get_code">获取验证码</string>
+    <string name="edit_password_reg">请输入密码(6-14位)</string>
+    <string name="user_agreement">用户协议</string>
+    <string name="go_login"><![CDATA[去登录>]]></string>
+    <string name="register">注册</string>
+    <string name="edit_mobile_tip">请输入正确的手机号</string>
+
+    <string name="ok">确定</string>
+    <string name="back">返回</string>
+    <string name="cancel">取消</string>
+    <string name="contact_search">搜索</string>
+    <string name="contact_select">选择</string>
+    <string name="search_hint">昵称/手机号</string>
+    <string name="search_hint_nick">昵称</string>
+    <string name="search_hint_user">手机号/ID</string>
+    <string name="country_select_head">选择国家和地区代码</string>
+    <string name="edit_agreement_tip">请同意用户协议</string>
+    <string name="edit_new_password_reg">填写新的密码</string>
+    <string name="commit">提交</string>
+    <string name="message">消息</string>
+    <string name="send_group_chat">发起群聊</string>
+    <string name="invite_friends">邀请好友</string>
+    <string name="scan">扫一扫</string>
+    <string name="collection_and_payment">收款</string>
+    <string name="select_contacts">选择联系人</string>
+
+    <string name="main_customer">意见反馈</string>
+
+    <string name="de_actionbar_system">"系统消息"</string>
+    <string name="de_actionbar_sub_defult">"聊天"</string>
+    <string name="change_language">切换语言</string>
+    <string name="zh_cn">简体中文</string>
+    <string name="zh_tw">繁体中文</string>
+    <string name="en_us">English</string>
+
+
+    <!--actionbar title ===================================未翻译-->
+    <string name="de_actionbar_myacc">"个人账号"</string>
+    <string name="de_actionbar_sub_group">"群组"</string>
+    <string name="de_actionbar_sub_private">"我的私人会话"</string>
+    <string name="de_actionbar_sub_discussion">"我的讨论组"</string>
+    <string name="de_actionbar_sub_system">"系统消息"</string>
+    <string name="de_actionbar_set_public">"公众号"</string>
+    <string name="permission_banned">为了您的体验，请您授权所需的的权限</string>
+    <string name="setting">去授权</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_friend_title_bar">添加联系人</string>
+    <string name="m_add_friend_search_edit">输入手机号/嘟嘟号</string>
+    <string name="m_add_friend_label_qr_code">我的二维码名片</string>
+    <string name="m_add_friend_wechat_label_1">微信好友</string>
+    <string name="m_add_friend_wechat_label_2">添加微信中的联系人</string>
+
+    <string name="m_add_friend_contact_label_1">手机联系人</string>
+    <string name="m_add_friend_contact_label_2">添加通讯录中的联系人</string>
+    <string name="m_add_friend_scan_it_label_1">扫一扫</string>
+    <string name="m_add_friend_scan_it_label_2">扫一扫二维码名片</string>
+    <string name="m_information_title_bar">个人信息</string>
+    <string name="m_personal_information_signature_label">个性签名</string>
+    <string name="m_personal_information_signature_text">添加到通讯录</string>
+    <string name="m_verification_title_bar">验证申请</string>
+    <string name="m_verification_label">你需要发送验证申请，等待对方通过</string>
+    <string name="m_verification_send_btn">发送</string>
+    <string name="m_qr_code_title_bar">相册</string>
+    <string name="m_qr_code_title_bar_me">我的二维码</string>
+    <string name="m_my_qr_code_label">扫描二维码，加我为好友</string>
+    <string name="m_contact_title_bar">手机联系人</string>
+    <string name="m_item_contact_type_text">已添加</string>
+    <string name="m_item_contact_type_text_1">申请添加</string>
+    <string name="m_constacts_new_friend_title_bar">通讯录</string>
+    <string name="m_constacts_new_friend_group_chat_label">群聊</string>
+    <string name="m_contact_add_friend_label">新的好友</string>
+    <string name="m_contact_new_friend_label">添加好友</string>
+    <string name="m_contact_search_label">搜索</string>
+    <string name="m_fragment_new_friend_title_bar">新的朋友</string>
+    <string name="m_fragment_chat_information_title_bar">聊天信息</string>
+    <string name="m_chat_information_add_member">添加新成员</string>
+    <string name="label">置顶聊天</string>
+    <string name="label_1">消息免打扰</string>
+    <string name="m_chat_information_chat_and_picture_text">聊天文件与图片</string>
+    <string name="m_chat_information_find_chat_history_label">查找聊天记录</string>
+    <string name="m_chat_information_set_current_time_text">设置当前时间</string>
+    <string name="m_dialog_account_freeze_caveat_text">很抱歉、您的多多账户已被冻结,\n 如有疑问或冻结、请联系人工客服。</string>
+    <string name="m_dialog_account_freeze_phone_number">客服电话：181-3992-9960</string>
+    <string name="m_edit_information_title_bar">编辑个人信息</string>
+    <string name="m_edit_information_area_label">地区</string>
+    <string name="m_edit_information_name_edit">例如：小明</string>
+    <string name="m_edit_information_area_edit">完善你的位置信息</string>
+    <string name="m_edit_information_name_label">昵称</string>
+    <string name="m_edit_information_btn">完成</string>
+    <string name="m_set_payment_pwd_title_bar">设置支付密码</string>
+    <string name="m_set_payment_pwd_label">为了您的账户安全，请设置支付密码</string>
+
+
 </resources>

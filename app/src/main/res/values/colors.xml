@@ -1,6 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="colorPrimary">#4B4D5B</color>
+    <color name="colorPrimaryDark">#4B4D5B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="login_bg">#4B4D5B</color>
+    <color name="text_click_normal">#636466</color>
+    <color name="text_click_pressed">#1B1A1A</color>
+    <color name="login_btn_normal">#E5C175</color>
+    <color name="login_btn_pressed">#EBBA57</color>
+    <color name="contact_letter_idx_bg">#00746262</color>
+    <color name="list_item_bg_press">#F1EDED</color>
+    <color name="game_quick_create_bg_normal">#FFFFFF</color>
+    <color name="text_select_color">#8B8888</color>
+    <color name="head_bg">#111111</color>
+    <color name="main_list_divider">#C7C6C6</color>
+    <color name="contacts_letters_color">#80807c</color>
+    <color name="text_white_def">#c9ccd0</color>
+    <color name="item_bg_normal">#2D2D2D</color>
+    <color name="edt_common_hint_color">#8c8c8c</color>
+    <color name="home_tab_gray">#A5A1A1</color>
+    <color name="home_tab_dark">#413F3F</color>
+    <color name="search_def_gary">#EBEBEB</color>
+    <color name="head_ok_pressed_bg">#F7C547</color>
+    <color name="head_ok_normal_bg">#FFD464</color>
+    <color name="m_friend_search_view">#fff5f5f5</color>
+    <color name="m_add_friend_wechat_label_2">#999999</color>
+    <color name="m_add_friend_line">#DDDDDD</color>
+    <color name="personal_information">#9C9C9C</color>
+    <color name="personal_information_1">#F8F8F8</color>
+    <color name="m_personal_information_dudu_id">#999999</color>
+    <color name="m_verification_send_btn">#4B4D5B</color>
+    <color name="m_verification_send_btn_background">#E5C175</color>
+
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="result_view">#B0000000</color>
+    <color name="viewfinder_frame">#90FFFFFF</color>
+    <color name="result_point_color">#C0FFFF00</color>
+    <color name="laser_color">#0F0</color>
+    <color name="corner_color">#00FF00</color>
+    <color name="m_my_qr_code_label">#BBBBBB</color>
+    <color name="m_contact_edit_back">#EEEEEE</color>
+    <color name="m_item_contact_type_text_1">#4B4D5B</color>
+    <color name="m_item_msg_session_label">#999999</color>
+    <color name="m_item_msg_message_number">#EA2222</color>
+    <color name="m_constacts_new_friend_group_chat_label">#999999</color>
+
+    <color name="textcolor1">#333</color>
+    <color name="textcolor2">#666</color>
+    <color name="textcolor3">#999</color>
+    <color name="m_edit_information_btn">#FFE6A5</color>
+
 </resources>
