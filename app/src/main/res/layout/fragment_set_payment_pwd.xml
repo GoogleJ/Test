@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:psd="http://schemas.android.com/tools"
+    android:orientation="vertical">
+    <com.zxjk.duoduo.weight.TitleBar
+        android:id="@+id/m_set_payment_pwd_title_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        app:titleBarLeftImage="@drawable/ico_back"
+        app:titleBarTitle="@string/m_set_payment_pwd_title_bar"
+        app:titleBarTextColor="@color/white"
+        />
+    <TextView
+        android:id="@+id/m_set_payment_pwd_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/m_set_payment_pwd_label"
+        android:layout_gravity="center_horizontal"
+        android:textSize="19dp"
+
+        android:layout_marginTop="98dp"
+        android:textColor="@color/m_verification_send_btn"
+        />
+    <com.zxjk.duoduo.weight.PayPsdInputView
+        android:id="@+id/m_set_payment_pwd_edit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="90dp"
+        android:inputType="number"
+        psd:maxCount="6"
+        psd:psdType="weChat"
+        psd:rectAngle="4dp"
+        />
+
+</LinearLayout>

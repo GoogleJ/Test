@@ -8,8 +8,8 @@ import retrofit2.Retrofit;
 
 public class TestConvert extends Converter.Factory {
 
-    @Override
-    public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
-        return new TestBodyConverter<>(type);
-    }
+//    @Override
+//    public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
+////        return new TestBodyConverter<>(type);
+//    }
 }

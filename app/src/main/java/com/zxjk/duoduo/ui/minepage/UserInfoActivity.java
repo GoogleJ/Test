@@ -9,6 +9,10 @@ import android.widget.TextView;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 
+/**
+ * 关于用户信息的activity
+ * @author Administrator
+ */
 public class UserInfoActivity extends BaseActivity {
 
     private ImageView ivUserInfoHead;
@@ -22,7 +26,7 @@ public class UserInfoActivity extends BaseActivity {
     private TextView tvUserInfoWallet;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
 
