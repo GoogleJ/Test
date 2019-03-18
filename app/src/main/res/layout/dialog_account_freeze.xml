@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="275dp"
+        android:layout_marginStart="38dp"
+        android:layout_marginEnd="38dp"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/m_dialog_account_freeze_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="38dp"
+            android:layout_marginStart="38dp">
+
+
+            <ImageView
+                android:id="@+id/m_dialog_account_freeze_icon"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="37dp"
+                android:src="@drawable/icon_caveat"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/m_dialog_account_freeze_caveat_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:gravity="center"
+
+
+                android:text="@string/m_dialog_account_freeze_caveat_text"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/m_dialog_account_freeze_icon" />
+
+            <TextView
+                android:id="@+id/m_dialog_account_freeze_phone_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="19dp"
+                android:text="@string/m_dialog_account_freeze_phone_number"
+                android:textColor="@color/m_my_qr_code_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/m_dialog_account_freeze_caveat_text" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/m_dialog_account_freeze_close_btn"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/dialog_icon_close"
+        />
+
+</LinearLayout>

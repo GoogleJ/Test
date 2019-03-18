@@ -1,5 +1,6 @@
 package com.zxjk.duoduo;
 
+import com.blankj.utilcode.util.DeviceUtils;
 import com.zxjk.duoduo.network.response.LoginResponse;
 
 public class Constant {
@@ -16,12 +17,13 @@ public class Constant {
 
     public static String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0IiwiaXNzIjoiZHVvZHVvIiwianRpIjoiMzIxNjU0MTExIn0.JdddTri7172qkvHKXDfmRDPR6HatCTpHxiAkdiI7GQY";
 
-    public static String phoneUuid ="321654111";
-//    public static String phoneUuid = DeviceUtils.getMacAddress()
-//            .equals("") ? DeviceUtils.getAndroidID() : DeviceUtils.getMacAddress();
+//    public static String phoneUuid ="321654111";
+    public static String phoneUuid = DeviceUtils.getMacAddress()
+            .equals("") ? DeviceUtils.getAndroidID() : DeviceUtils.getMacAddress();
 
 //    public static String language = Locale.getDefault().getLanguage();
     public static String language = "zh-TW";
 
     public static LoginResponse currentUser = new LoginResponse();
+
 }

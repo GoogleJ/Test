@@ -23,6 +23,51 @@ public interface Api {
             @Field("pwd") String pwd
     );
 
+    /**
+     * 这里是注册接口
+     *
+     * @param phone
+     * @param code
+     * @param pwd
+     * @return
+     */
+    @POST("duoduo/customer/appUserRegister")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> register(
+            @Field("mobile") String phone,
+            @Field("securityCode") String code,
+            @Field("pwd") String pwd
+    );
+
+    /**
+     * 这里是短信验证码接口
+     *
+     * @param phone
+     * @return
+     */
+    @POST("duoduo/getCode")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> getCode(
+            @Field("mobile") String phone
+    );
+
+    /**
+     * 这里是忘记密码
+     *
+     * @param phone
+     * @param pwd
+     * @param code
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("duoduo/customer/forgetPwd")
+    Observable<BaseResponse<String>> forgetPwd(
+            @Field("mobile") String phone,
+            @Field("pwd") String pwd,
+            @Field("securityCode") String code
+    );
+
+
     //更新用户信息
     @POST("duoduo/customer/updateCustomerInfo")
     @FormUrlEncoded

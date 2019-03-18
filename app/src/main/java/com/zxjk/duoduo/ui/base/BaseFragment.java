@@ -4,7 +4,13 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.trello.rxlifecycle3.components.RxFragment;
 import com.zxjk.duoduo.network.rx.RxException;
 
-public class BaseFragment extends RxFragment {
+import androidx.fragment.app.Fragment;
+
+/**
+ * @author Administrator
+ * @// TODO: 2019\3\18 0018  关于Fragment的基类 
+ */
+public class BaseFragment extends Fragment {
 
     public void handleApiError(Throwable throwable) {
         if (throwable instanceof RxException.DuplicateLoginExcepiton) {

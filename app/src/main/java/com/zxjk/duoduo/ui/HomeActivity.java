@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -13,6 +14,10 @@ import com.zxjk.duoduo.ui.minepage.MineFragment;
 import static com.google.android.material.tabs.TabLayout.MODE_FIXED;
 import static com.ashokvarma.bottomnavigation.BottomNavigationBar.BACKGROUND_STYLE_RIPPLE;
 
+/**
+ * 这里是首页的activity
+ * @author Administrator
+ */
 public class HomeActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
 
     BottomNavigationBar m_bottom_bar;
@@ -27,8 +32,9 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
     MineFragment testFragment;
     MineFragment mineFragment;
 
+    @SuppressLint("WrongConstant")
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
@@ -42,23 +48,33 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                 .setText("10")
                 .setBackgroundColorResource(R.color.colorAccent)
                 .setBorderWidth(0);
+//设置Item选中颜色方法
+        m_bottom_bar.setActiveColor(R.color.colorAccent)
+                //设置Item未选中颜色方法
+                .setInActiveColor(R.color.colorPrimary)
+                //背景颜色
+                .setBarBackgroundColor("#FFFFFF");
 
-        m_bottom_bar.setActiveColor(R.color.colorAccent)//设置Item选中颜色方法
-                .setInActiveColor(R.color.colorPrimary)//设置Item未选中颜色方法
-                .setBarBackgroundColor("#FFFFFF");//背景颜色
         m_bottom_bar.setMode(BottomNavigationBar.MODE_FIXED);
-
-        m_bottom_bar.setMode(MODE_FIXED) // 设置mode
-                .setBackgroundStyle(BACKGROUND_STYLE_RIPPLE)  // 背景样式
-                .setBarBackgroundColor("#2FA8E1") // 背景颜色
-                .setInActiveColor("#929292") // 未选中状态颜色
-                .setActiveColor("#ffffff") // 选中状态颜色
-                .addItem(new BottomNavigationItem(R.drawable.tab_message_icon_hl, "消息").setInactiveIconResource(R.drawable.tab_message_icon_nl).setBadgeItem(badgeItem)) // 添加Item
+        // 设置mode
+        m_bottom_bar.setMode(MODE_FIXED)
+                // 背景样式
+                .setBackgroundStyle(BACKGROUND_STYLE_RIPPLE)
+                // 背景颜色
+                .setBarBackgroundColor("#2FA8E1")
+                // 未选中状态颜色
+                .setInActiveColor("#929292")
+                // 选中状态颜色
+                .setActiveColor("#ffffff")
+                // 添加Item
+                .addItem(new BottomNavigationItem(R.drawable.tab_message_icon_hl, "消息").setInactiveIconResource(R.drawable.tab_message_icon_nl).setBadgeItem(badgeItem))
                 .addItem(new BottomNavigationItem(R.drawable.tab_qun_icon_hl, "社群").setInactiveIconResource(R.drawable.tab_qun_icon_nl))
                 .addItem(new BottomNavigationItem(R.drawable.tab_wallet_icon_hl, "钱包").setInactiveIconResource(R.drawable.tab_wallet_icon_nl))
                 .addItem(new BottomNavigationItem(R.drawable.tab_setting_icon_hl, "我的").setInactiveIconResource(R.drawable.tab_setting_icon_nl))
-                .setFirstSelectedPosition(0) //设置默认选中位置
-                .initialise();  // 提交初始化（完成配置）
+                //设置默认选中位置
+                .setFirstSelectedPosition(0)
+                // 提交初始化（完成配置）
+                .initialise();
 
         m_bottom_bar.setTabSelectedListener(this);
     }

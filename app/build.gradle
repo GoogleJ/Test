@@ -9,6 +9,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -20,7 +21,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
+    buildToolsVersion '28.0.3'
+    dexOptions {
+    }
 }
 
 dependencies {
@@ -56,4 +59,16 @@ dependencies {
     implementation 'com.blankj:utilcodex:1.23.7'
     //Loading
     implementation 'com.github.ybq:Android-SpinKit:1.2.0'
+    //添加依赖  安卓黄油刀，可减少部分代码，具体看个人习惯
+    implementation 'com.jakewharton:butterknife:10.0.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
+    //添加融云的依赖包
+    implementation project(':IMKit')
+    implementation project(':IMLib')
+    //这个是对方法数进行的依赖
+    implementation 'androidx.multidex:multidex:2.0.0'
+    //这个是关于Permission权限申请的依赖
+    implementation 'org.liang.library:jpermission:1.0.2'
+    //v4包
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0-beta01'
 }

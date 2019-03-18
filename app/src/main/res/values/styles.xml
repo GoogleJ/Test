@@ -13,4 +13,87 @@
         <item name="android:windowExitAnimation">@anim/push_buttom_out</item>
     </style>
 
+    <style name="view_shadow_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">#aa000000</item>
+        <item name="android:visibility">gone</item>
+    </style>
+    <style name="listview_common_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:cacheColorHint">@android:color/transparent</item>
+        <item name="android:fadingEdge">none</item>
+        <item name="android:overScrollMode">never</item>
+        <item name="android:scrollbars">none</item>
+        <item name="android:dividerHeight">1px</item>
+        <item name="android:divider">@color/main_list_divider</item>
+        <item name="android:listSelector">@android:color/transparent</item>
+    </style>
+
+    //这是国家选择代码的ListView的适配器的Item  Style
+
+    <style name="tv_common_column_title_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_select_color</item>
+        <item name="android:gravity">center</item>
+        <item name="android:drawablePadding">5dp</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    //这里是国家代码的头部吧标题的
+    <style name="rl_head_bg_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:minHeight">50dp</item>
+    </style>
+    //这里是searchHeader中的属性
+    <style name="edt_common_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/item_bg_normal</item>
+        <item name="android:textColor">@color/text_white_def</item>
+        <item name="android:textColorHint">@color/edt_common_hint_color</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:cursorVisible">true</item>
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:layout_marginLeft">50dp</item>
+        <item name="android:layout_marginRight">50dp</item>
+    </style>
+    //首页进来的图标
+    <style name="AppTheme.Theme_Splash">
+        <item name="android:windowBackground">@drawable/splash</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:clipToPadding">true</item>
+    </style>
+    //dialog的基本属性
+    <style name="dialogstyle" parent="AppTheme">
+        <item name="android:windowBackground">@android:color/transparent</item> 
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@style/bottom</item>
+    </style>
+    //dialog进来时的动画
+    <style name="bottom">
+        <item name="android:windowEnterAnimation">@anim/dialog_enter</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit</item><!--//退出时的动画-->
+    </style>
+    //自定义标题的线的颜色
+    <style name="line">
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">#000</item>
+    </style>
 </resources>

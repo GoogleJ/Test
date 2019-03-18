@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.zxjk.duoduo.weight.TitleBar
+        android:id="@+id/m_edit_information_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:titleBarLeftImage="@drawable/ico_back"
+        app:titleBarTextColor="@color/white"
+        app:titleBarTitle="@string/m_edit_information_title_bar" />
+
+    <ImageView
+        android:id="@+id/m_edit_information_header_icon"
+        android:layout_width="80dp"
+        android:scaleType="fitXY"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="69dp"
+        android:src="@drawable/icon_commit_header" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/m_edit_information_name_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="39dp"
+            android:gravity="center"
+            android:text="@string/m_edit_information_name_label"
+            android:textColor="@color/black"
+            android:textSize="17dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/m_edit_information_name_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:background="@null"
+            android:hint="@string/m_edit_information_name_edit"
+            android:paddingBottom="10dp"
+            android:paddingStart="20dp"
+            android:paddingTop="10dp"
+            android:textSize="17dp"
+            app:layout_constraintBottom_toBottomOf="@+id/m_edit_information_name_label"
+            app:layout_constraintStart_toEndOf="@+id/m_edit_information_name_label"
+            app:layout_constraintTop_toTopOf="@+id/m_edit_information_name_label" />
+
+        <View
+            android:id="@+id/m_edit_information_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginEnd="38dp"
+            android:layout_marginStart="38dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/m_add_friend_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/m_edit_information_name_label" />
+
+        <TextView
+            android:id="@+id/m_edit_information_area_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="37dp"
+            android:text="@string/m_edit_information_area_label"
+            android:textColor="@color/black"
+            android:textSize="17dp"
+            app:layout_constraintStart_toStartOf="@+id/m_edit_information_name_label"
+            app:layout_constraintTop_toBottomOf="@+id/m_edit_information_line" />
+
+        <EditText
+            android:id="@+id/m_edit_information_area_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:background="@null"
+            android:hint="@string/m_edit_information_area_edit"
+            android:paddingBottom="10dp"
+            android:paddingStart="20dp"
+            android:paddingTop="10dp"
+            android:textSize="17dp"
+            app:layout_constraintBottom_toBottomOf="@+id/m_edit_information_area_label"
+            app:layout_constraintStart_toEndOf="@+id/m_edit_information_area_label"
+            app:layout_constraintTop_toTopOf="@+id/m_edit_information_area_label" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginEnd="38dp"
+            android:layout_marginStart="38dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/m_add_friend_line"
+            app:layout_constraintTop_toBottomOf="@+id/m_edit_information_area_edit" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/m_edit_information_btn"
+        android:layout_width="match_parent"
+        android:text="@string/m_edit_information_btn"
+       android:gravity="center"
+        android:layout_height="50dp"
+        android:layout_marginEnd="38dp"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="50dp"
+        android:textColor="@color/m_verification_send_btn"
+        android:background="@color/m_edit_information_btn"
+        />
+
+
+</LinearLayout>
