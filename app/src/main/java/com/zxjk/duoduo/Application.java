@@ -15,8 +15,7 @@ public class Application extends android.app.Application {
 
         Utils.init(this);
 
-        initOSS();
-
+        new Thread(this::initOSS).start();
     }
 
     //初始化阿里云OSS上传服务

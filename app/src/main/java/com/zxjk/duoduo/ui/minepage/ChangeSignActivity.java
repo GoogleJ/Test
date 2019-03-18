@@ -59,14 +59,13 @@ public class ChangeSignActivity extends BaseActivity {
             ToastUtils.showShort("请输入内容");
             return;
         }
-        LoginResponse login = new LoginResponse(Constant.userId);
-        login.setSignature(sign);
+        LoginResponse update = new LoginResponse(Constant.userId);
+        update.setSignature(sign);
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .updateUserInfo(GsonUtils.toJson(login))
+                .updateUserInfo(GsonUtils.toJson(update))
                 .compose(bindToLifecycle())
-                .compose(RxSchedulers.ioObserver())
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
-                .compose(RxSchedulers.showLoading(CommonUtils.initDialog(this)))
                 .subscribe(response -> {
                     Constant.currentUser.setSignature(sign);
                 }, this::handleApiError);
