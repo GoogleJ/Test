@@ -1,8 +1,0 @@
-# Referenced at F:\git\DuoDuo-Android\app\build\intermediates\merged_manifests\debug\AndroidManifest.xml:37
--keep class androidx.core.app.CoreComponentFactory { <init>(); }
-# Referenced at F:\git\DuoDuo-Android\app\build\intermediates\merged_manifests\debug\AndroidManifest.xml:37
--keep class com.zxjk.duoduo.Application { <init>(); }
-# Referenced at F:\git\DuoDuo-Android\app\build\intermediates\merged_manifests\debug\AndroidManifest.xml:393
--keep class io.rong.push.rongpush.PushReceiver { <init>(); }
-# Referenced at F:\git\DuoDuo-Android\app\build\intermediates\merged_manifests\debug\AndroidManifest.xml:388
--keep class io.rong.push.rongpush.PushService { <init>(); }

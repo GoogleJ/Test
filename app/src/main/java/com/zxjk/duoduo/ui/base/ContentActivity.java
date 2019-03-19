@@ -3,15 +3,11 @@ package com.zxjk.duoduo.ui.base;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.msg.ConstactsNewFriendFragment;
-
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 
 /**
@@ -19,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * @// TODO: 2019\3\18 0018 Fragment跳转的基础activity 
  */
 @SuppressLint("Registered")
-public class ContentActivity extends FragmentActivity {
+public class ContentActivity extends BaseActivity {
     int i;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,6 +40,4 @@ public class ContentActivity extends FragmentActivity {
                 break;
         }
     }
-
-
 }

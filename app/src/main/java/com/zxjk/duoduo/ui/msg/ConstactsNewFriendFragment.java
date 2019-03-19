@@ -2,16 +2,10 @@ package com.zxjk.duoduo.ui.msg;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.UserBean;
@@ -21,18 +15,18 @@ import com.zxjk.duoduo.ui.msg.base.BaseFragment;
 import com.zxjk.duoduo.ui.msg.utils.PinyinComparator;
 import com.zxjk.duoduo.ui.msg.widget.IndexView;
 import com.zxjk.duoduo.weight.TitleBar;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.rong.imkit.tools.CharacterParser;
-
-import static java.security.AccessController.getContext;
 
 /**
  * @author Administrator
@@ -111,7 +105,7 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
 
         adapter = new BaseContactAdapter();
         adapter.setNewData(userBeans);
-      mRecyclerView.setAdapter(adapter);
+//      mRecyclerView.setAdapter(adapter);
 
         initIndexView();
 

@@ -2,20 +2,17 @@ package com.zxjk.duoduo.ui;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.widget.FrameLayout;
-
 import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.minepage.MineFragment;
 import com.zxjk.duoduo.ui.msg.MsgFragment;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import static com.ashokvarma.bottomnavigation.BottomNavigationBar.BACKGROUND_STYLE_RIPPLE;
 import static com.google.android.material.tabs.TabLayout.MODE_FIXED;
 
@@ -24,7 +21,7 @@ import static com.google.android.material.tabs.TabLayout.MODE_FIXED;
  *
  * @author Administrator
  */
-public class HomeActivity extends FragmentActivity implements BottomNavigationBar.OnTabSelectedListener {
+public class HomeActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
 
     BottomNavigationBar m_bottom_bar;
     FrameLayout fragment_content;

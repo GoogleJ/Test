@@ -4,32 +4,27 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.ContentActivity;
 import com.zxjk.duoduo.ui.msg.RongIMAdapter.ConversationListAdapterEx;
 import com.zxjk.duoduo.ui.msg.base.BaseFragment;
 import com.zxjk.duoduo.ui.msg.widget.CommonPopupWindow;
 import com.zxjk.duoduo.utils.DensityUtils;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
-
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -42,11 +37,8 @@ import io.rong.imlib.model.UserInfo;
 public class MsgFragment extends BaseFragment implements View.OnClickListener, CommonPopupWindow.ViewInterface {
 
     private static final String CONVERSATIONLIST_FRAGMENT_KEY = "conversationlist_fragment_key";
-
-
     private ConversationListFragment mConversationListFragment = null;
     private Conversation.ConversationType[] mConversationsTypes = null;
-
     private CommonPopupWindow popupWindow;
 
     public static MsgFragment newInstance() {
@@ -55,11 +47,7 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
         fragment.setArguments(bundle);
         return fragment;
     }
-
-
     View view;
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
