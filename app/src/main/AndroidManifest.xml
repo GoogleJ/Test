@@ -23,10 +23,8 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
 
-
         <activity
             android:name="com.zxjk.duoduo.ui.WelcomeActivity"
-
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleInstance"
             android:resizeableActivity="true"
@@ -51,6 +49,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
+
         <activity
             android:name=".ui.minepage.ChangeSignActivity"
 
@@ -58,25 +57,6 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data
-                    android:host="com.zxjk.duoduo"
-                    android:pathPrefix="/push_message"
-                    android:scheme="rong" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".ui.base.BaseActivity"
-
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden">
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -242,42 +222,42 @@
             </intent-filter>
         </activity>
         <!--<activity-->
-            <!--android:name=".ui.minepage.SettingActivity"-->
+        <!--android:name=".ui.minepage.SettingActivity"-->
 
-            <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
-            <!--android:launchMode="singleTask"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:windowSoftInputMode="adjustUnspecified|stateHidden">-->
+        <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
+        <!--android:launchMode="singleTask"-->
+        <!--android:screenOrientation="portrait"-->
+        <!--android:windowSoftInputMode="adjustUnspecified|stateHidden">-->
 
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.VIEW" />-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.VIEW" />-->
 
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
+        <!--<category android:name="android.intent.category.DEFAULT" />-->
 
-                <!--<data-->
-                    <!--android:host="com.zxjk.duoduo"-->
-                    <!--android:pathPrefix="/push_message"-->
-                    <!--android:scheme="rong" />-->
-            <!--</intent-filter>-->
+        <!--<data-->
+        <!--android:host="com.zxjk.duoduo"-->
+        <!--android:pathPrefix="/push_message"-->
+        <!--android:scheme="rong" />-->
+        <!--</intent-filter>-->
         <!--</activity>-->
         <!--<activity-->
-            <!--android:name=".ui.minepage.UserInfoActivity"-->
+        <!--android:name=".ui.minepage.UserInfoActivity"-->
 
-            <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
-            <!--android:launchMode="singleTask"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:windowSoftInputMode="adjustUnspecified|stateHidden">-->
+        <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
+        <!--android:launchMode="singleTask"-->
+        <!--android:screenOrientation="portrait"-->
+        <!--android:windowSoftInputMode="adjustUnspecified|stateHidden">-->
 
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.VIEW" />-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.VIEW" />-->
 
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
+        <!--<category android:name="android.intent.category.DEFAULT" />-->
 
-                <!--<data-->
-                    <!--android:host="com.zxjk.duoduo"-->
-                    <!--android:pathPrefix="/push_message"-->
-                    <!--android:scheme="rong" />-->
-            <!--</intent-filter>-->
+        <!--<data-->
+        <!--android:host="com.zxjk.duoduo"-->
+        <!--android:pathPrefix="/push_message"-->
+        <!--android:scheme="rong" />-->
+        <!--</intent-filter>-->
         <!--</activity>-->
         <activity
             android:name=".ui.base.ContentActivity"
@@ -301,23 +281,23 @@
 
 
         <!--<receiver-->
-            <!--android:name=".utils.SealNotificationReceiverUtils"-->
-            <!--android:exported="true">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />-->
-                <!--<action android:name="io.rong.push.intent.MESSAGE_CLICKED" />-->
-                <!--<action android:name="io.rong.push.intent.THIRD_PARTY_PUSH_STATE" />-->
-            <!--</intent-filter>-->
+        <!--android:name=".utils.SealNotificationReceiverUtils"-->
+        <!--android:exported="true">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />-->
+        <!--<action android:name="io.rong.push.intent.MESSAGE_CLICKED" />-->
+        <!--<action android:name="io.rong.push.intent.THIRD_PARTY_PUSH_STATE" />-->
+        <!--</intent-filter>-->
         <!--</receiver>-->
 
         <!--<provider-->
-            <!--android:name="androidx.core.content.FileProvider"-->
-            <!--android:authorities="com.zxjk.duoduo.FileProvider"-->
-            <!--android:exported="false"-->
-            <!--android:grantUriPermissions="true">-->
-            <!--<meta-data-->
-                <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
-                <!--android:resource="@xml/rc_file_path" />-->
+        <!--android:name="androidx.core.content.FileProvider"-->
+        <!--android:authorities="com.zxjk.duoduo.FileProvider"-->
+        <!--android:exported="false"-->
+        <!--android:grantUriPermissions="true">-->
+        <!--<meta-data-->
+        <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
+        <!--android:resource="@xml/rc_file_path" />-->
         <!--</provider>-->
 
 

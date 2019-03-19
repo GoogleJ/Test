@@ -29,6 +29,7 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.CountryEntity;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.rx.RxException;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CountryCodeConstantsUtils;
@@ -203,6 +204,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     @SuppressLint("CheckResult")
     public void registerCode(String phone) {
+        countDownTimer.start();
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .getCode(phone)
                 .compose(bindToLifecycle())
@@ -213,20 +215,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     public void accept(String s) throws Exception {
 
                         ToastUtils.showShort(getString(R.string.code_label));
-                        countDownTimer.start();
 
                         LogUtils.d(s);
 //                        ToastUtils.showShort(s);
                     }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        //handleApiError(throwable);
-                        ToastUtils.showShort(throwable.getMessage());
-                        LogUtils.d("ssssss0", throwable.getMessage());
-
-                    }
-                });
+                }, this::handleApiError);
 
     }
 

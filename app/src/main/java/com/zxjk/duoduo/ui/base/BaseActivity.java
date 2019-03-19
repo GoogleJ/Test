@@ -16,7 +16,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import top.zibin.luban.Luban;
 
-@SuppressLint("CheckResult")
+@SuppressLint({"CheckResult", "Registered"})
 public class BaseActivity extends RxAppCompatActivity {
 
     public void handleApiError(Throwable throwable) {

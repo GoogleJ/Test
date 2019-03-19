@@ -9,12 +9,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.blankj.utilcode.util.GsonUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -27,10 +23,8 @@ import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
-
 import java.io.File;
 import java.util.Collections;
-
 import androidx.annotation.Nullable;
 
 @SuppressLint("CheckResult")
@@ -142,7 +136,6 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
             zipFile(Collections.singletonList(filePath), files -> {
                 File file = files.get(0);
                 OssUtils.uploadFile(file.getAbsolutePath(), url -> {
-                    GlideUtil.loadCornerImg(ivUserInfoHead, url, R.drawable.ic_launcher, CommonUtils.dip2px(this, 2));
                     LoginResponse update = new LoginResponse(Constant.userId);
                     update.setHeadPortrait(url);
                     ServiceFactory.getInstance().getBaseService(Api.class)
