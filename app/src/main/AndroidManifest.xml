@@ -41,8 +41,8 @@
         <activity android:name=".ui.minepage.UserInfoActivity" />
 
         <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.zxjk.duoduo.fileprovider"
+            android:name="com.zxjk.duoduo.DuoDuoFileProvider"
+            android:authorities="com.zxjk.duoduo.duoduofileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

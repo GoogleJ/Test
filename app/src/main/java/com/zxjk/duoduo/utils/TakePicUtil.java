@@ -43,7 +43,7 @@ public class TakePicUtil {
 
     private static Uri getUriForFile(Context context, File file) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileprovider", file);
+            return FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".duoduofileprovider", file);
         }
         return Uri.fromFile(file);
     }

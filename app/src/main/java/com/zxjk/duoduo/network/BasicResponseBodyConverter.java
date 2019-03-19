@@ -2,8 +2,6 @@ package com.zxjk.duoduo.network;
 
 import android.text.TextUtils;
 import com.google.gson.TypeAdapter;
-import com.zxjk.duoduo.network.rx.RxException;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
@@ -25,7 +23,7 @@ public class BasicResponseBodyConverter<T> implements Converter<ResponseBody, T>
             JSONObject jsonObject = new JSONObject(json);
             String data = jsonObject.optString("data");
             String msg = jsonObject.optString("msg");
-            if (TextUtils.isEmpty(data)||data.equals("")) {
+            if (TextUtils.isEmpty(data) || data.equals("")) {
                 throw new IOException(msg);
             }
         } catch (JSONException e) {
