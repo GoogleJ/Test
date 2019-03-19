@@ -14,6 +14,7 @@ import com.zxjk.duoduo.weight.TitleBar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
@@ -45,7 +46,7 @@ public class QrCodeActivity extends BaseActivity implements ZXingView.Delegate {
      */
     private boolean isFlashlight;
 
-    public static void start(AppCompatActivity activity) {
+    public static void start(FragmentActivity activity) {
         Intent intent = new Intent(activity, QrCodeActivity.class);
         activity.startActivity(intent);
 

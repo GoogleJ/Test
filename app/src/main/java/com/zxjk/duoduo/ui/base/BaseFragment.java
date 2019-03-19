@@ -1,23 +1,14 @@
 package com.zxjk.duoduo.ui.base;
 
-import android.content.res.Resources;
-import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.trello.rxlifecycle3.components.support.RxFragment;
-import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.rx.RxException;
-import com.zxjk.duoduo.utils.DensityUtils;
 import java.io.File;
 import java.util.List;
-
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;

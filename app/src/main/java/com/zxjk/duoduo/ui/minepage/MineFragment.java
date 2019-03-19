@@ -2,22 +2,21 @@ package com.zxjk.duoduo.ui.minepage;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.ui.base.BaseFragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
 
 /**
  * @author Administrator
  * @// TODO: 2019\3\19 0019  
  */
-public class MineFragment extends Fragment implements View.OnClickListener {
+public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @Nullable
     @Override
