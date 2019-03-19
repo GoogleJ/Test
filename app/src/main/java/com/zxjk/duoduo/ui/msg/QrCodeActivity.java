@@ -1,25 +1,21 @@
 package com.zxjk.duoduo.ui.msg;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.provider.SyncStateContract;
 import android.util.Log;
 import android.view.View;
 
-
 import com.blankj.utilcode.util.ToastUtils;
-import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.weight.TitleBar;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.internal.Constants;
 import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
 import cn.bingoogolapple.qrcode.zxing.QRCodeDecoder;
 import cn.bingoogolapple.qrcode.zxing.ZXingView;
@@ -49,7 +45,7 @@ public class QrCodeActivity extends BaseActivity implements ZXingView.Delegate {
      */
     private boolean isFlashlight;
 
-    public static void start(Activity activity) {
+    public static void start(AppCompatActivity activity) {
         Intent intent = new Intent(activity, QrCodeActivity.class);
         activity.startActivity(intent);
 

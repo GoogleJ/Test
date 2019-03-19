@@ -2,23 +2,14 @@ package com.zxjk.duoduo.ui;
 
 import android.app.Activity;
 import android.content.Intent;
-import androidx.annotation.Nullable;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import io.reactivex.functions.Consumer;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
-//import io.rong.imkit.RongIM;
-//import io.rong.imlib.RongIMClient;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import com.blankj.utilcode.util.EncryptUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Application;
 import com.zxjk.duoduo.Constant;
@@ -29,9 +20,21 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.ui.base.ContentActivity;
 import com.zxjk.duoduo.utils.CountryCodeConstantsUtils;
 import com.zxjk.duoduo.weight.dialog.AccountFreezeDialog;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+
+//import io.rong.imkit.RongIM;
+//import io.rong.imlib.RongIMClient;
 
 /**
  * 此处是登录界面及操作
@@ -52,7 +55,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     EditText edit_password;
 
 
-    public static void start(Activity activity){
+    public static void start(AppCompatActivity activity){
         Intent intent=new Intent(activity,LoginActivity.class);
         activity.startActivity(intent);
     }
@@ -131,8 +134,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             login_country.setText(" +" + (countryEntity != null ? countryEntity.countryCode : "86"));
         }
     }
+    Disposable subscribe;
     public void login(String phone,String pwd){
-        ServiceFactory.getInstance().getBaseService(Api.class)
+        subscribe = ServiceFactory.getInstance().getBaseService(Api.class)
                 .login(phone, String.valueOf(EncryptUtils.encryptMD5ToString(pwd)).toLowerCase())
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
@@ -158,7 +162,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         }
 
                     }
-                }, throwable -> { handleApiError(throwable);});
+                }, throwable -> {
+                    handleApiError(throwable);
+                });
 
     }
 
@@ -203,5 +209,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
-
+    @Override
+    protected void onDestroy() {
+        if (subscribe != null && !subscribe.isDisposed()) {
+            subscribe.dispose();
+        }
+        super.onDestroy();
+    }
 }

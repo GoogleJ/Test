@@ -2,8 +2,6 @@ package com.zxjk.duoduo.ui;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import android.widget.FrameLayout;
 import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
@@ -13,11 +11,14 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.minepage.MineFragment;
 import com.zxjk.duoduo.ui.msg.MsgFragment;
 
-import static com.google.android.material.tabs.TabLayout.MODE_FIXED;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import static com.ashokvarma.bottomnavigation.BottomNavigationBar.BACKGROUND_STYLE_RIPPLE;
+import static com.google.android.material.tabs.TabLayout.MODE_FIXED;
 
 /**
  * 这里是首页的activity
+ *
  * @author Administrator
  */
 public class HomeActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
@@ -87,7 +88,8 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
         testFragment = new MineFragment();
         mineFragment = new MineFragment();
 
-        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+        fragmentTransaction =  getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.fragment_content, msgFragment)
                 .commit();
         mFragment = testFragment;

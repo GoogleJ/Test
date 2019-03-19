@@ -6,19 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.UserBean;
-import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.ui.base.ContentActivity;
 import com.zxjk.duoduo.ui.msg.adapter.BaseContactAdapter;
+import com.zxjk.duoduo.ui.msg.base.BaseFragment;
 import com.zxjk.duoduo.ui.msg.utils.PinyinComparator;
-import com.zxjk.duoduo.ui.msg.widget.HoverItemDecoration;
 import com.zxjk.duoduo.ui.msg.widget.IndexView;
 import com.zxjk.duoduo.weight.TitleBar;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,6 +28,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.rong.imkit.tools.CharacterParser;
 
+/**
+ * @author Administrator
+ */
 public class ConstactsNewFriendFragment extends BaseFragment implements View.OnClickListener {
     @BindView(R.id.m_constacts_new_friend_title_bar)
     TitleBar titleBar;
@@ -95,17 +94,18 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
         layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         //一行代码实现吸顶悬浮的效果
-        mRecyclerView.addItemDecoration(new HoverItemDecoration(getContext(), new HoverItemDecoration.BindItemTextCallback() {
-            @Override
-            public String getItemText(int position) {
-                //悬浮的信息
-                return userBeans.get(position).getSortLetters();
-            }
-        }));
+//        mRecyclerView.addItemDecoration(new HoverItemDecoration(getContext(), new HoverItemDecoration.BindItemTextCallback() {
+//            @Override
+//            public String getItemText(int position) {
+//                //悬浮的信息
+//                return userBeans.get(position).getSortLetters();
+//            }
+//        }));
+
 
         adapter = new BaseContactAdapter();
         adapter.setNewData(userBeans);
-        mRecyclerView.setAdapter(adapter);
+//      mRecyclerView.setAdapter(adapter);
 
         initIndexView();
 
@@ -201,7 +201,7 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
                 ToastUtils.showShort("此功能暂未实现");
                 break;
             case R.id.m_contact_search_btn:
-//                SearchActivity.start(getActivity());
+                SearchActivity.start(getActivity());
                 break;
             default:
                 break;

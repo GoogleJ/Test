@@ -15,6 +15,7 @@ import com.zxjk.duoduo.network.rx.RxException;
 import com.zxjk.duoduo.utils.DensityUtils;
 import java.io.File;
 import java.util.List;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import io.reactivex.Observable;
@@ -27,7 +28,6 @@ import top.zibin.luban.Luban;
  * @// TODO: 2019\3\18 0018  关于Fragment的基类 
  */
 public class BaseFragment extends RxFragment {
-
 
     private View rootView;
     protected Fragment mCurrentFragment;
@@ -48,7 +48,7 @@ public class BaseFragment extends RxFragment {
                 .observeOn(Schedulers.io())
                 .map(origin -> Luban.with(Utils.getApp()).load(origin).get())
                 .observeOn(AndroidSchedulers.mainThread())
-//                .compose(bindToLifecycle())
+                .compose(bindToLifecycle())
                 .subscribe(result -> {
                     if (onFinish != null) {
                         onFinish.onFinish(result);
@@ -69,36 +69,5 @@ public class BaseFragment extends RxFragment {
 
 
 
-
-    protected <T extends Fragment> T getFragment(String tag) {
-        return (T) getChildFragmentManager()
-                .findFragmentByTag(tag);
-    }
-    protected Fragment getCurrentFragment(Bundle bundle) {
-        String currentFragmentTag = bundle.getString(CURRENT_FRAGMENT_KEY, CURRENT_FRAGMENT_KEY);
-        return getFragment(currentFragmentTag);
-    }
-    protected void switchFragment(Fragment targetFragment, int contentId) {
-
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        if (targetFragment == mCurrentFragment) {
-            return;
-        }
-
-        if (mCurrentFragment != null) {
-            transaction.hide(mCurrentFragment);
-        }
-
-        if (!targetFragment.isAdded()) {
-            transaction.add(contentId, targetFragment, targetFragment.getClass().getSimpleName());
-        } else {
-            transaction.show(targetFragment);
-        }
-
-        transaction.commitAllowingStateLoss();
-
-        mCurrentFragment = targetFragment;
-
-    }
 
 }

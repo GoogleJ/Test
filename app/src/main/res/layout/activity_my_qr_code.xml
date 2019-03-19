@@ -36,7 +36,7 @@
                 android:layout_height="60dp"
                 android:layout_marginStart="21dp"
                 android:layout_marginTop="20dp"
-                android:src="@drawable/icon_header"
+                app:srcCompat="@drawable/icon_header"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="RtlCompat" />
@@ -71,7 +71,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="40dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/icon_header"
+                app:srcCompat="@drawable/icon_header"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/m_my_qr_code_signature_label" />

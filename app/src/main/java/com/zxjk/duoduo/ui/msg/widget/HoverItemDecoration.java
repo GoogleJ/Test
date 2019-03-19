@@ -9,6 +9,9 @@ import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * @author Administrator
+ */
 public class HoverItemDecoration extends RecyclerView.ItemDecoration {
 
     private Context context;
