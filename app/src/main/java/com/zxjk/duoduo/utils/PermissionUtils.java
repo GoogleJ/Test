@@ -1,8 +1,8 @@
 package com.zxjk.duoduo.utils;
 
-import android.app.Activity;
 import android.content.pm.PackageManager;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 public class PermissionUtils {
@@ -11,7 +11,7 @@ public class PermissionUtils {
             "android.permission.READ_EXTERNAL_STORAGE",
             "android.permission.WRITE_EXTERNAL_STORAGE"};
 
-    public static void verifyStoragePermissions(Activity activity) {
+    public static void verifyStoragePermissions(AppCompatActivity activity) {
         try {
             //检测是否有写的权限
             int permission = ActivityCompat.checkSelfPermission(activity,

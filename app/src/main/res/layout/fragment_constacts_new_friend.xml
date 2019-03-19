@@ -40,7 +40,7 @@
                 android:layout_marginStart="31dp"
                 android:layout_marginTop="10dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/ico_group_chat"
+                app:srcCompat="@drawable/ico_group_chat"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="RtlCompat" />
@@ -73,7 +73,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/icon_contract_friend"
+                app:srcCompat="@drawable/icon_contract_friend"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="RtlCompat" />
@@ -106,7 +106,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/icon_contract_add_friend"
+                app:srcCompat="@drawable/icon_contract_add_friend"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="RtlCompat" />
@@ -140,7 +140,7 @@
                 android:layout_height="37dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/icon_contract_search"
+                app:srcCompat="@drawable/icon_contract_search"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="RtlCompat" />
@@ -162,7 +162,7 @@
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/m_contact_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

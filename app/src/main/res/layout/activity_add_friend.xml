@@ -55,7 +55,7 @@
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:layout_marginStart="7dp"
-            android:src="@drawable/icon_qr_code"
+            app:srcCompat="@drawable/icon_qr_code"
             app:layout_constraintBottom_toBottomOf="@+id/m_add_friend_label_qr_code"
             app:layout_constraintStart_toEndOf="@+id/m_add_friend_label_qr_code"
             app:layout_constraintTop_toTopOf="@+id/m_add_friend_label_qr_code" />
@@ -74,7 +74,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="12dp"
-            android:src="@drawable/icon_wechat"
+            app:srcCompat="@drawable/icon_wechat"
             app:layout_constraintStart_toStartOf="parent"
             tools:ignore="MissingConstraints" />
 
@@ -123,7 +123,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="12dp"
-            android:src="@drawable/icon_contact"
+            app:srcCompat="@drawable/icon_contact"
             app:layout_constraintStart_toStartOf="parent"
             tools:ignore="MissingConstraints" />
 
@@ -154,7 +154,7 @@
             android:layout_height="15dp"
             android:layout_marginEnd="13dp"
 
-            android:src="@drawable/icon_go"
+            app:srcCompat="@drawable/icon_go"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -181,7 +181,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="15dp"
-            android:src="@drawable/icon_scan_it"
+            app:srcCompat="@drawable/icon_scan_it"
             app:layout_constraintStart_toStartOf="parent"
             tools:ignore="MissingConstraints" />
 

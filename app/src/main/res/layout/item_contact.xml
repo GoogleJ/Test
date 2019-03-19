@@ -11,7 +11,7 @@
         android:id="@+id/m_item_contact_heard_icon"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:src="@drawable/icon_header"
+        app:srcCompat="@drawable/icon_header"
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_marginTop="8dp"

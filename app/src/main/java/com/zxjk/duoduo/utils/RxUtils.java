@@ -1,12 +1,11 @@
 package com.zxjk.duoduo.utils;
 
-import android.app.Activity;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.appcompat.app.AppCompatActivity;
 import io.reactivex.Flowable;
 import io.reactivex.FlowableTransformer;
 import io.reactivex.Observable;
@@ -21,9 +20,9 @@ import io.reactivex.schedulers.Schedulers;
  * @author Administrator
  */
 public class RxUtils {
-    private static Map<Activity, List<Disposable>> disposableMap = new HashMap<>();
+    private static Map<AppCompatActivity, List<Disposable>> disposableMap = new HashMap<>();
 
-    public static void addDisposable(Activity activity, Disposable disposable) {
+    public static void addDisposable(AppCompatActivity activity, Disposable disposable) {
         if (hasDisposables(activity)) {
             disposableMap.get(activity).add(disposable);
             return;
@@ -33,7 +32,7 @@ public class RxUtils {
         disposableMap.put(activity, disposables);
     }
 
-    public static void removeDisposable(Activity activity) {
+    public static void removeDisposable(AppCompatActivity activity) {
         if (hasDisposables(activity)) {
             for (Disposable disposable : disposableMap.get(activity)) {
                 if (disposable != null && !disposable.isDisposed()) {
@@ -44,7 +43,7 @@ public class RxUtils {
         }
     }
 
-    private static boolean hasDisposables(Activity activity) {
+    private static boolean hasDisposables(AppCompatActivity activity) {
         return disposableMap.containsKey(activity);
     }
 

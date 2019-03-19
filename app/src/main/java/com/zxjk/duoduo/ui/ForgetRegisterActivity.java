@@ -20,6 +20,7 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CountryCodeConstantsUtils;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -59,7 +60,7 @@ public class ForgetRegisterActivity extends BaseActivity implements View.OnClick
     private String password;
     private String code;
 
-    public static void start(Activity activity) {
+    public static void start(AppCompatActivity activity) {
         Intent intent = new Intent(activity, ForgetRegisterActivity.class);
         activity.startActivity(intent);
     }

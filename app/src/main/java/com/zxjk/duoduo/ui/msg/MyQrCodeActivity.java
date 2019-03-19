@@ -1,6 +1,5 @@
 package com.zxjk.duoduo.ui.msg;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,12 +11,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
- 
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.weight.TitleBar;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bingoogolapple.qrcode.core.BGAQRCodeUtil;
@@ -35,7 +34,7 @@ public class MyQrCodeActivity extends BaseActivity {
     @BindView(R.id.m_my_qr_code_qr_code_icon)
     ImageView qrCode;
 
-    public static void start(Activity activity){
+    public static void start(AppCompatActivity activity){
         Intent intent=new Intent(activity,MyQrCodeActivity.class);
         activity.startActivity(intent);
     }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -15,7 +16,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="12dp"
             android:onClick="back"
-            android:src="@drawable/ico_back" />
+            app:srcCompat="@drawable/ico_back" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -59,7 +60,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
-                    android:src="@drawable/ic_mine_rightarrow" />
+                    app:srcCompat="@drawable/ic_mine_rightarrow" />
 
                 <ImageView
                     android:id="@+id/ivUserInfoHead"
@@ -101,7 +102,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
-                    android:src="@drawable/ic_mine_rightarrow" />
+                    app:srcCompat="@drawable/ic_mine_rightarrow" />
 
                 <TextView
                     android:id="@+id/tvUserInfoNick"
@@ -144,7 +145,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
-                    android:src="@drawable/ic_mine_rightarrow" />
+                    app:srcCompat="@drawable/ic_mine_rightarrow" />
 
                 <TextView
                     android:id="@+id/tvUserInfoSex"
@@ -185,7 +186,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
-                    android:src="@drawable/ic_mine_rightarrow"
+                    app:srcCompat="@drawable/ic_mine_rightarrow"
                     android:visibility="invisible" />
 
                 <TextView
@@ -229,7 +230,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
-                    android:src="@drawable/ic_mine_rightarrow"
+                    app:srcCompat="@drawable/ic_mine_rightarrow"
                     android:visibility="invisible" />
 
                 <ImageView
@@ -237,7 +238,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@id/ivUserInfoRightArrow5"
-                    android:src="@drawable/ic_mine_code2" />
+                    app:srcCompat="@drawable/ic_mine_code2" />
 
             </RelativeLayout>
 
@@ -269,7 +270,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
-                    android:src="@drawable/ic_mine_rightarrow"
+                    app:srcCompat="@drawable/ic_mine_rightarrow"
                     android:visibility="invisible" />
 
                 <TextView
@@ -312,7 +313,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
-                    android:src="@drawable/ic_mine_rightarrow" />
+                    app:srcCompat="@drawable/ic_mine_rightarrow" />
 
                 <TextView
                     android:id="@+id/tvUserInfoPhone"
@@ -356,7 +357,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
-                    android:src="@drawable/ic_mine_rightarrow" />
+                    app:srcCompat="@drawable/ic_mine_rightarrow" />
 
                 <TextView
                     android:id="@+id/tvUserInfoSign"
@@ -404,7 +405,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="8dp"
-                    android:src="@drawable/ic_mine_rightarrow" />
+                    app:srcCompat="@drawable/ic_mine_rightarrow" />
 
                 <TextView
                     android:id="@+id/tvUserInfoEmail"

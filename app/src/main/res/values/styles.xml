@@ -16,7 +16,7 @@
     <style name="view_shadow_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:background">#aa000000</item>
+        <item name="background">#aa000000</item>
         <item name="android:visibility">gone</item>
     </style>
     <style name="listview_common_style">
@@ -27,7 +27,7 @@
         <item name="android:overScrollMode">never</item>
         <item name="android:scrollbars">none</item>
         <item name="android:dividerHeight">1px</item>
-        <item name="android:divider">@color/main_list_divider</item>
+        <item name="divider">@color/main_list_divider</item>
         <item name="android:listSelector">@android:color/transparent</item>
     </style>
 
@@ -53,7 +53,7 @@
     <style name="edt_common_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/item_bg_normal</item>
+        <item name="background">@color/item_bg_normal</item>
         <item name="android:textColor">@color/text_white_def</item>
         <item name="android:textColorHint">@color/edt_common_hint_color</item>
         <item name="android:gravity">center_vertical</item>
@@ -73,14 +73,14 @@
         <item name="android:windowBackground">@drawable/splash</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:fitsSystemWindows">true</item>
-        <item name="android:windowNoTitle">true</item>
+        <item name="windowNoTitle">true</item>
         <item name="android:clipToPadding">true</item>
     </style>
     //dialog的基本属性
     <style name="dialogstyle" parent="AppTheme">
         <item name="android:windowBackground">@android:color/transparent</item> 
         <item name="android:windowFrame">@null</item>
-        <item name="android:windowNoTitle">true</item>
+        <item name="windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowAnimationStyle">@style/bottom</item>
@@ -94,7 +94,7 @@
     <style name="line">
         <item name="android:layout_height">1dp</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:background">#000</item>
+        <item name="background">#000</item>
     </style>
     //这是关于旧的标题栏的属性
 
@@ -106,7 +106,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:layout_centerVertical">true</item>
-        <item name="android:background">@null</item>
+        <item name="background">@null</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_marginLeft">15dp</item>
         <item name="android:layout_marginRight">15dp</item>

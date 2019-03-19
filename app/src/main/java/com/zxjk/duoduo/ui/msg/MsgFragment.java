@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +13,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.ui.base.ContentActivity;
 import com.zxjk.duoduo.ui.msg.RongIMAdapter.ConversationListAdapterEx;
+import com.zxjk.duoduo.ui.msg.base.BaseFragment;
 import com.zxjk.duoduo.ui.msg.widget.CommonPopupWindow;
 import com.zxjk.duoduo.utils.DensityUtils;
 
@@ -34,6 +35,10 @@ import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 
+/**
+ * @author Administrator
+ * @// TODO: 2019\3\19 0019 聊天列表
+ */
 public class MsgFragment extends BaseFragment implements View.OnClickListener, CommonPopupWindow.ViewInterface {
 
     private static final String CONVERSATIONLIST_FRAGMENT_KEY = "conversationlist_fragment_key";
@@ -162,14 +167,14 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
         if (bundle != null) {
             mCurrentFragment = getCurrentFragment(bundle);
             String currentFragmentTag = bundle.getString(CONVERSATIONLIST_FRAGMENT_KEY, CONVERSATIONLIST_FRAGMENT_KEY);
-//            mConversationListFragment = (ConversationListFragment) getFragment(currentFragmentTag);
+            mConversationListFragment = (ConversationListFragment) getFragment(currentFragmentTag);
         }
 
         if (mConversationListFragment == null) {
             mConversationListFragment = createConversationList();
         }
 
-//        switchFragment(mConversationListFragment, R.id.conversationlist);
+        switchFragment(mConversationListFragment, R.id.conversationlist);
 
     }
 

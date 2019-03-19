@@ -14,8 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-
-import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.CountryEntity;
 import com.zxjk.duoduo.ui.adapter.CountryCodeAdapter;
@@ -28,8 +26,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import butterknife.BindView;
 
@@ -59,7 +57,7 @@ public class CountrySelectActivity extends BaseActivity implements View.OnClickL
     SearchView searchView;
     TextView tv_search_cancel;
 
-    public static void start(Activity activity, int requestCode) {
+    public static void start(AppCompatActivity activity, int requestCode) {
         Intent intent = new Intent(activity, CountrySelectActivity.class);
         activity.startActivityForResult(intent, requestCode);
     }

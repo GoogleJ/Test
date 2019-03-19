@@ -1,10 +1,8 @@
 package com.zxjk.duoduo.ui.msg;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
 
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
@@ -13,6 +11,7 @@ import com.zxjk.duoduo.weight.TitleBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -26,7 +25,7 @@ public class AddFriendActivity extends BaseActivity implements View.OnClickListe
     TitleBar titleBar;
 
 
-    public static void start(Activity activity) {
+    public static void start(AppCompatActivity activity) {
         Intent intent = new Intent(activity, AddFriendActivity.class);
         activity.startActivity(intent);
     }

@@ -6,11 +6,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.support.v7.widget.AppCompatEditText;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.widget.EditText;
-
 
 import com.zxjk.duoduo.R;
 
@@ -23,7 +22,7 @@ import static android.graphics.Paint.ANTI_ALIAS_FLAG;
  * 自定义支付密码输入框
  */
 
-public class PayPsdInputView extends EditText {
+public class PayPsdInputView extends AppCompatEditText {
 
     private Context mContext;
     /**

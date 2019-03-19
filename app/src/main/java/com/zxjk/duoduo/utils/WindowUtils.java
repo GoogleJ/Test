@@ -1,12 +1,13 @@
 package com.zxjk.duoduo.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * @author Administrator
@@ -15,7 +16,7 @@ public class WindowUtils {
     /**
      * 隐藏虚拟按键，并且全屏
      */
-    public static void hideBottomUIMenu(Activity activity) {
+    public static void hideBottomUIMenu(AppCompatActivity activity) {
         //隐藏虚拟按键，并且全屏
         View decorView = activity.getWindow().getDecorView();
         if (Build.VERSION.SDK_INT >= 19) {

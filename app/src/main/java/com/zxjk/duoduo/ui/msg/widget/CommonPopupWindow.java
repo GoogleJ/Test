@@ -1,6 +1,5 @@
 package com.zxjk.duoduo.ui.msg.widget;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
@@ -9,6 +8,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class CommonPopupWindow extends PopupWindow {
     final PopupController controller;
@@ -194,7 +195,7 @@ public class CommonPopupWindow extends PopupWindow {
          * @param level 0.0f-1.0f
          */
         void setBackGroundLevel(float level) {
-            mWindow = ((Activity) context).getWindow();
+            mWindow = ((AppCompatActivity) context).getWindow();
             WindowManager.LayoutParams params = mWindow.getAttributes();
             params.alpha = level;
             mWindow.setAttributes(params);
