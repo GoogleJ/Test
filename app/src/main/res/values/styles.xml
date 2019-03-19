@@ -98,9 +98,6 @@
     </style>
     //这是关于旧的标题栏的属性
 
-
-
-
     <style name="tv_head_common_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

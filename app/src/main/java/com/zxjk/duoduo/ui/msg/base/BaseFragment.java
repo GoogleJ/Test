@@ -1,11 +1,14 @@
 package com.zxjk.duoduo.ui.msg.base;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+
+import com.trello.rxlifecycle3.components.support.RxFragment;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 
-public class BaseFragment extends Fragment {
+public class BaseFragment extends RxFragment {
     private static final String CURRENT_FRAGMENT_KEY = "current_fragment_key";
     protected Fragment mCurrentFragment;
     protected <T extends Fragment> T getFragment(String tag) {

@@ -13,6 +13,8 @@ import android.util.AttributeSet;
 
 import com.zxjk.duoduo.R;
 
+import androidx.appcompat.widget.AppCompatEditText;
+
 import static android.graphics.Paint.ANTI_ALIAS_FLAG;
 
 /**
