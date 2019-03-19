@@ -1,4 +1,4 @@
-package com.zxjk.duoduo.ui.msg.widget;
+package com.zxjk.duoduo.ui.msgpage.widget;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;

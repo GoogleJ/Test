@@ -1,4 +1,4 @@
-package com.zxjk.duoduo.ui.msg.RongIMUtils;
+package com.zxjk.duoduo.ui.msgpage.RongIMUtils;
 
 import android.content.Context;
 

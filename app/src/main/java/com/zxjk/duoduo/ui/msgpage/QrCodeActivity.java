@@ -1,4 +1,4 @@
-package com.zxjk.duoduo.ui.msg;
+package com.zxjk.duoduo.ui.msgpage;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -13,7 +13,6 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.weight.TitleBar;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;

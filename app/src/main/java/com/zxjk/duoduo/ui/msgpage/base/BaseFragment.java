@@ -1,4 +1,4 @@
-package com.zxjk.duoduo.ui.msg.base;
+package com.zxjk.duoduo.ui.msgpage.base;
 
 import android.os.Bundle;
 

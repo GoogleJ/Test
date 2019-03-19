@@ -106,7 +106,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.msg.SearchActivity"
+            android:name=".ui.msgpage.SearchActivity"
 
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
@@ -258,7 +258,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.msg.AddFriendActivity"
+            android:name=".ui.msgpage.AddFriendActivity"
 
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
@@ -277,7 +277,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.msg.MyQrCodeActivity"
+            android:name=".ui.msgpage.MyQrCodeActivity"
 
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
@@ -296,7 +296,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.msg.QrCodeActivity"
+            android:name=".ui.msgpage.QrCodeActivity"
 
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
@@ -382,7 +382,7 @@
                 <!--android:resource="@xml/rc_file_path" />-->
         <!--</provider>-->
 
-
+        <activity android:name=".ui.minepage.BalanceLeftActivity" />
     </application>
 
 </manifest>

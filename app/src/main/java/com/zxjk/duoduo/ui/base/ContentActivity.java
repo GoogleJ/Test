@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.ui.msg.ConstactsNewFriendFragment;
+import com.zxjk.duoduo.ui.msgpage.ConstactsNewFriendFragment;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;

@@ -1,4 +1,4 @@
-package com.zxjk.duoduo.ui.walletpage;
+package com.zxjk.duoduo.ui.grouppage;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,11 +11,11 @@ import com.zxjk.duoduo.ui.base.BaseFragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class WalletFragment extends BaseFragment {
+public class GroupFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.fragment_wallet, container, false);
+        View inflate = inflater.inflate(R.layout.fragment_group, container, false);
         return inflate;
     }
 }

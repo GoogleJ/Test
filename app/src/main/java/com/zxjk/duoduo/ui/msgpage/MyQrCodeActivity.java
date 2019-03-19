@@ -1,4 +1,4 @@
-package com.zxjk.duoduo.ui.msg;
+package com.zxjk.duoduo.ui.msgpage;
 
 import android.content.Intent;
 import android.graphics.Bitmap;

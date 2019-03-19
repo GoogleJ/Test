@@ -1,4 +1,4 @@
-package com.zxjk.duoduo.ui.msg;
+package com.zxjk.duoduo.ui.msgpage;
 
 import android.content.Intent;
 import android.content.res.Resources;
@@ -12,9 +12,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.ContentActivity;
-import com.zxjk.duoduo.ui.msg.RongIMAdapter.ConversationListAdapterEx;
-import com.zxjk.duoduo.ui.msg.base.BaseFragment;
-import com.zxjk.duoduo.ui.msg.widget.CommonPopupWindow;
+import com.zxjk.duoduo.ui.msgpage.RongIMAdapter.ConversationListAdapterEx;
+import com.zxjk.duoduo.ui.msgpage.base.BaseFragment;
+import com.zxjk.duoduo.ui.msgpage.widget.CommonPopupWindow;
 import com.zxjk.duoduo.utils.DensityUtils;
 import java.util.HashMap;
 import java.util.List;

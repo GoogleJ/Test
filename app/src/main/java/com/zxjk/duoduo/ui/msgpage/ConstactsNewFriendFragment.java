@@ -1,4 +1,4 @@
-package com.zxjk.duoduo.ui.msg;
+package com.zxjk.duoduo.ui.msgpage;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,10 +10,10 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.UserBean;
 import com.zxjk.duoduo.ui.base.ContentActivity;
-import com.zxjk.duoduo.ui.msg.adapter.BaseContactAdapter;
-import com.zxjk.duoduo.ui.msg.base.BaseFragment;
-import com.zxjk.duoduo.ui.msg.utils.PinyinComparator;
-import com.zxjk.duoduo.ui.msg.widget.IndexView;
+import com.zxjk.duoduo.ui.msgpage.adapter.BaseContactAdapter;
+import com.zxjk.duoduo.ui.msgpage.base.BaseFragment;
+import com.zxjk.duoduo.ui.msgpage.utils.PinyinComparator;
+import com.zxjk.duoduo.ui.msgpage.widget.IndexView;
 import com.zxjk.duoduo.weight.TitleBar;
 import java.util.ArrayList;
 import java.util.Collections;

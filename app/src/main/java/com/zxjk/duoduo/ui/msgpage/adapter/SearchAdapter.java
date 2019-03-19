@@ -1,4 +1,4 @@
-package com.zxjk.duoduo.ui.msg.adapter;
+package com.zxjk.duoduo.ui.msgpage.adapter;
 
 import android.content.Context;
 import android.graphics.Color;

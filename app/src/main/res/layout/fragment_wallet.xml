@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#4B4D5B"
+        android:gravity="center"
+        android:text="嘟嘟钱包"
+        android:textColor="@color/white"
+        android:textSize="17sp" />
 
 </LinearLayout>

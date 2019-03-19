@@ -1,4 +1,4 @@
-package com.zxjk.duoduo.ui.msg.utils;
+package com.zxjk.duoduo.ui.msgpage.utils;
 
 
 

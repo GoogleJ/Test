@@ -8,8 +8,10 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.ui.grouppage.GroupFragment;
 import com.zxjk.duoduo.ui.minepage.MineFragment;
-import com.zxjk.duoduo.ui.msg.MsgFragment;
+import com.zxjk.duoduo.ui.msgpage.MsgFragment;
+import com.zxjk.duoduo.ui.walletpage.WalletFragment;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -31,8 +33,8 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
     private Fragment mFragment;
 
     MsgFragment msgFragment;
-    MineFragment qunFragment;
-    MineFragment testFragment;
+    GroupFragment groupFragment;
+    WalletFragment walletFragment;
     MineFragment mineFragment;
 
     @SuppressLint("WrongConstant")
@@ -84,15 +86,15 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
 
     private void initFragment() {
         msgFragment = new MsgFragment();
-        qunFragment = new MineFragment();
-        testFragment = new MineFragment();
+        groupFragment = new GroupFragment();
+        walletFragment = new WalletFragment();
         mineFragment = new MineFragment();
 
 
         fragmentTransaction =  getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.fragment_content, msgFragment)
                 .commit();
-        mFragment = testFragment;
+        mFragment = msgFragment;
     }
 
     @Override
@@ -102,10 +104,10 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                 switchFragment(msgFragment);
                 break;
             case 1:
-                switchFragment(qunFragment);
+                switchFragment(groupFragment);
                 break;
             case 2:
-                switchFragment(testFragment);
+                switchFragment(walletFragment);
                 break;
             case 3:
                 switchFragment(mineFragment);

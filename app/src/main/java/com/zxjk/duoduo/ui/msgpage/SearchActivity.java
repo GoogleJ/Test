@@ -1,4 +1,4 @@
-package com.zxjk.duoduo.ui.msg;
+package com.zxjk.duoduo.ui.msgpage;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,7 +17,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.SearchBean;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.ui.msg.adapter.SearchAdapter;
+import com.zxjk.duoduo.ui.msgpage.adapter.SearchAdapter;
 import com.zxjk.duoduo.weight.TitleBar;
 
 import java.util.ArrayList;

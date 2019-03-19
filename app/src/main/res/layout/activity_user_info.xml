@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="#4B4D5B">
+        android:background="@color/themecolor">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -30,8 +30,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,8 +49,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="头像"
-                    android:textColor="#4B4D5B"
-                    android:textSize="15sp" />
+                    android:textColor="@color/themecolor"
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/ivUserInfoRightArrow1"
@@ -59,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="10dp"
                     app:srcCompat="@drawable/ic_mine_rightarrow" />
 
                 <ImageView
@@ -67,7 +66,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@id/ivUserInfoRightArrow1"
+                    android:layout_toStartOf="@id/ivUserInfoRightArrow1"
                     android:background="#e0e0e0" />
 
             </RelativeLayout>
@@ -75,7 +74,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:background="#dddddd" />
 
             <RelativeLayout
@@ -92,8 +91,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="昵称"
-                    android:textColor="#4B4D5B"
-                    android:textSize="15sp" />
+                    android:textColor="@color/themecolor"
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/ivUserInfoRightArrow2"
@@ -101,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="10dp"
                     app:srcCompat="@drawable/ic_mine_rightarrow" />
 
                 <TextView
@@ -109,7 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@id/ivUserInfoRightArrow2"
+                    android:layout_toStartOf="@id/ivUserInfoRightArrow2"
                     android:text="王哈哈"
                     android:textColor="@color/textcolor3" />
 
@@ -118,7 +117,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:background="#dddddd" />
 
             <RelativeLayout
@@ -135,8 +134,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="性别"
-                    android:textColor="#4B4D5B"
-                    android:textSize="15sp" />
+                    android:textColor="@color/themecolor"
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/ivUserInfoRightArrow3"
@@ -144,7 +143,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="10dp"
                     app:srcCompat="@drawable/ic_mine_rightarrow" />
 
                 <TextView
@@ -152,7 +151,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@id/ivUserInfoRightArrow3"
+                    android:layout_toStartOf="@id/ivUserInfoRightArrow3"
                     android:text="男"
                     android:textColor="@color/textcolor3" />
 
@@ -176,8 +175,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="嘟嘟号"
-                    android:textColor="#4B4D5B"
-                    android:textSize="15sp" />
+                    android:textColor="@color/themecolor"
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/ivUserInfoRightArrow4"
@@ -185,7 +184,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="10dp"
                     app:srcCompat="@drawable/ic_mine_rightarrow"
                     android:visibility="invisible" />
 
@@ -194,7 +193,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@id/ivUserInfoRightArrow4"
+                    android:layout_toStartOf="@id/ivUserInfoRightArrow4"
                     android:text="496131"
                     android:textColor="@color/textcolor3" />
 
@@ -203,7 +202,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:background="#dddddd" />
 
             <RelativeLayout
@@ -220,8 +219,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="我的二维码"
-                    android:textColor="#4B4D5B"
-                    android:textSize="15sp" />
+                    android:textColor="@color/themecolor"
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/ivUserInfoRightArrow5"
@@ -229,7 +228,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="10dp"
                     app:srcCompat="@drawable/ic_mine_rightarrow"
                     android:visibility="invisible" />
 
@@ -237,7 +236,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@id/ivUserInfoRightArrow5"
+                    android:layout_toStartOf="@id/ivUserInfoRightArrow5"
                     app:srcCompat="@drawable/ic_mine_code2" />
 
             </RelativeLayout>
@@ -260,8 +259,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="姓名"
-                    android:textColor="#4B4D5B"
-                    android:textSize="15sp" />
+                    android:textColor="@color/themecolor"
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/ivUserInfoRightArrow6"
@@ -269,7 +268,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="10dp"
                     app:srcCompat="@drawable/ic_mine_rightarrow"
                     android:visibility="invisible" />
 
@@ -278,7 +277,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@id/ivUserInfoRightArrow6"
+                    android:layout_toStartOf="@id/ivUserInfoRightArrow6"
                     android:text="周小瑞"
                     android:textColor="@color/textcolor3" />
 
@@ -287,7 +286,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:background="#dddddd" />
 
             <RelativeLayout
@@ -303,8 +302,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="手机号码"
-                    android:textColor="#4B4D5B"
-                    android:textSize="15sp" />
+                    android:textColor="@color/themecolor"
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/ivUserInfoRightArrow7"
@@ -312,7 +311,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="10dp"
                     app:srcCompat="@drawable/ic_mine_rightarrow" />
 
                 <TextView
@@ -320,7 +319,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@id/ivUserInfoRightArrow7"
+                    android:layout_toStartOf="@id/ivUserInfoRightArrow7"
                     android:text="181****9660"
                     android:textColor="@color/textcolor3" />
 
@@ -329,7 +328,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:background="#dddddd" />
 
             <RelativeLayout
@@ -347,8 +346,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="个性签名"
-                    android:textColor="#4B4D5B"
-                    android:textSize="15sp" />
+                    android:textColor="@color/themecolor"
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/ivUserInfoRightArrow8"
@@ -356,7 +355,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="10dp"
                     app:srcCompat="@drawable/ic_mine_rightarrow" />
 
                 <TextView
@@ -377,7 +376,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:background="#dddddd" />
 
             <RelativeLayout
@@ -395,8 +394,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="邮箱"
-                    android:textColor="#4B4D5B"
-                    android:textSize="15sp" />
+                    android:textColor="@color/themecolor"
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/ivUserInfoRightArrow9"
@@ -404,7 +403,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="10dp"
                     app:srcCompat="@drawable/ic_mine_rightarrow" />
 
                 <TextView
@@ -441,14 +440,14 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="钱包地址"
-                    android:textColor="#4B4D5B"
-                    android:textSize="15sp" />
+                    android:textColor="@color/themecolor"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tvUserInfoWallet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@id/tvUserInfoWalletHead"
                     android:ellipsize="end"

@@ -125,6 +125,7 @@
         android:background="#EDEDEE" />
 
     <LinearLayout
+        android:id="@+id/llMineBalanceLeft"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"

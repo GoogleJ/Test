@@ -1,4 +1,4 @@
-package com.zxjk.duoduo.ui.msg.RongIMAdapter;
+package com.zxjk.duoduo.ui.msgpage.RongIMAdapter;
 
 import android.content.Context;
 import android.view.View;
