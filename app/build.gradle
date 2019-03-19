@@ -40,7 +40,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
-//    implementation 'com.squareup.retrofit2:converter-scalars:2.4.0'
+    //    implementation 'com.squareup.retrofit2:converter-scalars:2.4.0'
     //OKHTTP3
     implementation 'com.squareup.okhttp3:okhttp:3.14.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.14.0'
@@ -63,12 +63,20 @@ dependencies {
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     //添加融云的依赖包
-    implementation project(':IMKit')
-    implementation project(':IMLib')
     //这个是对方法数进行的依赖
     implementation 'androidx.multidex:multidex:2.0.0'
     //这个是关于Permission权限申请的依赖
     implementation 'org.liang.library:jpermission:1.0.2'
     //v4包
     implementation 'androidx.legacy:legacy-support-v4:1.0.0-beta01'
+    //    implementation project(':IMKit')
+    //    implementation project(':IMLib')
+    //图片缓存
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    //文件压缩
+    implementation 'top.zibin:Luban:1.1.3'
+    //安全键盘
+    implementation 'com.ziyeyouhu:customizekeyboard:1.0.0'
+    //安全密码
+    implementation 'coder.siy:password-textView:1.0.0'
 }

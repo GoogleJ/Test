@@ -3,7 +3,6 @@ package com.zxjk.duoduo.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -18,7 +17,6 @@ import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.CountryCodeConstantsUtils;
 
 import androidx.annotation.Nullable;
@@ -141,7 +139,7 @@ public class ForgetRegisterActivity extends BaseActivity implements View.OnClick
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.normalTrans())
                 .compose(RxSchedulers.ioObserver())
-                .compose(RxSchedulers.showLoading(CommonUtils.initDialog(this)))
+//                .compose(RxSchedulers.showLoading(CommonUtils.initDialog(this)))
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String s) throws Exception {

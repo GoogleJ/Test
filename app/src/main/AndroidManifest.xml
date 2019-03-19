@@ -109,6 +109,25 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ui.EditPersonalInformationFragment"
+
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.zxjk.duoduo"
+                    android:pathPrefix="/push_message"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".ui.HomeActivity"
 
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -185,6 +204,25 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ui.SetUpPaymentPwdFragment"
+
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.zxjk.duoduo"
+                    android:pathPrefix="/push_message"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".ui.RegisterActivity"
 
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -203,44 +241,44 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.minepage.SettingActivity"
+        <!--<activity-->
+            <!--android:name=".ui.minepage.SettingActivity"-->
 
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+            <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
+            <!--android:launchMode="singleTask"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:windowSoftInputMode="adjustUnspecified|stateHidden">-->
 
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.VIEW" />-->
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
 
-                <data
-                    android:host="com.zxjk.duoduo"
-                    android:pathPrefix="/push_message"
-                    android:scheme="rong" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".ui.minepage.UserInfoActivity"
+                <!--<data-->
+                    <!--android:host="com.zxjk.duoduo"-->
+                    <!--android:pathPrefix="/push_message"-->
+                    <!--android:scheme="rong" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
+        <!--<activity-->
+            <!--android:name=".ui.minepage.UserInfoActivity"-->
 
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+            <!--android:configChanges="keyboardHidden|orientation|screenSize"-->
+            <!--android:launchMode="singleTask"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:windowSoftInputMode="adjustUnspecified|stateHidden">-->
 
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.VIEW" />-->
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
 
-                <data
-                    android:host="com.zxjk.duoduo"
-                    android:pathPrefix="/push_message"
-                    android:scheme="rong" />
-            </intent-filter>
-        </activity>
+                <!--<data-->
+                    <!--android:host="com.zxjk.duoduo"-->
+                    <!--android:pathPrefix="/push_message"-->
+                    <!--android:scheme="rong" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
         <activity
             android:name=".ui.base.ContentActivity"
 
@@ -262,25 +300,25 @@
         </activity>
 
 
-        <receiver
-            android:name=".utils.SealNotificationReceiverUtils"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />
-                <action android:name="io.rong.push.intent.MESSAGE_CLICKED" />
-                <action android:name="io.rong.push.intent.THIRD_PARTY_PUSH_STATE" />
-            </intent-filter>
-        </receiver>
+        <!--<receiver-->
+            <!--android:name=".utils.SealNotificationReceiverUtils"-->
+            <!--android:exported="true">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />-->
+                <!--<action android:name="io.rong.push.intent.MESSAGE_CLICKED" />-->
+                <!--<action android:name="io.rong.push.intent.THIRD_PARTY_PUSH_STATE" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
 
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.zxjk.duoduo.FileProvider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/rc_file_path" />
-        </provider>
+        <!--<provider-->
+            <!--android:name="androidx.core.content.FileProvider"-->
+            <!--android:authorities="com.zxjk.duoduo.FileProvider"-->
+            <!--android:exported="false"-->
+            <!--android:grantUriPermissions="true">-->
+            <!--<meta-data-->
+                <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
+                <!--android:resource="@xml/rc_file_path" />-->
+        <!--</provider>-->
 
 
     </application>

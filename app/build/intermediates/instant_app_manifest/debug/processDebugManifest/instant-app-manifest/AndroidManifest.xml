@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.zxjk.duoduo"
+    android:targetSandboxVersion="2"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="20"
+        android:targetSdkVersion="28" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
+    <application
+        android:name="com.zxjk.duoduo.Application"
+        android:allowBackup="true"
+        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+        android:debuggable="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:testOnly="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true" >
+        <activity
+            android:name="com.zxjk.duoduo.ui.WelcomeActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleInstance"
+            android:resizeableActivity="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Theme_Splash"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.zxjk.duoduo.ui.minepage.SettingActivity" />
+        <activity android:name="com.zxjk.duoduo.ui.minepage.UserInfoActivity" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.zxjk.duoduo.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true" >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
+
+        <activity
+            android:name="com.zxjk.duoduo.ui.minepage.ChangeSignActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.zxjk.duoduo"
+                    android:pathPrefix="/push_message"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.zxjk.duoduo.ui.base.BaseActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.zxjk.duoduo"
+                    android:pathPrefix="/push_message"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.zxjk.duoduo.ui.LoginActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.zxjk.duoduo"
+                    android:pathPrefix="/push_message"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.zxjk.duoduo.ui.EditPersonalInformationFragment"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.zxjk.duoduo"
+                    android:pathPrefix="/push_message"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.zxjk.duoduo.ui.HomeActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.zxjk.duoduo"
+                    android:pathPrefix="/push_message"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.zxjk.duoduo.ui.ChangeLanguageActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.zxjk.duoduo"
+                    android:pathPrefix="/push_message"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.zxjk.duoduo.ui.CountrySelectActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.zxjk.duoduo"
+                    android:pathPrefix="/push_message"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.zxjk.duoduo.ui.ForgetRegisterActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.zxjk.duoduo"
+                    android:pathPrefix="/push_message"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.zxjk.duoduo.ui.SetUpPaymentPwdFragment"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.zxjk.duoduo"
+                    android:pathPrefix="/push_message"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.zxjk.duoduo.ui.RegisterActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.zxjk.duoduo"
+                    android:pathPrefix="/push_message"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+        <!-- <activity -->
+        <!-- android:name=".ui.minepage.SettingActivity" -->
+
+
+        <!-- android:configChanges="keyboardHidden|orientation|screenSize" -->
+        <!-- android:launchMode="singleTask" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:windowSoftInputMode="adjustUnspecified|stateHidden"> -->
+
+
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.VIEW" /> -->
+
+
+        <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+
+
+        <!-- <data -->
+        <!-- android:host="com.zxjk.duoduo" -->
+        <!-- android:pathPrefix="/push_message" -->
+        <!-- android:scheme="rong" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
+        <!-- <activity -->
+        <!-- android:name=".ui.minepage.UserInfoActivity" -->
+
+
+        <!-- android:configChanges="keyboardHidden|orientation|screenSize" -->
+        <!-- android:launchMode="singleTask" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:windowSoftInputMode="adjustUnspecified|stateHidden"> -->
+
+
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.VIEW" /> -->
+
+
+        <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+
+
+        <!-- <data -->
+        <!-- android:host="com.zxjk.duoduo" -->
+        <!-- android:pathPrefix="/push_message" -->
+        <!-- android:scheme="rong" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
+        <activity
+            android:name="com.zxjk.duoduo.ui.base.ContentActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.zxjk.duoduo"
+                    android:pathPrefix="/push_message"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+
+        <!-- <receiver -->
+        <!-- android:name=".utils.SealNotificationReceiverUtils" -->
+        <!-- android:exported="true"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="io.rong.push.intent.MESSAGE_ARRIVED" /> -->
+        <!-- <action android:name="io.rong.push.intent.MESSAGE_CLICKED" /> -->
+        <!-- <action android:name="io.rong.push.intent.THIRD_PARTY_PUSH_STATE" /> -->
+        <!-- </intent-filter> -->
+        <!-- </receiver> -->
+
+
+        <!-- <provider -->
+        <!-- android:name="androidx.core.content.FileProvider" -->
+        <!-- android:authorities="com.zxjk.duoduo.FileProvider" -->
+        <!-- android:exported="false" -->
+        <!-- android:grantUriPermissions="true"> -->
+        <!-- <meta-data -->
+        <!-- android:name="android.support.FILE_PROVIDER_PATHS" -->
+        <!-- android:resource="@xml/rc_file_path" /> -->
+        <!-- </provider> -->
+
+        <activity
+            android:name="com.liang.permission.PermissionActivity"
+            android:configChanges="screenSize|keyboardHidden|orientation"
+            android:theme="@style/Theme_Translucent" />
+        <activity
+            android:name="com.blankj.utilcode.util.PermissionUtils$PermissionActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:multiprocess="true"
+            android:theme="@style/ActivityTranslucent"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden" />
+
+        <provider
+            android:name="com.blankj.utilcode.util.Utils$FileProvider4UtilCode"
+            android:authorities="com.zxjk.duoduo.utilcode.provider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            android:multiprocess="true" >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/util_code_provider_paths" />
+        </provider>
+        <provider
+            android:name="com.android.tools.ir.server.InstantRunContentProvider"
+            android:authorities="com.zxjk.duoduo.com.android.tools.ir.server.InstantRunContentProvider"
+            android:multiprocess="true" />
+    </application>
+
+</manifest>

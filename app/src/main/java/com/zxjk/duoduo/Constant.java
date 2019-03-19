@@ -13,11 +13,14 @@ public class Constant {
 
     public static final int CODE_UNLOGIN = 601;
 
-    public static String userId = "4";
+//    public static String userId = "4";
 
-    public static String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0IiwiaXNzIjoiZHVvZHVvIiwianRpIjoiMzIxNjU0MTExIn0.JdddTri7172qkvHKXDfmRDPR6HatCTpHxiAkdiI7GQY";
+//    public static String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0IiwiaXNzIjoiZHVvZHVvIiwianRpIjoiMzIxNjU0MTExIn0.JdddTri7172qkvHKXDfmRDPR6HatCTpHxiAkdiI7GQY";
 
 //    public static String phoneUuid ="321654111";
+
+    public static String userId="20";
+    public static String token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMCIsImlzcyI6ImR1b2R1byIsImp0aSI6IjA0OjRmOjRjOjljOjgwOjFkIn0.MAxAE2cluTL2y7ZKi2_vWYCW6YKfWmUle_-OIOlB6qM";
     public static String phoneUuid = DeviceUtils.getMacAddress()
             .equals("") ? DeviceUtils.getAndroidID() : DeviceUtils.getMacAddress();
 

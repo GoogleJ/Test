@@ -10,7 +10,7 @@ import com.liang.permission.annotation.Permission;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.RxUtils;
-import com.zxjk.duoduo.utils.SealAppContext;
+
 import com.zxjk.duoduo.utils.UserPreferencesUtils;
 import com.zxjk.duoduo.utils.WindowUtils;
 
@@ -21,7 +21,6 @@ import androidx.annotation.Nullable;
 import io.reactivex.Flowable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-import io.rong.imkit.RongIM;
 
 /**
  * 这里是欢迎首页
@@ -75,7 +74,7 @@ public class WelcomeActivity extends BaseActivity {
     }
 
     private void goLoginByIM(String rongToken) {
-        RongIM.connect(rongToken, SealAppContext.getInstance().getConnectCallback(this));
+//        RongIM.connect(rongToken, SealAppContext.getInstance().getConnectCallback(this));
     }
 
 

@@ -6,8 +6,8 @@ import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
+//import io.rong.imkit.RongIM;
+//import io.rong.imlib.RongIMClient;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +18,7 @@ import com.blankj.utilcode.util.EncryptUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Application;
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.CountryEntity;
 import com.zxjk.duoduo.network.Api;
@@ -104,7 +105,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     ToastUtils.showShort(getString(R.string.edit_mobile_tip));
                     return;
                 }
-                if (password.isEmpty() || 6 >= password.length() || password.length() >= 14) {
+                if (password.isEmpty() || 5 >= password.length() || password.length() >= 14) {
                     ToastUtils.showShort(getString(R.string.edit_password_reg));
                     return;
                 }
@@ -141,11 +142,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         dialog = new AccountFreezeDialog(LoginActivity.this);
                         dialog.show();
                     } else if (idFirstLogin.equals(loginResponse.getIsFirstLogin())){
-                        Intent intent=new Intent(LoginActivity.this, ContentActivity.class);
-                        intent.putExtra("tag",0);
-                        startActivity(intent);
+                        startActivity(new Intent(LoginActivity.this,EditPersonalInformationFragment.class));
                     }else{
-                       connect(loginResponse.getRongToken());
+                        Constant.token=loginResponse.getToken();
+                        Constant.userId=loginResponse.getId();
+                        Constant.currentUser=loginResponse;
+//                       connect(loginResponse.getRongToken());
+                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                     }
 
                 }, throwable -> {
@@ -156,45 +159,45 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
 
-    public void connect(String token) {
-
-        if (getApplicationInfo().packageName.equals(Application.getCurProcessName(getApplicationContext()))) {
-
-            RongIM.connect(token, new RongIMClient.ConnectCallback() {
-
-                /**
-                 * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
-                 *                  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
-                 */
-                @Override
-                public void onTokenIncorrect() {
-
-                }
-
-                /**
-                 * 连接融云成功
-                 * @param userid 当前 token 对应的用户 id
-                 */
-                @Override
-                public void onSuccess(String userid) {
-                    Log.d("GJSONSSSSS", "--onSuccess" + userid);
-                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                    finish();
-                }
-
-                /**
-                 * 连接融云失败
-                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
-                 */
-                @Override
-                public void onError(RongIMClient.ErrorCode errorCode) {
-
-                    Log.i("GJSONSSSS", "" + errorCode.getMessage());
-
-                }
-            });
-        }
-    }
+//    public void connect(String token) {
+//
+//        if (getApplicationInfo().packageName.equals(Application.getCurProcessName(getApplicationContext()))) {
+//
+//            RongIM.connect(token, new RongIMClient.ConnectCallback() {
+//
+//                /**
+//                 * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
+//                 *                  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
+//                 */
+//                @Override
+//                public void onTokenIncorrect() {
+//
+//                }
+//
+//                /**
+//                 * 连接融云成功
+//                 * @param userid 当前 token 对应的用户 id
+//                 */
+//                @Override
+//                public void onSuccess(String userid) {
+//                    Log.d("GJSONSSSSS", "--onSuccess" + userid);
+//                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+//                    finish();
+//                }
+//
+//                /**
+//                 * 连接融云失败
+//                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
+//                 */
+//                @Override
+//                public void onError(RongIMClient.ErrorCode errorCode) {
+//
+//                    Log.i("GJSONSSSS", "" + errorCode.getMessage());
+//
+//                }
+//            });
+//        }
+//    }
 
 
 }

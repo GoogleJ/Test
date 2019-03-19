@@ -32,10 +32,10 @@ public class ContentActivity extends BaseActivity {
         FragmentManager manager=getSupportFragmentManager();
         FragmentTransaction transaction=manager.beginTransaction();
         switch (i) {
-            case 0:
-                transaction.add(R.id.m_content, EditPersonalInformationFragment.newInstance());
-                transaction.commit();
-                break;
+//            case 0:
+//                transaction.add(R.id.m_content, EditPersonalInformationFragment.newInstance());
+//                transaction.commit();
+//                break;
             default:
                 break;
         }

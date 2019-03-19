@@ -2,6 +2,8 @@ package com.zxjk.duoduo.network;
 
 import com.zxjk.duoduo.network.response.BaseResponse;
 import com.zxjk.duoduo.network.response.LoginResponse;
+import com.zxjk.duoduo.network.response.UpdateCustomerInfoResponse;
+
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -71,6 +73,23 @@ public interface Api {
     //更新用户信息
     @POST("duoduo/customer/updateCustomerInfo")
     @FormUrlEncoded
-    Observable<BaseResponse<LoginResponse>> updateUserInfo(@Field("customerInfo") String customerInfo);
+    Observable<BaseResponse<UpdateCustomerInfoResponse>> updateUserInfo(@Field("customerInfo") String customerInfo);
+
+    /**
+     * 修改支付密码
+     * @param oldPwd
+     * @param newPwdOne
+     * @param newPwdTwo
+     * @return
+     */
+    @POST("duoduo/customer/updatePayPwd")
+    @FormUrlEncoded
+    Observable<BaseResponse<LoginResponse>> updatePwd(
+            @Field("oldPayPwd")String oldPwd,
+            @Field("newPayPwd")String newPwdOne,
+            @Field("newPayPwdTwo")String newPwdTwo
+    );
+
+
 
 }

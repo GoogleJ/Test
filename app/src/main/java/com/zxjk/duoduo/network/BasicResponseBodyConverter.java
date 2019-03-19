@@ -24,7 +24,7 @@ public class BasicResponseBodyConverter<T> implements Converter<ResponseBody, T>
             String data = jsonObject.optString("data");
             String msg = jsonObject.optString("msg");
             int code = jsonObject.optInt("code");
-            if (TextUtils.isEmpty(data)) {
+            if (TextUtils.isEmpty(data)||data.equals("")) {
                 throw new RxException.EmptyDataExceptioin(msg, code);
             }
         } catch (Exception e) {
