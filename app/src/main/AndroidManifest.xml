@@ -38,8 +38,10 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
 
+
         <activity
             android:name="com.zxjk.duoduo.ui.WelcomeActivity"
+
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleInstance"
             android:resizeableActivity="true"
@@ -352,13 +354,13 @@
         <!--</receiver>-->
 
         <!--<provider-->
-        <!--android:name="androidx.core.content.FileProvider"-->
-        <!--android:authorities="com.zxjk.duoduo.FileProvider"-->
-        <!--android:exported="false"-->
-        <!--android:grantUriPermissions="true">-->
-        <!--<meta-data-->
-        <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
-        <!--android:resource="@xml/rc_file_path" />-->
+            <!--android:name="androidx.core.content.FileProvider"-->
+            <!--android:authorities="com.zxjk.duoduo.FileProvider"-->
+            <!--android:exported="false"-->
+            <!--android:grantUriPermissions="true">-->
+            <!--<meta-data-->
+                <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
+                <!--android:resource="@xml/rc_file_path" />-->
         <!--</provider>-->
 
 
