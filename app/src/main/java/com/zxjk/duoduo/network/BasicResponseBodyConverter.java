@@ -3,6 +3,8 @@ package com.zxjk.duoduo.network;
 import android.text.TextUtils;
 import com.google.gson.TypeAdapter;
 import com.zxjk.duoduo.network.rx.RxException;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
 import okhttp3.ResponseBody;
@@ -23,11 +25,10 @@ public class BasicResponseBodyConverter<T> implements Converter<ResponseBody, T>
             JSONObject jsonObject = new JSONObject(json);
             String data = jsonObject.optString("data");
             String msg = jsonObject.optString("msg");
-            int code = jsonObject.optInt("code");
             if (TextUtils.isEmpty(data)||data.equals("")) {
-                throw new RxException.EmptyDataExceptioin(msg, code);
+                throw new IOException(msg);
             }
-        } catch (Exception e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         return adapter.fromJson(json);
