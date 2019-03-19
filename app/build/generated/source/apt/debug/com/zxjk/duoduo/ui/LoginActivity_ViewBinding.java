@@ -17,17 +17,17 @@ import java.lang.Override;
 public class LoginActivity_ViewBinding implements Unbinder {
   private LoginActivity target;
 
-  private View view7f09005f;
+  private View view7f09006f;
 
-  private View view7f0900db;
+  private View view7f09011d;
 
-  private View view7f090164;
+  private View view7f0902d1;
 
-  private View view7f090166;
+  private View view7f0902d3;
 
-  private View view7f09006a;
+  private View view7f09007d;
 
-  private View view7f0900dc;
+  private View view7f09011e;
 
   @UiThread
   public LoginActivity_ViewBinding(LoginActivity target) {
@@ -41,7 +41,7 @@ public class LoginActivity_ViewBinding implements Unbinder {
     View view;
     view = Utils.findRequiredView(source, R.id.btn_login, "field 'btn_login' and method 'onClick'");
     target.btn_login = Utils.castView(view, R.id.btn_login, "field 'btn_login'", Button.class);
-    view7f09005f = view;
+    view7f09006f = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -50,7 +50,7 @@ public class LoginActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.login_country, "field 'login_country' and method 'onClick'");
     target.login_country = Utils.castView(view, R.id.login_country, "field 'login_country'", TextView.class);
-    view7f0900db = view;
+    view7f09011d = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -59,7 +59,7 @@ public class LoginActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.text_forget_password, "field 'forget_password' and method 'onClick'");
     target.forget_password = Utils.castView(view, R.id.text_forget_password, "field 'forget_password'", TextView.class);
-    view7f090164 = view;
+    view7f0902d1 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -68,7 +68,7 @@ public class LoginActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.text_go_register, "field 'go_register' and method 'onClick'");
     target.go_register = Utils.castView(view, R.id.text_go_register, "field 'go_register'", TextView.class);
-    view7f090166 = view;
+    view7f0902d3 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -78,7 +78,7 @@ public class LoginActivity_ViewBinding implements Unbinder {
     target.edit_mobile = Utils.findRequiredViewAsType(source, R.id.edit_mobile, "field 'edit_mobile'", EditText.class);
     target.edit_password = Utils.findRequiredViewAsType(source, R.id.edit_password, "field 'edit_password'", EditText.class);
     view = Utils.findRequiredView(source, R.id.change_language, "method 'onClick'");
-    view7f09006a = view;
+    view7f09007d = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -86,7 +86,7 @@ public class LoginActivity_ViewBinding implements Unbinder {
       }
     });
     view = Utils.findRequiredView(source, R.id.login_country_bottom, "method 'onClick'");
-    view7f0900dc = view;
+    view7f09011e = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -109,17 +109,17 @@ public class LoginActivity_ViewBinding implements Unbinder {
     target.edit_mobile = null;
     target.edit_password = null;
 
-    view7f09005f.setOnClickListener(null);
-    view7f09005f = null;
-    view7f0900db.setOnClickListener(null);
-    view7f0900db = null;
-    view7f090164.setOnClickListener(null);
-    view7f090164 = null;
-    view7f090166.setOnClickListener(null);
-    view7f090166 = null;
-    view7f09006a.setOnClickListener(null);
-    view7f09006a = null;
-    view7f0900dc.setOnClickListener(null);
-    view7f0900dc = null;
+    view7f09006f.setOnClickListener(null);
+    view7f09006f = null;
+    view7f09011d.setOnClickListener(null);
+    view7f09011d = null;
+    view7f0902d1.setOnClickListener(null);
+    view7f0902d1 = null;
+    view7f0902d3.setOnClickListener(null);
+    view7f0902d3 = null;
+    view7f09007d.setOnClickListener(null);
+    view7f09007d = null;
+    view7f09011e.setOnClickListener(null);
+    view7f09011e = null;
   }
 }

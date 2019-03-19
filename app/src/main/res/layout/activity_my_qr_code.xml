@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical">
+
+
+    <com.zxjk.duoduo.weight.TitleBar
+        android:id="@+id/m_qr_code_title_bar_me"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:titleBarLeftImage="@drawable/ico_back"
+        app:titleBarTextColor="@color/white"
+        app:titleBarTitle="@string/m_qr_code_title_bar_me" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="88dp"
+        android:layout_marginEnd="27dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="65dp"
+        android:paddingBottom="25dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/icon_qr_code_back">
+
+            <ImageView
+                android:id="@+id/m_my_qr_code_header_icon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="21dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/icon_header"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="RtlCompat" />
+
+            <TextView
+                android:id="@+id/m_my_qr_code_user_name_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="9dp"
+                android:text="爱吃水果"
+                android:textColor="@color/black"
+                android:textSize="19dp"
+                app:layout_constraintStart_toEndOf="@+id/m_my_qr_code_header_icon"
+                app:layout_constraintTop_toTopOf="@+id/m_my_qr_code_header_icon"
+                tools:ignore="RtlCompat" />
+
+            <TextView
+                android:id="@+id/m_my_qr_code_signature_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="专业兑换港币，加好友线下联系"
+                app:layout_constraintBottom_toBottomOf="@+id/m_my_qr_code_header_icon"
+                app:layout_constraintStart_toStartOf="@+id/m_my_qr_code_user_name_text"
+                app:layout_constraintTop_toBottomOf="@+id/m_my_qr_code_user_name_text" />
+
+            <ImageView
+                android:id="@+id/m_my_qr_code_qr_code_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="100dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="40dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_header"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/m_my_qr_code_signature_label" />
+
+            <TextView
+                android:id="@+id/m_my_qr_code_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/m_my_qr_code_label"
+                android:text="@string/m_my_qr_code_label"
+                app:layout_constraintEnd_toEndOf="@+id/m_my_qr_code_qr_code_icon"
+                app:layout_constraintStart_toStartOf="@+id/m_my_qr_code_qr_code_icon"
+                app:layout_constraintTop_toBottomOf="@+id/m_my_qr_code_qr_code_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>

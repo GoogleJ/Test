@@ -12,85 +12,85 @@ public final class R {
     public static final class attr {
         private attr() {}
 
-        public static final int SpinKitViewStyle = 0x7f040000;
-        public static final int SpinKit_Color = 0x7f040001;
-        public static final int SpinKit_Style = 0x7f040002;
+        public static final int SpinKitViewStyle = 0x7f040007;
+        public static final int SpinKit_Color = 0x7f040008;
+        public static final int SpinKit_Style = 0x7f040009;
     }
     public static final class id {
         private id() {}
 
-        public static final int ChasingDots = 0x7f090002;
-        public static final int Circle = 0x7f090003;
-        public static final int CubeGrid = 0x7f090004;
-        public static final int DoubleBounce = 0x7f090005;
-        public static final int FadingCircle = 0x7f090007;
-        public static final int FoldingCube = 0x7f090008;
-        public static final int MultiplePulse = 0x7f09000a;
-        public static final int MultiplePulseRing = 0x7f09000b;
-        public static final int Pulse = 0x7f09000c;
-        public static final int PulseRing = 0x7f09000d;
-        public static final int RotatingCircle = 0x7f09000e;
-        public static final int RotatingPlane = 0x7f09000f;
-        public static final int ThreeBounce = 0x7f090012;
-        public static final int WanderingCubes = 0x7f090013;
-        public static final int Wave = 0x7f090014;
+        public static final int ChasingDots = 0x7f090008;
+        public static final int Circle = 0x7f090009;
+        public static final int CubeGrid = 0x7f09000a;
+        public static final int DoubleBounce = 0x7f09000b;
+        public static final int FadingCircle = 0x7f09000e;
+        public static final int FoldingCube = 0x7f09000f;
+        public static final int MultiplePulse = 0x7f090011;
+        public static final int MultiplePulseRing = 0x7f090012;
+        public static final int Pulse = 0x7f090013;
+        public static final int PulseRing = 0x7f090014;
+        public static final int RotatingCircle = 0x7f090015;
+        public static final int RotatingPlane = 0x7f090016;
+        public static final int ThreeBounce = 0x7f09001b;
+        public static final int WanderingCubes = 0x7f09001c;
+        public static final int Wave = 0x7f09001d;
     }
     public static final class style {
         private style() {}
 
-        public static final int SpinKitView = 0x7f0f0119;
-        public static final int SpinKitView_ChasingDots = 0x7f0f011a;
-        public static final int SpinKitView_Circle = 0x7f0f011b;
-        public static final int SpinKitView_CubeGrid = 0x7f0f011c;
-        public static final int SpinKitView_DoubleBounce = 0x7f0f011d;
-        public static final int SpinKitView_FadingCircle = 0x7f0f011e;
-        public static final int SpinKitView_FoldingCube = 0x7f0f011f;
-        public static final int SpinKitView_Large = 0x7f0f0120;
-        public static final int SpinKitView_Large_ChasingDots = 0x7f0f0121;
-        public static final int SpinKitView_Large_Circle = 0x7f0f0122;
-        public static final int SpinKitView_Large_CubeGrid = 0x7f0f0123;
-        public static final int SpinKitView_Large_DoubleBounce = 0x7f0f0124;
-        public static final int SpinKitView_Large_FadingCircle = 0x7f0f0125;
-        public static final int SpinKitView_Large_FoldingCube = 0x7f0f0126;
-        public static final int SpinKitView_Large_MultiplePulse = 0x7f0f0127;
-        public static final int SpinKitView_Large_MultiplePulseRing = 0x7f0f0128;
-        public static final int SpinKitView_Large_Pulse = 0x7f0f0129;
-        public static final int SpinKitView_Large_PulseRing = 0x7f0f012a;
-        public static final int SpinKitView_Large_RotatingCircle = 0x7f0f012b;
-        public static final int SpinKitView_Large_RotatingPlane = 0x7f0f012c;
-        public static final int SpinKitView_Large_ThreeBounce = 0x7f0f012d;
-        public static final int SpinKitView_Large_WanderingCubes = 0x7f0f012e;
-        public static final int SpinKitView_Large_Wave = 0x7f0f012f;
-        public static final int SpinKitView_MultiplePulse = 0x7f0f0130;
-        public static final int SpinKitView_MultiplePulseRing = 0x7f0f0131;
-        public static final int SpinKitView_Pulse = 0x7f0f0132;
-        public static final int SpinKitView_PulseRing = 0x7f0f0133;
-        public static final int SpinKitView_RotatingCircle = 0x7f0f0134;
-        public static final int SpinKitView_RotatingPlane = 0x7f0f0135;
-        public static final int SpinKitView_Small = 0x7f0f0136;
-        public static final int SpinKitView_Small_ChasingDots = 0x7f0f0137;
-        public static final int SpinKitView_Small_Circle = 0x7f0f0138;
-        public static final int SpinKitView_Small_CubeGrid = 0x7f0f0139;
-        public static final int SpinKitView_Small_DoubleBounce = 0x7f0f013a;
-        public static final int SpinKitView_Small_FadingCircle = 0x7f0f013b;
-        public static final int SpinKitView_Small_FoldingCube = 0x7f0f013c;
-        public static final int SpinKitView_Small_MultiplePulse = 0x7f0f013d;
-        public static final int SpinKitView_Small_MultiplePulseRing = 0x7f0f013e;
-        public static final int SpinKitView_Small_Pulse = 0x7f0f013f;
-        public static final int SpinKitView_Small_PulseRing = 0x7f0f0140;
-        public static final int SpinKitView_Small_RotatingCircle = 0x7f0f0141;
-        public static final int SpinKitView_Small_RotatingPlane = 0x7f0f0142;
-        public static final int SpinKitView_Small_ThreeBounce = 0x7f0f0143;
-        public static final int SpinKitView_Small_WanderingCubes = 0x7f0f0144;
-        public static final int SpinKitView_Small_Wave = 0x7f0f0145;
-        public static final int SpinKitView_ThreeBounce = 0x7f0f0146;
-        public static final int SpinKitView_WanderingCubes = 0x7f0f0147;
-        public static final int SpinKitView_Wave = 0x7f0f0148;
+        public static final int SpinKitView = 0x7f10013e;
+        public static final int SpinKitView_ChasingDots = 0x7f10013f;
+        public static final int SpinKitView_Circle = 0x7f100140;
+        public static final int SpinKitView_CubeGrid = 0x7f100141;
+        public static final int SpinKitView_DoubleBounce = 0x7f100142;
+        public static final int SpinKitView_FadingCircle = 0x7f100143;
+        public static final int SpinKitView_FoldingCube = 0x7f100144;
+        public static final int SpinKitView_Large = 0x7f100145;
+        public static final int SpinKitView_Large_ChasingDots = 0x7f100146;
+        public static final int SpinKitView_Large_Circle = 0x7f100147;
+        public static final int SpinKitView_Large_CubeGrid = 0x7f100148;
+        public static final int SpinKitView_Large_DoubleBounce = 0x7f100149;
+        public static final int SpinKitView_Large_FadingCircle = 0x7f10014a;
+        public static final int SpinKitView_Large_FoldingCube = 0x7f10014b;
+        public static final int SpinKitView_Large_MultiplePulse = 0x7f10014c;
+        public static final int SpinKitView_Large_MultiplePulseRing = 0x7f10014d;
+        public static final int SpinKitView_Large_Pulse = 0x7f10014e;
+        public static final int SpinKitView_Large_PulseRing = 0x7f10014f;
+        public static final int SpinKitView_Large_RotatingCircle = 0x7f100150;
+        public static final int SpinKitView_Large_RotatingPlane = 0x7f100151;
+        public static final int SpinKitView_Large_ThreeBounce = 0x7f100152;
+        public static final int SpinKitView_Large_WanderingCubes = 0x7f100153;
+        public static final int SpinKitView_Large_Wave = 0x7f100154;
+        public static final int SpinKitView_MultiplePulse = 0x7f100155;
+        public static final int SpinKitView_MultiplePulseRing = 0x7f100156;
+        public static final int SpinKitView_Pulse = 0x7f100157;
+        public static final int SpinKitView_PulseRing = 0x7f100158;
+        public static final int SpinKitView_RotatingCircle = 0x7f100159;
+        public static final int SpinKitView_RotatingPlane = 0x7f10015a;
+        public static final int SpinKitView_Small = 0x7f10015b;
+        public static final int SpinKitView_Small_ChasingDots = 0x7f10015c;
+        public static final int SpinKitView_Small_Circle = 0x7f10015d;
+        public static final int SpinKitView_Small_CubeGrid = 0x7f10015e;
+        public static final int SpinKitView_Small_DoubleBounce = 0x7f10015f;
+        public static final int SpinKitView_Small_FadingCircle = 0x7f100160;
+        public static final int SpinKitView_Small_FoldingCube = 0x7f100161;
+        public static final int SpinKitView_Small_MultiplePulse = 0x7f100162;
+        public static final int SpinKitView_Small_MultiplePulseRing = 0x7f100163;
+        public static final int SpinKitView_Small_Pulse = 0x7f100164;
+        public static final int SpinKitView_Small_PulseRing = 0x7f100165;
+        public static final int SpinKitView_Small_RotatingCircle = 0x7f100166;
+        public static final int SpinKitView_Small_RotatingPlane = 0x7f100167;
+        public static final int SpinKitView_Small_ThreeBounce = 0x7f100168;
+        public static final int SpinKitView_Small_WanderingCubes = 0x7f100169;
+        public static final int SpinKitView_Small_Wave = 0x7f10016a;
+        public static final int SpinKitView_ThreeBounce = 0x7f10016b;
+        public static final int SpinKitView_WanderingCubes = 0x7f10016c;
+        public static final int SpinKitView_Wave = 0x7f10016d;
     }
     public static final class styleable {
         private styleable() {}
 
-        public static final int[] SpinKitView = { 0x7f040001, 0x7f040002 };
+        public static final int[] SpinKitView = { 0x7f040008, 0x7f040009 };
         public static final int SpinKitView_SpinKit_Color = 0;
         public static final int SpinKitView_SpinKit_Style = 1;
     }

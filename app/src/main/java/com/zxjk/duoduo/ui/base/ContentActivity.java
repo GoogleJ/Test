@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.EditPersonalInformationFragment;
+import com.zxjk.duoduo.ui.msg.ConstactsNewFriendFragment;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -32,10 +34,10 @@ public class ContentActivity extends BaseActivity {
         FragmentManager manager=getSupportFragmentManager();
         FragmentTransaction transaction=manager.beginTransaction();
         switch (i) {
-//            case 0:
-//                transaction.add(R.id.m_content, EditPersonalInformationFragment.newInstance());
-//                transaction.commit();
-//                break;
+            case 0:
+                transaction.add(R.id.m_content,ConstactsNewFriendFragment.newInstance());
+                transaction.commit();
+                break;
             default:
                 break;
         }

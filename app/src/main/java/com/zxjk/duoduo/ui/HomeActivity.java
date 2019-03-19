@@ -11,6 +11,8 @@ import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.minepage.MineFragment;
+import com.zxjk.duoduo.ui.msg.MsgFragment;
+
 import static com.google.android.material.tabs.TabLayout.MODE_FIXED;
 import static com.ashokvarma.bottomnavigation.BottomNavigationBar.BACKGROUND_STYLE_RIPPLE;
 
@@ -27,7 +29,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
 
     private Fragment mFragment;
 
-    MineFragment msgFragment;
+    MsgFragment msgFragment;
     MineFragment qunFragment;
     MineFragment testFragment;
     MineFragment mineFragment;
@@ -80,7 +82,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
     }
 
     private void initFragment() {
-        msgFragment = new MineFragment();
+        msgFragment = new MsgFragment();
         qunFragment = new MineFragment();
         testFragment = new MineFragment();
         mineFragment = new MineFragment();

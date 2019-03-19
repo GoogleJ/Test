@@ -12,6 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 
+/**
+ * @author Administrator
+ * @// TODO: 2019\3\19 0019  
+ */
 public class MineFragment extends RxFragment implements View.OnClickListener {
 
     @Nullable

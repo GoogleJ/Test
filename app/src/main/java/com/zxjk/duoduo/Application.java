@@ -9,6 +9,10 @@ import android.app.ActivityManager;
 import android.content.Context;
 
 import androidx.multidex.MultiDex;
+import io.rong.imkit.RongIM;
+import io.rong.push.PushType;
+import io.rong.push.notification.PushMessageReceiver;
+import io.rong.push.notification.PushNotificationMessage;
 //import io.rong.imkit.RongIM;
 //import io.rong.push.PushType;
 //import io.rong.push.notification.PushMessageReceiver;
@@ -31,7 +35,7 @@ public class Application extends android.app.Application {
         new Thread(this::initOSS).start();
 
         MultiDex.install(this);
-//        RongIM.init(this);
+        RongIM.init(this);
     }
 
     //初始化阿里云OSS上传服务
@@ -68,18 +72,18 @@ public class Application extends android.app.Application {
         return null;
     }
 
-//    public class MyRongReceiver extends PushMessageReceiver {
-//
-//
-//        @Override
-//        public boolean onNotificationMessageArrived(Context context, PushType pushType, PushNotificationMessage pushNotificationMessage) {
-//            //false是系统的，true是需要自定义
-//            return false;
-//        }
-//
-//        @Override
-//        public boolean onNotificationMessageClicked(Context context, PushType pushType, PushNotificationMessage pushNotificationMessage) {
-//            return false;
-//        }
-//    }
+    public class MyRongReceiver extends PushMessageReceiver {
+
+
+        @Override
+        public boolean onNotificationMessageArrived(Context context, PushType pushType, PushNotificationMessage pushNotificationMessage) {
+            //false是系统的，true是需要自定义
+            return false;
+        }
+
+        @Override
+        public boolean onNotificationMessageClicked(Context context, PushType pushType, PushNotificationMessage pushNotificationMessage) {
+            return false;
+        }
+    }
 }

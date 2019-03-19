@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ic_msg_popwindow_bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/send_group_chat"
+        style="@style/msg_top_pop_style">
+
+        <ImageView
+            style="@style/msg_top_pop_img_style"
+            android:src="@drawable/icon_group_chat" />
+
+        <TextView
+            style="@style/msg_top_pop_text_style"
+            android:text="@string/send_group_chat" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/invite_friends"
+        style="@style/msg_top_pop_style">
+
+        <ImageView
+            style="@style/msg_top_pop_img_style"
+            android:src="@drawable/ic_invite_friends" />
+
+        <TextView
+            style="@style/msg_top_pop_text_style"
+            android:text="@string/invite_friends" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/scan"
+        style="@style/msg_top_pop_style">
+
+        <ImageView
+            style="@style/msg_top_pop_img_style"
+            android:src="@drawable/ic_scan" />
+
+        <TextView
+            style="@style/msg_top_pop_text_style"
+            android:text="@string/scan" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/collection_and_payment"
+        style="@style/msg_top_pop_style">
+
+        <ImageView
+            style="@style/msg_top_pop_img_style"
+            android:src="@drawable/ic_collection_and_payment" />
+
+        <TextView
+            style="@style/msg_top_pop_text_style"
+            android:text="@string/collection_and_payment" />
+    </LinearLayout>
+
+</LinearLayout>

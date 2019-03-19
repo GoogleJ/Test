@@ -14,7 +14,7 @@ import java.lang.Override;
 public class EditPersonalInformationFragment_ViewBinding implements Unbinder {
   private EditPersonalInformationFragment target;
 
-  private View view7f0900e9;
+  private View view7f09014a;
 
   @UiThread
   public EditPersonalInformationFragment_ViewBinding(EditPersonalInformationFragment target) {
@@ -28,7 +28,7 @@ public class EditPersonalInformationFragment_ViewBinding implements Unbinder {
 
     View view;
     view = Utils.findRequiredView(source, R.id.m_edit_information_btn, "method 'onClick'");
-    view7f0900e9 = view;
+    view7f09014a = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -44,7 +44,7 @@ public class EditPersonalInformationFragment_ViewBinding implements Unbinder {
     target = null;
 
 
-    view7f0900e9.setOnClickListener(null);
-    view7f0900e9 = null;
+    view7f09014a.setOnClickListener(null);
+    view7f09014a = null;
   }
 }

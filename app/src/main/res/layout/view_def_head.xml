@@ -10,22 +10,23 @@
         android:layout_height="25dp"
         android:minHeight="25dp" />
 
-    <!--<RelativeLayout-->
-        <!--android:id="@+id/rl_head"-->
-        <!--style="@style/rl_head_bg_style">-->
+    <RelativeLayout
+        android:id="@+id/rl_head"
+        style="@style/rl_head_bg_style">
 
-        <!--<Button-->
-            <!--android:id="@+id/btn_head_left"-->
-            <!--style="@style/tv_head_common_style" />-->
+        <Button
+            android:id="@+id/btn_head_left"
+            style="@style/tv_head_common_style" />
 
-        <!--<TextView-->
-            <!--android:id="@+id/tv_head_title"-->
-            <!--style="@style/tv_head_title_style" />-->
+        <TextView
+            android:id="@+id/tv_head_title"
+            style="@style/tv_head_title_style" />
 
-        <!--<Button-->
-            <!--android:id="@+id/btn_head_right"-->
-            <!--style="@style/tv_head_common_style"-->
-            <!--android:layout_alignParentRight="true" />-->
 
-    <!--</RelativeLayout>-->
+        <Button
+            android:id="@+id/btn_head_right"
+            style="@style/tv_head_common_style"
+            android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
 </LinearLayout>
