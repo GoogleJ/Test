@@ -1,6 +1,5 @@
 package com.zxjk.duoduo.weight;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
@@ -17,6 +16,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zxjk.duoduo.R;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 
 /**
@@ -222,7 +223,7 @@ public class TitleBar extends LinearLayout {
     public void setLeftLayoutClickListener(OnClickListener listener) {
         mLeftLayout.setOnClickListener(listener);
     }
-    public void setLeftBack(final Activity activity) {
+    public void setLeftBack(final AppCompatActivity activity) {
         mLeftLayout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

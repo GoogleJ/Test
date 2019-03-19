@@ -51,7 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:src="@drawable/ic_mine_code2" />
+                    app:srcCompat="@drawable/ic_mine_code2" />
 
             </LinearLayout>
 
@@ -101,7 +101,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="8dp"
-                    android:src="@drawable/ic_launcher" />
+                    app:srcCompat="@drawable/ic_launcher" />
 
                 <TextView
                     android:id="@+id/tvMineAuthSign"
@@ -136,7 +136,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_mine_moneyleft" />
+            app:srcCompat="@drawable/ic_mine_moneyleft" />
 
         <TextView
             android:layout_width="0dp"
@@ -150,7 +150,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_mine_rightarrow" />
+            app:srcCompat="@drawable/ic_mine_rightarrow" />
 
     </LinearLayout>
 
@@ -172,7 +172,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_mine_wallet" />
+            app:srcCompat="@drawable/ic_mine_wallet" />
 
         <TextView
             android:layout_width="0dp"
@@ -186,7 +186,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_mine_rightarrow" />
+            app:srcCompat="@drawable/ic_mine_rightarrow" />
 
     </LinearLayout>
 
@@ -208,7 +208,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_mine_code" />
+            app:srcCompat="@drawable/ic_mine_code" />
 
         <TextView
             android:layout_width="0dp"
@@ -222,7 +222,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_mine_rightarrow" />
+            app:srcCompat="@drawable/ic_mine_rightarrow" />
 
     </LinearLayout>
 
@@ -244,7 +244,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_mine_setting" />
+            app:srcCompat="@drawable/ic_mine_setting" />
 
         <TextView
             android:layout_width="0dp"
@@ -258,7 +258,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_mine_rightarrow" />
+            app:srcCompat="@drawable/ic_mine_rightarrow" />
 
     </LinearLayout>
 

@@ -12,12 +12,12 @@ public final class R {
     public static final class style {
         private style() {}
 
-        public static final int ActivityTranslucent = 0x7f0f0000;
-        public static final int DialogTransparent = 0x7f0f00df;
+        public static final int ActivityTranslucent = 0x7f100000;
+        public static final int DialogTransparent = 0x7f1000e8;
     }
     public static final class xml {
         private xml() {}
 
-        public static final int util_code_provider_paths = 0x7f110009;
+        public static final int util_code_provider_paths = 0x7f12000b;
     }
 }

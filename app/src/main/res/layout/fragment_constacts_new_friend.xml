@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/m_contact_edit_back"
+    android:orientation="vertical">
+
+
+    <com.zxjk.duoduo.weight.TitleBar
+        android:id="@+id/m_constacts_new_friend_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:titleBarLeftImage="@drawable/ico_back"
+        app:titleBarTextColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleBarTitle="@string/m_constacts_new_friend_title_bar" />
+
+    <LinearLayout
+        android:id="@+id/m_constacts_layout1"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:background="@color/white"
+        android:paddingBottom="12dp"
+        app:layout_constraintTop_toBottomOf="@+id/m_constacts_new_friend_title_bar"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/m_constacts_new_friend_group_chat_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/m_constacts_new_friend_group_chat_icon"
+                android:layout_width="37dp"
+                android:layout_height="37dp"
+                android:layout_marginStart="31dp"
+                android:layout_marginTop="10dp"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/ico_group_chat"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="RtlCompat" />
+
+            <TextView
+                android:id="@+id/m_constacts_new_friend_group_chat_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/m_constacts_new_friend_group_chat_label"
+                android:textColor="@color/m_constacts_new_friend_group_chat_label"
+                android:textSize="14dp"
+                app:layout_constraintEnd_toEndOf="@+id/m_constacts_new_friend_group_chat_icon"
+                app:layout_constraintStart_toStartOf="@+id/m_constacts_new_friend_group_chat_icon"
+                app:layout_constraintTop_toBottomOf="@+id/m_constacts_new_friend_group_chat_icon" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/m_contact_add_friend_btn"
+            android:layout_width="0dp"
+
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/m_contact_add_friend_icon"
+                android:layout_width="37dp"
+                android:layout_height="37dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/icon_contract_friend"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="RtlCompat" />
+
+            <TextView
+                android:id="@+id/m_contact_add_friend_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:text="@string/m_contact_add_friend_label"
+                android:textColor="@color/m_constacts_new_friend_group_chat_label"
+                android:textSize="14dp"
+                app:layout_constraintEnd_toEndOf="@+id/m_contact_add_friend_icon"
+                app:layout_constraintStart_toStartOf="@+id/m_contact_add_friend_icon"
+                app:layout_constraintTop_toBottomOf="@+id/m_contact_add_friend_icon" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/m_contact_new_friend_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/m_contact_new_friend_icon"
+                android:layout_width="37dp"
+                android:layout_height="37dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/icon_contract_add_friend"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="RtlCompat" />
+
+            <TextView
+                android:id="@+id/m_contact_new_friend_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/m_contact_new_friend_label"
+                android:textColor="@color/m_constacts_new_friend_group_chat_label"
+                android:textSize="14dp"
+                app:layout_constraintEnd_toEndOf="@+id/m_contact_new_friend_icon"
+                app:layout_constraintStart_toStartOf="@+id/m_contact_new_friend_icon"
+                app:layout_constraintTop_toBottomOf="@+id/m_contact_new_friend_icon"
+
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/m_contact_search_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/m_contact_search_icon"
+                android:layout_width="37dp"
+                android:layout_height="37dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/icon_contract_search"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="RtlCompat" />
+
+            <TextView
+                android:id="@+id/m_contact_search_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="搜索"
+                android:textColor="@color/m_constacts_new_friend_group_chat_label"
+                app:layout_constraintEnd_toEndOf="@+id/m_contact_search_icon"
+                app:layout_constraintStart_toStartOf="@+id/m_contact_search_icon"
+                app:layout_constraintTop_toBottomOf="@+id/m_contact_search_icon" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/m_contact_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/m_constacts_layout1"
+        />
+
+    <com.zxjk.duoduo.ui.msg.widget.IndexView
+        android:id="@+id/index_view"
+        android:layout_width="25dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="right|center"
+        android:layout_marginBottom="20dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="200dp"
+
+        app:layout_constraintTop_toBottomOf="@+id/m_constacts_layout1" />
+    <TextView
+        android:id="@+id/m_constacts_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

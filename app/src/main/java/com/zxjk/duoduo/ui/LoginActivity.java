@@ -2,20 +2,14 @@ package com.zxjk.duoduo.ui;
 
 import android.app.Activity;
 import android.content.Intent;
-import androidx.annotation.Nullable;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-//import io.rong.imkit.RongIM;
-//import io.rong.imlib.RongIMClient;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import com.blankj.utilcode.util.EncryptUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Application;
 import com.zxjk.duoduo.Constant;
@@ -23,11 +17,24 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.CountryEntity;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.ui.base.ContentActivity;
 import com.zxjk.duoduo.utils.CountryCodeConstantsUtils;
 import com.zxjk.duoduo.weight.dialog.AccountFreezeDialog;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+
+//import io.rong.imkit.RongIM;
+//import io.rong.imlib.RongIMClient;
 
 /**
  * 此处是登录界面及操作
@@ -48,7 +55,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     EditText edit_password;
 
 
-    public static void start(Activity activity){
+    public static void start(AppCompatActivity activity){
         Intent intent=new Intent(activity,LoginActivity.class);
         activity.startActivity(intent);
     }
@@ -127,77 +134,86 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             login_country.setText(" +" + (countryEntity != null ? countryEntity.countryCode : "86"));
         }
     }
+    Disposable subscribe;
     public void login(String phone,String pwd){
-        ServiceFactory.getInstance().getBaseService(Api.class)
+        subscribe = ServiceFactory.getInstance().getBaseService(Api.class)
                 .login(phone, String.valueOf(EncryptUtils.encryptMD5ToString(pwd)).toLowerCase())
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(loginResponse -> {
+                .subscribe(new Consumer<LoginResponse>() {
+                    @Override
+                    public void accept(LoginResponse loginResponse) throws Exception {
 
 
-                    String isDelete="1";
-                    String idFirstLogin="1";
-                    if (isDelete.equals(loginResponse.getIsDelete())) {
-                        dialog = new AccountFreezeDialog(LoginActivity.this);
-                        dialog.show();
-                    } else if (idFirstLogin.equals(loginResponse.getIsFirstLogin())){
-                        startActivity(new Intent(LoginActivity.this,EditPersonalInformationFragment.class));
-                    }else{
-                        Constant.token=loginResponse.getToken();
-                        Constant.userId=loginResponse.getId();
-                        Constant.currentUser=loginResponse;
-//                       connect(loginResponse.getRongToken());
-                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        String isDelete = "1";
+                        String idFirstLogin = "0";
+                        if (isDelete.equals(loginResponse.getIsDelete())) {
+                            dialog = new AccountFreezeDialog(LoginActivity.this);
+                            dialog.show();
+                        } else if (idFirstLogin.equals(loginResponse.getIsFirstLogin())) {
+                            LoginActivity.this.startActivity(new Intent(LoginActivity.this, EditPersonalInformationFragment.class));
+                        } else {
+                            Constant.token = loginResponse.getToken();
+                            Constant.userId = loginResponse.getId();
+                            Constant.currentUser = loginResponse;
+                            LoginActivity.this.connect(loginResponse.getRongToken());
+                            LoginActivity.this.startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        }
+
                     }
-
                 }, throwable -> {
                     handleApiError(throwable);
-
                 });
 
     }
 
 
-//    public void connect(String token) {
-//
-//        if (getApplicationInfo().packageName.equals(Application.getCurProcessName(getApplicationContext()))) {
-//
-//            RongIM.connect(token, new RongIMClient.ConnectCallback() {
-//
-//                /**
-//                 * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
-//                 *                  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
-//                 */
-//                @Override
-//                public void onTokenIncorrect() {
-//
-//                }
-//
-//                /**
-//                 * 连接融云成功
-//                 * @param userid 当前 token 对应的用户 id
-//                 */
-//                @Override
-//                public void onSuccess(String userid) {
-//                    Log.d("GJSONSSSSS", "--onSuccess" + userid);
-//                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-//                    finish();
-//                }
-//
-//                /**
-//                 * 连接融云失败
-//                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
-//                 */
-//                @Override
-//                public void onError(RongIMClient.ErrorCode errorCode) {
-//
-//                    Log.i("GJSONSSSS", "" + errorCode.getMessage());
-//
-//                }
-//            });
-//        }
-//    }
+    public void connect(String token) {
 
+        if (getApplicationInfo().packageName.equals(Application.getCurProcessName(getApplicationContext()))) {
 
+            RongIM.connect(token, new RongIMClient.ConnectCallback() {
+
+                /**
+                 * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
+                 *                  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
+                 */
+                @Override
+                public void onTokenIncorrect() {
+
+                }
+
+                /**
+                 * 连接融云成功
+                 * @param userid 当前 token 对应的用户 id
+                 */
+                @Override
+                public void onSuccess(String userid) {
+                    Log.d("GJSONSSSSS", "--onSuccess" + userid);
+                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    finish();
+                }
+
+                /**
+                 * 连接融云失败
+                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
+                 */
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+
+                    Log.i("GJSONSSSS", "" + errorCode.getMessage());
+
+                }
+            });
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (subscribe != null && !subscribe.isDisposed()) {
+            subscribe.dispose();
+        }
+        super.onDestroy();
+    }
 }

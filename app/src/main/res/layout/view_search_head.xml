@@ -13,76 +13,42 @@
 
     <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/rl_head"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:minHeight="50dp"
-
-        >
+        style="@style/rl_head_bg_style">
 
 
         <RelativeLayout
             android:id="@+id/rl_head_normal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/btn_head_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:background="@null"
+                style="@style/tv_head_common_style"
                 android:clickable="true"
                 android:drawableLeft="@drawable/selector_btn_back"
                 android:drawablePadding="5dp"
-                android:gravity="center"
                 android:onClick="onBack"
-                android:text="@string/back"
-                android:textColor="@android:color/white"
-                android:textSize="16dp" />
+                android:text="@string/back" />
 
             <TextView
                 android:id="@+id/tv_head_right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/tv_head_common_style"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:background="@null"
-                android:gravity="center"
-                android:textColor="@android:color/white"
-                android:textSize="16dp"
+                android:layout_marginRight="0dp"
                 tools:text="清除" />
 
             <TextView
                 android:id="@+id/tv_head_right_second"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
+                style="@style/tv_head_common_style"
                 android:layout_toLeftOf="@id/tv_head_right"
-                android:background="@null"
-                android:gravity="center"
-                android:textColor="@android:color/white"
-                android:textSize="16dp"
                 android:visibility="gone"
                 tools:text="右2"
                 tools:visibility="visible" />
 
             <TextView
                 android:id="@+id/tv_head_title"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:singleLine="true"
-                android:text="11"
-                android:textColor="@color/white"
-                android:textSize="18dp" />
+                style="@style/tv_head_title_style"
+                android:text="11" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -129,10 +95,9 @@
                 android:layout_centerVertical="true"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:textSize="18sp"
                 android:text="@string/cancel"
                 android:textColor="@android:color/white"
-                 />
+                android:textSize="18sp" />
 
             <com.example.administrator.duoduo_android.weight.ClearableEditTextWithIcon
                 android:id="@+id/edit_search"

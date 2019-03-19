@@ -2,6 +2,7 @@ package com.zxjk.duoduo.ui.minepage;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 
-public class MineFragment extends RxFragment implements View.OnClickListener {
+/**
+ * @author Administrator
+ * @// TODO: 2019\3\19 0019  
+ */
+public class MineFragment extends Fragment implements View.OnClickListener {
 
     @Nullable
     @Override

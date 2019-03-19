@@ -15,11 +15,11 @@ import java.lang.Override;
 public class ChangeLanguageActivity_ViewBinding implements Unbinder {
   private ChangeLanguageActivity target;
 
-  private View view7f09006d;
+  private View view7f090080;
 
-  private View view7f09006e;
+  private View view7f090081;
 
-  private View view7f09006c;
+  private View view7f09007f;
 
   @UiThread
   public ChangeLanguageActivity_ViewBinding(ChangeLanguageActivity target) {
@@ -33,7 +33,7 @@ public class ChangeLanguageActivity_ViewBinding implements Unbinder {
     View view;
     view = Utils.findRequiredView(source, R.id.checkbox_zh_cn, "field 'checkBoxZhCn' and method 'onClick'");
     target.checkBoxZhCn = Utils.castView(view, R.id.checkbox_zh_cn, "field 'checkBoxZhCn'", ImageView.class);
-    view7f09006d = view;
+    view7f090080 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -42,7 +42,7 @@ public class ChangeLanguageActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.checkbox_zh_tw, "field 'checkBoxZhTw' and method 'onClick'");
     target.checkBoxZhTw = Utils.castView(view, R.id.checkbox_zh_tw, "field 'checkBoxZhTw'", ImageView.class);
-    view7f09006e = view;
+    view7f090081 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -51,7 +51,7 @@ public class ChangeLanguageActivity_ViewBinding implements Unbinder {
     });
     view = Utils.findRequiredView(source, R.id.checkbox_en_us, "field 'checkBoxEnUs' and method 'onClick'");
     target.checkBoxEnUs = Utils.castView(view, R.id.checkbox_en_us, "field 'checkBoxEnUs'", ImageView.class);
-    view7f09006c = view;
+    view7f09007f = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -71,11 +71,11 @@ public class ChangeLanguageActivity_ViewBinding implements Unbinder {
     target.checkBoxZhTw = null;
     target.checkBoxEnUs = null;
 
-    view7f09006d.setOnClickListener(null);
-    view7f09006d = null;
-    view7f09006e.setOnClickListener(null);
-    view7f09006e = null;
-    view7f09006c.setOnClickListener(null);
-    view7f09006c = null;
+    view7f090080.setOnClickListener(null);
+    view7f090080 = null;
+    view7f090081.setOnClickListener(null);
+    view7f090081 = null;
+    view7f09007f.setOnClickListener(null);
+    view7f09007f = null;
   }
 }

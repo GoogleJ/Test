@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="RtlCompat"
+    android:background="@color/white"
+
+    android:orientation="vertical">
+
+    <com.zxjk.duoduo.weight.TitleBar
+        android:id="@+id/m_add_friend_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/login_bg"
+        app:titleBarLeftImage="@drawable/ico_back"
+        app:titleBarTextColor="@color/white"
+        app:titleBarTitle="@string/add_friend_title_bar" />
+
+    <EditText
+        android:id="@+id/m_add_friend_search_edit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/list_item_bg_press"
+        android:drawableStart="@drawable/icon_search_view"
+        android:hint="@string/m_add_friend_search_edit"
+        android:paddingEnd="20dp"
+        android:paddingStart="25dp"
+        android:textSize="16dp"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/m_my_qr_code_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="14dp">
+
+        <TextView
+
+            android:id="@+id/m_add_friend_label_qr_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="38dp"
+            android:text="@string/m_add_friend_label_qr_code"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginStart="7dp"
+            app:srcCompat="@drawable/icon_qr_code"
+            app:layout_constraintBottom_toBottomOf="@+id/m_add_friend_label_qr_code"
+            app:layout_constraintStart_toEndOf="@+id/m_add_friend_label_qr_code"
+            app:layout_constraintTop_toTopOf="@+id/m_add_friend_label_qr_code" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/m_add_friend_wechat_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="4dp"
+        android:paddingTop="10dp">
+
+        <ImageView
+            android:id="@+id/m_add_friend_wechat_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="12dp"
+            app:srcCompat="@drawable/icon_wechat"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/m_add_friend_wechat_label_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="7dp"
+            android:text="@string/m_add_friend_wechat_label_1"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            app:layout_constraintStart_toEndOf="@+id/m_add_friend_wechat_icon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/m_add_friend_wechat_label_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:text="@string/m_add_friend_wechat_label_2"
+            android:textColor="@color/m_add_friend_wechat_label_2"
+            android:textSize="13dp"
+            app:layout_constraintBottom_toBottomOf="@+id/m_add_friend_wechat_icon"
+            app:layout_constraintStart_toStartOf="@+id/m_add_friend_wechat_label_1" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="11dp"
+            android:background="@color/m_add_friend_line"
+            app:layout_constraintStart_toStartOf="@+id/m_add_friend_wechat_label_2"
+            app:layout_constraintTop_toBottomOf="@+id/m_add_friend_wechat_label_2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/m_add_friend_contact_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
+
+        <ImageView
+            android:id="@+id/m_add_friend_contact_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="12dp"
+            app:srcCompat="@drawable/icon_contact"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/m_add_friend_contact_label_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="7dp"
+            android:text="@string/m_add_friend_contact_label_1"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            app:layout_constraintStart_toEndOf="@+id/m_add_friend_contact_icon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/m_add_friend_contact_label_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/m_add_friend_contact_label_2"
+            android:textColor="@color/m_add_friend_wechat_label_2"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="@+id/m_add_friend_contact_icon"
+            app:layout_constraintStart_toStartOf="@+id/m_add_friend_contact_label_1" />
+
+        <ImageView
+            android:layout_width="8dp"
+            android:layout_height="15dp"
+            android:layout_marginEnd="13dp"
+
+            app:srcCompat="@drawable/icon_go"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="11dp"
+            android:background="@color/m_add_friend_line"
+            app:layout_constraintStart_toStartOf="@+id/m_add_friend_contact_label_2"
+            app:layout_constraintTop_toBottomOf="@+id/m_add_friend_contact_label_2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/m_add_friend_scan_it_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
+
+        <ImageView
+            android:id="@+id/m_add_friend_scan_it_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="15dp"
+            app:srcCompat="@drawable/icon_scan_it"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/m_add_friend_scan_it_label_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="7dp"
+            android:text="@string/m_add_friend_scan_it_label_1"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            app:layout_constraintStart_toEndOf="@+id/m_add_friend_scan_it_icon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/m_add_friend_scan_it_label_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/m_add_friend_scan_it_label_2"
+            android:textColor="@color/m_add_friend_wechat_label_2"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="@+id/m_add_friend_scan_it_icon"
+            app:layout_constraintStart_toStartOf="@+id/m_add_friend_scan_it_label_1" />
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="11dp"
+            android:background="@color/m_add_friend_line"
+            app:layout_constraintStart_toStartOf="@+id/m_add_friend_scan_it_label_2"
+            app:layout_constraintTop_toBottomOf="@+id/m_add_friend_scan_it_label_2" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>

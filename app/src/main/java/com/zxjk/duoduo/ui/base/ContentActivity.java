@@ -3,11 +3,15 @@ package com.zxjk.duoduo.ui.base;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.ui.EditPersonalInformationFragment;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import com.zxjk.duoduo.ui.msg.ConstactsNewFriendFragment;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 
 /**
@@ -15,7 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
  * @// TODO: 2019\3\18 0018 Fragment跳转的基础activity 
  */
 @SuppressLint("Registered")
-public class ContentActivity extends BaseActivity {
+public class ContentActivity extends FragmentActivity {
     int i;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,10 +36,10 @@ public class ContentActivity extends BaseActivity {
         FragmentManager manager=getSupportFragmentManager();
         FragmentTransaction transaction=manager.beginTransaction();
         switch (i) {
-//            case 0:
-//                transaction.add(R.id.m_content, EditPersonalInformationFragment.newInstance());
-//                transaction.commit();
-//                break;
+            case 0:
+                transaction.add(R.id.m_content,ConstactsNewFriendFragment.newInstance());
+                transaction.commit();
+                break;
             default:
                 break;
         }

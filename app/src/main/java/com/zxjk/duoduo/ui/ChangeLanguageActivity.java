@@ -1,14 +1,16 @@
 package com.zxjk.duoduo.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
+
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
+
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -30,7 +32,7 @@ public class ChangeLanguageActivity extends BaseActivity implements View.OnClick
     int type=0;
 
 
-    public static void start(Activity activity) {
+    public static void start(AppCompatActivity activity) {
         Intent intent = new Intent(activity, ChangeLanguageActivity.class);
         activity.startActivity(intent);
     }

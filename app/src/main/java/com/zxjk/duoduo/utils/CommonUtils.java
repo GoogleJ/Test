@@ -1,13 +1,15 @@
 package com.zxjk.duoduo.utils;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.widget.TextView;
+
 import com.zxjk.duoduo.R;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 @SuppressLint("CheckResult")
 public class CommonUtils {
@@ -53,14 +55,14 @@ public class CommonUtils {
     }
 
     // 屏幕宽度（像素）
-    public static int getWindowWidth(Activity activity) {
+    public static int getWindowWidth(AppCompatActivity activity) {
         DisplayMetrics metric = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(metric);
         return metric.widthPixels;
     }
 
     // 屏幕高度（像素）
-    public static int getWindowHeight(Activity activity) {
+    public static int getWindowHeight(AppCompatActivity activity) {
         DisplayMetrics metric = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(metric);
         return metric.heightPixels;
