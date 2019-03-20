@@ -22,24 +22,18 @@ public class BaseContactAdapter extends BaseQuickAdapter<FriendListResponse, Bas
     String type="0";
     Context context;
     public BaseContactAdapter( ) {
-        super(R.layout.item_contact);
+        super(R.layout.item_consatnt_friend);
         context=mContext;
     }
 
     @Override
     protected void convert(BaseViewHolder helper, FriendListResponse item) {
-        helper.setText(R.id.m_item_contact_user_name_text,item.getNick());
-        ImageView heardImage=helper.getView(R.id.m_item_contact_heard_icon);
+        helper.setText(R.id.m_user_name,item.getRealname())
+        .setText(R.id.m_singture_text,item.getSignature());
+        ImageView heardImage=helper.getView(R.id.m_constants_header_icon);
         GlideUtil.loadImg(heardImage,item.getHeadPortrait());
-        TextView typeText=helper.getView(R.id.m_item_contact_type_text_1);
-        if (type.equals(item.getIsDelete())){
-            typeText.setText("申请添加");
-            typeText.setTextColor(Color.BLACK);
-        }else{
-            typeText.setBackgroundColor(Color.WHITE);
-            typeText.setTextColor(Color.GRAY);
-            typeText.setText("已添加");
-        }
+
+
 
 
 

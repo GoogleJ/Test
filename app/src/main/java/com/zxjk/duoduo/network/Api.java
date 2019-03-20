@@ -111,7 +111,6 @@ public interface Api {
      * @return
      */
     @POST("duoduo/friend/getFriendListById")
-    @FormUrlEncoded
     Observable<BaseResponse<List<FriendListResponse>>> getFriendListById();
 
     /**
@@ -154,8 +153,33 @@ public interface Api {
      * @return
      */
     @POST("duoduo/friend/getMyfriendsWaiting")
-
     Observable<BaseResponse<List<FriendListResponse>>> getMyFirendsWaiting();
+
+    /**
+     * 同意添加
+     * @param friendId
+     * @param markName
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("duoduo/friend/addFriend")
+    Observable<BaseResponse<List<String>>> addFriend(
+            @Field("friendId")String friendId,
+            @Field("markName")String markName
+    );
+
+    /**
+     * 删除好友
+     * @param friendId
+     * @return
+     */
+    @POST("duoduo/friend/deleteFriend")
+    @FormUrlEncoded
+    Observable<List<String>> deleteFriend(
+            @Field("friendId")String friendId
+    );
+
+
 
 
 
