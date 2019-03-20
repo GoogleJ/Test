@@ -83,6 +83,7 @@ public interface Api {
 
     /**
      * 修改支付密码
+     *
      * @param oldPwd
      * @param newPwdOne
      * @param newPwdTwo
@@ -91,23 +92,26 @@ public interface Api {
     @POST("duoduo/customer/updatePayPwd")
     @FormUrlEncoded
     Observable<BaseResponse<LoginResponse>> updatePwd(
-            @Field("oldPayPwd")String oldPwd,
-            @Field("newPayPwd")String newPwdOne,
-            @Field("newPayPwdTwo")String newPwdTwo
+            @Field("oldPayPwd") String oldPwd,
+            @Field("newPayPwd") String newPwdOne,
+            @Field("newPayPwdTwo") String newPwdTwo
     );
+
     /**
      * 获取好友详情
+     *
      * @param friendId
      * @return
      */
-     @POST("duoduo/friend/getFriendInfoById")
-     @FormUrlEncoded
-     Observable<BaseResponse<FriendInfoResponse>> getFriendInfoById(
-             @Field("friendId")String friendId
-     );
+    @POST("duoduo/friend/getFriendInfoById")
+    @FormUrlEncoded
+    Observable<BaseResponse<FriendInfoResponse>> getFriendInfoById(
+            @Field("friendId") String friendId
+    );
 
     /**
      * 获取好友列表
+     *
      * @return
      */
     @POST("duoduo/friend/getFriendListById")
@@ -116,28 +120,31 @@ public interface Api {
 
     /**
      * 模糊搜索好友
+     *
      * @param data
      * @return
      */
     @POST("duoduo/friend/searchFriend")
     @FormUrlEncoded
     Observable<BaseResponse<List<SearchResponse>>> searchFriend(
-            @Field("data")String data
+            @Field("data") String data
     );
 
     /**
      * 模糊搜索用户
+     *
      * @param data
      * @return
      */
     @POST("duoduo/friend/searchCustomer")
     @FormUrlEncoded
     Observable<BaseResponse<List<SearchCustomerInfoResponse>>> searchCustomerInfo(
-            @Field("data")String data
+            @Field("data") String data
     );
 
     /**
-     *申请添加好友
+     * 申请添加好友
+     *
      * @param friendId
      * @param remark
      * @return
@@ -145,18 +152,23 @@ public interface Api {
     @POST("duoduo/friend/applyAddFriend")
     @FormUrlEncoded
     Observable<BaseResponse<List<FriendListResponse>>> applyAddFriend(
-            @Field("friendId")String friendId,
-            @Field("remark")String remark
+            @Field("friendId") String friendId,
+            @Field("remark") String remark
     );
 
     /**
      * 获取待添加的好友列表
+     *
      * @return
      */
     @POST("duoduo/friend/getMyfriendsWaiting")
-
     Observable<BaseResponse<List<FriendListResponse>>> getMyFirendsWaiting();
 
-
+    @POST("duoduo/customer/updateMobile")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> updateMobile(
+            @Field("newMobile") String newMobile,
+            @Field("securityCode") String securityCode
+    );
 
 }

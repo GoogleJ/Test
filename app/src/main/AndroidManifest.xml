@@ -34,7 +34,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.msgpage.GlobalSearchActivity"></activity>
+        <activity android:name=".ui.walletpage.ExchangeListActivity"></activity>
+        <activity android:name=".ui.walletpage.ExchangeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.minepage.ChangePwdActivity" />
+        <activity android:name=".ui.minepage.ChangePhoneActivity" />
+        <activity android:name=".ui.minepage.AccountActivity" />
+        <activity android:name=".ui.msgpage.GlobalSearchActivity" />
         <activity
             android:name=".ui.WelcomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -42,13 +53,7 @@
             android:resizeableActivity="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Theme_Splash"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".ui.minepage.SettingActivity" />
         <activity android:name=".ui.minepage.UserInfoActivity" />
 
