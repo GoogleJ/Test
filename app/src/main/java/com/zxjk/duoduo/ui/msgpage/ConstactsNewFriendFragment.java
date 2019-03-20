@@ -117,6 +117,14 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
             }
         });
 
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent=new Intent(getActivity(),PeopleInformationActivity.class);
+                intent.putExtra("peopleInformatinoUserId",list.get(position).getId());
+                getActivity().startActivity(intent);
+            }
+        });
     }
 
     /**

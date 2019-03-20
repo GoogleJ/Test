@@ -104,6 +104,12 @@
     <string name="code_label">验证码已经发送，请注意查收</string>
     <string name="m_delete_popup">删除</string>
     <string name="m_deleter_friend_cancel">取消</string>
+    <string name="m_people_information_phone_label">手机</string>
+    <string name="m_people_information_email_label">邮箱</string>
+    <string name="m_people_information_signature_label">个性签名</string>
+    <string name="m_people_information_wallet_address_label">钱包地址</string>
+    <string name="m_people_information_send_to_message">发消息</string>
+    <string name="m_people_information_voice_calls">语音通话</string>
 
 
 </resources>
