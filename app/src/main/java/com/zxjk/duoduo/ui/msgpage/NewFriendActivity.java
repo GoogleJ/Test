@@ -21,6 +21,7 @@ import com.zxjk.duoduo.network.response.FriendListResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.NewFriendAdapter;
+import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendDialog;
 import com.zxjk.duoduo.weight.TitleBar;
 
 import org.apache.commons.io.output.TaggedOutputStream;
@@ -50,7 +51,7 @@ public class NewFriendActivity extends BaseActivity {
     @BindView(R.id.m_fragment_new_friend_recycler_view)
     RecyclerView mRecyclerView;
     NewFriendAdapter mAdapter;
-
+    DeleteFriendDialog dialog;
     /**
      * 填充的假数据
      */
@@ -110,6 +111,20 @@ public class NewFriendActivity extends BaseActivity {
 
             }
         });
+        mAdapter.setOnItemChildLongClickListener(new BaseQuickAdapter.OnItemChildLongClickListener() {
+            @Override
+            public boolean onItemChildLongClick(BaseQuickAdapter adapter, View view, int position) {
+                dialog=new DeleteFriendDialog(NewFriendActivity.this);
+                dialog.show();
+                dialog.setOnClickListener(new DeleteFriendDialog.OnClickListener() {
+                    @Override
+                    public void onDelete() {
+                        deleteMyfirendsWaiting(list.get(position).getId());
+                    }
+                });
+                return false;
+            }
+        });
     }
 
     public void getMyFriendsWaiting() {
@@ -137,15 +152,27 @@ public class NewFriendActivity extends BaseActivity {
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<List<String>>() {
+                .subscribe(new Consumer<String>() {
                     @Override
-                    public void accept(List<String> strings) throws Exception {
+                    public void accept(String s) throws Exception {
                         ToastUtils.showShort("添加好友成功");
-                        LogUtils.d("DEBUG",strings);
-
+                        LogUtils.d("DEBUG",s);
                     }
                 },this::handleApiError);
 
+    }
+    public void deleteMyfirendsWaiting(String friendId){
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .deleteMyfirendsWaiting(friendId)
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.ioObserver())
+                .compose(RxSchedulers.normalTrans())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        LogUtils.d("DEBUG",s);
+                    }
+                },this::handleApiError);
     }
 
 }

@@ -3,11 +3,17 @@ package com.zxjk.duoduo.ui.msgpage;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -18,6 +24,7 @@ import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.base.ContentActivity;
+import com.zxjk.duoduo.ui.msgpage.utils.PoPutWindowUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.weight.TitleBar;
 
@@ -53,7 +60,7 @@ public class PersonalInformationActivity extends BaseActivity implements View.On
 
     String userIds;
     String user;
-
+    private PopupWindow mPopupWindow;
 
     int   type;
     int a =1;
@@ -145,9 +152,9 @@ public class PersonalInformationActivity extends BaseActivity implements View.On
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<List<String>>() {
+                .subscribe(new Consumer<String>() {
                     @Override
-                    public void accept(List<String> strings) throws Exception {
+                    public void accept(String strings) throws Exception {
                         ToastUtils.showShort("添加好友成功");
                         LogUtils.d("DEBUG",strings);
                         finish();
@@ -163,4 +170,7 @@ public class PersonalInformationActivity extends BaseActivity implements View.On
         super.onStop();
         finish();
     }
+
+
+
 }

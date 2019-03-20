@@ -102,6 +102,8 @@
     <string name="m_set_payment_pwd_label">为了您的账户安全，请设置支付密码</string>
     <string name="edit_register_code">请输入验证码</string>
     <string name="code_label">验证码已经发送，请注意查收</string>
+    <string name="m_delete_popup">删除</string>
+    <string name="m_deleter_friend_cancel">取消</string>
 
 
 </resources>

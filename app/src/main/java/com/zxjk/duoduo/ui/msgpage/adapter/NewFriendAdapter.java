@@ -24,7 +24,8 @@ public class NewFriendAdapter extends BaseQuickAdapter<FriendListResponse, BaseV
         helper.setText(R.id.m_item_new_friend_user_name_text, item.getRealname())
                 .setText(R.id.m_item_new_friend_message_label, item.getSignature())
                 .addOnClickListener(R.id.m_item_new_friend_type_btn)
-                .addOnClickListener(R.id.m_add_btn_layout);
+                .addOnClickListener(R.id.m_add_btn_layout)
+        .addOnLongClickListener(R.id.m_add_btn_layout);
 
 
     }

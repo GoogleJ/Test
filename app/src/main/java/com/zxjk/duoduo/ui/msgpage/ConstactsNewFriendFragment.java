@@ -9,18 +9,18 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.bean.UserBean;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.FriendListResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
-import com.zxjk.duoduo.ui.base.ContentActivity;
+import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.ui.msgpage.adapter.BaseContactAdapter;
-import com.zxjk.duoduo.ui.msgpage.base.BaseFragment;
 import com.zxjk.duoduo.ui.msgpage.utils.PinyinComparator;
 import com.zxjk.duoduo.ui.msgpage.widget.HoverItemDecoration;
 import com.zxjk.duoduo.ui.msgpage.widget.IndexView;
+import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendDialog;
 import com.zxjk.duoduo.weight.TitleBar;
 
 import java.util.ArrayList;
@@ -34,6 +34,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.functions.Consumer;
 import io.rong.imkit.tools.CharacterParser;
 
 /**
@@ -53,6 +54,7 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
 
 
     private BaseContactAdapter adapter;
+
 
 
     /**
@@ -146,7 +148,6 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
     }
 
 
-
     private List<FriendListResponse> filledData(List<FriendListResponse> sortList) {
         for (int i = 0; i < sortList.size(); i++) {
             if ("".equals(sortList.get(i).getRealname())) {
@@ -164,7 +165,7 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
                 }
             }
         }
-         Collections.sort(sortList, pinyinComparator);
+        Collections.sort(sortList, pinyinComparator);
         return sortList;
     }
 
@@ -199,11 +200,12 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
                 .subscribe(friendListResponses -> {
                     list = friendListResponses;
                     adapter.setNewData(friendListResponses);
-
                     for (int i = 0; i < friendListResponses.size(); i++) {
                         LogUtils.d("DEBUG", friendListResponses.get(i).toString());
                     }
                 }, throwable -> LogUtils.d("DDD", throwable.getMessage()));
 
     }
+
+
 }

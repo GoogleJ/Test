@@ -29,7 +29,8 @@ public class BaseContactAdapter extends BaseQuickAdapter<FriendListResponse, Bas
     @Override
     protected void convert(BaseViewHolder helper, FriendListResponse item) {
         helper.setText(R.id.m_user_name,item.getRealname())
-        .setText(R.id.m_singture_text,item.getSignature());
+        .setText(R.id.m_singture_text,item.getSignature())
+        .addOnLongClickListener(R.id.m_constacts_friend);
         ImageView heardImage=helper.getView(R.id.m_constants_header_icon);
         GlideUtil.loadImg(heardImage,item.getHeadPortrait());
 
