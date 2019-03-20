@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <com.zxjk.duoduo.weight.TitleBar
-        android:id="@+id/m_fragment_search_title_bar"
+        android:id="@+id/m_search_title_bar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         app:titleBarLeftImage="@drawable/ico_back"

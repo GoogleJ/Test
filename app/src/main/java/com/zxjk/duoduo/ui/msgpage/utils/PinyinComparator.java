@@ -4,13 +4,18 @@ package com.zxjk.duoduo.ui.msgpage.utils;
 
 
 import com.zxjk.duoduo.bean.UserBean;
+import com.zxjk.duoduo.network.response.FriendListResponse;
 
 import java.util.Comparator;
 
-public class PinyinComparator implements Comparator<UserBean> {
+/**
+ * @author Administrator
+ *
+ */
+public class PinyinComparator implements Comparator<FriendListResponse> {
 
 	@Override
-	public int compare(UserBean o1, UserBean o2) {
+	public int compare(FriendListResponse o1, FriendListResponse o2) {
 		if (o1.getSortLetters().equals("@")
 				|| o2.getSortLetters().equals("#")) {
 			return -1;
@@ -21,4 +26,6 @@ public class PinyinComparator implements Comparator<UserBean> {
 			return o1.getSortLetters().compareTo(o2.getSortLetters());
 		}
 	}
+
+
 }

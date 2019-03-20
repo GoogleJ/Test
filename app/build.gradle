@@ -91,6 +91,6 @@ dependencies {
     implementation 'cn.bingoogolapple:bga-qrcodecore:1.1.7@aar'
     //通用适配器
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
-
+    //平滑按钮
+    implementation 'com.github.zcweng:switch-button:0.0.3@aar'
 }
-

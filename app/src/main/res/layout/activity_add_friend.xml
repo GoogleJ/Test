@@ -18,13 +18,14 @@
         app:titleBarTextColor="@color/white"
         app:titleBarTitle="@string/add_friend_title_bar" />
 
-    <EditText
+    <TextView
         android:id="@+id/m_add_friend_search_edit"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginEnd="12dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="10dp"
+      android:gravity="center_vertical"
         android:background="@color/list_item_bg_press"
         android:drawableStart="@drawable/icon_search_view"
         android:hint="@string/m_add_friend_search_edit"

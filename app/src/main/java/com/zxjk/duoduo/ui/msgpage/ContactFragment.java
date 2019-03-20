@@ -1,18 +1,22 @@
 package com.zxjk.duoduo.ui.msgpage;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.ToastUtils;
+
+import com.blankj.utilcode.util.LogUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.UserBean;
-import com.zxjk.duoduo.ui.base.ContentActivity;
+import com.zxjk.duoduo.network.Api;
+import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.FriendListResponse;
+import com.zxjk.duoduo.network.rx.RxSchedulers;
+import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.ui.msgpage.adapter.BaseContactAdapter;
-import com.zxjk.duoduo.ui.msgpage.base.BaseFragment;
 import com.zxjk.duoduo.ui.msgpage.utils.PinyinComparator;
 import com.zxjk.duoduo.ui.msgpage.widget.HoverItemDecoration;
 import com.zxjk.duoduo.ui.msgpage.widget.IndexView;
@@ -24,34 +28,29 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import io.reactivex.functions.Consumer;
 import io.rong.imkit.tools.CharacterParser;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\20 0020 通讯录
+ * @// TODO: 2019\3\20 0020 手机联系人界面
  */
-public class ConstactsNewFriendFragment extends BaseFragment implements View.OnClickListener {
-    @BindView(R.id.m_constacts_new_friend_title_bar)
-    TitleBar titleBar;
+public class ContactFragment extends BaseFragment {
 
-    @BindView(R.id.m_contact_recycler_view)
-    RecyclerView mRecyclerView;
+    @BindView(R.id.m_contact_title_bar)
+    TitleBar titleBar;
+    @BindView(R.id.previewText)
+    TextView textView;
     @BindView(R.id.index_view)
     IndexView indexView;
-    @BindView(R.id.m_constacts_dialog)
-    TextView constactsDialog;
+    @BindView(R.id.m_contact_recycler_view)
+    RecyclerView mRecyclerView;
 
-
-    private BaseContactAdapter adapter;
-
-    private List<UserBean> userBeans = new ArrayList<>();
-
-    private String[] names = new String[]{"阿妹", "打黑牛", "张三", "李四", "王五", "田鸡", "孙五"};
 
     /**
      * 汉字转换成拼音的类
@@ -64,20 +63,16 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
 
     private LinearLayoutManager layoutManager;
 
-    public static ConstactsNewFriendFragment newInstance() {
-        ConstactsNewFriendFragment fragment = new ConstactsNewFriendFragment();
+    BaseContactAdapter adapter;
+
+    List<FriendListResponse> friendListResponseList = new ArrayList<>();
+
+
+    public static Fragment newInstance() {
+        ContactFragment fragment = new ContactFragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
         return fragment;
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_constacts_new_friend, null);
-        ButterKnife.bind(this, view);
-        initView();
-        return view;
     }
 
     @Override
@@ -85,10 +80,24 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
         super.onCreate(savedInstanceState);
     }
 
-    private void initView() {
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_contact, null);
+        ButterKnife.bind(this, view);
+        initUI();
+        initData();
+
+        return view;
+    }
+
+    private void initData() {
         characterParser = CharacterParser.getInstance();
         pinyinComparator = new PinyinComparator();
-        userBeans = filledData(getData());
+
+
+        friendListResponseList = filledData(friendListResponseList);
+
         layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         //一行代码实现吸顶悬浮的效果
@@ -96,27 +105,31 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
             @Override
             public String getItemText(int position) {
                 //悬浮的信息
-                return userBeans.get(position).getSortLetters();
+                return friendListResponseList.get(position).getSortLetters();
             }
         }));
+
         adapter = new BaseContactAdapter();
-//        adapter.setNewData(userBeans);
+        getFriendListInfoById();
         mRecyclerView.setAdapter(adapter);
+
         initIndexView();
+    }
+
+    protected void initUI() {
         titleBar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getActivity().finish();
             }
         });
-
     }
 
     /**
      * 初始化右边字幕索引view
      */
     private void initIndexView() {
-        indexView.setShowTextDialog(constactsDialog);
+        indexView.setShowTextDialog(textView);
         indexView.setOnTouchingLetterChangedListener(new IndexView.OnTouchingLetterChangedListener() {
             @Override
             public void onTouchingLetterChanged(String letter) {
@@ -131,8 +144,8 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
     }
 
     public int getPositionForSection(String section) {
-        for (int i = 0; i < userBeans.size(); i++) {
-            String sortStr = userBeans.get(i).getSortLetters();
+        for (int i = 0; i < friendListResponseList.size(); i++) {
+            String sortStr = friendListResponseList.get(i).getSortLetters();
             if (sortStr.equals(section)) {
                 return i;
             }
@@ -140,23 +153,16 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
         return -1;
     }
 
-    private List<UserBean> getData() {
-        List<UserBean> userBeans = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
-            UserBean userBean = new UserBean();
-            userBean.setUserName(names[i % 7]);
-            userBeans.add(userBean);
-        }
-        return userBeans;
-    }
 
-    private List<UserBean> filledData(List<UserBean> sortList) {
+    private List<FriendListResponse> filledData(List<FriendListResponse> sortList) {
+
         for (int i = 0; i < sortList.size(); i++) {
-            if ("".equals(sortList.get(i).getUserName())) {
+
+            if ("".equals(sortList.get(i).getNick())) {
                 sortList.get(i).setSortLetters("#");
             } else {
                 // 汉字转换成拼音
-                String pinyin = characterParser.getSelling(sortList.get(i).getUserName());
+                String pinyin = characterParser.getSelling(sortList.get(i).getNick());
                 String sortString = pinyin.substring(0, 1).toUpperCase();
 
                 // 正则表达式，判断首字母是否是英文字母
@@ -168,30 +174,25 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
             }
         }
         // 根据a-z进行排序源数据
-//        Collections.sort(sortList, pinyinComparator);
+        Collections.sort(sortList, pinyinComparator);
+
         return sortList;
     }
 
-    @OnClick({R.id.m_constacts_new_friend_group_chat_btn, R.id.m_contact_add_friend_btn, R.id.m_contact_new_friend_btn, R.id.m_contact_search_btn})
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.m_constacts_new_friend_group_chat_btn:
-                ToastUtils.showShort("此功能暂未实现");
-                break;
-            case R.id.m_contact_add_friend_btn:
-                Intent intent = new Intent(getActivity(), ContentActivity.class);
-                intent.putExtra("tag", 4);
-                getActivity().startActivity(intent);
-                break;
-            case R.id.m_contact_new_friend_btn:
-                AddFriendActivity.start(getActivity());
-                break;
-            case R.id.m_contact_search_btn:
-                SearchActivity.start(getActivity());
-                break;
-            default:
-                break;
-        }
+    public void getFriendListInfoById() {
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .getFriendListById()
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.ioObserver())
+                .compose(RxSchedulers.normalTrans())
+                .subscribe(friendListResponses -> {
+
+                    adapter.setNewData(friendListResponses);
+                    friendListResponseList = friendListResponses;
+                    for (int i = 0; i < friendListResponses.size(); i++) {
+                        LogUtils.d("DEBUG", friendListResponses.get(i).toString());
+                    }
+                }, throwable -> LogUtils.d("DDD", throwable.getMessage()));
+
     }
 }

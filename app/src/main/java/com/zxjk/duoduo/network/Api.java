@@ -1,8 +1,14 @@
 package com.zxjk.duoduo.network;
 
 import com.zxjk.duoduo.network.response.BaseResponse;
+import com.zxjk.duoduo.network.response.FriendInfoResponse;
+import com.zxjk.duoduo.network.response.FriendListResponse;
 import com.zxjk.duoduo.network.response.LoginResponse;
+import com.zxjk.duoduo.network.response.SearchCustomerInfoResponse;
+import com.zxjk.duoduo.network.response.SearchResponse;
 import com.zxjk.duoduo.network.response.UpdateCustomerInfoResponse;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
@@ -88,6 +94,46 @@ public interface Api {
             @Field("oldPayPwd")String oldPwd,
             @Field("newPayPwd")String newPwdOne,
             @Field("newPayPwdTwo")String newPwdTwo
+    );
+    /**
+     * 获取好友详情
+     * @param friendId
+     * @return
+     */
+     @POST("duoduo/friend/getFriendInfoById")
+     @FormUrlEncoded
+     Observable<BaseResponse<FriendInfoResponse>> getFriendInfoById(
+             @Field("friendId")String friendId
+     );
+
+    /**
+     * 获取好友列表
+     * @return
+     */
+    @POST("duoduo/friend/getFriendListById")
+    @FormUrlEncoded
+    Observable<BaseResponse<List<FriendListResponse>>> getFriendListById();
+
+    /**
+     * 模糊搜索好友
+     * @param data
+     * @return
+     */
+    @POST("duoduo/friend/searchFriend")
+    @FormUrlEncoded
+    Observable<BaseResponse<List<SearchResponse>>> searchFriend(
+            @Field("data")String data
+    );
+
+    /**
+     * 模糊搜索用户
+     * @param data
+     * @return
+     */
+    @POST("duoduo/friend/searchCustomer")
+    @FormUrlEncoded
+    Observable<BaseResponse<List<SearchCustomerInfoResponse>>> searchCustomerInfo(
+            @Field("data")String data
     );
 
 

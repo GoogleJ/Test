@@ -99,10 +99,9 @@
     <string name="m_edit_information_name_label">昵称</string>
     <string name="m_edit_information_btn">完成</string>
     <string name="m_set_payment_pwd_title_bar">设置支付密码</string>
-    <string name="m_set_payment_pwd_label" >为了您的账户安全，请设置支付密码</string>
+    <string name="m_set_payment_pwd_label">为了您的账户安全，请设置支付密码</string>
     <string name="edit_register_code">请输入验证码</string>
     <string name="code_label">验证码已经发送，请注意查收</string>
-
 
 
 </resources>

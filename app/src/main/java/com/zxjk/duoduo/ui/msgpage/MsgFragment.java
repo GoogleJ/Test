@@ -10,15 +10,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.ContentActivity;
 import com.zxjk.duoduo.ui.msgpage.RongIMAdapter.ConversationListAdapterEx;
 import com.zxjk.duoduo.ui.msgpage.base.BaseFragment;
 import com.zxjk.duoduo.ui.msgpage.widget.CommonPopupWindow;
 import com.zxjk.duoduo.utils.DensityUtils;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import butterknife.ButterKnife;
@@ -47,7 +50,9 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
         fragment.setArguments(bundle);
         return fragment;
     }
+
     View view;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +63,7 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_message, null);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
 
         initHear();
         return view;
@@ -130,7 +135,7 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
     @OnClick(R.id.btn_head_left)
     public void showForContactFragment() {
         Intent intent = new Intent(getActivity(), ContentActivity.class);
-        intent.putExtra("tag", 0);
+        intent.putExtra("tag", 3);
         getActivity().startActivity(intent);
     }
 
@@ -208,9 +213,11 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
         }
 
     }
+
     public Button getLeftBtn() {
         return ((Button) view.findViewById(R.id.btn_head_left));
     }
+
     public Button getLeftBtn(int width, int height) {
         Button leftView = getLeftBtn();
         ViewGroup.LayoutParams leftViewLayoutParams = leftView.getLayoutParams();
@@ -219,6 +226,7 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
         leftView.setLayoutParams(leftViewLayoutParams);
         return leftView;
     }
+
     public Button getRightBtn() {
         return ((Button) view.findViewById(R.id.btn_head_right));
     }
@@ -238,12 +246,14 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
         layoutParams.height = getStatusBarHeight();
         view1.setLayoutParams(layoutParams);
     }
+
     protected int getStatusBarHeight() {
         Resources resources = getResources();
         int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
         int height = resources.getDimensionPixelSize(resourceId);
         return height;
     }
+
     public void setHeadTitle(int resId) {
         ((TextView) view.findViewById(R.id.tv_head_title)).setText(resId);
     }

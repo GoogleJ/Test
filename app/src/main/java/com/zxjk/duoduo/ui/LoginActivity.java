@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.EncryptUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Application;
 import com.zxjk.duoduo.Constant;
@@ -38,6 +39,7 @@ import io.rong.imlib.RongIMClient;
 
 /**
  * 此处是登录界面及操作
+ *
  * @author Administrator
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
@@ -55,10 +57,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     EditText edit_password;
 
 
-    public static void start(AppCompatActivity activity){
-        Intent intent=new Intent(activity,LoginActivity.class);
+    public static void start(AppCompatActivity activity) {
+        Intent intent = new Intent(activity, LoginActivity.class);
         activity.startActivity(intent);
     }
+
     AccountFreezeDialog dialog;
 
 
@@ -67,9 +70,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+        edit_mobile.setText(SPUtils.getInstance().getString("mobile"));
     }
-
-
 
 
     @OnClick({R.id.login_country
@@ -80,7 +83,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             , R.id.login_country_bottom})
     @Override
     public void onClick(View v) {
-        int phoneLength=11;
+        int phoneLength = 11;
         switch (v.getId()) {
             case R.id.login_country:
                 CountrySelectActivity.start(LoginActivity.this, CountryCodeConstantsUtils.REQUESTCODE_COUNTRY_SELECT);
@@ -93,7 +96,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.text_go_register:
                 RegisterActivity.start(this);
-                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
 
                 break;
             case R.id.change_language:
@@ -104,7 +107,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                 String mobile = edit_mobile.getText().toString().trim();
                 String password = edit_password.getText().toString().trim();
-                if (mobile.isEmpty()||password.isEmpty()){
+                if (mobile.isEmpty() || password.isEmpty()) {
                     ToastUtils.showShort(getString(R.string.edit_mobile_or_password_tip));
                     return;
                 }
@@ -117,7 +120,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     return;
                 }
 
-                login(mobile,password);
+                login(mobile, password);
+                SPUtils.getInstance().put("mobile",edit_mobile.getText().toString().trim());
+
                 break;
             default:
                 break;
@@ -134,8 +139,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             login_country.setText(" +" + (countryEntity != null ? countryEntity.countryCode : "86"));
         }
     }
+
     Disposable subscribe;
-    public void login(String phone,String pwd){
+
+    public void login(String phone, String pwd) {
+
+
+
         subscribe = ServiceFactory.getInstance().getBaseService(Api.class)
                 .login(phone, String.valueOf(EncryptUtils.encryptMD5ToString(pwd)).toLowerCase())
                 .compose(bindToLifecycle())
