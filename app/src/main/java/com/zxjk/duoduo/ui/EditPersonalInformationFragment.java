@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -29,8 +30,10 @@ import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
 import com.zxjk.duoduo.weight.TitleBar;
+
 import java.io.File;
 import java.util.Collections;
+
 import androidx.annotation.Nullable;
 import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
@@ -66,39 +69,28 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
      * 这里是输入地区的输入框
      */
     EditText editArea;
-
-
-
-
-  private String url;
-
+    private String url;
     private TakePopWindow selectPicPopWindow;
-
-
 
     private void initData() {
         titleBar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               finish();
+                finish();
             }
         });
     }
 
-    private void initView( ) {
+    private void initView() {
         titleBar = findViewById(R.id.m_edit_information_title_bar);
         commitBtn = findViewById(R.id.m_edit_information_btn);
         imageSearchBtn = findViewById(R.id.m_edit_information_header_icon);
         editArea = findViewById(R.id.m_edit_information_name_edit);
         editNickName = findViewById(R.id.m_edit_information_area_edit);
-
         selectPicPopWindow = new TakePopWindow(this);
         selectPicPopWindow.setOnItemClickListener(this);
-
         imageSearchBtn.setOnClickListener(this);
         commitBtn.setOnClickListener(this);
-
-
     }
 
     @Override
@@ -124,9 +116,7 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                     ToastUtils.showShort("地区不能为空");
                     return;
                 }
-
                 LoginResponse update = new LoginResponse(Constant.userId);
-
                 update.setHeadPortrait(url);
                 update.setNick(editNickName.getText().toString());
                 update.setAddress(editArea.getText().toString());
@@ -143,12 +133,8 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                 break;
             default:
                 break;
-
         }
-
-
     }
-
 
     /**
      * 把用户选择好的图片显示在ImageView上
@@ -183,7 +169,7 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                     update.setHeadPortrait(url);
                     GlideUtil.loadCornerImg(imageSearchBtn, url, R.drawable.ic_launcher, CommonUtils.dip2px(this, 2));
 
-                    this.url=url;
+                    this.url = url;
 
                 });
             });
@@ -205,7 +191,7 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
         }
     }
 
-    public void updateCustomerInfo(String customerInfo){
+    public void updateCustomerInfo(String customerInfo) {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .updateUserInfo(customerInfo)
                 .compose(bindToLifecycle())
@@ -216,10 +202,9 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                     public void accept(UpdateCustomerInfoResponse response) throws Exception {
                         GlideUtil.loadCornerImg(imageSearchBtn, url, R.drawable.ic_launcher, CommonUtils.dip2px(EditPersonalInformationFragment.this, 2));
                         ToastUtils.showShort("更新头像成功");
-                        startActivity(new Intent(EditPersonalInformationFragment.this,SetUpPaymentPwdFragment.class));
-
+                        startActivity(new Intent(EditPersonalInformationFragment.this, SetUpPaymentPwdFragment.class));
                     }
-                },this::handleApiError);
+                }, this::handleApiError);
     }
 
     @Override

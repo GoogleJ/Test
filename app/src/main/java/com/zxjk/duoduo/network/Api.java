@@ -144,13 +144,18 @@ public interface Api {
      */
     @POST("duoduo/friend/applyAddFriend")
     @FormUrlEncoded
-    Observable<BaseResponse<List<String>>> applyAddFriend(
+    Observable<BaseResponse<List<FriendListResponse>>> applyAddFriend(
             @Field("friendId")String friendId,
             @Field("remark")String remark
     );
-    @FormUrlEncoded
+
+    /**
+     * 获取待添加的好友列表
+     * @return
+     */
     @POST("duoduo/friend/getMyfriendsWaiting")
-    Observable<BaseResponse<FriendListResponse>> getMyFirendsWaiting();
+
+    Observable<BaseResponse<List<FriendListResponse>>> getMyFirendsWaiting();
 
 
 

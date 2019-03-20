@@ -77,4 +77,10 @@ public class AddFriendActivity extends BaseActivity implements View.OnClickListe
         });
 
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
 }

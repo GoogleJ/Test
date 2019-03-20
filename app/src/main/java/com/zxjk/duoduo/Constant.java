@@ -19,8 +19,8 @@ public class Constant {
 
 //    public static String phoneUuid ="321654111";
 
-    public static String userId="20";
-    public static String token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMCIsImlzcyI6ImR1b2R1byIsImp0aSI6IjA0OjRmOjRjOjljOjgwOjFkIn0.MAxAE2cluTL2y7ZKi2_vWYCW6YKfWmUle_-OIOlB6qM";
+    public static String userId="";
+    public static String token="";
     public static String phoneUuid = DeviceUtils.getMacAddress()
             .equals("") ? DeviceUtils.getAndroidID() : DeviceUtils.getMacAddress();
 //    public static String userId="";

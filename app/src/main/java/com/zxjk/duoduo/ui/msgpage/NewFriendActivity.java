@@ -37,7 +37,7 @@ public class NewFriendActivity extends BaseActivity {
     /**
      * 填充的假数据
      */
-    List<TestBean> list;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,9 +62,7 @@ public class NewFriendActivity extends BaseActivity {
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
         mAdapter=new NewFriendAdapter();
-        list=new ArrayList<>();
-
-
+        getMyFriendsWaiting();
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
@@ -83,10 +81,10 @@ public class NewFriendActivity extends BaseActivity {
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<FriendListResponse>() {
+                .subscribe(new Consumer<List<FriendListResponse>>() {
                     @Override
-                    public void accept(FriendListResponse s) throws Exception {
-
+                    public void accept(List<FriendListResponse> s) throws Exception {
+                        mAdapter.setNewData(s);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

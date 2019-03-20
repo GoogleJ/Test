@@ -78,6 +78,13 @@ public class GlobalSearchActivity extends BaseActivity {
     }
 
     private void initUI() {
+        titleBar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         LinearLayoutManager manager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(manager);
         mAdapter = new GlobalSearchAdapter();
@@ -115,5 +122,11 @@ public class GlobalSearchActivity extends BaseActivity {
                     }
                 }, throwable -> LogUtils.d("DEBUG", throwable.getMessage()));
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
     }
 }

@@ -121,4 +121,10 @@ public class PersonalInformationActivity extends BaseActivity implements View.On
                     }
                 });
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
 }

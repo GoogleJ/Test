@@ -12,6 +12,7 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.BaseResponse;
+import com.zxjk.duoduo.network.response.FriendListResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.weight.TitleBar;
@@ -71,19 +72,16 @@ public class VerificationActivity extends BaseActivity implements View.OnClickLi
                 .applyAddFriend(friendId,remark)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
-                .subscribe(new Consumer<BaseResponse<List<String>>>() {
+                .subscribe(new Consumer<BaseResponse<List<FriendListResponse>>>() {
                     @Override
-                    public void accept(BaseResponse<List<String>> listBaseResponse) throws Exception {
+                    public void accept(BaseResponse<List<FriendListResponse>> listBaseResponse) throws Exception {
 
                         LogUtils.d("DEBUG",listBaseResponse);
+                        finish();
+
 
                     }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        LogUtils.d("DEBUG",throwable.getMessage());
-                    }
-                });
+                },this::handleApiError);
 
     }
 

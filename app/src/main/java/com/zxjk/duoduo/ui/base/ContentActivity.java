@@ -6,11 +6,9 @@ import android.os.Bundle;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.msgpage.ConstactsNewFriendFragment;
 import com.zxjk.duoduo.ui.msgpage.ContactFragment;
-import com.zxjk.duoduo.ui.msgpage.VerificationActivity;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import com.zxjk.duoduo.ui.msg.NewFriendFragment;
 
 
 /**
@@ -58,12 +56,12 @@ public class ContentActivity extends BaseActivity {
                 transaction.replace(R.id.m_content, ConstactsNewFriendFragment.newInstance());
                 transaction.commit();
                 break;
-            case 4:
-                //这个是新的朋友的Fragment界面
-                transaction.remove(ConstactsNewFriendFragment.newInstance());
-                transaction.replace(R.id.m_content, NewFriendFragment.newInstance());
-                transaction.commit();
-                break;
+//            case 4:
+//                //这个是新的朋友的Fragment界面
+//                transaction.remove(ConstactsNewFriendFragment.newInstance());
+//                transaction.replace(R.id.m_content, NewFriendFragment.newInstance());
+//                transaction.commit();
+//                break;
             default:
                 break;
         }
