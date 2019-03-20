@@ -114,6 +114,23 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ui.msgpage.PersonalInformationActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.zxjk.duoduo"
+                    android:pathPrefix="/push_message"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".ui.EditPersonalInformationFragment"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"

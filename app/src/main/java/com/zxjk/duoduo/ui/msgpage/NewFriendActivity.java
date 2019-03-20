@@ -1,32 +1,21 @@
-package com.zxjk.duoduo.ui.msg;
-
+package com.zxjk.duoduo.ui.msgpage;
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zxjk.duoduo.R;
-
 import com.zxjk.duoduo.bean.TestBean;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.FriendListResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
-import com.zxjk.duoduo.ui.base.ContentActivity;
+import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.NewFriendAdapter;
-import com.zxjk.duoduo.ui.msgpage.base.BaseFragment;
 import com.zxjk.duoduo.weight.TitleBar;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -37,7 +26,7 @@ import io.reactivex.functions.Consumer;
  * @author Administrator
  * @// TODO: 2019\3\20 0020  新的朋友
  */
-public class NewFriendFragment extends BaseFragment {
+public class NewFriendActivity extends BaseActivity {
     @BindView(R.id.m_fragment_new_friend_title_bar)
     TitleBar titleBar;
     @BindView(R.id.m_contact_search_edit_1)
@@ -49,25 +38,15 @@ public class NewFriendFragment extends BaseFragment {
      * 填充的假数据
      */
     List<TestBean> list;
-    public static Fragment newInstance(){
-        NewFriendFragment fragment=new NewFriendFragment();
-        Bundle bundle =new Bundle();
-        fragment.setArguments(bundle);
-        return fragment;
-    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_new_friend);
+        ButterKnife.bind(this);
+        initUI();
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_new_friend,null);
-        ButterKnife.bind(this,view);
-        initUI();
-        return view;
-    }
 
     @SuppressLint("WrongConstant")
 
@@ -76,10 +55,10 @@ public class NewFriendFragment extends BaseFragment {
         titleBar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               getActivity().finish();
+                finish();
             }
         });
-        LinearLayoutManager manager=new LinearLayoutManager(getContext());
+        LinearLayoutManager manager=new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
         mAdapter=new NewFriendAdapter();
@@ -91,11 +70,30 @@ public class NewFriendFragment extends BaseFragment {
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent=new Intent(getActivity(), ContentActivity.class);
-                intent.putExtra("tag",0);
-                getActivity().startActivity(intent);
+//                Intent intent=new Intent(getActivity(), ContentActivity.class);
+//                intent.putExtra("tag",0);
+//                getActivity().startActivity(intent);
             }
         });
+    }
+
+    public void getMyFriendsWaiting(){
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .getMyFirendsWaiting()
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.ioObserver())
+                .compose(RxSchedulers.normalTrans())
+                .subscribe(new Consumer<FriendListResponse>() {
+                    @Override
+                    public void accept(FriendListResponse s) throws Exception {
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+
+                    }
+                });
     }
 
 }

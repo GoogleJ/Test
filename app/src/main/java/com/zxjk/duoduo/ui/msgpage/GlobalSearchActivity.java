@@ -2,6 +2,7 @@ package com.zxjk.duoduo.ui.msgpage;
 
 
 import android.app.Activity;
+import android.app.Person;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -24,6 +25,7 @@ import com.zxjk.duoduo.ui.msgpage.adapter.GlobalSearchAdapter;
 import com.zxjk.duoduo.ui.msgpage.adapter.SearchAdapter;
 import com.zxjk.duoduo.weight.TitleBar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -58,6 +60,7 @@ public class GlobalSearchActivity extends BaseActivity {
         initData();
         initUI();
     }
+    List<SearchCustomerInfoResponse> list=new ArrayList<>();
     private void initData() {
         searchEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -83,9 +86,11 @@ public class GlobalSearchActivity extends BaseActivity {
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent=new Intent(GlobalSearchActivity.this, ContentActivity.class);
-                intent.putExtra("tag",0);
+
+                Intent intent=new Intent(GlobalSearchActivity.this, PersonalInformationActivity.class);
+                intent.putExtra("userId",list.get(position).getId());
                 startActivity(intent);
+
 
             }
         });
@@ -105,6 +110,7 @@ public class GlobalSearchActivity extends BaseActivity {
                         for (int i = 0; i < searchCustomerInfoResponses.size(); i++) {
                             LogUtils.d("DEBUG", searchCustomerInfoResponses.get(i).toString());
                         }
+                        list=searchCustomerInfoResponses;
 
                     }
                 }, throwable -> LogUtils.d("DEBUG", throwable.getMessage()));

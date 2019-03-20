@@ -37,11 +37,6 @@ public class AddFriendActivity extends BaseActivity implements View.OnClickListe
         ButterKnife.bind(this);
         initUI();
     }
-
-
-
-
-
     @OnClick({R.id.m_add_friend_wechat_btn
             ,R.id.m_add_friend_contact_btn
             ,R.id.m_my_qr_code_btn

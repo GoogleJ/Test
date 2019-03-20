@@ -180,9 +180,7 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
                 ToastUtils.showShort("此功能暂未实现");
                 break;
             case R.id.m_contact_add_friend_btn:
-                Intent intent = new Intent(getActivity(), ContentActivity.class);
-                intent.putExtra("tag", 4);
-                getActivity().startActivity(intent);
+
                 break;
             case R.id.m_contact_new_friend_btn:
                 AddFriendActivity.start(getActivity());

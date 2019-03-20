@@ -136,6 +136,22 @@ public interface Api {
             @Field("data")String data
     );
 
+    /**
+     *申请添加好友
+     * @param friendId
+     * @param remark
+     * @return
+     */
+    @POST("duoduo/friend/applyAddFriend")
+    @FormUrlEncoded
+    Observable<BaseResponse<List<String>>> applyAddFriend(
+            @Field("friendId")String friendId,
+            @Field("remark")String remark
+    );
+    @FormUrlEncoded
+    @POST("duoduo/friend/getMyfriendsWaiting")
+    Observable<BaseResponse<FriendListResponse>> getMyFirendsWaiting();
+
 
 
 }

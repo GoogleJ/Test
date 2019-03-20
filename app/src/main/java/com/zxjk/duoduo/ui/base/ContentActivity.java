@@ -6,8 +6,7 @@ import android.os.Bundle;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.msgpage.ConstactsNewFriendFragment;
 import com.zxjk.duoduo.ui.msgpage.ContactFragment;
-import com.zxjk.duoduo.ui.msgpage.PersonalInformationFragment;
-import com.zxjk.duoduo.ui.msgpage.VerificationFragment;
+import com.zxjk.duoduo.ui.msgpage.VerificationActivity;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -37,19 +36,19 @@ public class ContentActivity extends BaseActivity {
         FragmentTransaction transaction=manager.beginTransaction();
         switch (i) {
             case 0:
-                //添加联系人界面
-                transaction.add(R.id.m_content, PersonalInformationFragment.newInstance());
-                transaction.commit();
+//                //添加联系人界面
+//                transaction.add(R.id.m_content, PersonalInformationFragment.newInstance());
+//                transaction.commit();
                 break;
-            case 1:
-                //验证申请界面
-                transaction.remove(PersonalInformationFragment.newInstance());
-                transaction.replace(R.id.m_content, VerificationFragment.newInstance());
-                transaction.commit();
-                break;
+//            case 1:
+//                //验证申请界面
+//
+//                transaction.add(R.id.m_content, VerificationActivity.newInstance());
+//                transaction.commit();
+//                break;
             case 2:
                 //这个是手机联系人界面
-                transaction.remove(VerificationFragment.newInstance());
+//                transaction.remove(VerificationActivity.newInstance());
                 transaction.replace(R.id.m_content, ContactFragment.newInstance());
                 transaction.commit();
                 break;
