@@ -11,6 +11,10 @@ import android.widget.PopupWindow;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * @author Administrator
+ *
+ */
 public class CommonPopupWindow extends PopupWindow {
     final PopupController controller;
 

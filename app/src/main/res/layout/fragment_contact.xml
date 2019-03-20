@@ -33,14 +33,16 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="26dp"
             android:layout_marginEnd="24dp"
+            android:imeOptions="actionSearch"
+            android:singleLine="true"
+
             android:layout_marginBottom="26dp"
             android:background="@color/m_contact_edit_back"
             android:drawableStart="@drawable/ic_search_gray"
             android:drawablePadding="10dp"
-
+            android:hint="搜索"
             android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="搜索" />
+            android:paddingEnd="20dp" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
