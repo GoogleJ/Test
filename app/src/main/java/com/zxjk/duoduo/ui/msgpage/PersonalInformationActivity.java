@@ -58,12 +58,15 @@ public class PersonalInformationActivity extends BaseActivity implements View.On
     @BindView(R.id.m_personal_information_gender_icon)
     ImageView genderImage;
 
-    String userIds;
+
     String user;
+    String newFriendId;
     private PopupWindow mPopupWindow;
 
     int   type;
     int a =1;
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,15 +74,13 @@ public class PersonalInformationActivity extends BaseActivity implements View.On
         setContentView(R.layout.activity_personal_information);
         ButterKnife.bind(this);
         initUI();
-        Intent intent = getIntent();
-        userIds = intent.getStringExtra("userId");
-
+        Intent intent=getIntent();
+        user=intent.getStringExtra("searchUserId");
         Intent intent1=getIntent();
-        user =intent1.getStringExtra("userIds");
-        int types = 0;
-        type =intent1.getIntExtra("type",types);
-        getFriendInfoById(userIds);
+        newFriendId=intent1.getStringExtra("newFriendActivityUserId");
+
         getFriendInfoById(user);
+        getFriendInfoById(newFriendId);
     }
 
 
@@ -99,15 +100,13 @@ public class PersonalInformationActivity extends BaseActivity implements View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.m_personal_information_add_contact_btn:
-
                 if (type!=a){
                 Intent intent = new Intent(PersonalInformationActivity.this, VerificationActivity.class);
-                intent.putExtra("userIdAddFriend", userIds);
+                intent.putExtra("userIdAddFriend", user);
                 startActivity(intent);
                 }else{
                     addFriend(user,signtureText.getText().toString());
                     ToastUtils.showShort("添加成功");
-
                 }
 
                 break;
@@ -168,7 +167,7 @@ public class PersonalInformationActivity extends BaseActivity implements View.On
     @Override
     protected void onStop() {
         super.onStop();
-        finish();
+
     }
 
 

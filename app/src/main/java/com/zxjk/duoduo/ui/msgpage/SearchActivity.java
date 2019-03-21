@@ -63,6 +63,8 @@ public class SearchActivity extends BaseActivity {
         activity.startActivity(intent);
     }
 
+    List<SearchCustomerInfoResponse> list = new ArrayList<>();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,10 +107,11 @@ public class SearchActivity extends BaseActivity {
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-//               Intent intent=new Intent(SearchActivity.this,ContentActivity.class);
-//               intent.putExtra("tag",0);
-//               startActivity(intent);
+
                 //这里跳转到已添加的可以发消息的好友
+                Intent intent = new Intent(SearchActivity.this, PersonalInformationActivity.class);
+                intent.putExtra("searchUserId", list.get(position).getId());
+                startActivity(intent);
 
             }
         });
@@ -117,18 +120,21 @@ public class SearchActivity extends BaseActivity {
     }
 
     public void searchFriendInfo(String data) {
+        //模糊搜索用户
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .searchFriend(data)
+                .searchCustomerInfo(data)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<List<SearchResponse>>() {
+                .subscribe(new Consumer<List<SearchCustomerInfoResponse>>() {
                     @Override
-                    public void accept(List<SearchResponse> searchCustomerInfoResponses) throws Exception {
+                    public void accept(List<SearchCustomerInfoResponse> searchCustomerInfoResponses) throws Exception {
                         mAdapter.setNewData(searchCustomerInfoResponses);
                         for (int i = 0; i < searchCustomerInfoResponses.size(); i++) {
                             LogUtils.d("DEBUG", searchCustomerInfoResponses.get(i).toString());
                         }
+                        list = searchCustomerInfoResponses;
+
 
                     }
                 }, throwable -> LogUtils.d("DEBUG", throwable.getMessage()));

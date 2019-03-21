@@ -34,6 +34,8 @@ import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 
+import static com.zxjk.duoduo.utils.MD5Utils.getMD5;
+
 //import io.rong.imkit.RongIM;
 //import io.rong.imlib.RongIMClient;
 
@@ -147,7 +149,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 
         subscribe = ServiceFactory.getInstance().getBaseService(Api.class)
-                .login(phone, String.valueOf(EncryptUtils.encryptMD5ToString(pwd)).toLowerCase())
+                .login(phone, getMD5(pwd))
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
@@ -173,6 +175,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                     }
                 }, throwable -> {
+
+
                     handleApiError(throwable);
                 });
 

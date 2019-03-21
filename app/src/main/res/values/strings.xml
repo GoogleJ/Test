@@ -110,7 +110,13 @@
     <string name="m_people_information_wallet_address_label">钱包地址</string>
     <string name="m_people_information_send_to_message">发消息</string>
     <string name="m_people_information_voice_calls">语音通话</string>
-
+    <string name="update_rename">修改备注</string>
+    <string name="recommend_to_friend">推荐给好友</string>
+    <string name="m_delete_friend_constant">删除联系人</string>
+    <string name="m_delete_friend_label">将联系人“%1$3d”，删除，同时删除与个该联系人的聊天记录</string>
+    <string name="m_cancel_btn">取消</string>
+    <string name="m_modify_notes_title_bar">备注</string>
+    <string name="m_modify_notes_right_title_bar">确定</string>
 
     <string name="m_group_chat">群聊</string>
     <string name="enter_group_chat">输入群名</string>

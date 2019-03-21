@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewParent;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -52,11 +54,6 @@ public class NewFriendActivity extends BaseActivity {
     RecyclerView mRecyclerView;
     NewFriendAdapter mAdapter;
     DeleteFriendDialog dialog;
-    /**
-     * 填充的假数据
-     */
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +79,7 @@ public class NewFriendActivity extends BaseActivity {
         mAdapter = new NewFriendAdapter();
         getMyFriendsWaiting();
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
+
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
@@ -101,15 +98,16 @@ public class NewFriendActivity extends BaseActivity {
                         break;
                     case R.id.m_add_btn_layout:
                         Intent intent=new Intent(NewFriendActivity.this,PersonalInformationActivity.class);
-                        intent.putExtra("userIds",list.get(position).getId());
+                        intent.putExtra("newFriendActivityUserId",list.get(position).getId());
                         intent.putExtra("type",1);
                         startActivity(intent);
                         break;
                     default:
                         break;
                 }
-
+                mAdapter.notifyDataSetChanged();
             }
+
         });
         mAdapter.setOnItemChildLongClickListener(new BaseQuickAdapter.OnItemChildLongClickListener() {
             @Override
@@ -125,6 +123,19 @@ public class NewFriendActivity extends BaseActivity {
                 return false;
             }
         });
+
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                //搜索按键action
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    LogUtils.d("开始搜索");
+//                    searchCustomerInfo(editText.getText().toString());
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     public void getMyFriendsWaiting() {
@@ -136,13 +147,18 @@ public class NewFriendActivity extends BaseActivity {
                 .subscribe(new Consumer<List<FriendListResponse>>() {
                     @Override
                     public void accept(List<FriendListResponse> s) throws Exception {
-                        mAdapter.setNewData(s);
+                       mAdapter.setNewData(s);
                         list=s;
+                        for (int i=0;i<s.size();i++){
+                            LogUtils.d("DEBUG",s);
+                        }
+
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         LogUtils.d("DEBUG", throwable.getMessage());
+
                     }
                 });
     }

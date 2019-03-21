@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/ic_msg_popwindow_bg"
+    android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/update_rename"
+        style="@style/msg_top_pop_style">
+
+        <ImageView
+            style="@style/msg_top_pop_img_style"
+            app:srcCompat="@drawable/icon_update_rename" />
+
+        <TextView
+            style="@style/msg_top_pop_text_style"
+            android:text="@string/update_rename" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/recommend_to_friend"
+        style="@style/msg_top_pop_style">
+
+        <ImageView
+            style="@style/msg_top_pop_img_style"
+            app:srcCompat="@drawable/icon_recommend_to_friend" />
+
+        <TextView
+            style="@style/msg_top_pop_text_style"
+            android:text="@string/recommend_to_friend" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/delete_friend"
+        style="@style/msg_top_pop_style">
+
+        <ImageView
+            style="@style/msg_top_pop_img_style"
+            app:srcCompat="@drawable/icon_delete_friend" />
+
+        <TextView
+            style="@style/msg_top_pop_text_style"
+            android:text="@string/m_delete_popup" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -33,6 +33,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import io.reactivex.functions.Consumer;
 import io.rong.imkit.tools.CharacterParser;
 
@@ -51,7 +52,7 @@ public class ContactFragment extends BaseFragment {
     @BindView(R.id.m_contact_recycler_view)
     RecyclerView mRecyclerView;
 
-
+Unbinder unbinder;
     /**
      * 汉字转换成拼音的类
      */
@@ -84,7 +85,7 @@ public class ContactFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_contact, null);
-        ButterKnife.bind(this, view);
+        unbinder= ButterKnife.bind(this, view);
         initUI();
         initData();
 
@@ -194,5 +195,11 @@ public class ContactFragment extends BaseFragment {
                     }
                 }, throwable -> LogUtils.d("DDD", throwable.getMessage()));
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
     }
 }

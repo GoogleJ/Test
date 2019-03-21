@@ -28,6 +28,10 @@ import androidx.annotation.RequiresApi;
 import butterknife.ButterKnife;
 import io.reactivex.functions.Consumer;
 
+/**
+ * @author Administrator
+ * @// TODO: 2019\3\21 0021  设置支付密码
+ */
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class SetUpPaymentPwdFragment extends BaseActivity {
 

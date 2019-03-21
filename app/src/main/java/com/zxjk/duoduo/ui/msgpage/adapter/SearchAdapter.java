@@ -34,7 +34,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * @author Administrator
  * @// TODO: 2019\3\20 0020 搜索的适配器
  */
-public class SearchAdapter extends BaseQuickAdapter<SearchResponse, BaseViewHolder> {
+public class SearchAdapter extends BaseQuickAdapter<SearchCustomerInfoResponse, BaseViewHolder> {
 
     Context context;
 
@@ -44,7 +44,7 @@ public class SearchAdapter extends BaseQuickAdapter<SearchResponse, BaseViewHold
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, SearchResponse item) {
+    protected void convert(BaseViewHolder helper, SearchCustomerInfoResponse item) {
         helper.setText(R.id.m_item_search_text, item.getRealname())
                 .setText(R.id.m_item_search_dudu_id, item.getDuoduoId())
                 .addOnClickListener(R.id.m_item_search_layout);

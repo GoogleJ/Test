@@ -34,6 +34,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import io.reactivex.functions.Consumer;
 import io.rong.imkit.tools.CharacterParser;
 
@@ -56,7 +57,7 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
     private BaseContactAdapter adapter;
 
 
-
+    Unbinder unbinder;
     /**
      * 汉字转换成拼音的类
      */
@@ -81,7 +82,7 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_constacts_new_friend, null);
-        ButterKnife.bind(this, view);
+        unbinder=ButterKnife.bind(this, view);
         initView();
         return view;
     }
@@ -89,7 +90,7 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getFriendListInfoById();
+
     }
 
     private void initView() {
@@ -107,7 +108,7 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
             }
         }));
         adapter = new BaseContactAdapter();
-
+        getFriendListInfoById();
         mRecyclerView.setAdapter(adapter);
         initIndexView();
         titleBar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
@@ -120,8 +121,8 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
         adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent=new Intent(getActivity(),PeopleInformationActivity.class);
-                intent.putExtra("peopleInformatinoUserId",list.get(position).getId());
+                Intent intent = new Intent(getActivity(), PeopleInformationActivity.class);
+                intent.putExtra("peopleInformatinoUserId", list.get(position).getId());
                 getActivity().startActivity(intent);
             }
         });
@@ -212,9 +213,20 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
                     for (int i = 0; i < friendListResponses.size(); i++) {
                         LogUtils.d("DEBUG", friendListResponses.get(i).toString());
                     }
+
                 }, throwable -> LogUtils.d("DDD", throwable.getMessage()));
 
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
+    }
 }

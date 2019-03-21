@@ -80,8 +80,7 @@ public interface Api {
     //更新用户信息
     @POST("duoduo/customer/updateCustomerInfo")
     @FormUrlEncoded
-    Observable<BaseResponse<UpdateCustomerInfoResponse>> updateUserInfo(
-            @Field("customerInfo") String customerInfo);
+    Observable<BaseResponse<String>> updateUserInfo(@Field("customerInfo") String customerInfo);
 
     /**
      * 修改支付密码
@@ -152,7 +151,7 @@ public interface Api {
      */
     @POST("duoduo/friend/applyAddFriend")
     @FormUrlEncoded
-    Observable<BaseResponse<List<FriendListResponse>>> applyAddFriend(
+    Observable<BaseResponse<String>> applyAddFriend(
             @Field("friendId") String friendId,
             @Field("remark") String remark
     );
@@ -180,7 +179,7 @@ public interface Api {
     );
 
     /**
-     * 删除好友
+     * 删除好友申请
      *
      * @param friendId
      * @return
