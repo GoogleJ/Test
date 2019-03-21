@@ -1,5 +1,9 @@
 package com.zxjk.duoduo.network.response;
 
+/**
+ * @author Administrator
+ * @// TODO: 2019\3\21 0021 实名认证 
+ */
 public class UpdateCustomerInfoResponse {
 
     /**

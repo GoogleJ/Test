@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Debug;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -38,6 +39,7 @@ import androidx.annotation.Nullable;
 import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
 
+import static com.zxjk.duoduo.utils.PermissionUtils.cameraPremissions;
 import static com.zxjk.duoduo.utils.PermissionUtils.verifyStoragePermissions;
 
 /**
@@ -126,7 +128,7 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                 break;
             case R.id.m_edit_information_header_icon:
                 verifyStoragePermissions(this);
-
+                cameraPremissions(this);
                 selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
 
@@ -204,12 +206,23 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                         ToastUtils.showShort("更新头像成功");
                         startActivity(new Intent(EditPersonalInformationFragment.this, SetUpPaymentPwdFragment.class));
                     }
-                }, this::handleApiError);
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        handleApiError(throwable);
+                        LogUtils.d("DEBUG",throwable.getMessage());
+                    }
+                });
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
         finish();
     }
 }

@@ -53,6 +53,7 @@ public class MyQrCodeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_qr_code);
         ButterKnife.bind(this);
+
         titleBar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

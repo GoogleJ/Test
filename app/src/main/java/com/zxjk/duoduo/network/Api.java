@@ -150,7 +150,7 @@ public interface Api {
      */
     @POST("duoduo/friend/applyAddFriend")
     @FormUrlEncoded
-    Observable<BaseResponse<List<FriendListResponse>>> applyAddFriend(
+    Observable<BaseResponse<String>> applyAddFriend(
             @Field("friendId") String friendId,
             @Field("remark") String remark
     );
@@ -178,7 +178,7 @@ public interface Api {
     );
 
     /**
-     * 删除好友
+     * 删除好友申请
      *
      * @param friendId
      * @return
@@ -188,11 +188,42 @@ public interface Api {
     Observable<BaseResponse<String>> deleteMyfirendsWaiting(
             @Field("deleteCustomerId") String friendId
     );
+
+    /**
+     * 修改手机号
+     * @param newMobile
+     * @param securityCode
+     * @return
+     */
     @POST("duoduo/customer/updateMobile")
     @FormUrlEncoded
     Observable<BaseResponse<String>> updateMobile(
             @Field("newMobile") String newMobile,
             @Field("securityCode") String securityCode
+    );
+
+    /**
+     * 删除好友
+     * @param friendId
+     * @return
+     */
+    @POST("duoduo/friend/deleteFriend")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> deleteFriend(
+            @Field("friendId")String friendId
+    );
+
+    /**
+     * 修改好友备注
+     * @param friendId
+     * @param remark
+     * @return
+     */
+    @POST("duoduo/friend/updateRemark")
+    @FormUrlEncoded
+    Observable<BaseResponse<FriendInfoResponse>> updateRemark(
+            @Field("friendId")String friendId,
+            @Field("remark")String remark
     );
 
 }

@@ -72,9 +72,10 @@ public class VerificationActivity extends BaseActivity implements View.OnClickLi
                 .applyAddFriend(friendId,remark)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
-                .subscribe(new Consumer<BaseResponse<List<FriendListResponse>>>() {
+                .subscribe(new Consumer<BaseResponse<String>>() {
                     @Override
-                    public void accept(BaseResponse<List<FriendListResponse>> listBaseResponse) throws Exception {
+                    public void accept(BaseResponse<String> listBaseResponse) throws Exception {
+                        ToastUtils.showShort("添加成功");
 
                         LogUtils.d("DEBUG",listBaseResponse);
                         finish();

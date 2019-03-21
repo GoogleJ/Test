@@ -119,6 +119,7 @@ public class GlobalSearchActivity extends BaseActivity {
                         }
                         list=searchCustomerInfoResponses;
 
+
                     }
                 }, throwable -> LogUtils.d("DEBUG", throwable.getMessage()));
 
@@ -127,6 +128,6 @@ public class GlobalSearchActivity extends BaseActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        finish();
+
     }
 }

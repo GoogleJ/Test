@@ -20,6 +20,8 @@ import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
 import cn.bingoogolapple.qrcode.zxing.QRCodeDecoder;
 import cn.bingoogolapple.qrcode.zxing.ZXingView;
 
+import static com.zxjk.duoduo.utils.PermissionUtils.cameraPremissions;
+
 
 /**
  * @author Administrator
@@ -83,7 +85,9 @@ public class QrCodeActivity extends BaseActivity implements ZXingView.Delegate {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_code);
         ButterKnife.bind(this);
+        cameraPremissions(this);
         initUI();
+
 
     }
 
