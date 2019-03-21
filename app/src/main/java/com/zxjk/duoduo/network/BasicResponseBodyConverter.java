@@ -1,19 +1,21 @@
 package com.zxjk.duoduo.network;
 
 import android.text.TextUtils;
+
 import com.google.gson.TypeAdapter;
 import com.zxjk.duoduo.Constant;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
+
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
 
 public class BasicResponseBodyConverter<T> implements Converter<ResponseBody, T> {
 
     private final TypeAdapter<T> adapter;
-
 
     BasicResponseBodyConverter(TypeAdapter<T> adapter) {
         this.adapter = adapter;
@@ -24,14 +26,16 @@ public class BasicResponseBodyConverter<T> implements Converter<ResponseBody, T>
         String json = value.string();
         try {
             JSONObject jsonObject = new JSONObject(json);
-            int code=jsonObject.optInt("code");
             String data = jsonObject.optString("data");
             String msg = jsonObject.optString("msg");
-            if (TextUtils.isEmpty(data)&&code!= Constant.CODE_SUCCESS ) {
+            int code = jsonObject.optInt("code", Constant.CODE_SUCCESS);
+            if (code != Constant.CODE_SUCCESS && TextUtils.isEmpty(data)) {
                 throw new IOException(msg);
             }
         } catch (JSONException e) {
             e.printStackTrace();
+        } finally {
+            value.close();
         }
         return adapter.fromJson(json);
     }

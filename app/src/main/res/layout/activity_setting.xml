@@ -41,6 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_mine_rightarrow"
+                android:onClick="jump2Account"
                 android:paddingLeft="10dp"
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
@@ -54,30 +55,17 @@
                 android:layout_height="10dp"
                 android:background="#f8f8f8" />
 
-            <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
+                android:drawableEnd="@drawable/ic_mine_rightarrow"
                 android:paddingLeft="10dp"
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
-                android:paddingBottom="16dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_weight="1"
-                    android:text="新消息通知"
-                    android:textColor="#4B4D5B"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_mine_rightarrow" />
-
-            </LinearLayout>
+                android:paddingBottom="16dp"
+                android:text="新消息通知"
+                android:textColor="#4B4D5B"
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -115,7 +103,6 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_weight="1"
                     android:text="实名认证"
                     android:textColor="#4B4D5B"
@@ -152,7 +139,6 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_weight="1"
                     android:text="收款信息"
                     android:textColor="#4B4D5B"
@@ -244,6 +230,24 @@
 
             <View
                 android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginStart="10dp"
+                android:background="#dddddd" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_mine_rightarrow"
+                android:paddingLeft="10dp"
+                android:paddingTop="16dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="16dp"
+                android:text="在线客服"
+                android:textColor="#4B4D5B"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:background="#f8f8f8" />
 
@@ -259,7 +263,6 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_weight="1"
                     android:text="切换账号"
                     android:textColor="#4B4D5B"

@@ -188,5 +188,11 @@ public interface Api {
     Observable<BaseResponse<String>> deleteMyfirendsWaiting(
             @Field("deleteCustomerId") String friendId
     );
+    @POST("duoduo/customer/updateMobile")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> updateMobile(
+            @Field("newMobile") String newMobile,
+            @Field("securityCode") String securityCode
+    );
 
 }
