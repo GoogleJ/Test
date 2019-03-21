@@ -18,13 +18,42 @@
             android:onClick="back"
             android:src="@drawable/ico_back" />
 
-        <TextView
+        <RadioGroup
+            android:id="@+id/rgExchangeTop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="账号"
-            android:textColor="@color/white"
-            android:textSize="17sp" />
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_bac_exchange1"
+                android:button="@null"
+                android:paddingStart="10dp"
+                android:paddingTop="3dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="3dp"
+                android:text="买入"
+                android:textColor="@drawable/selector_text_exchange"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/rb2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_bac_exchange2"
+                android:button="@null"
+                android:paddingStart="10dp"
+                android:paddingTop="3dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="3dp"
+                android:text="出售"
+                android:textColor="@drawable/selector_text_exchange"
+                android:textSize="16sp" />
+
+        </RadioGroup>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -52,6 +81,7 @@
         android:paddingBottom="16dp">
 
         <TextView
+            android:id="@+id/tvExchangeLine1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -125,6 +155,7 @@
         android:paddingBottom="16dp">
 
         <TextView
+            android:id="@+id/tvExchangeLine3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -160,6 +191,7 @@
         android:paddingBottom="16dp">
 
         <TextView
+            android:id="@+id/tvExchangeLine4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -178,6 +210,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tvExchangePayType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#F8F8F8"
@@ -216,6 +249,7 @@
             android:id="@+id/rbExchangeWexin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
             android:background="@drawable/selector_exchange_radio"
             android:button="@null" />
 
@@ -256,6 +290,7 @@
             android:id="@+id/rbExchangeAlipay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
             android:background="@drawable/selector_exchange_radio"
             android:button="@null" />
 
@@ -281,7 +316,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_exchange_alipay" />
+            android:src="@drawable/ic_exchange_bankpay" />
 
         <TextView
             android:layout_width="0dp"
@@ -296,6 +331,7 @@
             android:id="@+id/rbExchangeBank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
             android:background="@drawable/selector_exchange_radio"
             android:button="@null" />
 
@@ -308,6 +344,7 @@
         android:background="#F8F8F8">
 
         <Button
+            android:id="@+id/btnExchangeConfirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"

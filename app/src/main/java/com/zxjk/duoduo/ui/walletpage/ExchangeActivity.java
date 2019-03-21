@@ -3,14 +3,15 @@ package com.zxjk.duoduo.ui.walletpage;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
-
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 
-public class ExchangeActivity extends BaseActivity implements View.OnClickListener {
+public class ExchangeActivity extends BaseActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     private static final int PAY_TYPE_WEXINN = 0;
     private static final int PAY_TYPE_ALI = 1;
@@ -26,8 +27,15 @@ public class ExchangeActivity extends BaseActivity implements View.OnClickListen
     private TextView tvExchangePrice;
     private TextView tvExchangeCount;
     private TextView tvExchangeTotal;
+    private RadioGroup rgExchangeTop;
+    private TextView tvExchangeLine1;
+    private TextView tvExchangeLine3;
+    private TextView tvExchangeLine4;
+    private TextView tvExchangePayType;
+    private Button btnExchangeConfirm;
 
     private int payType;
+    private boolean buyOrSale = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +57,18 @@ public class ExchangeActivity extends BaseActivity implements View.OnClickListen
         tvExchangePrice = findViewById(R.id.tvExchangePrice);
         tvExchangeCount = findViewById(R.id.tvExchangeCount);
         tvExchangeTotal = findViewById(R.id.tvExchangeTotal);
+        rgExchangeTop = findViewById(R.id.rgExchangeTop);
+        tvExchangeLine1 = findViewById(R.id.tvExchangeLine1);
+        tvExchangeLine3 = findViewById(R.id.tvExchangeLine3);
+        tvExchangeLine4 = findViewById(R.id.tvExchangeLine4);
+        tvExchangePayType = findViewById(R.id.tvExchangePayType);
+        btnExchangeConfirm = findViewById(R.id.btnExchangeConfirm);
 
         llExchangeWexin.setOnClickListener(this);
         llExchangeAliPay.setOnClickListener(this);
         llExchangeBank.setOnClickListener(this);
+        rgExchangeTop.check(R.id.rb1);
+        rgExchangeTop.setOnCheckedChangeListener(this);
     }
 
     public void submit(View view) {
@@ -93,6 +109,28 @@ public class ExchangeActivity extends BaseActivity implements View.OnClickListen
                 rbExchangeBank.setChecked(true);
                 break;
             default:
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        switch (checkedId) {
+            case R.id.rb2:
+                buyOrSale = false;
+                tvExchangeLine1.setText("出售币种");
+                tvExchangeLine3.setText("出售数量");
+                tvExchangeLine4.setText("出售总金额");
+                tvExchangePayType.setText("收款方式");
+                btnExchangeConfirm.setText("确认出售");
+                break;
+            case R.id.rb1:
+                buyOrSale = true;
+                tvExchangeLine1.setText("购买币种");
+                tvExchangeLine3.setText("购买数量");
+                tvExchangeLine4.setText("需支付金额");
+                tvExchangePayType.setText("支付方式");
+                btnExchangeConfirm.setText("确认购买");
+                break;
         }
     }
 }

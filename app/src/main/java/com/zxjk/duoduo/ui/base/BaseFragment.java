@@ -20,7 +20,7 @@ import top.zibin.luban.Luban;
  */
 public class BaseFragment extends RxFragment {
 
-    private View rootView;
+    public View rootView;
     protected Fragment mCurrentFragment;
     private static final String CURRENT_FRAGMENT_KEY = "current_fragment_key";
     public void handleApiError(Throwable throwable) {

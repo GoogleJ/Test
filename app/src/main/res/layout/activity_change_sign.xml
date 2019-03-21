@@ -24,7 +24,7 @@
             android:layout_centerInParent="true"
             android:text="个性签名"
             android:textColor="@color/white"
-            android:textSize="17sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="wrap_content"

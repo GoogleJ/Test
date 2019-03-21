@@ -60,6 +60,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Theme_Splash"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -210,6 +211,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
