@@ -73,9 +73,8 @@
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".ui.minepage.SettingActivity" />
-        <activity android:name=".ui.minepage.UserInfoActivity" />
+
+
 
                 <data
                     android:host="com.zxjk.duoduo"
