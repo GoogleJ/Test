@@ -1,9 +1,14 @@
 package com.zxjk.duoduo.network;
 
 import com.zxjk.duoduo.Constant;
+
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -21,15 +26,18 @@ public  class ServiceFactory {
         //构造client对象
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(interceptor).connectTimeout(10, TimeUnit.SECONDS)
-                .addInterceptor(chain -> {
-                    Request original = chain.request();
-                    Request.Builder requestBuilder = original.newBuilder()
-                            .header("id", Constant.userId)
-                            .header("token", Constant.token)
-                            .header("Accept-Language", Constant.language)
-                            .header("phoneUuid", Constant.phoneUuid);
-                    Request request = requestBuilder.build();
-                    return chain.proceed(request);
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        Request original = chain.request();
+                        Request.Builder requestBuilder = original.newBuilder()
+                                .header("id", Constant.userId)
+                                .header("token", Constant.token)
+                                .header("Accept-Language", Constant.language)
+                                .header("phoneUuid", Constant.phoneUuid);
+                        Request request = requestBuilder.build();
+                        return chain.proceed(request);
+                    }
                 })
                 .readTimeout(60, TimeUnit.SECONDS)
                 .writeTimeout(60, TimeUnit.SECONDS)

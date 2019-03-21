@@ -37,9 +37,15 @@
         <activity android:name=".ui.walletpage.ExchangeListActivity"></activity>
         <activity android:name=".ui.walletpage.ExchangeActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+
+                <data
+                    android:host="com.zxjk.duoduo"
+                    android:pathPrefix="/push_message"
+                    android:scheme="rong" />
             </intent-filter>
         </activity>
         <activity android:name=".ui.minepage.ChangePwdActivity" />
@@ -62,7 +68,6 @@
         </activity>
 
 
-
         <activity
             android:name=".ui.minepage.UserInfoActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -73,7 +78,6 @@
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
-
 
 
                 <data
@@ -408,6 +412,25 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.msgpage.GroupChatActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.zxjk.duoduo"
+                    android:pathPrefix="/push_message"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+
         <receiver
             android:name=".ui.msgpage.utils.SealNotificationReceiverUtils"
             android:exported="true">
@@ -418,13 +441,13 @@
             </intent-filter>
         </receiver>
         <!--<provider-->
-            <!--android:name="androidx.core.content.FileProvider"-->
-            <!--android:authorities="com.zxjk.duoduo.FileProvider"-->
-            <!--android:exported="false"-->
-            <!--android:grantUriPermissions="true">-->
-            <!--<meta-data-->
-                <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
-                <!--android:resource="@xml/rc_file_path" />-->
+        <!--android:name="androidx.core.content.FileProvider"-->
+        <!--android:authorities="com.zxjk.duoduo.FileProvider"-->
+        <!--android:exported="false"-->
+        <!--android:grantUriPermissions="true">-->
+        <!--<meta-data-->
+        <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
+        <!--android:resource="@xml/rc_file_path" />-->
         <!--</provider>-->
         <provider
             android:name=".DuoDuoFileProvider"

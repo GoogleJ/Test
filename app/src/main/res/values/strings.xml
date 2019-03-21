@@ -112,4 +112,8 @@
     <string name="m_people_information_voice_calls">语音通话</string>
 
 
+    <string name="m_group_chat">群聊</string>
+    <string name="enter_group_chat">输入群名</string>
+
+
 </resources>

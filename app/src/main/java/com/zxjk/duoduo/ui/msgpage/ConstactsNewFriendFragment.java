@@ -182,7 +182,8 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.m_constacts_new_friend_group_chat_btn:
-                ToastUtils.showShort("此功能暂未实现");
+                //ToastUtils.showShort("此功能暂未实现");
+                GroupChatActivity.start(getActivity());//进入群聊界面
                 break;
             case R.id.m_contact_add_friend_btn:
                 startActivity(new Intent(getActivity(), NewFriendActivity.class));

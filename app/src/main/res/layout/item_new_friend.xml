@@ -29,7 +29,7 @@
         android:text="不爱吃水果"
         android:textColor="@color/black"
 
-        android:textSize="16dp"
+        android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/m_item_new_friend_icon"
         app:layout_constraintTop_toTopOf="@+id/m_item_new_friend_icon"
          />
@@ -40,10 +40,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="“周瑞”邀请你进群"
-        android:textSize="14dp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/m_item_new_friend_icon"
         app:layout_constraintStart_toStartOf="@+id/m_item_new_friend_user_name_text" />
-    
+
     <TextView
         android:id="@+id/m_item_new_friend_type_btn"
         android:layout_width="wrap_content"

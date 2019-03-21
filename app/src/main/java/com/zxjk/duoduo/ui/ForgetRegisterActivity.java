@@ -157,7 +157,12 @@ public class ForgetRegisterActivity extends BaseActivity implements View.OnClick
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(s -> LogUtils.d(s), new Consumer<Throwable>() {
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        LogUtils.d(s);
+                    }
+                }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         handleApiError(throwable);

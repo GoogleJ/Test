@@ -3,6 +3,7 @@ package com.zxjk.duoduo.network;
 import com.zxjk.duoduo.network.response.BaseResponse;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.response.FriendListResponse;
+import com.zxjk.duoduo.network.response.GroupChatResponse;
 import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.response.SearchCustomerInfoResponse;
 import com.zxjk.duoduo.network.response.SearchResponse;
@@ -79,7 +80,8 @@ public interface Api {
     //更新用户信息
     @POST("duoduo/customer/updateCustomerInfo")
     @FormUrlEncoded
-    Observable<BaseResponse<UpdateCustomerInfoResponse>> updateUserInfo(@Field("customerInfo") String customerInfo);
+    Observable<BaseResponse<UpdateCustomerInfoResponse>> updateUserInfo(
+            @Field("customerInfo") String customerInfo);
 
     /**
      * 修改支付密码
@@ -188,11 +190,19 @@ public interface Api {
     Observable<BaseResponse<String>> deleteMyfirendsWaiting(
             @Field("deleteCustomerId") String friendId
     );
+
     @POST("duoduo/customer/updateMobile")
     @FormUrlEncoded
     Observable<BaseResponse<String>> updateMobile(
             @Field("newMobile") String newMobile,
             @Field("securityCode") String securityCode
     );
+
+    /**
+     * 获取所有群组信息
+     */
+    @POST("duoduo/group/getGroupByCustomId")
+    @FormUrlEncoded
+    Observable<BaseResponse<List<GroupChatResponse>>> getMygroupinformation(@Field("customerId") String customerId);
 
 }

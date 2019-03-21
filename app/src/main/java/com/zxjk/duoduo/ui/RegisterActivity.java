@@ -104,7 +104,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 String mobile = edit_mobile.getText().toString().trim();
                 String country = login_country.getText().toString();
                 countryCode = country.substring(1);
-                if (!mobile.isEmpty() && !"".equals(mobile) && mobile.length() == phoneLength) {
+                if (mobile.isEmpty() && "".equals(mobile) && mobile.length() == phoneLength) {
                     registerCode(countryCode + "-" + mobile);
                     return;
                 }

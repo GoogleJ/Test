@@ -16,6 +16,7 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.LoginResponse;
+import com.zxjk.duoduo.network.response.UpdateCustomerInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.TakePopWindow;
@@ -25,6 +26,8 @@ import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
 import java.io.File;
 import java.util.Collections;
+import java.util.List;
+
 import androidx.annotation.Nullable;
 
 @SuppressLint("CheckResult")
@@ -133,21 +136,27 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
         }
 
         if (!TextUtils.isEmpty(filePath)) {
-            zipFile(Collections.singletonList(filePath), files -> {
-                File file = files.get(0);
-                OssUtils.uploadFile(file.getAbsolutePath(), url -> {
-                    LoginResponse update = new LoginResponse(Constant.userId);
-                    update.setHeadPortrait(url);
-                    ServiceFactory.getInstance().getBaseService(Api.class)
-                            .updateUserInfo(GsonUtils.toJson(update))
-                            .compose(bindToLifecycle())
-                            .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                            .compose(RxSchedulers.normalTrans())
-                            .subscribe(response -> {
-                                GlideUtil.loadCornerImg(ivUserInfoHead, url, R.drawable.ic_launcher, CommonUtils.dip2px(this, 2));
-                                ToastUtils.showShort("更新头像成功");
-                            }, this::handleApiError);
-                });
+            zipFile(Collections.singletonList(filePath), new OnZipFileFinish() {
+                @Override
+                public void onFinish(List<File> files) {
+                    File file = files.get(0);
+                    OssUtils.uploadFile(file.getAbsolutePath(), new OssUtils.OssCallBack() {
+                        @Override
+                        public void onSuccess(String url) {
+                            LoginResponse update = new LoginResponse(Constant.userId);
+                            update.setHeadPortrait(url);
+                            ServiceFactory.getInstance().getBaseService(Api.class)
+                                    .updateUserInfo(GsonUtils.toJson(update))
+                                    .compose(UserInfoActivity.this.bindToLifecycle())
+                                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(UserInfoActivity.this)))
+                                    .compose(RxSchedulers.normalTrans())
+                                    .subscribe((UpdateCustomerInfoResponse response) -> {
+                                        GlideUtil.loadCornerImg(ivUserInfoHead, url, R.drawable.ic_launcher, CommonUtils.dip2px(UserInfoActivity.this, 2));
+                                        ToastUtils.showShort("更新头像成功");
+                                    }, UserInfoActivity.this::handleApiError);
+                        }
+                    });
+                }
             });
         }
     }
