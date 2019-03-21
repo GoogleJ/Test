@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/m_contact_edit_back"
 
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/m_contact_edit_back"
     android:orientation="vertical">
+
     <com.zxjk.duoduo.weight.TitleBar
         android:id="@+id/m_fragment_new_friend_title_bar"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         app:titleBarLeftImage="@drawable/ico_back"
-        app:titleBarTitle="@string/m_fragment_new_friend_title_bar"
         app:titleBarTextColor="@color/white"
-        />
+        app:titleBarTitle="@string/m_fragment_new_friend_title_bar" />
+
     <LinearLayout
         android:id="@+id/m_contact_search_edit"
         android:layout_width="match_parent"
@@ -21,37 +22,38 @@
         android:background="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/m_contact_title_bar">
+
         <EditText
             android:id="@+id/m_contact_search_edit_1"
             style="?attr/checkedTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginBottom="26dp"
-            android:layout_marginEnd="24dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="26dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="26dp"
             android:background="@color/m_contact_edit_back"
-            android:drawablePadding="10dp"
             android:drawableStart="@drawable/ic_search_gray"
-            android:paddingEnd="20dp"
+            android:drawablePadding="10dp"
+            android:hint="搜索"
+            android:imeOptions="actionSearch"
             android:paddingStart="20dp"
-            android:text="搜索" />
+            android:paddingEnd="20dp"
+            android:singleLine="true" />
     </LinearLayout>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="28dp"
-        android:text="@string/m_fragment_new_friend_title_bar"
-        android:paddingStart="12dp"
         android:gravity="center_vertical"
-        />
+        android:paddingStart="12dp"
+        android:text="@string/m_fragment_new_friend_title_bar" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/m_fragment_new_friend_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="20dp"
-        />
-    
-
+        android:paddingBottom="20dp" />
 
 
 </LinearLayout>

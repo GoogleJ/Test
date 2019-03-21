@@ -33,6 +33,8 @@ import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
 
+import static com.zxjk.duoduo.utils.MD5Utils.getMD5;
+
 /**
  * @author Mr.Chen
  * @// TODO: 2019\3\17 0017 注册
@@ -120,11 +122,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 String code = edit_register_code.getText().toString();
 
 
-                if (!mobile.isEmpty() && !"".equals(mobile) && mobile.length() == phoneLength) {
+                if (mobile.isEmpty() && "".equals(mobile) && mobile.length() != phoneLength) {
                     ToastUtils.showShort(getString(R.string.edit_mobile_tip));
                     return;
                 }
-                if (password.isEmpty() || 6 >= password.length() || password.length() >= 14) {
+                if (password.isEmpty() || 5>= password.length() || password.length() >= 14) {
                     ToastUtils.showShort(getString(R.string.edit_password_reg));
                     return;
                 }
@@ -172,20 +174,14 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     public void register(String phone, String code, String pwd) {
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .register(phone, code, String.valueOf(EncryptUtils.encryptMD5ToString(pwd)).toLowerCase())
+                .register(phone, code,getMD5(pwd))
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
                     LogUtils.d(s);
-                    ToastUtils.showShort(s);
                     finish();
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        LogUtils.d(throwable.getMessage() + "");
-                    }
-                });
+                }, throwable -> LogUtils.d(throwable.getMessage() + ""));
     }
 
     @SuppressLint("CheckResult")

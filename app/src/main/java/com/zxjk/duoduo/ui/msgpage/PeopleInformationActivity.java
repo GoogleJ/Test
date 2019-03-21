@@ -102,6 +102,7 @@ public class PeopleInformationActivity extends BaseActivity implements View.OnCl
     @BindView(R.id.m_people_information_copy_wallet_address)
     ImageView copyBtn;
     String userId;
+    String newFriendUserId;
     /**
      * 0是男1是女
      */
@@ -118,8 +119,11 @@ public class PeopleInformationActivity extends BaseActivity implements View.OnCl
         ButterKnife.bind(this);
         initUI();
         Intent intent = getIntent();
-        userId = intent.getStringExtra("peopleInformatinoUserId");
+        userId = intent.getStringExtra("userId");
         getFriendInfoInfoById(userId);
+        Intent intent1=getIntent();
+        newFriendUserId=intent1.getStringExtra("peopleInformatinoUserId");
+        getFriendInfoInfoById(newFriendUserId);
     }
 
 

@@ -90,7 +90,7 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getFriendListInfoById();
+
     }
 
     private void initView() {
@@ -108,7 +108,7 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
             }
         }));
         adapter = new BaseContactAdapter();
-
+        getFriendListInfoById();
         mRecyclerView.setAdapter(adapter);
         initIndexView();
         titleBar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
@@ -212,7 +212,7 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
                     for (int i = 0; i < friendListResponses.size(); i++) {
                         LogUtils.d("DEBUG", friendListResponses.get(i).toString());
                     }
-                    adapter.notifyDataSetChanged();
+
                 }, throwable -> LogUtils.d("DDD", throwable.getMessage()));
 
     }

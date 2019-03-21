@@ -79,7 +79,7 @@ public interface Api {
     //更新用户信息
     @POST("duoduo/customer/updateCustomerInfo")
     @FormUrlEncoded
-    Observable<BaseResponse<UpdateCustomerInfoResponse>> updateUserInfo(@Field("customerInfo") String customerInfo);
+    Observable<BaseResponse<String>> updateUserInfo(@Field("customerInfo") String customerInfo);
 
     /**
      * 修改支付密码

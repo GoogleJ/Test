@@ -119,9 +119,11 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                     return;
                 }
                 LoginResponse update = new LoginResponse(Constant.userId);
+
                 update.setHeadPortrait(url);
                 update.setNick(editNickName.getText().toString());
                 update.setAddress(editArea.getText().toString());
+
 
                 updateCustomerInfo(GsonUtils.toJson(update));
 
@@ -199,9 +201,9 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<UpdateCustomerInfoResponse>() {
+                .subscribe(new Consumer<String>() {
                     @Override
-                    public void accept(UpdateCustomerInfoResponse response) throws Exception {
+                    public void accept(String response) throws Exception {
                         GlideUtil.loadCornerImg(imageSearchBtn, url, R.drawable.ic_launcher, CommonUtils.dip2px(EditPersonalInformationFragment.this, 2));
                         ToastUtils.showShort("更新头像成功");
                         startActivity(new Intent(EditPersonalInformationFragment.this, SetUpPaymentPwdFragment.class));

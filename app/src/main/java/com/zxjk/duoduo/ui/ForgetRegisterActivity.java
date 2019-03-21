@@ -3,6 +3,7 @@ package com.zxjk.duoduo.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -25,6 +26,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
+
+import static com.zxjk.duoduo.utils.MD5Utils.getMD5;
 
 /**
  * @author Administrator
@@ -70,6 +73,7 @@ public class ForgetRegisterActivity extends BaseActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forget_register);
         ButterKnife.bind(this);
+
     }
 
     @OnClick({R.id.btn_commit, R.id.text_user_agreement, R.id.text_go_login, R.id.mobile_code, R.id.login_country})
@@ -85,7 +89,7 @@ public class ForgetRegisterActivity extends BaseActivity implements View.OnClick
                     ToastUtils.showShort(getString(R.string.edit_mobile_tip));
                     return;
                 }
-                if (password.isEmpty() || 6 >= password.length() || password.length() >= 14) {
+                if (password.isEmpty() || 5 >= password.length() || password.length() >= 14) {
                     ToastUtils.showShort(getString(R.string.edit_password_reg));
                     return;
                 }
@@ -104,6 +108,9 @@ public class ForgetRegisterActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.mobile_code:
                 String countryCode = login_country.getText().toString();
+                mobile = edit_mobile.getText().toString();
+                password = edit_password.getText().toString();
+                code = edit_mobile_code.getText().toString();
                 if (!mobile.isEmpty() && !"".equals(mobile) && mobile.length() == phoneLength) {
                     registerCode(countryCode + "-" + mobile);
                     return;
@@ -135,6 +142,7 @@ public class ForgetRegisterActivity extends BaseActivity implements View.OnClick
     }
 
     public void registerCode(String phone) {
+        countDownTimer.start();
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .getCode(phone)
                 .compose(bindToLifecycle())
@@ -152,16 +160,38 @@ public class ForgetRegisterActivity extends BaseActivity implements View.OnClick
     }
 
     public void forgetPwd(String phone, String pwd, String code) {
+
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .forgetPwd(phone, pwd, code)
+                .forgetPwd(phone, getMD5(pwd), code)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(s -> LogUtils.d(s), new Consumer<Throwable>() {
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        LogUtils.d(s);
+                        ToastUtils.showShort("修改成功");
+                        finish();
+                    }
+                }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         handleApiError(throwable);
                     }
                 });
     }
+    private CountDownTimer countDownTimer = new CountDownTimer(60000, 1000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            long time = millisUntilFinished / 1000;
+            mobile_code.setText(time + "秒后重新获取");
+            mobile_code.setClickable(false);
+        }
+
+        @Override
+        public void onFinish() {
+            mobile_code.setText("重新获取验证码");
+            mobile_code.setClickable(true);
+        }
+    };
 }

@@ -18,7 +18,7 @@ public class NewFriendAdapter extends BaseQuickAdapter<FriendListResponse, BaseV
         super(R.layout.item_new_friend);
     }
 
-    @SuppressLint({"ResourceAsColor", "NewApi"})
+
     @Override
     protected void convert(BaseViewHolder helper, FriendListResponse item) {
         helper.setText(R.id.m_item_new_friend_user_name_text, item.getRealname())

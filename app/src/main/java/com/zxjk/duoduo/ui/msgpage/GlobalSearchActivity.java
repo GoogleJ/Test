@@ -2,7 +2,6 @@ package com.zxjk.duoduo.ui.msgpage;
 
 
 import android.app.Activity;
-import android.app.Person;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -16,13 +15,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.SearchCustomerInfoResponse;
 import com.zxjk.duoduo.network.response.SearchResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.ui.base.ContentActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.GlobalSearchAdapter;
-import com.zxjk.duoduo.ui.msgpage.adapter.SearchAdapter;
 import com.zxjk.duoduo.weight.TitleBar;
 
 import java.util.ArrayList;
@@ -60,7 +56,7 @@ public class GlobalSearchActivity extends BaseActivity {
         initData();
         initUI();
     }
-    List<SearchCustomerInfoResponse> list=new ArrayList<>();
+    List<SearchResponse> list=new ArrayList<>();
     private void initData() {
         searchEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -94,7 +90,7 @@ public class GlobalSearchActivity extends BaseActivity {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
 
-                Intent intent=new Intent(GlobalSearchActivity.this, PersonalInformationActivity.class);
+                Intent intent=new Intent(GlobalSearchActivity.this, PeopleInformationActivity.class);
                 intent.putExtra("userId",list.get(position).getId());
                 startActivity(intent);
 
@@ -105,14 +101,15 @@ public class GlobalSearchActivity extends BaseActivity {
 
     }
     public void searchCustomerInfo(String data) {
+        //模糊搜索好友
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .searchCustomerInfo(data)
+                .searchFriend(data)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<List<SearchCustomerInfoResponse>>() {
+                .subscribe(new Consumer<List<SearchResponse>>() {
                     @Override
-                    public void accept(List<SearchCustomerInfoResponse> searchCustomerInfoResponses) throws Exception {
+                    public void accept(List<SearchResponse> searchCustomerInfoResponses) throws Exception {
                         mAdapter.setNewData(searchCustomerInfoResponses);
                         for (int i = 0; i < searchCustomerInfoResponses.size(); i++) {
                             LogUtils.d("DEBUG", searchCustomerInfoResponses.get(i).toString());
