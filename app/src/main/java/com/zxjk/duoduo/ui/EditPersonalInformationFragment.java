@@ -1,6 +1,7 @@
 package com.zxjk.duoduo.ui;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -73,6 +74,7 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
     EditText editArea;
     private String url;
     private TakePopWindow selectPicPopWindow;
+    private LoginResponse update;
 
     private void initData() {
         titleBar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
@@ -118,12 +120,11 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                     ToastUtils.showShort("地区不能为空");
                     return;
                 }
-                LoginResponse update = new LoginResponse(Constant.userId);
 
+                update = new LoginResponse(Constant.userId);
                 update.setHeadPortrait(url);
                 update.setNick(editNickName.getText().toString());
                 update.setAddress(editArea.getText().toString());
-
 
                 updateCustomerInfo(GsonUtils.toJson(update));
 
@@ -195,26 +196,21 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
         }
     }
 
+    @SuppressLint("CheckResult")
     public void updateCustomerInfo(String customerInfo) {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .updateUserInfo(customerInfo)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String response) throws Exception {
-                        GlideUtil.loadCornerImg(imageSearchBtn, url, R.drawable.ic_launcher, CommonUtils.dip2px(EditPersonalInformationFragment.this, 2));
-                        ToastUtils.showShort("更新头像成功");
-                        startActivity(new Intent(EditPersonalInformationFragment.this, SetUpPaymentPwdFragment.class));
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        handleApiError(throwable);
-                        LogUtils.d("DEBUG",throwable.getMessage());
-                    }
-                });
+                .subscribe(response -> {
+                    GlideUtil.loadCornerImg(imageSearchBtn, url, R.drawable.ic_launcher, CommonUtils.dip2px(EditPersonalInformationFragment.this, 2));
+                    ToastUtils.showShort("更新头像成功");
+                    Constant.currentUser.setHeadPortrait(update.getHeadPortrait());
+                    Constant.currentUser.setNick(update.getNick());
+                    Constant.currentUser.setAddress(update.getAddress());
+                    startActivity(new Intent(EditPersonalInformationFragment.this, SetUpPaymentPwdFragment.class));
+                }, throwable -> handleApiError(throwable));
     }
 
     @Override

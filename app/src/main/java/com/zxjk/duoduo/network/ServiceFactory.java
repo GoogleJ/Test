@@ -1,5 +1,7 @@
 package com.zxjk.duoduo.network;
 
+import android.text.TextUtils;
+
 import com.zxjk.duoduo.Constant;
 
 import java.io.IOException;
@@ -20,24 +22,25 @@ public  class ServiceFactory {
     private static ServiceFactory instance;
 
     private ServiceFactory() {
+        initRetrofit();
+    }
+
+    private void initRetrofit() {
         //Log拦截器
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         //构造client对象
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(interceptor).connectTimeout(10, TimeUnit.SECONDS)
-                .addInterceptor(new Interceptor() {
-                    @Override
-                    public Response intercept(Chain chain) throws IOException {
-                        Request original = chain.request();
-                        Request.Builder requestBuilder = original.newBuilder()
-                                .header("id", Constant.userId)
-                                .header("token", Constant.token)
-                                .header("Accept-Language", Constant.language)
-                                .header("phoneUuid", Constant.phoneUuid);
-                        Request request = requestBuilder.build();
-                        return chain.proceed(request);
-                    }
+                .addInterceptor(chain -> {
+                    Request original = chain.request();
+                    Request.Builder requestBuilder = original.newBuilder()
+                            .header("id", Constant.userId)
+                            .header("token", Constant.token)
+                            .header("Accept-Language", Constant.language)
+                            .header("phoneUuid", Constant.phoneUuid);
+                    Request request = requestBuilder.build();
+                    return chain.proceed(request);
                 })
                 .readTimeout(60, TimeUnit.SECONDS)
                 .writeTimeout(60, TimeUnit.SECONDS)
@@ -58,7 +61,10 @@ public  class ServiceFactory {
         return instance;
     }
 
-    public <T> T getBaseService(final Class<T> from) {
+    public <T> T getBaseService(Class<T> from) {
+        if (TextUtils.isEmpty(Constant.userId)) {
+            initRetrofit();
+        }
         return retrofit.create(from);
     }
 }

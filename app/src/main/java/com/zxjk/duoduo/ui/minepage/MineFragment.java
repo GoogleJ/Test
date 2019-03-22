@@ -2,13 +2,19 @@ package com.zxjk.duoduo.ui.minepage;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseFragment;
+import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.utils.GlideUtil;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +26,11 @@ import androidx.cardview.widget.CardView;
  */
 public class MineFragment extends BaseFragment implements View.OnClickListener {
 
+    private ImageView ivMineHeadImg;
+    private TextView tvMineNick;
+    private TextView tvMineDuNum;
+    private TextView tvMineSign;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -28,10 +39,28 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         LinearLayout llMineSetting = view.findViewById(R.id.llMineSetting);
         LinearLayout llMineBalanceLeft = view.findViewById(R.id.llMineBalanceLeft);
         CardView cardMineInfo = view.findViewById(R.id.cardMineInfo);
+        ivMineHeadImg = view.findViewById(R.id.ivMineHeadImg);
+        tvMineNick = view.findViewById(R.id.tvMineNick);
+        tvMineDuNum = view.findViewById(R.id.tvMineDuNum);
+        tvMineSign = view.findViewById(R.id.tvMineSign);
+
+        GlideUtil.loadCornerImg(ivMineHeadImg, Constant.currentUser.getHeadPortrait(), R.drawable.ic_launcher, CommonUtils.dip2px(getContext(), 2));
+        tvMineNick.setText(Constant.currentUser.getNick());
+        tvMineDuNum.setText(Constant.currentUser.getDuoduoId());
+        tvMineSign.setText(TextUtils.isEmpty(Constant.currentUser.getSignature()) ? "暂无" : Constant.currentUser.getSignature());
+
         llMineSetting.setOnClickListener(this);
         llMineBalanceLeft.setOnClickListener(this);
         cardMineInfo.setOnClickListener(this);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        tvMineNick.setText(Constant.currentUser.getNick());
+        tvMineSign.setText(TextUtils.isEmpty(Constant.currentUser.getSignature()) ? "暂无" : Constant.currentUser.getSignature());
+        GlideUtil.loadCornerImg(ivMineHeadImg, Constant.currentUser.getHeadPortrait(), R.drawable.ic_launcher, CommonUtils.dip2px(getContext(), 2));
     }
 
     @Override

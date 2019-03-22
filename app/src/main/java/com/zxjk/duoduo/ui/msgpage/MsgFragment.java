@@ -80,8 +80,7 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
         RongIM.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
             @Override
             public void onSuccess(List<Conversation> conversations) {
-                conversations.size();
-                if (conversations != null || conversations.size() != 0) {
+                if (conversations != null && conversations.size() != 0) {
                     for (int i = 0; i < conversations.size(); i++) {
                         Log.i("GJson", "好饿呀！" + conversations.get(i));
                     }

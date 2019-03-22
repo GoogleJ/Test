@@ -177,7 +177,7 @@ public class PeopleInformationActivity extends BaseActivity implements View.OnCl
                 dialog.setOnClickListener(new DeleteFriendInformationDialog.OnClickListener() {
                     @Override
                     public void onDel() {
-                        deleteFriend(userId);
+//                        deleteFriend(userId);
                     }
                 });
                 break;
@@ -230,23 +230,23 @@ public class PeopleInformationActivity extends BaseActivity implements View.OnCl
 
     }
 
-    public void deleteFriend(String friendId) {
-        ServiceFactory.getInstance().getBaseService(Api.class)
-                .deleteFriend(friendId)
-                .compose(bindToLifecycle())
-                .compose(RxSchedulers.ioObserver())
-                .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) throws Exception {
-                        LogUtils.d("DEBUG", s);
-                        ToastUtils.showShort("删除成功");
-                        dialog.dismiss();
-
-                    }
-                }, this::handleApiError);
-
-    }
+//    public void deleteFriend(String friendId) {
+//        ServiceFactory.getInstance().getBaseService(Api.class)
+//                .deleteFriend(friendId)
+//                .compose(bindToLifecycle())
+//                .compose(RxSchedulers.ioObserver())
+//                .compose(RxSchedulers.normalTrans())
+//                .subscribe(new Consumer<String>() {
+//                    @Override
+//                    public void accept(String s) throws Exception {
+//                        LogUtils.d("DEBUG", s);
+//                        ToastUtils.showShort("删除成功");
+//                        dialog.dismiss();
+//
+//                    }
+//                }, this::handleApiError);
+//
+//    }
 
     @Override
     protected void onStop() {

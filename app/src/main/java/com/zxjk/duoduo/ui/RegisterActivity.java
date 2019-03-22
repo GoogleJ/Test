@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.EncryptUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.CountryEntity;
@@ -93,7 +95,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         int phoneLength = 11;
         String codes = "86";
-
         switch (v.getId()) {
             case R.id.login_country:
                 CountrySelectActivity.start(this, CountryCodeConstantsUtils.REQUESTCODE_COUNTRY_SELECT);
@@ -106,7 +107,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 String mobile = edit_mobile.getText().toString().trim();
                 String country = login_country.getText().toString();
                 countryCode = country.substring(1);
-                if (mobile.isEmpty() && "".equals(mobile) && mobile.length() == phoneLength) {
+                if (!TextUtils.isEmpty(mobile) && RegexUtils.isMobileExact(mobile)) {
                     registerCode(countryCode + "-" + mobile);
                     return;
                 }
@@ -117,16 +118,16 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 finish();
                 break;
             case R.id.btn_register:
-                mobile = edit_mobile.getText().toString();
-                password = edit_password.getText().toString();
-                String code = edit_register_code.getText().toString();
+                mobile = edit_mobile.getText().toString().trim();
+                password = edit_password.getText().toString().trim();
+                String code = edit_register_code.getText().toString().trim();
 
 
                 if (mobile.isEmpty() && "".equals(mobile) && mobile.length() != phoneLength) {
                     ToastUtils.showShort(getString(R.string.edit_mobile_tip));
                     return;
                 }
-                if (password.isEmpty() || 5>= password.length() || password.length() >= 14) {
+                if (password.isEmpty() || 5>= password.length()) {
                     ToastUtils.showShort(getString(R.string.edit_password_reg));
                     return;
                 }
@@ -138,7 +139,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     ToastUtils.showShort(getString(R.string.edit_agreement_tip));
                     return;
                 }
-                register(mobile, edit_register_code.getText().toString(), edit_password.toString());
+                register(mobile, code, password);
 
                 break;
             default:
@@ -181,7 +182,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 .subscribe(s -> {
                     LogUtils.d(s);
                     finish();
-                }, throwable -> LogUtils.d(throwable.getMessage() + ""));
+                }, this::handleApiError);
     }
 
     @SuppressLint("CheckResult")

@@ -6,6 +6,8 @@ import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
+import com.zxjk.duoduo.Constant;
+import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.rx.RxException;
 
 import java.io.File;
@@ -23,6 +25,7 @@ public class BaseActivity extends RxAppCompatActivity {
         if (throwable instanceof RxException.DuplicateLoginExcepiton) {
             //TODO code601，后续考虑如何处理(弹对话框、强制退出)
             LogUtils.e("已经登录，提示用户退出");
+            Constant.currentUser = new LoginResponse();
             return;
         }
 

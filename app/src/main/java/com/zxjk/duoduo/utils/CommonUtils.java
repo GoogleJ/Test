@@ -68,4 +68,7 @@ public class CommonUtils {
         return metric.heightPixels;
     }
 
+    public static int getSex(String sex) {
+        return sex.equals("0") ? R.string.male : R.string.female;
+    }
 }

@@ -123,7 +123,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 }
 
                 login(mobile, password);
-                SPUtils.getInstance().put("mobile",edit_mobile.getText().toString().trim());
+                SPUtils.getInstance().put("mobile", edit_mobile.getText().toString().trim());
 
                 break;
             default:
@@ -147,55 +147,40 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void login(String phone, String pwd) {
 
 
-
         subscribe = ServiceFactory.getInstance().getBaseService(Api.class)
                 .login(phone, getMD5(pwd))
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<LoginResponse>() {
-                    @Override
-                    public void accept(LoginResponse loginResponse) throws Exception {
+                .subscribe(loginResponse -> {
+                    Constant.token = loginResponse.getToken();
+                    Constant.userId = loginResponse.getId();
+                    Constant.currentUser = loginResponse;
 
-
-                        String isDelete = "1";
-                        String idFirstLogin = "0";
-                        if (isDelete.equals(loginResponse.getIsDelete())) {
-                            dialog = new AccountFreezeDialog(LoginActivity.this);
-                            dialog.show();
-                        } else if (idFirstLogin.equals(loginResponse.getIsFirstLogin())) {
-                            LoginActivity.this.startActivity(new Intent(LoginActivity.this, EditPersonalInformationFragment.class));
-                        } else {
-                            Constant.token = loginResponse.getToken();
-                            Constant.userId = loginResponse.getId();
-                            Constant.currentUser = loginResponse;
-                            LoginActivity.this.connect(loginResponse.getRongToken());
-                            LoginActivity.this.startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                        }
-
+                    if (loginResponse.getIsDelete().equals(Constant.FLAG_IS_Delete)) {
+                        dialog = new AccountFreezeDialog(LoginActivity.this);
+                        dialog.show();
+                    } else if (loginResponse.getIsFirstLogin().equals(Constant.FLAG_FIRSTLOGIN)) {
+                        LoginActivity.this.startActivity(new Intent(LoginActivity.this, EditPersonalInformationFragment.class));
+                    } else {
+                        LoginActivity.this.connect(loginResponse.getRongToken());
                     }
-                }, throwable -> {
-
-
-                    handleApiError(throwable);
-                });
+                }, this::handleApiError);
 
     }
 
 
     public void connect(String token) {
-
+        Log.d("GJSONSSSSS", "--token: " + token);
         if (getApplicationInfo().packageName.equals(Application.getCurProcessName(getApplicationContext()))) {
-
             RongIM.connect(token, new RongIMClient.ConnectCallback() {
-
                 /**
                  * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
                  *                  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
                  */
                 @Override
                 public void onTokenIncorrect() {
-
+                    Log.d("GJSONSSSSS", "--TokenIncorrect");
                 }
 
                 /**
@@ -215,9 +200,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                  */
                 @Override
                 public void onError(RongIMClient.ErrorCode errorCode) {
-
-                    Log.i("GJSONSSSS", "" + errorCode.getMessage());
-
+                    Log.d("GJSONSSSSS", "--onError" + errorCode);
                 }
             });
         }

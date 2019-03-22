@@ -14,6 +14,7 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.utils.MD5Utils;
 
 @SuppressLint("CheckResult")
 public class ChangePwdActivity extends BaseActivity {
@@ -32,12 +33,14 @@ public class ChangePwdActivity extends BaseActivity {
         etChangePwdConfirm = findViewById(R.id.etChangePwdConfirm);
     }
 
+    private String newPass;
+
     public void submit(View view) {
         String s = etChangePwdOrigin.getText().toString().trim();
         String s1 = etChangePwdNew.getText().toString().trim();
         String s2 = etChangePwdConfirm.getText().toString().trim();
 
-        if (!verifyPwd(s) || !s.equals(Constant.currentUser.getPassword())) {
+        if (!verifyPwd(s)) {
             ToastUtils.showShort("请输入正确原密码");
             return;
         }
@@ -56,8 +59,8 @@ public class ChangePwdActivity extends BaseActivity {
             ToastUtils.showShort("两次新密码输入不一致");
             return;
         }
-
-        doChangePwd(s, s1);
+        newPass = s1;
+        doChangePwd(MD5Utils.getMD5(s), MD5Utils.getMD5(s1));
     }
 
     private void doChangePwd(String oldPwd, String newPwd) {
@@ -67,7 +70,8 @@ public class ChangePwdActivity extends BaseActivity {
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ChangePwdActivity.this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(response -> {
-                    ToastUtils.showShort("修改成功");
+                    Constant.currentUser.setPassword(MD5Utils.getMD5(newPass));
+                    ToastUtils.showShort(R.string.update_success);
                     finish();
                 }, this::handleApiError);
     }

@@ -84,6 +84,7 @@
                         app:srcCompat="@drawable/ic_bottom" />
 
                     <com.zxjk.duoduo.weight.ClearableEditTextWithIcon
+                        android:inputType="phone"
                         android:id="@+id/edit_mobile"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"

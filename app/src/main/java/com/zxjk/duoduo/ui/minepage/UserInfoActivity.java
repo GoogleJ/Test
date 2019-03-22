@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
@@ -16,7 +17,6 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.LoginResponse;
-import com.zxjk.duoduo.network.response.UpdateCustomerInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.TakePopWindow;
@@ -24,9 +24,9 @@ import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
+
 import java.io.File;
 import java.util.Collections;
-import java.util.List;
 
 import androidx.annotation.Nullable;
 
@@ -56,6 +56,26 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
         selectPicPopWindow.setOnItemClickListener(this);
 
         findViews();
+        bindData();
+        GlideUtil.loadCornerImg(ivUserInfoHead, Constant.currentUser.getHeadPortrait(), R.drawable.ic_launcher, CommonUtils.dip2px(this, 2));
+    }
+
+    private void bindData() {
+        String mobile = Constant.currentUser.getMobile();
+        tvUserInfoNick.setText(Constant.currentUser.getNick());
+        tvUserInfoSex.setText(CommonUtils.getSex(Constant.currentUser.getSex()));
+        tvUserInfoDUDUNum.setText(Constant.currentUser.getDuoduoId());
+        tvUserInfoRealName.setText(TextUtils.isEmpty(Constant.currentUser.getRealname()) ? "暂未认证" : Constant.currentUser.getRealname());
+        tvUserInfoPhone.setText(mobile.substring(0, 3) + "****" + mobile.substring(7, 11));
+        tvUserInfoSign.setText(TextUtils.isEmpty(Constant.currentUser.getSignature()) ? "暂无" : Constant.currentUser.getSignature());
+        tvUserInfoEmail.setText(TextUtils.isEmpty(Constant.currentUser.getEmail()) ? "暂无" : Constant.currentUser.getEmail());
+        tvUserInfoWallet.setText(TextUtils.isEmpty(Constant.currentUser.getWalletAddress()) ? "暂无" : Constant.currentUser.getWalletAddress());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bindData();
     }
 
     private void findViews() {
@@ -78,7 +98,14 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
 
     //修改昵称
     public void changeNick(View view) {
+        Intent intent = new Intent(this, UpdateUserInfoActivity.class);
+        intent.putExtra("type", 2);
+        startActivity(intent);
+    }
 
+    //修改手机
+    public void changeMobile(View view) {
+        startActivity(new Intent(this, ChangePhoneActivity.class));
     }
 
     //修改性别
@@ -93,12 +120,16 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
 
     //修改个性签名
     public void changeSign(View view) {
-        startActivity(new Intent(this, ChangeSignActivity.class));
+        Intent intent = new Intent(this, UpdateUserInfoActivity.class);
+        intent.putExtra("type", 1);
+        startActivity(intent);
     }
 
     //修改Email
     public void changeEmail(View view) {
-
+        Intent intent = new Intent(this, UpdateUserInfoActivity.class);
+        intent.putExtra("type", 3);
+        startActivity(intent);
     }
 
     public void back(View view) {
@@ -136,27 +167,22 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
         }
 
         if (!TextUtils.isEmpty(filePath)) {
-            zipFile(Collections.singletonList(filePath), new OnZipFileFinish() {
-                @Override
-                public void onFinish(List<File> files) {
-                    File file = files.get(0);
-                    OssUtils.uploadFile(file.getAbsolutePath(), new OssUtils.OssCallBack() {
-                        @Override
-                        public void onSuccess(String url) {
-                            LoginResponse update = new LoginResponse(Constant.userId);
-                            update.setHeadPortrait(url);
-                            ServiceFactory.getInstance().getBaseService(Api.class)
-                                    .updateUserInfo(GsonUtils.toJson(update))
-                                    .compose(UserInfoActivity.this.bindToLifecycle())
-                                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(UserInfoActivity.this)))
-                                    .compose(RxSchedulers.normalTrans())
-                                    .subscribe((UpdateCustomerInfoResponse response) -> {
-                                        GlideUtil.loadCornerImg(ivUserInfoHead, url, R.drawable.ic_launcher, CommonUtils.dip2px(UserInfoActivity.this, 2));
-                                        ToastUtils.showShort("更新头像成功");
-                                    }, UserInfoActivity.this::handleApiError);
-                        }
-                    });
-                }
+            zipFile(Collections.singletonList(filePath), files -> {
+                File file = files.get(0);
+                OssUtils.uploadFile(file.getAbsolutePath(), url -> {
+                    LoginResponse update = new LoginResponse(Constant.userId);
+                    update.setHeadPortrait(url);
+                    ServiceFactory.getInstance().getBaseService(Api.class)
+                            .updateUserInfo(GsonUtils.toJson(update))
+                            .compose(UserInfoActivity.this.bindToLifecycle())
+                            .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(UserInfoActivity.this)))
+                            .compose(RxSchedulers.normalTrans())
+                            .subscribe(response -> {
+                                Constant.currentUser.setHeadPortrait(url);
+                                GlideUtil.loadCornerImg(ivUserInfoHead, url, R.drawable.ic_launcher, CommonUtils.dip2px(UserInfoActivity.this, 2));
+                                ToastUtils.showShort("更新头像成功");
+                            }, UserInfoActivity.this::handleApiError);
+                });
             });
         }
     }

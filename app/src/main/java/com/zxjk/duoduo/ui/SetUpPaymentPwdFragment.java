@@ -1,5 +1,7 @@
 package com.zxjk.duoduo.ui;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -32,20 +34,21 @@ import io.reactivex.functions.Consumer;
  * @author Administrator
  * @// TODO: 2019\3\21 0021  设置支付密码
  */
+@SuppressLint("CheckResult")
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class SetUpPaymentPwdFragment extends BaseActivity {
 
 
-    PayPsdInputView        payPsdInputView;
+    PayPsdInputView payPsdInputView;
     TitleBar titleBar;
     TextView commmitBtn;
     KeyboardUtil keyboardUtil;
 
     LinearLayout rootView;
     ScrollView scrollView;
+    TextView m_set_payment_pwd_label;
 
-
-    String oldPwd="";
+    String oldPwd = "";
     String newPwd;
     String newPwdTwo;
 
@@ -72,7 +75,7 @@ public class SetUpPaymentPwdFragment extends BaseActivity {
 
 
     private void initUI() {
-
+        m_set_payment_pwd_label = findViewById(R.id.m_set_payment_pwd_label);
         rootView = (LinearLayout) findViewById(R.id.root_view);
         scrollView = (ScrollView) findViewById(R.id.sv_main);
         titleBar = findViewById(R.id.m_set_payment_pwd_title_bar);
@@ -94,7 +97,6 @@ public class SetUpPaymentPwdFragment extends BaseActivity {
                 ToastUtils.showShort("与上次密码不一致");
 
 
-
             }
 
 
@@ -104,14 +106,15 @@ public class SetUpPaymentPwdFragment extends BaseActivity {
 
                 commmitBtn.setVisibility(View.VISIBLE);
 
-                newPwd=psd;
+                newPwd = psd;
 
-                newPwdTwo=psd;
+                newPwdTwo = psd;
             }
 
             @Override
             public void inputFinished(String inputPsd) {
                 // TODO: 2018/1/3 输完逻辑
+                m_set_payment_pwd_label.setText("请再次输入支付密码");
                 payPsdInputView.setComparePassword(inputPsd);
                 payPsdInputView.setText("");
 
@@ -128,27 +131,17 @@ public class SetUpPaymentPwdFragment extends BaseActivity {
 
 
     public void updatePwd(String oldPwd, String newPwd, String newPwdTwo) {
-        LogUtils.d("Pasdsdfaw",newPwd,newPwdTwo);
+        LogUtils.d("Pasdsdfaw", newPwd, newPwdTwo);
 
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .updatePwd("", String.valueOf(EncryptUtils.encryptMD5ToString(newPwd)).toLowerCase(), String.valueOf(EncryptUtils.encryptMD5ToString(newPwdTwo)).toLowerCase())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<LoginResponse>() {
-                    @Override
-                    public void accept(LoginResponse s) throws Exception {
-                        ToastUtils.showShort("修改成功");
-                        finish();
-
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-//                        ToastUtils.showShort("密码修改成功");
-                        LogUtils.d("DEBUGS",throwable.getMessage());
-
-                    }
-                });
+                .subscribe(s -> {
+                    Intent intent = new Intent(this, HomeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }, this::handleApiError);
     }
 
     class KeyBoardStateListener implements KeyboardUtil.KeyBoardStateChangeListener {

@@ -120,6 +120,15 @@
 
     <string name="m_group_chat">群聊</string>
     <string name="enter_group_chat">输入群名</string>
+    <string name="sign">个性签名</string>
+    <string name="hint_sign">请输入个性签名</string>
+    <string name="nick">昵称</string>
+    <string name="hint_nick">请输入昵称</string>
+    <string name="email">邮箱</string>
+    <string name="hint_email">请输入邮箱</string>
+    <string name="male">男</string>
+    <string name="female">女</string>
+    <string name="update_success">修改成功</string>
 
 
 </resources>

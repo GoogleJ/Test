@@ -44,26 +44,26 @@ public class ModifyNotesActivity extends BaseActivity implements View.OnClickLis
             case R.id.m_title_bar_right:
                 Intent intent=getIntent();
                 String userId=intent.getStringExtra("peopelUserId");
-                updateRemark(userId,modifyNotesEdit.getText().toString());
+//                updateRemark(userId,modifyNotesEdit.getText().toString());
 
                 break;
         }
     }
-    public void updateRemark(String friendId,String remark){
-        ServiceFactory.getInstance().getBaseService(Api.class)
-                .updateRemark(friendId, remark)
-                .compose(bindToLifecycle())
-                .compose(RxSchedulers.ioObserver())
-                .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<FriendInfoResponse>() {
-                    @Override
-                    public void accept(FriendInfoResponse friendInfoResponse) throws Exception {
-                        ToastUtils.showShort("修改成功");
-                        finish();
-
-                    }
-                },this::handleApiError);
-
-    }
+//    public void updateRemark(String friendId,String remark){
+//        ServiceFactory.getInstance().getBaseService(Api.class)
+//                .updateRemark(friendId, remark)
+//                .compose(bindToLifecycle())
+//                .compose(RxSchedulers.ioObserver())
+//                .compose(RxSchedulers.normalTrans())
+//                .subscribe(new Consumer<FriendInfoResponse>() {
+//                    @Override
+//                    public void accept(FriendInfoResponse friendInfoResponse) throws Exception {
+//                        ToastUtils.showShort("修改成功");
+//                        finish();
+//
+//                    }
+//                },this::handleApiError);
+//
+//    }
 
 }

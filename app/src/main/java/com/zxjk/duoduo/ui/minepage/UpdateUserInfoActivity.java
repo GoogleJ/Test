@@ -1,6 +1,7 @@
 package com.zxjk.duoduo.ui.minepage;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,18 +21,25 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 @SuppressLint("CheckResult")
-public class ChangeSignActivity extends BaseActivity {
+public class UpdateUserInfoActivity extends BaseActivity {
 
     private EditText etChangeSign;
     private TextView tvChangeSign;
+    private TextView tvUpdateInfoTitle;
+
+    private static final int TYPE_SIGN = 1;
+    private static final int TYPE_NICK = 2;
+    private static final int TYPE_EMAIL = 3;
+    private int type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_change_sign);
+        setContentView(R.layout.activity_update_user_info);
 
         etChangeSign = findViewById(R.id.etChangeSign);
         tvChangeSign = findViewById(R.id.tvChangeSign);
+        tvUpdateInfoTitle = findViewById(R.id.tvUpdateInfoTitle);
 
         etChangeSign.addTextChangedListener(new TextWatcher() {
             @Override
@@ -50,24 +58,60 @@ public class ChangeSignActivity extends BaseActivity {
                 tvChangeSign.setText("" + (20 - length));
             }
         });
+
+        Intent intent = getIntent();
+        type = intent.getIntExtra("type", 0);
+        if (type == TYPE_SIGN) {
+            tvUpdateInfoTitle.setText(R.string.sign);
+            etChangeSign.setHint(R.string.hint_sign);
+        } else if (type == TYPE_NICK) {
+            tvUpdateInfoTitle.setText(R.string.nick);
+            etChangeSign.setHint(R.string.hint_nick);
+        } else if (type == TYPE_EMAIL) {
+            tvUpdateInfoTitle.setText(R.string.email);
+            etChangeSign.setHint(R.string.hint_email);
+        }
     }
 
     //提交
     public void submit(View view) {
-        String sign = etChangeSign.getText().toString();
+        String sign = etChangeSign.getText().toString().trim();
         if (sign.length() == 0) {
             ToastUtils.showShort("请输入内容");
             return;
         }
         LoginResponse update = new LoginResponse(Constant.userId);
-        update.setSignature(sign);
+        switch (type) {
+            case TYPE_EMAIL:
+                update.setEmail(sign);
+                break;
+            case TYPE_NICK:
+                update.setNick(sign);
+                break;
+            case TYPE_SIGN:
+                update.setSignature(sign);
+                break;
+            default:
+        }
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .updateUserInfo(GsonUtils.toJson(update))
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(response -> {
-                    Constant.currentUser.setSignature(sign);
+                    switch (type) {
+                        case TYPE_EMAIL:
+                            Constant.currentUser.setEmail(sign);
+                            break;
+                        case TYPE_NICK:
+                            Constant.currentUser.setNick(sign);
+                            break;
+                        case TYPE_SIGN:
+                            Constant.currentUser.setSignature(sign);
+                            break;
+                        default:
+                    }
+                    finish();
                 }, this::handleApiError);
     }
 

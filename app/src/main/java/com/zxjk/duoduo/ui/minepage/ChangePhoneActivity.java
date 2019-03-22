@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -79,11 +80,12 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
 
     private void doChangePhone(String verifyCode) {
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .updateMobile(phoneReciveVerify, verifyCode)
+                .updateMobile(Constant.HEAD_LOCATION + phoneReciveVerify, verifyCode)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ChangePhoneActivity.this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
+                    Constant.currentUser.setMobile(phoneReciveVerify);
                     ToastUtils.showShort("修改成功");
                     finish();
                 }, this::handleApiError);
@@ -91,7 +93,7 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        String phone = etChangePhone.getText().toString();
+        String phone = etChangePhone.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
             ToastUtils.showShort("请输入手机号");
             return;
@@ -108,7 +110,7 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
 
     private void getVerifyCode() {
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .getCode(phoneReciveVerify)
+                .getCode(Constant.HEAD_LOCATION + phoneReciveVerify)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ChangePhoneActivity.this)))
                 .compose(RxSchedulers.normalTrans())

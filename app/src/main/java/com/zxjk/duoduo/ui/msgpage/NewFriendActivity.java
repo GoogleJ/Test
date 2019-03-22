@@ -25,21 +25,14 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.NewFriendAdapter;
 import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendDialog;
 import com.zxjk.duoduo.weight.TitleBar;
-
-import org.apache.commons.io.output.TaggedOutputStream;
-
-import java.security.spec.PSSParameterSpec;
 import java.util.ArrayList;
 import java.util.List;
-
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.functions.Consumer;
-
-import static com.blankj.utilcode.util.SnackbarUtils.getView;
 
 /**
  * @author Administrator
