@@ -222,7 +222,31 @@
     <string name="about_label">软件许可及服务协议 隐私政策</string>
     <string name="about_label_1">©1998-2019 Tencent Inc.All rights reserved.</string>
     <string name="community">社群</string>
-
+    <string name="order_being_traded_label">你还有正在交易的订单，交易\n完成后再来修改吧!</string>
+    <string name="determine_btn">确定</string>
+    <string name="billing_message_title">收款信息</string>
+    <string name="billing_message_wechat">微信</string>
+    <string name="billing_message_type">未完善</string>
+    <string name="billing_message_alipy">支付宝</string>
+    <string name="billing_message_bank">银行卡</string>
+    <string name="prompt_message">为了保证订单尽快交易，请完善所有的收款信息，并确认所填信息的正确性。</string>
+    <string name="receipt_type_title">信息</string>
+    <string name="receipt_type_name">账号</string>
+    <string name="receipt_type_real_name">真实姓名</string>
+    <string name="commit_btn">提交</string>
+    <string name="not_uploaded">未上传</string>
+    <string name="wechat_info">微信信息</string>
+    <string name="collection_code">收款码</string>
+    <string name="user_name">周晓瑞</string>
+    <string name="alipy_info">支付宝信息</string>
+    <string name="account_id">账号</string>
+    <string name="bank_info">银行卡信息</string>
+    <string name="account_name">户名</string>
+    <string name="bank_id_card">银行卡号</string>
+    <string name="bank">银行</string>
+    <string name="commit_successful">提交成功</string>
+    <string name="commit_label">我们会尽快审核，给您反馈</string>
+    <string name="user_phone">请输入手机号</string>
 
 
 </resources>

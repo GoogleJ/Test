@@ -55,6 +55,15 @@ public class SettingActivity extends BaseActivity {
         startActivity(new Intent(this,PrivacyActivity.class));
     }
 
+    /***
+     * 收款信息页面跳转
+     * @param view
+     */
+    public void billingMessage(View view){
+        startActivity(new Intent(this,BillingMessageActivity.class));
+    }
+
+
     public void back(View view) {
         finish();
     }
