@@ -129,6 +129,33 @@
     <string name="male">男</string>
     <string name="female">女</string>
     <string name="update_success">修改成功</string>
+    <string name="authen_true">已认证</string>
+    <string name="authen_false">未认证</string>
+    <string name="none">暂无</string>
+    <string name="update_head_portrail">更新头像成功</string>
+    <string name="input_empty">请输入内容</string>
+    <string name="verify_pwd1">请输入正确原密码</string>
+    <string name="verify_pwd2">请输入正确新密码</string>
+    <string name="verify_pwd3">两次密码输入不一致</string>
+    <string name="exchange1_sale1">出售币种</string>
+    <string name="exchange1_sale2">出售数量</string>
+    <string name="exchange1_sale3">出售总金额</string>
+    <string name="exchange1_sale4">收款方式</string>
+    <string name="exchange1_sale5">确认出售</string>
+    <string name="exchange1_buy1">购买币种</string>
+    <string name="exchange1_buy2">购买数量</string>
+    <string name="exchange1_buy3">需支付金额</string>
+    <string name="exchange1_buy4">支付方式</string>
+    <string name="exchange1_buy5">确认购买</string>
+    <string name="paytype">支付方式</string>
+    <string name="wechat">微信</string>
+    <string name="alipay">支付宝</string>
+    <string name="bankcard">银行卡</string>
+    <string name="sale_success">下单成功</string>
+    <string name="select_count_tips">请选择数量</string>
+    <string name="select_buytype_tips">请选择支付方式</string>
+    <string name="select_saletype_tips">请选择至少一种收款方式</string>
+    <string name="choosecount">请选择数量</string>
 
     //红包相关
     <string name="m_red_envelopes_title_text">发红包</string>

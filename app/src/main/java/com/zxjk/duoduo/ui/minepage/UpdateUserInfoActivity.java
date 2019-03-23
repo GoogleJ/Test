@@ -77,7 +77,7 @@ public class UpdateUserInfoActivity extends BaseActivity {
     public void submit(View view) {
         String sign = etChangeSign.getText().toString().trim();
         if (sign.length() == 0) {
-            ToastUtils.showShort("请输入内容");
+            ToastUtils.showShort(R.string.input_empty);
             return;
         }
         LoginResponse update = new LoginResponse(Constant.userId);

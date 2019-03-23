@@ -3,6 +3,70 @@ package com.zxjk.duoduo.network.response;
 import java.io.Serializable;
 
 public class LoginResponse implements Serializable {
+    /**
+     * id : 4
+     * duoduoId : 10000004
+     * nick : 4号用户
+     * realname :
+     * mobile : 18202987805
+     * password : 14e1b600b1fd579f47433b88e8d85291
+     * address : beijing
+     * email :
+     * headPortrait : https://zhongxingjike.oss-cn-hongkong.aliyuncs.com/upload/FC888443-8DAF-4501-B7A7-5EAD7139657A.jpg
+     * sex : 0
+     * signature : 饿了了
+     * walletAddress :
+     * idCard :
+     * isShowRealname : 0
+     * updateTime : 1552839507662
+     * createTime :
+     * isDelete : 0
+     * token : eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0IiwiaXNzIjoiZHVvZHVvIiwianRpIjoiMzIxNjU0MTExIn0.JdddTri7172qkvHKXDfmRDPR6HatCTpHxiAkdiI7GQY
+     * remark :
+     * rongToken : NxgHGk1qzACem1Js1tLQE702a5n+rzXoZ3Aj3/5nogmk0P2rdaAtUQ+ptQpowx2j1NHoPEbm8e4qFHLxR/8ruA==
+     * payPwd :
+     * isFirstLogin : 1
+     * renegeNumber : 0
+     * isConfine : 0
+     * status :
+     * isAuthentication : 1
+     * onlineService : https://tb.53kf.com/code/client/10197755/1
+     */
+
+    private String id;
+    private String duoduoId;
+    private String nick;
+    private String realname;
+    private String mobile;
+    private String password;
+    private String address;
+    private String email;
+    private String headPortrait;
+    private String sex;
+    private String signature;
+    private String walletAddress;
+    private String idCard;
+    private String isShowRealname;
+    private String updateTime;
+    private String createTime;
+    private String isDelete;
+    private String token;
+    private String remark;
+    private String rongToken;
+    private String payPwd;
+    private String isFirstLogin;
+    private String renegeNumber;
+    private String isConfine;
+    private String status;
+    private String isAuthentication;
+    private String onlineService;
+
+    public LoginResponse(String id) {
+        this.id = id;
+    }
+
+    public LoginResponse() {
+    }
 
     public String getId() {
         return id;
@@ -212,101 +276,11 @@ public class LoginResponse implements Serializable {
         this.isAuthentication = isAuthentication;
     }
 
-    /**
-     * id : 14
-     * duoduoId : 10000000
-     * nick :
-     * realname :
-     * mobile : 15249047866
-     * password : e10adc3949ba59abbe56e057f20f883e
-     * email :
-     * headPortrait : https://zhongxingjike.oss-cn-hongkong.aliyuncs.com/upload/FC888443-8DAF-4501-B7A7-5EAD7139657A.jpg
-     * sex : 0
-     * signature :
-     * walletAddress :
-     * idCard :
-     * isShowRealname : 0
-     * updateTime : 1551081292117
-     * createTime : 1551081292117
-     * isDelete : 0
-     * token : eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNCJ9.KHSJP1cnYY7vrIGqJkULoBJbsqLdZV0DkdhPyCNgIy0
-     * remark :
-     * payPwd :
-     * rongToken : juanMR8aw2u04GgR+7Uk5702a5n+rzXoZ3Aj3/5nogndTFT6YOzQPMZFP/QmJpCO7EUA7BEGUpwqFHLxR/8ruA==
-     */
-
-    private String id;
-    private String duoduoId;
-    private String nick;
-    private String realname;
-    private String mobile;
-    private String password;
-    private String address;
-    private String email;
-    private String headPortrait;
-    private String sex;
-    private String signature;
-    private String walletAddress;
-    private String idCard;
-    private String isShowRealname;
-    private String updateTime;
-    private String createTime;
-    private String isDelete;
-    private String token;
-    private String remark;
-    private String rongToken;
-    private String payPwd;
-    private String isFirstLogin;
-    /**
-     * 违约次数
-     */
-    private String renegeNumber;
-    /**
-     * 是否限制买卖账单
-     */
-    private String isConfine;
-    private String status;
-    /**
-     * 是否实名认证
-     */
-    private String isAuthentication;
-
-    public LoginResponse(String id) {
-        this.id = id;
+    public String getOnlineService() {
+        return onlineService;
     }
 
-    public LoginResponse() {
-    }
-
-    @Override
-    public String toString() {
-        return "LoginResponse{" +
-                "id='" + id + '\'' +
-                ", duoduoId='" + duoduoId + '\'' +
-                ", nick='" + nick + '\'' +
-                ", realname='" + realname + '\'' +
-                ", mobile='" + mobile + '\'' +
-                ", password='" + password + '\'' +
-                ", address='" + address + '\'' +
-                ", email='" + email + '\'' +
-                ", headPortrait='" + headPortrait + '\'' +
-                ", sex='" + sex + '\'' +
-                ", signature='" + signature + '\'' +
-                ", walletAddress='" + walletAddress + '\'' +
-                ", idCard='" + idCard + '\'' +
-                ", isShowRealname='" + isShowRealname + '\'' +
-                ", updateTime='" + updateTime + '\'' +
-                ", createTime='" + createTime + '\'' +
-                ", isDelete='" + isDelete + '\'' +
-                ", token='" + token + '\'' +
-                ", remark='" + remark + '\'' +
-                ", rongToken='" + rongToken + '\'' +
-                ", payPwd='" + payPwd + '\'' +
-                ", isFirstLogin='" + isFirstLogin + '\'' +
-                ", renegeNumber='" + renegeNumber + '\'' +
-                ", isConfine='" + isConfine + '\'' +
-                ", status='" + status + '\'' +
-                ", isAuthentication='" + isAuthentication + '\'' +
-                '}';
+    public void setOnlineService(String onlineService) {
+        this.onlineService = onlineService;
     }
 }

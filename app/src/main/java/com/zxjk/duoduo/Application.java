@@ -86,4 +86,13 @@ public class Application extends android.app.Application {
             return false;
         }
     }
+
+    @Override
+    public void onTerminate() {
+        Constant.token = "";
+        Constant.userId = "";
+        Constant.phoneUuid = "";
+        Constant.clear();
+        super.onTerminate();
+    }
 }

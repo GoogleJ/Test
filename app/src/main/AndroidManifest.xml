@@ -34,13 +34,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.walletpage.ExchangeListActivity"></activity>
+        <activity android:name=".ui.walletpage.ConfirmSaleActivity"></activity>
+        <activity android:name=".ui.walletpage.ConfirmBuyActivity" />
+        <activity android:name=".ui.walletpage.ExchangeListActivity" />
         <activity android:name=".ui.walletpage.ExchangeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
-
 
                 <data
                     android:host="com.zxjk.duoduo"
@@ -60,14 +61,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Theme_Splash"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.msgpage.ModifyNotesActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -75,11 +74,7 @@
             android:resizeableActivity="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Theme_Splash"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden">
-
-        </activity>
-
-
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.minepage.UserInfoActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -89,7 +84,6 @@
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
-
 
                 <data
                     android:host="com.zxjk.duoduo"
@@ -113,7 +107,6 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.minepage.UpdateUserInfoActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -199,7 +192,6 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -403,7 +395,6 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.minepage.BalanceLeftActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -425,7 +416,6 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -531,16 +521,15 @@
                 <action android:name="io.rong.push.intent.MESSAGE_CLICKED" />
                 <action android:name="io.rong.push.intent.THIRD_PARTY_PUSH_STATE" />
             </intent-filter>
-        </receiver>
-        <!--<provider-->
-        <!--android:name="androidx.core.content.FileProvider"-->
-        <!--android:authorities="com.zxjk.duoduo.FileProvider"-->
-        <!--android:exported="false"-->
-        <!--android:grantUriPermissions="true">-->
-        <!--<meta-data-->
-        <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
-        <!--android:resource="@xml/rc_file_path" />-->
-        <!--</provider>-->
+        </receiver> <!-- <provider -->
+        <!-- android:name="androidx.core.content.FileProvider" -->
+        <!-- android:authorities="com.zxjk.duoduo.FileProvider" -->
+        <!-- android:exported="false" -->
+        <!-- android:grantUriPermissions="true"> -->
+        <!-- <meta-data -->
+        <!-- android:name="android.support.FILE_PROVIDER_PATHS" -->
+        <!-- android:resource="@xml/rc_file_path" /> -->
+        <!-- </provider> -->
         <provider
             android:name=".DuoDuoFileProvider"
             android:authorities="com.zxjk.duoduo.FileProvider"

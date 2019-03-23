@@ -112,12 +112,11 @@
                             android:scaleType="centerCrop"
                             app:srcCompat="@drawable/ic_launcher" />
 
-                        <TextView
-                            android:id="@+id/tvMineAuthSign"
+                        <ImageView
+                            android:id="@+id/ivMineAuthSign"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_gravity="end|bottom"
-                            android:background="@drawable/shape_mine_authenticate"
                             android:gravity="center"
                             android:text="1"
                             android:textColor="@color/white"

@@ -41,6 +41,7 @@ import static com.zxjk.duoduo.utils.MD5Utils.getMD5;
  * @author Mr.Chen
  * @// TODO: 2019\3\17 0017 注册
  */
+@SuppressLint("CheckResult")
 public class RegisterActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.btn_register)
     Button btn_register;
@@ -72,8 +73,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private boolean isAgreement;
     private String password;
     private String countryCode;
-    private String mobile;
-    private String code;
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -94,7 +93,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         int phoneLength = 11;
-        String codes = "86";
         switch (v.getId()) {
             case R.id.login_country:
                 CountrySelectActivity.start(this, CountryCodeConstantsUtils.REQUESTCODE_COUNTRY_SELECT);
@@ -122,8 +120,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 password = edit_password.getText().toString().trim();
                 String code = edit_register_code.getText().toString().trim();
 
-
-                if (mobile.isEmpty() && "".equals(mobile) && mobile.length() != phoneLength) {
+                if (!TextUtils.isEmpty(mobile) && RegexUtils.isMobileExact(mobile)) {
                     ToastUtils.showShort(getString(R.string.edit_mobile_tip));
                     return;
                 }
@@ -185,7 +182,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 }, this::handleApiError);
     }
 
-    @SuppressLint("CheckResult")
     public void registerCode(String phone) {
         countDownTimer.start();
         ServiceFactory.getInstance().getBaseService(Api.class)
@@ -193,15 +189,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) throws Exception {
+                .subscribe(s -> {
 
-                        ToastUtils.showShort(getString(R.string.code_label));
+                    ToastUtils.showShort(getString(R.string.code_label));
 
-                        LogUtils.d(s);
+                    LogUtils.d(s);
 //                        ToastUtils.showShort(s);
-                    }
                 }, this::handleApiError);
 
     }

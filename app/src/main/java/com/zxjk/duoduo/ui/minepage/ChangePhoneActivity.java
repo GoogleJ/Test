@@ -120,4 +120,8 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
                     timer.onFinish();
                 });
     }
+
+    public void back(View view) {
+        finish();
+    }
 }

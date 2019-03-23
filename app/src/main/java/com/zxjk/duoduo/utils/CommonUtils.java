@@ -69,6 +69,16 @@ public class CommonUtils {
     }
 
     public static int getSex(String sex) {
+        if (TextUtils.isEmpty(sex)) {
+            return R.string.male;
+        }
         return sex.equals("0") ? R.string.male : R.string.female;
+    }
+
+    public static int getAuthenticate(String authenticate) {
+        if (TextUtils.isEmpty(authenticate)) {
+            return R.string.authen_false;
+        }
+        return authenticate.equals("0") ? R.string.authen_true : R.string.authen_false;
     }
 }

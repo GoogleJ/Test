@@ -1,41 +1,68 @@
 package com.zxjk.duoduo.ui.walletpage;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
+import android.widget.CheckBox;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.network.Api;
+import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.GetNumbeOfTransactionResponse;
+import com.zxjk.duoduo.network.response.PayInfoResponse;
+import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.utils.MD5Utils;
+import java.util.ArrayList;
+import java.util.List;
+import io.reactivex.ObservableSource;
+import io.reactivex.functions.Function;
 
-public class ExchangeActivity extends BaseActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
+@SuppressLint("CheckResult")
+public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
 
-    private static final int PAY_TYPE_WEXINN = 0;
-    private static final int PAY_TYPE_ALI = 1;
-    private static final int PAY_TYPE_BANK = 2;
+    private ChooseCountWindow chooseCountWindow;
 
-    private LinearLayout llExchangeWexin;
-    private LinearLayout llExchangeAliPay;
-    private LinearLayout llExchangeBank;
-    private RadioButton rbExchangeWexin;
-    private RadioButton rbExchangeAliPay;
-    private RadioButton rbExchangeBank;
-    private TextView tvExchangeCoinType;
     private TextView tvExchangePrice;
-    private TextView tvExchangeCount;
     private TextView tvExchangeTotal;
     private RadioGroup rgExchangeTop;
     private TextView tvExchangeLine1;
     private TextView tvExchangeLine3;
     private TextView tvExchangeLine4;
     private TextView tvExchangePayType;
+    private TextView tvExchangeChooseCount;
     private Button btnExchangeConfirm;
 
-    private int payType;
+    private RelativeLayout rlExchangeType1;
+    private RelativeLayout rlExchangeType2;
+    private RelativeLayout rlExchangeType3;
+    private CheckBox cbExchangePayType1;
+    private CheckBox cbExchangePayType2;
+    private CheckBox cbExchangePayType3;
+    private TextView tvExchangePayInfo1;
+    private TextView tvExchangePayInfo2;
+    private TextView tvExchangePayInfo3;
+
+    private List<String> paytypes = new ArrayList<>(3);
+    private String buyType = "";
+    private static final String PAYTYPE_WECHAT = "1";
+    private static final String PAYTYPE_ALI = "2";
+    private static final String PAYTYPE_BANK = "3";
+
     private boolean buyOrSale = true;
+
+    private List strings;
+
+    private int count;
+    private float totalPrice;
+    private float rate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,40 +71,102 @@ public class ExchangeActivity extends BaseActivity implements View.OnClickListen
 
         initViews();
 
+        ServiceFactory.getInstance().getBaseService(Api.class).getNumbeOfTransaction()
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.normalTrans())
+                .flatMap((Function<GetNumbeOfTransactionResponse, ObservableSource<List<PayInfoResponse>>>) s -> {
+                    runOnUiThread(() -> {
+                        chooseCountWindow = new ChooseCountWindow(this);
+                        chooseCountWindow.setData(s.getNumbeOfTransaction());
+                        chooseCountWindow.setOnChooseCount(s1 -> {
+                            chooseCountWindow.dismiss();
+                            count = Integer.parseInt(s1);
+                            tvExchangeChooseCount.setText(s1);
+                        });
+                        strings = s.getNumbeOfTransaction();
+                        rate = Float.parseFloat(s.getHkPrice());
+                        tvExchangePrice.setText(rate + " CNY=1HKB");
+                    });
+                    return ServiceFactory.getInstance().getBaseService(Api.class).getPayInfo().compose(RxSchedulers.normalTrans());
+                })
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                .subscribe(listBaseResponse -> {
+                    for (PayInfoResponse res : listBaseResponse) {
+                        if (res.getPayType().equals(PAYTYPE_WECHAT)) {
+                            tvExchangePayInfo1.setText(res.getWechatNick());
+                        } else if (res.getPayType().equals(PAYTYPE_ALI)) {
+                            tvExchangePayInfo2.setText(res.getZhifubaoNumber());
+                        } else {
+                            tvExchangePayInfo3.setText(res.getOpenBank());
+                        }
+                    }
+                }, this::handleApiError);
     }
 
     private void initViews() {
-        llExchangeWexin = findViewById(R.id.llExchangeWexin);
-        llExchangeAliPay = findViewById(R.id.llExchangeAliPay);
-        llExchangeBank = findViewById(R.id.llExchangeBank);
-        rbExchangeWexin = findViewById(R.id.rbExchangeWexin);
-        rbExchangeAliPay = findViewById(R.id.rbExchangeAlipay);
-        rbExchangeBank = findViewById(R.id.rbExchangeBank);
-        tvExchangeCoinType = findViewById(R.id.tvExchangeCoinType);
+        rlExchangeType1 = findViewById(R.id.rlExchangeType1);
+        rlExchangeType2 = findViewById(R.id.rlExchangeType2);
+        rlExchangeType3 = findViewById(R.id.rlExchangeType3);
+        cbExchangePayType1 = findViewById(R.id.cbExchangePayType1);
+        cbExchangePayType2 = findViewById(R.id.cbExchangePayType2);
+        cbExchangePayType3 = findViewById(R.id.cbExchangePayType3);
+        tvExchangePayInfo1 = findViewById(R.id.tvExchangePayInfo1);
+        tvExchangePayInfo2 = findViewById(R.id.tvExchangePayInfo2);
+        tvExchangePayInfo3 = findViewById(R.id.tvExchangePayInfo3);
+        rlExchangeType1.setOnClickListener(this);
+        rlExchangeType2.setOnClickListener(this);
+        rlExchangeType3.setOnClickListener(this);
+
         tvExchangePrice = findViewById(R.id.tvExchangePrice);
-        tvExchangeCount = findViewById(R.id.tvExchangeCount);
         tvExchangeTotal = findViewById(R.id.tvExchangeTotal);
         rgExchangeTop = findViewById(R.id.rgExchangeTop);
         tvExchangeLine1 = findViewById(R.id.tvExchangeLine1);
         tvExchangeLine3 = findViewById(R.id.tvExchangeLine3);
         tvExchangeLine4 = findViewById(R.id.tvExchangeLine4);
         tvExchangePayType = findViewById(R.id.tvExchangePayType);
+        tvExchangeChooseCount = findViewById(R.id.tvExchangeChooseCount);
         btnExchangeConfirm = findViewById(R.id.btnExchangeConfirm);
 
-        llExchangeWexin.setOnClickListener(this);
-        llExchangeAliPay.setOnClickListener(this);
-        llExchangeBank.setOnClickListener(this);
-        rgExchangeTop.check(R.id.rb1);
         rgExchangeTop.setOnCheckedChangeListener(this);
+        rgExchangeTop.check(R.id.rb1);
     }
 
     public void submit(View view) {
-
+        if (count == 0) {
+            ToastUtils.showShort(R.string.select_count_tips);
+            return;
+        }
+        if (TextUtils.isEmpty(buyType) && buyOrSale) {
+            ToastUtils.showShort(R.string.select_buytype_tips);
+            return;
+        }
+        if (paytypes.size() == 0 && !buyOrSale) {
+            ToastUtils.showShort(R.string.select_saletype_tips);
+            return;
+        }
+        Api api = ServiceFactory.getInstance().getBaseService(Api.class);
+        if (buyOrSale) {
+            api.releaseSale(String.valueOf(count), String.valueOf(totalPrice), "1", buyType)
+                    .compose(bindToLifecycle())
+                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                    .compose(RxSchedulers.normalTrans())
+                    .subscribe(s -> startActivity(new Intent(this, ConfirmBuyActivity.class)), this::handleApiError);
+        } else {
+            api.releasePurchase(String.valueOf(count), String.valueOf(totalPrice),
+                    "1", MD5Utils.getMD5("123456"), getPayTypes())
+                    .compose(bindToLifecycle())
+                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ExchangeActivity.this)))
+                    .compose(RxSchedulers.normalTrans())
+                    .subscribe(s -> startActivity(new Intent(this, ConfirmSaleActivity.class)), this::handleApiError);
+        }
     }
 
-    //选择数量
-    public void chooseCount(View view) {
-
+    private String getPayTypes() {
+        StringBuilder builder = new StringBuilder();
+        for (String str : paytypes) {
+            builder.append(str + ",");
+        }
+        return builder.substring(0, builder.length() - 1);
     }
 
     public void jump2List(View view) {
@@ -89,48 +178,99 @@ public class ExchangeActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
-    public void onClick(View v) {
-        payType = v.getId() == R.id.llExchangeWexin ? PAY_TYPE_WEXINN : (v.getId() == R.id.llExchangeAliPay ? PAY_TYPE_ALI : PAY_TYPE_BANK);
-        changeType(payType);
-    }
-
-    private void changeType(int type) {
-        rbExchangeWexin.setChecked(false);
-        rbExchangeAliPay.setChecked(false);
-        rbExchangeBank.setChecked(false);
-        switch (type) {
-            case PAY_TYPE_WEXINN:
-                rbExchangeWexin.setChecked(true);
-                break;
-            case PAY_TYPE_ALI:
-                rbExchangeAliPay.setChecked(true);
-                break;
-            case PAY_TYPE_BANK:
-                rbExchangeBank.setChecked(true);
-                break;
-            default:
-        }
-    }
-
-    @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
+        buyType = "";
+        paytypes.clear();
+        count = 0;
+        tvExchangeChooseCount.setText(R.string.choosecount);
+        cbExchangePayType1.setChecked(false);
+        cbExchangePayType2.setChecked(false);
+        cbExchangePayType3.setChecked(false);
         switch (checkedId) {
             case R.id.rb2:
                 buyOrSale = false;
-                tvExchangeLine1.setText("出售币种");
-                tvExchangeLine3.setText("出售数量");
-                tvExchangeLine4.setText("出售总金额");
-                tvExchangePayType.setText("收款方式");
-                btnExchangeConfirm.setText("确认出售");
+                tvExchangeLine1.setText(R.string.exchange1_sale1);
+                tvExchangeLine3.setText(R.string.exchange1_sale2);
+                tvExchangeLine4.setText(R.string.exchange1_sale3);
+                tvExchangePayType.setText(R.string.exchange1_sale4);
+                btnExchangeConfirm.setText(R.string.exchange1_sale5);
+
+                if (tvExchangePayInfo1.getText().toString().length() != 0) {
+                    tvExchangePayInfo1.setVisibility(View.VISIBLE);
+                }
+                if (tvExchangePayInfo2.getText().toString().length() != 0) {
+                    tvExchangePayInfo2.setVisibility(View.VISIBLE);
+                }
+
+                if (tvExchangePayInfo3.getText().toString().length() != 0) {
+                    tvExchangePayInfo3.setVisibility(View.VISIBLE);
+                }
                 break;
             case R.id.rb1:
                 buyOrSale = true;
-                tvExchangeLine1.setText("购买币种");
-                tvExchangeLine3.setText("购买数量");
-                tvExchangeLine4.setText("需支付金额");
-                tvExchangePayType.setText("支付方式");
-                btnExchangeConfirm.setText("确认购买");
+                tvExchangeLine1.setText(R.string.exchange1_buy1);
+                tvExchangeLine3.setText(R.string.exchange1_buy2);
+                tvExchangeLine4.setText(R.string.exchange1_buy3);
+                tvExchangePayType.setText(R.string.exchange1_buy4);
+                btnExchangeConfirm.setText(R.string.exchange1_buy5);
+
+                tvExchangePayInfo1.setVisibility(View.GONE);
+                tvExchangePayInfo2.setVisibility(View.GONE);
+                tvExchangePayInfo3.setVisibility(View.GONE);
                 break;
+        }
+    }
+
+    public void chooseCount(View view) {
+        chooseCountWindow.showPopupWindow(tvExchangeChooseCount);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (buyOrSale) {
+            cbExchangePayType1.setChecked(false);
+            cbExchangePayType2.setChecked(false);
+            cbExchangePayType3.setChecked(false);
+            buyType = v.getId() == R.id.rlExchangeType1 ? PAYTYPE_WECHAT : (v.getId() == R.id.rlExchangeType2 ? PAYTYPE_ALI : PAYTYPE_BANK);
+
+            if (v.getId() == R.id.rlExchangeType1) {
+                cbExchangePayType1.setChecked(true);
+            } else if (v.getId() == R.id.rlExchangeType2) {
+                cbExchangePayType2.setChecked(true);
+            } else {
+                cbExchangePayType3.setChecked(true);
+            }
+            return;
+        }
+        switch (v.getId()) {
+            case R.id.rlExchangeType1:
+                if (paytypes.contains(PAYTYPE_WECHAT)) {
+                    paytypes.remove(PAYTYPE_WECHAT);
+                    cbExchangePayType1.setChecked(false);
+                } else if (tvExchangePayInfo1.getText().toString().length() != 0) {
+                    paytypes.add(PAYTYPE_WECHAT);
+                    cbExchangePayType1.setChecked(true);
+                }
+                break;
+            case R.id.rlExchangeType2:
+                if (paytypes.contains(PAYTYPE_ALI)) {
+                    paytypes.remove(PAYTYPE_ALI);
+                    cbExchangePayType2.setChecked(false);
+                } else if (tvExchangePayInfo2.getText().toString().length() != 0) {
+                    paytypes.add(PAYTYPE_ALI);
+                    cbExchangePayType2.setChecked(true);
+                }
+                break;
+            case R.id.rlExchangeType3:
+                if (paytypes.contains(PAYTYPE_BANK)) {
+                    paytypes.remove(PAYTYPE_BANK);
+                    cbExchangePayType3.setChecked(false);
+                } else if (tvExchangePayInfo3.getText().toString().length() != 0) {
+                    paytypes.add(PAYTYPE_BANK);
+                    cbExchangePayType3.setChecked(true);
+                }
+                break;
+            default:
         }
     }
 }

@@ -3,18 +3,20 @@ package com.zxjk.duoduo.network;
 import com.zxjk.duoduo.network.response.BaseResponse;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.response.FriendListResponse;
+import com.zxjk.duoduo.network.response.GetBalanceHkResponse;
+import com.zxjk.duoduo.network.response.GetNumbeOfTransactionResponse;
 import com.zxjk.duoduo.network.response.GroupChatResponse;
 import com.zxjk.duoduo.network.response.LoginResponse;
+import com.zxjk.duoduo.network.response.PayInfoResponse;
+import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
 import com.zxjk.duoduo.network.response.SearchCustomerInfoResponse;
 import com.zxjk.duoduo.network.response.SearchResponse;
-import com.zxjk.duoduo.network.response.UpdateCustomerInfoResponse;
 
 import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface Api {
@@ -204,6 +206,25 @@ public interface Api {
     @POST("duoduo/group/getGroupByCustomId")
     @FormUrlEncoded
     Observable<BaseResponse<List<GroupChatResponse>>> getMygroupinformation(@Field("customerId") String customerId);
+
+    @POST("duoduo/exchange/getBalanceHk")
+    Observable<BaseResponse<GetBalanceHkResponse>> getBalanceHk();
+
+    @POST("duoduo/exchange/getNumbeOfTransaction")
+    Observable<BaseResponse<GetNumbeOfTransactionResponse>> getNumbeOfTransaction();
+
+    @POST("duoduo/exchange/releasePurchase")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> releasePurchase(@Field("number") String number,
+                                                     @Field("money") String money, @Field("currency") String currency, @Field("payPwd") String paypwd, @Field("payTpye") String payTpye);
+
+    @POST("duoduo/exchange/releaseSale")
+    @FormUrlEncoded
+    Observable<BaseResponse<ReleaseSaleResponse>> releaseSale(@Field("number") String number,
+                                                              @Field("money") String money, @Field("currency") String currency, @Field("payTpye") String payTpye);
+
+    @POST("duoduo/customer/getPayInfo")
+    Observable<BaseResponse<List<PayInfoResponse>>> getPayInfo();
 
     /**
      * 删除好友相关

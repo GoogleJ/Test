@@ -41,22 +41,22 @@ public class ChangePwdActivity extends BaseActivity {
         String s2 = etChangePwdConfirm.getText().toString().trim();
 
         if (!verifyPwd(s)) {
-            ToastUtils.showShort("请输入正确原密码");
+            ToastUtils.showShort(R.string.verify_pwd1);
             return;
         }
 
         if (!verifyPwd(s1)) {
-            ToastUtils.showShort("请输入正确新密码");
+            ToastUtils.showShort(R.string.verify_pwd2);
             return;
         }
 
         if (!verifyPwd(s2)) {
-            ToastUtils.showShort("请输入正确新密码");
+            ToastUtils.showShort(R.string.verify_pwd2);
             return;
         }
 
         if (!s1.equals(s2)) {
-            ToastUtils.showShort("两次新密码输入不一致");
+            ToastUtils.showShort(R.string.verify_pwd3);
             return;
         }
         newPass = s1;
@@ -74,6 +74,10 @@ public class ChangePwdActivity extends BaseActivity {
                     ToastUtils.showShort(R.string.update_success);
                     finish();
                 }, this::handleApiError);
+    }
+
+    public void back(View view) {
+        finish();
     }
 
     private boolean verifyPwd(String pwd) {

@@ -13,9 +13,7 @@ import android.widget.TextView;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseFragment;
-import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
@@ -27,6 +25,7 @@ import androidx.cardview.widget.CardView;
 public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     private ImageView ivMineHeadImg;
+    private ImageView ivMineAuthSign;
     private TextView tvMineNick;
     private TextView tvMineDuNum;
     private TextView tvMineSign;
@@ -40,14 +39,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         LinearLayout llMineBalanceLeft = view.findViewById(R.id.llMineBalanceLeft);
         CardView cardMineInfo = view.findViewById(R.id.cardMineInfo);
         ivMineHeadImg = view.findViewById(R.id.ivMineHeadImg);
+        ivMineAuthSign = view.findViewById(R.id.ivMineAuthSign);
         tvMineNick = view.findViewById(R.id.tvMineNick);
         tvMineDuNum = view.findViewById(R.id.tvMineDuNum);
         tvMineSign = view.findViewById(R.id.tvMineSign);
-
-        GlideUtil.loadCornerImg(ivMineHeadImg, Constant.currentUser.getHeadPortrait(), R.drawable.ic_launcher, CommonUtils.dip2px(getContext(), 2));
-        tvMineNick.setText(Constant.currentUser.getNick());
         tvMineDuNum.setText(Constant.currentUser.getDuoduoId());
-        tvMineSign.setText(TextUtils.isEmpty(Constant.currentUser.getSignature()) ? "暂无" : Constant.currentUser.getSignature());
 
         llMineSetting.setOnClickListener(this);
         llMineBalanceLeft.setOnClickListener(this);
@@ -59,8 +55,19 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         tvMineNick.setText(Constant.currentUser.getNick());
-        tvMineSign.setText(TextUtils.isEmpty(Constant.currentUser.getSignature()) ? "暂无" : Constant.currentUser.getSignature());
-        GlideUtil.loadCornerImg(ivMineHeadImg, Constant.currentUser.getHeadPortrait(), R.drawable.ic_launcher, CommonUtils.dip2px(getContext(), 2));
+        if (TextUtils.isEmpty(tvMineSign.getText())) {
+            tvMineSign.setText(R.string.none);
+        } else {
+            tvMineSign.setText(Constant.currentUser.getSignature());
+        }
+        GlideUtil.loadCornerImg(ivMineHeadImg, Constant.currentUser.getHeadPortrait(), 3);
+
+        String isAuthentication = Constant.currentUser.getIsAuthentication();
+        if (isAuthentication.equals("0")) {
+            ivMineAuthSign.setVisibility(View.VISIBLE);
+        } else {
+            ivMineAuthSign.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override

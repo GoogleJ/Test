@@ -7,7 +7,7 @@ public class Constant {
     //阿里OSS上传地址
     public static final String OSS_URL = "https://zhongxingjike.oss-cn-hongkong.aliyuncs.com/upload/";
 
-public static final String BASE_URL="http://192.168.0.110:8085/";
+    public static final String BASE_URL = "http://192.168.0.110:8085/";
 
     public static final int CODE_SUCCESS = 0;
 
@@ -27,4 +27,7 @@ public static final String BASE_URL="http://192.168.0.110:8085/";
 
     public static LoginResponse currentUser = new LoginResponse();
 
+    public static void clear() {
+        currentUser = null;
+    }
 }

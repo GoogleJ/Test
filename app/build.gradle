@@ -12,7 +12,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         ndk {
-            abiFilters "armeabi-v7a", "x86"
+            abiFilters "armeabi-v7a", "x86", "x86_64", "mips64", "mips", "armeabi", "arm64-v8a"
         }
     }
     buildTypes {
@@ -98,4 +98,6 @@ dependencies {
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
     //平滑按钮
     implementation 'com.github.zcweng:switch-button:0.0.3@aar'
+    //popwindow
+    implementation 'com.github.razerdp:BasePopup:2.1.9'
 }

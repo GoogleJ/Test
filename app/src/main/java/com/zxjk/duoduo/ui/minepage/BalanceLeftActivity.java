@@ -1,11 +1,18 @@
 package com.zxjk.duoduo.ui.minepage;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.network.Api;
+import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.utils.CommonUtils;
 
+@SuppressLint("CheckResult")
 public class BalanceLeftActivity extends BaseActivity {
 
     private TextView tvBalanceleftAuthenticateFlag; //是否认证tv
@@ -20,6 +27,15 @@ public class BalanceLeftActivity extends BaseActivity {
         tvBalanceleftAuthenticateFlag = findViewById(R.id.tvBalanceleftAuthenticateFlag);
         tvBalanceleftBalance = findViewById(R.id.tvBalanceleftBalance);
         tvBalanceleftType = findViewById(R.id.tvBalanceleftType);
+
+        tvBalanceleftAuthenticateFlag.setText(CommonUtils.getAuthenticate(Constant.currentUser.getIsAuthentication()));
+
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .getBalanceHk()
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.normalTrans())
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                .subscribe(b -> tvBalanceleftBalance.setText(b.getBalanceHk()), this::handleApiError);
     }
 
     //订单详情
