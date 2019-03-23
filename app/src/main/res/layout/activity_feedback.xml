@@ -11,6 +11,7 @@
         android:layout_height="50dp"
         android:background="@color/login_bg">
         <ImageView
+            android:onClick="returnBtn"
             android:id="@+id/return_btn"
             android:layout_width="10dp"
             android:layout_height="19dp"
@@ -32,6 +33,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
         <TextView
+            android:onClick="feedbackDetermine"
             android:id="@+id/feedback_determine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

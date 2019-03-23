@@ -186,6 +186,15 @@
     <string name="m_privacy_add_my_way">添加我的方式</string>
     <string name="feedback_title">意见反馈</string>
     <string name="feedback_edit">留下你宝贵的意见</string>
+    <string name="account_switch_title">账号切换</string>
+    <string name="change_account_login">换个账号登录</string>
+    <string name="about_title">关于嘟嘟</string>
+    <string name="about_release_notes">版本说明</string>
+    <string name="about_version">版本号</string>
+    <string name="about_version_number">10.1.58</string>
+    <string name="about_label">软件许可及服务协议 隐私政策</string>
+    <string name="about_label_1">©1998-2019 Tencent Inc.All rights reserved.</string>
+    <string name="community">社群</string>
 
 
 

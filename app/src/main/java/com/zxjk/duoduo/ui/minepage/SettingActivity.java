@@ -25,6 +25,36 @@ public class SettingActivity extends BaseActivity {
         startActivity(new Intent(this, AccountActivity.class));
     }
 
+    /**
+     * 意见反馈
+     * @param view
+     */
+    public void feedback(View view){
+        startActivity(new Intent(this,FeedbackActivity.class));
+    }
+    /**
+     * 账号切换
+     * @param view
+     */
+    public void accountSwitch(View view){
+        startActivity(new Intent(this, AccountSwitchActivity.class));
+    }
+    /**
+     * 关于嘟嘟界面
+     * @param view
+     */
+    public void aboutDuoDuo(View view){
+        startActivity(new Intent(this, AboutActivity.class));
+    }
+
+    /**
+     * 隐私界面的跳转
+     * @param view
+     */
+    public void privacy(View view){
+        startActivity(new Intent(this,PrivacyActivity.class));
+    }
+
     public void back(View view) {
         finish();
     }

@@ -8,7 +8,7 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.ui.grouppage.GroupFragment;
+import com.zxjk.duoduo.ui.grouppage.CommunityFragment;
 import com.zxjk.duoduo.ui.minepage.MineFragment;
 import com.zxjk.duoduo.ui.msgpage.MsgFragment;
 import com.zxjk.duoduo.ui.walletpage.WalletFragment;
@@ -33,7 +33,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
     private Fragment mFragment;
 
     MsgFragment msgFragment;
-    GroupFragment groupFragment;
+    CommunityFragment communityFragment;
     WalletFragment walletFragment;
     MineFragment mineFragment;
 
@@ -86,7 +86,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
 
     private void initFragment() {
         msgFragment = new MsgFragment();
-        groupFragment = new GroupFragment();
+        communityFragment = new CommunityFragment();
         walletFragment = new WalletFragment();
         mineFragment = new MineFragment();
 
@@ -104,7 +104,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                 switchFragment(msgFragment);
                 break;
             case 1:
-                switchFragment(groupFragment);
+                switchFragment(communityFragment);
                 break;
             case 2:
                 switchFragment(walletFragment);
