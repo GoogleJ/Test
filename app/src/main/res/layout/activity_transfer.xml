@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="MissingConstraints,RtlCompat">
+
+    <com.zxjk.duoduo.weight.TitleBar
+        android:id="@+id/m_transfer_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:titleBarLeftImage="@drawable/ico_back"
+        app:titleBarTextColor="@color/white"
+        app:titleBarTitle="@string/m_transfer_title_bar" />
+
+    <ImageView
+        android:id="@+id/m_transfer_heard_icon"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="31dp"
+        android:src="@drawable/icon_header" />
+
+    <TextView
+        android:id="@+id/m_transfer_nick_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="14dp"
+        android:text="爱吃水果（王小二）"
+        android:textColor="@color/black"
+        android:textSize="16dp" />
+
+    <TextView
+        android:id="@+id/m_transfer_money_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="29dp"
+        android:text="@string/m_transfer_money_label"
+        android:textColor="@color/m_red_envelopes_unit_text"
+        android:textSize="15sp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        >
+
+        <EditText
+            android:id="@+id/m_transfer_money_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/m_red_envelopes_money_text"
+            android:textColor="@color/black"
+            android:background="@null"
+            android:textSize="35sp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/m_red_envelopes_unit_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/m_red_envelopes_unit_label"
+            android:textColor="@color/m_red_envelopes_unit_text"
+            android:textSize="25sp"
+            android:layout_marginStart="13dp"
+            app:layout_constraintBottom_toBottomOf="@+id/m_transfer_money_text"
+            app:layout_constraintStart_toEndOf="@+id/m_transfer_money_text"
+            app:layout_constraintTop_toTopOf="@+id/m_transfer_money_text"
+             />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <View
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/m_add_friend_line"
+        />
+    <TextView
+        android:id="@+id/m_transfer_add_instructions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/m_transfer_add_instructions"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="22dp"
+        />
+    <TextView
+        android:id="@+id/m_transfer_commit_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/m_transfer_commit_btn"
+        android:gravity="center"
+        android:background="@drawable/shape_bac_normal"
+        android:layout_marginStart="80dp"
+        android:layout_marginEnd="80dp"
+         android:layout_marginTop="150dp"
+        />
+
+</LinearLayout>

@@ -205,4 +205,14 @@ public interface Api {
     @FormUrlEncoded
     Observable<BaseResponse<List<GroupChatResponse>>> getMygroupinformation(@Field("customerId") String customerId);
 
+    /**
+     * 删除好友相关
+     * @return
+     */
+    @POST("duoduo/friend/deleteFriend")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> deleteFriend(
+            @Field("friendId")String friendId
+    );
+
 }

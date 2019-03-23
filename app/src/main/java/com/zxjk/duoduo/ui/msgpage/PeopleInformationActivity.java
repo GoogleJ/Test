@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
@@ -16,20 +15,20 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
+import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.widget.CommonPopupWindow;
 import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendInformationDialog;
 import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.weight.TitleBar;
-
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 import io.reactivex.functions.Consumer;
+import io.rong.imkit.RongIM;
 
 /**
  * @author Administrator
@@ -111,6 +110,8 @@ public class PeopleInformationActivity extends BaseActivity implements View.OnCl
     private CommonPopupWindow popupWindow;
 
     DeleteFriendInformationDialog dialog;
+    int a;
+    int type;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -119,11 +120,17 @@ public class PeopleInformationActivity extends BaseActivity implements View.OnCl
         ButterKnife.bind(this);
         initUI();
         Intent intent = getIntent();
-        userId = intent.getStringExtra("userId");
-        getFriendInfoInfoById(userId);
-        Intent intent1=getIntent();
-        newFriendUserId=intent1.getStringExtra("peopleInformatinoUserId");
-        getFriendInfoInfoById(newFriendUserId);
+
+
+        type = intent.getIntExtra("type", a);
+        if (type != 1) {
+            Intent intent1 = getIntent();
+            newFriendUserId = intent1.getStringExtra("peopleInformatinoUserId");
+            getFriendInfoInfoById(newFriendUserId);
+        } else {
+            userId = intent.getStringExtra("userId");
+            getFriendInfoInfoById(userId);
+        }
     }
 
 
@@ -158,14 +165,27 @@ public class PeopleInformationActivity extends BaseActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.m_people_information_send_to_message:
-                ToastUtils.showShort("此功能暂未实现");
+
+                if (RongIM.getInstance() != null) {
+                    if (type != 1) {
+
+
+                    } else {
+
+
+
+                }
+
+                }
+
+
                 break;
             case R.id.m_people_information_voice_calls:
                 ToastUtils.showShort("此功能暂未实现");
                 break;
             case R.id.update_rename:
-                Intent intent=new Intent(PeopleInformationActivity.this,ModifyNotesActivity.class);
-                intent.putExtra("peopelUserId",userId);
+                Intent intent = new Intent(PeopleInformationActivity.this, ModifyNotesActivity.class);
+                intent.putExtra("peopelUserId", userId);
                 startActivity(intent);
                 break;
             case R.id.recommend_to_friend:
@@ -177,7 +197,7 @@ public class PeopleInformationActivity extends BaseActivity implements View.OnCl
                 dialog.setOnClickListener(new DeleteFriendInformationDialog.OnClickListener() {
                     @Override
                     public void onDel() {
-//                        deleteFriend(userId);
+                         deleteFriend(userId);
                     }
                 });
                 break;
@@ -230,27 +250,29 @@ public class PeopleInformationActivity extends BaseActivity implements View.OnCl
 
     }
 
-//    public void deleteFriend(String friendId) {
-//        ServiceFactory.getInstance().getBaseService(Api.class)
-//                .deleteFriend(friendId)
-//                .compose(bindToLifecycle())
-//                .compose(RxSchedulers.ioObserver())
-//                .compose(RxSchedulers.normalTrans())
-//                .subscribe(new Consumer<String>() {
-//                    @Override
-//                    public void accept(String s) throws Exception {
-//                        LogUtils.d("DEBUG", s);
-//                        ToastUtils.showShort("删除成功");
-//                        dialog.dismiss();
-//
-//                    }
-//                }, this::handleApiError);
-//
-//    }
+    public void deleteFriend(String friendId) {
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .deleteFriend(friendId)
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.ioObserver())
+                .compose(RxSchedulers.normalTrans())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        LogUtils.d("DEBUG", s);
+                        ToastUtils.showShort("删除成功");
+                        dialog.dismiss();
+
+                    }
+                }, this::handleApiError);
+
+    }
 
     @Override
     protected void onStop() {
         super.onStop();
 
     }
+
+
 }

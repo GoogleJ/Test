@@ -130,5 +130,63 @@
     <string name="female">女</string>
     <string name="update_success">修改成功</string>
 
+    //红包相关
+    <string name="m_red_envelopes_title_text">发红包</string>
+    <string name="m_red_envelopes_title_right_text">红包记录</string>
+    <string name="m_red_envelopes_single_amount_label">单个金额</string>
+    <string name="m_red_envelopes_unit_label">HK</string>
+    <string name="m_red_envelopes_label">鸿运当头，大吉大利</string>
+    <string name="m_red_envelopes_money_text">0.000</string>
+    <string name="m_red_envelopes_commit_btn">塞进红包</string>
+    <string name="m_transfer_title_bar">转账</string>
+    <string name="m_transfer_money_label">转账金额</string>
+    <string name="m_transfer_add_instructions">添加转账说明</string>
+    <string name="m_transfer_commit_btn">确认转账</string>
+    <string name="m_successful_transfer_title_bar">转账详情</string>
+    <string name="m_successful_transfer_label">转账成功</string>
+    <string name="m_successful_transfer_text">待好友爱吃水果确认收款</string>
+    <string name="m_successful_transfer_money_text">5000</string>
+    <string name="m_successful_transfer_commit">完成</string>
+    <string name="m_transfer_pending_user">待王小二确认领取</string>
+    <string name="m_transfer_pending_money_text">500</string>
+    <string name="m_transfer_pending_return_text">24小时内对方未确认，将退还给你。</string>
+    <string name="m_transfer_pending_time_text">转账时间：2019-03-02 11：11</string>
+    <string name="m_transfer_info_pending_payment_text">待收款</string>
+    <string name="m_transfer_info_commit_btn">确认</string>
+    <string name="m_transfer_info_caveat_text">24小时内未确认，将退还给对方</string>
+    <string name="m_transfer_received_text">已领取</string>
+    <string name="m_transfer_received_time_text">转账时间：2019-03-02 11：11</string>
+    <string name="m_transfer_received_icon_time_label">收账时间：2019-03-02 12：12</string>
+    <string name="m_red_envelopes_user">爱吃水果的红包</string>
+    <string name="m_red_envelopes_signature_text">鸿运当头，大吉大利</string>
+    <string name="m_transfer_unaccalimed_text">红包金额50HK,等待对方领取</string>
+    <string name="m_expired_envelopes_text">该红包已超过24小时，\n可在红包记录中查看。</string>
+    <string name="m_expired_envelopes_info">查看领取详情 ></string>
+    <string name="m_envelopes_text">1个红包共50HK</string>
+    <string name="m_received_envelopes_text">包子</string>
+    <string name="m_received_envelopes_time_text">2-19 16：22</string>
+    <string name="m_received_envelopes_money_text">50HK</string>
+    <string name="m_envelopes_recording_title_bar">红包记录</string>
+    <string name="m_income_user_name_text">周晓瑞共收到</string>
+    <string name="m_income_money_text">500.68</string>
+    <string name="m_income_count_text">共收到50个红红包</string>
+    <string name="m_item_recording_user_name_text">爱吃水果</string>
+    <string name="m_add_my_way_title_bar">添加我的方式</string>
+    <string name="m_add_my_way_duoduo_id">嘟嘟号</string>
+    <string name="m_add_my_way_phone_id">手机号</string>
+    <string name="m_add_my_way_group_chat_text">群聊</string>
+    <string name="m_add_my_way_qrcode_text">二维码</string>
+    <string name="m_add_my_way_business_carde_text">名片</string>
+    <string name="m_add_my_way_caveat_label">关闭后、用户不能通过以下方式找到你</string>
+    <string name="m_privacy_title_bar">隐私</string>
+    <string name="m_privacy_add_friend_verify_text">加我为朋友时需要验证</string>
+    <string name="m_privacy_hide_real_name_text">隐藏我的真实姓名</string>
+    <string name="m_privacy_recommend_friend">向我推荐通讯录里头的朋友</string>
+    <string name="m_privacy_recommend_friend_caveat">开启后，为您推荐已经开通嘟嘟的手机联系人</string>
+    <string name="m_privacy_add_my_way">添加我的方式</string>
+    <string name="feedback_title">意见反馈</string>
+    <string name="feedback_edit">留下你宝贵的意见</string>
+
+
 
 </resources>

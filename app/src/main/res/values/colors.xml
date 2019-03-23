@@ -52,5 +52,7 @@
     <color name="textcolor2">#666</color>
     <color name="textcolor3">#999</color>
     <color name="m_edit_information_btn">#FFE6A5</color>
-
+    //红包相关
+    <color name="m_red_envelopes_unit_text">#666666</color>
+    <color name="m_people_red_envelopes_title_bar">#F9514E</color>
 </resources>

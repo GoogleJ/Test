@@ -77,28 +77,6 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
 
         Button rightView = getRightBtn(20, 20);
         rightView.setBackgroundResource(R.drawable.ic_head_add);
-        RongIM.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
-            @Override
-            public void onSuccess(List<Conversation> conversations) {
-                if (conversations != null && conversations.size() != 0) {
-                    for (int i = 0; i < conversations.size(); i++) {
-                        Log.i("GJson", "好饿呀！" + conversations.get(i));
-                    }
-                } else {
-
-                }
-            }
-
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-                Log.i("GJson", "" + errorCode.getMessage());
-            }
-        });
-//        RongIM.getInstance().refreshUserInfoCache(userInfo);
-        Map<String, Boolean> map = new HashMap<String, Boolean>();
-        map.put(Conversation.ConversationType.PRIVATE.getName(), false);//会话类型
-//        RongIM.getInstance().startConversationList(context,map);
-
     }
 
 
