@@ -18,6 +18,10 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 
+/**
+ * @author Administrator
+ * @// TODO: 2019\3\25 0025 修改手机号 
+ */
 @SuppressLint("CheckResult")
 public class ChangePhoneActivity extends BaseActivity implements View.OnClickListener {
 

@@ -95,7 +95,7 @@ public interface Api {
      */
     @POST("duoduo/customer/updatePayPwd")
     @FormUrlEncoded
-    Observable<BaseResponse<LoginResponse>> updatePwd(
+    Observable<BaseResponse<LoginResponse>> updatePayPwd(
             @Field("oldPayPwd") String oldPwd,
             @Field("newPayPwd") String newPwdOne,
             @Field("newPayPwdTwo") String newPwdTwo
@@ -193,6 +193,13 @@ public interface Api {
             @Field("deleteCustomerId") String friendId
     );
 
+    /**
+     * 修改手机号
+     *
+     * @param newMobile
+     * @param securityCode
+     * @return
+     */
     @POST("duoduo/customer/updateMobile")
     @FormUrlEncoded
     Observable<BaseResponse<String>> updateMobile(
@@ -207,33 +214,92 @@ public interface Api {
     @FormUrlEncoded
     Observable<BaseResponse<List<GroupChatResponse>>> getMygroupinformation(@Field("customerId") String customerId);
 
+
+    /**
+     * 个人中心-获取账户信息
+     * @return
+     */
     @POST("duoduo/exchange/getBalanceHk")
     Observable<BaseResponse<GetBalanceHkResponse>> getBalanceHk();
 
+    /**
+     * 获取交易额度
+     * @return
+     */
     @POST("duoduo/exchange/getNumbeOfTransaction")
     Observable<BaseResponse<GetNumbeOfTransactionResponse>> getNumbeOfTransaction();
 
+    /**
+     *个人发布出售币种
+     * @param number
+     * @param money
+     * @param currency
+     * @param paypwd
+     * @param payTpye
+     * @return
+     */
     @POST("duoduo/exchange/releasePurchase")
     @FormUrlEncoded
     Observable<BaseResponse<String>> releasePurchase(@Field("number") String number,
-                                                     @Field("money") String money, @Field("currency") String currency, @Field("payPwd") String paypwd, @Field("payTpye") String payTpye);
+                                                     @Field("money") String money,
+                                                     @Field("currency") String currency,
+                                                     @Field("payPwd") String paypwd,
+                                                     @Field("payTpye") String payTpye);
 
+    /**
+     * 发布购买币种信息
+     * @param number
+     * @param money
+     * @param currency
+     * @param payTpye
+     * @return
+     */
     @POST("duoduo/exchange/releaseSale")
     @FormUrlEncoded
     Observable<BaseResponse<ReleaseSaleResponse>> releaseSale(@Field("number") String number,
-                                                              @Field("money") String money, @Field("currency") String currency, @Field("payTpye") String payTpye);
+                                                              @Field("money") String money,
+                                                              @Field("currency") String currency,
+                                                              @Field("payTpye") String payTpye);
 
+    /**
+     * 获取用户收款方式
+     *
+     * @return
+     */
     @POST("duoduo/customer/getPayInfo")
     Observable<BaseResponse<List<PayInfoResponse>>> getPayInfo();
 
     /**
      * 删除好友相关
+     *
      * @return
      */
     @POST("duoduo/friend/deleteFriend")
     @FormUrlEncoded
     Observable<BaseResponse<String>> deleteFriend(
-            @Field("friendId")String friendId
+            @Field("friendId") String friendId
     );
+
+    /**
+     * 修改登录密码
+     * @param oldPwd
+     * @param newPwdOne
+     * @param newPwdTwo
+     * @return
+     */
+    @POST("duoduo/exchange/updatePwd")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> updatePwd(
+          @Field("oldPwd")String oldPwd,
+          @Field("newPwdOne")String newPwdOne,
+          @Field("newPwdTwo")String newPwdTwo
+    );
+
+    /**
+     * 退出登录
+     * @return
+     */
+    @POST("duoduo/loginOut")
+    Observable<BaseResponse<String>> loginOut();
 
 }

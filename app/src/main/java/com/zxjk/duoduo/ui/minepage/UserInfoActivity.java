@@ -19,6 +19,7 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.ui.msgpage.MyQrCodeActivity;
 import com.zxjk.duoduo.ui.widget.TakePopWindow;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
@@ -30,6 +31,12 @@ import java.util.Collections;
 
 import androidx.annotation.Nullable;
 
+import static com.zxjk.duoduo.utils.PermissionUtils.cameraPremissions;
+
+/**
+ * @author Administrator
+ * 个人资料页面
+ */
 @SuppressLint("CheckResult")
 public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnItemClickListener {
 
@@ -91,6 +98,7 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
 
     //修改头像
     public void changeHeadImg(View view) {
+        cameraPremissions(this);
         selectPicPopWindow.showAtLocation(findViewById(android.R.id.content),
                 Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
     }
@@ -114,7 +122,7 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
 
     //我的二维码
     public void myQRCode(View view) {
-
+        startActivity(new Intent(this,MyQrCodeActivity.class));
     }
 
     //修改个性签名

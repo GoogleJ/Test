@@ -16,6 +16,10 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
 
+/**
+ * @author Administrator
+ * @// TODO: 2019\3\25 0025 修改密码
+ */
 @SuppressLint("CheckResult")
 public class ChangePwdActivity extends BaseActivity {
 

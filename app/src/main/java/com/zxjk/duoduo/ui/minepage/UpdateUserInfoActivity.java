@@ -20,6 +20,12 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 
+import io.reactivex.functions.Consumer;
+
+/**
+ * @author Administrator
+ * @// TODO: 2019\3\25 0025 综合修改个人信息界面 
+ */
 @SuppressLint("CheckResult")
 public class UpdateUserInfoActivity extends BaseActivity {
 
@@ -111,7 +117,7 @@ public class UpdateUserInfoActivity extends BaseActivity {
                             break;
                         default:
                     }
-                    finish();
+                    UpdateUserInfoActivity.this.finish();
                 }, this::handleApiError);
     }
 

@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.EncryptUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Application;
@@ -164,7 +165,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         LoginActivity.this.startActivity(new Intent(LoginActivity.this, EditPersonalInformationFragment.class));
                     } else {
                         LoginActivity.this.connect(loginResponse.getRongToken());
+                        LogUtils.d("DEBUG",loginResponse.toString());
                     }
+
                 }, this::handleApiError);
 
     }

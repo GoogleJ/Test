@@ -243,6 +243,7 @@
                 android:background="#dddddd" />
 
             <TextView
+                android:onClick="onlineService"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_mine_rightarrow"
@@ -296,6 +297,7 @@
                 android:background="#f8f8f8" />
 
             <TextView
+                android:onClick="loginOut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

@@ -27,6 +27,7 @@
         android:paddingBottom="20dp"
         />
     <TextView
+        android:onClick="changeAccountLogin"
         android:id="@+id/change_account_login"
         android:paddingTop="22dp"
         android:paddingBottom="22dp"

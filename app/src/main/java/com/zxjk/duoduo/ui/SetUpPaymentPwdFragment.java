@@ -134,7 +134,7 @@ public class SetUpPaymentPwdFragment extends BaseActivity {
         LogUtils.d("Pasdsdfaw", newPwd, newPwdTwo);
 
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .updatePwd("", String.valueOf(EncryptUtils.encryptMD5ToString(newPwd)).toLowerCase(), String.valueOf(EncryptUtils.encryptMD5ToString(newPwdTwo)).toLowerCase())
+                .updatePayPwd("", String.valueOf(EncryptUtils.encryptMD5ToString(newPwd)).toLowerCase(), String.valueOf(EncryptUtils.encryptMD5ToString(newPwdTwo)).toLowerCase())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
