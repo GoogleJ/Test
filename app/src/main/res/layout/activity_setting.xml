@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="#4B4D5B">
+        android:background="@color/themecolor">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="设置"
+            android:text="@string/setting_title"
             android:textColor="@color/white"
             android:textSize="18sp" />
 
@@ -49,14 +49,14 @@
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="16dp"
-                android:text="账号"
+                android:text="@string/account_number"
                 android:textColor="@color/themecolor"
                 android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:background="#f8f8f8" />
+                android:background="@color/personal_information_1" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -66,15 +66,15 @@
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="16dp"
-                android:text="新消息通知"
-                android:textColor="#4B4D5B"
+                android:text="@string/new_message_notificatino"
+                android:textColor="@color/themecolor"
                 android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginStart="10dp"
-                android:background="#dddddd" />
+                android:background="@color/m_add_friend_line" />
 
             <TextView
                 android:onClick="privacy"
@@ -85,17 +85,18 @@
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="16dp"
-                android:text="隐私"
-                android:textColor="#4B4D5B"
+                android:text="@string/pricacy"
+                android:textColor="@color/themecolor"
                 android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginStart="10dp"
-                android:background="#dddddd" />
+                android:background="@color/m_add_friend_line" />
 
             <LinearLayout
+                android:onClick="verified"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -108,14 +109,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="实名认证"
-                    android:textColor="#4B4D5B"
+                    android:text="@string/verified"
+                    android:textColor="@color/themecolor"
                     android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="已认证" />
+                    android:text="@string/verified_successful" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -129,7 +130,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginStart="10dp"
-                android:background="#dddddd" />
+                android:background="@color/m_add_friend_line" />
 
             <LinearLayout
                 android:onClick="billingMessage"
@@ -145,14 +146,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="收款信息"
-                    android:textColor="#4B4D5B"
+                    android:text="@string/billing_message"
+                    android:textColor="@color/themecolor"
                     android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="未完善" />
+                    android:text="@string/not_completed" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -165,7 +166,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:background="#f8f8f8" />
+                android:background="@color/personal_information_1" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -175,15 +176,15 @@
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="16dp"
-                android:text="帮助中心"
-                android:textColor="#4B4D5B"
+                android:text="@string/help_center"
+                android:textColor="@color/themecolor"
                 android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginStart="10dp"
-                android:background="#dddddd" />
+                android:background="@color/m_add_friend_line" />
 
             <TextView
                 android:onClick="feedback"
@@ -195,15 +196,15 @@
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="16dp"
-                android:text="意见反馈"
-                android:textColor="#4B4D5B"
+                android:text="@string/feedback_title"
+                android:textColor="@color/themecolor"
                 android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginStart="10dp"
-                android:background="#dddddd" />
+                android:background="@color/m_add_friend_line" />
 
             <TextView
                 android:onClick="aboutDuoDuo"
@@ -214,15 +215,15 @@
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="16dp"
-                android:text="关于嘟嘟"
-                android:textColor="#4B4D5B"
+                android:text="@string/about_title"
+                android:textColor="@color/themecolor"
                 android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginStart="10dp"
-                android:background="#dddddd" />
+                android:background="@color/m_add_friend_line" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -232,15 +233,15 @@
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="16dp"
-                android:text="语言切换"
-                android:textColor="#4B4D5B"
+                android:text="@string/language_switching"
+                android:textColor="@color/themecolor"
                 android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginStart="10dp"
-                android:background="#dddddd" />
+                android:background="@color/m_add_friend_line" />
 
             <TextView
                 android:onClick="onlineService"
@@ -251,14 +252,14 @@
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="16dp"
-                android:text="在线客服"
-                android:textColor="#4B4D5B"
+                android:text="@string/online_service"
+                android:textColor="@color/themecolor"
                 android:textSize="16sp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:background="#f8f8f8" />
+                android:background="@color/personal_information_1" />
 
             <LinearLayout
                 android:onClick="accountSwitch"
@@ -274,14 +275,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="切换账号"
-                    android:textColor="#4B4D5B"
+                    android:text="@string/switch_account"
+                    android:textColor="@color/themecolor"
                     android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="周小瑞" />
+                    android:text="@string/user_name" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -294,7 +295,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:background="#f8f8f8" />
+                android:background="@color/personal_information_1" />
 
             <TextView
                 android:onClick="loginOut"
@@ -303,7 +304,7 @@
                 android:gravity="center"
                 android:paddingTop="14dp"
                 android:paddingBottom="14dp"
-                android:text="退出"
+                android:text="@string/drop_out"
                 android:textColor="@color/themecolor"
                 android:textSize="18sp" />
 
@@ -311,7 +312,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="#f8f8f8"
+                android:background="@color/personal_information_1"
                 android:paddingBottom="16dp" />
 
         </LinearLayout>

@@ -33,7 +33,7 @@
     <color name="personal_information_1">#F8F8F8</color>
     <color name="m_personal_information_dudu_id">#999999</color>
     <color name="m_verification_send_btn">#4B4D5B</color>
-    <color name="m_verification_send_btn_background">#E5C175</color>
+    <color name="m_verification_send_btn_backgrounFd">#E5C175</color>
 
     <color name="viewfinder_mask">#60000000</color>
     <color name="result_view">#B0000000</color>
@@ -58,4 +58,7 @@
 
     //关于嘟嘟页面相关
     <color name="about_version_number">#CCCCCC</color>
+    //实名认证里头的图片颜色
+    <color name="verified_image_color">#DCDCDC</color>
+    <color name="m_verification_send_btn_background"></color>
 </resources>

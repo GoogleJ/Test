@@ -302,4 +302,19 @@ public interface Api {
     @POST("duoduo/loginOut")
     Observable<BaseResponse<String>> loginOut();
 
+    /**
+     * 新增（修改收款方式）
+     * @return
+     */
+    @POST("duoduo/customer/addPayInfo")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> addPayInfo(
+           @Field("data") String data
+    );
+    @POST("duoduo/customer/certification")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> certification(
+            @Field("data")String data
+    );
+
 }

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.googlecode.mp4parser.boxes.dece.ContentInformationBox;
 import com.liang.permission.annotation.Permission;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
@@ -151,9 +152,7 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         String filePath = "";
-
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_TAKE:
@@ -162,9 +161,10 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                 case REQUEST_ALBUM:
                     filePath = TakePicUtil.getPath(this, data.getData());
                     break;
+                    default:
+                        break;
             }
         }
-
         if (!TextUtils.isEmpty(filePath)) {
             zipFile(Collections.singletonList(filePath), files -> {
                 File file = files.get(0);
@@ -173,9 +173,7 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                     LoginResponse update = new LoginResponse(Constant.userId);
                     update.setHeadPortrait(url);
                     GlideUtil.loadCornerImg(imageSearchBtn, url, CommonUtils.dip2px(this, 2));
-
                     this.url = url;
-
                 });
             });
         }

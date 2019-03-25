@@ -1,4 +1,6 @@
-<resources>
+<resources
+    tools:ignore="MissingTranslation"
+    xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">duoduo</string>
     <string name="edit_phone_number_tip">请输入手机号</string>
     <string name="edit_password_tip">请输入密码</string>
@@ -208,7 +210,7 @@
     <string name="m_privacy_title_bar">隐私</string>
     <string name="m_privacy_add_friend_verify_text">加我为朋友时需要验证</string>
     <string name="m_privacy_hide_real_name_text">隐藏我的真实姓名</string>
-    <string name="m_privacy_recommend_friend">向我推荐通讯录里头的朋友</string>
+    <string name="m_privacy_recommend_friend" >向我推荐通讯录里头的朋友</string>
     <string name="m_privacy_recommend_friend_caveat">开启后，为您推荐已经开通嘟嘟的手机联系人</string>
     <string name="m_privacy_add_my_way">添加我的方式</string>
     <string name="feedback_title">意见反馈</string>
@@ -248,6 +250,40 @@
     <string name="commit_label">我们会尽快审核，给您反馈</string>
     <string name="user_phone">请输入手机号</string>
     <string name="login_out">已退出登录</string>
+    <string name="wechat_nick">填写现在的微信昵称</string>
+    <string name="alipay_number">填写支付宝账号</string>
+    <string name="setting_title">设置</string>
+    <string name="account_number">账号</string>
+    <string name="new_message_notificatino">新消息通知</string>
+    <string name="pricacy">隐私</string>
+    <string name="verified">实名认证</string>
+    <string name="verified_successful">已认证</string>
+    <string name="billing_message">收款信息</string>
+    <string name="not_completed">未完善</string>
+    <string name="help_center">帮助中心</string>
+    <string name="language_switching">语言切换</string>
+    <string name="online_service">在线客服</string>
+    <string name="switch_account">切换账号</string>
+    <string name="drop_out">退出</string>
+    <string name="verified_prompt">请填写证件上的真实名称、证件类型及证件号</string>
+    <string name="please_select_the_type_of_document">请选择证件类型</string>
+    <string name="personal_name">个人名称</string>
+    <string name="id_number">证件号码</string>
+    <string name="verified_prompt_1">拍摄证件照，确保证件照上的名称及证件号清晰可见</string>
+    <string name="front_photo_of_the_document">证件正面照</string>
+    <string name="reverse_photo_of_the_document">证件反面照</string>
+    <string name="hand_held_passport_photo">手持证件照</string>
+    <string name="type_of_certificate">证件类型</string>
+    <string name="id_card">身份证</string>
+    <string name="passport">护照</string>
+    <string name="other_identity_card">其他国家或地区的身份证</string>
+    <string name="bank_id_card_edit">请输入您的真实姓名</string>
+    <string name="bank_real_name">真实姓名</string>
+    <string name="edit_real_name">请填写真实姓名</string>
+    <string name="edit_id_cards">请填写正确得证件号</string>
+    <string name="please_upload_payment_code">请上传付款码</string>
+    <string name="please_upload_selector_open_bank">请先选择开户银行</string>
+    <string name="uploaded">已上传</string>
 
 
 </resources>

@@ -36,55 +36,71 @@ android {
 }
 
 dependencies {
-
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha03'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0-beta01'
     implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
+
     //Rxlifecycle
     implementation 'com.trello.rxlifecycle3:rxlifecycle:3.0.0'
     implementation 'com.trello.rxlifecycle3:rxlifecycle-android:3.0.0'
     implementation 'com.trello.rxlifecycle3:rxlifecycle-components:3.0.0'
+
     //RxJava
     implementation 'io.reactivex.rxjava2:rxjava:2.2.7'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+
     //Retrofit2
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+
     //OKHTTP3
     implementation 'com.squareup.okhttp3:okhttp:3.14.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.14.0'
+
     //Material
     implementation 'com.google.android.material:material:1.1.0-alpha04'
     implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha03'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.ashokvarma.android:bottom-navigation-bar:1.3.1'
+
     //扫码相关
     implementation 'com.google.zxing:core:3.3.2'
+
     //Aliyun
     implementation 'com.aliyun.dpa:oss-android-sdk:+'
+
     //utils
     implementation 'com.blankj:utilcodex:1.23.7'
+
     //Loading
     implementation 'com.github.ybq:Android-SpinKit:1.2.0'
+
     //添加依赖  安卓黄油刀，可减少部分代码，具体看个人习惯
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
+
     //这个是对方法数进行的依赖
     implementation 'androidx.multidex:multidex:2.0.0'
+
     //这个是关于Permission权限申请的依赖
     implementation 'org.liang.library:jpermission:1.0.2'
+
     //融云
     implementation project(':IMKit')
     implementation project(':IMLib')
+
     //图片缓存
     implementation 'com.github.bumptech.glide:glide:4.9.0'
+
     //文件压缩
     implementation 'top.zibin:Luban:1.1.8'
+
     //安全键盘
     implementation 'com.ziyeyouhu:customizekeyboard:1.0.0'
+
     //安全密码
     implementation 'coder.siy:password-textView:1.0.0'
 
@@ -94,10 +110,14 @@ dependencies {
     implementation 'cn.bingoogolapple:bga-flowlayout:1.0.0@aar'
     implementation 'cn.bingoogolapple:bga-zxing:1.1.7@aar'
     implementation 'cn.bingoogolapple:bga-qrcodecore:1.1.7@aar'
+
     //通用适配器
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+
     //平滑按钮
     implementation 'com.github.zcweng:switch-button:0.0.3@aar'
+
     //popwindow
     implementation 'com.github.razerdp:BasePopup:2.1.9'
+    implementation files('libs/BASE64.jar')
 }

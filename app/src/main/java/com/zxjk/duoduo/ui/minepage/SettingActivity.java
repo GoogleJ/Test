@@ -110,7 +110,6 @@ public class SettingActivity extends BaseActivity {
                     ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
                     boolean res = am.clearApplicationUserData();
                     if (!res) {
-                        LogUtils.d("DEBUG", "缓存已清理");
                     }
                 }, this::handleApiError);
     }
@@ -124,6 +123,14 @@ public class SettingActivity extends BaseActivity {
         Uri uri = Uri.parse(Constant.currentUser.getOnlineService());
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
+    }
+
+    /**
+     * 跳转实名认证界面
+     * @param view
+     */
+    public void verified(View view){
+        startActivity(new Intent(SettingActivity.this,VerifiedActivity.class));
 
     }
 

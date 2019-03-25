@@ -32,6 +32,7 @@ import java.util.Collections;
 import androidx.annotation.Nullable;
 
 import static com.zxjk.duoduo.utils.PermissionUtils.cameraPremissions;
+import static com.zxjk.duoduo.utils.PermissionUtils.verifyStoragePermissions;
 
 /**
  * @author Administrator
@@ -53,6 +54,10 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
     private TakePopWindow selectPicPopWindow;
     private static final int REQUEST_TAKE = 1;
     private static final int REQUEST_ALBUM = 2;
+    String type="type";
+    int changeNick=2;
+    int changeSign=1;
+    int changeEmail=3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +103,7 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
 
     //修改头像
     public void changeHeadImg(View view) {
+        verifyStoragePermissions(this);
         cameraPremissions(this);
         selectPicPopWindow.showAtLocation(findViewById(android.R.id.content),
                 Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
@@ -106,7 +112,7 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
     //修改昵称
     public void changeNick(View view) {
         Intent intent = new Intent(this, UpdateUserInfoActivity.class);
-        intent.putExtra("type", 2);
+        intent.putExtra(type, changeNick);
         startActivity(intent);
     }
 
@@ -128,14 +134,14 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
     //修改个性签名
     public void changeSign(View view) {
         Intent intent = new Intent(this, UpdateUserInfoActivity.class);
-        intent.putExtra("type", 1);
+        intent.putExtra(type, changeSign);
         startActivity(intent);
     }
 
     //修改Email
     public void changeEmail(View view) {
         Intent intent = new Intent(this, UpdateUserInfoActivity.class);
-        intent.putExtra("type", 3);
+        intent.putExtra(type, changeEmail);
         startActivity(intent);
     }
 

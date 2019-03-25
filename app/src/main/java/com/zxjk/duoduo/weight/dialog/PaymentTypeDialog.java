@@ -32,9 +32,10 @@ public class PaymentTypeDialog extends Dialog implements View.OnClickListener {
     @BindView(R.id.edit_information)
     EditText editInformation;
 
-    String title;
-    int type;
-    int wechat=0;
+
+    String wechat="1";
+    String alipay="2";
+
     String editContent;
 
     public PaymentTypeDialog(@NonNull Context context) {
@@ -44,11 +45,20 @@ public class PaymentTypeDialog extends Dialog implements View.OnClickListener {
         view= LayoutInflater.from(context).inflate(R.layout.dialog_payment_type,null);
         ButterKnife.bind(this,view);
     }
-    public void show(String title,int type){
+    public void show(String title,String type){
         show();
-        this.title=title;
-        this.type=type;
-
+        dialogTitle.setText(title);
+        if (wechat.equals(type)){
+            //微信的
+            editInformation.setHint(R.string.nick);
+        }else if (alipay.equals(type)){
+            //支付宝的
+            editInformation.setHint(R.string.alipay_number);
+            editInformation.setInputType(InputType.TYPE_CLASS_NUMBER);
+        }else{
+            editInformation.setHint(R.string.bank_id_card_edit);
+            editInformation.setInputType(InputType.TYPE_CLASS_NUMBER);
+        }
 
     }
     @Override
@@ -63,16 +73,8 @@ public class PaymentTypeDialog extends Dialog implements View.OnClickListener {
         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
         layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
         window.setAttributes(layoutParams);
-        dialogTitle.setText(title);
-        if (type==wechat){
-            //微信的
-            editInformation.setHint(R.string.nick);
-        }else{
-            //支付宝的
-            editInformation.setHint(R.string.user_phone);
-            editInformation.setInputType(InputType.TYPE_CLASS_NUMBER);
-        }
-        editContent=editInformation.getText().toString();
+
+
 
     }
 
@@ -86,7 +88,8 @@ public class PaymentTypeDialog extends Dialog implements View.OnClickListener {
                 break;
             case R.id.determine_btn:
                 if (onClickListener!=null){
-                    onClickListener.determine(editContent);
+
+                    onClickListener.determine(editInformation.getText().toString());
                 }
                 break;
                 default:

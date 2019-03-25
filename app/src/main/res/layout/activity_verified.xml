@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="MissingConstraints">
+
+    <com.zxjk.duoduo.weight.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:titleBarLeftImage="@drawable/ico_back"
+        app:titleBarTextColor="@color/white"
+        app:titleBarTitle="@string/verified" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/personal_information_1"
+                android:padding="12dp"
+                android:text="@string/verified_prompt"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:onClick="pleaseSelectTheTypeOfDocument"
+                android:paddingStart="12dp"
+                android:paddingTop="22dp"
+                android:paddingEnd="13dp"
+                android:paddingBottom="22dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:text="@string/please_select_the_type_of_document"
+                    android:textColor="@color/m_my_qr_code_label"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/id_card_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/id_card_go"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/id_card_go"
+                    android:layout_width="8dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/icon_go"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginStart="12dp"
+                android:background="@color/m_add_friend_line" />
+
+            <EditText
+                android:id="@+id/real_name"
+                style="?attr/checkedTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:hint="@string/personal_name"
+                android:paddingStart="12dp"
+                android:paddingTop="22dp"
+                android:paddingBottom="22dp"
+                android:textColor="@color/m_my_qr_code_label" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginStart="12dp"
+                android:background="@color/m_add_friend_line" />
+
+            <EditText
+                android:id="@+id/id_card"
+                style="?attr/checkedTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:hint="@string/id_number"
+                android:paddingStart="12dp"
+                android:paddingTop="22dp"
+                android:paddingBottom="22dp"
+                android:textColor="@color/m_my_qr_code_label"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:text="@string/verified_prompt_1"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/front_photo_of_the_document"
+                    android:layout_width="150dp"
+                    android:layout_height="108dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/verified_image_color"
+                    android:maxWidth="168dp"
+                    android:scaleType="center"
+                    android:src="@drawable/icon_add_a_photo_of_the_id"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/front_photo_of_the_document_edit"
+                    android:layout_width="29dp"
+                    android:layout_height="29dp"
+                    android:src="@drawable/icon_image_edit"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="@+id/front_photo_of_the_document"
+                    app:layout_constraintTop_toTopOf="@+id/front_photo_of_the_document" />
+
+                <TextView
+                    android:id="@+id/front_photo_of_the_document_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/front_photo_of_the_document"
+                    android:textColor="@color/m_red_envelopes_unit_text"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="@+id/front_photo_of_the_document"
+                    app:layout_constraintStart_toStartOf="@+id/front_photo_of_the_document"
+                    app:layout_constraintTop_toBottomOf="@+id/front_photo_of_the_document" />
+
+                <ImageView
+                    android:id="@+id/reverse_photo_of_the_document"
+                    android:layout_width="150dp"
+                    android:layout_height="108dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@color/verified_image_color"
+                    android:scaleType="center"
+                    android:src="@drawable/icon_add_a_photo_of_the_id"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/reverse_photo_of_the_document_edit"
+                    android:layout_width="29dp"
+                    android:layout_height="29dp"
+                    android:src="@drawable/icon_image_edit"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="@+id/reverse_photo_of_the_document"
+                    app:layout_constraintTop_toTopOf="@+id/reverse_photo_of_the_document" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/reverse_photo_of_the_document"
+                    android:textColor="@color/m_red_envelopes_unit_text"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="@+id/reverse_photo_of_the_document"
+                    app:layout_constraintStart_toStartOf="@+id/reverse_photo_of_the_document"
+                    app:layout_constraintTop_toBottomOf="@+id/reverse_photo_of_the_document" />
+
+                <ImageView
+                    android:id="@+id/hand_held_passport_photo"
+                    android:layout_width="150dp"
+                    android:layout_height="108dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="14dp"
+                    android:background="@color/verified_image_color"
+                    android:scaleType="center"
+                    android:src="@drawable/icon_hand_held_passport_photo"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/front_photo_of_the_document_text" />
+
+                <ImageView
+                    android:id="@+id/hand_held_passport_photo_edit"
+                    android:layout_width="29dp"
+                    android:layout_height="29dp"
+                    android:src="@drawable/icon_image_edit"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="@+id/hand_held_passport_photo"
+                    app:layout_constraintTop_toTopOf="@+id/hand_held_passport_photo" />
+
+                <TextView
+                    android:id="@+id/hand_held_passport_photo_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:paddingBottom="6dp"
+                    android:text="@string/hand_held_passport_photo"
+                    app:layout_constraintEnd_toEndOf="@+id/hand_held_passport_photo"
+                    app:layout_constraintStart_toStartOf="@+id/hand_held_passport_photo"
+                    app:layout_constraintTop_toBottomOf="@+id/hand_held_passport_photo" />
+
+                <TextView
+                    android:id="@+id/verified_commit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_login_btn_click_bg_pressed"
+                    android:gravity="center"
+                    android:paddingTop="17dp"
+                    android:paddingBottom="17dp"
+                    android:text="@string/commit"
+                    android:textColor="@color/themecolor"
+                    app:layout_constraintTop_toBottomOf="@+id/hand_held_passport_photo_text" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

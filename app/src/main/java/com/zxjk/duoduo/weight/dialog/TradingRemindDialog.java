@@ -9,10 +9,12 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.zxjk.duoduo.R;
 
 import androidx.annotation.NonNull;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -24,12 +26,18 @@ public class TradingRemindDialog extends Dialog implements View.OnClickListener 
 
     private View view;
     Context context;
+    @BindView(R.id.order_being_traded_label)
+    TextView titleText;
 
     public TradingRemindDialog(@NonNull Context context) {
         super(context, R.style.dialogstyle);
         this.context=context;
         view= LayoutInflater.from(context).inflate(R.layout.dialog_order_being_traded,null);
         ButterKnife.bind(this,view);
+    }
+    public void show(String title){
+        super.show();
+        titleText.setText(title);
     }
 
     @Override

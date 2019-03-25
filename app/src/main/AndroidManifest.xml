@@ -53,6 +53,9 @@
         <activity android:name=".ui.minepage.ChangePhoneActivity" />
         <activity android:name=".ui.minepage.AccountActivity" />
         <activity android:name=".ui.msgpage.GlobalSearchActivity" />
+        <activity android:name=".ui.minepage.VerifiedActivity"/>
+
+
         <activity
             android:name=".ui.WelcomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

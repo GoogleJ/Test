@@ -1,6 +1,8 @@
 package com.zxjk.duoduo;
 
 import com.blankj.utilcode.util.DeviceUtils;
+import com.zxjk.duoduo.bean.AddPayInfoBean;
+import com.zxjk.duoduo.bean.VerifiedBean;
 import com.zxjk.duoduo.network.response.LoginResponse;
 
 public class Constant {
@@ -30,4 +32,13 @@ public class Constant {
     public static void clear() {
         currentUser = null;
     }
+
+    /**
+     * 新增（修改收款方式）实体
+     */
+    public static AddPayInfoBean  payInfoBean=new AddPayInfoBean();
+    /**
+     * 实名认证实体
+     */
+    public static VerifiedBean verifiedBean=new VerifiedBean();
 }
