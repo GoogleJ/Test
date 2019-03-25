@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".ui.walletpage.CancelOrderActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -23,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/sale_success"
+            android:text="@string/sale_cancel"
             android:textColor="@color/white"
             android:textSize="18sp" />
 
@@ -34,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="38dp"
-        android:src="@drawable/icon_transfer_successful" />
+        android:src="@drawable/ic_order_cancel" />
 
     <TextView
         android:id="@+id/commit_successful"
@@ -42,8 +44,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="24dp"
-        android:text="@string/wait_for_others_to_buy"
-        android:textColor="@color/black"
+        android:text="@string/sale_cancel"
+        android:textColor="@color/textcolor3"
         android:textSize="19sp" />
 
     <View
@@ -87,7 +89,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/salecointype"
+            android:text="@string/cointype"
             android:textColor="@color/textcolor3" />
 
         <TextView
@@ -131,7 +133,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/saleCount"
+            android:text="@string/count"
             android:textColor="@color/textcolor3" />
 
         <TextView
@@ -153,7 +155,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/saleTotalPrice"
+            android:text="@string/moneyCount"
             android:textColor="@color/textcolor3" />
 
         <TextView
@@ -185,28 +187,5 @@
             android:textColor="@color/themecolor" />
 
     </LinearLayout>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/selector_login_btn_click_bg"
-        android:onClick="showOrders"
-        android:text="@string/orders_mine"
-        android:textSize="16sp" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:background="#EEEEEE"
-        android:onClick="cancelOrder"
-        android:text="@string/cancel_order"
-        android:textColor="#BBBBBB"
-        android:textSize="16sp" />
 
 </LinearLayout>

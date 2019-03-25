@@ -8,23 +8,17 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-
-import com.blankj.utilcode.util.LogUtils;
+import android.widget.ImageView;
+import android.widget.TextView;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.LoginResponse;
-import com.zxjk.duoduo.network.rx.RxException;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
-import com.zxjk.duoduo.ui.HomeActivity;
-import com.zxjk.duoduo.ui.LoginActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
-
 import androidx.annotation.RequiresApi;
-import io.reactivex.functions.Consumer;
 
 /**
  * 这里是关于设置的activity
@@ -34,10 +28,28 @@ import io.reactivex.functions.Consumer;
 @SuppressLint("CheckResult")
 public class SettingActivity extends BaseActivity {
 
+    private TextView tvSettingAuthenticate;
+    private TextView tvSettingPayment;
+    private TextView tvSettingNick;
+
+    private ImageView ivSettingAuthen;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+
+        tvSettingAuthenticate = findViewById(R.id.tvSettingAuthenticate);
+        tvSettingPayment = findViewById(R.id.tvSettingPayment);
+        tvSettingNick = findViewById(R.id.tvSettingNick);
+        ivSettingAuthen = findViewById(R.id.ivSettingAuthen);
+
+        if (Constant.currentUser.getRealname().equals("")) {
+            tvSettingAuthenticate.setText(R.string.authen_false);
+        } else {
+            tvSettingAuthenticate.setText(R.string.authen_true);
+        }
+        tvSettingNick.setText(Constant.currentUser.getNick());
     }
 
     String actionReceiver = "com.zxjk.duoduo.logout";
@@ -55,7 +67,6 @@ public class SettingActivity extends BaseActivity {
     public void feedback(View view) {
         startActivity(new Intent(this, FeedbackActivity.class));
     }
-
     /**
      * 账号切换
      *

@@ -1,4 +1,4 @@
-package com.zxjk.duoduo.ui.minepage;
+package com.zxjk.duoduo.ui.walletpage;
 
 import android.os.Bundle;
 

@@ -25,6 +25,7 @@ import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
+import com.zxjk.duoduo.weight.dialog.ChooseSexDialog;
 
 import java.io.File;
 import java.util.Collections;
@@ -59,6 +60,8 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
     int changeSign=1;
     int changeEmail=3;
 
+    private ChooseSexDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +71,23 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
         selectPicPopWindow.setOnItemClickListener(this);
 
         findViews();
+
+        dialog = new ChooseSexDialog(this, sex -> {
+            if (sex.equals(Constant.currentUser.getSex())) {
+                return;
+            }
+            LoginResponse update = new LoginResponse(Constant.currentUser.getId());
+            update.setSex(sex);
+            ServiceFactory.getInstance().getBaseService(Api.class)
+                    .updateUserInfo(GsonUtils.toJson(update))
+                    .compose(bindToLifecycle())
+                    .compose(RxSchedulers.normalTrans())
+                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                    .subscribe(s -> {
+                        Constant.currentUser.setSex(sex);
+                        tvUserInfoSex.setText(CommonUtils.getSex(Constant.currentUser.getSex()));
+                    }, this::handleApiError);
+        });
     }
 
     private void bindData() {
@@ -80,7 +100,7 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
         tvUserInfoPhone.setText(mobile.substring(0, 3) + "****" + mobile.substring(7, 11));
         tvUserInfoSign.setText(TextUtils.isEmpty(Constant.currentUser.getSignature()) ? "暂无" : Constant.currentUser.getSignature());
         tvUserInfoEmail.setText(TextUtils.isEmpty(Constant.currentUser.getEmail()) ? "暂无" : Constant.currentUser.getEmail());
-        tvUserInfoWallet.setText(TextUtils.isEmpty(Constant.currentUser.getWalletAddress()) ? "暂无" : Constant.currentUser.getWalletAddress());
+        tvUserInfoWallet.setText(Constant.currentUser.getWalletAddress());
     }
 
     @Override
@@ -123,7 +143,7 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
 
     //修改性别
     public void changeSex(View view) {
-
+        dialog.show();
     }
 
     //我的二维码
@@ -192,7 +212,7 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
                             .compose(RxSchedulers.normalTrans())
                             .subscribe(response -> {
                                 Constant.currentUser.setHeadPortrait(url);
-                                GlideUtil.loadCornerImg(ivUserInfoHead, url,3);
+                                GlideUtil.loadCornerImg(ivUserInfoHead, url, 3);
                                 ToastUtils.showShort(R.string.update_head_portrail);
                             }, UserInfoActivity.this::handleApiError);
                 });

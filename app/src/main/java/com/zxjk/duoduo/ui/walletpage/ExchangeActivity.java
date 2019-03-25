@@ -10,18 +10,22 @@ import android.widget.CheckBox;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.GetNumbeOfTransactionResponse;
 import com.zxjk.duoduo.network.response.PayInfoResponse;
+import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import io.reactivex.ObservableSource;
 import io.reactivex.functions.Function;
 
@@ -58,8 +62,6 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
 
     private boolean buyOrSale = true;
 
-    private List strings;
-
     private int count;
     private float totalPrice;
     private float rate;
@@ -76,16 +78,17 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                 .compose(RxSchedulers.normalTrans())
                 .flatMap((Function<GetNumbeOfTransactionResponse, ObservableSource<List<PayInfoResponse>>>) s -> {
                     runOnUiThread(() -> {
+                        rate = Float.parseFloat(s.getHkPrice());
+                        tvExchangePrice.setText(rate + " CNY=1HK");
                         chooseCountWindow = new ChooseCountWindow(this);
                         chooseCountWindow.setData(s.getNumbeOfTransaction());
                         chooseCountWindow.setOnChooseCount(s1 -> {
-                            chooseCountWindow.dismiss();
                             count = Integer.parseInt(s1);
+                            totalPrice = count * rate;
+                            chooseCountWindow.dismiss();
                             tvExchangeChooseCount.setText(s1);
+                            tvExchangeTotal.setText(String.valueOf(totalPrice));
                         });
-                        strings = s.getNumbeOfTransaction();
-                        rate = Float.parseFloat(s.getHkPrice());
-                        tvExchangePrice.setText(rate + " CNY=1HKB");
                     });
                     return ServiceFactory.getInstance().getBaseService(Api.class).getPayInfo().compose(RxSchedulers.normalTrans());
                 })
@@ -144,20 +147,32 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
             ToastUtils.showShort(R.string.select_saletype_tips);
             return;
         }
+
         Api api = ServiceFactory.getInstance().getBaseService(Api.class);
+
         if (buyOrSale) {
-            api.releaseSale(String.valueOf(count), String.valueOf(totalPrice), "1", buyType)
-                    .compose(bindToLifecycle())
-                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+            api.isConfine().compose(bindToLifecycle())
                     .compose(RxSchedulers.normalTrans())
-                    .subscribe(s -> startActivity(new Intent(this, ConfirmBuyActivity.class)), this::handleApiError);
+                    .flatMap((Function<String, ObservableSource<ReleaseSaleResponse>>) s -> api.releaseSale(String.valueOf(count), String.valueOf(totalPrice),
+                            "1", buyType).compose(RxSchedulers.normalTrans()))
+                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                    .subscribe(s -> {
+                        Intent intent = new Intent(this, ConfirmBuyActivity.class);
+                        intent.putExtra("data", s);
+                        startActivity(intent);
+                    }, this::handleApiError);
         } else {
             api.releasePurchase(String.valueOf(count), String.valueOf(totalPrice),
                     "1", MD5Utils.getMD5("123456"), getPayTypes())
                     .compose(bindToLifecycle())
-                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ExchangeActivity.this)))
                     .compose(RxSchedulers.normalTrans())
-                    .subscribe(s -> startActivity(new Intent(this, ConfirmSaleActivity.class)), this::handleApiError);
+                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                    .subscribe(s -> {
+                        Intent intent = new Intent(this, ConfirmSaleActivity.class);
+                        intent.putExtra("data", s);
+                        intent.putExtra("rate", tvExchangePrice.getText().toString());
+                        startActivity(intent);
+                    }, this::handleApiError);
         }
     }
 

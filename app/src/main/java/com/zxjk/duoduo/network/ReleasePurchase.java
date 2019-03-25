@@ -1,17 +1,17 @@
-package com.zxjk.duoduo.network.response;
+package com.zxjk.duoduo.network;
 
 import java.io.Serializable;
 
-public class ReleaseSaleResponse implements Serializable {
+public class ReleasePurchase implements Serializable {
 
     /**
-     * id : 49
-     * customerId : 4
-     * duoduoId : 10000004
-     * sellOrderId : 15518705466054
-     * number : 400
-     * money : 400
-     * createTime : 1551870546
+     * id :
+     * customerId : 34
+     * duoduoId : 6780785
+     * sellOrderId : 155341930630834
+     * number : 7000
+     * money : 0.0
+     * createTime : 1553419306308
      * currency : 1
      * payType : 1,2,3
      * closeTime :
@@ -23,8 +23,6 @@ public class ReleaseSaleResponse implements Serializable {
     private int customerId;
     private String duoduoId;
     private String sellOrderId;
-    private String buyOrderId;
-    private String bothOrderId;
     private String number;
     private String money;
     private String createTime;
@@ -33,49 +31,6 @@ public class ReleaseSaleResponse implements Serializable {
     private String closeTime;
     private String isDelete;
     private String payPwd;
-    private String nick;
-    private String receiptNumber;
-    private String receiptPicture;
-
-    public String getBuyOrderId() {
-        return buyOrderId;
-    }
-
-    public void setBuyOrderId(String buyOrderId) {
-        this.buyOrderId = buyOrderId;
-    }
-
-    public String getBothOrderId() {
-        return bothOrderId;
-    }
-
-    public void setBothOrderId(String bothOrderId) {
-        this.bothOrderId = bothOrderId;
-    }
-
-    public String getNick() {
-        return nick;
-    }
-
-    public void setNick(String nick) {
-        this.nick = nick;
-    }
-
-    public String getReceiptNumber() {
-        return receiptNumber;
-    }
-
-    public void setReceiptNumber(String receiptNumber) {
-        this.receiptNumber = receiptNumber;
-    }
-
-    public String getReceiptPicture() {
-        return receiptPicture;
-    }
-
-    public void setReceiptPicture(String receiptPicture) {
-        this.receiptPicture = receiptPicture;
-    }
 
     public String getId() {
         return id;

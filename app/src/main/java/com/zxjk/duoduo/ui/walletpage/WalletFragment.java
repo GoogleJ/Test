@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.walletpage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseFragment;
+import com.zxjk.duoduo.ui.msgpage.QrCodeActivity;
 import com.zxjk.duoduo.ui.walletpage.adapter.WalletPageAdapter;
 import com.zxjk.duoduo.ui.walletpage.model.WalletPageData;
 
@@ -40,6 +42,8 @@ public class WalletFragment extends BaseFragment {
 
         recyclerWalletPage.setAdapter(new WalletPageAdapter(new ArrayList<>(5)));
         recyclerWalletPage.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+
+        tvWalletPageTop1.setOnClickListener(v -> startActivity(new Intent(getContext(), QrCodeActivity.class)));
 
         return rootView;
     }

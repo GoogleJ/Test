@@ -1,6 +1,4 @@
-<resources
-    tools:ignore="MissingTranslation"
-    xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">duoduo</string>
     <string name="edit_phone_number_tip">请输入手机号</string>
     <string name="edit_password_tip">请输入密码</string>
@@ -132,7 +130,7 @@
     <string name="female">女</string>
     <string name="update_success">修改成功</string>
     <string name="authen_true">已认证</string>
-    <string name="authen_false">未认证</string>
+    <string name="authen_false">暂未认证</string>
     <string name="none">暂无</string>
     <string name="update_head_portrail">更新头像成功</string>
     <string name="input_empty">请输入内容</string>
@@ -210,7 +208,7 @@
     <string name="m_privacy_title_bar">隐私</string>
     <string name="m_privacy_add_friend_verify_text">加我为朋友时需要验证</string>
     <string name="m_privacy_hide_real_name_text">隐藏我的真实姓名</string>
-    <string name="m_privacy_recommend_friend" >向我推荐通讯录里头的朋友</string>
+    <string name="m_privacy_recommend_friend">向我推荐通讯录里头的朋友</string>
     <string name="m_privacy_recommend_friend_caveat">开启后，为您推荐已经开通嘟嘟的手机联系人</string>
     <string name="m_privacy_add_my_way">添加我的方式</string>
     <string name="feedback_title">意见反馈</string>
@@ -224,6 +222,9 @@
     <string name="about_label">软件许可及服务协议 隐私政策</string>
     <string name="about_label_1">©1998-2019 Tencent Inc.All rights reserved.</string>
     <string name="community">社群</string>
+    <string name="choosesex">性别选择</string>
+    <string name="unauthenticate">暂未认证</string>
+    <string name="unsetting">暂未设置</string>
     <string name="order_being_traded_label">你还有正在交易的订单，交易\n完成后再来修改吧!</string>
     <string name="determine_btn">确定</string>
     <string name="billing_message_title">收款信息</string>
@@ -284,6 +285,34 @@
     <string name="please_upload_payment_code">请上传付款码</string>
     <string name="please_upload_selector_open_bank">请先选择开户银行</string>
     <string name="uploaded">已上传</string>
+    <string name="wait_for_others_to_buy">等待其他用户来购买~</string>
+    <string name="orderid">单号</string>
+    <string name="salecointype">出售币种</string>
+    <string name="price_reference">参考价格</string>
+    <string name="saleCount">出售数量</string>
+    <string name="saleTotalPrice">出售金额</string>
+    <string name="salePayType">收款方式</string>
+    <string name="orders_mine">我的订单</string>
+    <string name="cancel_order">取消订单</string>
+    <string name="sale_cancel">订单已取消</string>
+    <string name="cointype">币种</string>
+    <string name="count">数量</string>
+    <string name="moneyCount">金额</string>
+    <string name="dontcancel_temp">暂不取消</string>
+    <string name="cancel_now">立即取消</string>
+    <string name="buy">购买</string>
+    <string name="tobepayed">需支付</string>
+    <string name="wechatPay">微信支付</string>
+    <string name="receiver">收款人</string>
+    <string name="receiverAccount">收款账号</string>
+    <string name="receiverQR">收款二维码</string>
+    <string name="payTips1">请尽快向上面账号自行转账</string>
+    <string name="singleprice">单价</string>
+    <string name="orderTime">订单时间</string>
+    <string name="paySign">支付凭证</string>
+    <string name="unUpload">未上传</string>
+    <string name="buy_complete">我已完成支付</string>
+    <string name="buyIn15MinuteLimit">请在15分钟内完成支付</string>
 
 
 </resources>

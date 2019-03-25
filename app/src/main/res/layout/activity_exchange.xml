@@ -103,7 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="HKB"
+            android:text="HK"
             android:textColor="@color/themecolor" />
 
     </LinearLayout>
@@ -137,7 +137,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="1 CNY=1HKB"
+            android:text="1 CNY=1HK"
             android:textColor="@color/themecolor" />
 
     </LinearLayout>

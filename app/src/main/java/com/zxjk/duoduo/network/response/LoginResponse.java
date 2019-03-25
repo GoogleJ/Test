@@ -29,7 +29,7 @@ public class LoginResponse implements Serializable {
      * renegeNumber : 0
      * isConfine : 0
      * status :
-     * isAuthentication : 1
+     * isAuthentication : 1.未实名 2.认证中 0.已实名
      * onlineService : https://tb.53kf.com/code/client/10197755/1
      */
 

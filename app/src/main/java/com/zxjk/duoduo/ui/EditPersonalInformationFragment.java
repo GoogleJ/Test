@@ -169,11 +169,12 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
             zipFile(Collections.singletonList(filePath), files -> {
                 File file = files.get(0);
                 OssUtils.uploadFile(file.getAbsolutePath(), url -> {
-                    GlideUtil.loadCornerImg(imageSearchBtn, url, CommonUtils.dip2px(this, 2));
                     LoginResponse update = new LoginResponse(Constant.userId);
                     update.setHeadPortrait(url);
-                    GlideUtil.loadCornerImg(imageSearchBtn, url, CommonUtils.dip2px(this, 2));
+                    GlideUtil.loadCornerImg(imageSearchBtn, url, 2);
+
                     this.url = url;
+
                 });
             });
         }
@@ -202,7 +203,7 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(response -> {
-                    GlideUtil.loadCornerImg(imageSearchBtn, url, CommonUtils.dip2px(EditPersonalInformationFragment.this, 2));
+                    GlideUtil.loadCornerImg(imageSearchBtn, url, 2);
                     ToastUtils.showShort("更新头像成功");
                     Constant.currentUser.setHeadPortrait(update.getHeadPortrait());
                     Constant.currentUser.setNick(update.getNick());

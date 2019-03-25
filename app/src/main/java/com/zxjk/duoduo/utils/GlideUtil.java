@@ -66,8 +66,6 @@ public class GlideUtil {
             case LOAD_CIRCLE:
                 return RequestOptions.bitmapTransform(new CircleCrop());
             case LOAD_CORNER:
-                int i = CommonUtils.dip2px(context, radius);
-                LogUtils.e(i, radius);
                 return new RequestOptions()
                         .error(R.drawable.ic_launcher)
                         .transform(new CenterCrop(), new RoundedCorners(CommonUtils.dip2px(context, radius)));

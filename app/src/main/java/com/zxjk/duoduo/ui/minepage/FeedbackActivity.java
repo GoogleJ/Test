@@ -17,30 +17,34 @@ import androidx.annotation.Nullable;
  */
 public class FeedbackActivity extends BaseActivity {
     EditText feedbackEdit;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
-        feedbackEdit=findViewById(R.id.feedback_edit);
+        feedbackEdit = findViewById(R.id.feedback_edit);
     }
 
     /**
      * 返回
+     *
      * @param view
      */
-    public void returnBtn(View view){
+    public void returnBtn(View view) {
         finish();
     }
 
     /**
      * 点击的确定按钮
+     *
      * @param view
      */
-    public void feedbackDetermine(View view){
-        if (feedbackEdit.getText().toString().isEmpty()){
+    public void feedbackDetermine(View view) {
+        if (feedbackEdit.getText().toString().isEmpty()) {
             ToastUtils.showShort("请输入反馈的意见");
-        }else{
+        } else {
             ToastUtils.showShort("提交成功");
+            finish();
         }
     }
 }

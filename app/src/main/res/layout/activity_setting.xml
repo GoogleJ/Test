@@ -85,8 +85,8 @@
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="16dp"
-                android:text="@string/pricacy"
-                android:textColor="@color/themecolor"
+                android:text="隐私"
+                android:textColor="#4B4D5B"
                 android:textSize="16sp" />
 
             <View
@@ -114,9 +114,18 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/tvSettingAuthenticate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
                     android:text="@string/verified_successful" />
+
+                <ImageView
+                    android:id="@+id/ivSettingAuthen"
+                    android:visibility="invisible"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_mine_authenticate" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -151,6 +160,7 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/tvSettingPayment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/not_completed" />
@@ -187,9 +197,8 @@
                 android:background="@color/m_add_friend_line" />
 
             <TextView
-                android:onClick="feedback"
-
                 android:layout_width="match_parent"
+
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_mine_rightarrow"
                 android:paddingLeft="10dp"
@@ -280,6 +289,7 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/tvSettingNick"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/user_name" />

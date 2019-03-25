@@ -217,6 +217,7 @@ public interface Api {
 
     /**
      * 个人中心-获取账户信息
+     *
      * @return
      */
     @POST("duoduo/exchange/getBalanceHk")
@@ -224,13 +225,15 @@ public interface Api {
 
     /**
      * 获取交易额度
+     *
      * @return
      */
     @POST("duoduo/exchange/getNumbeOfTransaction")
     Observable<BaseResponse<GetNumbeOfTransactionResponse>> getNumbeOfTransaction();
 
     /**
-     *个人发布出售币种
+     * 个人发布出售币种
+     *
      * @param number
      * @param money
      * @param currency
@@ -240,14 +243,12 @@ public interface Api {
      */
     @POST("duoduo/exchange/releasePurchase")
     @FormUrlEncoded
-    Observable<BaseResponse<String>> releasePurchase(@Field("number") String number,
-                                                     @Field("money") String money,
-                                                     @Field("currency") String currency,
-                                                     @Field("payPwd") String paypwd,
-                                                     @Field("payTpye") String payTpye);
+    Observable<BaseResponse<ReleasePurchase>> releasePurchase(@Field("number") String number,
+                                                              @Field("money") String money, @Field("currency") String currency, @Field("payPwd") String paypwd, @Field("payTpye") String payTpye);
 
     /**
      * 发布购买币种信息
+     *
      * @param number
      * @param money
      * @param currency
@@ -282,6 +283,7 @@ public interface Api {
 
     /**
      * 修改登录密码
+     *
      * @param oldPwd
      * @param newPwdOne
      * @param newPwdTwo
@@ -290,13 +292,14 @@ public interface Api {
     @POST("duoduo/exchange/updatePwd")
     @FormUrlEncoded
     Observable<BaseResponse<String>> updatePwd(
-          @Field("oldPwd")String oldPwd,
-          @Field("newPwdOne")String newPwdOne,
-          @Field("newPwdTwo")String newPwdTwo
+            @Field("oldPwd") String oldPwd,
+            @Field("newPwdOne") String newPwdOne,
+            @Field("newPwdTwo") String newPwdTwo
     );
 
     /**
      * 退出登录
+     *
      * @return
      */
     @POST("duoduo/loginOut")
@@ -304,17 +307,51 @@ public interface Api {
 
     /**
      * 新增（修改收款方式）
+     *
      * @return
      */
     @POST("duoduo/customer/addPayInfo")
     @FormUrlEncoded
     Observable<BaseResponse<String>> addPayInfo(
-           @Field("data") String data
+            @Field("data") String data
     );
+
     @POST("duoduo/customer/certification")
     @FormUrlEncoded
     Observable<BaseResponse<String>> certification(
-            @Field("data")String data
+            @Field("data") String data
     );
+
+    @POST("duoduo/exchange/closeSellOrder")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> closeSellOrder(@Field("sellOrderId") String sellOrderId);
+
+    @POST("duoduo/exchange/cancelled")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> cancelled(@Field("buyOrderId") String buyOrderId
+            , @Field("bothOrderId") String bothOrderId
+            , @Field("sellOrderId") String sellOrderId);
+
+    @POST("duoduo/exchange/isConfine")
+    Observable<BaseResponse<String>> isConfine();
+
+    @POST("duoduo/exchange/overOrder")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> overOrder(@Field("buyCustomerId") String buyCustomerId
+            , @Field("buyOrderId") String buyOrderId
+            , @Field("sellOrderId") String sellOrderId
+            , @Field("bothOrderId") String bothOrderId);
+
+
+    @POST("duoduo/exchange/rejectAudit")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> rejectAudit(
+            @Field("buyOrderId") String buyOrderId
+            , @Field("bothOrderId") String bothOrderId
+            , @Field("sellOrderId") String sellOrderId);
+
+    @POST("dduoduo/exchange/updateBuyPayState")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> updateBuyPayState(@Field("bothOrderId") String bothOrderId);
 
 }

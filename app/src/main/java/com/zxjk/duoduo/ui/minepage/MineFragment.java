@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseFragment;
+import com.zxjk.duoduo.ui.msgpage.MyQrCodeActivity;
 import com.zxjk.duoduo.utils.GlideUtil;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +29,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private TextView tvMineNick;
     private TextView tvMineDuNum;
     private TextView tvMineSign;
+    private ImageView ivMineQRcode;
 
     @Nullable
     @Override
@@ -43,11 +44,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         tvMineNick = view.findViewById(R.id.tvMineNick);
         tvMineDuNum = view.findViewById(R.id.tvMineDuNum);
         tvMineSign = view.findViewById(R.id.tvMineSign);
+        ivMineQRcode = view.findViewById(R.id.ivMineQRcode);
         tvMineDuNum.setText(Constant.currentUser.getDuoduoId());
 
         llMineSetting.setOnClickListener(this);
         llMineBalanceLeft.setOnClickListener(this);
         cardMineInfo.setOnClickListener(this);
+        ivMineQRcode.setOnClickListener(this);
         return view;
     }
 
@@ -81,6 +84,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.llMineBalanceLeft:
                 startActivity(new Intent(getContext(), BalanceLeftActivity.class));
+                break;
+            case R.id.ivMineQRcode:
+                startActivity(new Intent(getContext(), MyQrCodeActivity.class));
                 break;
             default:
         }
