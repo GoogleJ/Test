@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/m_friend_search_view"
+    android:orientation="vertical"
+    tools:ignore="MissingConstraints">
+
+    <com.zxjk.duoduo.weight.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:titleBarLeftImage="@drawable/ico_back"
+        app:titleBarTextColor="@color/white"
+        app:titleBarTitle="@string/chat_information_title" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/group_chat_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="12dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+
+                    android:text="@string/group_chat_name_label"
+                    android:textColor="@color/themecolor"
+                    android:textSize="17sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="12dp"
+                    android:src="@drawable/icon_go"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="32dp"
+                    android:text="@string/group_chat_name"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/group_chat_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="12dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp" />
+
+                <TextView
+                    android:id="@+id/see_more_group_members"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="12dp"
+                    android:text="@string/see_more_group_members"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/group_chat_recycler_view" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="12dp"
+                    android:paddingTop="22dp"
+                    android:paddingBottom="22dp"
+                    android:text="@string/label"
+                    android:textColor="@color/themecolor"
+                    android:textSize="17sp" />
+
+                <com.suke.widget.SwitchButton
+                    android:layout_width="43dp"
+                    android:layout_height="26dp"
+                    android:layout_marginEnd="12dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/label"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/label"
+                    app:sb_checked="false"
+                    app:sb_show_indicator="false" />
+
+                <View
+                    android:id="@+id/line"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginStart="12dp"
+                    android:background="@color/m_add_friend_line"
+                    app:layout_constraintBottom_toBottomOf="@+id/label" />
+
+                <TextView
+                    android:id="@+id/label_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="12dp"
+                    android:paddingTop="22dp"
+                    android:paddingBottom="22dp"
+                    android:text="@string/label_1"
+                    android:textColor="@color/themecolor"
+                    android:textSize="17sp"
+                    app:layout_constraintTop_toBottomOf="@+id/line" />
+
+                <com.suke.widget.SwitchButton
+                    android:layout_width="43dp"
+                    android:layout_height="26dp"
+                    android:layout_marginEnd="12dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/label_1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/label_1"
+                    app:sb_checked="false"
+                    app:sb_show_indicator="false" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/group_announcement"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="22dp"
+                    android:background="@color/white"
+                    android:paddingBottom="12dp"
+                    android:text="@string/group_announcement"
+                    android:textColor="@color/themecolor"
+                    android:textSize="17sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/icon_go"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/announcement"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="36dp"
+                    android:paddingBottom="18dp"
+                    android:text="@string/announcement"
+                    android:textSize="15sp"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@+id/group_announcement" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginStart="12dp"
+                android:background="@color/m_add_friend_line" />
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:drawableEnd="@drawable/icon_go"
+                android:paddingStart="12dp"
+                android:paddingTop="22dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="22dp"
+
+                android:text="@string/group_management"
+                android:textColor="@color/themecolor"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/clear_chat_history"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:drawableEnd="@drawable/icon_go"
+                android:paddingStart="12dp"
+                android:paddingTop="22dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="22dp"
+                android:text="@string/clear_chat_history"
+                android:textColor="@color/themecolor"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/dissolution_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:gravity="center"
+
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="@string/dissolution_group"
+                android:textColor="@color/themecolor"
+                android:textSize="17sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

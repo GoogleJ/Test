@@ -63,6 +63,7 @@
                 android:src="@drawable/selector_document_selection"
                 />
             <TextView
+                android:id="@+id/passport_text"
                 android:text="@string/passport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -81,6 +82,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp" />
             <TextView
+                android:id="@+id/other_id_card"
                 android:text="@string/other_identity_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

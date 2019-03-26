@@ -195,7 +195,7 @@
     <string name="m_received_envelopes_money_text">50HK</string>
     <string name="m_envelopes_recording_title_bar">红包记录</string>
     <string name="m_income_user_name_text">周晓瑞共收到</string>
-    <string name="m_income_money_text">500.68</string>
+    <string name="m_income_money_text">0.00</string>
     <string name="m_income_count_text">共收到50个红红包</string>
     <string name="m_item_recording_user_name_text">爱吃水果</string>
     <string name="m_add_my_way_title_bar">添加我的方式</string>
@@ -314,5 +314,35 @@
     <string name="buy_complete">我已完成支付</string>
     <string name="buyIn15MinuteLimit">请在15分钟内完成支付</string>
 
+    //群组相关
+    <string name="chat_information_title">聊天信息(22)</string>
+    <string name="group_chat_name">牛牛金花群</string>
+    <string name="group_chat_name_label">群聊名称</string>
+    <string name="see_more_group_members">查看更多群成员 ></string>
+    <string name="group_announcement">群公告</string>
+    <string name="group_management">群管理</string>
+    <string name="clear_chat_history">清空聊天记录</string>
+    <string name="dissolution_group">解散群</string>
+    <string name="all_group_members_title">全部群成员</string>
+    <string name="group_announcement_edit">请编辑群公告</string>
+    <string name="announcement">港币兑换开始啦，大家抓紧时间哟，机不可失时不再来，更有大优惠等你来！</string>
+    <string name="remove_group_chat">移除群聊</string>
+    <string name="remove_btn">删除</string>
+    <string name="add_group_verification">加群验证</string>
+    <string name="add_group_verification_label">开启后，需群主认证才能邀朋友进群</string>
+    <string name="upgrade_group_number">升级群人数</string>
+    <string name="upgrade">200人群，去升级</string>
+    <string name="group_members_banned">群成员禁言</string>
+    <string name="prohibit_group_members_from_single_chat">禁止群成员单聊</string>
+    <string name="prohibited_send_picture">禁止发送图片</string>
+    <string name="prohibited_send_link">禁止发送链接</string>
+    <string name="transfer_group">转让群</string>
+    <string name="choose_a_new_owner_title">选择新群主</string>
+    <string name="total_amount">总金额</string>
+    <string name="prompt_label">拼手气红包，抢到的金额随机不等</string>
+    <string name="number_of_red_packets">红包个数</string>
+    <string name="fill_in_the_number">填写个数</string>
+    <string name="fill_in_the_number_unit">个</string>
+    <string name="group_total_people">本群共22个人</string>
 
 </resources>

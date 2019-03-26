@@ -23,6 +23,10 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 
+/**
+ * @author Administrator
+ * @// TODO: 2019\3\26 0026 购买
+ */
 @SuppressLint("CheckResult")
 public class ConfirmBuyActivity extends BaseActivity {
     private ReleaseSaleResponse data;
@@ -64,11 +68,14 @@ public class ConfirmBuyActivity extends BaseActivity {
         Observable.interval(1, TimeUnit.SECONDS)
                 .take(900)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(l -> {
-                    LogUtils.e(l);
-                    long minute = (900 - l) / 60;
-                    long second = 60 - l % 60;
-                    tvConfirmBuyCountDown.setText(minute + ":" + (second == 60 ? "00" : ((second < 10 ? ("0" + second) : second))));
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long l) throws Exception {
+                        LogUtils.e(l);
+                        long minute = (900 - l) / 60;
+                        long second = 60 - l % 60;
+                        tvConfirmBuyCountDown.setText(minute + ":" + (second == 60 ? "00" : ((second < 10 ? ("0" + second) : second))));
+                    }
                 }, this::handleApiError);
 
         data = (ReleaseSaleResponse) getIntent().getSerializableExtra("data");
@@ -87,10 +94,13 @@ public class ConfirmBuyActivity extends BaseActivity {
                         .compose(RxSchedulers.normalTrans())
                         .compose(bindToLifecycle())
                         .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                        .subscribe(s -> {
+                        .subscribe(new Consumer<String>() {
+                            @Override
+                            public void accept(String s) throws Exception {
 //                            Intent intent = new Intent(this, WaitForJudgeActivity.class);
 //                            intent.putExtra("data",data);
 //                            startActivity(intent);
+                            }
                         }, this::handleApiError);
             });
         }
@@ -105,10 +115,13 @@ public class ConfirmBuyActivity extends BaseActivity {
                         .compose(RxSchedulers.normalTrans())
                         .compose(bindToLifecycle())
                         .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                        .subscribe(s -> {
+                        .subscribe(new Consumer<String>() {
+                            @Override
+                            public void accept(String s) throws Exception {
 //                            Intent intent = new Intent(this, CancelOrderActivity.class);
 //                            intent.putExtra("data", data);
 //                            startActivity(intent);
+                            }
                         }, this::handleApiError);
             });
         }

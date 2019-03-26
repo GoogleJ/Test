@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.zxjk.duoduo.weight.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:titleBarLeftImage="@drawable/ico_back"
+        app:titleBarTextColor="@color/white"
+        app:titleBarTitle="@string/group_announcement" />
+
+    <EditText
+        android:paddingStart="12dp"
+        android:paddingEnd="5dp"
+        android:paddingTop="10dp"
+
+        android:hint="@string/group_announcement_edit"
+        android:gravity="top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
+        android:lines="20" />
+
+</LinearLayout>

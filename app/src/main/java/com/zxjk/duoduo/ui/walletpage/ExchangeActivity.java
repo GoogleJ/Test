@@ -29,6 +29,10 @@ import java.util.List;
 import io.reactivex.ObservableSource;
 import io.reactivex.functions.Function;
 
+/**
+ * @author Administrator
+ * @// TODO: 2019\3\26 0026 交易所 
+ */
 @SuppressLint("CheckResult")
 public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
 

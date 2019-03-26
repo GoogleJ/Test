@@ -332,9 +332,21 @@ public interface Api {
             , @Field("bothOrderId") String bothOrderId
             , @Field("sellOrderId") String sellOrderId);
 
+    /**
+     * 查询用户是否可以进行买单操作
+     * @return
+     */
     @POST("duoduo/exchange/isConfine")
     Observable<BaseResponse<String>> isConfine();
 
+    /**
+     * 完成交易
+     * @param buyCustomerId
+     * @param buyOrderId
+     * @param sellOrderId
+     * @param bothOrderId
+     * @return
+     */
     @POST("duoduo/exchange/overOrder")
     @FormUrlEncoded
     Observable<BaseResponse<String>> overOrder(@Field("buyCustomerId") String buyCustomerId
@@ -342,7 +354,13 @@ public interface Api {
             , @Field("sellOrderId") String sellOrderId
             , @Field("bothOrderId") String bothOrderId);
 
-
+    /**
+     * 卖家拒绝审核
+     * @param buyOrderId
+     * @param bothOrderId
+     * @param sellOrderId
+     * @return
+     */
     @POST("duoduo/exchange/rejectAudit")
     @FormUrlEncoded
     Observable<BaseResponse<String>> rejectAudit(
@@ -350,7 +368,12 @@ public interface Api {
             , @Field("bothOrderId") String bothOrderId
             , @Field("sellOrderId") String sellOrderId);
 
-    @POST("dduoduo/exchange/updateBuyPayState")
+    /**
+     * 买家确认付款
+     * @param bothOrderId
+     * @return
+     */
+    @POST("duoduo/exchange/updateBuyPayState")
     @FormUrlEncoded
     Observable<BaseResponse<String>> updateBuyPayState(@Field("bothOrderId") String bothOrderId);
 

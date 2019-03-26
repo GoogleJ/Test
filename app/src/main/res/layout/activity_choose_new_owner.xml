@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/list_item_bg_press"
+    android:orientation="vertical"
+    tools:ignore="MissingConstraints">
+
+    <com.zxjk.duoduo.weight.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:titleBarLeftImage="@drawable/ico_back"
+        app:titleBarTextColor="@color/white"
+        app:titleBarTitle="@string/choose_a_new_owner_title" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/title_layout">
+
+        <EditText
+            android:id="@+id/search_edit"
+            style="?attr/checkedTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="12dp"
+            android:background="@color/list_item_bg_press"
+            android:drawableStart="@drawable/icon_search_view"
+            android:drawablePadding="10dp"
+            android:hint="@string/m_contact_search_label"
+            android:imeOptions="actionSearch"
+            android:maxLines="1"
+            android:paddingStart="20dp"
+            android:singleLine="true"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="20dp" />
+
+        <com.zxjk.duoduo.ui.msgpage.widget.IndexView
+            android:layout_width="13dp"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
