@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
  * @author Administrator
  * @// TODO: 2019\3\26 0026 选择新群主
  */
-public class ChooseNewOwner extends BaseActivity {
+public class ChooseNewOwnerActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

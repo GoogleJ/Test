@@ -54,6 +54,13 @@
         <activity android:name=".ui.minepage.AccountActivity" />
         <activity android:name=".ui.msgpage.GlobalSearchActivity" />
         <activity android:name=".ui.minepage.VerifiedActivity"/>
+        <activity android:name=".ui.grouppage.AllGroupMembersActivity"/>
+        <activity android:name=".ui.grouppage.ChooseNewOwnerActivity"/>
+        <activity android:name=".ui.grouppage.GroupAnnouncementActivity"/>
+        <activity android:name=".ui.grouppage.GroupChatInformationActivity"/>
+        <activity android:name=".ui.grouppage.GroupManagementActivity"/>
+        <activity android:name=".ui.grouppage.RemoveGroupChatActivity"/>
+        <activity android:name=".ui.grouppage.SendRedEnvelopesActivity"/>
 
 
         <activity

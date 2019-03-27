@@ -11,6 +11,10 @@ import com.zxjk.duoduo.ui.base.BaseFragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+/**
+ * @author Administrator
+ * @// TODO: 2019\3\27 0027 关于底部导航来的群组的实现
+ */
 public class CommunityFragment extends BaseFragment {
     @Nullable
     @Override
