@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.EncryptUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.RegexUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.CountryEntity;
@@ -107,6 +108,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 countryCode = country.substring(1);
                 if (!TextUtils.isEmpty(mobile) && RegexUtils.isMobileExact(mobile)) {
                     registerCode(countryCode + "-" + mobile);
+                    SPUtils.getInstance().put("countryCode",countryCode);
                     return;
                 }
                 ToastUtils.showShort(getString(R.string.edit_mobile_tip));

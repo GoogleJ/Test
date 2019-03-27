@@ -7,22 +7,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.ToastUtils;
-import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.bean.AddPayInfoBean;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.utils.AesUtil;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.weight.TitleBar;
-import com.zxjk.duoduo.weight.dialog.TradingRemindDialog;
-
-import java.util.concurrent.ThreadLocalRandom;
+import com.zxjk.duoduo.weight.dialog.BaseAddTitleDialog;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -43,7 +36,7 @@ public class BillingMessageActivity extends BaseActivity implements View.OnClick
     String alipay = "2";
     String bank = "3";
     String type = "type";
-    TradingRemindDialog dialog;
+    BaseAddTitleDialog dialog;
 
 
     @Override
@@ -85,40 +78,41 @@ public class BillingMessageActivity extends BaseActivity implements View.OnClick
                 intent = new Intent(this, ReceiptTypeActivity.class);
                 intent.putExtra(type, wechat);
                 startActivity(intent);
+                updatePayInfo(wechat);
                 break;
             case R.id.alipy_btn:
                 //跳转到支付宝信息页面
                 intent = new Intent(this, ReceiptTypeActivity.class);
                 intent.putExtra(type, alipay);
                 startActivity(intent);
+                updatePayInfo(alipay);
                 break;
             case R.id.bank_btn:
                 //跳转到银行卡信息页面
                 intent = new Intent(this, ReceiptTypeActivity.class);
                 intent.putExtra(type, bank);
                 startActivity(intent);
+                updatePayInfo(bank);
                 break;
             default:
                 break;
         }
     }
-
-
-    public void addPayInfo(String data) {
+    public void updatePayInfo(String payType) {
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .addPayInfo(data)
+                .updatePayInfo(payType)
+                .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(s -> LogUtils.d("DEBUG", "修改成功"), throwable -> {
-                    dialog=new TradingRemindDialog(BillingMessageActivity.this);
-                    dialog.show(throwable.getMessage());
-                    dialog.setOnClickListener(new TradingRemindDialog.OnClickListener() {
-                        @Override
-                        public void determine() {
-                            dialog.dismiss();
-                        }
+                .subscribe(s -> {
+                    LogUtils.d("DEBUG", "成功"+s);
+                }, throwable -> {
+                    dialog = new BaseAddTitleDialog(BillingMessageActivity.this);
+                    dialog.setOnClickListener(() -> {
+                        dialog.dismiss();
                     });
+                    dialog.show(throwable.getMessage());
                 });
-    }
 
+    }
 }

@@ -45,18 +45,18 @@ public class PaymentTypeDialog extends Dialog implements View.OnClickListener {
         view= LayoutInflater.from(context).inflate(R.layout.dialog_payment_type,null);
         ButterKnife.bind(this,view);
     }
-    public void show(String title,String type){
+    public void show(String title,String hint,String type){
         show();
         dialogTitle.setText(title);
         if (wechat.equals(type)){
             //微信的
-            editInformation.setHint(R.string.nick);
+            editInformation.setHint(hint);
         }else if (alipay.equals(type)){
             //支付宝的
-            editInformation.setHint(R.string.alipay_number);
+            editInformation.setHint(hint);
             editInformation.setInputType(InputType.TYPE_CLASS_NUMBER);
         }else{
-            editInformation.setHint(R.string.bank_id_card_edit);
+            editInformation.setHint(hint);
             editInformation.setInputType(InputType.TYPE_CLASS_NUMBER);
         }
 
@@ -88,7 +88,6 @@ public class PaymentTypeDialog extends Dialog implements View.OnClickListener {
                 break;
             case R.id.determine_btn:
                 if (onClickListener!=null){
-
                     onClickListener.determine(editInformation.getText().toString());
                 }
                 break;

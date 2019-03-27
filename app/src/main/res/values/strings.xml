@@ -283,7 +283,7 @@
     <string name="edit_real_name">请填写真实姓名</string>
     <string name="edit_id_cards">请填写正确得证件号</string>
     <string name="please_upload_payment_code">请上传付款码</string>
-    <string name="please_upload_selector_open_bank">请先选择开户银行</string>
+    <string name="please_upload_selector_open_bank">请输入开户银行</string>
     <string name="uploaded">已上传</string>
     <string name="wait_for_others_to_buy">等待其他用户来购买~</string>
     <string name="orderid">单号</string>
@@ -344,5 +344,31 @@
     <string name="fill_in_the_number">填写个数</string>
     <string name="fill_in_the_number_unit">个</string>
     <string name="group_total_people">本群共22个人</string>
+    <string name="input_bank_number">请输入银行卡号</string>
+    <string name="hint_alipay">请填写支付宝账号</string>
+    <string name="open_bank">开户银行</string>
+    <string name="pay_setting_title">支付设置</string>
+    <string name="update_pay_pwd">修改支付密码</string>
+    <string name="retrieve_payment_pwd">找回支付密码</string>
+    <string name="secret_payment">开启后，支付时无需输入密码或指纹</string>
+    <string name="small_amount_of_confidentiality">小额免密</string>
+    <string name="prompt_fingerprint_payment">开启后，可以通过验证指纹快速完成付款</string>
+    <string name="fingerprint_payment">指纹支付</string>
+
+    <string name="identity_verified">身份认证</string>
+    <string name="input_pay_pwd">请输入支付密码</string>
+    <string name="authentication">身份验证</string>
+    <string name="sms_verified">短信验证</string>
+    <string name="please_enter_the_id_number">请输入证件号码</string>
+    <string name="verified_message">验证信息</string>
+    <string name="phone_number_label">手机号码</string>
+    <string name="verified_code">验证码</string>
+    <string name="under_review">审核中</string>
+    <string name="verified_success">正在审核</string>
+    <string name="not_verified">审核不通过</string>
+    <string name="please_first_verified">请先进行实名认证</string>
+    <string name="please_input_id_card">请先输入证件号码</string>
+    <string name="newCode">重新获取验证码</string>
+    <string name="tiem_new_code">秒后重新获取</string>
 
 </resources>

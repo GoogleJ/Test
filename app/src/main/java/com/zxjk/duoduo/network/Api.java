@@ -316,16 +316,36 @@ public interface Api {
             @Field("data") String data
     );
 
+    /**
+     * 实名认证
+     *
+     * @param data
+     * @return
+     */
     @POST("duoduo/customer/certification")
     @FormUrlEncoded
     Observable<BaseResponse<String>> certification(
             @Field("data") String data
     );
 
+    /**
+     * 撤销发布的卖单
+     *
+     * @param sellOrderId
+     * @return
+     */
     @POST("duoduo/exchange/closeSellOrder")
     @FormUrlEncoded
     Observable<BaseResponse<String>> closeSellOrder(@Field("sellOrderId") String sellOrderId);
 
+    /**
+     * 买家撤销订单
+     *
+     * @param buyOrderId
+     * @param bothOrderId
+     * @param sellOrderId
+     * @return
+     */
     @POST("duoduo/exchange/cancelled")
     @FormUrlEncoded
     Observable<BaseResponse<String>> cancelled(@Field("buyOrderId") String buyOrderId
@@ -334,6 +354,7 @@ public interface Api {
 
     /**
      * 查询用户是否可以进行买单操作
+     *
      * @return
      */
     @POST("duoduo/exchange/isConfine")
@@ -341,6 +362,7 @@ public interface Api {
 
     /**
      * 完成交易
+     *
      * @param buyCustomerId
      * @param buyOrderId
      * @param sellOrderId
@@ -356,6 +378,7 @@ public interface Api {
 
     /**
      * 卖家拒绝审核
+     *
      * @param buyOrderId
      * @param bothOrderId
      * @param sellOrderId
@@ -370,11 +393,30 @@ public interface Api {
 
     /**
      * 买家确认付款
+     *
      * @param bothOrderId
      * @return
      */
     @POST("duoduo/exchange/updateBuyPayState")
     @FormUrlEncoded
     Observable<BaseResponse<String>> updateBuyPayState(@Field("bothOrderId") String bothOrderId);
+
+    /**
+     * 判断是否允许修改支付方式
+     *
+     * @return
+     */
+    @POST("duoduo/customer/updatePayInfo")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> updatePayInfo(
+            @Field("payType")String payType
+            );
+
+    /**
+     * 获取用户实名认证状态
+     * @return
+     */
+    @POST("duoduo/customer/getCustomerAuth")
+    Observable<BaseResponse<String>> getCustomerAuth();
 
 }

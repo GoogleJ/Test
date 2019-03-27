@@ -8,6 +8,7 @@
     tools:ignore="MissingConstraints">
 
     <com.zxjk.duoduo.weight.TitleBar
+        android:id="@id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         app:titleBarLeftImage="@drawable/ico_back"
@@ -75,6 +76,7 @@
             <EditText
                 android:id="@+id/real_name"
                 style="?attr/checkedTextViewStyle"
+                android:singleLine="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -97,6 +99,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:hint="@string/id_number"
+                android:singleLine="true"
                 android:paddingStart="12dp"
                 android:paddingTop="22dp"
                 android:paddingBottom="22dp"

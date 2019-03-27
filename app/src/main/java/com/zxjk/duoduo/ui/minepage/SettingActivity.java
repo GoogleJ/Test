@@ -9,16 +9,24 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.blankj.utilcode.util.BusUtils;
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.BaseResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 import androidx.annotation.RequiresApi;
+import io.reactivex.functions.Consumer;
+import okhttp3.Response;
 
 /**
  * 这里是关于设置的activity
@@ -34,11 +42,14 @@ public class SettingActivity extends BaseActivity {
 
     private ImageView ivSettingAuthen;
 
+    LinearLayout verifiedLayout;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-
+        getVerified();
+        verifiedLayout=findViewById(R.id.verified);
         tvSettingAuthenticate = findViewById(R.id.tvSettingAuthenticate);
         tvSettingPayment = findViewById(R.id.tvSettingPayment);
         tvSettingNick = findViewById(R.id.tvSettingNick);
@@ -50,6 +61,17 @@ public class SettingActivity extends BaseActivity {
             tvSettingAuthenticate.setText(R.string.authen_true);
         }
         tvSettingNick.setText(Constant.currentUser.getNick());
+
+        initView();
+    }
+
+    private void initView() {
+        verifiedLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SettingActivity.this,VerifiedActivity.class));
+            }
+        });
     }
 
     String actionReceiver = "com.zxjk.duoduo.logout";
@@ -118,10 +140,10 @@ public class SettingActivity extends BaseActivity {
                     ToastUtils.showShort(R.string.login_out);
                     Intent intent = new Intent(actionReceiver);
                     sendBroadcast(intent);
-                    ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-                    boolean res = am.clearApplicationUserData();
-                    if (!res) {
-                    }
+//                    ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+//                    boolean res = am.clearApplicationUserData();
+//                    if (!res) {
+//                    }
                 }, this::handleApiError);
     }
 
@@ -136,17 +158,47 @@ public class SettingActivity extends BaseActivity {
         startActivity(intent);
     }
 
-    /**
-     * 跳转实名认证界面
-     * @param view
-     */
-    public void verified(View view){
-        startActivity(new Intent(SettingActivity.this,VerifiedActivity.class));
-
-    }
 
     public void back(View view) {
         finish();
     }
+    public void getVerified(){
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .getCustomerAuth()
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                .compose(RxSchedulers.normalTrans())
+                .subscribe(s -> {
 
+                    //已认证
+                    String verified="0";
+                    //审核中
+                    String underReview="2";
+                    String notVerified="1";
+                    Constant.verifiedBean.setState(s);
+                    if (verified.equals(s)){
+                        verifiedLayout.setClickable(false);
+                        ivSettingAuthen.setVisibility(View.VISIBLE);
+                        tvSettingAuthenticate.setText(R.string.verified_successful);
+                    }else if (underReview.equals(s)){
+                        verifiedLayout.setClickable(false);
+                        tvSettingAuthenticate.setText(R.string.under_review);
+                    }else if (notVerified.equals(s)){
+                        //其他均为未认证
+                        verifiedLayout.setClickable(true);
+                        tvSettingAuthenticate.setText(R.string.not_verified);
+                    }else{
+                        //其他均为未认证
+                        verifiedLayout.setClickable(true);
+                        tvSettingAuthenticate.setText(R.string.authen_false);
+                    }
+
+                },this::handleApiError);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        getVerified();
+    }
 }

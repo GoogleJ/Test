@@ -22,6 +22,7 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.CountryCodeConstantsUtils;
 import com.zxjk.duoduo.weight.dialog.AccountFreezeDialog;
 
@@ -151,7 +152,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         subscribe = ServiceFactory.getInstance().getBaseService(Api.class)
                 .login(phone, getMD5(pwd))
                 .compose(bindToLifecycle())
-                .compose(RxSchedulers.ioObserver())
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(loginResponse -> {
                     Constant.token = loginResponse.getToken();

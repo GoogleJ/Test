@@ -19,7 +19,6 @@ import com.ziyeyouhu.library.KeyboardUtil;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.weight.PayPsdInputView;
@@ -28,7 +27,6 @@ import com.zxjk.duoduo.weight.TitleBar;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import butterknife.ButterKnife;
-import io.reactivex.functions.Consumer;
 
 /**
  * @author Administrator
@@ -36,7 +34,7 @@ import io.reactivex.functions.Consumer;
  */
 @SuppressLint("CheckResult")
 @RequiresApi(api = Build.VERSION_CODES.M)
-public class SetUpPaymentPwdFragment extends BaseActivity {
+public class SetUpPaymentPwdActivity extends BaseActivity {
 
 
     PayPsdInputView payPsdInputView;
@@ -66,7 +64,7 @@ public class SetUpPaymentPwdFragment extends BaseActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_set_payment_pwd);
+        setContentView(R.layout.activity_set_payment_pwd);
         ButterKnife.bind(this);
         initUI();
         initMoveKeyBoard();
@@ -97,6 +95,7 @@ public class SetUpPaymentPwdFragment extends BaseActivity {
                 ToastUtils.showShort("与上次密码不一致");
 
 
+                oldPwd=oldPsd;
             }
 
 

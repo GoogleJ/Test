@@ -61,4 +61,11 @@
     //实名认证里头的图片颜色
     <color name="verified_image_color">#DCDCDC</color>
     <color name="default_placeholder">#EDEDEE</color>
+    <color name="background">#ededee</color>
+    //安全键盘
+
+
+    <color name="divider">#D1D1D1</color>
+    <color name="click_bg_dark">#BFBFBF</color>
+    <color name="click_bg_dark_light">#E0E0E0</color>
 </resources>

@@ -12,6 +12,17 @@ public class AddPayInfoBean {
     private String wechatNick;
     private String zhifubaoNumber;
     private String openBank;
+    private String payPwd;
+
+    public String getPayPwd() {
+        return payPwd;
+    }
+
+    public void setPayPwd(String payPwd) {
+        this.payPwd = payPwd;
+    }
+
+
 
 
     public String getPayType() {

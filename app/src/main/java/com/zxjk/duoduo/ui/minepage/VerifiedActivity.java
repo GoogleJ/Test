@@ -26,6 +26,7 @@ import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
+import com.zxjk.duoduo.weight.TitleBar;
 import com.zxjk.duoduo.weight.dialog.DocumentSelectionDialog;
 
 import java.io.File;
@@ -35,8 +36,6 @@ import java.util.List;
 import androidx.annotation.Nullable;
 import io.reactivex.functions.Consumer;
 
-import static com.zxjk.duoduo.ui.EditPersonalInformationFragment.REQUEST_ALBUM;
-import static com.zxjk.duoduo.ui.EditPersonalInformationFragment.REQUEST_TAKE;
 import static com.zxjk.duoduo.utils.PermissionUtils.cameraPremissions;
 import static com.zxjk.duoduo.utils.PermissionUtils.verifyStoragePermissions;
 
@@ -46,7 +45,8 @@ import static com.zxjk.duoduo.utils.PermissionUtils.verifyStoragePermissions;
  */
 @SuppressLint("CheckResult")
 public class VerifiedActivity extends BaseActivity implements View.OnClickListener, TakePopWindow.OnItemClickListener {
-
+    public static final int REQUEST_TAKE = 1;
+    public static final int REQUEST_ALBUM = 2;
     /**
      * 证件类型
      */
@@ -86,29 +86,42 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
     /**
      * 手持证件照编辑
      */
+    TitleBar titleBar;
+
     String url;
     ImageView handHeldPassportPhotoEdit;
     DocumentSelectionDialog dialog;
     String realNames;
     String idCards;
+
     private TakePopWindow selectPicPopWindow;
 
-    private static final int REQUEST_CODE = 2;
-    private static final int REQUEST_CODE2 = 3;
-    private static final int REQUEST_CODE3 = 4;
+    private static final int REQUEST_CODE = 1;
+    private static final int REQUEST_CODE2 = 2;
+    private static final int REQUEST_CODE3 = 3;
+
+    int type1 ;
+    int type2;
+    int type3;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verified);
         initView();
+
     }
 
+
+
+    @SuppressLint("WrongViewCast")
     private void initView() {
+
+        titleBar=findViewById(R.id.title_bar);
+        titleBar.getLeftImageView().setOnClickListener(v -> finish());
         selectPicPopWindow = new TakePopWindow(this);
         selectPicPopWindow.setOnItemClickListener(this);
-
-
         cardType = findViewById(R.id.card_type);
         verifiedCommit = findViewById(R.id.verified_commit);
         realName = findViewById(R.id.real_name);
@@ -126,7 +139,6 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
         reversePhotoOfTheDocumentEdit.setOnClickListener(this);
         handHeldPassportPhoto.setOnClickListener(this);
         handHeldPassportPhotoEdit.setOnClickListener(this);
-
         realNames = realName.getText().toString();
         idCards = idCard.getText().toString();
     }
@@ -176,60 +188,81 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
                     ToastUtils.showShort(R.string.edit_id_cards);
                     return;
                 }
-                String result = "2";
+
+                String idCards=getString(R.string.id_card);
+                String passport=getString(R.string.passport);
+                String otherIdCard=getString(R.string.other_identity_card);
+
 
                 Constant.verifiedBean.setNumber(idCard.getText().toString());
                 Constant.verifiedBean.setRealName(realName.getText().toString());
-                Constant.verifiedBean.setType(cardType.getText().toString());
+
+                if (idCards.equals(cardType.getText().toString())){
+                    String idCardType="1";
+                    Constant.verifiedBean.setType(idCardType);
+                }else if (passport.equals(cardType.getText().toString())){
+                    String passportType="2";
+                    Constant.verifiedBean.setType(passportType);
+                }else{
+                    String otherIdCardType="3";
+                    Constant.verifiedBean.setType(otherIdCardType);
+                }
+
                 Constant.verifiedBean.setPictureFront(url);
                 Constant.verifiedBean.setPictureHand(url);
                 Constant.verifiedBean.setPictureReverse(url);
+                Constant.verifiedBean.getState();
                 certification(AesUtil.getInstance().encrypt(GsonUtils.toJson(Constant.verifiedBean)));
                 break;
             case R.id.front_photo_of_the_document:
-//                //证件正面照
-//                verifyStoragePermissions(this);
-//                cameraPremissions(this);
-//                selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
-//                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+//                证件正面照
+                type1=1;
+                verifyStoragePermissions(this);
+                cameraPremissions(this);
+                selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
+                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+
 
 
                 break;
             case R.id.front_photo_of_the_document_edit:
 
-//                //证件正面照编辑
-//                 verifyStoragePermissions(this);
-//                cameraPremissions(this);
-//                 selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
-//                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                //证件正面照编辑
+                verifyStoragePermissions(this);
+                cameraPremissions(this);
+                selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
+                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+
                 break;
             case R.id.reverse_photo_of_the_document:
                 //证件反面照
+                type2=2;
                 verifyStoragePermissions(this);
                 cameraPremissions(this);
                 selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.reverse_photo_of_the_document_edit:
-//                //证件反面照编辑
-//                verifyStoragePermissions(this);
-//                cameraPremissions(this);
-//                selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
-//                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                //证件反面照编辑
+                verifyStoragePermissions(this);
+                cameraPremissions(this);
+                selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
+                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.hand_held_passport_photo:
-//                //手持证件照
-//                verifyStoragePermissions(this);
-//                cameraPremissions(this);
-//                selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
-//                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                //手持证件照
+                type3=3;
+                verifyStoragePermissions(this);
+                cameraPremissions(this);
+                selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
+                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.hand_held_passport_photo_edit:
-//                //手持证件照编辑
-//                verifyStoragePermissions(this);
-//                cameraPremissions(this);
-//                selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
-//                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                //手持证件照编辑
+                verifyStoragePermissions(this);
+                cameraPremissions(this);
+                selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
+                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             default:
                 break;
@@ -264,14 +297,18 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
                         @Override
                         public void onSuccess(String url) {
                             VerifiedActivity.this.url = url;
-                            if (requestCode==REQUEST_CODE){
-
+                            if (type1 == REQUEST_CODE) {
                                 GlideUtil.loadCornerImg(frontPhotoOfTheDocument, url, 3);
+                                return;
+                            }
+                            if (type2 == REQUEST_CODE2) {
+                                GlideUtil.loadCornerImg(reversePhotoOfTheDocument, url, 3);
+                                return;
+                            }
+                            if (type3 == REQUEST_CODE3) {
 
-                            }else if(requestCode==REQUEST_CODE2){
-                                GlideUtil.loadCornerImg(reversePhotoOfTheDocument,url,3);
-                            }else if (requestCode==REQUEST_CODE3){
-                                GlideUtil.loadCornerImg(handHeldPassportPhoto,url,3);
+                                GlideUtil.loadCornerImg(handHeldPassportPhoto, url, 3);
+                                return;
                             }
 
 
@@ -293,6 +330,8 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
                     @Override
                     public void accept(String s) throws Exception {
                         LogUtils.d("DEBUG", "成功" + s);
+                        ToastUtils.showShort(R.string.verified_success);
+                        finish();
                     }
                 }, this::handleApiError);
     }

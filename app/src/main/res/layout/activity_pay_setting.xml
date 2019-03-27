@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <com.zxjk.duoduo.weight.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:titleBarLeftImage="@drawable/ico_back"
+        app:titleBarTextColor="@color/white"
+        app:titleBarTitle="@string/pay_setting_title" />
+
+    <TextView
+        android:onClick="updatePayPwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:drawableEnd="@drawable/icon_go"
+        android:paddingStart="12dp"
+        android:paddingTop="22dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="22dp"
+        android:text="@string/update_pay_pwd"
+        android:textColor="@color/themecolor"
+        android:textSize="17sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginStart="12dp"
+        android:background="@color/m_add_friend_line" />
+
+    <TextView
+        android:id="@+id/retrieve_pay_pwd"
+        android:onClick="retrievePayPwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:drawableEnd="@drawable/icon_go"
+        android:paddingStart="12dp"
+        android:paddingTop="22dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="22dp"
+        android:text="@string/retrieve_payment_pwd"
+        android:textColor="@color/themecolor"
+        android:textSize="17sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="12dp"
+        android:paddingTop="9dp"
+        android:paddingBottom="9dp"
+        android:text="@string/secret_payment"
+        android:textColor="@color/m_add_friend_wechat_label_2"
+        android:textSize="13sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="12dp"
+            android:paddingTop="22dp"
+            android:paddingBottom="22dp"
+            android:text="@string/small_amount_of_confidentiality"
+            android:textColor="@color/themecolor"
+            android:textSize="17sp" />
+
+        <com.suke.widget.SwitchButton
+            android:id="@+id/small_amount_of_confidentiality_switch"
+            android:layout_width="43dp"
+            android:layout_height="26dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="12dp"
+            app:sb_checked="false"
+            app:sb_show_indicator="false" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="12dp"
+        android:paddingTop="9dp"
+        android:paddingBottom="9dp"
+        android:text="@string/prompt_fingerprint_payment" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="12dp"
+            android:paddingTop="22dp"
+            android:paddingBottom="22dp"
+            android:text="@string/fingerprint_payment"
+            android:textColor="@color/themecolor"
+            android:textSize="17sp" />
+
+        <com.suke.widget.SwitchButton
+            android:id="@+id/fingerprint_payment_switch"
+            android:layout_marginEnd="12dp"
+            android:layout_width="43dp"
+            android:layout_height="26dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            app:sb_checked="false"
+            app:sb_show_indicator="false" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

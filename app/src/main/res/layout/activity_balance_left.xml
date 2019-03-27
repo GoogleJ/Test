@@ -131,11 +131,12 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/verified_layout"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:onClick="authenticate"
         android:paddingLeft="16dp"
         android:paddingTop="18dp"
         android:paddingRight="16dp"

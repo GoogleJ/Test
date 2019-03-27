@@ -96,7 +96,7 @@
                 android:background="@color/m_add_friend_line" />
 
             <LinearLayout
-                android:onClick="verified"
+               android:id="@+id/verified"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -117,12 +117,11 @@
                     android:id="@+id/tvSettingAuthenticate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="4dp"
                     android:text="@string/verified_successful" />
 
                 <ImageView
                     android:id="@+id/ivSettingAuthen"
-                    android:visibility="invisible"
+                    android:visibility="gone"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:src="@drawable/ic_mine_authenticate" />

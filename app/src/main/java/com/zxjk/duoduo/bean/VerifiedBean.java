@@ -1,5 +1,9 @@
 package com.zxjk.duoduo.bean;
 
+/**
+ * @author Administrator
+ * @// TODO: 2019\3\27 0027 审核的实体 
+ */
 public class VerifiedBean {
     private String number;
     private String realName;
@@ -7,6 +11,18 @@ public class VerifiedBean {
     private String pictureFront;
     private String pictureReverse;
     private String pictureHand;
+    private String state;
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+ 
+    
 
     public String getNumber() {
         return number;

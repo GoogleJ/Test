@@ -44,13 +44,14 @@ import static com.zxjk.duoduo.utils.PermissionUtils.verifyStoragePermissions;
  * @author Administrator
  * @// TODO: 2019\3\23 0023 获取支付类型的字符
  */
-public class ReceiptTypeActivity extends BaseActivity implements View.OnClickListener,TakePopWindow.OnItemClickListener {
+public class ReceiptTypeActivity extends BaseActivity implements View.OnClickListener, TakePopWindow.OnItemClickListener {
     TitleBar receiptTypeTitle;
     ConstraintLayout nickName, realName, accountIdCard;
     TextView receiptTypeName, receiptTypeCard, receiptTypePaymentName;
     TextView receiptTypeRealName, receiptTypeRealCardName, receiptTypePayment;
     ImageView receiptTypeGo, receiptTypeCardGo, receiptTypePaymentGo;
     TextView commitBtn;
+
 
     private TakePopWindow selectPicPopWindow;
     //接受的类型
@@ -116,20 +117,22 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
             receiptTypeName.setText(R.string.nick);
             receiptTypeCard.setText(R.string.receipt_type_real_name);
             receiptTypePaymentName.setText(R.string.collection_code);
-            receiptTypeRealName.setVisibility(View.GONE);
+
             receiptTypeRealCardName.setText(R.string.user_name);
             receiptTypePayment.setText(R.string.not_uploaded);
             receiptTypeCardGo.setVisibility(View.GONE);
+
         } else if (alipay.equals(types)) {
             //支付宝信息，提交按钮已隐藏
             receiptTypeTitle.setTitle(getString(R.string.alipy_info));
             receiptTypeName.setText(R.string.account_id);
             receiptTypeCard.setText(R.string.receipt_type_real_name);
             receiptTypePaymentName.setText(R.string.collection_code);
-            receiptTypeRealName.setVisibility(View.GONE);
+
             receiptTypeRealCardName.setText(R.string.user_name);
             receiptTypePayment.setText(R.string.not_uploaded);
             receiptTypeCardGo.setVisibility(View.GONE);
+
         } else {
             //银行卡信息，提交按钮已隐藏
             receiptTypeTitle.setTitle(getString(R.string.bank_info));
@@ -137,8 +140,9 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
             receiptTypeCard.setText(R.string.bank_id_card);
             receiptTypePaymentName.setText(R.string.bank);
             receiptTypeRealName.setText(R.string.user_name);
-            receiptTypeRealCardName.setVisibility(View.GONE);
-            receiptTypePayment.setVisibility(View.GONE);
+
+
+
             receiptTypeGo.setVisibility(View.GONE);
         }
     }
@@ -148,84 +152,92 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.nick_name:
                 if (wechat.equals(types)) {
-                    if (receiptTypePayments.equals(receiptTypePayment)) {
-                        dialog = new PaymentTypeDialog(this);
-                        dialog.setOnClickListener(editContent -> {
-                            Constant.payInfoBean.setPayType(wechat);
-                            Constant.payInfoBean.setWechatNick(editContent);
-                            Constant.payInfoBean.setPayPicture(url);
-                            addPayInfo(AesUtil.getInstance().encrypt(GsonUtils.toJson(Constant.payInfoBean)));
-                            commitBtn.setVisibility(View.VISIBLE);
-                            dialog.dismiss();
-                        });
-                        dialog.show(getString(R.string.wechat_nick), wechat);
-                    } else {
+                    dialog = new PaymentTypeDialog(this);
+                    dialog.setOnClickListener(editContent -> {
 
-                    }
-
-
+                        receiptTypeRealName.setText(editContent);
+                        receiptTypeRealName.setVisibility(View.VISIBLE);
+                        dialog.dismiss();
+                    });
+                    dialog.show(getString(R.string.wechat_nick), getString(R.string.hint_nick), wechat);
+                    return;
                 } else if (alipay.equals(types)) {
-                    if (receiptTypePayments.equals(receiptTypePayment)) {
-                        dialog = new PaymentTypeDialog(this);
-
-                        dialog.setOnClickListener(editContent -> {
-                            Constant.payInfoBean.setZhifubaoNumber(editContent);
-                            Constant.payInfoBean.setPayType(alipay);
-                            Constant.payInfoBean.setPayPicture(url);
-                            addPayInfo(AesUtil.getInstance().encrypt(GsonUtils.toJson(Constant.payInfoBean)));
-                            commitBtn.setVisibility(View.VISIBLE);
-                            dialog.dismiss();
-                        });
-                        dialog.show(getString(R.string.alipay_number), alipay);
-                    } else {
-                        ToastUtils.showShort(R.string.please_upload_payment_code);
-                    }
-
+                    dialog = new PaymentTypeDialog(this);
+                    dialog.setOnClickListener(editContent -> {
+                        receiptTypeRealName.setText(editContent);
+                        receiptTypeRealName.setVisibility(View.VISIBLE);
+                        dialog.dismiss();
+                    });
+                    dialog.show(getString(R.string.alipay_number), getString(R.string.hint_alipay), alipay);
+                    return;
                 } else {
-                    if (receiptTypePayment.getText().length() != 0) {
-                        dialog = new PaymentTypeDialog(this);
-
-                        dialog.setOnClickListener(editContent -> {
-                            Constant.payInfoBean.setPayType(bank);
-                            Constant.payInfoBean.setPayNumber(editContent);
-                            addPayInfo(AesUtil.getInstance().encrypt(GsonUtils.toJson(Constant.payInfoBean)));
-                            commitBtn.setVisibility(View.VISIBLE);
-                            dialog.dismiss();
-                        });
-                        dialog.show(getString(R.string.bank_real_name), bank);
-                    } else {
-                        ToastUtils.showShort(R.string.please_upload_selector_open_bank);
-                    }
+                    LogUtils.d("银行卡这里不允许弹出框");
                 }
                 break;
             case R.id.real_name:
+                if (bank.equals(types)) {
+                    dialog = new PaymentTypeDialog(ReceiptTypeActivity.this);
+                    dialog.setOnClickListener(new PaymentTypeDialog.OnClickListener() {
+                        @Override
+                        public void determine(String editContent) {
+                            receiptTypeRealCardName.setText(editContent);
+                        }
+                    });
+                    dialog.show(getString(R.string.bankcard), getString(R.string.input_bank_number), bank);
+                }
                 break;
             case R.id.account_id_card:
                 if (wechat.equals(types)) {
 
-                    receiptTypePaymentName.setText(R.string.uploaded);
-                        verifyStoragePermissions(this);
-                        cameraPremissions(this);
-                        selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
-                                Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-
-
-
-                } else if (alipay.equals(types)) {
-
-                    receiptTypePaymentName.setText(R.string.uploaded);
                     verifyStoragePermissions(this);
                     cameraPremissions(this);
                     selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
                             Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
 
-                } else {
+                    return;
+                } else if (alipay.equals(types)) {
 
+                    verifyStoragePermissions(this);
+                    cameraPremissions(this);
+                    selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
+                            Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+
+                    return;
+                } else {
+                    dialog = new PaymentTypeDialog(ReceiptTypeActivity.this);
+                    dialog.setOnClickListener(new PaymentTypeDialog.OnClickListener() {
+                        @Override
+                        public void determine(String editContent) {
+                            receiptTypePayment.setText(editContent);
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.show(getString(R.string.open_bank), getString(R.string.please_upload_selector_open_bank), bank);
                 }
                 break;
             case R.id.commit_btn:
+                if (wechat.equals(types)) {
+                    Constant.payInfoBean.setPayType(wechat);
+                    Constant.payInfoBean.setWechatNick(receiptTypeRealName.getText().toString());
+                    Constant.payInfoBean.setPayPicture(url);
+                    Constant.payInfoBean.setPayPwd("123456");
+                    addPayInfo(AesUtil.getInstance().encrypt(GsonUtils.toJson(Constant.payInfoBean)));
+                    return;
+                } else if (alipay.equals(types)) {
+                    Constant.payInfoBean.setPayType(alipay);
+                    Constant.payInfoBean.setZhifubaoNumber(receiptTypeRealName.getText().toString());
+                    Constant.payInfoBean.setPayPicture(url);
+                    Constant.payInfoBean.setPayPwd("123456");
+                    addPayInfo(AesUtil.getInstance().encrypt(GsonUtils.toJson(Constant.payInfoBean)));
+                } else {
+                    Constant.payInfoBean.setPayType(bank);
+                    Constant.payInfoBean.setPayNumber(receiptTypeRealCardName.getText().toString());
+                    Constant.payInfoBean.setOpenBank(receiptTypePayment.getText().toString());
+//                    Constant.payInfoBean.setPayPicture("null");
+                    Constant.payInfoBean.setPayPwd("123456");
+                    addPayInfo(AesUtil.getInstance().encrypt(GsonUtils.toJson(Constant.payInfoBean)));
+                }
                 break;
-
             default:
                 break;
         }
@@ -252,8 +264,8 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
             zipFile(Collections.singletonList(filePath), files -> {
                 File file = files.get(0);
                 OssUtils.uploadFile(file.getAbsolutePath(), url -> {
-                 this.url=url;
-
+                    this.url = url;
+                    receiptTypePayment.setText(R.string.uploaded);
 
                 });
             });
