@@ -44,6 +44,7 @@ public class WalletFragment extends BaseFragment {
         recyclerWalletPage.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
         tvWalletPageTop1.setOnClickListener(v -> startActivity(new Intent(getContext(), QrCodeActivity.class)));
+        tvWalletPageTop3.setOnClickListener(v -> startActivity(new Intent(getContext(), BlockWalletActivity.class)));
 
         return rootView;
     }

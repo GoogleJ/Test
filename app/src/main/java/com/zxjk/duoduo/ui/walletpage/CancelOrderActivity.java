@@ -59,13 +59,13 @@ public class CancelOrderActivity extends BaseActivity {
         } else {
             switch (data.getPayType()) {
                 case "1":
-                    sb.append("微信" + ",");
+                    sb.append("微信");
                     break;
                 case "2":
-                    sb.append("支付宝" + ",");
+                    sb.append("支付宝");
                     break;
                 case "3":
-                    sb.append("银行卡" + ",");
+                    sb.append("银行卡");
                     break;
             }
         }

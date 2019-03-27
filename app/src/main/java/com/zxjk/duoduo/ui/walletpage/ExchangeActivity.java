@@ -31,7 +31,7 @@ import io.reactivex.functions.Function;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\26 0026 交易所 
+ * @// TODO: 2019\3\26 0026 交易所
  */
 @SuppressLint("CheckResult")
 public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
@@ -163,6 +163,8 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                     .subscribe(s -> {
                         Intent intent = new Intent(this, ConfirmBuyActivity.class);
                         intent.putExtra("data", s);
+                        intent.putExtra("rate", tvExchangePrice.getText().toString());
+                        intent.putExtra("buytype", buyType);
                         startActivity(intent);
                     }, this::handleApiError);
         } else {

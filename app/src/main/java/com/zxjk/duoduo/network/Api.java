@@ -5,6 +5,8 @@ import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.response.FriendListResponse;
 import com.zxjk.duoduo.network.response.GetBalanceHkResponse;
 import com.zxjk.duoduo.network.response.GetNumbeOfTransactionResponse;
+import com.zxjk.duoduo.network.response.GetOverOrderResponse;
+import com.zxjk.duoduo.network.response.GetReleasePurchaseResponse;
 import com.zxjk.duoduo.network.response.GroupChatResponse;
 import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.response.PayInfoResponse;
@@ -418,5 +420,15 @@ public interface Api {
      */
     @POST("duoduo/customer/getCustomerAuth")
     Observable<BaseResponse<String>> getCustomerAuth();
+
+    @POST("duoduo/exchange/getOverOrder")
+    Observable<BaseResponse<List<GetOverOrderResponse>>> getOverOrder();
+
+    @POST("duoduo/exchange/getReleasePurchase")
+    Observable<BaseResponse<List<GetReleasePurchaseResponse>>> getReleasePurchase();
+
+    @POST("duoduo/wallet/getWallet")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> getWallet(@Field("customerDuoDuoId") String customerDuoDuoId);
 
 }

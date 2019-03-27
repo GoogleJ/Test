@@ -34,8 +34,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.walletpage.ConfirmSaleActivity"></activity>
+        <activity android:name=".ui.walletpage.BlockWalletActivity"></activity>
+        <activity android:name=".ui.walletpage.WaitForJudgeActivity" />
+        <activity android:name=".ui.walletpage.ConfirmSaleActivity" />
         <activity android:name=".ui.walletpage.ConfirmBuyActivity" />
+        <activity android:name=".ui.walletpage.CancelOrderActivity" />
         <activity android:name=".ui.walletpage.ExchangeListActivity" />
         <activity android:name=".ui.walletpage.ExchangeActivity">
             <intent-filter>
@@ -66,8 +69,6 @@
         <activity android:name=".ui.minepage.PaySettingActivity" />
         <activity android:name=".ui.minepage.UpdatePayPwdActivity" />
         <activity android:name=".ui.minepage.RetrievePayPwdActivity"/>
-
-
         <activity
             android:name=".ui.WelcomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -578,7 +579,6 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
-
         <receiver
             android:name=".ui.msgpage.utils.SealNotificationReceiverUtils"
             android:exported="true">

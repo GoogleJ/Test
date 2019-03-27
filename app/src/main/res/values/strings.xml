@@ -370,5 +370,14 @@
     <string name="please_input_id_card">请先输入证件号码</string>
     <string name="newCode">重新获取验证码</string>
     <string name="tiem_new_code">秒后重新获取</string>
+    <string name="sale_waitforjudge">等待审核</string>
+    <string name="wait_for_others_to_judge">等待对方审核</string>
+    <string name="paytotal">支付总金额</string>
+    <string name="collection_and_payment1">收款方式</string>
+    <string name="onprocing">进行中</string>
+    <string name="done">已完成</string>
+    <string name="blockWallet">区块链钱包</string>
+    <string name="huazhuan">划转</string>
+    <string name="zhuanchu">转出</string>
 
 </resources>

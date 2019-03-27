@@ -37,7 +37,10 @@ public class ConfirmDialog extends Dialog {
         tvDialogTitle.setText(title);
         tvDialogContent.setText(content);
 
-        tvDialogConfirm.setOnClickListener(listener);
+        tvDialogConfirm.setOnClickListener(v -> {
+            dismiss();
+            listener.onClick(v);
+        });
         tvDialogCancel.setOnClickListener(v -> dismiss());
 
         setContentView(contentView);
