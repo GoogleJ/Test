@@ -109,23 +109,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.btn_login:
 
-                String mobile = edit_mobile.getText().toString().trim();
-                String password = edit_password.getText().toString().trim();
-                if (mobile.isEmpty() || password.isEmpty()) {
-                    ToastUtils.showShort(getString(R.string.edit_mobile_or_password_tip));
-                    return;
-                }
-                if (mobile.isEmpty() && "".equals(mobile) && mobile.length() == phoneLength) {
-                    ToastUtils.showShort(getString(R.string.edit_mobile_tip));
-                    return;
-                }
-                if (password.isEmpty() || 5 >= password.length() || password.length() >= 14) {
-                    ToastUtils.showShort(getString(R.string.edit_password_reg));
-                    return;
-                }
+//                String mobile = edit_mobile.getText().toString().trim();
+//                String password = edit_password.getText().toString().trim();
+//                if (mobile.isEmpty() || password.isEmpty()) {
+//                    ToastUtils.showShort(getString(R.string.edit_mobile_or_password_tip));
+//                    return;
+//                }
+//                if (mobile.isEmpty() && "".equals(mobile) && mobile.length() == phoneLength) {
+//                    ToastUtils.showShort(getString(R.string.edit_mobile_tip));
+//                    return;
+//                }
+//                if (password.isEmpty() || 5 >= password.length() || password.length() >= 14) {
+//                    ToastUtils.showShort(getString(R.string.edit_password_reg));
+//                    return;
+//                }
 
-                login(mobile, password);
-                SPUtils.getInstance().put("mobile", edit_mobile.getText().toString().trim());
+                login("15935910958", "000000");
+//                SPUtils.getInstance().put("mobile", edit_mobile.getText().toString().trim());
 
                 break;
             default:
@@ -147,7 +147,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     Disposable subscribe;
 
     public void login(String phone, String pwd) {
-
 
         subscribe = ServiceFactory.getInstance().getBaseService(Api.class)
                 .login(phone, getMD5(pwd))

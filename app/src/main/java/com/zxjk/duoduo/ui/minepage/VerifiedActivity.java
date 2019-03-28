@@ -88,7 +88,9 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
      */
     TitleBar titleBar;
 
-    String url;
+    String url1;
+    String url2;
+    String url3;
     ImageView handHeldPassportPhotoEdit;
     DocumentSelectionDialog dialog;
     String realNames;
@@ -96,29 +98,20 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
 
     private TakePopWindow selectPicPopWindow;
 
-    private static final int REQUEST_CODE = 1;
-    private static final int REQUEST_CODE2 = 2;
-    private static final int REQUEST_CODE3 = 3;
-
-    int type1 ;
-    int type2;
-    int type3;
-
+    private int currentPictureFlag;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verified);
         initView();
-
     }
-
 
 
     @SuppressLint("WrongViewCast")
     private void initView() {
 
-        titleBar=findViewById(R.id.title_bar);
+        titleBar = findViewById(R.id.title_bar);
         titleBar.getLeftImageView().setOnClickListener(v -> finish());
         selectPicPopWindow = new TakePopWindow(this);
         selectPicPopWindow.setOnItemClickListener(this);
@@ -139,8 +132,6 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
         reversePhotoOfTheDocumentEdit.setOnClickListener(this);
         handHeldPassportPhoto.setOnClickListener(this);
         handHeldPassportPhotoEdit.setOnClickListener(this);
-        realNames = realName.getText().toString();
-        idCards = idCard.getText().toString();
     }
 
     @SuppressLint("NewApi")
@@ -178,65 +169,73 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
+        realNames = realName.getText().toString().trim();
+        idCards = idCard.getText().toString().trim();
+
         switch (v.getId()) {
             case R.id.verified_commit:
-                if (!realNames.isEmpty()) {
+                if (TextUtils.isEmpty(realNames)) {
                     ToastUtils.showShort(R.string.edit_real_name);
                     return;
                 }
-                if (!idCards.isEmpty()) {
+                if (TextUtils.isEmpty(idCards)) {
                     ToastUtils.showShort(R.string.edit_id_cards);
                     return;
                 }
 
-                String idCards=getString(R.string.id_card);
-                String passport=getString(R.string.passport);
-                String otherIdCard=getString(R.string.other_identity_card);
-
-
-                Constant.verifiedBean.setNumber(idCard.getText().toString());
-                Constant.verifiedBean.setRealName(realName.getText().toString());
-
-                if (idCards.equals(cardType.getText().toString())){
-                    String idCardType="1";
-                    Constant.verifiedBean.setType(idCardType);
-                }else if (passport.equals(cardType.getText().toString())){
-                    String passportType="2";
-                    Constant.verifiedBean.setType(passportType);
-                }else{
-                    String otherIdCardType="3";
-                    Constant.verifiedBean.setType(otherIdCardType);
+                if (TextUtils.isEmpty(url1)) {
+                    ToastUtils.showShort(R.string.verified_realname1);
+                    return;
                 }
 
-                Constant.verifiedBean.setPictureFront(url);
-                Constant.verifiedBean.setPictureHand(url);
-                Constant.verifiedBean.setPictureReverse(url);
-                Constant.verifiedBean.getState();
+                if (TextUtils.isEmpty(url2)) {
+                    ToastUtils.showShort(R.string.verified_realname2);
+                    return;
+                }
+
+                if (TextUtils.isEmpty(url3)) {
+                    ToastUtils.showShort(R.string.verified_realname3);
+                    return;
+                }
+
+                Constant.verifiedBean.setNumber(idCards);
+                Constant.verifiedBean.setRealName(realNames);
+
+                String s = cardType.getText().toString();
+                String otherIdCardType;
+                if (s.equals("身份证")) {
+                    otherIdCardType = "1";
+                } else if (s.equals("护照")) {
+                    otherIdCardType = "2";
+                } else {
+                    otherIdCardType = "3";
+                }
+
+                Constant.verifiedBean.setType(otherIdCardType);
+                Constant.verifiedBean.setPictureFront(url1);
+                Constant.verifiedBean.setPictureHand(url2);
+                Constant.verifiedBean.setPictureReverse(url3);
                 certification(AesUtil.getInstance().encrypt(GsonUtils.toJson(Constant.verifiedBean)));
                 break;
             case R.id.front_photo_of_the_document:
 //                证件正面照
-                type1=1;
+                currentPictureFlag = 1;
                 verifyStoragePermissions(this);
                 cameraPremissions(this);
                 selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-
-
-
                 break;
             case R.id.front_photo_of_the_document_edit:
-
                 //证件正面照编辑
+                currentPictureFlag = 1;
                 verifyStoragePermissions(this);
                 cameraPremissions(this);
                 selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-
                 break;
             case R.id.reverse_photo_of_the_document:
                 //证件反面照
-                type2=2;
+                currentPictureFlag = 2;
                 verifyStoragePermissions(this);
                 cameraPremissions(this);
                 selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
@@ -244,6 +243,7 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.reverse_photo_of_the_document_edit:
                 //证件反面照编辑
+                currentPictureFlag = 2;
                 verifyStoragePermissions(this);
                 cameraPremissions(this);
                 selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
@@ -251,7 +251,7 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.hand_held_passport_photo:
                 //手持证件照
-                type3=3;
+                currentPictureFlag = 3;
                 verifyStoragePermissions(this);
                 cameraPremissions(this);
                 selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
@@ -259,6 +259,7 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.hand_held_passport_photo_edit:
                 //手持证件照编辑
+                currentPictureFlag = 3;
                 verifyStoragePermissions(this);
                 cameraPremissions(this);
                 selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
@@ -275,12 +276,10 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
 
         String filePath = "";
 
-
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_TAKE:
                     filePath = TakePicUtil.file.getAbsolutePath();
-
                     break;
                 case REQUEST_ALBUM:
                     filePath = TakePicUtil.getPath(this, data.getData());
@@ -289,35 +288,27 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
         }
 
         if (!TextUtils.isEmpty(filePath)) {
-            zipFile(Collections.singletonList(filePath), new OnZipFileFinish() {
-                @Override
-                public void onFinish(List<File> files) {
-                    File file = files.get(0);
-                    OssUtils.uploadFile(file.getAbsolutePath(), new OssUtils.OssCallBack() {
-                        @Override
-                        public void onSuccess(String url) {
-                            VerifiedActivity.this.url = url;
-                            if (type1 == REQUEST_CODE) {
-                                GlideUtil.loadCornerImg(frontPhotoOfTheDocument, url, 3);
-                                return;
-                            }
-                            if (type2 == REQUEST_CODE2) {
-                                GlideUtil.loadCornerImg(reversePhotoOfTheDocument, url, 3);
-                                return;
-                            }
-                            if (type3 == REQUEST_CODE3) {
-                                GlideUtil.loadCornerImg(handHeldPassportPhoto, url, 3);
-                                return;
-                            }
-
-
-                        }
-                    });
-                }
+            zipFile(Collections.singletonList(filePath), files -> {
+                File file = files.get(0);
+                OssUtils.uploadFile(file.getAbsolutePath(), url -> {
+                    if (currentPictureFlag == 1) {
+                        url1 = url;
+                        GlideUtil.loadCornerImg(frontPhotoOfTheDocument, url, 3);
+                        return;
+                    }
+                    if (currentPictureFlag == 2) {
+                        url2 = url;
+                        GlideUtil.loadCornerImg(reversePhotoOfTheDocument, url, 3);
+                        return;
+                    }
+                    if (currentPictureFlag == 3) {
+                        url3 = url;
+                        GlideUtil.loadCornerImg(handHeldPassportPhoto, url, 3);
+                    }
+                });
             });
         }
     }
-
 
     public void certification(String data) {
         ServiceFactory.getInstance().getBaseService(Api.class)
@@ -325,13 +316,10 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) throws Exception {
-                        LogUtils.d("DEBUG", "成功" + s);
-                        ToastUtils.showShort(R.string.verified_success);
-                        finish();
-                    }
+                .subscribe(s -> {
+                    Constant.currentUser.setIsAuthentication("2");
+                    ToastUtils.showShort(R.string.verified_success);
+                    finish();
                 }, this::handleApiError);
     }
 

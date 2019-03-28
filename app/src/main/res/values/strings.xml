@@ -383,5 +383,16 @@
     <string name="please_input_phone_code">请输入正确得短信验证码</string>
     <string name="please_input_pay_pwd">请输入支付密码</string>
     <string name="group_chat_invitation">群聊邀请</string>
+    <string name="verified_realname1">请上传正面身份证照片</string>
+    <string name="verified_realname2">请上传反面身份证照片</string>
+    <string name="verified_realname3">请上传手持身份证照片</string>
+    <string name="verifiedfailed">认证失败</string>
+    <string name="verifing">认证中</string>
+    <string name="currentCoin">当前币种</string>
+    <string name="recipetWalletAddress">收款钱包</string>
+    <string name="inputwalletaddress">请输入钱包地址</string>
+    <string name="inputZhuanChuAccount">请输入转出数量</string>
+    <string name="zhuanchuCount">转出数量</string>
+    <string name="kuanggongprice">矿工费用</string>
 
 </resources>

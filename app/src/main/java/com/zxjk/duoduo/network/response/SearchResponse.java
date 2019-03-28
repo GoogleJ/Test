@@ -1,6 +1,8 @@
 package com.zxjk.duoduo.network.response;
 
-public class SearchResponse {
+import java.io.Serializable;
+
+public class SearchResponse implements Serializable {
 
 
     /**

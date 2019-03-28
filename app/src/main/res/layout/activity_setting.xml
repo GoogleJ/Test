@@ -77,10 +77,10 @@
                 android:background="@color/m_add_friend_line" />
 
             <TextView
-                android:onClick="privacy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_mine_rightarrow"
+                android:onClick="privacy"
                 android:paddingLeft="10dp"
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
@@ -95,8 +95,15 @@
                 android:layout_marginStart="10dp"
                 android:background="@color/m_add_friend_line" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginStart="10dp"
+                android:background="@color/m_add_friend_line" />
+
             <LinearLayout
-               android:id="@+id/verified"
+                android:onClick="gotoVerivy"
+                android:id="@+id/verified"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -121,10 +128,10 @@
 
                 <ImageView
                     android:id="@+id/ivSettingAuthen"
-                    android:visibility="gone"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
-                    android:src="@drawable/ic_mine_authenticate" />
+                    android:src="@drawable/ic_mine_authenticate"
+                    android:visibility="gone" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -134,17 +141,11 @@
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="10dp"
-                android:background="@color/m_add_friend_line" />
-
             <LinearLayout
-                android:onClick="billingMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
+                android:onClick="billingMessage"
                 android:paddingLeft="10dp"
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
@@ -197,9 +198,9 @@
 
             <TextView
                 android:layout_width="match_parent"
-
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_mine_rightarrow"
+                android:onClick="feedback"
                 android:paddingLeft="10dp"
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
@@ -215,10 +216,10 @@
                 android:background="@color/m_add_friend_line" />
 
             <TextView
-                android:onClick="aboutDuoDuo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_mine_rightarrow"
+                android:onClick="aboutDuoDuo"
                 android:paddingLeft="10dp"
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
@@ -252,10 +253,10 @@
                 android:background="@color/m_add_friend_line" />
 
             <TextView
-                android:onClick="onlineService"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_mine_rightarrow"
+                android:onClick="onlineService"
                 android:paddingLeft="10dp"
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
@@ -270,10 +271,10 @@
                 android:background="@color/personal_information_1" />
 
             <LinearLayout
-                android:onClick="accountSwitch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
+                android:onClick="accountSwitch"
                 android:paddingLeft="10dp"
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
@@ -307,10 +308,10 @@
                 android:background="@color/personal_information_1" />
 
             <TextView
-                android:onClick="loginOut"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:onClick="loginOut"
                 android:paddingTop="14dp"
                 android:paddingBottom="14dp"
                 android:text="@string/drop_out"

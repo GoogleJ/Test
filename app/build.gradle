@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 
 android {
-
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.zxjk.duoduo"
@@ -25,7 +24,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    buildToolsVersion '28.0.3'
     dexOptions {
     }
     sourceSets {
@@ -119,5 +117,4 @@ dependencies {
 
     //popwindow
     implementation 'com.github.razerdp:BasePopup:2.1.9'
-    implementation files('libs/BASE64.jar')
 }

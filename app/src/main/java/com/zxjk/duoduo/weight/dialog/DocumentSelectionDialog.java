@@ -63,6 +63,16 @@ public class DocumentSelectionDialog extends Dialog implements View.OnClickListe
 
     }
 
+    public void show(String type) {
+        if (type.equals("1")) {
+
+        } else if (type.equals("2")) {
+
+        } else {
+
+        }
+        show();
+    }
 
     @SuppressLint("NewApi")
     @OnClick({R.id.id_card_icon, R.id.passport_icon, R.id.other_identity_card_icon})
@@ -73,7 +83,7 @@ public class DocumentSelectionDialog extends Dialog implements View.OnClickListe
                 idCardIcon.setImageResource(R.drawable.icon_document_selection_successful);
                 passportIcon.setImageResource(R.drawable.icon_document_selection_no);
                 otherIdentityCardIcon.setImageResource(R.drawable.icon_document_selection_no);
-                if (onClickListener!=null){
+                if (onClickListener != null) {
                     onClickListener.onSelectedIdCard(idCard.getText().toString());
                 }
 
@@ -82,7 +92,7 @@ public class DocumentSelectionDialog extends Dialog implements View.OnClickListe
                 idCardIcon.setImageResource(R.drawable.icon_document_selection_no);
                 passportIcon.setImageResource(R.drawable.icon_document_selection_successful);
                 otherIdentityCardIcon.setImageResource(R.drawable.icon_document_selection_no);
-                if (onClickListener!=null){
+                if (onClickListener != null) {
                     onClickListener.onSelectedPassport(passport.getText().toString());
                 }
                 break;
@@ -90,7 +100,7 @@ public class DocumentSelectionDialog extends Dialog implements View.OnClickListe
                 idCardIcon.setImageResource(R.drawable.icon_document_selection_no);
                 passportIcon.setImageResource(R.drawable.icon_document_selection_no);
                 otherIdentityCardIcon.setImageResource(R.drawable.icon_document_selection_successful);
-                if (onClickListener!=null){
+                if (onClickListener != null) {
                     onClickListener.onSelectedOther(other.getText().toString());
                 }
                 break;

@@ -14,7 +14,6 @@
         app:titleBarTextColor="@color/white"
         app:titleBarTitle="@string/m_contact_search_label" />
 
-
     <EditText
         android:id="@+id/m_search_edit"
         android:layout_width="match_parent"

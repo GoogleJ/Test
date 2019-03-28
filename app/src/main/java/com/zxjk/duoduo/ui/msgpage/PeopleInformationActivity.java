@@ -16,12 +16,16 @@ import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.response.LoginResponse;
+import com.zxjk.duoduo.network.response.SearchResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.widget.CommonPopupWindow;
 import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendInformationDialog;
 import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.weight.TitleBar;
+
+import java.io.Serializable;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import butterknife.BindView;
@@ -100,8 +104,8 @@ public class PeopleInformationActivity extends BaseActivity implements View.OnCl
      */
     @BindView(R.id.m_people_information_copy_wallet_address)
     ImageView copyBtn;
-    String userId;
-    String newFriendUserId;
+
+    private SearchResponse user;
     /**
      * 0是男1是女
      */
@@ -110,29 +114,16 @@ public class PeopleInformationActivity extends BaseActivity implements View.OnCl
     private CommonPopupWindow popupWindow;
 
     DeleteFriendInformationDialog dialog;
-    int a;
-    int type;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_people_information);
         ButterKnife.bind(this);
+
         initUI();
-        Intent intent = getIntent();
 
-
-        type = intent.getIntExtra("type", a);
-        if (type != 1) {
-            Intent intent1 = getIntent();
-            newFriendUserId = intent1.getStringExtra("peopleInformatinoUserId");
-            getFriendInfoInfoById(newFriendUserId);
-        } else {
-            userId = intent.getStringExtra("userId");
-            getFriendInfoInfoById(userId);
-        }
     }
-
 
     private void initUI() {
         titleBar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
@@ -165,27 +156,14 @@ public class PeopleInformationActivity extends BaseActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.m_people_information_send_to_message:
-
-                if (RongIM.getInstance() != null) {
-                    if (type != 1) {
-
-
-                    } else {
-
-
-
-                }
-
-                }
-
-
+                RongIM.getInstance().startPrivateChat(this, user.getId(), user.getNick());
                 break;
             case R.id.m_people_information_voice_calls:
                 ToastUtils.showShort("此功能暂未实现");
                 break;
             case R.id.update_rename:
                 Intent intent = new Intent(PeopleInformationActivity.this, ModifyNotesActivity.class);
-                intent.putExtra("peopelUserId", userId);
+                intent.putExtra("peopelUserId", user.getId());
                 startActivity(intent);
                 break;
             case R.id.recommend_to_friend:
@@ -193,13 +171,8 @@ public class PeopleInformationActivity extends BaseActivity implements View.OnCl
                 break;
             case R.id.delete_friend:
                 dialog = new DeleteFriendInformationDialog(this);
+                dialog.setOnClickListener(() -> deleteFriend(user.getId()));
                 dialog.show();
-                dialog.setOnClickListener(new DeleteFriendInformationDialog.OnClickListener() {
-                    @Override
-                    public void onDel() {
-                         deleteFriend(userId);
-                    }
-                });
                 break;
             default:
                 break;
@@ -217,9 +190,8 @@ public class PeopleInformationActivity extends BaseActivity implements View.OnCl
                     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                     @Override
                     public void accept(FriendInfoResponse data) throws Exception {
-
                         //这个模块需要添加数据绑定
-                        GlideUtil.loadImg(heardIcon, data.getHeadPortrait());
+                        GlideUtil.loadCornerImg(heardIcon, data.getHeadPortrait(), 2);
                         userNameText.setText(data.getRealname());
                         duoduoId.setText(data.getDuoduoId());
                         areaText.setText(data.getAddress());
@@ -247,7 +219,6 @@ public class PeopleInformationActivity extends BaseActivity implements View.OnCl
                 view.findViewById(R.id.delete_friend).setOnClickListener(this);
                 break;
         }
-
     }
 
     public void deleteFriend(String friendId) {
@@ -259,10 +230,8 @@ public class PeopleInformationActivity extends BaseActivity implements View.OnCl
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String s) throws Exception {
-                        LogUtils.d("DEBUG", s);
                         ToastUtils.showShort("删除成功");
                         dialog.dismiss();
-
                     }
                 }, this::handleApiError);
 

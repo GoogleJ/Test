@@ -3,6 +3,7 @@ package com.zxjk.duoduo.ui;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.FrameLayout;
+
 import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -15,6 +16,9 @@ import com.zxjk.duoduo.ui.walletpage.WalletFragment;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
+
 import static com.ashokvarma.bottomnavigation.BottomNavigationBar.BACKGROUND_STYLE_RIPPLE;
 import static com.google.android.material.tabs.TabLayout.MODE_FIXED;
 
@@ -50,7 +54,6 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
 
         BadgeItem badgeItem = new BadgeItem();
         badgeItem.setHideOnSelect(false)
-                .setText("10")
                 .setBackgroundColorResource(R.color.colorAccent)
                 .setBorderWidth(0);
 //设置Item选中颜色方法
@@ -82,6 +85,15 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                 .initialise();
 
         m_bottom_bar.setTabSelectedListener(this);
+
+        RongIM.getInstance().addUnReadMessageCountChangedObserver(messageCount -> {
+            if (messageCount == 0) {
+                badgeItem.hide();
+            } else {
+                badgeItem.setText(String.valueOf(messageCount));
+                badgeItem.show(true);
+            }
+        }, Conversation.ConversationType.PRIVATE);
     }
 
     private void initFragment() {
@@ -90,8 +102,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
         walletFragment = new WalletFragment();
         mineFragment = new MineFragment();
 
-
-        fragmentTransaction =  getSupportFragmentManager().beginTransaction();
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.fragment_content, msgFragment)
                 .commit();
         mFragment = msgFragment;

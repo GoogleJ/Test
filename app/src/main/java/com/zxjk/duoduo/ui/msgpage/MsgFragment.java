@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import com.zxjk.duoduo.ui.msgpage.widget.CommonPopupWindow;
 import com.zxjk.duoduo.utils.DensityUtils;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
@@ -30,7 +28,6 @@ import butterknife.OnClick;
 import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
-import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 
@@ -42,32 +39,20 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
 
     private static final String CONVERSATIONLIST_FRAGMENT_KEY = "conversationlist_fragment_key";
     private ConversationListFragment mConversationListFragment = null;
-    private Conversation.ConversationType[] mConversationsTypes = null;
     private CommonPopupWindow popupWindow;
 
-    public static MsgFragment newInstance() {
-        MsgFragment fragment = new MsgFragment();
-        Bundle bundle = new Bundle();
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
-    View view;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initConversationList(savedInstanceState);
-    }
+    View rootView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_message, null);
-        ButterKnife.bind(this, view);
-
+        rootView = inflater.inflate(R.layout.fragment_message, container, false);
+        ButterKnife.bind(this, rootView);
         initHear();
-        return view;
+
+        initConversationList(null);
+
+        return rootView;
     }
 
     private void initHear() {
@@ -79,7 +64,6 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
         Button rightView = getRightBtn(20, 20);
         rightView.setBackgroundResource(R.drawable.ic_head_add);
     }
-
 
     @Override
     public void getChildView(View view, int layoutResId) {
@@ -148,12 +132,10 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
         }
 
         switchFragment(mConversationListFragment, R.id.conversationlist);
-
     }
 
     private ConversationListFragment createConversationList() {
         ConversationListFragment listFragment = new ConversationListFragment();
-        listFragment.setAdapter(new ConversationListAdapterEx(RongContext.getInstance()));
         Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversationlist")
                 //设置私聊会话是否聚合显示
@@ -167,35 +149,14 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
                 //系统
                 .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")
                 .build();
-        mConversationsTypes = new Conversation.ConversationType[]{Conversation.ConversationType.PRIVATE,
-                Conversation.ConversationType.GROUP,
-                Conversation.ConversationType.PUBLIC_SERVICE,
-                Conversation.ConversationType.APP_PUBLIC_SERVICE,
-                Conversation.ConversationType.SYSTEM
-        };
-
 
         listFragment.setUri(uri);
 
         return listFragment;
     }
 
-    //设置容云用户信息
-    private void setRongUserInfo(final String targetid) {
-        if (RongIM.getInstance() != null) {
-            RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-                @Override
-                public UserInfo getUserInfo(String s) {
-
-                    return null;
-                }
-            }, true);
-        }
-
-    }
-
     public Button getLeftBtn() {
-        return ((Button) view.findViewById(R.id.btn_head_left));
+        return ((Button) rootView.findViewById(R.id.btn_head_left));
     }
 
     public Button getLeftBtn(int width, int height) {
@@ -208,7 +169,7 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
     }
 
     public Button getRightBtn() {
-        return ((Button) view.findViewById(R.id.btn_head_right));
+        return ((Button) rootView.findViewById(R.id.btn_head_right));
     }
 
     public Button getRightBtn(int width, int height) {
@@ -221,7 +182,7 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
     }
 
     public void setHeadStatusBar() {
-        View view1 = view.findViewById(R.id.head_StatusBar);
+        View view1 = rootView.findViewById(R.id.head_StatusBar);
         ViewGroup.LayoutParams layoutParams = view1.getLayoutParams();
         layoutParams.height = getStatusBarHeight();
         view1.setLayoutParams(layoutParams);
@@ -235,10 +196,10 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
     }
 
     public void setHeadTitle(int resId) {
-        ((TextView) view.findViewById(R.id.tv_head_title)).setText(resId);
+        ((TextView) rootView.findViewById(R.id.tv_head_title)).setText(resId);
     }
 
     public void setHeadTitle(String title) {
-        ((TextView) view.findViewById(R.id.tv_head_title)).setText(title);
+        ((TextView) rootView.findViewById(R.id.tv_head_title)).setText(title);
     }
 }

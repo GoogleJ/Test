@@ -1,17 +1,11 @@
 package com.zxjk.duoduo.ui.msgpage;
 
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.TextView;
-
-import com.blankj.utilcode.util.LogUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -20,20 +14,16 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.GlobalSearchAdapter;
 import com.zxjk.duoduo.weight.TitleBar;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.functions.Consumer;
 
 /**
  * @author Administrator
  * @// TODO: 2019\3\20 0020 全局搜索
  */
+@SuppressLint("CheckResult")
 public class GlobalSearchActivity extends BaseActivity {
     @BindView(R.id.m_search_title_bar)
     TitleBar titleBar;
@@ -48,6 +38,7 @@ public class GlobalSearchActivity extends BaseActivity {
         Intent intent = new Intent(activity, GlobalSearchActivity.class);
         activity.startActivity(intent);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,50 +47,38 @@ public class GlobalSearchActivity extends BaseActivity {
         initData();
         initUI();
     }
-    List<SearchResponse> list=new ArrayList<>();
+
     private void initData() {
-        searchEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                //搜索按键action
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    LogUtils.d("开始搜索");
-                    searchCustomerInfo(searchEdit.getText().toString());
-                    return true;
-                }
-                return false;
+        searchEdit.setOnEditorActionListener((v, actionId, event) -> {
+            //搜索按键action
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                searchCustomerInfo(searchEdit.getText().toString());
+                return true;
             }
+            return false;
         });
 
     }
 
     private void initUI() {
-        titleBar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        titleBar.getLeftImageView().setOnClickListener(v -> finish());
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(manager);
         mAdapter = new GlobalSearchAdapter();
         mRecyclerView.setAdapter(mAdapter);
 
-        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            SearchResponse user = mAdapter.getData().get(position);
+            // 做判断 判断是否是自己的好友然后去跳转不同的界面
+            if (user.getId().equals("asdasdasdasdasdasdasd")) {
 
-                Intent intent=new Intent(GlobalSearchActivity.this, PeopleInformationActivity.class);
-                intent.putExtra("userId",list.get(position).getId());
-                startActivity(intent);
-
+            } else {
 
             }
         });
-        mAdapter.notifyDataSetChanged();
-
     }
+
     public void searchCustomerInfo(String data) {
         //模糊搜索好友
         ServiceFactory.getInstance().getBaseService(Api.class)
@@ -107,24 +86,6 @@ public class GlobalSearchActivity extends BaseActivity {
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<List<SearchResponse>>() {
-                    @Override
-                    public void accept(List<SearchResponse> searchCustomerInfoResponses) throws Exception {
-                        mAdapter.setNewData(searchCustomerInfoResponses);
-                        for (int i = 0; i < searchCustomerInfoResponses.size(); i++) {
-                            LogUtils.d("DEBUG", searchCustomerInfoResponses.get(i).toString());
-                        }
-                        list=searchCustomerInfoResponses;
-
-
-                    }
-                }, throwable -> LogUtils.d("DEBUG", throwable.getMessage()));
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
+                .subscribe(list -> mAdapter.setNewData(list), this::handleApiError);
     }
 }

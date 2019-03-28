@@ -36,7 +36,6 @@ public class DeleteFriendInformationDialog extends Dialog implements View.OnClic
 
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

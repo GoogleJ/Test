@@ -1,6 +1,7 @@
 package com.zxjk.duoduo.ui.walletpage;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -47,15 +48,15 @@ public class BlockWalletActivity extends BaseActivity {
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
 
-                },this::handleApiError);
+                }, this::handleApiError);
     }
 
     public void zhuanchu(View view) {
-
+        startActivity(new Intent(this, ZhuanChuActivity.class));
     }
 
     public void huazhuan(View view) {
-
+        startActivity(new Intent(this, HuaZhuanActivity.class));
     }
 
     public void back(View view) {
