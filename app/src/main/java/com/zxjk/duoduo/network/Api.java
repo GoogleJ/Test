@@ -8,6 +8,7 @@ import com.zxjk.duoduo.network.response.GetNumbeOfTransactionResponse;
 import com.zxjk.duoduo.network.response.GetOverOrderResponse;
 import com.zxjk.duoduo.network.response.GetReleasePurchaseResponse;
 import com.zxjk.duoduo.network.response.GroupChatResponse;
+import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.response.PayInfoResponse;
 import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
@@ -62,7 +63,8 @@ public interface Api {
     @POST("duoduo/getCode")
     @FormUrlEncoded
     Observable<BaseResponse<String>> getCode(
-            @Field("mobile") String phone
+            @Field("mobile") String phone,
+            @Field("type")String type
     );
 
     /**
@@ -411,24 +413,78 @@ public interface Api {
     @POST("duoduo/customer/updatePayInfo")
     @FormUrlEncoded
     Observable<BaseResponse<String>> updatePayInfo(
-            @Field("payType")String payType
-            );
+            @Field("payType") String payType
+    );
 
     /**
      * 获取用户实名认证状态
+     *
      * @return
      */
     @POST("duoduo/customer/getCustomerAuth")
     Observable<BaseResponse<String>> getCustomerAuth();
 
+    /**
+     * 获取用户已完成订单
+     *
+     * @return
+     */
     @POST("duoduo/exchange/getOverOrder")
     Observable<BaseResponse<List<GetOverOrderResponse>>> getOverOrder();
 
+    /***
+     * 获取用户发布的出售列表
+     * @return
+     */
     @POST("duoduo/exchange/getReleasePurchase")
     Observable<BaseResponse<List<GetReleasePurchaseResponse>>> getReleasePurchase();
 
+    /**
+     * 查看钱包地址及余额
+     *
+     * @param customerDuoDuoId
+     * @return
+     */
     @POST("duoduo/wallet/getWallet")
     @FormUrlEncoded
     Observable<BaseResponse<String>> getWallet(@Field("customerDuoDuoId") String customerDuoDuoId);
+
+    /**
+     * 找回支付密码
+     * @return
+     */
+    @POST("duoduo/customer/fandPayPwd")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> fandPayPwd(
+            @Field("number")String number,
+            @Field("securityCode")String securityCode,
+            @Field("newPayPwd")String newPayPwd,
+            @Field("newPayPwdTwo")String newPayPwdTwo
+
+    );
+
+    /**
+     * 创建群
+     * @param groupOwnerId
+     * @param customerIds
+     * @return
+     */
+    @POST("duoduo/group/makeGroup")
+    @FormUrlEncoded
+    Observable<BaseResponse<GroupResponse>> makeGroup(
+            @Field("groupOwnerId")String groupOwnerId,
+            @Field("customerIds")String customerIds
+    );
+    /**
+     *查看群成员
+     */
+    @POST("duoduo/group/getGroupMemByGroupId")
+    @FormUrlEncoded
+    Observable<BaseResponse<List<GroupResponse>>> getGroupMemByGroupId(
+            @Field("groupId")String groupId
+    );
+
+
+
 
 }

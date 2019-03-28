@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.minepage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -38,6 +39,10 @@ public class RetrievePayPwdActivity extends BaseActivity implements View.OnClick
     int length = 10;
     int codeLength = 5;
     boolean isTrue = true;
+
+    //短信验证
+    String messagfeCode;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,17 +80,20 @@ public class RetrievePayPwdActivity extends BaseActivity implements View.OnClick
                     phoneCodeImage.setImageResource(R.drawable.icon_phone_code);
                     isTrue = false;
                 } else {
-                    ToastUtils.showShort("跳转");
-
                     if (verifiedCodeEdit.getText().toString().isEmpty() && verifiedCodeEdit.getText().length() < codeLength) {
                         ToastUtils.showShort(getString(R.string.edit_register_code));
                         return;
                     }
+                    Intent intent = new Intent(this, SettingPayPwdActivity.class);
+                    intent.putExtra("idCardEdit", idCardEdit.getText().toString());
+                    intent.putExtra("verifiedCodeEdit", verifiedCodeEdit.getText().toString());
+                    startActivity(intent);
+                    finish();
                 }
                 break;
             case R.id.text_get_code:
-                String countryCode = SPUtils.getInstance().getString("countryCode");
-                registerCode(countryCode + "-" + phone.getText().toString());
+                String type = "1";
+                registerCode(phone.getText().toString(), type);
                 break;
             default:
                 break;
@@ -93,19 +101,18 @@ public class RetrievePayPwdActivity extends BaseActivity implements View.OnClick
 
     }
 
-    public void registerCode(String phone) {
-        countDownTimer.start();
+    public void registerCode(String phone, String type) {
+
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .getCode(phone)
+                .getCode(phone, type)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
-
                     ToastUtils.showShort(getString(R.string.code_label));
-
                     LogUtils.d(s);
-//                        ToastUtils.showShort(s);
+                    messagfeCode = s;
+                    countDownTimer.start();
                 }, this::handleApiError);
 
     }

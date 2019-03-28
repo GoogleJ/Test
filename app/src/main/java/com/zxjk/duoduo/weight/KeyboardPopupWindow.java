@@ -25,6 +25,11 @@ import java.util.Random;
  * @// TODO: 2019\3\27 0027 安全键盘
  */
 public class KeyboardPopupWindow extends PopupWindow {
+
+
+
+
+
     private static final String TAG = "KeyboardPopupWindow";
     private Context context;
     private View anchorView;
@@ -135,22 +140,22 @@ public class KeyboardPopupWindow extends PopupWindow {
             });
         }
 
-        //②给小数点按键设置点击监听
-        view.findViewById(R.id.buttonDot).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int curSelection = editText.getSelectionStart();
-                int length = editText.getText().toString().length();
-                if (curSelection < length) {
-                    String content = editText.getText().toString();
-                    editText.setText(content.substring(0, curSelection) + "." + content.subSequence(curSelection, length));
-                    editText.setSelection(curSelection + 1);
-                } else {
-                    editText.setText(editText.getText().toString() + ".");
-                    editText.setSelection(editText.getText().toString().length());
-                }
-            }
-        });
+//        //②给小数点按键设置点击监听
+//        view.findViewById(R.id.buttonDot).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int curSelection = editText.getSelectionStart();
+//                int length = editText.getText().toString().length();
+//                if (curSelection < length) {
+//                    String content = editText.getText().toString();
+//                    editText.setText(content.substring(0, curSelection) + "." + content.subSequence(curSelection, length));
+//                    editText.setSelection(curSelection + 1);
+//                } else {
+//                    editText.setText(editText.getText().toString() + ".");
+//                    editText.setSelection(editText.getText().toString().length());
+//                }
+//            }
+//        });
 
         //③给叉按键设置点击监听
         view.findViewById(R.id.buttonCross).setOnClickListener(new View.OnClickListener() {

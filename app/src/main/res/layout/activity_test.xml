@@ -5,59 +5,64 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.zxjk.duoduo.weight.TitleBar
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:titleBarLeftImage="@drawable/ico_back"
-        app:titleBarTextColor="@color/white"
-        app:titleBarTitle="@string/identity_verified" />
+    <!--<com.zxjk.duoduo.weight.TitleBar-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--app:titleBarLeftImage="@drawable/ico_back"-->
+        <!--app:titleBarTextColor="@color/white"-->
+        <!--app:titleBarTitle="@string/identity_verified" />-->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="98dp"
-        android:text="@string/input_pay_pwd"
-        android:textColor="@color/themecolor"
-        android:textSize="19sp" />
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:layout_marginTop="98dp"-->
+        <!--android:text="@string/input_pay_pwd"-->
+        <!--android:textColor="@color/themecolor"-->
+        <!--android:textSize="19sp" />-->
 
-    <com.zxjk.duoduo.weight.PwdEditText
-        android:id="@+id/pwd_verified"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="36dp"
+    <!--<com.zxjk.duoduo.weight.PwdEditText-->
+        <!--android:id="@+id/pwd_verified"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:layout_marginStart="40dp"-->
+        <!--android:layout_marginTop="36dp"-->
 
-        android:layout_marginEnd="40dp"
-        app:checkedColor="@color/bga_adapter_line"
-        app:defaultColor="@color/bga_adapter_line"
-        app:space="0dp" />
-    <com.zxjk.duoduo.weight.PwdEditText
-        android:id="@+id/new_pay_pwd"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="36dp"
-        android:visibility="gone"
-        android:layout_marginEnd="40dp"
-        app:checkedColor="@color/bga_adapter_line"
-        app:defaultColor="@color/bga_adapter_line"
-        app:space="0dp" />
+        <!--android:layout_marginEnd="40dp"-->
+        <!--app:checkedColor="@color/bga_adapter_line"-->
+        <!--app:defaultColor="@color/bga_adapter_line"-->
+        <!--app:space="0dp" />-->
+    <!--<com.zxjk.duoduo.weight.PwdEditText-->
+        <!--android:id="@+id/new_pay_pwd"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:layout_marginStart="40dp"-->
+        <!--android:layout_marginTop="36dp"-->
+        <!--android:visibility="gone"-->
+        <!--android:layout_marginEnd="40dp"-->
+        <!--app:checkedColor="@color/bga_adapter_line"-->
+        <!--app:defaultColor="@color/bga_adapter_line"-->
+        <!--app:space="0dp" />-->
 
-    <TextView
-        android:id="@+id/commit_btn"
-        android:background="@drawable/shape_bac_normal"
-        android:gravity="center"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:visibility="gone"
-        android:textColor="@color/themecolor"
-        android:text="@string/m_transfer_info_commit_btn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="29dp"/>
+    <!--<TextView-->
+        <!--android:id="@+id/commit_btn"-->
+        <!--android:background="@drawable/shape_bac_normal"-->
+        <!--android:gravity="center"-->
+        <!--android:layout_marginStart="40dp"-->
+        <!--android:layout_marginEnd="40dp"-->
+        <!--android:visibility="gone"-->
+        <!--android:textColor="@color/themecolor"-->
+        <!--android:text="@string/m_transfer_info_commit_btn"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:layout_marginTop="29dp"/>-->
 
-
+<Button
+    android:onClick="test"
+    android:layout_gravity="center"
+    android:text="测试"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
 </LinearLayout>

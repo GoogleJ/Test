@@ -19,7 +19,6 @@ import com.zxjk.duoduo.weight.dialog.BaseAddTitleDialog;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import io.reactivex.functions.Consumer;
 
 /**
  * @author Administrator
@@ -37,7 +36,7 @@ public class BillingMessageActivity extends BaseActivity implements View.OnClick
     String bank = "3";
     String type = "type";
     BaseAddTitleDialog dialog;
-
+    String pwds;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,6 +78,7 @@ public class BillingMessageActivity extends BaseActivity implements View.OnClick
                 intent.putExtra(type, wechat);
                 startActivity(intent);
                 updatePayInfo(wechat);
+
                 break;
             case R.id.alipy_btn:
                 //跳转到支付宝信息页面

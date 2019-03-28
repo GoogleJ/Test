@@ -306,7 +306,6 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
                                 return;
                             }
                             if (type3 == REQUEST_CODE3) {
-
                                 GlideUtil.loadCornerImg(handHeldPassportPhoto, url, 3);
                                 return;
                             }

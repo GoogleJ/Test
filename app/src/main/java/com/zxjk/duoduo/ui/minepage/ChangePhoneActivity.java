@@ -114,7 +114,7 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
 
     private void getVerifyCode() {
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .getCode(Constant.HEAD_LOCATION + phoneReciveVerify)
+                .getCode(Constant.HEAD_LOCATION + phoneReciveVerify,"1")
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ChangePhoneActivity.this)))
                 .compose(RxSchedulers.normalTrans())

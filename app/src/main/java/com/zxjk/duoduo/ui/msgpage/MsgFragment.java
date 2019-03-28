@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.ContentActivity;
+import com.zxjk.duoduo.ui.grouppage.SelectContactActivity;
 import com.zxjk.duoduo.ui.msgpage.RongIMAdapter.ConversationListAdapterEx;
 import com.zxjk.duoduo.ui.msgpage.base.BaseFragment;
 import com.zxjk.duoduo.ui.msgpage.widget.CommonPopupWindow;
@@ -120,7 +121,7 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.send_group_chat:
-//                SendGroupChatActivity.start(getActivity());
+                startActivity(new Intent(getActivity(), SelectContactActivity.class));
                 break;
             case R.id.invite_friends:
                 AddFriendActivity.start(getActivity());
@@ -129,6 +130,8 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
                 QrCodeActivity.start(getActivity());
                 break;
             case R.id.collection_and_payment:
+                break;
+            default:
                 break;
         }
     }

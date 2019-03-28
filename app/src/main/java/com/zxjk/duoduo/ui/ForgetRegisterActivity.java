@@ -18,6 +18,7 @@ import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.CountryCodeConstantsUtils;
 
 import androidx.annotation.Nullable;
@@ -112,7 +113,8 @@ public class ForgetRegisterActivity extends BaseActivity implements View.OnClick
                 password = edit_password.getText().toString();
                 code = edit_mobile_code.getText().toString();
                 if (!mobile.isEmpty() && !"".equals(mobile) && mobile.length() == phoneLength) {
-                    registerCode(countryCode + "-" + mobile);
+                    String type="0";
+                    registerCode(countryCode + "-" + mobile,type);
                     return;
 
                 }
@@ -141,18 +143,19 @@ public class ForgetRegisterActivity extends BaseActivity implements View.OnClick
         super.onDestroy();
     }
 
-    public void registerCode(String phone) {
-        countDownTimer.start();
+    public void registerCode(String phone,String type) {
+
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .getCode(phone)
+                .getCode(phone,type)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.normalTrans())
-                .compose(RxSchedulers.ioObserver())
-//                .compose(RxSchedulers.showLoading(CommonUtils.initDialog(this)))
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String s) throws Exception {
                         LogUtils.d(s);
+                        countDownTimer.start();
                         ToastUtils.showShort(getString(R.string.code_label));
                     }
                 }, throwable -> handleApiError(throwable));

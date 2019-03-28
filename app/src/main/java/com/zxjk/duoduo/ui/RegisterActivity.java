@@ -25,6 +25,7 @@ import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.CountryCodeConstantsUtils;
 
 import androidx.annotation.Nullable;
@@ -107,8 +108,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 String country = login_country.getText().toString();
                 countryCode = country.substring(1);
                 if (!TextUtils.isEmpty(mobile) && RegexUtils.isMobileExact(mobile)) {
-                    registerCode(countryCode + "-" + mobile);
-                    SPUtils.getInstance().put("countryCode",countryCode);
+                    String type="0";
+                    registerCode(countryCode + "-" + mobile,type);
+
                     return;
                 }
                 ToastUtils.showShort(getString(R.string.edit_mobile_tip));
@@ -176,7 +178,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .register(phone, code,getMD5(pwd))
                 .compose(bindToLifecycle())
-                .compose(RxSchedulers.ioObserver())
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
                     LogUtils.d(s);
@@ -184,15 +186,15 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 }, this::handleApiError);
     }
 
-    public void registerCode(String phone) {
-        countDownTimer.start();
+    public void registerCode(String phone,String type) {
+
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .getCode(phone)
+                .getCode(phone,type)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
-
+                    countDownTimer.start();
                     ToastUtils.showShort(getString(R.string.code_label));
 
                     LogUtils.d(s);

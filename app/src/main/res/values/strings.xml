@@ -379,5 +379,9 @@
     <string name="blockWallet">区块链钱包</string>
     <string name="huazhuan">划转</string>
     <string name="zhuanchu">转出</string>
+    <string name="pay_pwd">支付密码</string>
+    <string name="please_input_phone_code">请输入正确得短信验证码</string>
+    <string name="please_input_pay_pwd">请输入支付密码</string>
+    <string name="group_chat_invitation">群聊邀请</string>
 
 </resources>

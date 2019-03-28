@@ -11,18 +11,15 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.TakePopWindow;
 import com.zxjk.duoduo.utils.AesUtil;
 import com.zxjk.duoduo.utils.CommonUtils;
-import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
 import com.zxjk.duoduo.weight.TitleBar;
@@ -63,6 +60,8 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
     private String url;
     String receiptTypePayments = "已上传";
 
+    String pwd;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +84,8 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
         realName.setOnClickListener(this);
         accountIdCard.setOnClickListener(this);
         commitBtn.setOnClickListener(this);
+
+
     }
 
     private void initView() {
@@ -117,22 +118,18 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
             receiptTypeName.setText(R.string.nick);
             receiptTypeCard.setText(R.string.receipt_type_real_name);
             receiptTypePaymentName.setText(R.string.collection_code);
-
             receiptTypeRealCardName.setText(R.string.user_name);
             receiptTypePayment.setText(R.string.not_uploaded);
             receiptTypeCardGo.setVisibility(View.GONE);
-
         } else if (alipay.equals(types)) {
             //支付宝信息，提交按钮已隐藏
             receiptTypeTitle.setTitle(getString(R.string.alipy_info));
             receiptTypeName.setText(R.string.account_id);
             receiptTypeCard.setText(R.string.receipt_type_real_name);
             receiptTypePaymentName.setText(R.string.collection_code);
-
             receiptTypeRealCardName.setText(R.string.user_name);
             receiptTypePayment.setText(R.string.not_uploaded);
             receiptTypeCardGo.setVisibility(View.GONE);
-
         } else {
             //银行卡信息，提交按钮已隐藏
             receiptTypeTitle.setTitle(getString(R.string.bank_info));
@@ -140,9 +137,6 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
             receiptTypeCard.setText(R.string.bank_id_card);
             receiptTypePaymentName.setText(R.string.bank);
             receiptTypeRealName.setText(R.string.user_name);
-
-
-
             receiptTypeGo.setVisibility(View.GONE);
         }
     }

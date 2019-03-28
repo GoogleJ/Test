@@ -69,6 +69,9 @@
         <activity android:name=".ui.minepage.PaySettingActivity" />
         <activity android:name=".ui.minepage.UpdatePayPwdActivity" />
         <activity android:name=".ui.minepage.RetrievePayPwdActivity"/>
+        <activity android:name=".ui.minepage.SettingPayPwdActivity"/>
+        <activity android:name=".weight.TestActivity"/>
+        <activity android:name=".ui.grouppage.SelectContactActivity"/>
         <activity
             android:name=".ui.WelcomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -563,7 +566,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.minepage.CommitSuccessfulActivity"
+            android:name=".ui.walletpage.CommitSuccessfulActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
