@@ -1,7 +1,6 @@
 package com.zxjk.duoduo.ui.msgpage;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.bean.UserBean;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.FriendListResponse;
@@ -34,14 +32,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import io.reactivex.functions.Consumer;
 import io.rong.imkit.tools.CharacterParser;
 
 /**
  * @author Administrator
  * @// TODO: 2019\3\20 0020 手机联系人界面
  */
-public class ContactFragment extends BaseFragment {
+public class PhoneContactFragment extends BaseFragment {
 
     @BindView(R.id.m_contact_title_bar)
     TitleBar titleBar;
@@ -70,7 +67,7 @@ Unbinder unbinder;
 
 
     public static Fragment newInstance() {
-        ContactFragment fragment = new ContactFragment();
+        PhoneContactFragment fragment = new PhoneContactFragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
         return fragment;
@@ -191,9 +188,8 @@ Unbinder unbinder;
                     adapter.setNewData(friendListResponses);
                     friendListResponseList = friendListResponses;
                     for (int i = 0; i < friendListResponses.size(); i++) {
-                        LogUtils.d("DEBUG", friendListResponses.get(i).toString());
                     }
-                }, throwable -> LogUtils.d("DDD", throwable.getMessage()));
+                }, this::handleApiError);
 
     }
 

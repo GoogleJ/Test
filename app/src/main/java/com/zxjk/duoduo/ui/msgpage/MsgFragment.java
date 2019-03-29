@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.msgpage;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
@@ -11,24 +12,21 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.ui.base.ContentActivity;
 import com.zxjk.duoduo.ui.grouppage.SelectContactActivity;
-import com.zxjk.duoduo.ui.msgpage.RongIMAdapter.ConversationListAdapterEx;
 import com.zxjk.duoduo.ui.msgpage.base.BaseFragment;
 import com.zxjk.duoduo.ui.msgpage.widget.CommonPopupWindow;
 import com.zxjk.duoduo.utils.DensityUtils;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
 
 /**
@@ -41,6 +39,7 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
     private ConversationListFragment mConversationListFragment = null;
     private CommonPopupWindow popupWindow;
 
+
     View rootView;
 
     @Nullable
@@ -52,7 +51,76 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
 
         initConversationList(null);
 
+
+        initRongIM();
         return rootView;
+    }
+
+    private void initRongIM() {
+        RongIM.setConversationClickListener(new RongIM.ConversationClickListener() {
+            @Override
+            public boolean onUserPortraitClick(Context context, Conversation.ConversationType conversationType, UserInfo userInfo, String s) {
+
+               switch (conversationType){
+                   case NONE:
+
+                       break;
+                   case PRIVATE:
+                       RongIM.getInstance().startPrivateChat(getContext(),"","标题");
+                       startActivity(new Intent(getActivity(),ConversationActivity.class));
+                       break;
+                   case DISCUSSION:
+                       break;
+                   case GROUP:
+                       RongIM.getInstance().startGroupChat(getContext(),"110","群名称");
+                       startActivity(new Intent(getActivity(),ConversationActivity.class));
+                       break;
+                   case SYSTEM:
+                       break;
+                       default:
+                           break;
+               }
+                return false;
+            }
+
+            @Override
+            public boolean onUserPortraitLongClick(Context context, Conversation.ConversationType conversationType, UserInfo userInfo, String s) {
+                switch (conversationType){
+                    case NONE:
+
+                        RongIM.getInstance().startGroupChat(getContext(),"110","群名称");
+                        break;
+                    case PRIVATE:
+                        RongIM.getInstance().startPrivateChat(getContext(),"31","标题");
+                        startActivity(new Intent(getActivity(),ConversationActivity.class));
+                        break;
+                    case DISCUSSION:
+                        break;
+                    case GROUP:
+                        break;
+                    case SYSTEM:
+                        break;
+                    default:
+                        break;
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onMessageClick(Context context, View view, Message message) {
+                return false;
+            }
+            @Override
+            public boolean onMessageLinkClick(Context context, String s, Message message) {
+                return false;
+            }
+            @Override
+            public boolean onMessageLongClick(Context context, View view, Message message) {
+
+                return false;
+            }
+        });
+
     }
 
     private void initHear() {
@@ -108,7 +176,7 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
                 startActivity(new Intent(getActivity(), SelectContactActivity.class));
                 break;
             case R.id.invite_friends:
-                AddFriendActivity.start(getActivity());
+                AddContactActivity.start(getActivity());
                 break;
             case R.id.scan:
                 QrCodeActivity.start(getActivity());

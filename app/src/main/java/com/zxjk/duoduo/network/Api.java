@@ -64,7 +64,7 @@ public interface Api {
     @FormUrlEncoded
     Observable<BaseResponse<String>> getCode(
             @Field("mobile") String phone,
-            @Field("type")String type
+            @Field("type") String type
     );
 
     /**
@@ -451,20 +451,22 @@ public interface Api {
 
     /**
      * 找回支付密码
+     *
      * @return
      */
     @POST("duoduo/customer/fandPayPwd")
     @FormUrlEncoded
     Observable<BaseResponse<String>> fandPayPwd(
-            @Field("number")String number,
-            @Field("securityCode")String securityCode,
-            @Field("newPayPwd")String newPayPwd,
-            @Field("newPayPwdTwo")String newPayPwdTwo
+            @Field("number") String number,
+            @Field("securityCode") String securityCode,
+            @Field("newPayPwd") String newPayPwd,
+            @Field("newPayPwdTwo") String newPayPwdTwo
 
     );
 
     /**
      * 创建群
+     *
      * @param groupOwnerId
      * @param customerIds
      * @return
@@ -472,19 +474,35 @@ public interface Api {
     @POST("duoduo/group/makeGroup")
     @FormUrlEncoded
     Observable<BaseResponse<GroupResponse>> makeGroup(
-            @Field("groupOwnerId")String groupOwnerId,
-            @Field("customerIds")String customerIds
+            @Field("groupOwnerId") String groupOwnerId,
+            @Field("customerIds") String customerIds
     );
+
     /**
-     *查看群成员
+     * 查看群成员
      */
     @POST("duoduo/group/getGroupMemByGroupId")
     @FormUrlEncoded
     Observable<BaseResponse<List<GroupResponse>>> getGroupMemByGroupId(
-            @Field("groupId")String groupId
+            @Field("groupId") String groupId
     );
 
+    /**
+     * 同意加入群聊
+     *
+     * @param groupId
+     * @param inviterId
+     * @param customerIds
+     * @return
+     */
 
+    @POST("duoduo/group/enterGroup")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> enterGroup(
+            @Field("groupId") String groupId,
+            @Field("inviterId") String inviterId,
+            @Field("customerIds") String customerIds
+    );
 
 
 }

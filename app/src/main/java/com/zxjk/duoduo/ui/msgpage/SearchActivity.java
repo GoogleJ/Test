@@ -1,39 +1,26 @@
 package com.zxjk.duoduo.ui.msgpage;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
-
 import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.bean.SearchBean;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.FriendListResponse;
 import com.zxjk.duoduo.network.response.SearchCustomerInfoResponse;
-import com.zxjk.duoduo.network.response.SearchResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
-import com.zxjk.duoduo.ui.HomeActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.ui.base.ContentActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.SearchAdapter;
+import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.weight.TitleBar;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +35,7 @@ import io.reactivex.functions.Consumer;
  * @author Administrator
  * @// TODO: 2019\3\20 0020 搜索页面，需要添加模糊搜索
  */
+@SuppressLint("CheckResult")
 public class SearchActivity extends BaseActivity {
     @BindView(R.id.m_fragment_search_title_bar)
     TitleBar titleBar;
@@ -57,13 +45,14 @@ public class SearchActivity extends BaseActivity {
     RecyclerView mRecyclerView;
 
     SearchAdapter mAdapter;
+    Intent intent;
 
     public static void start(Activity activity) {
         Intent intent = new Intent(activity, SearchActivity.class);
         activity.startActivity(intent);
     }
 
-    List<SearchCustomerInfoResponse> list = new ArrayList<>();
+    List<FriendListResponse> friendList=new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,7 +70,6 @@ public class SearchActivity extends BaseActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 //搜索按键action
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    LogUtils.d("开始搜索");
                     searchFriendInfo(searchEdit.getText().toString());
                     return true;
                 }
@@ -105,14 +93,30 @@ public class SearchActivity extends BaseActivity {
         mRecyclerView.setAdapter(mAdapter);
 
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            String userid=null;
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                getFriendListInfoById();
 
-                //这里跳转到已添加的可以发消息的好友
-                Intent intent = new Intent(SearchActivity.this, PersonalInformationActivity.class);
-                intent.putExtra("searchUserId", list.get(position).getId());
-                startActivity(intent);
+                SearchCustomerInfoResponse searchCustomerInfoResponse=mAdapter.getData().get(position);
 
+
+                for (int i=0;i<friendList.size();i++) {
+                    userid = friendList.get(i).getId();
+                    if (userid.equals(searchCustomerInfoResponse.getId())) {
+                        intent = new Intent(SearchActivity.this, FriendDetailsActivity.class);
+                        intent.putExtra("searchFriendDetails", searchCustomerInfoResponse);
+                        intent.putExtra("searchDetailsType", 1);
+                      intent.putExtra("searchDetailsUserId",searchCustomerInfoResponse.getId());
+                        startActivity(intent);
+                    } else {
+                        intent = new Intent(SearchActivity.this, AddFriendDetailsActivity.class);
+                        intent.putExtra("searchAddFriendDetails", searchCustomerInfoResponse);
+                        intent.putExtra("searchAddType", 1);
+                        intent.putExtra("searchAddUserId",searchCustomerInfoResponse.getId());
+                        startActivity(intent);
+                    }
+                }
             }
         });
         mAdapter.notifyDataSetChanged();
@@ -126,19 +130,26 @@ public class SearchActivity extends BaseActivity {
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<List<SearchCustomerInfoResponse>>() {
+                .subscribe(searchCustomerInfoResponses -> {
+                    mAdapter.setNewData(searchCustomerInfoResponses);
+                }, this::handleApiError);
+
+    }
+
+
+    public void getFriendListInfoById(){
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .getFriendListById()
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                .compose(RxSchedulers.normalTrans())
+                .subscribe(new Consumer<List<FriendListResponse>>() {
                     @Override
-                    public void accept(List<SearchCustomerInfoResponse> searchCustomerInfoResponses) throws Exception {
-                        mAdapter.setNewData(searchCustomerInfoResponses);
-                        for (int i = 0; i < searchCustomerInfoResponses.size(); i++) {
-                            LogUtils.d("DEBUG", searchCustomerInfoResponses.get(i).toString());
-                        }
-                        list = searchCustomerInfoResponses;
+                    public void accept(List<FriendListResponse> friendListResponses) throws Exception {
 
-
+                        friendList=friendListResponses;
                     }
-                }, throwable -> LogUtils.d("DEBUG", throwable.getMessage()));
-
+                },this::handleApiError);
     }
 
 }

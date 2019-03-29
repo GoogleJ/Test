@@ -122,7 +122,6 @@ public class SettingPayPwdActivity extends BaseActivity {
 
 
     public void settingPayPwd(String number, String securityCode, String newPwd, String newPwdTwo) {
-        LogUtils.d("Pasdsdfaw", newPwd, newPwdTwo);
 
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .fandPayPwd(number, securityCode, newPwd, newPwdTwo)

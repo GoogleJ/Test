@@ -154,7 +154,6 @@ public class ForgetRegisterActivity extends BaseActivity implements View.OnClick
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String s) throws Exception {
-                        LogUtils.d(s);
                         countDownTimer.start();
                         ToastUtils.showShort(getString(R.string.code_label));
                     }
@@ -172,8 +171,6 @@ public class ForgetRegisterActivity extends BaseActivity implements View.OnClick
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String s) throws Exception {
-                        LogUtils.d(s);
-                        ToastUtils.showShort("修改成功");
                         finish();
                     }
                 }, new Consumer<Throwable>() {

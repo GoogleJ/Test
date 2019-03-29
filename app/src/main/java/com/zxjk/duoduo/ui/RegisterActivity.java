@@ -14,10 +14,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.EncryptUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.RegexUtils;
-import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.CountryEntity;
@@ -181,7 +179,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
-                    LogUtils.d(s);
                     finish();
                 }, this::handleApiError);
     }
@@ -197,8 +194,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     countDownTimer.start();
                     ToastUtils.showShort(getString(R.string.code_label));
 
-                    LogUtils.d(s);
-//                        ToastUtils.showShort(s);
                 }, this::handleApiError);
 
     }

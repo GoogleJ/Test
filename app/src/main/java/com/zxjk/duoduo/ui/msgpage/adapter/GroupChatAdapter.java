@@ -12,6 +12,7 @@ import com.zxjk.duoduo.utils.GlideUtil;
 
 /**
  * TODO:群聊信息的适配器
+ * @author Administrator
  */
 
 public class GroupChatAdapter extends BaseQuickAdapter<GroupChatResponse, BaseViewHolder> {
@@ -23,13 +24,15 @@ public class GroupChatAdapter extends BaseQuickAdapter<GroupChatResponse, BaseVi
 
     @Override
     protected void convert(BaseViewHolder helper, GroupChatResponse item) {
-        helper.setText(R.id.group_name,item.getGroupNikeName()) //群名称
+        //群名称
+        helper.setText(R.id.group_name,item.getGroupNikeName())
                 .setText(R.id.group_message,item.getGroupSign())
                 .setText(R.id.group_message_time,item.getUpdateTime())
         .addOnClickListener(R.id.m_group_chat);
+//群头像
 
         ImageView heardImage=helper.getView(R.id.group_chat_iamge);
-        GlideUtil.loadImg(heardImage,item.getHeadPortrait());//群头像
+        GlideUtil.loadImg(heardImage,item.getHeadPortrait());
 
 
 

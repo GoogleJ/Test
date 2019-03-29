@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -20,7 +19,6 @@ import com.zxjk.duoduo.ui.msgpage.adapter.BaseContactAdapter;
 import com.zxjk.duoduo.ui.msgpage.utils.PinyinComparator;
 import com.zxjk.duoduo.ui.msgpage.widget.HoverItemDecoration;
 import com.zxjk.duoduo.ui.msgpage.widget.IndexView;
-import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendDialog;
 import com.zxjk.duoduo.weight.TitleBar;
 
 import java.util.ArrayList;
@@ -35,7 +33,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import io.reactivex.functions.Consumer;
 import io.rong.imkit.tools.CharacterParser;
 
 /**
@@ -54,7 +51,7 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
     TextView constactsDialog;
 
 
-    private BaseContactAdapter adapter;
+    private BaseContactAdapter mAdapter;
 
 
     Unbinder unbinder;
@@ -70,6 +67,7 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
     private LinearLayoutManager layoutManager;
 
     List<FriendListResponse> list = new ArrayList<>();
+
 
     public static ConstactsNewFriendFragment newInstance() {
         ConstactsNewFriendFragment fragment = new ConstactsNewFriendFragment();
@@ -107,9 +105,9 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
                 return list.get(position).getSortLetters();
             }
         }));
-        adapter = new BaseContactAdapter();
+        mAdapter = new BaseContactAdapter();
         getFriendListInfoById();
-        mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setAdapter(mAdapter);
         initIndexView();
         titleBar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,12 +116,16 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
             }
         });
 
-        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(getActivity(), PeopleInformationActivity.class);
-                intent.putExtra("peopleInformatinoUserId", list.get(position).getId());
-                getActivity().startActivity(intent);
+
+                FriendListResponse friendListResponse=  mAdapter.getData().get(position);
+                Intent intent=new Intent(getActivity(),FriendDetailsActivity.class);
+                intent.putExtra("searchDetailsType",3);
+                intent.putExtra("friendListResponse",friendListResponse);
+                startActivity(intent);
+
             }
         });
     }
@@ -191,7 +193,7 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
 
                 break;
             case R.id.m_contact_new_friend_btn:
-                AddFriendActivity.start(getActivity());
+                AddContactActivity.start(getActivity());
                 break;
             case R.id.m_contact_search_btn:
                 SearchActivity.start(getActivity());
@@ -209,12 +211,9 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(friendListResponses -> {
                     list = friendListResponses;
-                    adapter.setNewData(friendListResponses);
-                    for (int i = 0; i < friendListResponses.size(); i++) {
-                        LogUtils.d("DEBUG", friendListResponses.get(i).toString());
-                    }
+                    mAdapter.setNewData(friendListResponses);
 
-                }, throwable -> LogUtils.d("DDD", throwable.getMessage()));
+                }, this::handleApiError);
 
     }
 

@@ -8,8 +8,8 @@ import com.zxjk.duoduo.network.response.LoginResponse;
 public class Constant {
     //阿里OSS上传地址
     public static final String OSS_URL = "https://zhongxingjike.oss-cn-hongkong.aliyuncs.com/upload/";
-
-    public static final String BASE_URL = "http://192.168.1.3:8085/";
+    public static final String BASE_URL = "http://192.168.0.114:8085/";
+//    public static final String BASE_URL = "http://192.168.1.3:8085/";
 
     public static final int CODE_SUCCESS = 0;
 
@@ -41,4 +41,8 @@ public class Constant {
      * 实名认证实体
      */
     public static VerifiedBean verifiedBean=new VerifiedBean();
+    /**
+     * 群组相关的实体
+     */
+
 }

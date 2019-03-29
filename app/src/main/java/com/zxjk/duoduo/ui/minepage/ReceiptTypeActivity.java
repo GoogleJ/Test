@@ -165,7 +165,6 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
                     dialog.show(getString(R.string.alipay_number), getString(R.string.hint_alipay), alipay);
                     return;
                 } else {
-                    LogUtils.d("银行卡这里不允许弹出框");
                 }
                 break;
             case R.id.real_name:
@@ -275,7 +274,6 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String s) throws Exception {
-                        LogUtils.d("DEBUG", "修改成功");
                     }
                 }, this::handleApiError);
     }

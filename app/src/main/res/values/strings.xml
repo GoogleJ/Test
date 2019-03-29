@@ -394,5 +394,7 @@
     <string name="inputZhuanChuAccount">请输入转出数量</string>
     <string name="zhuanchuCount">转出数量</string>
     <string name="kuanggongprice">矿工费用</string>
+    <string name="invite_to_group_chat">邀请加入群聊</string>
+    <string name="join_a_group_chat">加入群聊</string>
 
 </resources>

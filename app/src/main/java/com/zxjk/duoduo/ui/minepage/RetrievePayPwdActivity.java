@@ -110,7 +110,6 @@ public class RetrievePayPwdActivity extends BaseActivity implements View.OnClick
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
                     ToastUtils.showShort(getString(R.string.code_label));
-                    LogUtils.d(s);
                     messagfeCode = s;
                     countDownTimer.start();
                 }, this::handleApiError);

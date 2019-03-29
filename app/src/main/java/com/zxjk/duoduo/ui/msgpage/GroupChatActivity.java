@@ -2,6 +2,7 @@ package com.zxjk.duoduo.ui.msgpage;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -23,6 +24,7 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.GroupChatAdapter;
 import com.zxjk.duoduo.weight.TitleBar;
 
+import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -33,7 +35,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.functions.Consumer;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Message;
+import io.rong.imlib.model.UserInfo;
 
+/**
+ * @author Administrator
+ * @// TODO: 2019\3\29 0029 群聊页面
+ */
 public class GroupChatActivity extends BaseActivity implements TextWatcher {
 
     @BindView(R.id.m_group_chat_title_bar)
@@ -80,13 +90,10 @@ public class GroupChatActivity extends BaseActivity implements TextWatcher {
         getMyGroupChat(Constant.userId);
         mGroupChatRecyclerView.setAdapter(groupChatAdapter);
         groupChatAdapter.notifyDataSetChanged();
-        groupChatAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                //点击事件 跳转到群聊天界面
-
-
-            }
+        groupChatAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            //点击事件 跳转到群聊天界面
+           RongIM.getInstance().startConversation(this,Conversation.ConversationType.GROUP,groupChatAdapter.getData().get(position).getId(),groupChatAdapter.getData().get(position).getGroupNikeName());
+            startActivity(new Intent(this,ConversationActivity.class));
         });
 
 
@@ -104,14 +111,8 @@ public class GroupChatActivity extends BaseActivity implements TextWatcher {
                     public void accept(List<GroupChatResponse> s) throws Exception {
                         groupChatAdapter.setNewData(s);
                         list = s;
-                        Log.d("GJSONSSSSS", "--onSuccess" + list.get(0).GroupString()+list.size());
                     }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        LogUtils.d("DEBUG", throwable.getMessage());
-                    }
-                });
+                }, this::handleApiError);
 
     }
 

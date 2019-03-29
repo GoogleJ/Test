@@ -34,7 +34,7 @@ public class VerificationActivity extends BaseActivity implements View.OnClickLi
     TitleBar titleBar;
     @BindView(R.id.m_verification_edit)
     EditText verificationEdit;
-
+int addFriendType=0;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,14 +57,22 @@ public class VerificationActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.m_verification_send_btn:
-                Intent intent=getIntent();
-                String userId=intent.getStringExtra("userIdAddFriend");
-                applyAddFriend(userId,verificationEdit.getText().toString());
+               String searchFriendId=getIntent().getStringExtra("searchAddFriendId");
+               String globalAddUserId=getIntent().getStringExtra("globalAddUserId");
+               int type=getIntent().getIntExtra("addFriendType",addFriendType);
+               if (type==0){
+                   applyAddFriend(globalAddUserId,verificationEdit.getText().toString());
+               }else{
+                   applyAddFriend(searchFriendId,verificationEdit.getText().toString());
+               }
+
                 break;
             case R.id.m_verification_icon:
 
                 verificationEdit.setText("");
                 break;
+                default:
+                    break;
         }
     }
     public void applyAddFriend(String friendId,String remark){
@@ -76,8 +84,6 @@ public class VerificationActivity extends BaseActivity implements View.OnClickLi
                     @Override
                     public void accept(BaseResponse<String> listBaseResponse) throws Exception {
                         ToastUtils.showShort("添加成功");
-
-                        LogUtils.d("DEBUG",listBaseResponse);
                         finish();
 
 

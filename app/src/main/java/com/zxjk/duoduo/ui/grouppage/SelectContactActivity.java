@@ -1,23 +1,17 @@
 package com.zxjk.duoduo.ui.grouppage;
 
-import android.app.Service;
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.StringUtils;
-import com.blankj.utilcode.util.ToastUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.bean.SelectContactBean;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.BaseResponse;
 import com.zxjk.duoduo.network.response.FriendListResponse;
 import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
@@ -25,21 +19,18 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.adapter.AddGroupTopAdapter;
 import com.zxjk.duoduo.ui.grouppage.adapter.SelectContactAdapter;
 import com.zxjk.duoduo.utils.CommonUtils;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
-
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.functions.Consumer;
-import razerdp.util.log.LogTag;
 
 /**
  * @author Administrator
  * @// TODO: 2019\3\28 0028 选择联系人
  */
+@SuppressLint("CheckResult")
 public class SelectContactActivity extends BaseActivity implements View.OnClickListener {
 
     /**
@@ -128,9 +119,7 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
                     response.setHeadPortrait(friendListResponse.getHeadPortrait());
                     lists.add(response);
                 }
-                if (list.get(position).getId().equals(lists.get(position).getId())){
-                    return;
-                }
+
 
             }
             topAdapter.setNewData(lists);
@@ -150,7 +139,6 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
                 for (int i=0;i<lists.size();i++){
                     sb.append(lists.get(i).getId());
                     sb.append(",");
-                    Log.d("DEBUGSSS",""+sb.substring(0,sb.length()-1));
                 }
                 makeGroup(Constant.userId,Constant.userId+","+sb.substring(0,sb.length()-1));
 
@@ -170,36 +158,26 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<List<FriendListResponse>>() {
-                    @Override
-                    public void accept(List<FriendListResponse> friendListResponses) throws Exception {
-                        mAdapter.setNewData(friendListResponses);
-                        LogUtils.d("DEBUG", "成功");
-                        list = friendListResponses;
-
-                    }
+                .subscribe(friendListResponses -> {
+                    mAdapter.setNewData(friendListResponses);
+                    list = friendListResponses;
                 }, this::handleApiError);
     }
-
     /**
      * 创建群
      */
+
     public void makeGroup(String groupOwnerId, String customerIds) {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .makeGroup(groupOwnerId,customerIds)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<GroupResponse>() {
-                    @Override
-                    public void accept(GroupResponse s) throws Exception {
-                        LogUtils.d("DEBUG", s);
-                        finish();
-                    }
+                .subscribe(s -> {
+                    SelectContactActivity.this.finish();
+                    Intent intent=new Intent(SelectContactActivity.this,AgreeGroupChatActivity.class);
+                    intent.putExtra("groupId",s);
+                    startActivity(intent);
                 },this::handleApiError);
-
     }
-
-
-
 }

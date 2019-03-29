@@ -15,7 +15,9 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
+import com.zxjk.duoduo.network.response.FriendListResponse;
 import com.zxjk.duoduo.network.response.LoginResponse;
+import com.zxjk.duoduo.network.response.SearchCustomerInfoResponse;
 import com.zxjk.duoduo.network.response.SearchResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
@@ -38,7 +40,8 @@ import io.rong.imkit.RongIM;
  * @author Administrator
  * @// TODO: 2019\3\20 0020 个人信息详情页，包含删除的dialog等部分
  */
-public class PeopleInformationActivity extends BaseActivity implements View.OnClickListener, CommonPopupWindow.ViewInterface {
+@SuppressLint("CheckResult")
+public class FriendDetailsActivity extends BaseActivity implements View.OnClickListener, CommonPopupWindow.ViewInterface {
     /**
      * 标题布局
      */
@@ -114,7 +117,9 @@ public class PeopleInformationActivity extends BaseActivity implements View.OnCl
     private CommonPopupWindow popupWindow;
 
     DeleteFriendInformationDialog dialog;
-
+    SearchResponse searchResponse;
+    SearchCustomerInfoResponse searchCustomerInfoResponse;
+    FriendListResponse friendListResponse;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,6 +127,63 @@ public class PeopleInformationActivity extends BaseActivity implements View.OnCl
         ButterKnife.bind(this);
 
         initUI();
+        int searchDetailsType = 0;
+        int type;//接受类型
+
+        searchResponse = (SearchResponse) getIntent().getSerializableExtra("globalUserDetails");
+        type=getIntent().getIntExtra("searchDetailsType",searchDetailsType);
+        searchCustomerInfoResponse= (SearchCustomerInfoResponse) getIntent().getSerializableExtra("searchFriendDetails");
+
+        if (1==type){
+            //这个模块需要添加数据绑定
+            GlideUtil.loadCornerImg(heardIcon, searchCustomerInfoResponse.getHeadPortrait(), 2);
+            userNameText.setText(searchCustomerInfoResponse.getRealname());
+            duoduoId.setText(searchCustomerInfoResponse.getDuoduoId());
+            areaText.setText(searchCustomerInfoResponse.getAddress());
+            phoneText.setText(searchCustomerInfoResponse.getMobile());
+            emailText.setText(searchCustomerInfoResponse.getEmail());
+            sinatureText.setText(searchCustomerInfoResponse.getSignature());
+            walletAddressText.setText(searchCustomerInfoResponse.getWalletAddress());
+            if (sex.equals(searchCustomerInfoResponse.getSex())) {
+                //男
+                genderIcon.setImageDrawable(getDrawable(R.drawable.icon_gender_man));
+            } else {
+                genderIcon.setImageDrawable(getDrawable(R.drawable.icon_gender_woman));
+            }
+        }else if ( 0==type){
+            //这个模块需要添加数据绑定
+            GlideUtil.loadCornerImg(heardIcon, searchResponse.getHeadPortrait(), 2);
+            userNameText.setText(searchResponse.getRealname());
+            duoduoId.setText(searchResponse.getDuoduoId());
+            areaText.setText(searchResponse.getAddress());
+            phoneText.setText(searchResponse.getMobile());
+            emailText.setText(searchResponse.getEmail());
+            sinatureText.setText(searchResponse.getSignature());
+            walletAddressText.setText(searchResponse.getWalletAddress());
+            if (sex.equals(searchResponse.getSex())) {
+                //男
+                genderIcon.setImageDrawable(getDrawable(R.drawable.icon_gender_man));
+            } else {
+                genderIcon.setImageDrawable(getDrawable(R.drawable.icon_gender_woman));
+            }
+        }else{
+            friendListResponse= (FriendListResponse) getIntent().getSerializableExtra("friendListResponse");
+            GlideUtil.loadCornerImg(heardIcon, friendListResponse.getHeadPortrait(), 2);
+            userNameText.setText(friendListResponse.getRealname());
+            duoduoId.setText(friendListResponse.getDuoduoId());
+            areaText.setText(friendListResponse.getAddress());
+            phoneText.setText(friendListResponse.getMobile());
+            emailText.setText(friendListResponse.getEmail());
+            sinatureText.setText(friendListResponse.getSignature());
+            walletAddressText.setText(friendListResponse.getWalletAddress());
+            if (sex.equals(friendListResponse.getSex())) {
+                //男
+                genderIcon.setImageDrawable(getDrawable(R.drawable.icon_gender_man));
+            } else {
+                genderIcon.setImageDrawable(getDrawable(R.drawable.icon_gender_woman));
+            }
+        }
+
 
     }
 
@@ -138,12 +200,12 @@ public class PeopleInformationActivity extends BaseActivity implements View.OnCl
                 if (popupWindow != null && popupWindow.isShowing()) {
                     return;
                 }
-                popupWindow = new CommonPopupWindow.Builder(PeopleInformationActivity.this)
+                popupWindow = new CommonPopupWindow.Builder(FriendDetailsActivity.this)
                         .setView(R.layout.popup_window_people_information)
                         .setWidthAndHeight(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                         .setAnimationStyle(R.style.AnimDown)
                         .setBackGroundLevel(0.5f)
-                        .setViewOnclickListener(PeopleInformationActivity.this::getChildView)
+                        .setViewOnclickListener(FriendDetailsActivity.this::getChildView)
                         .setOutsideTouchable(true)
                         .create();
                 popupWindow.showAsDropDown(titleBar.getRightImageView());
@@ -156,13 +218,13 @@ public class PeopleInformationActivity extends BaseActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.m_people_information_send_to_message:
-                RongIM.getInstance().startPrivateChat(this, user.getId(), user.getNick());
+                RongIM.getInstance().startPrivateChat(this, "31", "标题");
                 break;
             case R.id.m_people_information_voice_calls:
                 ToastUtils.showShort("此功能暂未实现");
                 break;
             case R.id.update_rename:
-                Intent intent = new Intent(PeopleInformationActivity.this, ModifyNotesActivity.class);
+                Intent intent = new Intent(FriendDetailsActivity.this, ModifyNotesActivity.class);
                 intent.putExtra("peopelUserId", user.getId());
                 startActivity(intent);
                 break;
@@ -178,38 +240,6 @@ public class PeopleInformationActivity extends BaseActivity implements View.OnCl
                 break;
         }
     }
-
-    @SuppressLint("CheckResult")
-    public void getFriendInfoInfoById(String friendId) {
-        ServiceFactory.getInstance().getBaseService(Api.class)
-                .getFriendInfoById(friendId)
-                .compose(bindToLifecycle())
-                .compose(RxSchedulers.ioObserver())
-                .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<FriendInfoResponse>() {
-                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-                    @Override
-                    public void accept(FriendInfoResponse data) throws Exception {
-                        //这个模块需要添加数据绑定
-                        GlideUtil.loadCornerImg(heardIcon, data.getHeadPortrait(), 2);
-                        userNameText.setText(data.getRealname());
-                        duoduoId.setText(data.getDuoduoId());
-                        areaText.setText(data.getAddress());
-                        phoneText.setText(data.getMobile());
-                        emailText.setText(data.getEmail());
-                        sinatureText.setText(data.getSignature());
-                        walletAddressText.setText(data.getWalletAddress());
-                        if (sex.equals(data.getSex())) {
-                            //男
-                            genderIcon.setImageDrawable(getDrawable(R.drawable.icon_gender_man));
-                        } else {
-                            genderIcon.setImageDrawable(getDrawable(R.drawable.icon_gender_woman));
-                        }
-
-                    }
-                }, this::handleApiError);
-    }
-
     @Override
     public void getChildView(View view, int layoutResId) {
         switch (layoutResId) {
@@ -218,9 +248,10 @@ public class PeopleInformationActivity extends BaseActivity implements View.OnCl
                 view.findViewById(R.id.recommend_to_friend).setOnClickListener(this);
                 view.findViewById(R.id.delete_friend).setOnClickListener(this);
                 break;
+                default:
+                    break;
         }
     }
-
     public void deleteFriend(String friendId) {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .deleteFriend(friendId)
@@ -234,14 +265,5 @@ public class PeopleInformationActivity extends BaseActivity implements View.OnCl
                         dialog.dismiss();
                     }
                 }, this::handleApiError);
-
     }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-    }
-
-
 }

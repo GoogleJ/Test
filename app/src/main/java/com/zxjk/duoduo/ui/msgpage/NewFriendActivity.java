@@ -4,10 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewParent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,7 +14,6 @@ import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.bean.TestBean;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.FriendListResponse;
@@ -90,7 +87,7 @@ public class NewFriendActivity extends BaseActivity {
                         addFriend(list.get(position).getId(),mark.getText().toString());
                         break;
                     case R.id.m_add_btn_layout:
-                        Intent intent=new Intent(NewFriendActivity.this,PersonalInformationActivity.class);
+                        Intent intent=new Intent(NewFriendActivity.this, AddFriendDetailsActivity.class);
                         intent.putExtra("newFriendActivityUserId",list.get(position).getId());
                         intent.putExtra("type",1);
                         startActivity(intent);
@@ -122,7 +119,6 @@ public class NewFriendActivity extends BaseActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 //搜索按键action
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    LogUtils.d("开始搜索");
 //                    searchCustomerInfo(editText.getText().toString());
                     return true;
                 }
@@ -142,16 +138,11 @@ public class NewFriendActivity extends BaseActivity {
                     public void accept(List<FriendListResponse> s) throws Exception {
                        mAdapter.setNewData(s);
                         list=s;
-                        for (int i=0;i<s.size();i++){
-                            LogUtils.d("DEBUG",s);
-                        }
 
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        LogUtils.d("DEBUG", throwable.getMessage());
-
                     }
                 });
     }
@@ -179,7 +170,6 @@ public class NewFriendActivity extends BaseActivity {
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String s) throws Exception {
-                        LogUtils.d("DEBUG",s);
                     }
                 },this::handleApiError);
     }

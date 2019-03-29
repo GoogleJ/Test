@@ -37,9 +37,9 @@
         <activity android:name=".ui.walletpage.HuaZhuanActivity"></activity>
         <activity android:name=".ui.walletpage.ZhuanChuActivity" />
 
-        <meta-data
-            android:name="com.amap.api.v2.apikey"
-            android:value="df7babf242eb29b0f784dadae2460078" />
+        <!--<meta-data-->
+            <!--android:name="com.amap.api.v2.apikey"-->
+            <!--android:value="df7babf242eb29b0f784dadae2460078" />-->
 
         <activity android:name=".ui.msgpage.ConversationActivity">
             <intent-filter>
@@ -80,6 +80,7 @@
         <activity android:name=".ui.minepage.SettingPayPwdActivity" />
         <activity android:name=".weight.TestActivity" />
         <activity android:name=".ui.grouppage.SelectContactActivity" />
+        <activity android:name=".ui.grouppage.AgreeGroupChatActivity"/>
         <activity
             android:name=".ui.WelcomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -123,7 +124,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.msgpage.PersonalInformationActivity"
+            android:name=".ui.msgpage.AddFriendDetailsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
@@ -174,7 +175,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
-            android:name=".ui.msgpage.AddFriendActivity"
+            android:name=".ui.msgpage.AddContactActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
@@ -189,7 +190,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
-            android:name=".ui.msgpage.PeopleInformationActivity"
+            android:name=".ui.msgpage.FriendDetailsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />

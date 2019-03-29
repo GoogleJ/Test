@@ -12,6 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
+/**
+ * @author Administrator
+ * @// TODO: 2019\3\29 0029 关于群组详情的实现 
+ */
 public class ChatInformationFragment extends BaseFragment {
 
 

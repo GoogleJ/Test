@@ -34,6 +34,7 @@ public class BaseActivity extends RxAppCompatActivity {
             Constant.currentUser = new LoginResponse();
             return;
         }
+        LogUtils.d("DEBUG",throwable.getMessage());
 
         ToastUtils.showShort(RxException.getMessage(throwable));
     }

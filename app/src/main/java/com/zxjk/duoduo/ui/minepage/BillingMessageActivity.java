@@ -105,7 +105,6 @@ public class BillingMessageActivity extends BaseActivity implements View.OnClick
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
-                    LogUtils.d("DEBUG", "成功"+s);
                 }, throwable -> {
                     dialog = new BaseAddTitleDialog(BillingMessageActivity.this);
                     dialog.setOnClickListener(() -> {

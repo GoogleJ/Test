@@ -45,7 +45,6 @@ public class AccountSwitchActivity extends BaseActivity {
         ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         boolean res = am.clearApplicationUserData();
         if (!res) {
-            LogUtils.d("DEBUG", "缓存已清理");
         }
 
     }

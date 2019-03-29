@@ -1,11 +1,13 @@
 package com.zxjk.duoduo.network.response;
 
+import java.io.Serializable;
+
 /**
  * @author Administrator
  * @// TODO: 2019\3\20 0020 获取好友列表的实体
  */
 
-public class FriendListResponse {
+public class FriendListResponse implements Serializable {
 
     /**
      * id : 1
@@ -46,6 +48,17 @@ public class FriendListResponse {
     private String isDelete;
     private String token;
     private String remark;
+    private String address;
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+
+
 
     public String getSortLetters() {
         return sortLetters;

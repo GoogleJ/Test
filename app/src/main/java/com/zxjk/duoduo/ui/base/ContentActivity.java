@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.msgpage.ConstactsNewFriendFragment;
-import com.zxjk.duoduo.ui.msgpage.ContactFragment;
+import com.zxjk.duoduo.ui.msgpage.PhoneContactFragment;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -47,12 +47,12 @@ public class ContentActivity extends BaseActivity {
             case 2:
                 //这个是手机联系人界面
 //                transaction.remove(VerificationActivity.newInstance());
-                transaction.replace(R.id.m_content, ContactFragment.newInstance());
+                transaction.replace(R.id.m_content, PhoneContactFragment.newInstance());
                 transaction.commit();
                 break;
             case 3:
                 //这个是手机通讯录页面
-                transaction.remove(ContactFragment.newInstance());
+                transaction.remove(PhoneContactFragment.newInstance());
                 transaction.replace(R.id.m_content, ConstactsNewFriendFragment.newInstance());
                 transaction.commit();
                 break;

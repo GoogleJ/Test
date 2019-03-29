@@ -1,42 +1,38 @@
 package com.zxjk.duoduo.network.response;
 
-public class GroupResponse {
+import java.io.Serializable;
+
+/**
+ * @author Administrator
+ * @// TODO: 2019\3\29 0029  关于群组的实体 
+ */
+public class GroupResponse implements Serializable {
 
     /**
-     * id : 4
-     * duoduoId : null
-     * nick : null
-     * realname : null
-     * mobile : 15249047865
-     * password : e10adc3949ba59abbe56e057f20f883e
-     * email : null
-     * headPortrait : null
-     * sex : null
-     * signature : null
-     * walletAddress : null
-     * idCard : null
-     * isShowRealname : null
+     * id : 15
+     * goupType : 0
+     * groupNikeName : null
+     * groupHeadPortrait : null
+     * groupSign : null
+     * groupNotice : null
+     * groupOwnerId : 4
      * updataTime : null
-     * createTime : null
-     * isDelete : null
+     * createTime : 2019-02-22 16:25:56
+     * isDelete : 0
+     * isInviteConfirm : 0
      */
 
     private String id;
-    private Object duoduoId;
-    private Object nick;
-    private Object realname;
-    private String mobile;
-    private String password;
-    private Object email;
-    private Object headPortrait;
-    private Object sex;
-    private Object signature;
-    private Object walletAddress;
-    private Object idCard;
-    private Object isShowRealname;
-    private Object updataTime;
-    private Object createTime;
-    private Object isDelete;
+    private String goupType;
+    private String groupNikeName;
+    private String groupHeadPortrait;
+    private String groupSign;
+    private String groupNotice;
+    private String groupOwnerId;
+    private String updataTime;
+    private String createTime;
+    private String isDelete;
+    private String isInviteConfirm;
 
     public String getId() {
         return id;
@@ -46,123 +42,83 @@ public class GroupResponse {
         this.id = id;
     }
 
-    public Object getDuoduoId() {
-        return duoduoId;
+    public String getGoupType() {
+        return goupType;
     }
 
-    public void setDuoduoId(Object duoduoId) {
-        this.duoduoId = duoduoId;
+    public void setGoupType(String goupType) {
+        this.goupType = goupType;
     }
 
-    public Object getNick() {
-        return nick;
+    public String getGroupNikeName() {
+        return groupNikeName;
     }
 
-    public void setNick(Object nick) {
-        this.nick = nick;
+    public void setGroupNikeName(String groupNikeName) {
+        this.groupNikeName = groupNikeName;
     }
 
-    public Object getRealname() {
-        return realname;
+    public String getGroupHeadPortrait() {
+        return groupHeadPortrait;
     }
 
-    public void setRealname(Object realname) {
-        this.realname = realname;
+    public void setGroupHeadPortrait(String groupHeadPortrait) {
+        this.groupHeadPortrait = groupHeadPortrait;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getGroupSign() {
+        return groupSign;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setGroupSign(String groupSign) {
+        this.groupSign = groupSign;
     }
 
-    public String getPassword() {
-        return password;
+    public String getGroupNotice() {
+        return groupNotice;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setGroupNotice(String groupNotice) {
+        this.groupNotice = groupNotice;
     }
 
-    public Object getEmail() {
-        return email;
+    public String getGroupOwnerId() {
+        return groupOwnerId;
     }
 
-    public void setEmail(Object email) {
-        this.email = email;
+    public void setGroupOwnerId(String groupOwnerId) {
+        this.groupOwnerId = groupOwnerId;
     }
 
-    public Object getHeadPortrait() {
-        return headPortrait;
-    }
-
-    public void setHeadPortrait(Object headPortrait) {
-        this.headPortrait = headPortrait;
-    }
-
-    public Object getSex() {
-        return sex;
-    }
-
-    public void setSex(Object sex) {
-        this.sex = sex;
-    }
-
-    public Object getSignature() {
-        return signature;
-    }
-
-    public void setSignature(Object signature) {
-        this.signature = signature;
-    }
-
-    public Object getWalletAddress() {
-        return walletAddress;
-    }
-
-    public void setWalletAddress(Object walletAddress) {
-        this.walletAddress = walletAddress;
-    }
-
-    public Object getIdCard() {
-        return idCard;
-    }
-
-    public void setIdCard(Object idCard) {
-        this.idCard = idCard;
-    }
-
-    public Object getIsShowRealname() {
-        return isShowRealname;
-    }
-
-    public void setIsShowRealname(Object isShowRealname) {
-        this.isShowRealname = isShowRealname;
-    }
-
-    public Object getUpdataTime() {
+    public String getUpdataTime() {
         return updataTime;
     }
 
-    public void setUpdataTime(Object updataTime) {
+    public void setUpdataTime(String updataTime) {
         this.updataTime = updataTime;
     }
 
-    public Object getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Object createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
-    public Object getIsDelete() {
+    public String getIsDelete() {
         return isDelete;
     }
 
-    public void setIsDelete(Object isDelete) {
+    public void setIsDelete(String isDelete) {
         this.isDelete = isDelete;
+    }
+
+    public String getIsInviteConfirm() {
+        return isInviteConfirm;
+    }
+
+    public void setIsInviteConfirm(String isInviteConfirm) {
+        this.isInviteConfirm = isInviteConfirm;
     }
 }

@@ -130,7 +130,6 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
 
 
     public void updatePwd(String oldPwd, String newPwd, String newPwdTwo) {
-        LogUtils.d("Pasdsdfaw", newPwd, newPwdTwo);
 
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .updatePayPwd("", String.valueOf(EncryptUtils.encryptMD5ToString(newPwd)).toLowerCase(), String.valueOf(EncryptUtils.encryptMD5ToString(newPwdTwo)).toLowerCase())
