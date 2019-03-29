@@ -14,6 +14,10 @@ public class ZhuanChuActivity extends BaseActivity {
         setContentView(R.layout.activity_zhuan_chu);
     }
 
+    public void submit(View view) {
+
+    }
+
     public void back(View view) {
         finish();
     }

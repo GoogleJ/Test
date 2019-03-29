@@ -17,4 +17,12 @@ public class HuaZhuanActivity extends BaseActivity {
     public void back(View view) {
         finish();
     }
+
+    public void submit(View view) {
+
+    }
+
+    public void cancel(View view) {
+
+    }
 }

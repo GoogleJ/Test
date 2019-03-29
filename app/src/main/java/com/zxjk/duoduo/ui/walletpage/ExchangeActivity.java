@@ -243,7 +243,8 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
     }
 
     public void chooseCount(View view) {
-        chooseCountWindow.showPopupWindow(tvExchangeChooseCount);
+        chooseCountWindow.showPopupWindow(R.id.tvExchangeChooseCount);
+//        chooseCountWindow.showPopupWindow(tvExchangeChooseCount);
     }
 
     @Override
