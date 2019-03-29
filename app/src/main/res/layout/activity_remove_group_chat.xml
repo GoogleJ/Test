@@ -25,6 +25,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/titleBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/remove_group_chat"
@@ -36,6 +37,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/titleRight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"

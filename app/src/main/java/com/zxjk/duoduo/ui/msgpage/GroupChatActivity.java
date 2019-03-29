@@ -21,6 +21,8 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.GroupChatResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.ui.grouppage.AllGroupMembersActivity;
+import com.zxjk.duoduo.ui.grouppage.GroupChatInformationActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.GroupChatAdapter;
 import com.zxjk.duoduo.weight.TitleBar;
 
@@ -91,9 +93,16 @@ public class GroupChatActivity extends BaseActivity implements TextWatcher {
         mGroupChatRecyclerView.setAdapter(groupChatAdapter);
         groupChatAdapter.notifyDataSetChanged();
         groupChatAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            //点击事件 跳转到群聊天界面
-           RongIM.getInstance().startConversation(this,Conversation.ConversationType.GROUP,groupChatAdapter.getData().get(position).getId(),groupChatAdapter.getData().get(position).getGroupNikeName());
-            startActivity(new Intent(this,ConversationActivity.class));
+//            //点击事件 跳转到群聊天界面
+//           RongIM.getInstance().startConversation(this,Conversation.ConversationType.GROUP,groupChatAdapter.getData().get(position).getId(),groupChatAdapter.getData().get(position).getGroupNikeName());
+//            startActivity(new Intent(this,ConversationActivity.class));
+
+            GroupChatResponse groupChatResponse=groupChatAdapter.getData().get(position);
+            Intent intent=new Intent(this, GroupChatInformationActivity.class);
+            intent.putExtra("groupChatInformation",groupChatResponse);
+            startActivity(intent);
+
+
         });
 
 

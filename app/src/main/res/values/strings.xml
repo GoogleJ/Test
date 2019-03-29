@@ -396,5 +396,10 @@
     <string name="kuanggongprice">矿工费用</string>
     <string name="invite_to_group_chat">邀请加入群聊</string>
     <string name="join_a_group_chat">加入群聊</string>
+    <string name="announcement_edit_successful">群公告修改成功</string>
+    <string name="please_input_announcement">请先填写群公告</string>
+    <string name="exit_group">退出群聊</string>
+    <string name="you_have_disbanded_the_group">你已解散该群</string>
+    <string name="you_have_left_the_group_chat">你已退出群聊</string>
 
 </resources>

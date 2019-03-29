@@ -126,4 +126,10 @@ public class AddFriendDetailsActivity extends BaseActivity implements View.OnCli
                 break;
         }
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
 }

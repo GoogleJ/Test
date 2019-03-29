@@ -122,15 +122,15 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 password = edit_password.getText().toString().trim();
                 String code = edit_register_code.getText().toString().trim();
 
-                if (!TextUtils.isEmpty(mobile) && RegexUtils.isMobileExact(mobile)) {
+                if (TextUtils.isEmpty(mobile) && RegexUtils.isMobileExact(mobile)) {
                     ToastUtils.showShort(getString(R.string.edit_mobile_tip));
                     return;
                 }
-                if (password.isEmpty() || 5>= password.length()) {
+                if ( TextUtils.isEmpty(password)|| 5>= password.length()) {
                     ToastUtils.showShort(getString(R.string.edit_password_reg));
                     return;
                 }
-                if (code.isEmpty() || code.length() != 6) {
+                if (TextUtils.isEmpty(code) || code.length() != 6) {
                     ToastUtils.showShort(getString(R.string.edit_code_tip));
                     return;
                 }

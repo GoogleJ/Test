@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.network;
 
+import com.zxjk.duoduo.network.response.AllGroupMembersResponse;
 import com.zxjk.duoduo.network.response.BaseResponse;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.response.FriendListResponse;
@@ -7,6 +8,7 @@ import com.zxjk.duoduo.network.response.GetBalanceHkResponse;
 import com.zxjk.duoduo.network.response.GetNumbeOfTransactionResponse;
 import com.zxjk.duoduo.network.response.GetOverOrderResponse;
 import com.zxjk.duoduo.network.response.GetReleasePurchaseResponse;
+import com.zxjk.duoduo.network.response.GroupChatInformationResponse;
 import com.zxjk.duoduo.network.response.GroupChatResponse;
 import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.response.LoginResponse;
@@ -14,9 +16,13 @@ import com.zxjk.duoduo.network.response.PayInfoResponse;
 import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
 import com.zxjk.duoduo.network.response.SearchCustomerInfoResponse;
 import com.zxjk.duoduo.network.response.SearchResponse;
+import com.zxjk.duoduo.network.response.UpdateGroupOwnerResponse;
+
+import org.aspectj.lang.annotation.Pointcut;
 
 import java.util.List;
 
+import butterknife.OnItemClick;
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -483,7 +489,7 @@ public interface Api {
      */
     @POST("duoduo/group/getGroupMemByGroupId")
     @FormUrlEncoded
-    Observable<BaseResponse<List<GroupResponse>>> getGroupMemByGroupId(
+    Observable<BaseResponse<List<AllGroupMembersResponse>>> getGroupMemByGroupId(
             @Field("groupId") String groupId
     );
 
@@ -502,6 +508,80 @@ public interface Api {
             @Field("groupId") String groupId,
             @Field("inviterId") String inviterId,
             @Field("customerIds") String customerIds
+    );
+
+    /**
+     * 根据groupId查看群信息
+     * @param groupId
+     * @return
+     */
+    @POST("duoduo/group/getGroupByGroupId")
+    @FormUrlEncoded
+    Observable<BaseResponse<GroupResponse>> getGroupByGroupId(
+            @Field("groupId") String groupId
+    );
+
+    /**
+     * 修改群信息
+     * @param groupInfo
+     * @return
+     */
+    @POST("duoduo/group/updateGroupInfo")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> updateGroupInfo(
+            @Field("groupInfo")String groupInfo
+    );
+
+    /**
+     * 解散群
+     * @param groupId
+     * @param groupOwnerId
+     * @return
+     */
+    @POST("duoduo/group/disBandGroup")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> disBandGroup(
+            @Field("groupId")String groupId,
+            @Field("groupOwnerId")String groupOwnerId
+    );
+
+    /**
+     * 退出群组
+     * @param groupId
+     * @param customerId
+     * @return
+     */
+    @POST("duoduo/group/exitGroup")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> exitGroup(
+            @Field("groupId")String groupId,
+            @Field("customerId")String customerId
+    );
+
+    /**
+     * 移除群组
+     * @param groupId
+     * @param customerIds
+     * @return
+     */
+    @POST("duoduo/group/moveOutGroup")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> moveOutGroup(
+            @Field("groupId")String groupId,
+            @Field("customerIds")String customerIds
+    );
+
+    /**
+     * 群主转让
+     * @param groupId
+     * @param customerId
+     * @return
+     */
+    @POST("duoduo/group/updateGroupOwner")
+    @FormUrlEncoded
+    Observable<BaseResponse<List<UpdateGroupOwnerResponse>>> updateGroupOwner(
+            @Field("groupId")String groupId,
+            @Field("customerId")String customerId
     );
 
 

@@ -9,6 +9,7 @@
     tools:ignore="MissingConstraints">
 
     <com.zxjk.duoduo.weight.TitleBar
+        android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         app:titleBarLeftImage="@drawable/ico_back"
@@ -25,7 +26,7 @@
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/group_chat_name"
+                android:id="@+id/group_chat_name_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -52,6 +53,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/group_chat_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingEnd="32dp"
@@ -76,10 +78,10 @@
                     android:paddingBottom="12dp" />
 
                 <TextView
-                    android:onClick="groupAllMembers"
                     android:id="@+id/see_more_group_members"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="groupAllMembers"
                     android:paddingBottom="12dp"
                     android:text="@string/see_more_group_members"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -105,6 +107,8 @@
                     android:textSize="17sp" />
 
                 <com.suke.widget.SwitchButton
+
+                    android:id="@+id/top_chat_switch"
                     android:layout_width="43dp"
                     android:layout_height="26dp"
                     android:layout_marginEnd="12dp"
@@ -135,6 +139,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/line" />
 
                 <com.suke.widget.SwitchButton
+                    android:id="@+id/message_avoidance_switch"
                     android:layout_width="43dp"
                     android:layout_height="26dp"
                     android:layout_marginEnd="12dp"
@@ -151,8 +156,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:onClick="announcement"
-                android:background="@color/white">
+                android:background="@color/white"
+                android:onClick="announcement">
 
                 <TextView
                     android:id="@+id/group_announcement"
@@ -197,11 +202,11 @@
                 android:background="@color/m_add_friend_line" />
 
             <TextView
-                android:onClick="groupManagement"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:drawableEnd="@drawable/icon_go"
+                android:onClick="groupManagement"
                 android:paddingStart="12dp"
                 android:paddingTop="22dp"
                 android:paddingEnd="12dp"
@@ -226,16 +231,15 @@
                 android:textSize="17sp" />
 
             <TextView
+                android:onClick="dissolutionGroup"
                 android:id="@+id/dissolution_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:gravity="center"
-
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
-                android:text="@string/dissolution_group"
                 android:textColor="@color/themecolor"
                 android:textSize="17sp" />
 

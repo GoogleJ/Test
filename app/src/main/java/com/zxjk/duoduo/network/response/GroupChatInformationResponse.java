@@ -2,7 +2,22 @@ package com.zxjk.duoduo.network.response;
 
 import java.io.Serializable;
 
-public class GroupChatResponse implements Serializable {
+public class GroupChatInformationResponse implements Serializable {
+
+
+    /**
+     * id : 15
+     * goupType : 0
+     * groupNikeName : null
+     * groupHeadPortrait : null
+     * groupSign : null
+     * groupNotice : null
+     * groupOwnerId : 4
+     * updataTime : null
+     * createTime : 2019-02-22 16:25:56
+     * isDelete : 0
+     * isInviteConfirm : 0
+     */
 
     private String id;
     private String goupType;
@@ -11,12 +26,10 @@ public class GroupChatResponse implements Serializable {
     private String groupSign;
     private String groupNotice;
     private String groupOwnerId;
-    private String updateTime;
+    private String updataTime;
     private String createTime;
     private String isDelete;
     private String isInviteConfirm;
-    private String headPortrait;
-
 
     public String getId() {
         return id;
@@ -74,12 +87,12 @@ public class GroupChatResponse implements Serializable {
         this.groupOwnerId = groupOwnerId;
     }
 
-    public String getUpdateTime() {
-        return updateTime;
+    public String getUpdataTime() {
+        return updataTime;
     }
 
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
+    public void setUpdataTime(String updataTime) {
+        this.updataTime = updataTime;
     }
 
     public String getCreateTime() {
@@ -105,31 +118,4 @@ public class GroupChatResponse implements Serializable {
     public void setIsInviteConfirm(String isInviteConfirm) {
         this.isInviteConfirm = isInviteConfirm;
     }
-
-    public String getHeadPortrait() {
-        return headPortrait;
-    }
-
-    public void setHeadPortrait(String headPortrait) {
-        this.headPortrait = headPortrait;
-    }
-
-    public String GroupString() {
-
-        return "GroupChatResponse{" +
-                "id='" + id + '\'' +
-                ", goupType='" + goupType + '\'' +
-                ", groupNikeName='" + groupNikeName + '\'' +
-                ", groupHeadPortrait='" + groupHeadPortrait + '\'' +
-                ", groupSign='" + groupSign + '\'' +
-                ", groupNotice='" + groupNotice + '\'' +
-                ", groupOwnerId='" + groupOwnerId + '\'' +
-                ", updateTime='" + updateTime + '\'' +
-                ", createTime='" + createTime + '\'' +
-                ", isDelete='" + isDelete + '\'' +
-                ", isInviteConfirm='" + isInviteConfirm + '\'' +
-                ", headPortrait='" + headPortrait + '\'' +
-                '}';
-    }
-
 }

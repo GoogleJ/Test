@@ -266,4 +266,10 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                     }
                 }, this::handleApiError);
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
 }
