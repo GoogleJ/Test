@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.ui.base.ContentActivity;
@@ -72,7 +73,7 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
                    case DISCUSSION:
                        break;
                    case GROUP:
-                       RongIM.getInstance().startGroupChat(getContext(),"110","群名称");
+                       RongIM.getInstance().startGroupChat(getContext(), Constant.groupId,"群名称");
                        startActivity(new Intent(getActivity(),ConversationActivity.class));
                        break;
                    case SYSTEM:
@@ -88,7 +89,7 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
                 switch (conversationType){
                     case NONE:
 
-                        RongIM.getInstance().startGroupChat(getContext(),"110","群名称");
+                        RongIM.getInstance().startGroupChat(getContext(),Constant.groupId,"群名称");
                         break;
                     case PRIVATE:
                         RongIM.getInstance().startPrivateChat(getContext(),"31","标题");
@@ -173,7 +174,11 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.send_group_chat:
-                startActivity(new Intent(getActivity(), SelectContactActivity.class));
+//                startActivity(new Intent(getActivity(), SelectContactActivity.class));
+                Intent intent=new Intent(getActivity(),SelectContactActivity.class);
+                intent.putExtra("addGroupType",0);
+                startActivity(intent);
+
                 break;
             case R.id.invite_friends:
                 AddContactActivity.start(getActivity());

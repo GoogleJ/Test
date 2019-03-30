@@ -3,9 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:id="@+id/item_choose"
+
     android:layout_width="match_parent"
+    android:background="@color/white"
     tools:ignore="MissingConstraints"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/headers"
         android:layout_marginTop="4dp"
@@ -27,6 +30,13 @@
         android:layout_marginStart="14dp"
         android:textSize="16sp"
         android:textColor="@color/themecolor"
+        />
+    <View
+        app:layout_constraintTop_toBottomOf="@+id/headers"
+        android:layout_width="wrap_content"
+        android:layout_height="0.5dp"
+        android:background="@color/bga_adapter_line"
+        app:layout_constraintStart_toStartOf="@+id/user_name"
         />
 
 

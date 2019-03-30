@@ -100,6 +100,7 @@ public class GroupChatActivity extends BaseActivity implements TextWatcher {
             GroupChatResponse groupChatResponse=groupChatAdapter.getData().get(position);
             Intent intent=new Intent(this, GroupChatInformationActivity.class);
             intent.putExtra("groupChatInformation",groupChatResponse);
+            Constant.groupId=groupChatResponse.getId();
             startActivity(intent);
 
 

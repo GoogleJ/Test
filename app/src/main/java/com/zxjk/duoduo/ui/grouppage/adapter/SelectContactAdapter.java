@@ -9,6 +9,9 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.FriendListResponse;
 import com.zxjk.duoduo.utils.GlideUtil;
 
+/**
+ * @author Administrator
+ */
 public class SelectContactAdapter extends BaseQuickAdapter<FriendListResponse, BaseViewHolder> {
     public SelectContactAdapter() {
         super(R.layout.item_add_group);
@@ -17,7 +20,7 @@ public class SelectContactAdapter extends BaseQuickAdapter<FriendListResponse, B
     @Override
     protected void convert(BaseViewHolder helper, FriendListResponse item) {
         helper.setText(R.id.user_name,item.getNick())
-        .addOnClickListener(R.id.add_group_layout);
+        .addOnClickListener(R.id.add_del_group_layout);
         ImageView heardImage=helper.getView(R.id.remove_headers);
         GlideUtil.loadImg(heardImage,item.getHeadPortrait());
 

@@ -225,6 +225,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <TextView
+        android:onClick="transferGroup"
         android:id="@+id/transfer_group"
         android:paddingTop="22dp"
         android:paddingBottom="22dp"

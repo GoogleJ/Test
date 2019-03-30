@@ -191,7 +191,7 @@
                     android:paddingBottom="18dp"
                     android:text="@string/announcement"
                     android:textSize="15sp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:layout_constraintTop_toBottomOf="@+id/group_announcement" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 

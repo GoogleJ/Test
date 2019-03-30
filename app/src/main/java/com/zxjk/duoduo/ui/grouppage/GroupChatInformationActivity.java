@@ -3,8 +3,11 @@ package com.zxjk.duoduo.ui.grouppage;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -43,6 +46,7 @@ public class GroupChatInformationActivity extends BaseActivity {
 
     AllGroupMemebersAdapter mAdapter;
     GroupChatResponse group;
+    Intent intent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,42 +71,32 @@ public class GroupChatInformationActivity extends BaseActivity {
 
         initFooterView();
         group = (GroupChatResponse) getIntent().getSerializableExtra("groupChatInformation");
-        groupChatName.setText(group.getGroupNikeName());
-        announcement.setText(group.getGroupSign());
-
         getGroupMemByGroupId(group.getId());
-        groupChatRecyclerView.setAdapter(mAdapter);
-        if (Constant.userId.equals(group.getGroupOwnerId())) {
-            dissolutionGroup.setText(getString(R.string.dissolution_group));
-        } else {
-            dissolutionGroup.setText(getString(R.string.exit_group));
-        }
-
-        //        getGroupByGroupId(group.getId());
+        getGroupByGroupId(group.getId());
     }
 
     private void initFooterView() {
-        View view = LayoutInflater.from(this).inflate(R.layout.view_bottom_del, null);
-
-
-        mAdapter.setFooterView(view, 1);
-        mAdapter.getFooterLayout().setOnClickListener(new View.OnClickListener() {
+        View footerView = LayoutInflater.from(this).inflate(R.layout.view_bottom_del, null);
+        ImageView delMembers = footerView.findViewById(R.id.delete_members);
+        ImageView addMembers = footerView.findViewById(R.id.add_members);
+        delMembers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.delete_members:
-                        break;
-                    case R.id.add_members:
-                        break;
-                    default:
-                        break;
-                }
-
+                intent = new Intent(GroupChatInformationActivity.this, RemoveGroupChatActivity.class);
+                startActivity(intent);
             }
         });
-
-
+        addMembers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(GroupChatInformationActivity.this, SelectContactActivity.class);
+                intent.putExtra("addGroupType", 1);
+                startActivity(intent);
+            }
+        });
+        mAdapter.addFooterView(footerView);
     }
+
 
     /**
      * 跳转群公告
@@ -127,6 +121,7 @@ public class GroupChatInformationActivity extends BaseActivity {
      */
     public void groupManagement(View view) {
         startActivity(new Intent(this, GroupManagementActivity.class));
+
     }
 
     /**
@@ -196,22 +191,34 @@ public class GroupChatInformationActivity extends BaseActivity {
                     }
                 }, this::handleApiError);
     }
-//    /**
-//     * 查询群信息
-//     *
-//     * @param groupId
-//     */
-//
-//    public void getGroupByGroupId(String groupId) {
-//        ServiceFactory.getInstance().getBaseService(Api.class)
-//                .getGroupByGroupId(groupId)
-//                .compose(bindToLifecycle())
-//                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-//                .compose(RxSchedulers.normalTrans())
-//                .subscribe(groupResponse -> {
-//
-//
-//                }, this::handleApiError);
-//    }
+
+    /**
+     * 查询群信息
+     *
+     * @param groupId
+     */
+
+    public void getGroupByGroupId(String groupId) {
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .getGroupByGroupId(groupId)
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                .compose(RxSchedulers.normalTrans())
+                .subscribe(groupResponse -> {
+                    groupChatName.setText(groupResponse.getGroupNikeName());
+
+                    announcement.setText(groupResponse.getGroupSign());
+//                        announcement.setVisibility(View.VISIBLE);
+
+                    groupChatRecyclerView.setAdapter(mAdapter);
+                    if (Constant.userId.equals(groupResponse.getGroupOwnerId())) {
+                        dissolutionGroup.setText(getString(R.string.dissolution_group));
+                    } else {
+                        dissolutionGroup.setText(getString(R.string.exit_group));
+                    }
+
+
+                }, this::handleApiError);
+    }
 
 }

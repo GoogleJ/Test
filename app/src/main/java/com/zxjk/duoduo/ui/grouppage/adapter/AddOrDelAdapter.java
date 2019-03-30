@@ -8,20 +8,20 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.AllGroupMembersResponse;
 import com.zxjk.duoduo.utils.GlideUtil;
 
+import java.util.List;
 
-public class AllGroupMemebersAdapter extends BaseQuickAdapter<AllGroupMembersResponse, BaseViewHolder> {
-    public AllGroupMemebersAdapter() {
-        super(R.layout.item_group_chat_information);
+import androidx.annotation.Nullable;
+
+public class AddOrDelAdapter extends BaseQuickAdapter<AllGroupMembersResponse, BaseViewHolder> {
+    public AddOrDelAdapter() {
+        super(R.layout.item_select_contact);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, AllGroupMembersResponse item) {
-        helper.setText(R.id.nick_name,item.getNick());
-        ImageView heardImage=helper.getView(R.id.header_image);
-        GlideUtil.loadCornerImg(heardImage,item.getHeadPortrait(),2);
+        ImageView heardImage=helper.getView(R.id.item_header);
+        helper.addOnClickListener(R.id.item_header);
+        GlideUtil.loadImg(heardImage,item.getHeadPortrait());
 
     }
-
-
-
 }

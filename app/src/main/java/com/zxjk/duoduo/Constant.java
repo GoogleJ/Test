@@ -3,6 +3,7 @@ package com.zxjk.duoduo;
 import com.blankj.utilcode.util.DeviceUtils;
 import com.zxjk.duoduo.bean.AddPayInfoBean;
 import com.zxjk.duoduo.bean.VerifiedBean;
+import com.zxjk.duoduo.network.response.GroupChatResponse;
 import com.zxjk.duoduo.network.response.LoginResponse;
 
 public class Constant {
@@ -41,8 +42,10 @@ public class Constant {
      * 实名认证实体
      */
     public static VerifiedBean verifiedBean=new VerifiedBean();
+
     /**
-     * 群组相关的实体
+     * 群Id
      */
+    public static String groupId="";
 
 }

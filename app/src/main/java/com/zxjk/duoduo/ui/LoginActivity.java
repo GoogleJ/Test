@@ -3,6 +3,7 @@ package com.zxjk.duoduo.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -111,21 +112,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                 String mobile = edit_mobile.getText().toString().trim();
                 String password = edit_password.getText().toString().trim();
-                if (mobile.isEmpty() || password.isEmpty()) {
+                if (TextUtils.isEmpty(mobile) || TextUtils.isEmpty(password)) {
                     ToastUtils.showShort(getString(R.string.edit_mobile_or_password_tip));
                     return;
                 }
-                if (mobile.isEmpty() && "".equals(mobile) && mobile.length() == phoneLength) {
+                if (TextUtils.isEmpty(mobile) && "".equals(mobile) && mobile.length() == phoneLength) {
                     ToastUtils.showShort(getString(R.string.edit_mobile_tip));
                     return;
                 }
-                if (password.isEmpty() || 5 >= password.length() || password.length() >= 14) {
+                if (TextUtils.isEmpty(password) || 5 >= password.length() || password.length() >= 14) {
                     ToastUtils.showShort(getString(R.string.edit_password_reg));
                     return;
                 }
 
                 login(mobile, password);
-//                SPUtils.getInstance().put("mobile", edit_mobile.getText().toString().trim());
+                SPUtils.getInstance().put("mobile", edit_mobile.getText().toString().trim());
 
                 break;
             default:

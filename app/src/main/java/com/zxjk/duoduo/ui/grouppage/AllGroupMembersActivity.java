@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -36,15 +37,14 @@ public class AllGroupMembersActivity extends BaseActivity {
     AllGroupMemebersAdapter mAdapter;
 
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_group_members);
-        titleBar=findViewById(R.id.title_bar);
-        searchEdit=findViewById(R.id.search_edit);
-        mRecyclerView=findViewById(R.id.recycler_view);
-   initView();
+        titleBar = findViewById(R.id.title_bar);
+        searchEdit = findViewById(R.id.search_edit);
+        mRecyclerView = findViewById(R.id.recycler_view);
+        initView();
     }
 
     private void initView() {
@@ -54,15 +54,14 @@ public class AllGroupMembersActivity extends BaseActivity {
                 finish();
             }
         });
-        GridLayoutManager gridLayoutManager=new GridLayoutManager(this,5);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 5);
         mRecyclerView.setLayoutManager(gridLayoutManager);
-        mAdapter=new AllGroupMemebersAdapter();
-        GroupResponse groupResponse= (GroupResponse) getIntent().getSerializableExtra("groupId");
-        getGroupMemByGroupId(groupResponse.getId());
+        mAdapter = new AllGroupMemebersAdapter();
+        getGroupMemByGroupId(Constant.groupId);
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    public void getGroupMemByGroupId(String groupId){
+    public void getGroupMemByGroupId(String groupId) {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .getGroupMemByGroupId(groupId)
                 .compose(bindToLifecycle())
@@ -73,6 +72,6 @@ public class AllGroupMembersActivity extends BaseActivity {
                     public void accept(List<AllGroupMembersResponse> allGroupMembersResponses) throws Exception {
                         mAdapter.setNewData(allGroupMembersResponses);
                     }
-                },this::handleApiError);
+                }, this::handleApiError);
     }
 }

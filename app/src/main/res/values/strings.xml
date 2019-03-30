@@ -407,5 +407,10 @@
     <string name="inputhuazhuancount">请输入你要划转的数量</string>
     <string name="huazhuanAll">全部划转</string>
     <string name="receiveBalance">获得余额</string>
+    <string name="del_group_members">已移除该好友</string>
+    <string name="add_group_members">已添加该好友</string>
+    <string name="transfer_group_successful">群主转让成功</string>
+    <string name="determine_select_group">确定选择为新群主吗？</string>
+    <string name="add_group_chat">选择联系人</string>
 
 </resources>

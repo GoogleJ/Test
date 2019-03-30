@@ -579,7 +579,7 @@ public interface Api {
      */
     @POST("duoduo/group/updateGroupOwner")
     @FormUrlEncoded
-    Observable<BaseResponse<List<UpdateGroupOwnerResponse>>> updateGroupOwner(
+    Observable<BaseResponse<String>> updateGroupOwner(
             @Field("groupId")String groupId,
             @Field("customerId")String customerId
     );

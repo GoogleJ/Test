@@ -15,6 +15,7 @@ import com.zxjk.duoduo.R;
 import androidx.annotation.NonNull;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author Administrator
@@ -47,11 +48,12 @@ public class BaseAddTitleDialog extends Dialog implements View.OnClickListener {
         window.setAttributes(layoutParams);
     }
     public void show(String title){
-        super.show();
+       show();
         dialogTitle.setText(title);
     }
 
 
+    @OnClick({R.id.determine_btn,R.id.cancel_btn})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
