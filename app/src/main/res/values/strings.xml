@@ -391,7 +391,7 @@
     <string name="currentCoin">当前币种</string>
     <string name="recipetWalletAddress">收款钱包</string>
     <string name="inputwalletaddress">请输入钱包地址</string>
-    <string name="inputZhuanChuAccount">请输入转出数量</string>
+    <string name="inputZhuanChuCount">请输入转出数量</string>
     <string name="zhuanchuCount">转出数量</string>
     <string name="kuanggongprice">矿工费用</string>
     <string name="invite_to_group_chat">邀请加入群聊</string>
@@ -423,5 +423,6 @@
     <string name="pay_success">付款成功</string>
     <string name="zhuanru">转入</string>
     <string name="choosecoin">币种选择</string>
+    <string name="inputzhuanchucount">请输入转出数量</string>
 
 </resources>

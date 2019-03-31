@@ -35,6 +35,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:gravity="center_vertical"
+        android:onClick="chooseCoinType"
         android:paddingStart="12dp"
         android:paddingTop="16dp"
         android:paddingEnd="12dp"
@@ -49,6 +50,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/tvZhuanChuCoinType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_exchange_coins"
@@ -90,8 +92,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:onClick="selectContack"
+            android:paddingTop="15dp">
 
             <EditText
                 android:id="@+id/etWalletAddress"
@@ -99,8 +102,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@null"
+                android:ellipsize="end"
                 android:hint="@string/inputwalletaddress"
                 android:lines="1"
+                android:singleLine="true"
                 android:textSize="15sp" />
 
             <ImageView
@@ -143,13 +148,18 @@
             android:textSize="15sp" />
 
         <EditText
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
             android:id="@+id/etCount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@null"
-            android:hint="@string/inputZhuanChuAccount"
+            android:hint="@string/inputZhuanChuCount"
+            android:inputType="number"
             android:lines="1"
+            android:maxLength="2"
+            android:singleLine="true"
             android:textSize="15sp" />
 
         <View

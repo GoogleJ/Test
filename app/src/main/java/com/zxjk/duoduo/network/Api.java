@@ -509,6 +509,7 @@ public interface Api {
 
     /**
      * 根据groupId查看群信息
+     *
      * @param groupId
      * @return
      */
@@ -520,17 +521,19 @@ public interface Api {
 
     /**
      * 修改群信息
+     *
      * @param groupInfo
      * @return
      */
     @POST("duoduo/group/updateGroupInfo")
     @FormUrlEncoded
     Observable<BaseResponse<String>> updateGroupInfo(
-            @Field("groupInfo")String groupInfo
+            @Field("groupInfo") String groupInfo
     );
 
     /**
      * 解散群
+     *
      * @param groupId
      * @param groupOwnerId
      * @return
@@ -538,12 +541,13 @@ public interface Api {
     @POST("duoduo/group/disBandGroup")
     @FormUrlEncoded
     Observable<BaseResponse<String>> disBandGroup(
-            @Field("groupId")String groupId,
-            @Field("groupOwnerId")String groupOwnerId
+            @Field("groupId") String groupId,
+            @Field("groupOwnerId") String groupOwnerId
     );
 
     /**
      * 退出群组
+     *
      * @param groupId
      * @param customerId
      * @return
@@ -551,12 +555,13 @@ public interface Api {
     @POST("duoduo/group/exitGroup")
     @FormUrlEncoded
     Observable<BaseResponse<String>> exitGroup(
-            @Field("groupId")String groupId,
-            @Field("customerId")String customerId
+            @Field("groupId") String groupId,
+            @Field("customerId") String customerId
     );
 
     /**
      * 移除群组
+     *
      * @param groupId
      * @param customerIds
      * @return
@@ -564,12 +569,13 @@ public interface Api {
     @POST("duoduo/group/moveOutGroup")
     @FormUrlEncoded
     Observable<BaseResponse<String>> moveOutGroup(
-            @Field("groupId")String groupId,
-            @Field("customerIds")String customerIds
+            @Field("groupId") String groupId,
+            @Field("customerIds") String customerIds
     );
 
     /**
      * 群主转让
+     *
      * @param groupId
      * @param customerId
      * @return
@@ -577,8 +583,8 @@ public interface Api {
     @POST("duoduo/group/updateGroupOwner")
     @FormUrlEncoded
     Observable<BaseResponse<String>> updateGroupOwner(
-            @Field("groupId")String groupId,
-            @Field("customerId")String customerId
+            @Field("groupId") String groupId,
+            @Field("customerId") String customerId
     );
 
     @POST("duoduo/wallet/createWallet")
@@ -588,5 +594,18 @@ public interface Api {
     @POST("duoduo/wallet/getTransferEth")
     @FormUrlEncoded
     Observable<BaseResponse<GetTransferEthResponse>> getTransferEth(@Field("address") String address, @Field("page") String page, @Field("offset") String offset);
+
+
+    @POST("duoduo/wallet/signTransaction")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>>
+    signTransaction(@Field("payPwd") String payPwd,
+                    @Field("type") String type,
+                    @Field("fromaddress") String fromaddress,
+                    @Field("toaddress") String toaddress,
+                    @Field("gasPrice") String gasPrice,
+                    @Field("number") String number,
+                    @Field("keyStore") String keyStore,
+                    @Field("duoduoId") String duoduoId);
 
 }
