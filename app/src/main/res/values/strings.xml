@@ -281,7 +281,7 @@
     <string name="bank_id_card_edit">请输入您的真实姓名</string>
     <string name="bank_real_name">真实姓名</string>
     <string name="edit_real_name">请填写真实姓名</string>
-    <string name="edit_id_cards">请填写正确得证件号</string>
+    <string name="edit_id_cards">请填写正确的证件号</string>
     <string name="please_upload_payment_code">请上传付款码</string>
     <string name="please_upload_selector_open_bank">请输入开户银行</string>
     <string name="uploaded">已上传</string>
@@ -412,5 +412,16 @@
     <string name="transfer_group_successful">群主转让成功</string>
     <string name="determine_select_group">确定选择为新群主吗？</string>
     <string name="add_group_chat">选择联系人</string>
+    <string name="verifyfirstpls">请先完成实名认证</string>
+    <string name="verifying_pleasewait">正在实名认证中，请等待认证结果</string>
+    <string name="time">时间</string>
+    <string name="payAddress">付款地址</string>
+    <string name="receiptAddress">收款地址</string>
+    <string name="tradeOrder">交易号</string>
+    <string name="block">区块</string>
+    <string name="receipt_success">收款成功</string>
+    <string name="pay_success">付款成功</string>
+    <string name="zhuanru">转入</string>
+    <string name="choosecoin">币种选择</string>
 
 </resources>

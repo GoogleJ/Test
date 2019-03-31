@@ -188,9 +188,10 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/tvKuanggongPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="~~0.000003"
+                android:text="≈0.000003"
                 android:textColor="@color/textcolor3" />
 
         </LinearLayout>
@@ -218,11 +219,14 @@
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/seekZhuanchu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp" />
+            android:layout_marginTop="12dp"
+            android:thumb="@drawable/ic_seek_thumb" />
 
         <TextView
+            android:id="@+id/tvGwei"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"

@@ -47,7 +47,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="176dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="12dp"
@@ -76,7 +76,9 @@
                     android:layout_toEndOf="@id/ivBlockWalletHeadImg"
                     android:drawableEnd="@drawable/ic_copy_gray"
                     android:drawablePadding="4dp"
+                    android:ellipsize="end"
                     android:gravity="center_vertical"
+                    android:lines="1"
                     android:textColor="@color/themecolor" />
 
                 <TextView
@@ -89,12 +91,13 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:text="5465465"
                     android:id="@+id/tvBlockWalletBalance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:textColor="@color/themecolor"
-                    android:textSize="20sp" />
+                    android:textSize="25sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -115,7 +118,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="48dp"
         android:background="@color/white">
 
         <LinearLayout
@@ -143,6 +146,7 @@
         </LinearLayout>
 
         <View
+            android:background="#EFEFEF"
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:layout_marginTop="12dp"
@@ -169,6 +173,55 @@
                 android:text="@string/zhuanchu"
                 android:textColor="@color/themecolor"
                 android:textSize="17sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#F8F8F8" />
+
+    <LinearLayout
+        android:onClick="enterETHOrders"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:padding="12dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_blockwallet_eth"
+            android:drawablePadding="4dp"
+            android:gravity="start|center_vertical"
+            android:text="ETH"
+            android:textColor="@color/themecolor"
+            android:textSize="17sp" />
+
+        <LinearLayout
+            android:gravity="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvBlockWalletETH1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:textColor="@color/themecolor"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tvBlockWalletETH2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#CCCCCC"
+                android:textSize="15sp" />
 
         </LinearLayout>
 

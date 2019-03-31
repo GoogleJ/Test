@@ -51,19 +51,19 @@ public class SettingActivity extends BaseActivity {
 
         initView();
 
-        String isAuthentication = Constant.currentUser.getIsAuthentication();
-        if (isAuthentication.equals("0")) {
-            tvSettingAuthenticate.setText(R.string.verified_successful);
-            ivSettingAuthen.setVisibility(View.VISIBLE);
-        } else if (isAuthentication.equals("1")) {
-            tvSettingAuthenticate.setText(R.string.verifiedfailed);
-        } else if (isAuthentication.equals("2")) {
-            tvSettingAuthenticate.setText(R.string.verifing);
-        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        tvSettingAuthenticate.setText(CommonUtils.getAuthenticate(Constant.currentUser.getIsAuthentication()));
+        ivSettingAuthen.setVisibility(Constant.currentUser.getIsAuthentication().equals("0") ? View.VISIBLE : View.GONE);
     }
 
     public void gotoVerivy(View view) {
-        if (Constant.currentUser.getIsAuthentication().equals("1")) {
+        if (Constant.currentUser.getIsAuthentication().equals("2")) {
+            ToastUtils.showShort(R.string.verifying_pleasewait);
+        } else if (Constant.currentUser.getIsAuthentication().equals("1")) {
             startActivity(new Intent(this, VerifiedActivity.class));
         }
     }
@@ -73,12 +73,6 @@ public class SettingActivity extends BaseActivity {
         tvSettingPayment = findViewById(R.id.tvSettingPayment);
         tvSettingNick = findViewById(R.id.tvSettingNick);
         ivSettingAuthen = findViewById(R.id.ivSettingAuthen);
-
-        if (Constant.currentUser.getRealname().equals("")) {
-            tvSettingAuthenticate.setText(R.string.authen_false);
-        } else {
-            tvSettingAuthenticate.setText(R.string.authen_true);
-        }
         tvSettingNick.setText(Constant.currentUser.getNick());
     }
 

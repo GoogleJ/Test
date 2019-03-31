@@ -17,7 +17,9 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.RegisterBlockWalletService;
 import com.zxjk.duoduo.bean.CountryEntity;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -92,7 +94,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             , R.id.login_country_bottom})
     @Override
     public void onClick(View v) {
-        int phoneLength = 11;
         switch (v.getId()) {
             case R.id.login_country:
                 CountrySelectActivity.start(this, CountryCodeConstantsUtils.REQUESTCODE_COUNTRY_SELECT);
@@ -114,7 +115,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 ToastUtils.showShort(getString(R.string.edit_mobile_tip));
                 break;
             case R.id.text_go_login:
-                startActivity(new Intent(this, LoginActivity.class));
                 finish();
                 break;
             case R.id.btn_register:
@@ -178,7 +178,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(s -> {
+                .subscribe(loginResponse -> {
+                    Constant.currentUser = loginResponse;
+                    Constant.userId = loginResponse.getId();
+                    startService(new Intent(this, RegisterBlockWalletService.class));
                     finish();
                 }, this::handleApiError);
     }

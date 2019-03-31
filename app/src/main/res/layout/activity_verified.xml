@@ -80,11 +80,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:hint="@string/personal_name"
+                android:hint="@string/bank_real_name"
                 android:paddingStart="12dp"
                 android:paddingTop="22dp"
                 android:paddingBottom="22dp"
-                android:textColor="@color/m_my_qr_code_label" />
+                android:textColor="@color/themecolor" />
 
             <View
                 android:layout_width="match_parent"
@@ -103,7 +103,7 @@
                 android:paddingStart="12dp"
                 android:paddingTop="22dp"
                 android:paddingBottom="22dp"
-                android:textColor="@color/m_my_qr_code_label"
+                android:textColor="@color/themecolor"
                 android:textSize="16dp" />
 
             <TextView

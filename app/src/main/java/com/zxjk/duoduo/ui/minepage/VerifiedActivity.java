@@ -16,6 +16,7 @@ import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.bean.VerifiedBean;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
@@ -127,11 +128,8 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
         handHeldPassportPhotoEdit = findViewById(R.id.hand_held_passport_photo_edit);
         verifiedCommit.setOnClickListener(this);
         frontPhotoOfTheDocument.setOnClickListener(this);
-        frontPhotoOfTheDocumentEdit.setOnClickListener(this);
         reversePhotoOfTheDocument.setOnClickListener(this);
-        reversePhotoOfTheDocumentEdit.setOnClickListener(this);
         handHeldPassportPhoto.setOnClickListener(this);
-        handHeldPassportPhotoEdit.setOnClickListener(this);
     }
 
     @SuppressLint("NewApi")
@@ -155,7 +153,6 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
                 dialog.dismiss();
             }
 
-
             @Override
             public void onSelectedOther(String other) {
                 //点击其他的时候给赋值
@@ -178,6 +175,20 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
                     ToastUtils.showShort(R.string.edit_real_name);
                     return;
                 }
+
+                String s = cardType.getText().toString();
+                String otherIdCardType;
+                if (s.equals("身份证")) {
+                    otherIdCardType = "1";
+                } else if (s.equals("护照")) {
+                    otherIdCardType = "2";
+                } else if (s.equals("其他国家或地区的身份证")) {
+                    otherIdCardType = "3";
+                } else {
+                    ToastUtils.showShort("请选择证件类型");
+                    return;
+                }
+
                 if (TextUtils.isEmpty(idCards)) {
                     ToastUtils.showShort(R.string.edit_id_cards);
                     return;
@@ -198,35 +209,18 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
                     return;
                 }
 
-                Constant.verifiedBean.setNumber(idCards);
-                Constant.verifiedBean.setRealName(realNames);
+                VerifiedBean bean = new VerifiedBean();
 
-                String s = cardType.getText().toString();
-                String otherIdCardType;
-                if (s.equals("身份证")) {
-                    otherIdCardType = "1";
-                } else if (s.equals("护照")) {
-                    otherIdCardType = "2";
-                } else {
-                    otherIdCardType = "3";
-                }
-
-                Constant.verifiedBean.setType(otherIdCardType);
-                Constant.verifiedBean.setPictureFront(url1);
-                Constant.verifiedBean.setPictureHand(url2);
-                Constant.verifiedBean.setPictureReverse(url3);
-                certification(AesUtil.getInstance().encrypt(GsonUtils.toJson(Constant.verifiedBean)));
+                bean.setNumber(idCards);
+                bean.setRealName(realNames);
+                bean.setType(otherIdCardType);
+                bean.setPictureFront(url1);
+                bean.setPictureHand(url2);
+                bean.setPictureReverse(url3);
+                certification(AesUtil.getInstance().encrypt(GsonUtils.toJson(bean)));
                 break;
             case R.id.front_photo_of_the_document:
 //                证件正面照
-                currentPictureFlag = 1;
-                verifyStoragePermissions(this);
-                cameraPremissions(this);
-                selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
-                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-                break;
-            case R.id.front_photo_of_the_document_edit:
-                //证件正面照编辑
                 currentPictureFlag = 1;
                 verifyStoragePermissions(this);
                 cameraPremissions(this);
@@ -241,14 +235,6 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
                 selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
-            case R.id.reverse_photo_of_the_document_edit:
-                //证件反面照编辑
-                currentPictureFlag = 2;
-                verifyStoragePermissions(this);
-                cameraPremissions(this);
-                selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
-                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-                break;
             case R.id.hand_held_passport_photo:
                 //手持证件照
                 currentPictureFlag = 3;
@@ -257,16 +243,7 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
                 selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
-            case R.id.hand_held_passport_photo_edit:
-                //手持证件照编辑
-                currentPictureFlag = 3;
-                verifyStoragePermissions(this);
-                cameraPremissions(this);
-                selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
-                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-                break;
             default:
-                break;
         }
     }
 
@@ -293,16 +270,19 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
                 OssUtils.uploadFile(file.getAbsolutePath(), url -> {
                     if (currentPictureFlag == 1) {
                         url1 = url;
+                        frontPhotoOfTheDocumentEdit.setVisibility(View.VISIBLE);
                         GlideUtil.loadCornerImg(frontPhotoOfTheDocument, url, 3);
                         return;
                     }
                     if (currentPictureFlag == 2) {
                         url2 = url;
+                        reversePhotoOfTheDocumentEdit.setVisibility(View.VISIBLE);
                         GlideUtil.loadCornerImg(reversePhotoOfTheDocument, url, 3);
                         return;
                     }
                     if (currentPictureFlag == 3) {
                         url3 = url;
+                        handHeldPassportPhotoEdit.setVisibility(View.VISIBLE);
                         GlideUtil.loadCornerImg(handHeldPassportPhoto, url, 3);
                     }
                 });
