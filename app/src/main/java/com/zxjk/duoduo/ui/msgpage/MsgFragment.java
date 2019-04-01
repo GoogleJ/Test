@@ -27,6 +27,7 @@ import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imkit.manager.IUnReadMessageObserver;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
@@ -60,69 +61,13 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
     }
 
     private void initRongIM() {
-        RongIM.setConversationClickListener(new RongIM.ConversationClickListener() {
-            @Override
-            public boolean onUserPortraitClick(Context context, Conversation.ConversationType conversationType, UserInfo userInfo, String s) {
+//        RongIM.getInstance().setCurrentUserInfo(new UserInfo(Constant.friendInfoResponse.getId(),Constant.friendInfoResponse.getNick(),Uri.parse(Constant.friendInfoResponse.getHeadPortrait())));
 
-               switch (conversationType){
-                   case NONE:
-
-                       break;
-                   case PRIVATE:
-                       RongIM.getInstance().startPrivateChat(getContext(),Constant.friendInfoResponse.getId(),Constant.friendInfoResponse.getNick());
-                       break;
-                   case DISCUSSION:
-                       break;
-                   case GROUP:
-                       RongIM.getInstance().startGroupChat(getContext(),Constant.groupResponse.getId(),Constant.groupResponse.getGroupNikeName());
-
-                       break;
-                   case SYSTEM:
-                       break;
-                       default:
-                           break;
-               }
-                return false;
-            }
-
-            @Override
-            public boolean onUserPortraitLongClick(Context context, Conversation.ConversationType conversationType, UserInfo userInfo, String s) {
-                switch (conversationType){
-                    case NONE:
-
-                        break;
-                    case PRIVATE:
-                        RongIM.getInstance().startPrivateChat(getContext(),Constant.friendInfoResponse.getId(),Constant.friendInfoResponse.getNick());
-                        break;
-                    case DISCUSSION:
-                        break;
-                    case GROUP:
-                        RongIM.getInstance().startGroupChat(getContext(),Constant.groupResponse.getId(),Constant.groupResponse.getGroupNikeName());
-                        break;
-                    case SYSTEM:
-                        break;
-                    default:
-                        break;
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onMessageClick(Context context, View view, Message message) {
-                return false;
-            }
-            @Override
-            public boolean onMessageLinkClick(Context context, String s, Message message) {
-                return false;
-            }
-            @Override
-            public boolean onMessageLongClick(Context context, View view, Message message) {
-
-                return false;
-            }
-        });
 
     }
+
+
+
 
     private void initHear() {
         setHeadStatusBar();
@@ -175,8 +120,8 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
         switch (v.getId()) {
             case R.id.send_group_chat:
 //                startActivity(new Intent(getActivity(), SelectContactActivity.class));
-                Intent intent=new Intent(getActivity(),SelectContactActivity.class);
-                intent.putExtra("addGroupType",0);
+                Intent intent = new Intent(getActivity(), SelectContactActivity.class);
+                intent.putExtra("addGroupType", 0);
                 startActivity(intent);
 
                 break;
@@ -208,6 +153,7 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
     }
 
     private ConversationListFragment createConversationList() {
+        RongIM.getInstance().setMessageAttachedUserInfo(true);
         ConversationListFragment listFragment = new ConversationListFragment();
         Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversationlist")

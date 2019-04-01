@@ -2,6 +2,7 @@ package com.zxjk.duoduo.ui.msgpage;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
 import io.rong.push.notification.PushNotificationMessage;
 
 
@@ -36,7 +38,7 @@ import io.rong.push.notification.PushNotificationMessage;
  * @// TODO: 2019\3\20 0020 个人信息详情页，包含删除的dialog等部分
  */
 @SuppressLint("CheckResult")
-public class FriendDetailsActivity extends BaseActivity implements View.OnClickListener, CommonPopupWindow.ViewInterface {
+public class FriendDetailsActivity extends BaseActivity implements View.OnClickListener, CommonPopupWindow.ViewInterface, RongIM.UserInfoProvider {
     /**
      * 标题布局
      */
@@ -122,7 +124,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_people_information);
         ButterKnife.bind(this);
-
+        RongIM.setUserInfoProvider(this, false);
         initUI();
         int type = 0;
         //这个模块需要添加数据绑定
@@ -215,11 +217,22 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.m_people_information_send_to_message:
                 if (intentType == 0) {
+
+                    RongIM.getInstance().setCurrentUserInfo(new UserInfo(friendInfoResponse.getId(),friendInfoResponse.getNick(),Uri.parse(friendInfoResponse.getHeadPortrait())));
+                    RongIM.getInstance().setMessageAttachedUserInfo(true);
+                    RongIM.getInstance().refreshUserInfoCache(new UserInfo(friendInfoResponse.getId(), friendInfoResponse.getNick(), Uri.parse(friendInfoResponse.getHeadPortrait())));
                     RongIM.getInstance().startPrivateChat(this, friendInfoResponse.getId(), friendInfoResponse.getNick());
-//                    RongIM.getInstance().sendMessage("sss", "您有一条信息未接受", "dfad",);
                 } else if (intentType == 1) {
+
+                    RongIM.getInstance().setCurrentUserInfo(new UserInfo(friendInfo.getId(),friendInfo.getNick(),Uri.parse(friendInfo.getHeadPortrait())));
+                    RongIM.getInstance().setMessageAttachedUserInfo(true);
+                    RongIM.getInstance().refreshUserInfoCache(new UserInfo(friendInfo.getId(), friendInfo.getNick(), Uri.parse(friendInfo.getHeadPortrait())));
                     RongIM.getInstance().startPrivateChat(this, friendInfo.getId(), friendInfo.getNick());
                 } else {
+
+                    RongIM.getInstance().setCurrentUserInfo(new UserInfo(contactResponse.getId(),contactResponse.getNick(),Uri.parse(contactResponse.getHeadPortrait())));
+                    RongIM.getInstance().setMessageAttachedUserInfo(true);
+                    RongIM.getInstance().refreshUserInfoCache(new UserInfo(contactResponse.getId(), contactResponse.getNick(), Uri.parse(contactResponse.getHeadPortrait())));
                     RongIM.getInstance().startPrivateChat(this, contactResponse.getId(), contactResponse.getNick());
                 }
                 break;
@@ -296,5 +309,12 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
     protected void onStop() {
         super.onStop();
         finish();
+    }
+
+    @Override
+    public UserInfo getUserInfo(String s) {
+        Uri uri=Uri.parse(Constant.friendInfoResponse.getHeadPortrait());
+
+        return new UserInfo(contactResponse.getId(),contactResponse.getNick(),uri);
     }
 }
