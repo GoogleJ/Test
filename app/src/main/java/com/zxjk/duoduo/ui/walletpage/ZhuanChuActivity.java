@@ -14,12 +14,15 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.SendTransactionService;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.SelectContactActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.utils.MD5Utils;
+import com.zxjk.duoduo.weight.dialog.SafeInputDialog;
 
 import java.text.DecimalFormat;
 
@@ -39,10 +42,14 @@ public class ZhuanChuActivity extends BaseActivity implements SeekBar.OnSeekBarC
     private EditText etWalletAddress;
     private EditText etCount;
 
+    private SafeInputDialog safeInputDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_zhuan_chu);
+
+        safeInputDialog = new SafeInputDialog(this);
 
         seekZhuanchu = findViewById(R.id.seekZhuanchu);
         etCount = findViewById(R.id.etCount);
@@ -53,6 +60,7 @@ public class ZhuanChuActivity extends BaseActivity implements SeekBar.OnSeekBarC
 
         seekZhuanchu.setMax(1000);
         seekZhuanchu.setOnSeekBarChangeListener(this);
+        seekZhuanchu.setProgress(0);
     }
 
     //选择联系人
@@ -81,15 +89,40 @@ public class ZhuanChuActivity extends BaseActivity implements SeekBar.OnSeekBarC
             ToastUtils.showShort(R.string.inputZhuanChuCount);
             return;
         }
+
+        if (seekZhuanchu.getProgress() == 0) {
+            ToastUtils.showShort(R.string.inputGasPrice);
+            return;
+        }
+
+        String gasPrice = tvKuanggongPrice.getText().toString().replace("≈", "").replace("ether", "").trim();
+        if (type.equals("1")) {
+            //HKB
+            if (!(Double.valueOf(gasPrice) <= Double.valueOf(Constant.walletResponse.getBalanceEth()) && Double.valueOf(etCount.getText().toString().trim()) <= Double.valueOf(Constant.walletResponse.getBalanceHkb()))) {
+                ToastUtils.showShort(R.string.wronginput);
+                return;
+            }
+        } else {
+            //ETH
+            if (!((Double.valueOf(etCount.getText().toString().trim()) + Double.valueOf(gasPrice)) <= Double.valueOf(Constant.walletResponse.getBalanceEth()))) {
+                ToastUtils.showShort(R.string.wronginput);
+                return;
+            }
+        }
+
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .signTransaction(Constant.currentUser.getPayPwd()
-                        , type, Constant.currentUser.getWalletAddress(),
-                        walletAddress, tvKuanggongPrice.getText().toString(), count, "", Constant.currentUser.getDuoduoId())
+                .signTransaction(MD5Utils.getMD5("123456"), type, Constant.currentUser.getWalletAddress(),
+                        walletAddress, gasPrice, count, Constant.walletResponse.getWalletKeystore(), Constant.currentUser.getDuoduoId())
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.normalTrans())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .subscribe(s -> {
-
+                    Intent intent = new Intent(this, SendTransactionService.class);
+                    intent.putExtra("arg1", s.getTransactionHash());
+                    intent.putExtra("arg2", s.getRawTransaction());
+                    startService(intent);
+                    ToastUtils.showShort(R.string.zhuanchusuccess);
+                    finish();
                 }, this::handleApiError);
     }
 
@@ -99,8 +132,8 @@ public class ZhuanChuActivity extends BaseActivity implements SeekBar.OnSeekBarC
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        tvKuanggongPrice.setText("≈" + new DecimalFormat("#.0000").format((progress / 1000f * 0.006)) + " ether");
-        tvGwei.setText(new DecimalFormat("#.00").format((progress / 1000f * 100)) + " gwei");
+        tvKuanggongPrice.setText("≈" + new DecimalFormat("#0.0000").format((progress / 1000f * 0.006)) + " ether");
+        tvGwei.setText(new DecimalFormat("#0.00").format((progress / 1000f * 100)) + " gwei");
     }
 
     @Override

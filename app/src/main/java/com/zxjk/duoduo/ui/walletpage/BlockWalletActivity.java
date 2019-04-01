@@ -12,6 +12,7 @@ import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.CreateWalletResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
@@ -58,10 +59,11 @@ public class BlockWalletActivity extends BaseActivity {
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(response -> {
                     ETHmoney1 = response.getBalanceEth() + "ETH";
-                    ETHmoney2 = "≈￥ " + new DecimalFormat("#.00").format(response.getExchange());
+                    ETHmoney2 = "≈￥ " + new DecimalFormat("#0.00").format(response.getExchange());
                     tvBlockWalletETH1.setText(ETHmoney1);
                     tvBlockWalletETH2.setText(ETHmoney2);
                     tvBlockWalletBalance.setText(response.getBalanceHkb());
+                    Constant.walletResponse = response;
                 }, this::handleApiError);
     }
 
@@ -86,5 +88,11 @@ public class BlockWalletActivity extends BaseActivity {
 
     public void jump2List(View view) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Constant.walletResponse = new CreateWalletResponse();
     }
 }

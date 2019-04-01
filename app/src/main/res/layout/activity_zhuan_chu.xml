@@ -156,9 +156,8 @@
             android:layout_marginTop="16dp"
             android:background="@null"
             android:hint="@string/inputZhuanChuCount"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:lines="1"
-            android:maxLength="2"
             android:singleLine="true"
             android:textSize="15sp" />
 

@@ -15,6 +15,10 @@ import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.response.PayInfoResponse;
 import com.zxjk.duoduo.network.response.RedPackageResponse;
 import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
+import com.zxjk.duoduo.network.response.SearchCustomerInfoResponse;
+import com.zxjk.duoduo.network.response.SearchResponse;
+import com.zxjk.duoduo.network.response.SignHkbOrHkExchangeResponse;
+import com.zxjk.duoduo.network.response.SignTransactionResponse;
 
 import java.util.List;
 
@@ -635,7 +639,7 @@ public interface Api {
      */
     @POST("duoduo/wallet/signTransaction")
     @FormUrlEncoded
-    Observable<BaseResponse<String>>
+    Observable<BaseResponse<SignTransactionResponse>>
     signTransaction(@Field("payPwd") String payPwd,
                     @Field("type") String type,
                     @Field("fromaddress") String fromaddress,
@@ -644,6 +648,21 @@ public interface Api {
                     @Field("number") String number,
                     @Field("keyStore") String keyStore,
                     @Field("duoduoId") String duoduoId);
+
+    @POST("duoduo/wallet/sendTransaction")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> sendTransaction(@Field("transactionHash") String arg1, @Field("rawTransaction") String arg2);
+
+    @POST("duoduo/wallet/signHkbOrHkExchange")
+    @FormUrlEncoded
+    Observable<BaseResponse<SignHkbOrHkExchangeResponse>> signHkbOrHkExchange(@Field("payPwd") String payPwd, @Field("type") String type, @Field("address") String address,
+                                                                              @Field("gasPrice") String gasPrice, @Field("number") String number,
+                                                                              @Field("keyStore") String keyStore, @Field("duoduoId") String duoduoId);
+
+    @POST("duoduo/wallet/sendHkbOrHkExchange")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> sendHkbOrHkExchange(@Field("type") String type, @Field("number") String number,
+                                                         @Field("transactionHash") String transactionHash, @Field("rawTransaction") String rawTransaction);
 
     /**
      * 个人对个人进行发送红包

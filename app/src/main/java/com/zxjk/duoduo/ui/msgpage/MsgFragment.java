@@ -55,8 +55,7 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
         initConversationList(null);
 
 
-        initRongIM();
-
+//        initRongIM();
         return rootView;
     }
 
@@ -221,5 +220,4 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
     public void setHeadTitle(String title) {
         ((TextView) rootView.findViewById(R.id.tv_head_title)).setText(title);
     }
-
 }

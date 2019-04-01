@@ -1,31 +1,31 @@
 package com.zxjk.duoduo.network.response;
 
-public class SignTransactionResponse {
+public class SignHkbOrHkExchangeResponse {
 
     /**
      * id :
-     * customerId : 6
-     * duoduoId : 10000006
+     * customerId : 44
+     * duoduoId : 10420203
      * blockNumber :
-     * createTime : -646942495
-     * transactionHash : 0x85218b01b938dc0050b744aaf5af8c2bacb64ba31c8cbf8297fb0f9185760d2e
-     * nonce : 10
+     * createTime : -633989943
+     * transactionHash : 0xf667d9e4d1a6293d2f76a5b39f85e127683e253d8998b838c85dad7b4fa8af6f
+     * nonce : 5
      * blockHash :
-     * fromAddress : 0x51F027C78d4bF6bf622E5A02EfBdB395850beD84
-     * toAddress : 0x023328f0dFb1d1804C1FBFA89A26245828F00033
-     * balance : 0.0000001
-     * gas : 21004
-     * gasPrice : 0.0000000000002
+     * fromAddress : 0x9E5FE477c68aC516D92C999cF5569e9473D1d96c
+     * toAddress : 0x51F027C78d4bF6bf622E5A02EfBdB395850beD84
+     * balance : 0.01
+     * gas : 38015
+     * gasPrice : 0.0000000123
      * isError :
      * txreceiptStatus :
-     * contractAddress :
-     * gasUsed : 0.0000000042008
+     * contractAddress : 0xD9086f7d953f644B581429bb688E0f7fDFBD3e7f
+     * gasUsed : 0.0004675845
      * isDelete :
-     * tokenName : ETH
-     * tokenSymbol : ETH
-     * tokenDecimal :
-     * serialType : 0
-     * rawTransaction : 0xf8670a83030d4082520c94023328f0dfb1d1804c1fbfa89a26245828f0003385174876e8000077a0c92b6ee5162dacd0f43cdeb38bf318b21f8bb968406c5539aa8a83ac31e5995ba02cd3a8ab41f4927d664fc1f12b33d9d6cfb369ef38c9d3494e224ebb409fb8af
+     * tokenName : HKB
+     * tokenSymbol : HKB
+     * tokenDecimal : 2
+     * serialType : 3
+     * rawTransaction : 0xf8a9058502dd231b0082947f94d9086f7d953f644b581429bb688e0f7fdfbd3e7f80b844a9059cbb00000000000000000000000051f027c78d4bf6bf622e5a02efbdb395850bed84000000000000000000000000000000000000000000000000000000000000000177a0f2c5a7189a680ea54c740115593b347809134fae4b70564325713f8a6e4f435ea02c418654221141cb670728dd27d6518575101c16d395b053c553255e7e095417
      * inOrOut :
      * isTimeout :
      */

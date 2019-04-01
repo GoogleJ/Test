@@ -3,6 +3,8 @@ package com.zxjk.duoduo;
 import com.blankj.utilcode.util.DeviceUtils;
 import com.zxjk.duoduo.bean.AddPayInfoBean;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
+import com.zxjk.duoduo.bean.VerifiedBean;
+import com.zxjk.duoduo.network.response.CreateWalletResponse;
 import com.zxjk.duoduo.network.response.GroupChatResponse;
 import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.response.LoginResponse;
@@ -57,5 +59,7 @@ public class Constant {
     public static FriendInfoResponse friendInfoResponse=new FriendInfoResponse();
 
 
+
+    public static CreateWalletResponse walletResponse;
 
 }

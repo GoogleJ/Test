@@ -35,11 +35,13 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:gravity="center_vertical"
+        android:onClick="changeType"
         android:orientation="horizontal"
         android:paddingTop="16dp"
         android:paddingBottom="16dp">
 
         <TextView
+            android:id="@+id/tvHuaZhuan3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -48,7 +50,7 @@
             android:gravity="center"
             android:text="@string/blockWallet"
             android:textColor="@color/themecolor"
-            android:textSize="17sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -61,6 +63,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/tvHuaZhuan4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -69,7 +72,7 @@
             android:gravity="center"
             android:text="@string/balance"
             android:textColor="@color/themecolor"
-            android:textSize="17sp" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -93,6 +96,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/tvHuaZhuan1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -101,6 +105,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/tvHuaZhuanBlock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="5555HKB"
@@ -121,6 +126,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/tvHuaZhuan2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -129,6 +135,7 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/tvHuaZhuanBlockWallet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2.5HK"
@@ -162,13 +169,14 @@
             android:padding="12dp">
 
             <EditText
+                android:id="@+id/etHuaZhuanCount"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@null"
                 android:hint="@string/inputhuazhuancount"
                 android:imeOptions="actionDone"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:textSize="15sp" />
 
             <TextView
@@ -176,6 +184,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:background="@drawable/shape_bac_huazhuan_all"
+                android:onClick="huazhuanAll"
                 android:paddingStart="8dp"
                 android:paddingTop="4dp"
                 android:paddingEnd="8dp"
@@ -192,6 +201,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/tvHuaZhuan5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="48dp"
@@ -201,6 +211,7 @@
                 android:textColor="@color/themecolor" />
 
             <TextView
+                android:id="@+id/tvHuaZhuanReceiveBalance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -217,6 +228,7 @@
         android:background="#F8F8F8" />
 
     <LinearLayout
+        android:id="@+id/llHuaZhuanType3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -236,9 +248,10 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/tvHuaZhuanGasPrice1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="~~0.000003"
+                android:text="≈0.0000 ether"
                 android:textColor="@color/textcolor3" />
 
         </LinearLayout>
@@ -266,17 +279,46 @@
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/seekHuaZhuan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:thumb="@drawable/ic_seek_thumb" />
 
         <TextView
+            android:id="@+id/tvHuaZhuanGasPrice2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="5.00 gwei"
+            android:text="0.00 gwei"
             android:textColor="@color/textcolor3" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llHuaZhuanType2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="12dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/poundage"
+            android:textColor="@color/themecolor"
+            android:textSize="15sp" />
+
+        <TextView
+            android:text="0"
+            android:id="@+id/tvHuaZhuanPoundage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/themecolor"
+            android:textSize="15sp" />
 
     </LinearLayout>
 
@@ -288,7 +330,7 @@
         android:layout_marginRight="40dp"
         android:background="@drawable/selector_login_btn_click_bg"
         android:onClick="submit"
-        android:text="@string/rc_cs_submit"
+        android:text="@string/huazhuancommit"
         android:textSize="17sp" />
 
     <Button

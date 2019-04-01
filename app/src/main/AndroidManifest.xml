@@ -35,7 +35,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.walletpage.ChooseCoinActivity"></activity>
+        <activity android:name=".ui.walletpage.ChooseCoinActivity" />
         <activity android:name=".ui.walletpage.BlockOrderDetailActivity" />
         <activity android:name=".ui.walletpage.BlockETHOrders" />
         <activity android:name=".ui.walletpage.HuaZhuanActivity" />
@@ -361,6 +361,8 @@
         <!--</provider>-->
 
         <service android:name=".RegisterBlockWalletService" />
+        <service android:name=".SendTransactionService" />
+        <service android:name=".SendHkbOrHkExchangeService" />
     </application>
 
 </manifest>
