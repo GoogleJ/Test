@@ -27,6 +27,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.push.notification.PushNotificationMessage;
 
 
 /**
@@ -212,7 +214,14 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.m_people_information_send_to_message:
-                RongIM.getInstance().startPrivateChat(this, "31", "标题");
+                if (intentType == 0) {
+                    RongIM.getInstance().startPrivateChat(this, friendInfoResponse.getId(), friendInfoResponse.getNick());
+//                    RongIM.getInstance().sendMessage("sss", "您有一条信息未接受", "dfad",);
+                } else if (intentType == 1) {
+                    RongIM.getInstance().startPrivateChat(this, friendInfo.getId(), friendInfo.getNick());
+                } else {
+                    RongIM.getInstance().startPrivateChat(this, contactResponse.getId(), contactResponse.getNick());
+                }
                 break;
             case R.id.m_people_information_voice_calls:
                 ToastUtils.showShort("此功能暂未实现");

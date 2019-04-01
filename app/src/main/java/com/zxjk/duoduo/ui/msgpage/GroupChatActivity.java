@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Locale;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.view.menu.MenuAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -93,16 +94,9 @@ public class GroupChatActivity extends BaseActivity implements TextWatcher {
         mGroupChatRecyclerView.setAdapter(groupChatAdapter);
         groupChatAdapter.notifyDataSetChanged();
         groupChatAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-//            //点击事件 跳转到群聊天界面
-//           RongIM.getInstance().startConversation(this,Conversation.ConversationType.GROUP,groupChatAdapter.getData().get(position).getId(),groupChatAdapter.getData().get(position).getGroupNikeName());
-//            startActivity(new Intent(this,ConversationActivity.class));
 
-            GroupChatResponse groupChatResponse=groupChatAdapter.getData().get(position);
-            Intent intent=new Intent(this, GroupChatInformationActivity.class);
-            intent.putExtra("groupChatInformation",groupChatResponse);
-            Constant.groupId=groupChatResponse.getId();
-            startActivity(intent);
-
+            Constant.groupResponse= groupChatAdapter.getData().get(position);
+            RongIM.getInstance().startGroupChat(this, groupChatAdapter.getData().get(position).getId(),groupChatAdapter.getData().get(position).getGroupNikeName());
 
         });
 

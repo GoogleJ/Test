@@ -21,6 +21,7 @@ import androidx.annotation.Nullable;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import io.rong.imkit.RongIM;
 import top.zibin.luban.Luban;
 
 @SuppressLint({"CheckResult", "Registered"})

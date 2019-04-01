@@ -3,6 +3,8 @@ package com.zxjk.duoduo;
 import com.blankj.utilcode.util.DeviceUtils;
 import com.zxjk.duoduo.bean.AddPayInfoBean;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
+import com.zxjk.duoduo.network.response.GroupChatResponse;
+import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.response.LoginResponse;
 
 public class Constant {
@@ -43,6 +45,11 @@ public class Constant {
      * 群Id
      */
     public static String groupId="";
+
+    /**
+     * 点击的群的详细信息
+     */
+    public static GroupChatResponse groupResponse=new GroupChatResponse();
 
     /**
      * 获取好友列表

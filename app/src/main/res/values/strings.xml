@@ -430,6 +430,6 @@
     <string name="please_add_friend">请先去添加好友</string>
     <string name="add_friend_successful">添加好友成功</string>
     <string name="app_prompt_text">你还没有其他好友呐！</string>
-    <string name="add_btn">添加</string>
+    <string name="add_btn">未添加</string>
 
 </resources>

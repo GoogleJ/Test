@@ -14,6 +14,7 @@ import com.zxjk.duoduo.ui.minepage.MineFragment;
 import com.zxjk.duoduo.ui.msgpage.MsgFragment;
 import com.zxjk.duoduo.ui.walletpage.WalletFragment;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import io.rong.imkit.RongIM;
@@ -27,7 +28,7 @@ import static com.google.android.material.tabs.TabLayout.MODE_FIXED;
  *
  * @author Administrator
  */
-public class HomeActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
+public class HomeActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener {
 
     BottomNavigationBar m_bottom_bar;
     FrameLayout fragment_content;

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
@@ -82,21 +83,7 @@ public class NewFriendActivity extends BaseActivity {
             TextView mark = vp.findViewById(R.id.m_item_new_friend_message_label);
             switch (view.getId()) {
                 case R.id.m_item_new_friend_type_btn:
-                    mAdapter.getData().get(position).setStatus("0");
-                    if ("0".equals(mAdapter.getData().get(position).getStatus())){
-                        typeBtn.setText(getString(R.string.add_btn));
-                        typeBtn.setBackgroundColor(getColor(R.color.head_ok_pressed_bg));
-                        typeBtn.setTextColor(getColor(R.color.themecolor));
-                        mAdapter.getData().get(position).setStatus("1");
-                    }else{
-                        typeBtn.setBackgroundColor(Color.WHITE);
-                        typeBtn.setText(getString(R.string.m_item_contact_type_text));
-                        typeBtn.setTextColor(Color.GRAY);
-                        typeBtn.setEnabled(false);
-                        addFriend(mAdapter.getData().get(position).getId(), mark.getText().toString());
-                    }
-
-
+                    addFriend(mAdapter.getData().get(position).getId(), mark.getText().toString());
                     break;
                 case R.id.m_add_btn_layout:
                     Intent intent = new Intent(NewFriendActivity.this, AddFriendDetailsActivity.class);
@@ -168,6 +155,7 @@ public class NewFriendActivity extends BaseActivity {
                                 if (s.get(i).getId().equals(friendInfoResponse.getId()) && s.get(i).getId().equals(Constant.userId) && !TextUtils.isEmpty(friendInfoResponse.getId())) {
                                     mAdapter.getData().remove(i);
                                 } else {
+                                    LogUtils.d("DEBUG", s.toString());
                                     mAdapter.addData(s.get(i));
                                     mAdapter.notifyDataSetChanged();
                                 }

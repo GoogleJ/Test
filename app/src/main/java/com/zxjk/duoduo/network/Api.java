@@ -13,6 +13,7 @@ import com.zxjk.duoduo.network.response.GroupChatResponse;
 import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.response.PayInfoResponse;
+import com.zxjk.duoduo.network.response.RedPackageResponse;
 import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
 
 import java.util.List;
@@ -599,15 +600,39 @@ public interface Api {
             @Field("customerId") String customerId
     );
 
+    /**
+     * 创建钱包
+     * @param customerDuoDuoId
+     * @return
+     */
     @POST("duoduo/wallet/createWallet")
     @FormUrlEncoded
     Observable<BaseResponse<CreateWalletResponse>> createWallet(@Field("customerDuoDuoId") String customerDuoDuoId);
 
+    /**
+     * 查看eth转账记录
+     * @param address
+     * @param page
+     * @param offset
+     * @return
+     */
     @POST("duoduo/wallet/getTransferEth")
     @FormUrlEncoded
     Observable<BaseResponse<GetTransferEthResponse>> getTransferEth(@Field("address") String address, @Field("page") String page, @Field("offset") String offset);
 
 
+    /**
+     * 转账
+     * @param payPwd
+     * @param type
+     * @param fromaddress
+     * @param toaddress
+     * @param gasPrice
+     * @param number
+     * @param keyStore
+     * @param duoduoId
+     * @return
+     */
     @POST("duoduo/wallet/signTransaction")
     @FormUrlEncoded
     Observable<BaseResponse<String>>
@@ -619,5 +644,16 @@ public interface Api {
                     @Field("number") String number,
                     @Field("keyStore") String keyStore,
                     @Field("duoduoId") String duoduoId);
+
+    /**
+     * 个人对个人进行发送红包
+     * @param data
+     * @return
+     */
+    @POST("duoduo/redPackage/sendSingleRedPackage")
+    @FormUrlEncoded
+    Observable<BaseResponse<RedPackageResponse>> sendSingleRedPackage(
+            @Field("data")String data
+    );
 
 }

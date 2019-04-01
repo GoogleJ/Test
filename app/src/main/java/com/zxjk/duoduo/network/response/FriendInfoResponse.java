@@ -88,6 +88,39 @@ public class FriendInfoResponse implements Serializable {
     public FriendInfoResponse() {
 
     }
+
+    @Override
+    public String toString() {
+        return "FriendInfoResponse{" +
+                "id='" + id + '\'' +
+                ", duoduoId='" + duoduoId + '\'' +
+                ", nick='" + nick + '\'' +
+                ", realname='" + realname + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", password='" + password + '\'' +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                ", headPortrait='" + headPortrait + '\'' +
+                ", sex='" + sex + '\'' +
+                ", signature='" + signature + '\'' +
+                ", walletAddress='" + walletAddress + '\'' +
+                ", idCard='" + idCard + '\'' +
+                ", isShowRealname='" + isShowRealname + '\'' +
+                ", updateTime='" + updateTime + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", isDelete='" + isDelete + '\'' +
+                ", token='" + token + '\'' +
+                ", remark='" + remark + '\'' +
+                ", rongToken='" + rongToken + '\'' +
+                ", payPwd='" + payPwd + '\'' +
+                ", isFirstLogin='" + isFirstLogin + '\'' +
+                ", renegeNumber='" + renegeNumber + '\'' +
+                ", isConfine='" + isConfine + '\'' +
+                ", sortLetters='" + sortLetters + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
+
     public String getStatus() {
         return status;
     }

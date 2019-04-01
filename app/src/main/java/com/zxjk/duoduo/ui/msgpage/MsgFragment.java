@@ -26,6 +26,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
+import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
@@ -54,6 +55,7 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
 
 
         initRongIM();
+
         return rootView;
     }
 
@@ -67,14 +69,13 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
 
                        break;
                    case PRIVATE:
-                       RongIM.getInstance().startPrivateChat(getContext(),"","标题");
-                       startActivity(new Intent(getActivity(),ConversationActivity.class));
+                       RongIM.getInstance().startPrivateChat(getContext(),Constant.friendInfoResponse.getId(),Constant.friendInfoResponse.getNick());
                        break;
                    case DISCUSSION:
                        break;
                    case GROUP:
-                       RongIM.getInstance().startGroupChat(getContext(), Constant.groupId,"群名称");
-                       startActivity(new Intent(getActivity(),ConversationActivity.class));
+                       RongIM.getInstance().startGroupChat(getContext(),Constant.groupResponse.getId(),Constant.groupResponse.getGroupNikeName());
+
                        break;
                    case SYSTEM:
                        break;
@@ -89,15 +90,14 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
                 switch (conversationType){
                     case NONE:
 
-                        RongIM.getInstance().startGroupChat(getContext(),Constant.groupId,"群名称");
                         break;
                     case PRIVATE:
-                        RongIM.getInstance().startPrivateChat(getContext(),"31","标题");
-                        startActivity(new Intent(getActivity(),ConversationActivity.class));
+                        RongIM.getInstance().startPrivateChat(getContext(),Constant.friendInfoResponse.getId(),Constant.friendInfoResponse.getNick());
                         break;
                     case DISCUSSION:
                         break;
                     case GROUP:
+                        RongIM.getInstance().startGroupChat(getContext(),Constant.groupResponse.getId(),Constant.groupResponse.getGroupNikeName());
                         break;
                     case SYSTEM:
                         break;
@@ -214,7 +214,7 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
                 //设置私聊会话是否聚合显示
                 .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false")
                 //群组
-                .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "true")
+                .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "false")
                 //公共服务号
                 .appendQueryParameter(Conversation.ConversationType.PUBLIC_SERVICE.getName(), "true")
                 //订阅号
@@ -275,4 +275,5 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
     public void setHeadTitle(String title) {
         ((TextView) rootView.findViewById(R.id.tv_head_title)).setText(title);
     }
+
 }

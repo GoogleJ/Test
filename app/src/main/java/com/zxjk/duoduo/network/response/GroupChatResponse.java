@@ -17,6 +17,24 @@ public class GroupChatResponse implements Serializable {
     private String isInviteConfirm;
     private String headPortrait;
 
+    public GroupChatResponse(GroupChatResponse data ) {
+        this.id =data. id;
+        this.goupType =data. goupType;
+        this.groupNikeName =data. groupNikeName;
+        this.groupHeadPortrait =data. groupHeadPortrait;
+        this.groupSign =data. groupSign;
+        this.groupNotice =data. groupNotice;
+        this.groupOwnerId =data. groupOwnerId;
+        this.updateTime =data. updateTime;
+        this.createTime =data. createTime;
+        this.isDelete =data. isDelete;
+        this.isInviteConfirm =data. isInviteConfirm;
+        this.headPortrait =data. headPortrait;
+    }
+
+    public GroupChatResponse() {
+
+    }
 
     public String getId() {
         return id;
