@@ -113,7 +113,7 @@
     <string name="update_rename">修改备注</string>
     <string name="recommend_to_friend">推荐给好友</string>
     <string name="m_delete_friend_constant">删除联系人</string>
-    <string name="m_delete_friend_label">将联系人“%1$3d”，删除，同时删除与个该联系人的聊天记录</string>
+    <string name="m_delete_friend_label">将联系人“%1$s”，删除，同时删除与个该联系人的聊天记录</string>
     <string name="m_cancel_btn">取消</string>
     <string name="m_modify_notes_title_bar">备注</string>
     <string name="m_modify_notes_right_title_bar">确定</string>
@@ -426,5 +426,10 @@
     <string name="zhuanru">转入</string>
     <string name="choosecoin">币种选择</string>
     <string name="inputzhuanchucount">请输入转出数量</string>
+    <string name="input_search_edit">请输入搜索内容</string>
+    <string name="please_add_friend">请先去添加好友</string>
+    <string name="add_friend_successful">添加好友成功</string>
+    <string name="app_prompt_text">你还没有其他好友呐！</string>
+    <string name="add_btn">添加</string>
 
 </resources>

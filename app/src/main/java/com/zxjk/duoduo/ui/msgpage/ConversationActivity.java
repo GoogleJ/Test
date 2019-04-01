@@ -7,6 +7,10 @@ import android.view.View;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.weight.TitleBar;
 
+/**
+ * @author Administrator
+ * @// TODO: 2019\4\1 0001 单聊页面 
+ */
 public class ConversationActivity extends FragmentActivity {
 
     TitleBar titleBar;

@@ -3,7 +3,6 @@ package com.zxjk.duoduo.ui.grouppage;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,10 +13,8 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.AllGroupMembersResponse;
-import com.zxjk.duoduo.network.response.FriendListResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.ui.grouppage.adapter.AddGroupTopAdapter;
 import com.zxjk.duoduo.ui.grouppage.adapter.AddOrDelAdapter;
 import com.zxjk.duoduo.ui.grouppage.adapter.GroupAddOrRemoveAdapter;
 import com.zxjk.duoduo.utils.CommonUtils;
@@ -73,13 +70,13 @@ public class RemoveGroupChatActivity extends BaseActivity {
             topAdapter=new AddOrDelAdapter();
 
             AllGroupMembersResponse response=null;
-            for (AllGroupMembersResponse friendListResponse : list) {
+            for (AllGroupMembersResponse friendInfoResponse : list) {
 
-                if (list.get(position).getId().equals(friendListResponse.getId())) {
+                if (list.get(position).getId().equals(friendInfoResponse.getId())) {
                     response=new AllGroupMembersResponse();
 
-                    response.setId(friendListResponse.getId());
-                    response.setHeadPortrait(friendListResponse.getHeadPortrait());
+                    response.setId(friendInfoResponse.getId());
+                    response.setHeadPortrait(friendInfoResponse.getHeadPortrait());
                     lists.add(response);
                 }
             }

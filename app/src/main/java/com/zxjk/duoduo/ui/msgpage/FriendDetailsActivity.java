@@ -2,23 +2,18 @@ package com.zxjk.duoduo.ui.msgpage;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
-import com.zxjk.duoduo.network.response.FriendListResponse;
-import com.zxjk.duoduo.network.response.LoginResponse;
-import com.zxjk.duoduo.network.response.SearchCustomerInfoResponse;
-import com.zxjk.duoduo.network.response.SearchResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.widget.CommonPopupWindow;
@@ -26,15 +21,13 @@ import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendInformationDialog;
 import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.weight.TitleBar;
 
-import java.io.Serializable;
-
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongIM;
+
 
 /**
  * @author Administrator
@@ -117,9 +110,10 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
     private CommonPopupWindow popupWindow;
 
     DeleteFriendInformationDialog dialog;
-    SearchResponse searchResponse;
-    SearchCustomerInfoResponse searchCustomerInfoResponse;
-    FriendListResponse friendListResponse;
+    FriendInfoResponse friendInfoResponse;
+    FriendInfoResponse friendInfo;
+    FriendInfoResponse contactResponse;
+    int intentType = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -128,63 +122,62 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
         ButterKnife.bind(this);
 
         initUI();
-        int searchDetailsType = 0;
-        int type;//接受类型
+        int type = 0;
+        //这个模块需要添加数据绑定
+        friendInfoResponse = (FriendInfoResponse) getIntent().getSerializableExtra("searchFriendDetails");
+        intentType = getIntent().getIntExtra("intentType", type);
+        friendInfo = (FriendInfoResponse) getIntent().getSerializableExtra("globalSearchFriendDetails");
+        contactResponse = (FriendInfoResponse) getIntent().getSerializableExtra("contactResponse");
 
-        searchResponse = (SearchResponse) getIntent().getSerializableExtra("globalUserDetails");
-        type = getIntent().getIntExtra("searchDetailsType", searchDetailsType);
-        searchCustomerInfoResponse = (SearchCustomerInfoResponse) getIntent().getSerializableExtra("searchFriendDetails");
-
-        if (1 == type) {
-            //这个模块需要添加数据绑定
-            GlideUtil.loadCornerImg(heardIcon, searchCustomerInfoResponse.getHeadPortrait(), 2);
-            userNameText.setText(searchCustomerInfoResponse.getRealname());
-            duoduoId.setText(searchCustomerInfoResponse.getDuoduoId());
-            areaText.setText(searchCustomerInfoResponse.getAddress());
-            phoneText.setText(searchCustomerInfoResponse.getMobile());
-            emailText.setText(searchCustomerInfoResponse.getEmail());
-            sinatureText.setText(searchCustomerInfoResponse.getSignature());
-            walletAddressText.setText(searchCustomerInfoResponse.getWalletAddress());
-            if (sex.equals(searchCustomerInfoResponse.getSex())) {
+        if (intentType == 0) {
+            GlideUtil.loadCornerImg(heardIcon, friendInfoResponse.getHeadPortrait(), 2);
+            userNameText.setText(friendInfoResponse.getNick());
+            duoduoId.setText(friendInfoResponse.getDuoduoId());
+            areaText.setText(friendInfoResponse.getAddress());
+            phoneText.setText(friendInfoResponse.getMobile());
+            emailText.setText(friendInfoResponse.getEmail());
+            sinatureText.setText(friendInfoResponse.getSignature());
+            walletAddressText.setText(friendInfoResponse.getWalletAddress());
+            if (sex.equals(friendInfoResponse.getSex())) {
                 //男
                 genderIcon.setImageDrawable(getDrawable(R.drawable.icon_gender_man));
             } else {
                 genderIcon.setImageDrawable(getDrawable(R.drawable.icon_gender_woman));
             }
-        } else if (0 == type) {
-            //这个模块需要添加数据绑定
-            GlideUtil.loadCornerImg(heardIcon, searchResponse.getHeadPortrait(), 2);
-            userNameText.setText(searchResponse.getRealname());
-            duoduoId.setText(searchResponse.getDuoduoId());
-            areaText.setText(searchResponse.getAddress());
-            phoneText.setText(searchResponse.getMobile());
-            emailText.setText(searchResponse.getEmail());
-            sinatureText.setText(searchResponse.getSignature());
-            walletAddressText.setText(searchResponse.getWalletAddress());
-            if (sex.equals(searchResponse.getSex())) {
+            return;
+        } else if (intentType == 1) {
+            GlideUtil.loadCornerImg(heardIcon, friendInfo.getHeadPortrait(), 2);
+            userNameText.setText(friendInfo.getNick());
+            duoduoId.setText(friendInfo.getDuoduoId());
+            areaText.setText(friendInfo.getAddress());
+            phoneText.setText(friendInfo.getMobile());
+            emailText.setText(friendInfo.getEmail());
+            sinatureText.setText(friendInfo.getSignature());
+            walletAddressText.setText(friendInfo.getWalletAddress());
+            if (sex.equals(friendInfo.getSex())) {
                 //男
                 genderIcon.setImageDrawable(getDrawable(R.drawable.icon_gender_man));
             } else {
                 genderIcon.setImageDrawable(getDrawable(R.drawable.icon_gender_woman));
             }
+            return;
         } else {
-            friendListResponse = (FriendListResponse) getIntent().getSerializableExtra("friendListResponse");
-            GlideUtil.loadCornerImg(heardIcon, friendListResponse.getHeadPortrait(), 2);
-            userNameText.setText(friendListResponse.getRealname());
-            duoduoId.setText(friendListResponse.getDuoduoId());
-            areaText.setText(friendListResponse.getAddress());
-            phoneText.setText(friendListResponse.getMobile());
-            emailText.setText(friendListResponse.getEmail());
-            sinatureText.setText(friendListResponse.getSignature());
-            walletAddressText.setText(friendListResponse.getWalletAddress());
-            if (sex.equals(friendListResponse.getSex())) {
+            GlideUtil.loadCornerImg(heardIcon, contactResponse.getHeadPortrait(), 2);
+            userNameText.setText(contactResponse.getNick());
+            duoduoId.setText(contactResponse.getDuoduoId());
+            areaText.setText(contactResponse.getAddress());
+            phoneText.setText(contactResponse.getMobile());
+            emailText.setText(contactResponse.getEmail());
+            sinatureText.setText(contactResponse.getSignature());
+            walletAddressText.setText(contactResponse.getWalletAddress());
+            if (sex.equals(contactResponse.getSex())) {
                 //男
                 genderIcon.setImageDrawable(getDrawable(R.drawable.icon_gender_man));
             } else {
                 genderIcon.setImageDrawable(getDrawable(R.drawable.icon_gender_woman));
             }
+            return;
         }
-
 
     }
 
@@ -226,7 +219,6 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.update_rename:
                 Intent intent = new Intent(FriendDetailsActivity.this, ModifyNotesActivity.class);
-                intent.putExtra("peopelUserId", friendListResponse.getId());
                 startActivity(intent);
                 break;
             case R.id.recommend_to_friend:
@@ -234,12 +226,28 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.delete_friend:
                 dialog = new DeleteFriendInformationDialog(this);
-                dialog.setOnClickListener(() -> {
-                    FriendDetailsActivity.this.deleteFriend(friendListResponse.getId());
-                    dialog.dismiss();
-                    finish();
+                dialog.setOnClickListener(new DeleteFriendInformationDialog.OnClickListener() {
+                    @Override
+                    public void onDel() {
+                        if (intentType == 0) {
+                            FriendDetailsActivity.this.deleteFriend(friendInfoResponse.getId());
+                        } else if (intentType == 1) {
+                            FriendDetailsActivity.this.deleteFriend(friendInfo.getId());
+                        } else {
+                            FriendDetailsActivity.this.deleteFriend(contactResponse.getId());
+                        }
+                        dialog.dismiss();
+                        FriendDetailsActivity.this.finish();
+                    }
                 });
-                dialog.show();
+                if (intentType == 0) {
+                    dialog.show(friendInfoResponse.getNick());
+                } else if (intentType == 1) {
+                    dialog.show(friendInfo.getNick());
+                } else {
+                    dialog.show(contactResponse.getNick());
+                }
+
                 break;
             default:
                 break;
@@ -270,6 +278,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                     public void accept(String s) throws Exception {
                         ToastUtils.showShort("删除成功");
                         dialog.dismiss();
+
                     }
                 }, this::handleApiError);
     }

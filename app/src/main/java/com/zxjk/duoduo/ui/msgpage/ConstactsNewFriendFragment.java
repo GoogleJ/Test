@@ -1,30 +1,27 @@
 package com.zxjk.duoduo.ui.msgpage;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.FriendListResponse;
+import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.ui.msgpage.adapter.BaseContactAdapter;
 import com.zxjk.duoduo.ui.msgpage.utils.PinyinComparator;
-import com.zxjk.duoduo.ui.msgpage.widget.HoverItemDecoration;
 import com.zxjk.duoduo.ui.msgpage.widget.IndexView;
 import com.zxjk.duoduo.weight.TitleBar;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,11 +31,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.rong.imkit.tools.CharacterParser;
-
 /**
  * @author Administrator
  * @// TODO: 2019\3\20 0020 通讯录
  */
+@SuppressLint("CheckResult")
 public class ConstactsNewFriendFragment extends BaseFragment implements View.OnClickListener {
     @BindView(R.id.m_constacts_new_friend_title_bar)
     TitleBar titleBar;
@@ -49,9 +46,12 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
     IndexView indexView;
     @BindView(R.id.m_constacts_dialog)
     TextView constactsDialog;
+    @BindView(R.id.m_contact_add_friend_number_message)
+    TextView messageNumber;
 
 
     private BaseContactAdapter mAdapter;
+    FriendInfoResponse friendInfoResponse;
 
 
     Unbinder unbinder;
@@ -66,7 +66,7 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
 
     private LinearLayoutManager layoutManager;
 
-    List<FriendListResponse> list = new ArrayList<>();
+    List<FriendInfoResponse> list = new ArrayList<>();
 
 
     public static ConstactsNewFriendFragment newInstance() {
@@ -92,21 +92,24 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
     }
 
     private void initView() {
+        getMyFriendsWaiting();
         characterParser = CharacterParser.getInstance();
         pinyinComparator = new PinyinComparator();
         list = filledData(list);
         layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         //一行代码实现吸顶悬浮的效果
-        mRecyclerView.addItemDecoration(new HoverItemDecoration(getContext(), new HoverItemDecoration.BindItemTextCallback() {
-            @Override
-            public String getItemText(int position) {
-                //悬浮的信息
-                return list.get(position).getSortLetters();
-            }
-        }));
+//        mRecyclerView.addItemDecoration(new HoverItemDecoration(getContext(), new HoverItemDecoration.BindItemTextCallback() {
+//            @Override
+//            public String getItemText(int position) {
+//                //悬浮的信息
+//                return list.get(position).getSortLetters();
+//            }
+//        }));
         mAdapter = new BaseContactAdapter();
+
         getFriendListInfoById();
+
         mRecyclerView.setAdapter(mAdapter);
         initIndexView();
         titleBar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
@@ -116,18 +119,19 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
             }
         });
 
-        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
 
-                FriendListResponse friendListResponse=  mAdapter.getData().get(position);
-                Intent intent=new Intent(getActivity(),FriendDetailsActivity.class);
-                intent.putExtra("searchDetailsType",3);
-                intent.putExtra("friendListResponse",friendListResponse);
-                startActivity(intent);
+            FriendInfoResponse friendInfoResponse=  mAdapter.getData().get(position);
+            Intent intent=new Intent(getActivity(),FriendDetailsActivity.class);
+            intent.putExtra("intentType",2);
+            intent.putExtra("contactResponse",friendInfoResponse);
+            startActivity(intent);
 
-            }
         });
+        if (mAdapter.getData().size()==0){
+            View view=LayoutInflater.from(getContext()).inflate(R.layout.view_app_null_type,null);
+            mAdapter.setEmptyView(view);
+        }
     }
 
     /**
@@ -159,7 +163,7 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
     }
 
 
-    private List<FriendListResponse> filledData(List<FriendListResponse> sortList) {
+    private List<FriendInfoResponse> filledData(List<FriendInfoResponse> sortList) {
         for (int i = 0; i < sortList.size(); i++) {
             if ("".equals(sortList.get(i).getRealname())) {
                 sortList.get(i).setSortLetters("#");
@@ -185,8 +189,8 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.m_constacts_new_friend_group_chat_btn:
-                //ToastUtils.showShort("此功能暂未实现");
-                GroupChatActivity.start(getActivity());//进入群聊界面
+
+                GroupChatActivity.start(getActivity());
                 break;
             case R.id.m_contact_add_friend_btn:
                 startActivity(new Intent(getActivity(), NewFriendActivity.class));
@@ -196,25 +200,56 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
                 AddContactActivity.start(getActivity());
                 break;
             case R.id.m_contact_search_btn:
-                SearchActivity.start(getActivity());
+
+                startActivity(new Intent(getActivity(),SearchActivity.class));
                 break;
             default:
                 break;
         }
     }
 
+    /**
+     * 获取好友列表
+     */
     public void getFriendListInfoById() {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .getFriendListById()
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(friendListResponses -> {
-                    list = friendListResponses;
-                    mAdapter.setNewData(friendListResponses);
-
+                .subscribe(friendInfoResponses -> {
+                    for (int i=0;i<friendInfoResponses.size();i++){
+                        friendInfoResponse=new FriendInfoResponse(friendInfoResponses.get(i));
+                        if (!friendInfoResponses.get(i).getId().equals(Constant.userId)){
+                            list = friendInfoResponses;
+                            mAdapter.setNewData(friendInfoResponses);
+                            Constant.friendInfoResponse=friendInfoResponse;
+                        }else{
+                            if (friendInfoResponses.size()>=0){
+                                friendInfoResponses.remove(i);
+                            }
+                        }
+                    }
                 }, this::handleApiError);
-
+    }
+    /**
+     * 获取待添加好友列表
+     */
+    public void getMyFriendsWaiting() {
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .getMyFirendsWaiting()
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.ioObserver())
+                .compose(RxSchedulers.normalTrans())
+                .subscribe(s -> {
+//                    if (s.size()>0){
+//                        messageNumber.setVisibility(View.VISIBLE);
+//                        messageNumber.setText(String.valueOf(s.size()));
+//                    }else{
+//                        messageNumber.setText("");
+//                        messageNumber.setVisibility(View.GONE);
+//                    }
+                }, this::handleApiError);
     }
 
     @Override
@@ -227,5 +262,11 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
     public void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mAdapter.notifyDataSetChanged();
     }
 }

@@ -3,29 +3,32 @@ package com.zxjk.duoduo.ui.msgpage;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.FriendListResponse;
+import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.NewFriendAdapter;
 import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendDialog;
+import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendInformationDialog;
+import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.weight.TitleBar;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -46,7 +49,10 @@ public class NewFriendActivity extends BaseActivity {
     RecyclerView mRecyclerView;
 
     NewFriendAdapter mAdapter;
-    DeleteFriendDialog dialog;
+    DeleteFriendInformationDialog dialog;
+    FriendInfoResponse friendInfoResponse;
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +60,10 @@ public class NewFriendActivity extends BaseActivity {
         ButterKnife.bind(this);
         initUI();
     }
-    List<FriendListResponse> list=new ArrayList<>();
 
+    List<FriendInfoResponse> list = new ArrayList<>();
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @SuppressLint("WrongConstant")
 
     protected void initUI() {
@@ -65,30 +73,35 @@ public class NewFriendActivity extends BaseActivity {
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
         mAdapter = new NewFriendAdapter();
+        getFriendListById();
         getMyFriendsWaiting();
         mRecyclerView.setAdapter(mAdapter);
-
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-
-            View vp = (View)view.getParent();
-
-            TextView typeBtn=view.findViewById(R.id.m_item_new_friend_type_btn);
-            TextView mark=vp.findViewById(R.id.m_item_new_friend_message_label);
+            View vp = (View) view.getParent();
+            TextView typeBtn = view.findViewById(R.id.m_item_new_friend_type_btn);
+            TextView mark = vp.findViewById(R.id.m_item_new_friend_message_label);
             switch (view.getId()) {
                 case R.id.m_item_new_friend_type_btn:
-                    typeBtn.setBackgroundColor(Color.WHITE);
-                    typeBtn.setText("已添加");
-                    typeBtn.setTextColor(Color.GRAY);
-
-
-                    addFriend(list.get(position).getId(),mark.getText().toString(),position);
+                    mAdapter.getData().get(position).setStatus("0");
+                    if ("0".equals(mAdapter.getData().get(position).getStatus())){
+                        typeBtn.setText(getString(R.string.add_btn));
+                        typeBtn.setBackgroundColor(getColor(R.color.head_ok_pressed_bg));
+                        typeBtn.setTextColor(getColor(R.color.themecolor));
+                        mAdapter.getData().get(position).setStatus("1");
+                    }else{
+                        typeBtn.setBackgroundColor(Color.WHITE);
+                        typeBtn.setText(getString(R.string.m_item_contact_type_text));
+                        typeBtn.setTextColor(Color.GRAY);
+                        typeBtn.setEnabled(false);
+                        addFriend(mAdapter.getData().get(position).getId(), mark.getText().toString());
+                    }
 
 
                     break;
                 case R.id.m_add_btn_layout:
-                    Intent intent=new Intent(NewFriendActivity.this, AddFriendDetailsActivity.class);
-                    intent.putExtra("newFriendActivityUserId",list.get(position).getId());
-                    intent.putExtra("type",1);
+                    Intent intent = new Intent(NewFriendActivity.this, AddFriendDetailsActivity.class);
+                    intent.putExtra("intentAddType", 1);
+                    intent.putExtra("newFriend", mAdapter.getData().get(position));
                     startActivity(intent);
                     break;
                 default:
@@ -97,13 +110,43 @@ public class NewFriendActivity extends BaseActivity {
             mAdapter.notifyDataSetChanged();
         });
         mAdapter.setOnItemChildLongClickListener((adapter, view, position) -> {
-            dialog=new DeleteFriendDialog(NewFriendActivity.this);
-            dialog.show();
+            dialog = new DeleteFriendInformationDialog(NewFriendActivity.this);
+
             dialog.setOnClickListener(() -> deleteMyfirendsWaiting(list.get(position).getId()));
+            dialog.show(list.get(position).getNick());
             return false;
         });
-      textView.setOnClickListener(v -> startActivity(new Intent(NewFriendActivity.this,SearchActivity.class)));
+        if (mAdapter.getData().size() == 0) {
+            View view = LayoutInflater.from(this).inflate(R.layout.view_app_null_type, null);
+            mAdapter.setEmptyView(view);
+        }
+        textView.setOnClickListener(v -> startActivity(new Intent(NewFriendActivity.this, SearchActivity.class)));
     }
+
+    /**
+     * 查询已有的好友列表
+     */
+    public void getFriendListById() {
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .getFriendListById()
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                .compose(RxSchedulers.normalTrans())
+                .subscribe(new Consumer<List<FriendInfoResponse>>() {
+                    @Override
+                    public void accept(List<FriendInfoResponse> friendInfoResponses) throws Exception {
+                        for (int i = 0; i < friendInfoResponses.size(); i++) {
+                            if (friendInfoResponses.size() >= 0) {
+                                friendInfoResponse = new FriendInfoResponse(friendInfoResponses.get(i));
+                            } else {
+                                return;
+                            }
+                        }
+
+                    }
+                }, this::handleApiError);
+    }
+
 
     /**
      * 获取待添加好友列表
@@ -114,50 +157,53 @@ public class NewFriendActivity extends BaseActivity {
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<List<FriendListResponse>>() {
+                .subscribe(new Consumer<List<FriendInfoResponse>>() {
                     @Override
-                    public void accept(List<FriendListResponse> s) throws Exception {
-                        FriendListResponse friendListResponse=null;
-                        for (int i=0;i<s.size();i++){
-                            friendListResponse =s.get(i);
+                    public void accept(List<FriendInfoResponse> s) throws Exception {
+                        list.addAll(s);
+                        for (int i = 0; i < s.size(); i++) {
+                            if (friendInfoResponse == null || friendInfoResponse.getId().equals(null) || friendInfoResponse.getId().equals("")) {
+                                mAdapter.addData(s.get(i));
+                            } else {
+                                if (s.get(i).getId().equals(friendInfoResponse.getId()) && s.get(i).getId().equals(Constant.userId) && !TextUtils.isEmpty(friendInfoResponse.getId())) {
+                                    mAdapter.getData().remove(i);
+                                } else {
+                                    mAdapter.addData(s.get(i));
+                                    mAdapter.notifyDataSetChanged();
+                                }
+                            }
                         }
-                        if (friendListResponse.getId().equals(Constant.userId)){
-                            mAdapter.getData().remove(Constant.userId);
-                            mAdapter.setNewData(s);
-                        }
-                        list=s;
+                        mAdapter.setNewData(s);
                     }
                 }, this::handleApiError);
     }
 
     /**
      * 同意添加
+     *
      * @param friendId
      * @param markName
      */
-    public void addFriend(String friendId,String markName,int position){
+    public void addFriend(String friendId, String markName) {
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .addFriend(friendId,markName)
+                .addFriend(friendId, markName)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
-                    ToastUtils.showShort("添加好友成功");
-                    LogUtils.d("DEBUG",s);
-                    //这里顺便加入值的传递，用好友列表中的id比对获取待添加好友列表的Id，然后进行删除已有的东西
-                    if (mAdapter.getData().size()>=0){
-                        mAdapter.getData().remove(position);
-                        mAdapter.notifyDataSetChanged();
-                    }
-                },this::handleApiError);
+
+                    ToastUtils.showShort(getString(R.string.add_friend_successful));
+
+                }, this::handleApiError);
     }
 
     /**
      * 删除好友申请
+     *
      * @param friendId
      */
 
-    public void deleteMyfirendsWaiting(String friendId){
+    public void deleteMyfirendsWaiting(String friendId) {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .deleteMyfirendsWaiting(friendId)
                 .compose(bindToLifecycle())
@@ -166,8 +212,9 @@ public class NewFriendActivity extends BaseActivity {
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String s) throws Exception {
+                        mAdapter.notifyDataSetChanged();
                     }
-                },this::handleApiError);
+                }, this::handleApiError);
     }
 
 

@@ -58,7 +58,7 @@ public class SelectContactBean {
     private String sortLetters="";
     @Override
     public String toString() {
-        return "FriendListResponse{" +
+        return "FriendInfoResponse{" +
                 "id='" + id + '\'' +
                 ", duoduoId='" + duoduoId + '\'' +
                 ", nick='" + nick + '\'' +

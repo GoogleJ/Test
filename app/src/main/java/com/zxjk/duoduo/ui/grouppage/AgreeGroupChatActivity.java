@@ -68,7 +68,7 @@ public class AgreeGroupChatActivity extends BaseActivity {
     private void requestStoragePermission() {
         String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(this, perms)) {
-            loadWechatBitmap(groupHeader, 9);
+//            loadWechatBitmap(groupHeader, 9);
         } else {
             EasyPermissions.requestPermissions(this, "need storage permission", 1000, perms);
         }
@@ -79,16 +79,16 @@ public class AgreeGroupChatActivity extends BaseActivity {
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
-    private void loadWechatBitmap(ImageView imageView, int count) {
-        CombineBitmap.init(this)
-                .setLayoutManager(new WechatLayoutManager())
-                .setSize(180)
-                .setGap(3)
-                .setGapColor(Color.parseColor("#E8E8E8"))
-                .setUrls(groupResponse.getGroupHeadPortrait())
-                .setImageView(imageView)
-                .build();
-    }
+//    private void loadWechatBitmap(ImageView imageView, int count) {
+//        CombineBitmap.init(this)
+//                .setLayoutManager(new WechatLayoutManager())
+//                .setSize(180)
+//                .setGap(3)
+//                .setGapColor(Color.parseColor("#E8E8E8"))
+//                .setUrls(groupResponse.getGroupHeadPortrait())
+//                .setImageView(imageView)
+//                .build();
+//    }
 
     public void enterGroup(String groupId,String inviterId,String customerIds){
         ServiceFactory.getInstance().getBaseService(Api.class)

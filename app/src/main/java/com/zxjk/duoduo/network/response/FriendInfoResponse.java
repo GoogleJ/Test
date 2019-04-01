@@ -1,10 +1,12 @@
 package com.zxjk.duoduo.network.response;
 
+import java.io.Serializable;
+
 /**
  * @author Administrator
  * @// TODO: 2019\3\21 0021 好友相关实体 
  */
-public class FriendInfoResponse {
+public class FriendInfoResponse implements Serializable {
 
 
     /**
@@ -34,6 +36,7 @@ public class FriendInfoResponse {
     private String realname;
     private String mobile;
     private String password;
+    private String address;
     private String email;
     private String headPortrait;
     private String sex;
@@ -41,22 +44,56 @@ public class FriendInfoResponse {
     private String walletAddress;
     private String idCard;
     private String isShowRealname;
-    private String updataTime;
+    private String updateTime;
     private String createTime;
     private String isDelete;
     private String token;
     private String remark;
+    private String rongToken;
+    private String payPwd;
+    private String isFirstLogin;
+    private String renegeNumber;
+    private String isConfine;
+    private String  sortLetters;
+    private String status;
 
-    public String getAddress() {
-        return address;
+    public FriendInfoResponse(FriendInfoResponse friendInfoResponse) {
+        this.id =friendInfoResponse. id;
+        this.duoduoId =friendInfoResponse. duoduoId;
+        this.nick =friendInfoResponse. nick;
+        this.realname =friendInfoResponse. realname;
+        this.mobile =friendInfoResponse. mobile;
+        this.password =friendInfoResponse. password;
+        this.address =friendInfoResponse. address;
+        this.email =friendInfoResponse. email;
+        this.headPortrait =friendInfoResponse. headPortrait;
+        this.sex =friendInfoResponse. sex;
+        this.signature =friendInfoResponse. signature;
+        this.walletAddress =friendInfoResponse. walletAddress;
+        this.idCard =friendInfoResponse. idCard;
+        this.isShowRealname =friendInfoResponse. isShowRealname;
+        this.updateTime =friendInfoResponse. updateTime;
+        this.createTime =friendInfoResponse. createTime;
+        this.isDelete =friendInfoResponse. isDelete;
+        this.token =friendInfoResponse. token;
+        this.remark =friendInfoResponse. remark;
+        this.rongToken =friendInfoResponse. rongToken;
+        this.payPwd =friendInfoResponse. payPwd;
+        this.isFirstLogin =friendInfoResponse. isFirstLogin;
+        this.renegeNumber =friendInfoResponse. renegeNumber;
+        this.isConfine =friendInfoResponse. isConfine;
+        this.sortLetters =friendInfoResponse. sortLetters;
+        this.status=friendInfoResponse.status;
     }
+    public FriendInfoResponse() {
 
-    public void setAddress(String address) {
-        this.address = address;
     }
-
-    private String address;
-
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getId() {
         return id;
@@ -104,6 +141,14 @@ public class FriendInfoResponse {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getEmail() {
@@ -162,12 +207,12 @@ public class FriendInfoResponse {
         this.isShowRealname = isShowRealname;
     }
 
-    public String getUpdataTime() {
-        return updataTime;
+    public String getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUpdataTime(String updataTime) {
-        this.updataTime = updataTime;
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
     }
 
     public String getCreateTime() {
@@ -200,5 +245,53 @@ public class FriendInfoResponse {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getRongToken() {
+        return rongToken;
+    }
+
+    public void setRongToken(String rongToken) {
+        this.rongToken = rongToken;
+    }
+
+    public String getPayPwd() {
+        return payPwd;
+    }
+
+    public void setPayPwd(String payPwd) {
+        this.payPwd = payPwd;
+    }
+
+    public String getIsFirstLogin() {
+        return isFirstLogin;
+    }
+
+    public void setIsFirstLogin(String isFirstLogin) {
+        this.isFirstLogin = isFirstLogin;
+    }
+
+    public String getRenegeNumber() {
+        return renegeNumber;
+    }
+
+    public void setRenegeNumber(String renegeNumber) {
+        this.renegeNumber = renegeNumber;
+    }
+
+    public String getIsConfine() {
+        return isConfine;
+    }
+
+    public void setIsConfine(String isConfine) {
+        this.isConfine = isConfine;
+    }
+
+    public String getSortLetters() {
+        return sortLetters;
+    }
+
+    public void setSortLetters(String sortLetters) {
+        this.sortLetters = sortLetters;
     }
 }

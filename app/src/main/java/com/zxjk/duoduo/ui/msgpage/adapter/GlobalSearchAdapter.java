@@ -6,10 +6,10 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.SearchResponse;
+import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.utils.GlideUtil;
 
-public class GlobalSearchAdapter extends BaseQuickAdapter<SearchResponse, BaseViewHolder> {
+public class GlobalSearchAdapter extends BaseQuickAdapter<FriendInfoResponse, BaseViewHolder> {
 
     Context context;
 
@@ -19,7 +19,7 @@ public class GlobalSearchAdapter extends BaseQuickAdapter<SearchResponse, BaseVi
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, SearchResponse item) {
+    protected void convert(BaseViewHolder helper, FriendInfoResponse item) {
         helper.setText(R.id.m_item_search_text, item.getRealname())
                 .setText(R.id.m_item_search_dudu_id, item.getDuoduoId())
                 .addOnClickListener(R.id.m_item_search_layout);

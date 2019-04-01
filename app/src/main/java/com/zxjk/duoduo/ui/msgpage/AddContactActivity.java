@@ -50,7 +50,7 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
 //                Intent intent = new Intent(this, ContentActivity.class);
 //                intent.putExtra("tag", 2);
 //                startActivity(intent);
-                startActivity(new Intent(this,PhoneContactActivity.class));
+                startActivity(new Intent(this, PhoneContactActivity.class));
                 break;
             case R.id.m_add_friend_scan_it_btn:
                 QrCodeActivity.start(this);
@@ -59,7 +59,7 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
                 MyQrCodeActivity.start(this);
                 break;
             case R.id.m_add_friend_search_edit:
-                GlobalSearchActivity.start(this);
+                startActivity(new Intent(this, GlobalSearchActivity.class));
                 break;
             default:
                 break;

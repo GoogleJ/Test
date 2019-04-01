@@ -3,9 +3,7 @@ package com.zxjk.duoduo.ui.grouppage;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,8 +14,7 @@ import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.FriendListResponse;
-import com.zxjk.duoduo.network.response.GroupResponse;
+import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.adapter.AddGroupTopAdapter;
@@ -66,7 +63,7 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
 
 
     int position;
-    List<FriendListResponse> lists=new ArrayList<>();
+    List<FriendInfoResponse> lists=new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,11 +72,8 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
 
         fromZhuanChu = getIntent().getBooleanExtra("fromZhuanChu", false);
         initView();
-
     }
-
-    List<FriendListResponse> list = new ArrayList<>();
-
+    List<FriendInfoResponse> list = new ArrayList<>();
     private void initView() {
         titleBarLeftIamge = findViewById(R.id.title_left_image);
         titleRight = findViewById(R.id.title_right);
@@ -94,8 +88,6 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
         recyclerView.setAdapter(mAdapter);
         titleBarLeftIamge.setOnClickListener(this);
         titleRight.setOnClickListener(this);
-
-
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             if (fromZhuanChu) {
                 String walletAddress = list.get(position).getWalletAddress();
@@ -111,19 +103,16 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
             selectRecycler.setLayoutManager(linearLayoutManager);
             topAdapter = new AddGroupTopAdapter();
             this.position = position;
-            FriendListResponse response;
+            FriendInfoResponse response;
+            for (FriendInfoResponse friendInfoResponse : list) {
 
-            for (FriendListResponse friendListResponse : list) {
+                if (list.get(position).getId().equals(friendInfoResponse.getId())) {
+                    response=new FriendInfoResponse();
 
-                if (list.get(position).getId().equals(friendListResponse.getId())) {
-                    response=new FriendListResponse();
-
-                    response.setId(friendListResponse.getId());
-                    response.setHeadPortrait(friendListResponse.getHeadPortrait());
+                    response.setId(friendInfoResponse.getId());
+                    response.setHeadPortrait(friendInfoResponse.getHeadPortrait());
                     lists.add(response);
                 }
-
-
             }
             topAdapter.setNewData(lists);
 
@@ -183,9 +172,12 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(friendListResponses -> {
-                    mAdapter.setNewData(friendListResponses);
-                    list = friendListResponses;
+                .subscribe(new Consumer<List<FriendInfoResponse>>() {
+                    @Override
+                    public void accept(List<FriendInfoResponse> friendInfoResponses) throws Exception {
+                        mAdapter.setNewData(friendInfoResponses);
+                        list = friendInfoResponses;
+                    }
                 }, this::handleApiError);
     }
     /**

@@ -4,7 +4,6 @@ import com.zxjk.duoduo.network.response.AllGroupMembersResponse;
 import com.zxjk.duoduo.network.response.BaseResponse;
 import com.zxjk.duoduo.network.response.CreateWalletResponse;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
-import com.zxjk.duoduo.network.response.FriendListResponse;
 import com.zxjk.duoduo.network.response.GetBalanceHkResponse;
 import com.zxjk.duoduo.network.response.GetNumbeOfTransactionResponse;
 import com.zxjk.duoduo.network.response.GetOverOrderResponse;
@@ -15,8 +14,6 @@ import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.response.PayInfoResponse;
 import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
-import com.zxjk.duoduo.network.response.SearchCustomerInfoResponse;
-import com.zxjk.duoduo.network.response.SearchResponse;
 
 import java.util.List;
 
@@ -126,7 +123,7 @@ public interface Api {
      * @return
      */
     @POST("duoduo/friend/getFriendListById")
-    Observable<BaseResponse<List<FriendListResponse>>> getFriendListById();
+    Observable<BaseResponse<List<FriendInfoResponse>>> getFriendListById();
 
     /**
      * 模糊搜索好友
@@ -136,7 +133,7 @@ public interface Api {
      */
     @POST("duoduo/friend/searchFriend")
     @FormUrlEncoded
-    Observable<BaseResponse<List<SearchResponse>>> searchFriend(
+    Observable<BaseResponse<List<FriendInfoResponse>>> searchFriend(
             @Field("data") String data
     );
 
@@ -148,7 +145,7 @@ public interface Api {
      */
     @POST("duoduo/friend/searchCustomer")
     @FormUrlEncoded
-    Observable<BaseResponse<List<SearchCustomerInfoResponse>>> searchCustomerInfo(
+    Observable<BaseResponse<List<FriendInfoResponse>>> searchCustomerInfo(
             @Field("data") String data
     );
 
@@ -172,7 +169,7 @@ public interface Api {
      * @return
      */
     @POST("duoduo/friend/getMyfriendsWaiting")
-    Observable<BaseResponse<List<FriendListResponse>>> getMyFirendsWaiting();
+    Observable<BaseResponse<List<FriendInfoResponse>>> getMyFirendsWaiting();
 
     /**
      * 同意添加

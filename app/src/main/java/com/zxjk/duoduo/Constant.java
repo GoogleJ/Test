@@ -2,14 +2,13 @@ package com.zxjk.duoduo;
 
 import com.blankj.utilcode.util.DeviceUtils;
 import com.zxjk.duoduo.bean.AddPayInfoBean;
-import com.zxjk.duoduo.bean.VerifiedBean;
-import com.zxjk.duoduo.network.response.GroupChatResponse;
+import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.response.LoginResponse;
 
 public class Constant {
     //阿里OSS上传地址
     public static final String OSS_URL = "https://zhongxingjike.oss-cn-hongkong.aliyuncs.com/upload/";
-    public static final String BASE_URL = "http://192.168.0.110:8085/";
+    public static final String BASE_URL = "http://192.168.0.115:8085/";
 //    public static final String BASE_URL = "http://192.168.1.3:8085/";
 
     public static final int CODE_SUCCESS = 0;
@@ -44,5 +43,12 @@ public class Constant {
      * 群Id
      */
     public static String groupId="";
+
+    /**
+     * 获取好友列表
+     */
+    public static FriendInfoResponse friendInfoResponse=new FriendInfoResponse();
+
+
 
 }

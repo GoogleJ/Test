@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.FriendListResponse;
+import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.ui.msgpage.adapter.BaseContactAdapter;
@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.functions.Consumer;
 import io.rong.imkit.tools.CharacterParser;
 
 /**
@@ -60,7 +61,7 @@ public class PhoneContactFragment extends BaseFragment {
 
     BaseContactAdapter adapter;
 
-    List<FriendListResponse> friendListResponseList = new ArrayList<>();
+    List<FriendInfoResponse> friendInfoResponses = new ArrayList<>();
 
 
     public static Fragment newInstance() {
@@ -91,7 +92,7 @@ public class PhoneContactFragment extends BaseFragment {
         pinyinComparator = new PinyinComparator();
 
 
-        friendListResponseList = filledData(friendListResponseList);
+        friendInfoResponses = filledData(friendInfoResponses);
 
         layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
@@ -100,7 +101,7 @@ public class PhoneContactFragment extends BaseFragment {
             @Override
             public String getItemText(int position) {
                 //悬浮的信息
-                return friendListResponseList.get(position).getSortLetters();
+                return friendInfoResponses.get(position).getSortLetters();
             }
         }));
 
@@ -139,8 +140,8 @@ public class PhoneContactFragment extends BaseFragment {
     }
 
     public int getPositionForSection(String section) {
-        for (int i = 0; i < friendListResponseList.size(); i++) {
-            String sortStr = friendListResponseList.get(i).getSortLetters();
+        for (int i = 0; i < friendInfoResponses.size(); i++) {
+            String sortStr = friendInfoResponses.get(i).getSortLetters();
             if (sortStr.equals(section)) {
                 return i;
             }
@@ -149,7 +150,7 @@ public class PhoneContactFragment extends BaseFragment {
     }
 
 
-    private List<FriendListResponse> filledData(List<FriendListResponse> sortList) {
+    private List<FriendInfoResponse> filledData(List<FriendInfoResponse> sortList) {
 
         for (int i = 0; i < sortList.size(); i++) {
 
@@ -180,11 +181,14 @@ public class PhoneContactFragment extends BaseFragment {
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(friendListResponses -> {
+                .subscribe(new Consumer<List<FriendInfoResponse>>() {
+                    @Override
+                    public void accept(List<FriendInfoResponse> friendInfoResponses) throws Exception {
 
-                    adapter.setNewData(friendListResponses);
-                    friendListResponseList = friendListResponses;
-                    for (int i = 0; i < friendListResponses.size(); i++) {
+                        adapter.setNewData(friendInfoResponses);
+                        friendInfoResponses = friendInfoResponses;
+                        for (int i = 0; i < friendInfoResponses.size(); i++) {
+                        }
                     }
                 }, this::handleApiError);
 

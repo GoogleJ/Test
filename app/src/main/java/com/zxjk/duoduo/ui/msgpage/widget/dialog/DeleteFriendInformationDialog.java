@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.msgpage.widget.dialog;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -25,6 +26,8 @@ public class DeleteFriendInformationDialog extends Dialog implements View.OnClic
     TextView cancelBtn;
     @BindView(R.id.m_delete_btn)
     TextView delBtn;
+    @BindView(R.id.m_delete_friend_label)
+    TextView title;
 
     private View view;
     private Context context;
@@ -49,13 +52,17 @@ public class DeleteFriendInformationDialog extends Dialog implements View.OnClic
         layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
         window.setAttributes(layoutParams);
         ButterKnife.bind(this, view);
-        initUI();
+
     }
 
-    private void initUI() {
+
+    @SuppressLint("StringFormatMatches")
+    public void show(String titles) {
+        show();
+        title.setText(String.format(getContext().getResources().getString(R.string.m_delete_friend_label), titles));
     }
 
-    @OnClick({R.id.m_cancel_btn,R.id.m_delete_btn})
+    @OnClick({R.id.m_cancel_btn, R.id.m_delete_btn})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -63,7 +70,7 @@ public class DeleteFriendInformationDialog extends Dialog implements View.OnClic
                 dismiss();
                 break;
             case R.id.m_delete_btn:
-                if (onClickListener!=null){
+                if (onClickListener != null) {
                     onClickListener.onDel();
                 }
                 break;
@@ -72,6 +79,7 @@ public class DeleteFriendInformationDialog extends Dialog implements View.OnClic
                 break;
         }
     }
+
     public interface OnClickListener {
         void onDel();
     }

@@ -1,17 +1,18 @@
 package com.zxjk.duoduo.ui.msgpage;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
+import com.blankj.utilcode.util.ToastUtils;
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.FriendListResponse;
-import com.zxjk.duoduo.network.response.SearchResponse;
+import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.GlobalSearchAdapter;
@@ -29,7 +30,7 @@ import io.reactivex.functions.Consumer;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\20 0020 全局搜索
+ * @// TODO: 2019\3\20 0020 搜索--搜索用户，添加好友
  */
 @SuppressLint("CheckResult")
 public class GlobalSearchActivity extends BaseActivity {
@@ -43,18 +44,14 @@ public class GlobalSearchActivity extends BaseActivity {
     GlobalSearchAdapter mAdapter;
     Intent intent;
 
-    List<FriendListResponse> list = new ArrayList<>();
-
-    public static void start(Activity activity) {
-        Intent intent = new Intent(activity, GlobalSearchActivity.class);
-        activity.startActivity(intent);
-    }
+    FriendInfoResponse friendInfoResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_global_search);
         ButterKnife.bind(this);
+        getFriendListById();
         initData();
         initUI();
     }
@@ -63,7 +60,13 @@ public class GlobalSearchActivity extends BaseActivity {
         searchEdit.setOnEditorActionListener((v, actionId, event) -> {
             //搜索按键action
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                searchCustomerInfo(searchEdit.getText().toString());
+                if (!TextUtils.isEmpty(searchEdit.getText().toString())) {
+
+                    searchCustomerInfo(searchEdit.getText().toString());
+                } else {
+                    ToastUtils.showShort(getString(R.string.input_search_edit));
+                }
+
                 return true;
             }
             return false;
@@ -77,50 +80,80 @@ public class GlobalSearchActivity extends BaseActivity {
         mAdapter = new GlobalSearchAdapter();
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            SearchResponse user = mAdapter.getData().get(position);
+            FriendInfoResponse user = mAdapter.getData().get(position);
             getFriendListById();
 
-            for (int i = 0; i < list.size(); i++) {
 
-                if (user.getId().equals(list.get(i).getId())) {
+            if (friendInfoResponse==null||friendInfoResponse.getId().equals(null)||friendInfoResponse.getId().equals("")){
+                intent = new Intent(GlobalSearchActivity.this, AddFriendDetailsActivity.class);
+                intent.putExtra("searchAddFriendDetails", user);
+                intent.putExtra("intentAddType", 0);
+                startActivity(intent);
+                return;
+            }else{
+                if (friendInfoResponse.getId().equals(user.getId())) {
                     intent = new Intent(this, FriendDetailsActivity.class);
-                    intent.putExtra("globalUserDetails", user);
-                    intent.putExtra("searchDetailsType",0);
-                    intent.putExtra("globalUserDetailsId", user.getId());
+                    intent.putExtra("intentType", 1);
+                    intent.putExtra("globalSearchFriendDetails", user);
                     startActivity(intent);
                 } else {
-                    intent = new Intent(this, AddFriendDetailsActivity.class);
-                    intent.putExtra("globalAddUserDetails", user);
-                    intent.putExtra("searchUserId", user.getId());
+                    intent = new Intent(GlobalSearchActivity.this, AddFriendDetailsActivity.class);
+                    intent.putExtra("searchAddFriendDetails", user);
+                    intent.putExtra("intentAddType", 0);
                     startActivity(intent);
                 }
-
+                return;
             }
+
+
+
         });
     }
 
+    //模糊搜索好友
     public void searchCustomerInfo(String data) {
-        //模糊搜索好友
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .searchFriend(data)
+                .searchCustomerInfo(data)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(list -> mAdapter.setNewData(list), this::handleApiError);
+                .subscribe(list -> {
+                    for (int i = 0; i < list.size(); i++) {
+                        if (!list.get(i).getId().equals(Constant.userId)) {
+                            mAdapter.addData(list.get(i));
+                        } else {
+                            if (list.size() >= 0) {
+                                list.remove(i);
+                            }
+                        }
+                    }
+
+                }, this::handleApiError);
     }
 
+
+    /**
+     * 查询已有的好友列表
+     */
     public void getFriendListById() {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .getFriendListById()
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<List<FriendListResponse>>() {
+                .subscribe(new Consumer<List<FriendInfoResponse>>() {
                     @Override
-                    public void accept(List<FriendListResponse> friendListResponses) throws Exception {
-
-                        GlobalSearchActivity.this.list = friendListResponses;
+                    public void accept(List<FriendInfoResponse> friendInfoResponses) throws Exception {
+                        for (int i = 0; i < friendInfoResponses.size(); i++) {
+                            friendInfoResponse = friendInfoResponses.get(i);
+                        }
                     }
                 }, this::handleApiError);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
     }
 }

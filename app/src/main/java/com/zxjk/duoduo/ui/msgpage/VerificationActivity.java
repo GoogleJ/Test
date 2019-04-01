@@ -1,23 +1,18 @@
 package com.zxjk.duoduo.ui.msgpage;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.BaseResponse;
-import com.zxjk.duoduo.network.response.FriendListResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.weight.TitleBar;
-
-import java.util.List;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -34,7 +29,7 @@ public class VerificationActivity extends BaseActivity implements View.OnClickLi
     TitleBar titleBar;
     @BindView(R.id.m_verification_edit)
     EditText verificationEdit;
-    int addFriendType = 0;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,15 +54,8 @@ public class VerificationActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.m_verification_send_btn:
-                String searchFriendId = getIntent().getStringExtra("searchAddFriendId");
-                String globalAddUserId = getIntent().getStringExtra("globalAddUserId");
-                int type = getIntent().getIntExtra("addFriendType", addFriendType);
-                if (type == 0) {
-                    applyAddFriend(globalAddUserId, verificationEdit.getText().toString());
-                } else {
-                    applyAddFriend(searchFriendId, verificationEdit.getText().toString());
-                }
-
+                String newFriend=getIntent().getStringExtra("addFriend");
+                applyAddFriend(newFriend, verificationEdit.getText().toString());
                 break;
             case R.id.m_verification_icon:
 
@@ -88,8 +76,6 @@ public class VerificationActivity extends BaseActivity implements View.OnClickLi
                     public void accept(BaseResponse<String> listBaseResponse) throws Exception {
                         ToastUtils.showShort("添加成功");
                         finish();
-
-
                     }
                 }, this::handleApiError);
 

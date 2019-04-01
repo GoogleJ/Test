@@ -3,8 +3,7 @@ package com.zxjk.duoduo.ui.msgpage.utils;
 
 
 
-import com.zxjk.duoduo.bean.UserBean;
-import com.zxjk.duoduo.network.response.FriendListResponse;
+import com.zxjk.duoduo.network.response.FriendInfoResponse;
 
 import java.util.Comparator;
 
@@ -12,10 +11,10 @@ import java.util.Comparator;
  * @author Administrator
  *
  */
-public class PinyinComparator implements Comparator<FriendListResponse> {
+public class PinyinComparator implements Comparator<FriendInfoResponse> {
 
 	@Override
-	public int compare(FriendListResponse o1, FriendListResponse o2) {
+	public int compare(FriendInfoResponse o1, FriendInfoResponse o2) {
 		if (o1.getSortLetters().equals("@")
 				|| o2.getSortLetters().equals("#")) {
 			return -1;

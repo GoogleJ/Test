@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import com.blankj.utilcode.util.ToastUtils;
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -41,9 +42,7 @@ public class ModifyNotesActivity extends BaseActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.m_title_bar_right:
-                Intent intent = getIntent();
-                String userId = intent.getStringExtra("peopelUserId");
-                updateRemark(userId, modifyNotesEdit.getText().toString());
+//                updateRemark(Constant.friendInfoResponse.getId(), modifyNotesEdit.getText().toString());
                 break;
                 default:
                     break;
