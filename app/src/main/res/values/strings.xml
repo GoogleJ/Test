@@ -56,7 +56,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_friend_title_bar">添加联系人</string>
-    <string name="m_add_friend_search_edit">输入手机号/嘟嘟号</string>
+    <string name="m_add_friend_search_edit">输入手机号/多多号</string>
     <string name="m_add_friend_label_qr_code">我的二维码名片</string>
     <string name="m_add_friend_wechat_label_1">微信好友</string>
     <string name="m_add_friend_wechat_label_2">添加微信中的联系人</string>
@@ -412,5 +412,7 @@
     <string name="transfer_group_successful">群主转让成功</string>
     <string name="determine_select_group">确定选择为新群主吗？</string>
     <string name="add_group_chat">选择联系人</string>
+    <string name="send_verification">发送验证</string>
+    <string name="apply_to_add">申请添加</string>
 
 </resources>

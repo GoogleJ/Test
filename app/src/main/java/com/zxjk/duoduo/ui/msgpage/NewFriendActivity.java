@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -35,13 +36,15 @@ import io.reactivex.functions.Consumer;
  * @author Administrator
  * @// TODO: 2019\3\20 0020  新的朋友
  */
+@SuppressLint("CheckResult")
 public class NewFriendActivity extends BaseActivity {
     @BindView(R.id.m_fragment_new_friend_title_bar)
     TitleBar titleBar;
     @BindView(R.id.m_contact_search_edit_1)
-    EditText editText;
+    TextView textView;
     @BindView(R.id.m_fragment_new_friend_recycler_view)
     RecyclerView mRecyclerView;
+
     NewFriendAdapter mAdapter;
     DeleteFriendDialog dialog;
     @Override
@@ -57,12 +60,7 @@ public class NewFriendActivity extends BaseActivity {
 
     protected void initUI() {
 
-        titleBar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        titleBar.getLeftImageView().setOnClickListener(v -> finish());
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
@@ -70,63 +68,46 @@ public class NewFriendActivity extends BaseActivity {
         getMyFriendsWaiting();
         mRecyclerView.setAdapter(mAdapter);
 
-        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
 
-                View vp = (View)view.getParent();
+            View vp = (View)view.getParent();
 
-                TextView typeBtn=view.findViewById(R.id.m_item_new_friend_type_btn);
-                TextView mark=vp.findViewById(R.id.m_item_new_friend_message_label);
-                switch (view.getId()) {
-                    case R.id.m_item_new_friend_type_btn:
-                        typeBtn.setBackgroundColor(Color.WHITE);
-                        typeBtn.setText("已添加");
-                        typeBtn.setTextColor(Color.GRAY);
+            TextView typeBtn=view.findViewById(R.id.m_item_new_friend_type_btn);
+            TextView mark=vp.findViewById(R.id.m_item_new_friend_message_label);
+            switch (view.getId()) {
+                case R.id.m_item_new_friend_type_btn:
+                    typeBtn.setBackgroundColor(Color.WHITE);
+                    typeBtn.setText("已添加");
+                    typeBtn.setTextColor(Color.GRAY);
 
-                        addFriend(list.get(position).getId(),mark.getText().toString());
-                        break;
-                    case R.id.m_add_btn_layout:
-                        Intent intent=new Intent(NewFriendActivity.this, AddFriendDetailsActivity.class);
-                        intent.putExtra("newFriendActivityUserId",list.get(position).getId());
-                        intent.putExtra("type",1);
-                        startActivity(intent);
-                        break;
-                    default:
-                        break;
-                }
-                mAdapter.notifyDataSetChanged();
+
+                    addFriend(list.get(position).getId(),mark.getText().toString(),position);
+
+
+                    break;
+                case R.id.m_add_btn_layout:
+                    Intent intent=new Intent(NewFriendActivity.this, AddFriendDetailsActivity.class);
+                    intent.putExtra("newFriendActivityUserId",list.get(position).getId());
+                    intent.putExtra("type",1);
+                    startActivity(intent);
+                    break;
+                default:
+                    break;
             }
-
+            mAdapter.notifyDataSetChanged();
         });
-        mAdapter.setOnItemChildLongClickListener(new BaseQuickAdapter.OnItemChildLongClickListener() {
-            @Override
-            public boolean onItemChildLongClick(BaseQuickAdapter adapter, View view, int position) {
-                dialog=new DeleteFriendDialog(NewFriendActivity.this);
-                dialog.show();
-                dialog.setOnClickListener(new DeleteFriendDialog.OnClickListener() {
-                    @Override
-                    public void onDelete() {
-                        deleteMyfirendsWaiting(list.get(position).getId());
-                    }
-                });
-                return false;
-            }
+        mAdapter.setOnItemChildLongClickListener((adapter, view, position) -> {
+            dialog=new DeleteFriendDialog(NewFriendActivity.this);
+            dialog.show();
+            dialog.setOnClickListener(() -> deleteMyfirendsWaiting(list.get(position).getId()));
+            return false;
         });
-
-        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                //搜索按键action
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-//                    searchCustomerInfo(editText.getText().toString());
-                    return true;
-                }
-                return false;
-            }
-        });
+      textView.setOnClickListener(v -> startActivity(new Intent(NewFriendActivity.this,SearchActivity.class)));
     }
 
+    /**
+     * 获取待添加好友列表
+     */
     public void getMyFriendsWaiting() {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .getMyFirendsWaiting()
@@ -136,31 +117,46 @@ public class NewFriendActivity extends BaseActivity {
                 .subscribe(new Consumer<List<FriendListResponse>>() {
                     @Override
                     public void accept(List<FriendListResponse> s) throws Exception {
-                       mAdapter.setNewData(s);
+                        FriendListResponse friendListResponse=null;
+                        for (int i=0;i<s.size();i++){
+                            friendListResponse =s.get(i);
+                        }
+                        if (friendListResponse.getId().equals(Constant.userId)){
+                            mAdapter.getData().remove(Constant.userId);
+                            mAdapter.setNewData(s);
+                        }
                         list=s;
-
                     }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                    }
-                });
+                }, this::handleApiError);
     }
-    public void addFriend(String friendId,String markName){
+
+    /**
+     * 同意添加
+     * @param friendId
+     * @param markName
+     */
+    public void addFriend(String friendId,String markName,int position){
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .addFriend(friendId,markName)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) throws Exception {
-                        ToastUtils.showShort("添加好友成功");
-                        LogUtils.d("DEBUG",s);
+                .subscribe(s -> {
+                    ToastUtils.showShort("添加好友成功");
+                    LogUtils.d("DEBUG",s);
+                    //这里顺便加入值的传递，用好友列表中的id比对获取待添加好友列表的Id，然后进行删除已有的东西
+                    if (mAdapter.getData().size()>=0){
+                        mAdapter.getData().remove(position);
+                        mAdapter.notifyDataSetChanged();
                     }
                 },this::handleApiError);
-
     }
+
+    /**
+     * 删除好友申请
+     * @param friendId
+     */
+
     public void deleteMyfirendsWaiting(String friendId){
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .deleteMyfirendsWaiting(friendId)
@@ -173,5 +169,6 @@ public class NewFriendActivity extends BaseActivity {
                     }
                 },this::handleApiError);
     }
+
 
 }

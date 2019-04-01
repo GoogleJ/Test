@@ -157,9 +157,7 @@ public class SettingActivity extends BaseActivity {
      * @param view
      */
     public void onlineService(View view) {
-        Uri uri = Uri.parse(Constant.currentUser.getOnlineService());
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        startActivity(intent);
+        startActivity(new Intent(this, OnlineServiceActivity.class));
     }
 
     public void back(View view) {

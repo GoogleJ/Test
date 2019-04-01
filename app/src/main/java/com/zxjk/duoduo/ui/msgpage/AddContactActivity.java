@@ -17,7 +17,7 @@ import butterknife.OnClick;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\19 0019 添加好友的界面
+ * @// TODO: 2019\3\19 0019 添加联系人的界面
  */
 public class AddContactActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.m_add_friend_title_bar)
@@ -47,9 +47,10 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
             case R.id.m_add_friend_wechat_btn:
                 break;
             case R.id.m_add_friend_contact_btn:
-                Intent intent = new Intent(this, ContentActivity.class);
-                intent.putExtra("tag", 2);
-                startActivity(intent);
+//                Intent intent = new Intent(this, ContentActivity.class);
+//                intent.putExtra("tag", 2);
+//                startActivity(intent);
+                startActivity(new Intent(this,PhoneContactActivity.class));
                 break;
             case R.id.m_add_friend_scan_it_btn:
                 QrCodeActivity.start(this);

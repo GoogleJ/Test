@@ -27,7 +27,7 @@ public class GroupChatAdapter extends BaseQuickAdapter<GroupChatResponse, BaseVi
         //群名称
         helper.setText(R.id.group_name,item.getGroupNikeName())
                 .setText(R.id.group_message,item.getGroupSign())
-                .setText(R.id.group_message_time,item.getUpdateTime())
+//                .setText(R.id.group_message_time,item.getUpdateTime())
         .addOnClickListener(R.id.m_group_chat);
 //群头像
 

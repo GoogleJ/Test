@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-import com.blankj.utilcode.util.LogUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -19,11 +18,9 @@ import com.zxjk.duoduo.ui.msgpage.utils.PinyinComparator;
 import com.zxjk.duoduo.ui.msgpage.widget.HoverItemDecoration;
 import com.zxjk.duoduo.ui.msgpage.widget.IndexView;
 import com.zxjk.duoduo.weight.TitleBar;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -49,7 +46,7 @@ public class PhoneContactFragment extends BaseFragment {
     @BindView(R.id.m_contact_recycler_view)
     RecyclerView mRecyclerView;
 
-Unbinder unbinder;
+    Unbinder unbinder;
     /**
      * 汉字转换成拼音的类
      */
@@ -82,7 +79,7 @@ Unbinder unbinder;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_contact, null);
-        unbinder= ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         initUI();
         initData();
 

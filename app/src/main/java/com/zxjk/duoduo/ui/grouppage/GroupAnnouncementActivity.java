@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -54,6 +55,7 @@ public class GroupAnnouncementActivity extends BaseActivity {
     public void titleRight(View view){
         GroupResponse groupResponse=new GroupResponse();
         if (!TextUtils.isEmpty(announcementEdit.getText().toString())){
+            groupResponse.setId(Constant.groupId);
             groupResponse.setGroupSign(announcementEdit.getText().toString());
             updateGroupInfo(GsonUtils.toJson(groupResponse));
         }
@@ -66,8 +68,8 @@ public class GroupAnnouncementActivity extends BaseActivity {
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(groupResponse -> {
-                    ToastUtils.showShort(getString(R.string.announcement_edit_successful));
-                    finish();
+                    ToastUtils.showShort(GroupAnnouncementActivity.this.getString(R.string.announcement_edit_successful));
+                    GroupAnnouncementActivity.this.finish();
                 },this::handleApiError);
     }
 }

@@ -108,7 +108,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
     @BindView(R.id.m_people_information_copy_wallet_address)
     ImageView copyBtn;
 
-    private SearchResponse user;
+
     /**
      * 0是男1是女
      */
@@ -120,6 +120,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
     SearchResponse searchResponse;
     SearchCustomerInfoResponse searchCustomerInfoResponse;
     FriendListResponse friendListResponse;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,10 +132,10 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
         int type;//接受类型
 
         searchResponse = (SearchResponse) getIntent().getSerializableExtra("globalUserDetails");
-        type=getIntent().getIntExtra("searchDetailsType",searchDetailsType);
-        searchCustomerInfoResponse= (SearchCustomerInfoResponse) getIntent().getSerializableExtra("searchFriendDetails");
+        type = getIntent().getIntExtra("searchDetailsType", searchDetailsType);
+        searchCustomerInfoResponse = (SearchCustomerInfoResponse) getIntent().getSerializableExtra("searchFriendDetails");
 
-        if (1==type){
+        if (1 == type) {
             //这个模块需要添加数据绑定
             GlideUtil.loadCornerImg(heardIcon, searchCustomerInfoResponse.getHeadPortrait(), 2);
             userNameText.setText(searchCustomerInfoResponse.getRealname());
@@ -150,7 +151,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
             } else {
                 genderIcon.setImageDrawable(getDrawable(R.drawable.icon_gender_woman));
             }
-        }else if ( 0==type){
+        } else if (0 == type) {
             //这个模块需要添加数据绑定
             GlideUtil.loadCornerImg(heardIcon, searchResponse.getHeadPortrait(), 2);
             userNameText.setText(searchResponse.getRealname());
@@ -166,8 +167,8 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
             } else {
                 genderIcon.setImageDrawable(getDrawable(R.drawable.icon_gender_woman));
             }
-        }else{
-            friendListResponse= (FriendListResponse) getIntent().getSerializableExtra("friendListResponse");
+        } else {
+            friendListResponse = (FriendListResponse) getIntent().getSerializableExtra("friendListResponse");
             GlideUtil.loadCornerImg(heardIcon, friendListResponse.getHeadPortrait(), 2);
             userNameText.setText(friendListResponse.getRealname());
             duoduoId.setText(friendListResponse.getDuoduoId());
@@ -225,7 +226,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.update_rename:
                 Intent intent = new Intent(FriendDetailsActivity.this, ModifyNotesActivity.class);
-                intent.putExtra("peopelUserId", user.getId());
+                intent.putExtra("peopelUserId", friendListResponse.getId());
                 startActivity(intent);
                 break;
             case R.id.recommend_to_friend:
@@ -233,13 +234,18 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.delete_friend:
                 dialog = new DeleteFriendInformationDialog(this);
-                dialog.setOnClickListener(() -> deleteFriend(user.getId()));
+                dialog.setOnClickListener(() -> {
+                    FriendDetailsActivity.this.deleteFriend(friendListResponse.getId());
+                    dialog.dismiss();
+                    finish();
+                });
                 dialog.show();
                 break;
             default:
                 break;
         }
     }
+
     @Override
     public void getChildView(View view, int layoutResId) {
         switch (layoutResId) {
@@ -248,10 +254,11 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                 view.findViewById(R.id.recommend_to_friend).setOnClickListener(this);
                 view.findViewById(R.id.delete_friend).setOnClickListener(this);
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
     }
+
     public void deleteFriend(String friendId) {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .deleteFriend(friendId)

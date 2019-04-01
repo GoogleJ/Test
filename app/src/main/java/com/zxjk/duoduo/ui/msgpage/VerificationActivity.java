@@ -29,12 +29,13 @@ import io.reactivex.functions.Consumer;
  * @author Administrator
  * @// TODO: 2019\3\20 0020  发送验证
  */
-public class VerificationActivity extends BaseActivity implements View.OnClickListener{
+public class VerificationActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.m_verification_title_bar)
     TitleBar titleBar;
     @BindView(R.id.m_verification_edit)
     EditText verificationEdit;
-int addFriendType=0;
+    int addFriendType = 0;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,32 +53,34 @@ int addFriendType=0;
         });
 
     }
-    @OnClick({R.id.m_verification_icon,R.id.m_verification_send_btn})
+
+    @OnClick({R.id.m_verification_icon, R.id.m_verification_send_btn})
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.m_verification_send_btn:
-               String searchFriendId=getIntent().getStringExtra("searchAddFriendId");
-               String globalAddUserId=getIntent().getStringExtra("globalAddUserId");
-               int type=getIntent().getIntExtra("addFriendType",addFriendType);
-               if (type==0){
-                   applyAddFriend(globalAddUserId,verificationEdit.getText().toString());
-               }else{
-                   applyAddFriend(searchFriendId,verificationEdit.getText().toString());
-               }
+                String searchFriendId = getIntent().getStringExtra("searchAddFriendId");
+                String globalAddUserId = getIntent().getStringExtra("globalAddUserId");
+                int type = getIntent().getIntExtra("addFriendType", addFriendType);
+                if (type == 0) {
+                    applyAddFriend(globalAddUserId, verificationEdit.getText().toString());
+                } else {
+                    applyAddFriend(searchFriendId, verificationEdit.getText().toString());
+                }
 
                 break;
             case R.id.m_verification_icon:
 
                 verificationEdit.setText("");
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
     }
-    public void applyAddFriend(String friendId,String remark){
+
+    public void applyAddFriend(String friendId, String remark) {
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .applyAddFriend(friendId,remark)
+                .applyAddFriend(friendId, remark)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .subscribe(new Consumer<BaseResponse<String>>() {
@@ -88,7 +91,7 @@ int addFriendType=0;
 
 
                     }
-                },this::handleApiError);
+                }, this::handleApiError);
 
     }
 

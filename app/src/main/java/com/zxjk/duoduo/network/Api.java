@@ -402,6 +402,21 @@ public interface Api {
             , @Field("sellOrderId") String sellOrderId);
 
     /**
+     * 修改好友备注
+     * @param friendId
+     * @param remark
+     * @return
+     */
+    @POST("duoduo/friend/updateRemark")
+    @FormUrlEncoded
+    Observable<BaseResponse<FriendInfoResponse>> updateRemark(
+            @Field("friendId")String friendId,
+            @Field("remark")String remark
+    );
+
+
+
+    /**
      * 买家确认付款
      *
      * @param bothOrderId
@@ -528,7 +543,7 @@ public interface Api {
      */
     @POST("duoduo/group/updateGroupInfo")
     @FormUrlEncoded
-    Observable<BaseResponse<String>> updateGroupInfo(
+    Observable<BaseResponse<GroupResponse>> updateGroupInfo(
             @Field("groupInfo")String groupInfo
     );
 
