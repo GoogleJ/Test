@@ -7,6 +7,7 @@ import com.blankj.utilcode.util.Utils;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 
 import androidx.multidex.MultiDex;
 import io.rong.imkit.RongIM;
@@ -36,6 +37,7 @@ public class Application extends android.app.Application {
 
         MultiDex.install(this);
         RongIM.init(this);
+
     }
 
     //初始化阿里云OSS上传服务

@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import com.zxjk.duoduo.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 @SuppressLint("CheckResult")
@@ -79,6 +82,11 @@ public class CommonUtils {
         if (TextUtils.isEmpty(authenticate)) {
             return R.string.authen_false;
         }
-        return authenticate.equals("0") ? R.string.authen_true : R.string.authen_false;
+        return authenticate.equals("0") ? R.string.authen_true : ((authenticate.equals("1") ? R.string.authen_false : R.string.verifing));
+    }
+
+    public static String formatTime(long time) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        return simpleDateFormat.format(time);
     }
 }

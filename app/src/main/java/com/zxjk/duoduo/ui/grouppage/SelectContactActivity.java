@@ -62,6 +62,8 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
     SelectContactAdapter mAdapter;
     AddGroupTopAdapter topAdapter;
 
+    private boolean fromZhuanChu;
+
 
     int position;
     List<FriendListResponse> lists=new ArrayList<>();
@@ -70,6 +72,8 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_contact);
+
+        fromZhuanChu = getIntent().getBooleanExtra("fromZhuanChu", false);
         initView();
 
     }
@@ -93,26 +97,21 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
 
 
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            View v = (View) view.getParent();
-            CheckBox selectImage = view.findViewById(R.id.selected_delete);
-            boolean isTrue = true;
-            if (isTrue) {
-                selectImage.setChecked(false);
-                isTrue = false;
-
-            } else {
-                selectImage.setChecked(true);
-
+            if (fromZhuanChu) {
+                String walletAddress = list.get(position).getWalletAddress();
+                Intent intent = new Intent();
+                intent.putExtra("walletAddress", walletAddress);
+                setResult(3, intent);
+                finish();
+                return;
             }
-
-
             selectRecycler.setVisibility(View.VISIBLE);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(SelectContactActivity.this);
             linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
             selectRecycler.setLayoutManager(linearLayoutManager);
             topAdapter = new AddGroupTopAdapter();
             this.position = position;
-            FriendListResponse response = null;
+            FriendListResponse response;
 
             for (FriendListResponse friendListResponse : list) {
 

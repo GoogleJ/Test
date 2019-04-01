@@ -88,7 +88,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             , R.id.login_country_bottom})
     @Override
     public void onClick(View v) {
-        int phoneLength = 11;
         switch (v.getId()) {
             case R.id.login_country:
                 CountrySelectActivity.start(LoginActivity.this, CountryCodeConstantsUtils.REQUESTCODE_COUNTRY_SELECT);
@@ -100,32 +99,30 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 ForgetRegisterActivity.start(LoginActivity.this);
                 break;
             case R.id.text_go_register:
-                RegisterActivity.start(this);
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
-
                 break;
             case R.id.change_language:
                 startActivity(new Intent(LoginActivity.this, ChangeLanguageActivity.class));
-                finish();
                 break;
             case R.id.btn_login:
 
-                String mobile = edit_mobile.getText().toString().trim();
-                String password = edit_password.getText().toString().trim();
-                if (TextUtils.isEmpty(mobile) || TextUtils.isEmpty(password)) {
-                    ToastUtils.showShort(getString(R.string.edit_mobile_or_password_tip));
-                    return;
-                }
-                if (TextUtils.isEmpty(mobile) && "".equals(mobile) && mobile.length() == phoneLength) {
-                    ToastUtils.showShort(getString(R.string.edit_mobile_tip));
-                    return;
-                }
-                if (TextUtils.isEmpty(password) || 5 >= password.length() || password.length() >= 14) {
-                    ToastUtils.showShort(getString(R.string.edit_password_reg));
-                    return;
-                }
+//                String mobile = edit_mobile.getText().toString().trim();
+//                String password = edit_password.getText().toString().trim();
+//                if (TextUtils.isEmpty(mobile) || TextUtils.isEmpty(password)) {
+//                    ToastUtils.showShort(getString(R.string.edit_mobile_or_password_tip));
+//                    return;
+//                }
+//                if (TextUtils.isEmpty(mobile) && "".equals(mobile) && mobile.length() == phoneLength) {
+//                    ToastUtils.showShort(getString(R.string.edit_mobile_tip));
+//                    return;
+//                }
+//                if (TextUtils.isEmpty(password) || 5 >= password.length() || password.length() >= 14) {
+//                    ToastUtils.showShort(getString(R.string.edit_password_reg));
+//                    return;
+//                }
 
-                login(mobile, password);
+                login("15291048262", "123456");
+//                login("15935910958", "123456");
                 SPUtils.getInstance().put("mobile", edit_mobile.getText().toString().trim());
 
                 break;
@@ -163,6 +160,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         dialog = new AccountFreezeDialog(LoginActivity.this);
                         dialog.show();
                     } else if (loginResponse.getIsFirstLogin().equals(Constant.FLAG_FIRSTLOGIN)) {
+                        finish();
                         LoginActivity.this.startActivity(new Intent(LoginActivity.this, EditPersonalInformationFragment.class));
                     } else {
                         LoginActivity.this.connect(loginResponse.getRongToken());

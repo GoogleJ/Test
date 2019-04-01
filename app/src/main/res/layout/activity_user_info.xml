@@ -14,8 +14,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:padding="12dp"
             android:onClick="back"
+            android:padding="12dp"
             app:srcCompat="@drawable/ico_back" />
 
         <TextView
@@ -288,9 +288,9 @@
                 android:background="#dddddd" />
 
             <RelativeLayout
-                android:onClick="changeMobile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="changeMobile"
                 android:paddingLeft="10dp"
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
@@ -447,6 +447,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginStart="12dp"
                     android:layout_toEndOf="@id/tvUserInfoWalletHead"
                     android:ellipsize="end"
                     android:gravity="end"

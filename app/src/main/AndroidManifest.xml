@@ -3,8 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.zxjk.duoduo">
 
-    <!--<uses-permission android:name="android.permission.READ_CONTACTS"/>-->
-
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" /> <!-- 融云相关 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -37,13 +35,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.walletpage.HuaZhuanActivity"></activity>
-        <activity android:name=".ui.walletpage.ZhuanChuActivity" />
-
-        <!--<meta-data-->
-            <!--android:name="com.amap.api.v2.apikey"-->
-            <!--android:value="df7babf242eb29b0f784dadae2460078" />-->
-
+        <activity android:name=".ui.walletpage.ChooseCoinActivity"></activity>
+        <activity android:name=".ui.walletpage.BlockOrderDetailActivity" />
+        <activity android:name=".ui.walletpage.BlockETHOrders" />
+        <activity android:name=".ui.walletpage.HuaZhuanActivity" />
+        <activity android:name=".ui.walletpage.ZhuanChuActivity" /> <!-- <meta-data -->
+        <!-- android:name="com.amap.api.v2.apikey" -->
+        <!-- android:value="df7babf242eb29b0f784dadae2460078" /> -->
         <activity android:name=".ui.msgpage.ConversationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -84,7 +82,7 @@
         <activity android:name=".ui.minepage.SettingPayPwdActivity" />
         <activity android:name=".weight.TestActivity" />
         <activity android:name=".ui.grouppage.SelectContactActivity" />
-        <activity android:name=".ui.grouppage.AgreeGroupChatActivity"/>
+        <activity android:name=".ui.grouppage.AgreeGroupChatActivity" />
         <activity android:name=".ui.msgpage.PhoneContactActivity"/>
         <activity
             android:name=".ui.WelcomeActivity"
@@ -361,6 +359,8 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
+
+        <service android:name=".RegisterBlockWalletService" />
     </application>
 
 </manifest>

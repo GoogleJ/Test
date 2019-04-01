@@ -30,6 +30,7 @@ import com.zxjk.duoduo.weight.TitleBar;
 
 import java.io.File;
 import java.util.Collections;
+import java.util.concurrent.locks.ReentrantLock;
 
 import androidx.annotation.Nullable;
 import butterknife.OnClick;
@@ -112,6 +113,10 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                 }
                 if (editArea.getText().toString().isEmpty()) {
                     ToastUtils.showShort("地区不能为空");
+                    return;
+                }
+                if (TextUtils.isEmpty(url)) {
+                    ToastUtils.showShort("请上传头像");
                     return;
                 }
 

@@ -2,13 +2,14 @@ package com.zxjk.duoduo.network;
 
 import com.zxjk.duoduo.network.response.AllGroupMembersResponse;
 import com.zxjk.duoduo.network.response.BaseResponse;
+import com.zxjk.duoduo.network.response.CreateWalletResponse;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.response.FriendListResponse;
 import com.zxjk.duoduo.network.response.GetBalanceHkResponse;
 import com.zxjk.duoduo.network.response.GetNumbeOfTransactionResponse;
 import com.zxjk.duoduo.network.response.GetOverOrderResponse;
 import com.zxjk.duoduo.network.response.GetReleasePurchaseResponse;
-import com.zxjk.duoduo.network.response.GroupChatInformationResponse;
+import com.zxjk.duoduo.network.response.GetTransferEthResponse;
 import com.zxjk.duoduo.network.response.GroupChatResponse;
 import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.response.LoginResponse;
@@ -16,13 +17,9 @@ import com.zxjk.duoduo.network.response.PayInfoResponse;
 import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
 import com.zxjk.duoduo.network.response.SearchCustomerInfoResponse;
 import com.zxjk.duoduo.network.response.SearchResponse;
-import com.zxjk.duoduo.network.response.UpdateGroupOwnerResponse;
-
-import org.aspectj.lang.annotation.Pointcut;
 
 import java.util.List;
 
-import butterknife.OnItemClick;
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -54,7 +51,7 @@ public interface Api {
      */
     @POST("duoduo/customer/appUserRegister")
     @FormUrlEncoded
-    Observable<BaseResponse<String>> register(
+    Observable<BaseResponse<LoginResponse>> register(
             @Field("mobile") String phone,
             @Field("securityCode") String code,
             @Field("pwd") String pwd
@@ -468,7 +465,7 @@ public interface Api {
      */
     @POST("duoduo/wallet/getWallet")
     @FormUrlEncoded
-    Observable<BaseResponse<String>> getWallet(@Field("customerDuoDuoId") String customerDuoDuoId);
+    Observable<BaseResponse<CreateWalletResponse>> getWallet(@Field("customerDuoDuoId") String customerDuoDuoId);
 
     /**
      * 找回支付密码
@@ -527,6 +524,7 @@ public interface Api {
 
     /**
      * 根据groupId查看群信息
+     *
      * @param groupId
      * @return
      */
@@ -538,6 +536,7 @@ public interface Api {
 
     /**
      * 修改群信息
+     *
      * @param groupInfo
      * @return
      */
@@ -549,6 +548,7 @@ public interface Api {
 
     /**
      * 解散群
+     *
      * @param groupId
      * @param groupOwnerId
      * @return
@@ -556,12 +556,13 @@ public interface Api {
     @POST("duoduo/group/disBandGroup")
     @FormUrlEncoded
     Observable<BaseResponse<String>> disBandGroup(
-            @Field("groupId")String groupId,
-            @Field("groupOwnerId")String groupOwnerId
+            @Field("groupId") String groupId,
+            @Field("groupOwnerId") String groupOwnerId
     );
 
     /**
      * 退出群组
+     *
      * @param groupId
      * @param customerId
      * @return
@@ -569,12 +570,13 @@ public interface Api {
     @POST("duoduo/group/exitGroup")
     @FormUrlEncoded
     Observable<BaseResponse<String>> exitGroup(
-            @Field("groupId")String groupId,
-            @Field("customerId")String customerId
+            @Field("groupId") String groupId,
+            @Field("customerId") String customerId
     );
 
     /**
      * 移除群组
+     *
      * @param groupId
      * @param customerIds
      * @return
@@ -582,12 +584,13 @@ public interface Api {
     @POST("duoduo/group/moveOutGroup")
     @FormUrlEncoded
     Observable<BaseResponse<String>> moveOutGroup(
-            @Field("groupId")String groupId,
-            @Field("customerIds")String customerIds
+            @Field("groupId") String groupId,
+            @Field("customerIds") String customerIds
     );
 
     /**
      * 群主转让
+     *
      * @param groupId
      * @param customerId
      * @return
@@ -595,9 +598,29 @@ public interface Api {
     @POST("duoduo/group/updateGroupOwner")
     @FormUrlEncoded
     Observable<BaseResponse<String>> updateGroupOwner(
-            @Field("groupId")String groupId,
-            @Field("customerId")String customerId
+            @Field("groupId") String groupId,
+            @Field("customerId") String customerId
     );
 
+    @POST("duoduo/wallet/createWallet")
+    @FormUrlEncoded
+    Observable<BaseResponse<CreateWalletResponse>> createWallet(@Field("customerDuoDuoId") String customerDuoDuoId);
+
+    @POST("duoduo/wallet/getTransferEth")
+    @FormUrlEncoded
+    Observable<BaseResponse<GetTransferEthResponse>> getTransferEth(@Field("address") String address, @Field("page") String page, @Field("offset") String offset);
+
+
+    @POST("duoduo/wallet/signTransaction")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>>
+    signTransaction(@Field("payPwd") String payPwd,
+                    @Field("type") String type,
+                    @Field("fromaddress") String fromaddress,
+                    @Field("toaddress") String toaddress,
+                    @Field("gasPrice") String gasPrice,
+                    @Field("number") String number,
+                    @Field("keyStore") String keyStore,
+                    @Field("duoduoId") String duoduoId);
 
 }

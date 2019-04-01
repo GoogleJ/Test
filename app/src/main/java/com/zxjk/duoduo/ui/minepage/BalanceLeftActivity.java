@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -22,8 +23,6 @@ public class BalanceLeftActivity extends BaseActivity {
     private TextView tvBalanceleftBalance; //余额
     private TextView tvBalanceleftType; //币种
     LinearLayout verifiedLayout;
-    String verifiedType;
-    String type="verifiedType";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,27 +32,28 @@ public class BalanceLeftActivity extends BaseActivity {
         tvBalanceleftAuthenticateFlag = findViewById(R.id.tvBalanceleftAuthenticateFlag);
         tvBalanceleftBalance = findViewById(R.id.tvBalanceleftBalance);
         tvBalanceleftType = findViewById(R.id.tvBalanceleftType);
+        verifiedLayout = findViewById(R.id.verified_layout);
+        verifiedLayout.setOnClickListener(v -> {
+            if (Constant.currentUser.getIsAuthentication().equals("1")) {
+                startActivity(new Intent(BalanceLeftActivity.this, VerifiedActivity.class));
+            }
+            if (Constant.currentUser.getIsAuthentication().equals("2")) {
+                ToastUtils.showShort(R.string.verifying_pleasewait);
+            }
+        });
 
-        tvBalanceleftAuthenticateFlag.setText(CommonUtils.getAuthenticate(Constant.currentUser.getIsAuthentication()));
-        getVerified();
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .getBalanceHk()
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.normalTrans())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .subscribe(b -> tvBalanceleftBalance.setText(b.getBalanceHk()), this::handleApiError);
-        verifiedLayout = findViewById(R.id.verified_layout);
-        initView();
     }
 
-    private void initView() {
-        verifiedLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(BalanceLeftActivity.this, VerifiedActivity.class));
-
-            }
-        });
+    @Override
+    protected void onResume() {
+        super.onResume();
+        tvBalanceleftAuthenticateFlag.setText(CommonUtils.getAuthenticate(Constant.currentUser.getIsAuthentication()));
     }
 
     //订单详情
@@ -63,10 +63,7 @@ public class BalanceLeftActivity extends BaseActivity {
 
     //支付设置
     public void paySetting(View view) {
-//        startActivity(new Intent(this, PaySettingActivity.class));
-        Intent intent=new Intent(this, PaySettingActivity.class);
-        intent.putExtra(type,verifiedType);
-        startActivity(intent);
+        startActivity(new Intent(this, PaySettingActivity.class));
     }
 
 
@@ -74,42 +71,4 @@ public class BalanceLeftActivity extends BaseActivity {
         finish();
     }
 
-    public void getVerified() {
-        ServiceFactory.getInstance().getBaseService(Api.class)
-                .getCustomerAuth()
-                .compose(bindToLifecycle())
-                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                .compose(RxSchedulers.normalTrans())
-                .subscribe(s -> {
-                    this.verifiedType=s;
-                    //已认证
-                    String verified = "0";
-                    //审核中
-                    String underReview = "2";
-                    //审核不通过
-                    String authenFalse = "1";
-                    Constant.verifiedBean.setState(s);
-                    if (verified.equals(s)) {
-                        verifiedLayout.setClickable(false);
-                        tvBalanceleftAuthenticateFlag.setText(R.string.verified_successful);
-                    } else if (underReview.equals(s)) {
-                        verifiedLayout.setClickable(false);
-                        tvBalanceleftAuthenticateFlag.setText(R.string.under_review);
-                    } else if (authenFalse.equals(s)) {
-                        //其他均为未认证
-                        verifiedLayout.setClickable(true);
-                        tvBalanceleftAuthenticateFlag.setText(R.string.not_verified);
-                    } else {
-                        verifiedLayout.setClickable(true);
-                        tvBalanceleftAuthenticateFlag.setText(R.string.authen_false);
-                    }
-
-                }, this::handleApiError);
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        getVerified();
-    }
 }
