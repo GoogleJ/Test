@@ -31,7 +31,7 @@ import io.reactivex.functions.Consumer;
 
 
 @SuppressLint("CheckResult")
-public class ZhuanChuActivity extends BaseActivity implements SeekBar.OnSeekBarChangeListener {
+public class ZhuanChuActivity extends BaseActivity implements SeekBar.OnSeekBarChangeListener, SafeInputDialog.OnFinishListener {
 
     private String type = "1";// 0:eth转账，1：HKB转账
 
@@ -50,6 +50,7 @@ public class ZhuanChuActivity extends BaseActivity implements SeekBar.OnSeekBarC
         setContentView(R.layout.activity_zhuan_chu);
 
         safeInputDialog = new SafeInputDialog(this);
+        safeInputDialog.setOnFinishListener(this);
 
         seekZhuanchu = findViewById(R.id.seekZhuanchu);
         etCount = findViewById(R.id.etCount);
@@ -77,25 +78,26 @@ public class ZhuanChuActivity extends BaseActivity implements SeekBar.OnSeekBarC
         startActivityForResult(intent, 1);
     }
 
+    private String walletAddress;
+    private String count;
+    private String gasPrice;
+
     public void submit(View view) {
-        String walletAddress = etWalletAddress.getText().toString().trim();
+        walletAddress = etWalletAddress.getText().toString().trim();
         if (TextUtils.isEmpty(walletAddress)) {
             ToastUtils.showShort(R.string.inputwalletaddress);
             return;
         }
-
-        String count = etCount.getText().toString().trim();
+        count = etCount.getText().toString().trim();
         if (TextUtils.isEmpty(count)) {
             ToastUtils.showShort(R.string.inputZhuanChuCount);
             return;
         }
-
         if (seekZhuanchu.getProgress() == 0) {
             ToastUtils.showShort(R.string.inputGasPrice);
             return;
         }
-
-        String gasPrice = tvKuanggongPrice.getText().toString().replace("≈", "").replace("ether", "").trim();
+        gasPrice = tvKuanggongPrice.getText().toString().replace("≈", "").replace("ether", "").trim();
         if (type.equals("1")) {
             //HKB
             if (!(Double.valueOf(gasPrice) <= Double.valueOf(Constant.walletResponse.getBalanceEth()) && Double.valueOf(etCount.getText().toString().trim()) <= Double.valueOf(Constant.walletResponse.getBalanceHkb()))) {
@@ -110,20 +112,7 @@ public class ZhuanChuActivity extends BaseActivity implements SeekBar.OnSeekBarC
             }
         }
 
-        ServiceFactory.getInstance().getBaseService(Api.class)
-                .signTransaction(MD5Utils.getMD5("123456"), type, Constant.currentUser.getWalletAddress(),
-                        walletAddress, gasPrice, count, Constant.walletResponse.getWalletKeystore(), Constant.currentUser.getDuoduoId())
-                .compose(bindToLifecycle())
-                .compose(RxSchedulers.normalTrans())
-                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                .subscribe(s -> {
-                    Intent intent = new Intent(this, SendTransactionService.class);
-                    intent.putExtra("arg1", s.getTransactionHash());
-                    intent.putExtra("arg2", s.getRawTransaction());
-                    startService(intent);
-                    ToastUtils.showShort(R.string.zhuanchusuccess);
-                    finish();
-                }, this::handleApiError);
+        safeInputDialog.show(count + (type.equals("1") ? "HKB" : "ETH"));
     }
 
     public void back(View view) {
@@ -174,5 +163,23 @@ public class ZhuanChuActivity extends BaseActivity implements SeekBar.OnSeekBarC
             String walletAddress = data.getStringExtra("walletAddress");
             etWalletAddress.setText(walletAddress);
         }
+    }
+
+    @Override
+    public void onFinish(String psd) {
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .signTransaction(MD5Utils.getMD5(psd), type, Constant.currentUser.getWalletAddress(),
+                        walletAddress, gasPrice, count, Constant.walletResponse.getWalletKeystore(), Constant.currentUser.getDuoduoId())
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.normalTrans())
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                .subscribe(s -> {
+                    Intent intent = new Intent(this, SendTransactionService.class);
+                    intent.putExtra("arg1", s.getTransactionHash());
+                    intent.putExtra("arg2", s.getRawTransaction());
+                    startService(intent);
+                    ToastUtils.showShort(R.string.zhuanchusuccess);
+                    finish();
+                }, this::handleApiError);
     }
 }

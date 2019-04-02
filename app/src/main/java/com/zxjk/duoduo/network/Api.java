@@ -8,6 +8,7 @@ import com.zxjk.duoduo.network.response.GetBalanceHkResponse;
 import com.zxjk.duoduo.network.response.GetNumbeOfTransactionResponse;
 import com.zxjk.duoduo.network.response.GetOverOrderResponse;
 import com.zxjk.duoduo.network.response.GetReleasePurchaseResponse;
+import com.zxjk.duoduo.network.response.GetTransferAllResponse;
 import com.zxjk.duoduo.network.response.GetTransferEthResponse;
 import com.zxjk.duoduo.network.response.GroupChatResponse;
 import com.zxjk.duoduo.network.response.GroupResponse;
@@ -675,5 +676,34 @@ public interface Api {
             @Field("data")String data
     );
 
+    @POST("duoduo/wallet/getTransferAll")
+    @FormUrlEncoded
+    Observable<BaseResponse<GetTransferAllResponse>> getTransferAll(
+            @Field("address") String address, @Field("page") String page, @Field("offset") String offset
+    );
+
+    @POST("duoduo/wallet/getTransfer")
+    @FormUrlEncoded
+    Observable<BaseResponse<GetTransferAllResponse>> getTransfer(
+            @Field("address") String address, @Field("page") String page, @Field("offset") String offset
+    );
+
+    @POST("duoduo/wallet/getTransferOut")
+    @FormUrlEncoded
+    Observable<BaseResponse<GetTransferAllResponse>> getTransferOut(
+            @Field("address") String address, @Field("page") String page, @Field("offset") String offset
+    );
+
+    @POST("duoduo/wallet/getTransferIn")
+    @FormUrlEncoded
+    Observable<BaseResponse<GetTransferAllResponse>> getTransferIn(
+            @Field("address") String address, @Field("page") String page, @Field("offset") String offset
+    );
+
+    @POST("duoduo/wallet/getSerialsFail")
+    @FormUrlEncoded
+    Observable<BaseResponse<GetTransferAllResponse>> getSerialsFail(
+            @Field("address") String address, @Field("page") String page, @Field("offset") String offset
+    );
 
 }

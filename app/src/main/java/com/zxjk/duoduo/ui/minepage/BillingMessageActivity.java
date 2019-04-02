@@ -48,8 +48,9 @@ public class BillingMessageActivity extends BaseActivity implements View.OnClick
     String isTag;
     BaseAddTitleDialog dialog;
 
-String pwd=null;
     SelectPopupWindow selectPopupWindow;
+
+    Intent intent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,7 +58,9 @@ String pwd=null;
         setContentView(R.layout.activity_billing_message);
         initView();
 
+        getPayInfo();
 
+        intent = new Intent(this, ReceiptTypeActivity.class);
     }
 
     private void initView() {
@@ -115,7 +118,7 @@ String pwd=null;
              .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
              .compose(RxSchedulers.normalTrans())
              .subscribe(s -> {
-
+                 startActivity(intent);
              }, throwable -> {
                  dialog = new BaseAddTitleDialog(BillingMessageActivity.this);
                  dialog.setOnClickListener(() -> {
@@ -137,25 +140,17 @@ String pwd=null;
 
     @Override
     public void onPopWindowClickListener(String psw, boolean complete) {
+        intent.putExtra("payPwd", psw);
+
         if (complete) {
-            pwd=psw;
             if (isTag.equals(wechat)){
-                Intent intent = new Intent(this, ReceiptTypeActivity.class);
-                intent.putExtra(type, wechat);
-                intent.putExtra("payPwd", psw);
-                startActivity(intent);
+                intent.putExtra(type, isTag);
                 updatePayInfo(wechat);
             }else if (isTag.equals(alipay)){
-                Intent intent = new Intent(this, ReceiptTypeActivity.class);
                 intent.putExtra(type, alipay);
-                intent.putExtra("payPwd", psw);
-                startActivity(intent);
                 updatePayInfo(alipay);
             }else{
-                Intent intent = new Intent(this, ReceiptTypeActivity.class);
                 intent.putExtra(type, bank);
-                intent.putExtra("payPwd", psw);
-                startActivity(intent);
                 updatePayInfo(bank);
             }
         }
@@ -190,11 +185,5 @@ String pwd=null;
                         }
                     }
                 },this::handleApiError);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getPayInfo();
     }
 }
