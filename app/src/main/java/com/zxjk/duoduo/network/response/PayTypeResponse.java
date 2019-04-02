@@ -1,6 +1,7 @@
 package com.zxjk.duoduo.network.response;
 
-public class PayInfoResponse {
+public class PayTypeResponse {
+
 
     /**
      * id : 4
@@ -31,25 +32,6 @@ public class PayInfoResponse {
     private String reason;
     private String cerateTime;
     private String isDelete;
-
-    @Override
-    public String toString() {
-        return "PayInfoResponse{" +
-                "id='" + id + '\'' +
-                ", customerId='" + customerId + '\'' +
-                ", duoduoId='" + duoduoId + '\'' +
-                ", payType='" + payType + '\'' +
-                ", payPicture='" + payPicture + '\'' +
-                ", payNumber='" + payNumber + '\'' +
-                ", wechatNick='" + wechatNick + '\'' +
-                ", zhifubaoNumber='" + zhifubaoNumber + '\'' +
-                ", openBank='" + openBank + '\'' +
-                ", status='" + status + '\'' +
-                ", reason='" + reason + '\'' +
-                ", cerateTime='" + cerateTime + '\'' +
-                ", isDelete='" + isDelete + '\'' +
-                '}';
-    }
 
     public String getId() {
         return id;

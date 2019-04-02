@@ -445,5 +445,7 @@
     <string name="add_friend_successful">添加好友成功</string>
     <string name="app_prompt_text">你还没有其他好友呐！</string>
     <string name="add_btn">未添加</string>
+    <string name="pay_type_successful">该信息已完善</string>
+    <string name="pay_type_update_successful">已完善</string>
 
 </resources>

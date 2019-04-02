@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
@@ -298,6 +299,8 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
                     Constant.currentUser.setIsAuthentication("2");
+                    Constant.currentUser.setRealname(realNames);
+                    SPUtils.getInstance().put("realNames",realNames);
                     ToastUtils.showShort(R.string.verified_success);
                     finish();
                 }, this::handleApiError);

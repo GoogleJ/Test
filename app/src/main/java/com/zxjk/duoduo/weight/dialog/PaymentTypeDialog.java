@@ -35,6 +35,8 @@ public class PaymentTypeDialog extends Dialog implements View.OnClickListener {
 
     String wechat="1";
     String alipay="2";
+    String bank="3";
+    String openBank="4";
 
     String editContent;
 
@@ -55,9 +57,13 @@ public class PaymentTypeDialog extends Dialog implements View.OnClickListener {
             //支付宝的
             editInformation.setHint(hint);
             editInformation.setInputType(InputType.TYPE_CLASS_NUMBER);
-        }else{
+        }else if (bank.equals(type)){
+            //银行卡号
             editInformation.setHint(hint);
             editInformation.setInputType(InputType.TYPE_CLASS_NUMBER);
+        }else{
+            //开户银行
+            editInformation.setHint(hint);
         }
 
     }

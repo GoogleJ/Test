@@ -13,10 +13,10 @@ import com.zxjk.duoduo.network.response.GroupChatResponse;
 import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.response.PayInfoResponse;
+import com.zxjk.duoduo.network.response.PayTypeResponse;
 import com.zxjk.duoduo.network.response.RedPackageResponse;
 import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
-import com.zxjk.duoduo.network.response.SearchCustomerInfoResponse;
-import com.zxjk.duoduo.network.response.SearchResponse;
+
 import com.zxjk.duoduo.network.response.SignHkbOrHkExchangeResponse;
 import com.zxjk.duoduo.network.response.SignTransactionResponse;
 
@@ -674,5 +674,6 @@ public interface Api {
     Observable<BaseResponse<RedPackageResponse>> sendSingleRedPackage(
             @Field("data")String data
     );
+
 
 }

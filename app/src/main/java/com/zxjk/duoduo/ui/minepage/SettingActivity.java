@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,10 +22,13 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.BaseResponse;
+import com.zxjk.duoduo.network.response.PayInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.LoginActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
+
+import java.util.List;
 
 import androidx.annotation.RequiresApi;
 import io.reactivex.functions.Consumer;
@@ -42,13 +46,14 @@ public class SettingActivity extends BaseActivity {
     private TextView tvSettingPayment;
     private TextView tvSettingNick;
 
+
     private ImageView ivSettingAuthen;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-
+        getPayInfo();
         initView();
 
     }
@@ -58,6 +63,7 @@ public class SettingActivity extends BaseActivity {
         super.onResume();
         tvSettingAuthenticate.setText(CommonUtils.getAuthenticate(Constant.currentUser.getIsAuthentication()));
         ivSettingAuthen.setVisibility(Constant.currentUser.getIsAuthentication().equals("0") ? View.VISIBLE : View.GONE);
+
     }
 
     public void gotoVerivy(View view) {
@@ -74,6 +80,7 @@ public class SettingActivity extends BaseActivity {
         tvSettingNick = findViewById(R.id.tvSettingNick);
         ivSettingAuthen = findViewById(R.id.ivSettingAuthen);
         tvSettingNick.setText(Constant.currentUser.getNick());
+        tvSettingPayment.setText(SPUtils.getInstance().getString("successfulPayType"));
     }
 
     //账户
@@ -156,6 +163,26 @@ public class SettingActivity extends BaseActivity {
 
     public void back(View view) {
         finish();
+    }
+
+
+    public void getPayInfo(){
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .getPayInfo()
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                .compose(RxSchedulers.normalTrans())
+                .subscribe(payInfoResponses -> {
+                  for (PayInfoResponse data:payInfoResponses){
+                      if (TextUtils.isEmpty(data.getWechatNick())&&
+                              TextUtils.isEmpty(data.getZhifubaoNumber())&&
+                      TextUtils.isEmpty(data.getOpenBank())){
+                          tvSettingPayment.setText(getString(R.string.pay_type_update_successful));
+                      }else{
+                          return;
+                      }
+                  }
+                },this::handleApiError);
     }
 
 

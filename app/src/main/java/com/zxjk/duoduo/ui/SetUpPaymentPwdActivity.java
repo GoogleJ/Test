@@ -87,14 +87,16 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
             @Override
             public void inputFinished(String inputPsd) {
                 // TODO: 2018/1/3 输完逻辑
-                payPsdInputView.cleanPsd();
+
 
                 if (TextUtils.isEmpty(oldPwd)) {
+                    payPsdInputView.cleanPsd();
                     oldPwd = inputPsd;
                     m_set_payment_pwd_label.setText(R.string.please_set_paypass);
                     return;
                 }
                 if (TextUtils.isEmpty(newPwd)) {
+                    payPsdInputView.cleanPsd();
                     newPwd = inputPsd;
                     m_set_payment_pwd_label.setText(R.string.please_set_paypass_twtice);
                     return;

@@ -125,6 +125,8 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
         setContentView(R.layout.activity_people_information);
         ButterKnife.bind(this);
         RongIM.setUserInfoProvider(this, false);
+        RongIM.getInstance().setMessageAttachedUserInfo(true);
+        RongIM.getInstance().refreshUserInfoCache(new UserInfo(Constant.userId, Constant.currentUser.getNick(), Uri.parse(Constant.currentUser.getHeadPortrait())));
         initUI();
         int type = 0;
         //这个模块需要添加数据绑定
@@ -219,7 +221,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                 if (intentType == 0) {
 
                     RongIM.getInstance().setCurrentUserInfo(new UserInfo(friendInfoResponse.getId(),friendInfoResponse.getNick(),Uri.parse(friendInfoResponse.getHeadPortrait())));
-                    RongIM.getInstance().setMessageAttachedUserInfo(true);
+
                     RongIM.getInstance().refreshUserInfoCache(new UserInfo(friendInfoResponse.getId(), friendInfoResponse.getNick(), Uri.parse(friendInfoResponse.getHeadPortrait())));
                     RongIM.getInstance().startPrivateChat(this, friendInfoResponse.getId(), friendInfoResponse.getNick());
                 } else if (intentType == 1) {
@@ -315,6 +317,6 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
     public UserInfo getUserInfo(String s) {
         Uri uri=Uri.parse(Constant.friendInfoResponse.getHeadPortrait());
 
-        return new UserInfo(contactResponse.getId(),contactResponse.getNick(),uri);
+        return new UserInfo(Constant.friendInfoResponse.getId(),Constant.friendInfoResponse.getNick(),uri);
     }
 }

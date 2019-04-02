@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -91,12 +92,13 @@ public class GroupChatActivity extends BaseActivity implements TextWatcher {
         mGroupChatEdit1.addTextChangedListener(this);
         //从网络获取用户所有群组信息
         getMyGroupChat(Constant.userId);
+
         mGroupChatRecyclerView.setAdapter(groupChatAdapter);
         groupChatAdapter.notifyDataSetChanged();
         groupChatAdapter.setOnItemChildClickListener((adapter, view, position) -> {
 
-            Constant.groupResponse= groupChatAdapter.getData().get(position);
-            RongIM.getInstance().startGroupChat(this, groupChatAdapter.getData().get(position).getId(),groupChatAdapter.getData().get(position).getGroupNikeName());
+            Constant.groupResponse = groupChatAdapter.getData().get(position);
+            RongIM.getInstance().startGroupChat(this, groupChatAdapter.getData().get(position).getId(), groupChatAdapter.getData().get(position).getGroupNikeName());
 
         });
 
@@ -192,6 +194,7 @@ public class GroupChatActivity extends BaseActivity implements TextWatcher {
         }
         return filterList;
     }
+
 
 
 }
