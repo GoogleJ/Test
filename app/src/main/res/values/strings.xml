@@ -447,5 +447,14 @@
     <string name="add_btn">未添加</string>
     <string name="pay_type_successful">该信息已完善</string>
     <string name="pay_type_update_successful">已完善</string>
+    <string name="prompt_logo">多多红包</string>
+    <string name="red_packet">红包</string>
+    <string name="photo_image_title">图片</string>
+    <string name="shotting_image_title">拍摄</string>
+    <string name="transfer_money_title">转账</string>
+    <string name="voice_calls_title">语音通话</string>
+    <string name="personal_business_card_title">个人名片</string>
+    <string name="location_address_title">位置</string>
+    <string name="collection_title">收藏</string>
 
 </resources>

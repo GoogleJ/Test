@@ -183,6 +183,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     Constant.userId = loginResponse.getId();
                     startService(new Intent(this, RegisterBlockWalletService.class));
                     finish();
+                    btn_register.setEnabled(false);
                 }, this::handleApiError);
     }
 

@@ -10,8 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.EncryptUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Application;
@@ -20,7 +18,6 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.CountryEntity;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
@@ -33,14 +30,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 
 import static com.zxjk.duoduo.utils.MD5Utils.getMD5;
 
-//import io.rong.imkit.RongIM;
-//import io.rong.imlib.RongIMClient;
+
 
 /**
  * 此处是登录界面及操作
@@ -191,6 +186,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 public void onSuccess(String userid) {
                     Log.d("GJSONSSSSS", "--onSuccess" + userid);
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    btn_login.setEnabled(false);
                     finish();
                 }
 

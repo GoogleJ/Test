@@ -53,7 +53,7 @@ public class SettingActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-        getPayInfo();
+
         initView();
 
     }
@@ -165,25 +165,6 @@ public class SettingActivity extends BaseActivity {
         finish();
     }
 
-
-    public void getPayInfo(){
-        ServiceFactory.getInstance().getBaseService(Api.class)
-                .getPayInfo()
-                .compose(bindToLifecycle())
-                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                .compose(RxSchedulers.normalTrans())
-                .subscribe(payInfoResponses -> {
-                  for (PayInfoResponse data:payInfoResponses){
-                      if (TextUtils.isEmpty(data.getWechatNick())&&
-                              TextUtils.isEmpty(data.getZhifubaoNumber())&&
-                      TextUtils.isEmpty(data.getOpenBank())){
-                          tvSettingPayment.setText(getString(R.string.pay_type_update_successful));
-                      }else{
-                          return;
-                      }
-                  }
-                },this::handleApiError);
-    }
 
 
 }

@@ -156,6 +156,7 @@ public class ForgetRegisterActivity extends BaseActivity implements View.OnClick
                     public void accept(String s) throws Exception {
                         countDownTimer.start();
                         ToastUtils.showShort(getString(R.string.code_label));
+                        btn_commit.setEnabled(false);
                     }
                 }, throwable -> handleApiError(throwable));
 

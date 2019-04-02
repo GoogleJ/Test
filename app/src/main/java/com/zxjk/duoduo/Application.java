@@ -3,14 +3,19 @@ package com.zxjk.duoduo;
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.Utils;
-import com.zxjk.duoduo.ui.msgpage.adapter.CustomizeMessage;
+import com.zxjk.duoduo.ui.msgpage.adapter.BasePluginExtensionModule;
 
 import android.app.ActivityManager;
 import android.content.Context;
-import android.content.Intent;
+
+import java.util.List;
 
 import androidx.multidex.MultiDex;
+import io.rong.imkit.DefaultExtensionModule;
+import io.rong.imkit.IExtensionModule;
+import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Message;
@@ -22,13 +27,10 @@ import io.rong.message.VoiceMessage;
 import io.rong.push.PushType;
 import io.rong.push.notification.PushMessageReceiver;
 import io.rong.push.notification.PushNotificationMessage;
-//import io.rong.imkit.RongIM;
-//import io.rong.push.PushType;
-//import io.rong.push.notification.PushMessageReceiver;
-//import io.rong.push.notification.PushNotificationMessage;
 
 /**
  * 这里是Application
+ *
  * @author Administrator
  */
 public class Application extends android.app.Application {
@@ -45,11 +47,9 @@ public class Application extends android.app.Application {
 
         MultiDex.install(this);
         RongIM.init(this);
-        RongIM.getInstance().setSendMessageListener(new MySendMessageListener());
-        RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener());
-        RongIM.registerMessageType(CustomizeMessage.class);
-//        RongIM.registerMessageTemplate(new DuoDuoFileProvider());
-
+//        RongIM.registerMessageType(RedPacketMessage.class);
+//        RongIM.setOnReceiveMessageListener(new FriendDetailsActivity.ReceiveMessageListener());
+        setMyExtensionModule();
     }
 
     //初始化阿里云OSS上传服务
@@ -109,6 +109,7 @@ public class Application extends android.app.Application {
         Constant.clear();
         super.onTerminate();
     }
+
     private class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageListener {
 
         /**
@@ -186,6 +187,27 @@ public class Application extends android.app.Application {
         }
     }
 
+    public void setMyExtensionModule() {
+        List<IExtensionModule> moduleList = RongExtensionManager.getInstance().getExtensionModules();
 
+        if (moduleList != null) {
+            IExtensionModule defaultModule = null;
+            for (IExtensionModule module : moduleList) {
+                if (module instanceof DefaultExtensionModule) {
+                    defaultModule = module;
+                    break;
+                }
+            }
+//            if (defaultModule != null) {
+
+            RongExtensionManager.getInstance().unregisterExtensionModule(defaultModule);
+            RongExtensionManager.getInstance().registerExtensionModule(new BasePluginExtensionModule());
+
+            List<IExtensionModule> moduleList2 = RongExtensionManager.getInstance().getExtensionModules();
+
+            LogUtils.i("moduleList.size() = " + moduleList2);
+//            }
+        }
+    }
 
 }

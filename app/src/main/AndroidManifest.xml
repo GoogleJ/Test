@@ -86,6 +86,7 @@
         <activity android:name=".ui.grouppage.SelectContactActivity" />
         <activity android:name=".ui.grouppage.AgreeGroupChatActivity" />
         <activity android:name=".ui.msgpage.PhoneContactActivity"/>
+        <activity android:name=".ui.msgpage.PrivacyRedPacketActivity"/>
         <activity
             android:name=".ui.WelcomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -361,6 +362,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
+
 
         <service android:name=".RegisterBlockWalletService" />
         <service android:name=".SendTransactionService" />

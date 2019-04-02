@@ -1,14 +1,17 @@
 package com.zxjk.duoduo.ui.msgpage;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
@@ -21,7 +24,6 @@ import com.zxjk.duoduo.ui.msgpage.widget.CommonPopupWindow;
 import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendInformationDialog;
 import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.weight.TitleBar;
-
 import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,8 +31,8 @@ import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
-import io.rong.push.notification.PushNotificationMessage;
 
 
 /**
@@ -217,7 +219,11 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
             case R.id.m_people_information_send_to_message:
+
+
+                RongIM.getInstance().setSendMessageListener(new SendMessageListener());
                 if (intentType == 0) {
 
                     RongIM.getInstance().setCurrentUserInfo(new UserInfo(friendInfoResponse.getId(),friendInfoResponse.getNick(),Uri.parse(friendInfoResponse.getHeadPortrait())));
@@ -237,6 +243,8 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                     RongIM.getInstance().refreshUserInfoCache(new UserInfo(contactResponse.getId(), contactResponse.getNick(), Uri.parse(contactResponse.getHeadPortrait())));
                     RongIM.getInstance().startPrivateChat(this, contactResponse.getId(), contactResponse.getNick());
                 }
+
+
                 break;
             case R.id.m_people_information_voice_calls:
                 ToastUtils.showShort("此功能暂未实现");
@@ -319,4 +327,26 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
 
         return new UserInfo(Constant.friendInfoResponse.getId(),Constant.friendInfoResponse.getNick(),uri);
     }
+//     RongIM.registerMessageTemplate(new RedPacketMessageItemProvider());
+    public static class ReceiveMessageListener implements RongIMClient.OnReceiveMessageListener  {
+        @Override
+        public boolean onReceived(Message message, int i) {
+            LogUtils.d(i+" onReceived "+message.getTargetId()+"  "+message.getSenderUserId());
+            return false;
+        }
+    }
+    public static class SendMessageListener implements RongIM.OnSendMessageListener {
+        @Override
+        public Message onSend(Message message) {
+            LogUtils.d(" onSend "+message.getContent()+" id "+message.getSenderUserId()+"  "+message.getTargetId());
+            return message;
+        }
+
+        @Override
+        public boolean onSent(Message message, RongIM.SentMessageErrorCode sentMessageErrorCode) {
+            return false;
+        }
+    }
+
+
 }
