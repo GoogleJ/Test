@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.zxjk.duoduo">
 
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" /> <!-- 融云相关 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -11,7 +12,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 获取机型信息权限 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL"
+    <uses-permission
+        android:name="android.permission.INTERACT_ACROSS_USERS_FULL"
         tools:ignore="ProtectedPermissions" /> <!-- 查看 Wi-Fi 状态 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 查看网络状态 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -25,7 +27,7 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" /> <!-- 获取联系人信息，demo中演示发送通讯录消息 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
@@ -37,13 +39,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ui.walletpage.BlockWalletOrdersActivity"></activity>
         <activity android:name=".ui.walletpage.ChooseCoinActivity" />
         <activity android:name=".ui.walletpage.BlockOrderDetailActivity" />
         <activity android:name=".ui.walletpage.BlockETHOrders" />
         <activity android:name=".ui.walletpage.HuaZhuanActivity" />
-        <activity android:name=".ui.walletpage.ZhuanChuActivity" /> <!-- <meta-data -->
-        <!-- android:name="com.amap.api.v2.apikey" -->
-        <!-- android:value="df7babf242eb29b0f784dadae2460078" /> -->
+        <activity android:name=".ui.walletpage.ZhuanChuActivity" />
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="cf78026d76c3b2dcd0a8384061970712" />
+
         <activity android:name=".ui.msgpage.ConversationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -67,7 +73,7 @@
         <activity android:name=".ui.minepage.ChangePhoneActivity" />
         <activity android:name=".ui.minepage.AccountActivity" />
         <activity android:name=".ui.msgpage.GlobalSearchActivity" />
-        <activity android:name=".ui.minepage.OnlineServiceActivity"/>
+        <activity android:name=".ui.minepage.OnlineServiceActivity" />
         <activity
             android:name=".ui.minepage.VerifiedActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />

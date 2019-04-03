@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+            keyAlias 'duoduo'
+            keyPassword 'duoduo'
+            storeFile file('C:/WorkSpace/DuoDuo-Android/duoduo.jks')
+            storePassword 'duoduo'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.zxjk.duoduo"
@@ -13,11 +21,15 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86", "x86_64", "mips64", "mips", "armeabi", "arm64-v8a"
         }
+        signingConfig signingConfigs.release
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable false
+            signingConfig signingConfigs.release
+            zipAlignEnabled true
         }
     }
     compileOptions {
@@ -31,6 +43,8 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
+    productFlavors {
+    }
 }
 
 dependencies {
@@ -39,6 +53,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0-beta01'
     implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
     implementation 'pub.devrel:easypermissions:0.4.2'
+
     //Rxlifecycle
     implementation 'com.trello.rxlifecycle3:rxlifecycle:3.0.0'
     implementation 'com.trello.rxlifecycle3:rxlifecycle-android:3.0.0'
@@ -119,4 +134,6 @@ dependencies {
     //popwindow
     implementation 'com.github.razerdp:BasePopup:2.1.9'
     implementation 'com.github.Othershe:CombineBitmap:1.0.0'
+    // indicator
+    implementation 'com.github.hackware1993:MagicIndicator:1.6.0'
 }

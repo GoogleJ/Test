@@ -87,7 +87,7 @@ public class BlockWalletActivity extends BaseActivity {
     }
 
     public void jump2List(View view) {
-
+        startActivity(new Intent(this, BlockWalletOrdersActivity.class));
     }
 
     @Override

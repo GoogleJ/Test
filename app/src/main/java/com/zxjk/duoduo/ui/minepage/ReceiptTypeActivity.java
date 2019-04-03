@@ -260,6 +260,7 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
     public void addPayInfo(String data) {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .addPayInfo(data)
+                .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(new Consumer<String>() {

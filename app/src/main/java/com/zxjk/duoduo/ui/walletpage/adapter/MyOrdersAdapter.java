@@ -56,7 +56,6 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.ViewHo
             tvCointype = itemView.findViewById(R.id.tvCointype);
             tvMoney = itemView.findViewById(R.id.tvMoney);
             ivState = itemView.findViewById(R.id.ivState);
-
         }
 
         void bindData(MyOrdersData bean) {

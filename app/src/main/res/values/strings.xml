@@ -447,6 +447,12 @@
     <string name="add_btn">未添加</string>
     <string name="pay_type_successful">该信息已完善</string>
     <string name="pay_type_update_successful">已完善</string>
+    <string name="orders">记录</string>
+    <string name="failed">失败</string>
+    <string name="success">成功</string>
+    <string name="procssing">进行中</string>
+    <string name="all">全部</string>
+    <string name="nomore">暂无更多数据</string>
     <string name="prompt_logo">多多红包</string>
     <string name="red_packet">红包</string>
     <string name="photo_image_title">图片</string>

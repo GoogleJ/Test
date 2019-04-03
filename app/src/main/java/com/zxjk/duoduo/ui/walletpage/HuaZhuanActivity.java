@@ -23,12 +23,13 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
+import com.zxjk.duoduo.weight.dialog.SafeInputDialog;
 
 import java.text.DecimalFormat;
 
 import io.reactivex.functions.Consumer;
 
-public class HuaZhuanActivity extends BaseActivity {
+public class HuaZhuanActivity extends BaseActivity implements SafeInputDialog.OnFinishListener {
 
     private String type = "3"; //币种类型，2：HK->HKB，3：HKB->HK
 
@@ -54,10 +55,15 @@ public class HuaZhuanActivity extends BaseActivity {
 
     private String gasPrice = ""; //矿工费用 type为3时需要传
 
+    private SafeInputDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hua_zhuan);
+
+        dialog = new SafeInputDialog(this);
+        dialog.setOnFinishListener(this);
 
         tvHuaZhuan1 = findViewById(R.id.tvHuaZhuan1);
         tvHuaZhuan2 = findViewById(R.id.tvHuaZhuan2);
@@ -171,6 +177,8 @@ public class HuaZhuanActivity extends BaseActivity {
         }
     }
 
+    private String number;
+
     @SuppressLint("CheckResult")
     public void submit(View view) {
         if (etHuaZhuanCount.getText().toString().length() == 0) {
@@ -183,13 +191,9 @@ public class HuaZhuanActivity extends BaseActivity {
             return;
         }
 
-        String number;
         number = etHuaZhuanCount.getText().toString().trim();
-
         number = new DecimalFormat("#0.00").format(Double.valueOf(number).doubleValue());
-
         String price = tvHuaZhuanGasPrice1.getText().toString().replace("≈", "").replace("ether", "").trim();
-
         if (type.equals("3")) {
             if (!(Double.valueOf(price) <= Double.valueOf(Constant.walletResponse.getBalanceEth()) && Double.valueOf(number) <= Double.valueOf(Constant.walletResponse.getBalanceHkb()))) {
                 ToastUtils.showShort(R.string.wronginput);
@@ -202,22 +206,7 @@ public class HuaZhuanActivity extends BaseActivity {
             }
         }
 
-        String finalNumber = number;
-        ServiceFactory.getInstance().getBaseService(Api.class)
-                .signHkbOrHkExchange(MD5Utils.getMD5("654321"), type, Constant.walletResponse.getWalletAddress(),
-                        gasPrice, number, Constant.walletResponse.getWalletKeystore(), Constant.currentUser.getDuoduoId())
-                .compose(bindToLifecycle())
-                .compose(RxSchedulers.normalTrans())
-                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                .subscribe(s -> {
-                    Intent intent = new Intent(this, SendHkbOrHkExchangeService.class);
-                    intent.putExtra("arg1", type);
-                    intent.putExtra("arg2", finalNumber);
-                    intent.putExtra("arg3", s.getTransactionHash());
-                    intent.putExtra("arg4", s.getRawTransaction());
-                    startService(intent);
-                    ToastUtils.showShort(R.string.huazhuansuccess);
-                }, this::handleApiError);
+        dialog.show(etHuaZhuanCount.getText().toString() + (type.equals("3") ? "HKB" : "HK"));
     }
 
     public void cancel(View view) {
@@ -226,5 +215,25 @@ public class HuaZhuanActivity extends BaseActivity {
 
     public void back(View view) {
         finish();
+    }
+
+    @SuppressLint("CheckResult")
+    @Override
+    public void onFinish(String psd) {
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .signHkbOrHkExchange(MD5Utils.getMD5(psd), type, Constant.walletResponse.getWalletAddress(),
+                        gasPrice, number, Constant.walletResponse.getWalletKeystore(), Constant.currentUser.getDuoduoId())
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.normalTrans())
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                .subscribe(s -> {
+                    Intent intent = new Intent(this, SendHkbOrHkExchangeService.class);
+                    intent.putExtra("arg1", type);
+                    intent.putExtra("arg2", number);
+                    intent.putExtra("arg3", s.getTransactionHash());
+                    intent.putExtra("arg4", s.getRawTransaction());
+                    startService(intent);
+                    ToastUtils.showShort(R.string.huazhuansuccess);
+                }, this::handleApiError);
     }
 }

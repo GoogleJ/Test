@@ -52,20 +52,15 @@ public class SafeInputDialog extends Dialog {
 
             @Override
             public void inputFinished(String inputPsd) {
+                dismiss();
                 if (onFinishListener != null) {
                     onFinishListener.onFinish(inputPsd);
                 }
-                dismiss();
             }
         });
 
         setContentView(inflate);
 
-        Window window = getWindow();
-        WindowManager.LayoutParams lp = window.getAttributes();
-        lp.gravity = Gravity.CENTER;
-        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;//宽高可设置具体大小
-        getWindow().setAttributes(lp);
     }
 
     public void show(String money) {

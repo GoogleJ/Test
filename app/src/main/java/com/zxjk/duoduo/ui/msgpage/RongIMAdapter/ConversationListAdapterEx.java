@@ -20,11 +20,6 @@ public class ConversationListAdapterEx extends ConversationListAdapter {
 
     @Override
     protected void bindView(View v, int position, UIConversation data) {
-        if (data != null) {
-            if (data.getConversationType().equals(Conversation.ConversationType.DISCUSSION)) {
-                data.setUnreadType(UIConversation.UnreadRemindType.REMIND_ONLY);
-            }
-        }
         super.bindView(v, position, data);
     }
 }
