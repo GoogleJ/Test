@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import io.rong.imkit.RongExtension;
 import io.rong.imkit.plugin.IPluginModule;
 
-public class ShootingPlugin implements IPluginModule {
+public class TakePhotoPlugin implements IPluginModule {
     @Override
     public Drawable obtainDrawable(Context context) {
         return ContextCompat.getDrawable(context, R.drawable.icon_photography);

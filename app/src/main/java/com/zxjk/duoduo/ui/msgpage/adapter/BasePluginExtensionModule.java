@@ -20,7 +20,7 @@ public class BasePluginExtensionModule extends DefaultExtensionModule {
     public List<IPluginModule> getPluginModules(Conversation.ConversationType conversationType) {
         RedPacketPlugin packetPlugin = new RedPacketPlugin();
         PhotoSelectorPlugin photoSelectorPlugin = new PhotoSelectorPlugin();
-        ShootingPlugin shootingPlugin = new ShootingPlugin();
+        TakePhotoPlugin takePhotoPlugin = new TakePhotoPlugin();
         TransferPlugin transferPlugin = new TransferPlugin();
         VoiceCallsPlugin voiceCallsPlugin = new VoiceCallsPlugin();
         PersonalBusinessCardPlugin personalBusinessCardPlugin=new PersonalBusinessCardPlugin();
@@ -51,19 +51,17 @@ public class BasePluginExtensionModule extends DefaultExtensionModule {
                temp2 = module2;
            }
        }
-
         list.remove(temp);
         list.remove(temp1);
         list.remove(temp2);
         list.add(photoSelectorPlugin);
-        list.add(shootingPlugin);
+        list.add(takePhotoPlugin);
         list.add(transferPlugin);
         list.add(voiceCallsPlugin);
         list.add(packetPlugin);
         list.add(personalBusinessCardPlugin);
         list.add(locationPlugin);
         list.add(collectionPlugin);
-
         return list;
     }
 }

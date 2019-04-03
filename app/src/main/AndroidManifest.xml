@@ -87,6 +87,7 @@
         <activity android:name=".ui.grouppage.AgreeGroupChatActivity" />
         <activity android:name=".ui.msgpage.PhoneContactActivity"/>
         <activity android:name=".ui.msgpage.PrivacyRedPacketActivity"/>
+        <activity android:name=".ui.msgpage.PeopleRedEnvelopesActivity"/>
         <activity
             android:name=".ui.WelcomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

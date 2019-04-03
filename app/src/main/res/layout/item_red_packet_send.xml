@@ -4,14 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:orientation="vertical"
     tools:ignore="MissingConstraints">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+
         android:layout_width="224dp"
         android:layout_height="85dp"
-        android:layout_marginStart="63dp"
+        android:layout_gravity="center_horizontal"
+
         android:layout_marginTop="20dp"
+        android:id="@+id/send_red_packet_layout"
         android:background="@drawable/icon_send_red_packet_friend">
 
         <TextView

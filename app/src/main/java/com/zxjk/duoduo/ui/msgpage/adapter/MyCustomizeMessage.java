@@ -18,7 +18,7 @@ import io.rong.imlib.model.MessageContent;
  */
 @SuppressLint("ParcelCreator")
 @MessageTag(value = "app:custom", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
-public class RedPacketMessage extends MessageContent {
+public class MyCustomizeMessage extends MessageContent {
     /**
      * sendUserId : 14
      * receiveUserId : 15
@@ -32,6 +32,13 @@ public class RedPacketMessage extends MessageContent {
     private double money;
     private String message;
     private String paypwd;
+
+
+
+
+    public MyCustomizeMessage() {
+
+    }
 
     @Override
     public byte[] encode() {
@@ -55,6 +62,41 @@ public class RedPacketMessage extends MessageContent {
         return null;
     }
 
+    public MyCustomizeMessage(byte[] data) {
+        String jsonStr = null;
+
+        try {
+            jsonStr = new String(data, "UTF-8");
+        } catch (UnsupportedEncodingException e1) {
+            e1.printStackTrace();
+        }
+
+        try {
+            JSONObject jsonObj = new JSONObject(jsonStr);
+
+            if (jsonObj.has("sendUserId")) {
+                setSendUserId(jsonObj.optString("sendUserId"));
+            }
+
+            if (jsonObj.has("receiveUserId")) {
+                setReceiveUserId(jsonObj.optString("receiveUserId"));
+            }
+
+            if (jsonObj.has("money")) {
+                setMoney(jsonObj.optDouble("money"));
+            }
+
+            if (jsonObj.has("paypwd")) {
+                setPaypwd(jsonObj.optString("paypwd"));
+            }
+
+        } catch (JSONException e) {
+            Log.d("JSONException", e.getMessage());
+        }
+    }
+
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -71,13 +113,14 @@ public class RedPacketMessage extends MessageContent {
     }
 
     //给消息赋值。
-    public RedPacketMessage(Parcel in) {
-        //该类为工具类，消息属性
-        sendUserId= ParcelUtils.readFromParcel(in);
-        receiveUserId=ParcelUtils.readFromParcel(in);
-        money=ParcelUtils.readDoubleFromParcel(in);
-        message=ParcelUtils.readFromParcel(in);
-        paypwd=ParcelUtils.readFromParcel(in);
+    public MyCustomizeMessage(Parcel in) {
+        setSendUserId(ParcelUtils.readFromParcel(in));
+        //这里可继续增加你消息的属性
+        setReceiveUserId(ParcelUtils.readFromParcel(in));
+        setMoney(ParcelUtils.readDoubleFromParcel(in));
+        setMessage(ParcelUtils.readFromParcel(in));
+        setPaypwd(ParcelUtils.readFromParcel(in));
+
 
 
         //这里可继续增加你消息的属性
@@ -85,18 +128,19 @@ public class RedPacketMessage extends MessageContent {
     /**
      * 读取接口，目的是要从Parcel中构造一个实现了Parcelable的类的实例处理。
      */
-    public static final Creator<RedPacketMessage> CREATOR = new Creator<RedPacketMessage>() {
+    public static final Creator<MyCustomizeMessage> CREATOR = new Creator<MyCustomizeMessage>() {
 
         @Override
-        public RedPacketMessage createFromParcel(Parcel source) {
-            return new RedPacketMessage(source);
+        public MyCustomizeMessage createFromParcel(Parcel source) {
+            return new MyCustomizeMessage(source);
         }
 
         @Override
-        public RedPacketMessage[] newArray(int size) {
-            return new RedPacketMessage[size];
+        public MyCustomizeMessage[] newArray(int size) {
+            return new MyCustomizeMessage[size];
         }
     };
+
 
 
     public String getSendUserId() {
