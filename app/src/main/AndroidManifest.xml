@@ -30,7 +30,6 @@
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
     <application
         android:name=".Application"
         android:icon="@drawable/ic_launcher"
@@ -45,7 +44,6 @@
         <activity android:name=".ui.walletpage.BlockETHOrders" />
         <activity android:name=".ui.walletpage.HuaZhuanActivity" />
         <activity android:name=".ui.walletpage.ZhuanChuActivity" />
-
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="cf78026d76c3b2dcd0a8384061970712" />
@@ -94,6 +92,8 @@
         <activity android:name=".ui.msgpage.PhoneContactActivity"/>
         <activity android:name=".ui.msgpage.PrivacyRedPacketActivity"/>
         <activity android:name=".ui.msgpage.PeopleRedEnvelopesActivity"/>
+        <activity android:name=".ui.msgpage.TransferActivity"/>
+        <activity android:name=".ui.msgpage.TransferInfoActivity"/>
         <activity
             android:name=".ui.WelcomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

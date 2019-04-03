@@ -1,4 +1,4 @@
-package com.zxjk.duoduo.ui.msgpage.adapter;
+package com.zxjk.duoduo.ui.msgpage.rongIMAdapter;
 
 import android.annotation.SuppressLint;
 import android.os.Parcel;
@@ -15,10 +15,11 @@ import io.rong.imlib.model.MessageContent;
 
 /**
  * @author Administrator
+ * @// TODO: 2019\4\3 0003 关于红包的自定义消息 
  */
 @SuppressLint("ParcelCreator")
 @MessageTag(value = "app:custom", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
-public class MyCustomizeMessage extends MessageContent {
+public class RedPacketMessage extends MessageContent {
     /**
      * sendUserId : 14
      * receiveUserId : 15
@@ -33,10 +34,7 @@ public class MyCustomizeMessage extends MessageContent {
     private String message;
     private String paypwd;
 
-
-
-
-    public MyCustomizeMessage() {
+    public RedPacketMessage() {
 
     }
 
@@ -62,7 +60,7 @@ public class MyCustomizeMessage extends MessageContent {
         return null;
     }
 
-    public MyCustomizeMessage(byte[] data) {
+    public RedPacketMessage(byte[] data) {
         String jsonStr = null;
 
         try {
@@ -113,7 +111,7 @@ public class MyCustomizeMessage extends MessageContent {
     }
 
     //给消息赋值。
-    public MyCustomizeMessage(Parcel in) {
+    public RedPacketMessage(Parcel in) {
         setSendUserId(ParcelUtils.readFromParcel(in));
         //这里可继续增加你消息的属性
         setReceiveUserId(ParcelUtils.readFromParcel(in));
@@ -128,16 +126,16 @@ public class MyCustomizeMessage extends MessageContent {
     /**
      * 读取接口，目的是要从Parcel中构造一个实现了Parcelable的类的实例处理。
      */
-    public static final Creator<MyCustomizeMessage> CREATOR = new Creator<MyCustomizeMessage>() {
+    public static final Creator<RedPacketMessage> CREATOR = new Creator<RedPacketMessage>() {
 
         @Override
-        public MyCustomizeMessage createFromParcel(Parcel source) {
-            return new MyCustomizeMessage(source);
+        public RedPacketMessage createFromParcel(Parcel source) {
+            return new RedPacketMessage(source);
         }
 
         @Override
-        public MyCustomizeMessage[] newArray(int size) {
-            return new MyCustomizeMessage[size];
+        public RedPacketMessage[] newArray(int size) {
+            return new RedPacketMessage[size];
         }
     };
 

@@ -462,5 +462,11 @@
     <string name="personal_business_card_title">个人名片</string>
     <string name="location_address_title">位置</string>
     <string name="collection_title">收藏</string>
+    <string name="transfer_prompt">转账给王二小</string>
+    <string name="transfer_money">500 HK</string>
+    <string name="transfer_prompt_logo">多多转账</string>
+    <string name="business_card_user_name">天黑请闭眼</string>
+    <string name="business_card_duoduo_id">多多号：123456</string>
+    <string name="business_card_label">个人名片</string>
 
 </resources>

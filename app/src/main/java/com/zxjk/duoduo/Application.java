@@ -5,8 +5,11 @@ import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.Utils;
-import com.zxjk.duoduo.ui.msgpage.adapter.BasePluginExtensionModule;
-import com.zxjk.duoduo.ui.msgpage.adapter.MyCustomizeMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BasePluginExtensionModule;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketProvider;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferProvider;
 
 import android.app.ActivityManager;
 import android.content.Context;
@@ -48,8 +51,10 @@ public class Application extends android.app.Application {
 
         MultiDex.install(this);
         RongIM.init(this);
-        RongIM.registerMessageType(MyCustomizeMessage.class);
-        RongIM.registerMessageTemplate(new MyCustomizeMessageItemProvider());
+        RongIM.registerMessageType(RedPacketMessage.class);
+        RongIM.registerMessageType(TransferMessage.class);
+        RongIM.registerMessageTemplate(new RedPacketProvider());
+        RongIM.registerMessageTemplate(new TransferProvider());
         setMyExtensionModule();
     }
 

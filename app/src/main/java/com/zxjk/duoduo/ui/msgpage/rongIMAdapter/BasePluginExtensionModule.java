@@ -1,4 +1,4 @@
-package com.zxjk.duoduo.ui.msgpage.adapter;
+package com.zxjk.duoduo.ui.msgpage.rongIMAdapter;
 
 
 import java.util.List;

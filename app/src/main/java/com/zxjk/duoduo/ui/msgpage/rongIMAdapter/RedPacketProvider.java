@@ -1,4 +1,4 @@
-package com.zxjk.duoduo;
+package com.zxjk.duoduo.ui.msgpage.rongIMAdapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.msgpage.PeopleRedEnvelopesActivity;
-import com.zxjk.duoduo.ui.msgpage.adapter.MyCustomizeMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketMessage;
 import com.zxjk.duoduo.weight.dialog.RedEvelopesDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import io.rong.imkit.model.ProviderTag;
@@ -20,8 +22,8 @@ import io.rong.imlib.model.Message;
 /**
  * @author Administrator
  */
-@ProviderTag(messageContent = MyCustomizeMessage.class)
-public class MyCustomizeMessageItemProvider extends IContainerItemProvider.MessageProvider<MyCustomizeMessage> {
+@ProviderTag(messageContent = RedPacketMessage.class)
+public class RedPacketProvider extends IContainerItemProvider.MessageProvider<RedPacketMessage> {
 
     class ViewHolder {
         TextView message;
@@ -29,7 +31,7 @@ public class MyCustomizeMessageItemProvider extends IContainerItemProvider.Messa
     }
 
     @Override
-    public void bindView(View view, int position, MyCustomizeMessage myCustomizeMessage, UIMessage uiMessage) {
+    public void bindView(View view, int position, RedPacketMessage redPacketMessage, UIMessage uiMessage) {
         ViewHolder holder = (ViewHolder) view.getTag();
 
         if (uiMessage.getMessageDirection() == Message.MessageDirection.SEND) {
@@ -38,11 +40,11 @@ public class MyCustomizeMessageItemProvider extends IContainerItemProvider.Messa
         } else {
             holder.sendLayout.setBackgroundResource(R.drawable.icon_send_red_packet_friend);
         }
-        holder.message.setText(myCustomizeMessage.getMessage());
+        holder.message.setText(redPacketMessage.getMessage());
     }
 
     @Override
-    public Spannable getContentSummary(MyCustomizeMessage myCustomizeMessage) {
+    public Spannable getContentSummary(RedPacketMessage redPacketMessage) {
 
 
         return new SpannableString("");
@@ -51,7 +53,7 @@ public class MyCustomizeMessageItemProvider extends IContainerItemProvider.Messa
     }
 
     @Override
-    public void onItemClick(View view, int i, MyCustomizeMessage myCustomizeMessage, UIMessage uiMessage) {
+    public void onItemClick(View view, int i, RedPacketMessage redPacketMessage, UIMessage uiMessage) {
         Context context = view.getContext();
         RedEvelopesDialog dialog = new RedEvelopesDialog(context);
         dialog.setOnClickListener(new RedEvelopesDialog.OnClickListener() {

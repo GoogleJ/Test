@@ -1,4 +1,4 @@
-package com.zxjk.duoduo.ui.msgpage.RongIMUtils;
+package com.zxjk.duoduo.ui.msgpage.rongIMUtils;
 
 import android.content.Context;
 
@@ -6,6 +6,9 @@ import io.rong.push.PushType;
 import io.rong.push.notification.PushMessageReceiver;
 import io.rong.push.notification.PushNotificationMessage;
 
+/**
+ * @author Administrator
+ */
 public class SealNotificationReceiver extends PushMessageReceiver {
 
     @Override

@@ -1,4 +1,4 @@
-package com.zxjk.duoduo.ui.msgpage.adapter;
+package com.zxjk.duoduo.ui.msgpage.rongIMAdapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,15 +11,19 @@ import androidx.fragment.app.Fragment;
 import io.rong.imkit.RongExtension;
 import io.rong.imkit.plugin.IPluginModule;
 
-public class TransferPlugin implements IPluginModule {
+/**
+ * @author Administrator
+ * @// TODO: 2019\4\3 0003 关于收藏的plugin 
+ */
+public class CollectionPlugin implements IPluginModule {
     @Override
     public Drawable obtainDrawable(Context context) {
-        return ContextCompat.getDrawable(context,R.drawable.icon_transfer);
+        return ContextCompat.getDrawable(context,R.drawable.icon_collection);
     }
 
     @Override
     public String obtainTitle(Context context) {
-        return context.getString(R.string.transfer_money_title);
+        return context.getString(R.string.collection_title);
     }
 
     @Override
