@@ -163,7 +163,7 @@
     <string name="m_red_envelopes_single_amount_label">单个金额</string>
     <string name="m_red_envelopes_unit_label">HK</string>
     <string name="m_red_envelopes_label">鸿运当头，大吉大利</string>
-    <string name="m_red_envelopes_money_text">0.000</string>
+    <string name="m_red_envelopes_money_text">0.00</string>
     <string name="m_red_envelopes_commit_btn">塞进红包</string>
     <string name="m_transfer_title_bar">转账</string>
     <string name="m_transfer_money_label">转账金额</string>
@@ -468,5 +468,12 @@
     <string name="business_card_user_name">天黑请闭眼</string>
     <string name="business_card_duoduo_id">多多号：123456</string>
     <string name="business_card_label">个人名片</string>
+    <string name="inputzhuanzhangmoney">请输入转账金额</string>
+    <string name="inputzhuanzhangmoney1">转账金额不能为0</string>
+    <string name="done1">完成</string>
+    <string name="receive1">已领取</string>
+    <string name="receive3">已存入对方的账户中</string>
+    <string name="yituihuan">已退还</string>
+    <string name="yiguoqi">已过期</string>
 
 </resources>

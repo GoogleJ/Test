@@ -20,6 +20,7 @@ import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
 
 import com.zxjk.duoduo.network.response.SignHkbOrHkExchangeResponse;
 import com.zxjk.duoduo.network.response.SignTransactionResponse;
+import com.zxjk.duoduo.network.response.TransferResponse;
 
 import java.util.List;
 
@@ -403,6 +404,7 @@ public interface Api {
 
     /**
      * 修改好友备注
+     *
      * @param friendId
      * @param remark
      * @return
@@ -410,10 +412,9 @@ public interface Api {
     @POST("duoduo/friend/updateRemark")
     @FormUrlEncoded
     Observable<BaseResponse<FriendInfoResponse>> updateRemark(
-            @Field("friendId")String friendId,
-            @Field("remark")String remark
+            @Field("friendId") String friendId,
+            @Field("remark") String remark
     );
-
 
 
     /**
@@ -546,7 +547,7 @@ public interface Api {
     @POST("duoduo/group/updateGroupInfo")
     @FormUrlEncoded
     Observable<BaseResponse<GroupResponse>> updateGroupInfo(
-            @Field("groupInfo")String groupInfo
+            @Field("groupInfo") String groupInfo
     );
 
     /**
@@ -607,6 +608,7 @@ public interface Api {
 
     /**
      * 创建钱包
+     *
      * @param customerDuoDuoId
      * @return
      */
@@ -616,6 +618,7 @@ public interface Api {
 
     /**
      * 查看eth转账记录
+     *
      * @param address
      * @param page
      * @param offset
@@ -628,6 +631,7 @@ public interface Api {
 
     /**
      * 转账
+     *
      * @param payPwd
      * @param type
      * @param fromaddress
@@ -667,13 +671,14 @@ public interface Api {
 
     /**
      * 个人对个人进行发送红包
+     *
      * @param data
      * @return
      */
     @POST("duoduo/redPackage/sendSingleRedPackage")
     @FormUrlEncoded
     Observable<BaseResponse<RedPackageResponse>> sendSingleRedPackage(
-            @Field("data")String data
+            @Field("data") String data
     );
 
     @POST("duoduo/wallet/getTransferAll")
@@ -706,4 +711,20 @@ public interface Api {
             @Field("address") String address, @Field("page") String page, @Field("offset") String offset
     );
 
+    @POST("duoduo/customer/getCustomerInfoById")
+    @FormUrlEncoded
+    Observable<BaseResponse<LoginResponse>> getCustomerInfoById(@Field("id") String id);
+
+    @POST("duoduo/customer/transfer")
+    @FormUrlEncoded
+    Observable<BaseResponse<TransferResponse>> transfer(@Field("toCustomerId") String toCustomerId,
+                                                        @Field("hk") String hk, @Field("payPwd") String payPwd, @Field("remarks") String remarks);
+
+    @POST("duoduo/customer/collect")
+    @FormUrlEncoded
+    Observable<BaseResponse<TransferResponse>> collect(@Field("transferId") String transferId);
+
+    @POST("duoduo/customer/getTransferInfo")
+    @FormUrlEncoded
+    Observable<BaseResponse<TransferResponse>> getTransferInfo(@Field("transferId") String transferId);
 }

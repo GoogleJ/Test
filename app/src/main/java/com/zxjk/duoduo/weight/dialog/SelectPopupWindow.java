@@ -39,6 +39,7 @@ public class SelectPopupWindow extends PopupWindow implements View.OnClickListen
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            pswView.setDatas("");
             dismiss();
         }
     };

@@ -5,12 +5,16 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.ui.msgpage.TransferActivity;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import io.rong.imkit.RongExtension;
+import io.rong.imkit.RongIM;
 import io.rong.imkit.plugin.IPluginModule;
+import io.rong.imkit.userInfoCache.RongUserInfoManager;
+import io.rong.imlib.model.UserInfo;
 
 /**
  * @author Administrator
@@ -29,8 +33,14 @@ public class TransferPlugin implements IPluginModule {
 
     @Override
     public void onClick(Fragment fragment, RongExtension rongExtension) {
-        TransferActivity.start(fragment.getActivity());
-
+        Intent intent = new Intent(fragment.getContext(), TransferActivity.class);
+        UserInfo userInfo = RongUserInfoManager.getInstance().getUserInfo(rongExtension.getTargetId());
+        if (null == userInfo) {
+            intent.putExtra("userId", rongExtension.getTargetId());
+        } else {
+            intent.putExtra("user", userInfo);
+        }
+        fragment.startActivity(intent);
     }
 
     @Override

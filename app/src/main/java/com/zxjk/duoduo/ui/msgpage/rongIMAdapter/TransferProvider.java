@@ -24,7 +24,7 @@ import io.rong.imlib.model.Message;
  * @// TODO: 2019\4\3 0003 完成转账的自定义Provider
  */
 @ProviderTag(messageContent = TransferMessage.class)
-public class TransferProvider extends  IContainerItemProvider.MessageProvider<TransferMessage> {
+public class TransferProvider extends IContainerItemProvider.MessageProvider<TransferMessage> {
     class ViewHolder {
         TextView message;
         TextView transferMoney;
@@ -34,13 +34,14 @@ public class TransferProvider extends  IContainerItemProvider.MessageProvider<Tr
 
     @Override
     public void bindView(View view, int i, TransferMessage transferMessage, UIMessage uiMessage) {
-        ViewHolder holder =(ViewHolder) view.getTag();
+        ViewHolder holder = (ViewHolder) view.getTag();
 
         if (uiMessage.getMessageDirection() == Message.MessageDirection.SEND) {
-            //消息方向，自己发送的
+            holder.sendLayout.setBackgroundResource(R.drawable.ic_zhuanzhang_send_bg);
         } else {
             holder.sendLayout.setBackgroundResource(R.drawable.icon_send_red_packet_friend);
         }
+
         holder.message.setText(transferMessage.getRemarks());
         holder.transferMoney.setText(transferMessage.getHk());
 
@@ -48,14 +49,22 @@ public class TransferProvider extends  IContainerItemProvider.MessageProvider<Tr
 
     @Override
     public Spannable getContentSummary(TransferMessage transferMessage) {
-        return new SpannableString("");
+        return new SpannableString("收到一条转账消息");
     }
 
     @Override
     public void onItemClick(View view, int i, TransferMessage transferMessage, UIMessage uiMessage) {
         //这里只需要把transferMessage的值拿过来，传到TransferInfoActivity里头了
-        Context context=view.getContext();
-        context.startActivity(new Intent(context,TransferInfoActivity.class));
+        Context context = view.getContext();
+        Intent intent = new Intent(context, TransferInfoActivity.class);
+        intent.putExtra("msg", transferMessage);
+
+        boolean fromSelf = false;
+        if (uiMessage.getMessageDirection() == Message.MessageDirection.SEND) {
+            fromSelf = true;
+        }
+        intent.putExtra("fromSelf", fromSelf);
+        context.startActivity(intent);
     }
 
     @Override
@@ -63,8 +72,8 @@ public class TransferProvider extends  IContainerItemProvider.MessageProvider<Tr
         View view = LayoutInflater.from(context).inflate(R.layout.item_transfer_send, null);
         ViewHolder holder = new ViewHolder();
         holder.message = (TextView) view.findViewById(R.id.message);
-        holder.transferMoney=(TextView) view.findViewById(R.id.transfer_money);
-        holder.transferIconType=(ImageView)view.findViewById(R.id.transfer_type_icon);
+        holder.transferMoney = (TextView) view.findViewById(R.id.transfer_money);
+        holder.transferIconType = (ImageView) view.findViewById(R.id.transfer_type_icon);
         holder.sendLayout = (LinearLayout) view.findViewById(R.id.transfer_send_layout);
         view.setTag(holder);
         return view;

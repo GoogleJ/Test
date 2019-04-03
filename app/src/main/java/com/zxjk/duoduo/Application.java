@@ -56,6 +56,7 @@ public class Application extends android.app.Application {
         RongIM.registerMessageTemplate(new RedPacketProvider());
         RongIM.registerMessageTemplate(new TransferProvider());
         setMyExtensionModule();
+        RongIM.getInstance().setMessageAttachedUserInfo(true);
     }
 
     //初始化阿里云OSS上传服务
