@@ -19,6 +19,7 @@ import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.weight.TitleBar;
 
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class AgreeGroupChatActivity extends BaseActivity {
     TextView pleaseJoinGroup;
     TextView joinGroupBtn;
     GroupResponse groupResponse;
+    TitleBar titleBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +53,12 @@ public class AgreeGroupChatActivity extends BaseActivity {
         groupResponse = (GroupResponse) getIntent().getSerializableExtra("groupId");
         groupName.setText(groupResponse.getGroupNikeName());
         pleaseJoinGroup.setText(groupResponse.getGroupOwnerId());
+        titleBar.getRightImageView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         joinGroupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

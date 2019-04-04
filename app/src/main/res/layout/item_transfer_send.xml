@@ -10,7 +10,6 @@
     tools:ignore="MissingConstraints">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-
         android:layout_width="224dp"
         android:layout_height="85dp"
         android:layout_gravity="center_horizontal"

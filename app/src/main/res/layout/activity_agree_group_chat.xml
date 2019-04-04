@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <com.zxjk.duoduo.weight.TitleBar
+        android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         app:titleBarLeftImage="@drawable/ico_back"

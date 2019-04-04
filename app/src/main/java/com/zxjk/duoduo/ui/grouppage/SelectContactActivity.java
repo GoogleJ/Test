@@ -154,8 +154,6 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
                 }else{
                     enterGroup(Constant.groupId,Constant.userId,sb.substring(0,sb.length()-1));
                 }
-
-
                 break;
             default:
                 break;
@@ -198,6 +196,12 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
                 },this::handleApiError);
     }
 
+    /**
+     * 关于同意添加群的实现
+     * @param groupId
+     * @param inviterId
+     * @param customerIds
+     */
     public void enterGroup(String groupId,String inviterId,String customerIds){
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .enterGroup(groupId,inviterId,customerIds)

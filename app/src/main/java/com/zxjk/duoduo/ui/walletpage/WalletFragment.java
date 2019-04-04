@@ -46,6 +46,8 @@ public class WalletFragment extends BaseFragment {
         tvWalletPageTop1.setOnClickListener(v -> startActivity(new Intent(getContext(), QrCodeActivity.class)));
         tvWalletPageTop3.setOnClickListener(v -> startActivity(new Intent(getContext(), BlockWalletActivity.class)));
 
+        recyclerWalletPage.setHasFixedSize(true);
+        recyclerWalletPage.setNestedScrollingEnabled(false);
         return rootView;
     }
 }

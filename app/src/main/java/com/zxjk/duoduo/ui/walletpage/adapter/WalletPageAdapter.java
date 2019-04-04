@@ -36,10 +36,13 @@ public class WalletPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (context == null) context = parent.getContext();
+        if (context == null) {
+            context = parent.getContext();
+        }
 
-        if (viewType == VIEW_TYPE_TOP)
+        if (viewType == VIEW_TYPE_TOP) {
             return new TopHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.walletpage_viewtype_top, parent, false));
+        }
         return new NewsHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.walletpage_viewtype_news, parent, false));
     }
 

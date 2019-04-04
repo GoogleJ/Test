@@ -8,7 +8,6 @@ import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.CommunityFragment;
 import com.zxjk.duoduo.ui.minepage.MineFragment;
 import com.zxjk.duoduo.ui.msgpage.MsgFragment;

@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.msgpage.PeopleRedEnvelopesActivity;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketMessage;
 import com.zxjk.duoduo.weight.dialog.RedEvelopesDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import io.rong.imkit.model.ProviderTag;
@@ -21,6 +20,7 @@ import io.rong.imlib.model.Message;
 
 /**
  * @author Administrator
+ * @// TODO: 2019\4\4 0004 关于红包的provider 
  */
 @ProviderTag(messageContent = RedPacketMessage.class)
 public class RedPacketProvider extends IContainerItemProvider.MessageProvider<RedPacketMessage> {

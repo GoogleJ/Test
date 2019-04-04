@@ -3,12 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/ic_msg_popwindow_bg"
+    android:background="@drawable/icon_pop_background"
     android:orientation="vertical">
-
     <LinearLayout
+        android:paddingStart="20dp"
         android:id="@+id/send_group_chat"
-        style="@style/msg_top_pop_style">
+        style="@style/msg_top_pop_style"
+        android:paddingTop="20dp"
+        >
 
         <ImageView
             style="@style/msg_top_pop_img_style"
@@ -21,6 +23,7 @@
 
     <LinearLayout
         android:id="@+id/invite_friends"
+        android:paddingStart="20dp"
         style="@style/msg_top_pop_style">
 
         <ImageView
@@ -34,6 +37,7 @@
 
     <LinearLayout
         android:id="@+id/scan"
+        android:paddingStart="20dp"
         style="@style/msg_top_pop_style">
 
         <ImageView
@@ -46,6 +50,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:paddingStart="20dp"
         android:id="@+id/collection_and_payment"
         style="@style/msg_top_pop_style">
 

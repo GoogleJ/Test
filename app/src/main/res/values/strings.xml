@@ -475,5 +475,7 @@
     <string name="receive3">已存入对方的账户中</string>
     <string name="yituihuan">已退还</string>
     <string name="yiguoqi">已过期</string>
+    <string name="msg_title">多多消息</string>
+    <string name="del_my_message">对不起，你无法删除自己</string>
 
 </resources>

@@ -128,9 +128,7 @@ public class TransferActivity extends BaseActivity implements SelectPopupWindow.
                         RongIM.getInstance().sendMessage(message1, null, null, new IRongCallback.ISendMessageCallback() {
                             @Override
                             public void onAttached(Message message) {
-
                             }
-
                             @Override
                             public void onSuccess(Message message) {
                                 Intent intent = new Intent(TransferActivity.this, TransferSuccessActivity.class);
@@ -139,7 +137,6 @@ public class TransferActivity extends BaseActivity implements SelectPopupWindow.
                                 startActivity(intent);
                                 finish();
                             }
-
                             @Override
                             public void onError(Message message, RongIMClient.ErrorCode errorCode) {
 

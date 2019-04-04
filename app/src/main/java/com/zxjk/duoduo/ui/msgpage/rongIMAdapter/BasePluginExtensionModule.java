@@ -23,7 +23,7 @@ public class BasePluginExtensionModule extends DefaultExtensionModule {
         TakePhotoPlugin takePhotoPlugin = new TakePhotoPlugin();
         TransferPlugin transferPlugin = new TransferPlugin();
         VoiceCallsPlugin voiceCallsPlugin = new VoiceCallsPlugin();
-        PersonalBusinessCardPlugin personalBusinessCardPlugin=new PersonalBusinessCardPlugin();
+        BusinessCardPlugin businessCardPlugin =new BusinessCardPlugin();
         MyCombineLocationPlugin locationPlugin=new MyCombineLocationPlugin();
         CollectionPlugin collectionPlugin=new CollectionPlugin();
 
@@ -59,7 +59,7 @@ public class BasePluginExtensionModule extends DefaultExtensionModule {
         list.add(transferPlugin);
         list.add(voiceCallsPlugin);
         list.add(packetPlugin);
-        list.add(personalBusinessCardPlugin);
+        list.add(businessCardPlugin);
         list.add(locationPlugin);
         list.add(collectionPlugin);
         return list;
