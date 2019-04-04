@@ -27,6 +27,10 @@ public class BusinessCardMessage extends MessageContent {
     //这里是userId或者friendId
     private String userId;
 
+    public BusinessCardMessage() {
+
+    }
+
     @Override
     public byte[] encode() {
         JSONObject jsonObj = new JSONObject();
