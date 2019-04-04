@@ -60,6 +60,7 @@ public class Application extends android.app.Application {
         RongIM.registerMessageTemplate(new TransferProvider());
         RongIM.registerMessageTemplate(new BusinessCardProvider());
         setMyExtensionModule();
+        RongIM.getInstance().setMessageAttachedUserInfo(true);
     }
 
     //初始化阿里云OSS上传服务

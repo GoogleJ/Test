@@ -1,6 +1,7 @@
 package com.zxjk.duoduo.ui;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -129,7 +130,9 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
                     ToastUtils.showShort(R.string.modifysuccess);
-                    finish();
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                 }, this::handleApiError);
     }
 

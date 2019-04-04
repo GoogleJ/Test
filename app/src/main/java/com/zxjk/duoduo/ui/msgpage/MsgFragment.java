@@ -55,18 +55,8 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
         initConversationList(null);
 
 
-//        initRongIM();
         return rootView;
     }
-
-    private void initRongIM() {
-//        RongIM.getInstance().setCurrentUserInfo(new UserInfo(Constant.friendInfoResponse.getId(),Constant.friendInfoResponse.getNick(),Uri.parse(Constant.friendInfoResponse.getHeadPortrait())));
-
-
-    }
-
-
-
 
     private void initHear() {
         setHeadStatusBar();
@@ -152,7 +142,6 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
     }
 
     private ConversationListFragment createConversationList() {
-        RongIM.getInstance().setMessageAttachedUserInfo(true);
         ConversationListFragment listFragment = new ConversationListFragment();
         Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversationlist")

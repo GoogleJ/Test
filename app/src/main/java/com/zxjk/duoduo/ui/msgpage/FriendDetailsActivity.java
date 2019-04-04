@@ -19,6 +19,7 @@ import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
+import com.zxjk.duoduo.ui.HomeActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.widget.CommonPopupWindow;
 import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendInformationDialog;
@@ -40,7 +41,7 @@ import io.rong.imlib.model.UserInfo;
  * @// TODO: 2019\3\20 0020 个人信息详情页，包含删除的dialog等部分
  */
 @SuppressLint("CheckResult")
-public class FriendDetailsActivity extends BaseActivity implements View.OnClickListener, CommonPopupWindow.ViewInterface, RongIM.UserInfoProvider {
+public class FriendDetailsActivity extends BaseActivity implements View.OnClickListener, CommonPopupWindow.ViewInterface{
     /**
      * 标题布局
      */
@@ -126,9 +127,6 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_people_information);
         ButterKnife.bind(this);
-        RongIM.setUserInfoProvider(this, false);
-        RongIM.getInstance().setMessageAttachedUserInfo(true);
-        RongIM.getInstance().refreshUserInfoCache(new UserInfo(Constant.userId, Constant.currentUser.getNick(), Uri.parse(Constant.currentUser.getHeadPortrait())));
         initUI();
         int type = 0;
         //这个模块需要添加数据绑定
@@ -219,39 +217,23 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
             case R.id.m_people_information_send_to_message:
-
-
-                RongIM.getInstance().setSendMessageListener(new SendMessageListener());
+                Intent intent = new Intent(this, HomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 if (intentType == 0) {
-
-                    RongIM.getInstance().setCurrentUserInfo(new UserInfo(friendInfoResponse.getId(),friendInfoResponse.getNick(),Uri.parse(friendInfoResponse.getHeadPortrait())));
-
-                    RongIM.getInstance().refreshUserInfoCache(new UserInfo(friendInfoResponse.getId(), friendInfoResponse.getNick(), Uri.parse(friendInfoResponse.getHeadPortrait())));
                     RongIM.getInstance().startPrivateChat(this, friendInfoResponse.getId(), friendInfoResponse.getNick());
                 } else if (intentType == 1) {
-
-                    RongIM.getInstance().setCurrentUserInfo(new UserInfo(friendInfo.getId(),friendInfo.getNick(),Uri.parse(friendInfo.getHeadPortrait())));
-                    RongIM.getInstance().setMessageAttachedUserInfo(true);
-                    RongIM.getInstance().refreshUserInfoCache(new UserInfo(friendInfo.getId(), friendInfo.getNick(), Uri.parse(friendInfo.getHeadPortrait())));
                     RongIM.getInstance().startPrivateChat(this, friendInfo.getId(), friendInfo.getNick());
                 } else {
-
-                    RongIM.getInstance().setCurrentUserInfo(new UserInfo(contactResponse.getId(),contactResponse.getNick(),Uri.parse(contactResponse.getHeadPortrait())));
-                    RongIM.getInstance().setMessageAttachedUserInfo(true);
-                    RongIM.getInstance().refreshUserInfoCache(new UserInfo(contactResponse.getId(), contactResponse.getNick(), Uri.parse(contactResponse.getHeadPortrait())));
                     RongIM.getInstance().startPrivateChat(this, contactResponse.getId(), contactResponse.getNick());
                 }
-
-
                 break;
             case R.id.m_people_information_voice_calls:
                 ToastUtils.showShort("此功能暂未实现");
                 break;
             case R.id.update_rename:
-                Intent intent = new Intent(FriendDetailsActivity.this, ModifyNotesActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(FriendDetailsActivity.this, ModifyNotesActivity.class));
                 break;
             case R.id.recommend_to_friend:
                 ToastUtils.showShort("暂未实现");
@@ -272,6 +254,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                         FriendDetailsActivity.this.finish();
                     }
                 });
+
                 if (intentType == 0) {
                     dialog.show(friendInfoResponse.getNick());
                 } else if (intentType == 1) {
@@ -279,7 +262,6 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                 } else {
                     dialog.show(contactResponse.getNick());
                 }
-
                 break;
             default:
                 break;
@@ -314,39 +296,5 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                     }
                 }, this::handleApiError);
     }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        finish();
-    }
-
-    @Override
-    public UserInfo getUserInfo(String s) {
-        Uri uri=Uri.parse(Constant.friendInfoResponse.getHeadPortrait());
-
-        return new UserInfo(Constant.friendInfoResponse.getId(),Constant.friendInfoResponse.getNick(),uri);
-    }
-//     RongIM.registerMessageTemplate(new RedPacketMessageItemProvider());
-    public static class ReceiveMessageListener implements RongIMClient.OnReceiveMessageListener  {
-        @Override
-        public boolean onReceived(Message message, int i) {
-            LogUtils.d(i+" onReceived "+message.getTargetId()+"  "+message.getSenderUserId());
-            return false;
-        }
-    }
-    public static class SendMessageListener implements RongIM.OnSendMessageListener {
-        @Override
-        public Message onSend(Message message) {
-            LogUtils.d(" onSend "+message.getContent()+" id "+message.getSenderUserId()+"  "+message.getTargetId());
-            return message;
-        }
-
-        @Override
-        public boolean onSent(Message message, RongIM.SentMessageErrorCode sentMessageErrorCode) {
-            return false;
-        }
-    }
-
 
 }

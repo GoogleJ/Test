@@ -32,6 +32,8 @@ public class TransferMessage extends MessageContent {
     private String hk;
     private String payPwd;
     private String remarks;
+    private String type;
+    private String transferId;
 
     public TransferMessage(){}
 
@@ -43,6 +45,8 @@ public class TransferMessage extends MessageContent {
             jsonObj.put("hk",getHk());
             jsonObj.put("payPwd",getPayPwd());
             jsonObj.put("remarks",getRemarks());
+            jsonObj.put("type",getType());
+            jsonObj.put("transferId",getTransferId());
         } catch (JSONException e) {
             Log.e("JSONException", e.getMessage());
         }
@@ -83,6 +87,14 @@ public class TransferMessage extends MessageContent {
                 setRemarks(jsonObj.optString("remarks"));
             }
 
+            if (jsonObj.has("type")) {
+                setType(jsonObj.optString("type"));
+            }
+
+            if (jsonObj.has("transferId")) {
+                setTransferId(jsonObj.optString("transferId"));
+            }
+
         } catch (JSONException e) {
             Log.d("JSONException", e.getMessage());
         }
@@ -99,6 +111,8 @@ public class TransferMessage extends MessageContent {
         ParcelUtils.writeToParcel(dest,hk);
         ParcelUtils.writeToParcel(dest,payPwd);
         ParcelUtils.writeToParcel(dest,remarks);
+        ParcelUtils.writeToParcel(dest,type);
+        ParcelUtils.writeToParcel(dest,transferId);
     }
     //给消息赋值。
     public TransferMessage(Parcel in) {
@@ -107,6 +121,8 @@ public class TransferMessage extends MessageContent {
         setHk(ParcelUtils.readFromParcel(in));
         setPayPwd(ParcelUtils.readFromParcel(in));
         setRemarks(ParcelUtils.readFromParcel(in));
+        setType(ParcelUtils.readFromParcel(in));
+        setTransferId(ParcelUtils.readFromParcel(in));
     }
     /**
      * 读取接口，目的是要从Parcel中构造一个实现了Parcelable的类的实例处理。
@@ -154,5 +170,21 @@ public class TransferMessage extends MessageContent {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getTransferId() {
+        return transferId;
+    }
+
+    public void setTransferId(String transferId) {
+        this.transferId = transferId;
     }
 }
