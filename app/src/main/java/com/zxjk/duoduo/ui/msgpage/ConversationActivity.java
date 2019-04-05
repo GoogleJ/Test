@@ -1,48 +1,32 @@
 package com.zxjk.duoduo.ui.msgpage;
 
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Lifecycle;
-import io.reactivex.functions.Consumer;
-import io.rong.imkit.RongExtension;
 import io.rong.imkit.RongIM;
-import io.rong.imkit.fragment.ConversationFragment;
-import io.rong.imkit.model.UIConversation;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
-import io.rong.imkit.widget.adapter.MessageListAdapter;
-import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
-
 import android.annotation.SuppressLint;
-import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.trello.lifecycle2.android.lifecycle.AndroidLifecycle;
 import com.trello.rxlifecycle3.LifecycleProvider;
-import com.trello.rxlifecycle3.RxLifecycle;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.rx.RxException;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.grouppage.ChatInformationActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.weight.TitleBar;
+import com.zxjk.duoduo.weight.dialog.ExpiredEnvelopesDialog;
 import com.zxjk.duoduo.weight.dialog.RedEvelopesDialog;
-
-import java.util.List;
 
 /**
  * @author Administrator
@@ -102,7 +86,8 @@ public class ConversationActivity extends FragmentActivity {
                         break;
                     case "MRedPackageMsg":
                         //红包
-                        long hour = (System.currentTimeMillis() - message.getSentTime()) / (1000 * 60 * 60);
+                       long hour = (System.currentTimeMillis() - message.getSentTime()) / (1000 * 60 * 60);
+
                         if (hour < 24) {
                             if (message.getSenderUserId().equals(Constant.currentUser.getId())) {
                                 //自己发的
@@ -116,13 +101,16 @@ public class ConversationActivity extends FragmentActivity {
                             }
                         } else {
                             //已过期
-
-
+                            ExpiredEnvelopesDialog dialog=new ExpiredEnvelopesDialog(ConversationActivity.this);
+                            dialog.show();
                         }
                         break;
                     case "app:red2":
                         break;
+                        default:
+                            break;
                 }
+
                 return false;
             }
 

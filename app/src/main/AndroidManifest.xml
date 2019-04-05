@@ -102,6 +102,8 @@
         <activity android:name=".ui.msgpage.TransferActivity" />
         <activity android:name=".ui.msgpage.TransferInfoActivity" />
         <activity android:name=".ui.msgpage.ConversationForAddActivity"/>
+        <activity android:name=".ui.msgpage.ReceivedEnvelopesActivity"/>
+        <activity android:name=".ui.msgpage.PeopleUnaccalimedActivity"/>
 
         <activity
             android:name=".ui.WelcomeActivity"

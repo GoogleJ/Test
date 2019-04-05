@@ -9,13 +9,14 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="481dp"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="84dp"
         android:layout_marginEnd="25dp"
+        app:cardCornerRadius="20dp"
+        android:layout_marginTop="84dp"
         android:layout_marginBottom="103dp"
         android:background="@drawable/hongbao"
-        app:cardCornerRadius="20dp">
+       >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -23,8 +24,10 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:id="@+id/close_red_packet"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:padding="10dp"
                 android:layout_marginTop="18dp"
                 android:layout_marginEnd="12dp"
                 android:src="@drawable/icon_hongbao_close"
@@ -73,6 +76,7 @@
                 android:textColor="@color/white"
                 android:layout_marginBottom="30dp"
                 android:textSize="15sp"
+                android:visibility="gone"
                 android:text="@string/m_expired_envelopes_info"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.ui.grouppage.SelectContactActivity;
+import com.zxjk.duoduo.ui.msgpage.SelectContactForCardActivity;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
