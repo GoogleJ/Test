@@ -16,12 +16,12 @@
         app:titleBarTitle="@string/m_transfer_title_bar" />
 
     <ImageView
-        android:scaleType="centerCrop"
         android:id="@+id/m_transfer_heard_icon"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="31dp"
+        android:scaleType="centerCrop"
         android:src="@drawable/icon_header" />
 
     <TextView
@@ -92,6 +92,7 @@
         android:background="@null"
         android:gravity="center"
         android:hint="@string/m_transfer_add_instructions"
+        android:imeOptions="actionDone"
         android:textSize="14sp" />
 
     <TextView

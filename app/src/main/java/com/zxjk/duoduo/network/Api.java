@@ -7,6 +7,7 @@ import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.response.GetBalanceHkResponse;
 import com.zxjk.duoduo.network.response.GetNumbeOfTransactionResponse;
 import com.zxjk.duoduo.network.response.GetOverOrderResponse;
+import com.zxjk.duoduo.network.response.GetRedPackageRecordResponse;
 import com.zxjk.duoduo.network.response.GetReleasePurchaseResponse;
 import com.zxjk.duoduo.network.response.GetTransferAllResponse;
 import com.zxjk.duoduo.network.response.GetTransferEthResponse;
@@ -727,4 +728,10 @@ public interface Api {
     @POST("duoduo/customer/getTransferInfo")
     @FormUrlEncoded
     Observable<BaseResponse<TransferResponse>> getTransferInfo(@Field("transferId") String transferId);
+
+    @POST("duoduo/redPackage/getRedPackageRecord")
+    @FormUrlEncoded
+    Observable<BaseResponse<GetRedPackageRecordResponse>> getRedPackageRecord(@Field("type") String type);
+
+
 }

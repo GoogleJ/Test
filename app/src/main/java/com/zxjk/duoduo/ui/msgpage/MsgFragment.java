@@ -17,7 +17,12 @@ import androidx.annotation.DimenRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import butterknife.ButterKnife;
+import io.rong.imkit.RongExtensionManager;
+import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
+import io.rong.imkit.userInfoCache.RongConversationInfo;
+import io.rong.imkit.userInfoCache.RongUserInfoManager;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 
 /**
@@ -136,7 +141,6 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener  ,
                 .build();
 
         listFragment.setUri(uri);
-
         return listFragment;
     }
 

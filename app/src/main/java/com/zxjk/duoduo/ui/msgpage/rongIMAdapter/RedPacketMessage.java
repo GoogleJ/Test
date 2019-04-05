@@ -18,21 +18,20 @@ import io.rong.imlib.model.MessageContent;
  * @// TODO: 2019\4\3 0003 关于红包的自定义消息 
  */
 @SuppressLint("ParcelCreator")
-@MessageTag(value = "app:custom", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
+@MessageTag(value = "MRedPackageMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
 public class RedPacketMessage extends MessageContent {
     /**
-     * sendUserId : 14
+     * fromCustomer : 14
      * receiveUserId : 15
      * money : 0.001
-     * message : 恭喜发财，大吉大利
+     * remark : 恭喜发财，大吉大利
      * paypwd : 123456
      */
 
-    private String sendUserId;
-    private String receiveUserId;
-    private double money;
-    private String message;
-    private String paypwd;
+    private String fromCustomer;
+    private String remark;
+    private String extra;
+    private String redId;
 
     public RedPacketMessage() {
 
@@ -43,10 +42,10 @@ public class RedPacketMessage extends MessageContent {
         JSONObject jsonObj = new JSONObject();
 
         try {
-            jsonObj.put("sendUserId", getSendUserId());
-            jsonObj.put("receiveUserId",getReceiveUserId());
-            jsonObj.put("money",getMoney());
-            jsonObj.put("paypwd",getPaypwd());
+            jsonObj.put("fromCustomer", getFromCustomer());
+            jsonObj.put("remark", getRemark());
+            jsonObj.put("extra", getExtra());
+            jsonObj.put("redId", getRedId());
         } catch (JSONException e) {
             Log.e("JSONException", e.getMessage());
         }
@@ -72,20 +71,18 @@ public class RedPacketMessage extends MessageContent {
         try {
             JSONObject jsonObj = new JSONObject(jsonStr);
 
-            if (jsonObj.has("sendUserId")) {
-                setSendUserId(jsonObj.optString("sendUserId"));
+            if (jsonObj.has("fromCustomer")) {
+                setFromCustomer(jsonObj.optString("fromCustomer"));
             }
 
-            if (jsonObj.has("receiveUserId")) {
-                setReceiveUserId(jsonObj.optString("receiveUserId"));
+            if (jsonObj.has("remark")) {
+                setRemark(jsonObj.optString("remark"));
             }
-
-            if (jsonObj.has("money")) {
-                setMoney(jsonObj.optDouble("money"));
+            if (jsonObj.has("extra")) {
+                setExtra(jsonObj.optString("extra"));
             }
-
-            if (jsonObj.has("paypwd")) {
-                setPaypwd(jsonObj.optString("paypwd"));
+            if (jsonObj.has("redId")) {
+                setRedId(jsonObj.optString("redId"));
             }
 
         } catch (JSONException e) {
@@ -102,26 +99,18 @@ public class RedPacketMessage extends MessageContent {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        ParcelUtils.writeToParcel(dest,sendUserId);
-        ParcelUtils.writeToParcel(dest,receiveUserId);
-        ParcelUtils.writeToParcel(dest,money);
-        ParcelUtils.writeToParcel(dest,message);
-        ParcelUtils.writeToParcel(dest,paypwd);
-
+        ParcelUtils.writeToParcel(dest, fromCustomer);
+        ParcelUtils.writeToParcel(dest, remark);
+        ParcelUtils.writeToParcel(dest, redId);
+        ParcelUtils.writeToParcel(dest, extra);
     }
 
     //给消息赋值。
     public RedPacketMessage(Parcel in) {
-        setSendUserId(ParcelUtils.readFromParcel(in));
-        //这里可继续增加你消息的属性
-        setReceiveUserId(ParcelUtils.readFromParcel(in));
-        setMoney(ParcelUtils.readDoubleFromParcel(in));
-        setMessage(ParcelUtils.readFromParcel(in));
-        setPaypwd(ParcelUtils.readFromParcel(in));
-
-
-
-        //这里可继续增加你消息的属性
+        setFromCustomer(ParcelUtils.readFromParcel(in));
+        setRemark(ParcelUtils.readFromParcel(in));
+        setRedId(ParcelUtils.readFromParcel(in));
+        setExtra(ParcelUtils.readFromParcel(in));
     }
     /**
      * 读取接口，目的是要从Parcel中构造一个实现了Parcelable的类的实例处理。
@@ -141,43 +130,35 @@ public class RedPacketMessage extends MessageContent {
 
 
 
-    public String getSendUserId() {
-        return sendUserId;
+    public String getFromCustomer() {
+        return fromCustomer;
     }
 
-    public void setSendUserId(String sendUserId) {
-        this.sendUserId = sendUserId;
+    public void setFromCustomer(String fromCustomer) {
+        this.fromCustomer = fromCustomer;
     }
 
-    public String getReceiveUserId() {
-        return receiveUserId;
+    public String getRemark() {
+        return remark;
     }
 
-    public void setReceiveUserId(String receiveUserId) {
-        this.receiveUserId = receiveUserId;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
-    public double getMoney() {
-        return money;
+    public String getExtra() {
+        return extra;
     }
 
-    public void setMoney(double money) {
-        this.money = money;
+    public void setExtra(String extra) {
+        this.extra = extra;
     }
 
-    public String getMessage() {
-        return message;
+    public String getRedId() {
+        return redId;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public String getPaypwd() {
-        return paypwd;
-    }
-
-    public void setPaypwd(String paypwd) {
-        this.paypwd = paypwd;
+    public void setRedId(String redId) {
+        this.redId = redId;
     }
 }
