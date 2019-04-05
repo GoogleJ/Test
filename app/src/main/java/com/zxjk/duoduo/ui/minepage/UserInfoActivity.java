@@ -33,7 +33,6 @@ import java.util.Collections;
 import androidx.annotation.Nullable;
 
 import static com.zxjk.duoduo.utils.PermissionUtils.cameraPremissions;
-import static com.zxjk.duoduo.utils.PermissionUtils.verifyStoragePermissions;
 
 /**
  * @author Administrator
@@ -123,7 +122,6 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
 
     //修改头像
     public void changeHeadImg(View view) {
-        verifyStoragePermissions(this);
         cameraPremissions(this);
         selectPicPopWindow.showAtLocation(findViewById(android.R.id.content),
                 Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);

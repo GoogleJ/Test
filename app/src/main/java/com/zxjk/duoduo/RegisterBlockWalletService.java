@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
@@ -14,7 +15,9 @@ import com.zxjk.duoduo.network.response.BaseResponse;
 import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.rx.RxException;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
+
 import java.util.concurrent.TimeUnit;
+
 import androidx.annotation.Nullable;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -37,7 +40,7 @@ public class RegisterBlockWalletService extends Service {
                 .createWallet(Constant.currentUser.getDuoduoId())
                 .compose(RxSchedulers.normalTrans())
                 .subscribeOn(Schedulers.io())
-                .flatMap((Function<CreateWalletResponse, ObservableSource<BaseResponse<String>>>) s -> {
+                .flatMap((Function<CreateWalletResponse, ObservableSource<BaseResponse<LoginResponse>>>) s -> {
                     walletAddress = s.getWalletAddress();
                     LoginResponse loginResponse = new LoginResponse(Constant.currentUser.getId());
                     loginResponse.setWalletAddress(walletAddress);

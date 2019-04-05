@@ -7,14 +7,14 @@
     android:background="@color/white"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingBottom="5dp"
     tools:ignore="MissingConstraints,RtlCompat">
 
     <ImageView
+        android:scaleType="centerCrop"
         android:id="@+id/m_constants_header_icon"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_margin="5dp"
+        android:layout_margin="6dp"
         android:src="@drawable/icon_header"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

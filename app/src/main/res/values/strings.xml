@@ -500,5 +500,7 @@
     <string name="userinfo">个人资料</string>
     <string name="red_packet_list">红包记录</string>
     <string name="red_packet_tips1">个红包</string>
+    <string name="shouru">收入</string>
+    <string name="zhichu">支出</string>
 
 </resources>

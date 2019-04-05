@@ -52,7 +52,6 @@ public class ContentActivity extends BaseActivity {
                 break;
             case 3:
                 //这个是手机通讯录页面
-                transaction.remove(PhoneContactFragment.newInstance());
                 transaction.replace(R.id.m_content, ConstactsNewFriendFragment.newInstance());
                 transaction.commit();
                 break;
