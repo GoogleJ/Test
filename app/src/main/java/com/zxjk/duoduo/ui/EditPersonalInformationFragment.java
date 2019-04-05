@@ -206,7 +206,9 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                     Constant.currentUser.setHeadPortrait(update.getHeadPortrait());
                     Constant.currentUser.setNick(update.getNick());
                     Constant.currentUser.setAddress(update.getAddress());
-                    startActivity(new Intent(EditPersonalInformationFragment.this, SetUpPaymentPwdActivity.class));
+                    Intent intent = new Intent(EditPersonalInformationFragment.this, SetUpPaymentPwdActivity.class);
+                    intent.putExtra("firstLogin", true);
+                    startActivity(intent);
                 }, throwable -> handleApiError(throwable));
     }
 

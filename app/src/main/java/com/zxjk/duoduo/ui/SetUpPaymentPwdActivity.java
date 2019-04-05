@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.ziyeyouhu.library.KeyboardTouchListener;
 import com.ziyeyouhu.library.KeyboardUtil;
@@ -22,6 +23,7 @@ import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
 import com.zxjk.duoduo.weight.PayPsdInputView;
 import com.zxjk.duoduo.weight.TitleBar;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import butterknife.ButterKnife;
@@ -43,9 +45,10 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
     ScrollView scrollView;
     TextView m_set_payment_pwd_label;
 
-    String oldPwd;
+    String oldPwd = "";
     String newPwd;
     String newPwdTwo;
+    boolean firstLogin;
 
     private void initMoveKeyBoard() {
         keyboardUtil = new KeyboardUtil(this, rootView, scrollView);
@@ -62,8 +65,11 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_payment_pwd);
         ButterKnife.bind(this);
+        firstLogin = getIntent().getBooleanExtra("firstLogin", false);
+
         initUI();
         initMoveKeyBoard();
+
     }
 
     private void initUI() {
@@ -74,6 +80,7 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
         payPsdInputView = findViewById(R.id.m_set_payment_pwd_edit);
         commmitBtn = findViewById(R.id.m_edit_information_btn);
         titleBar.getLeftImageView().setOnClickListener(v -> finish());
+        titleBar.getTitleView().setText(firstLogin ? R.string.set_pay_pwd : R.string.update_pay_pwd);
 
         payPsdInputView.setComparePassword(new PayPsdInputView.onPasswordListener() {
 
@@ -90,7 +97,7 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
                 // TODO: 2018/1/3 输完逻辑
 
 
-                if (TextUtils.isEmpty(oldPwd)) {
+                if (TextUtils.isEmpty(oldPwd) && !firstLogin) {
                     payPsdInputView.cleanPsd();
                     oldPwd = inputPsd;
                     m_set_payment_pwd_label.setText(R.string.please_set_paypass);
@@ -124,7 +131,7 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
 
     public void updatePwd(String oldPwd, String newPwd, String newPwdTwo) {
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .updatePayPwd(MD5Utils.getMD5(oldPwd), MD5Utils.getMD5(newPwd), MD5Utils.getMD5(newPwdTwo))
+                .updatePayPwd(firstLogin ? "" : MD5Utils.getMD5(oldPwd), MD5Utils.getMD5(newPwd), MD5Utils.getMD5(newPwdTwo))
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())

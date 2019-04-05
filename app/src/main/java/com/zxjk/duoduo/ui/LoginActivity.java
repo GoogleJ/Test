@@ -2,6 +2,7 @@ package com.zxjk.duoduo.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -10,8 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.google.gson.Gson;
 import com.zxjk.duoduo.Application;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
@@ -32,6 +35,7 @@ import butterknife.OnClick;
 import io.reactivex.disposables.Disposable;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
 
 import static com.zxjk.duoduo.utils.MD5Utils.getMD5;
 
@@ -72,6 +76,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         ButterKnife.bind(this);
 
         edit_mobile.setText(SPUtils.getInstance().getString("mobile"));
+
+        login("15935910958","123456");
+//        login("15935910008","123456");
     }
 
 
@@ -101,23 +108,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.btn_login:
 
-                String mobile = edit_mobile.getText().toString().trim();
-                String password = edit_password.getText().toString().trim();
-                if (TextUtils.isEmpty(mobile) || TextUtils.isEmpty(password)) {
-                    ToastUtils.showShort(getString(R.string.edit_mobile_or_password_tip));
-                    return;
-                }
-                if (TextUtils.isEmpty(mobile) && "".equals(mobile) ) {
-                    ToastUtils.showShort(getString(R.string.edit_mobile_tip));
-                    return;
-                }
-                if (TextUtils.isEmpty(password) || 5 >= password.length() || password.length() >= 14) {
-                    ToastUtils.showShort(getString(R.string.edit_password_reg));
-                    return;
-                }
+//                String mobile = edit_mobile.getText().toString().trim();
+//                String password = edit_password.getText().toString().trim();
+//                if (TextUtils.isEmpty(mobile) || TextUtils.isEmpty(password)) {
+//                    ToastUtils.showShort(getString(R.string.edit_mobile_or_password_tip));
+//                    return;
+//                }
+//                if (TextUtils.isEmpty(mobile) && "".equals(mobile) ) {
+//                    ToastUtils.showShort(getString(R.string.edit_mobile_tip));
+//                    return;
+//                }
+//                if (TextUtils.isEmpty(password) || 5 >= password.length() || password.length() >= 14) {
+//                    ToastUtils.showShort(getString(R.string.edit_password_reg));
+//                    return;
+//                }
 
-                login(mobile,password);
-                SPUtils.getInstance().put("mobile", edit_mobile.getText().toString().trim());
+                login("15935910958","123456");
+//                SPUtils.getInstance().put("mobile", edit_mobile.getText().toString().trim());
 
                 break;
             default:
@@ -139,7 +146,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     Disposable subscribe;
 
     public void login(String phone, String pwd) {
-
         subscribe = ServiceFactory.getInstance().getBaseService(Api.class)
                 .login(phone, getMD5(pwd))
                 .compose(bindToLifecycle())
@@ -154,7 +160,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         dialog = new AccountFreezeDialog(LoginActivity.this);
                         dialog.show();
                     } else if (loginResponse.getIsFirstLogin().equals(Constant.FLAG_FIRSTLOGIN)) {
-                        finish();
                         LoginActivity.this.startActivity(new Intent(LoginActivity.this, EditPersonalInformationFragment.class));
                     } else {
                         LoginActivity.this.connect(loginResponse.getRongToken());
@@ -185,9 +190,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 @Override
                 public void onSuccess(String userid) {
                     Log.d("GJSONSSSSS", "--onSuccess" + userid);
+                    UserInfo userInfo = new UserInfo(userid, Constant.currentUser.getNick(), Uri.parse(Constant.currentUser.getHeadPortrait()));
+                    RongIM.getInstance().setCurrentUserInfo(userInfo);
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                     btn_login.setEnabled(false);
                     finish();
+                    LogUtils.e(new Gson().toJson(userInfo));
                 }
 
                 /**

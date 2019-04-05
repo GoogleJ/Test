@@ -26,7 +26,7 @@
     <string name="edit_agreement_tip">请同意用户协议</string>
     <string name="edit_new_password_reg">填写新的密码</string>
     <string name="commit">提交</string>
-    <string name="message">消息</string>
+    <string name="remark">消息</string>
     <string name="send_group_chat">发起群聊</string>
     <string name="invite_friends">邀请好友</string>
     <string name="scan">扫一扫</string>
@@ -477,5 +477,10 @@
     <string name="yiguoqi">已过期</string>
     <string name="msg_title">多多消息</string>
     <string name="del_my_message">对不起，你无法删除自己</string>
+    <string name="set_pay_pwd">设置支付密码</string>
+    <string name="input_redmoney">请输入红包金额</string>
+    <string name="userinfo">个人资料</string>
+    <string name="red_packet_list">红包记录</string>
+    <string name="red_packet_tips1">个红包</string>
 
 </resources>

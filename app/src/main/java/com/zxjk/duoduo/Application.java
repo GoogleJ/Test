@@ -17,6 +17,7 @@ import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferProvider;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.view.View;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.model.UIConversation;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;

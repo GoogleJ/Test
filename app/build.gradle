@@ -5,7 +5,7 @@ android {
         release {
             keyAlias 'duoduo'
             keyPassword 'duoduo'
-            storeFile file('C:/WorkSpace/DuoDuo-Android/duoduo.jks')
+            storeFile file('H:/DuoDuo-Android/duoduo.jks')
             storePassword 'duoduo'
         }
     }
@@ -56,8 +56,8 @@ dependencies {
 
     //Rxlifecycle
     implementation 'com.trello.rxlifecycle3:rxlifecycle:3.0.0'
-    implementation 'com.trello.rxlifecycle3:rxlifecycle-android:3.0.0'
     implementation 'com.trello.rxlifecycle3:rxlifecycle-components:3.0.0'
+    implementation 'com.trello.rxlifecycle3:rxlifecycle-android-lifecycle:3.0.0'
 
     //RxJava
     implementation 'io.reactivex.rxjava2:rxjava:2.2.7'
@@ -133,6 +133,7 @@ dependencies {
     //popwindow
     implementation 'com.github.razerdp:BasePopup:2.1.9'
     implementation 'com.github.Othershe:CombineBitmap:1.0.0'
+
     // indicator
     implementation 'com.github.hackware1993:MagicIndicator:1.6.0'
 }

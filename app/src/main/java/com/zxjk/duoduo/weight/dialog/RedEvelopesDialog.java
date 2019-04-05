@@ -2,16 +2,24 @@ package com.zxjk.duoduo.weight.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.ui.msgpage.PeopleRedEnvelopesActivity;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketMessage;
+import com.zxjk.duoduo.utils.GlideUtil;
 
 import androidx.annotation.NonNull;
+import io.rong.imlib.model.Message;
+import io.rong.imlib.model.UserInfo;
 
 /**
  * @author Administrator
@@ -20,19 +28,21 @@ import androidx.annotation.NonNull;
 public class RedEvelopesDialog extends Dialog implements View.OnClickListener {
     ImageView redOpenBtn;
     ImageView redCloseBtn;
+    ImageView m_transfer_envelopes_heard;
+    TextView m_red_envelopes_user;
+    TextView m_red_envelopes_signature_text;
 
     private View view;
     private Context context;
+
+    private Message message;
+    private UserInfo userInfo;
 
     public RedEvelopesDialog(@NonNull Context context) {
         super(context, R.style.dialogstyle);
         this.view = View.inflate(context, R.layout.dialog_red_evelopes, null);
         this.context = context;
-    }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(view);
         setCancelable(false);
         setCanceledOnTouchOutside(false);
@@ -48,33 +58,35 @@ public class RedEvelopesDialog extends Dialog implements View.OnClickListener {
     private void initView() {
         redOpenBtn = view.findViewById(R.id.m_red_envelopes_open);
         redCloseBtn = view.findViewById(R.id.m_red_evelopes_close);
+        m_transfer_envelopes_heard = view.findViewById(R.id.m_transfer_envelopes_heard);
+        m_red_envelopes_user = view.findViewById(R.id.m_red_envelopes_user);
+        m_red_envelopes_signature_text = view.findViewById(R.id.m_red_envelopes_signature_text);
         redOpenBtn.setOnClickListener(this);
         redCloseBtn.setOnClickListener(this);
     }
 
+    public void show(Message message, UserInfo userInfo) {
+        this.message = message;
+        this.userInfo = userInfo;
+        GlideUtil.loadCornerImg(m_transfer_envelopes_heard, userInfo.getPortraitUri().toString(), 2);
+        m_red_envelopes_user.setText(userInfo.getName() + "的红包");
+        RedPacketMessage m = (RedPacketMessage) message.getContent();
+
+        if (TextUtils.isEmpty(m.getRemark())) {
+            m_red_envelopes_signature_text.setText(R.string.m_red_envelopes_signature_text);
+        } else {
+            m_red_envelopes_signature_text.setText(m.getRemark());
+        }
+        show();
+    }
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.m_red_envelopes_open:
-                if (onClickListener!=null){
-                    onClickListener.onOpen();
-                }
-                break;
-            case R.id.m_red_evelopes_close:
-                dismiss();
-                break;
-            default:
-                dismiss();
-                break;
+        dismiss();
+        if (v.getId() == R.id.m_red_envelopes_open) {
+            Intent intent = new Intent(v.getContext(), PeopleRedEnvelopesActivity.class);
+            intent.putExtra("msg", message);
+            v.getContext().startActivity(intent);
         }
-    }
-
-    public OnClickListener onClickListener;
-
-    public interface OnClickListener{
-        void onOpen();
-    }
-    public void setOnClickListener(OnClickListener onClicklistener){
-        this.onClickListener=onClicklistener;
     }
 }

@@ -39,15 +39,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.msgpage.TransferSuccessActivity"></activity>
+        <activity android:name=".ui.msgpage.RedPackageListActivity"></activity>
+        <activity android:name=".ui.msgpage.TransferSuccessActivity" />
         <activity android:name=".ui.walletpage.BlockWalletOrdersActivity" />
         <activity android:name=".ui.walletpage.ChooseCoinActivity" />
         <activity android:name=".ui.walletpage.BlockOrderDetailActivity" />
         <activity android:name=".ui.walletpage.BlockETHOrders" />
         <activity android:name=".ui.walletpage.HuaZhuanActivity" />
         <activity android:name=".ui.walletpage.ZhuanChuActivity" />
-        <activity android:name=".ui.grouppage.ChatInformationActivity"/>
-        <activity android:name=".ui.msgpage.ConversationDetailsActivity"/>
+        <activity android:name=".ui.grouppage.ChatInformationActivity" />
+        <activity android:name=".ui.msgpage.ConversationDetailsActivity" />
 
         <meta-data
             android:name="com.amap.api.v2.apikey"

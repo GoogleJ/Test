@@ -18,12 +18,12 @@ import io.rong.imlib.model.UserInfo;
 
 /**
  * @author Administrator
- * @// TODO: 2019\4\3 0003 关于转账的自定义plugin 
+ * @// TODO: 2019\4\3 0003 关于转账的自定义plugin
  */
 public class TransferPlugin implements IPluginModule {
     @Override
     public Drawable obtainDrawable(Context context) {
-        return ContextCompat.getDrawable(context,R.drawable.icon_transfer);
+        return ContextCompat.getDrawable(context, R.drawable.icon_transfer);
     }
 
     @Override
@@ -35,11 +35,7 @@ public class TransferPlugin implements IPluginModule {
     public void onClick(Fragment fragment, RongExtension rongExtension) {
         Intent intent = new Intent(fragment.getContext(), TransferActivity.class);
         UserInfo userInfo = RongUserInfoManager.getInstance().getUserInfo(rongExtension.getTargetId());
-        if (null == userInfo) {
-            intent.putExtra("userId", rongExtension.getTargetId());
-        } else {
-            intent.putExtra("user", userInfo);
-        }
+        intent.putExtra("user", userInfo);
         fragment.startActivity(intent);
     }
 

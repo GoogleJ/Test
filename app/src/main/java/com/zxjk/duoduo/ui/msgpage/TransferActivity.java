@@ -6,19 +6,15 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.LoginResponse;
-import com.zxjk.duoduo.network.response.TransferResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferMessage;
@@ -29,7 +25,6 @@ import com.zxjk.duoduo.weight.TitleBar;
 import com.zxjk.duoduo.weight.dialog.SelectPopupWindow;
 
 import androidx.annotation.Nullable;
-import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
@@ -119,9 +114,9 @@ public class TransferActivity extends BaseActivity implements SelectPopupWindow.
                     .compose(RxSchedulers.normalTrans())
                     .subscribe(s -> {
                         TransferMessage message = new TransferMessage();
-                        message.setRemarks(remarks);
+                        message.setRemark(remarks);
                         message.setPayPwd(payPsd);
-                        message.setHk(hk);
+                        message.setMoney(hk);
                         message.setTransferId(s.getId());
 
                         Message message1 = Message.obtain(targetUser.getUserId(), Conversation.ConversationType.PRIVATE, message);
@@ -129,6 +124,7 @@ public class TransferActivity extends BaseActivity implements SelectPopupWindow.
                             @Override
                             public void onAttached(Message message) {
                             }
+
                             @Override
                             public void onSuccess(Message message) {
                                 Intent intent = new Intent(TransferActivity.this, TransferSuccessActivity.class);
@@ -137,12 +133,12 @@ public class TransferActivity extends BaseActivity implements SelectPopupWindow.
                                 startActivity(intent);
                                 finish();
                             }
+
                             @Override
                             public void onError(Message message, RongIMClient.ErrorCode errorCode) {
 
                             }
                         });
-                        startActivity(new Intent(this, TransferSuccessActivity.class));
                     }, this::handleApiError);
         }
     }

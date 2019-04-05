@@ -24,14 +24,14 @@ public class TransferMessage extends MessageContent {
     /**
      * 里头的所有字段实体可根据需求自己定义
      *toCustomerId 接受者用户Id
-     * hk 转账金额
+     * money 转账金额
      *payPwd 支付密码
-     * remarks 转账说明
+     * remark 转账说明
      */
     private String toCustomerId;
-    private String hk;
+    private String money;
     private String payPwd;
-    private String remarks;
+    private String remark;
     private String type;
     private String transferId;
 
@@ -42,9 +42,9 @@ public class TransferMessage extends MessageContent {
         JSONObject jsonObj = new JSONObject();
         try {
             jsonObj.put("toCustomerId", getToCustomerId());
-            jsonObj.put("hk",getHk());
+            jsonObj.put("money", getMoney());
             jsonObj.put("payPwd",getPayPwd());
-            jsonObj.put("remarks",getRemarks());
+            jsonObj.put("remark", getRemark());
             jsonObj.put("type",getType());
             jsonObj.put("transferId",getTransferId());
         } catch (JSONException e) {
@@ -75,16 +75,16 @@ public class TransferMessage extends MessageContent {
                 setToCustomerId(jsonObj.optString("toCustomerId"));
             }
 
-            if (jsonObj.has("hk")) {
-                setHk(jsonObj.optString("hk"));
+            if (jsonObj.has("money")) {
+                setMoney(jsonObj.optString("money"));
             }
 
             if (jsonObj.has("payPwd")) {
                 setPayPwd(jsonObj.optString("payPwd"));
             }
 
-            if (jsonObj.has("remarks")) {
-                setRemarks(jsonObj.optString("remarks"));
+            if (jsonObj.has("remark")) {
+                setRemark(jsonObj.optString("remark"));
             }
 
             if (jsonObj.has("type")) {
@@ -108,9 +108,9 @@ public class TransferMessage extends MessageContent {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         ParcelUtils.writeToParcel(dest,toCustomerId);
-        ParcelUtils.writeToParcel(dest,hk);
+        ParcelUtils.writeToParcel(dest, money);
         ParcelUtils.writeToParcel(dest,payPwd);
-        ParcelUtils.writeToParcel(dest,remarks);
+        ParcelUtils.writeToParcel(dest, remark);
         ParcelUtils.writeToParcel(dest,type);
         ParcelUtils.writeToParcel(dest,transferId);
     }
@@ -118,9 +118,9 @@ public class TransferMessage extends MessageContent {
     public TransferMessage(Parcel in) {
         setToCustomerId(ParcelUtils.readFromParcel(in));
         //这里可继续增加你消息的属性
-        setHk(ParcelUtils.readFromParcel(in));
+        setMoney(ParcelUtils.readFromParcel(in));
         setPayPwd(ParcelUtils.readFromParcel(in));
-        setRemarks(ParcelUtils.readFromParcel(in));
+        setRemark(ParcelUtils.readFromParcel(in));
         setType(ParcelUtils.readFromParcel(in));
         setTransferId(ParcelUtils.readFromParcel(in));
     }
@@ -148,12 +148,12 @@ public class TransferMessage extends MessageContent {
         this.toCustomerId = toCustomerId;
     }
 
-    public String getHk() {
-        return hk;
+    public String getMoney() {
+        return money;
     }
 
-    public void setHk(String hk) {
-        this.hk = hk;
+    public void setMoney(String money) {
+        this.money = money;
     }
 
     public String getPayPwd() {
@@ -164,12 +164,12 @@ public class TransferMessage extends MessageContent {
         this.payPwd = payPwd;
     }
 
-    public String getRemarks() {
-        return remarks;
+    public String getRemark() {
+        return remark;
     }
 
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public String getType() {
