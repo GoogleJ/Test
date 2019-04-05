@@ -118,13 +118,16 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
                 commmitBtn.setVisibility(View.VISIBLE);
             }
         });
-        commmitBtn.setOnClickListener(v -> updatePwd(oldPwd, newPwd, newPwdTwo));
+        commmitBtn.setOnClickListener(v -> {
+            updatePwd("", MD5Utils.getMD5(newPwd), MD5Utils.getMD5(newPwdTwo));
+        });
     }
 
 
     public void updatePwd(String oldPwd, String newPwd, String newPwdTwo) {
+
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .updatePayPwd(MD5Utils.getMD5(oldPwd), MD5Utils.getMD5(newPwd), MD5Utils.getMD5(newPwdTwo))
+                .updatePayPwd(oldPwd, MD5Utils.getMD5(newPwd), MD5Utils.getMD5(newPwdTwo))
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())

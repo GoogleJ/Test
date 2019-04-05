@@ -92,10 +92,11 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener  ,
                 startActivity(intent);
                 break;
             case R.id.invite_friends:
-                AddContactActivity.start(getActivity());
+                startActivity(new Intent(getActivity(),AddContactActivity.class));
+
                 break;
             case R.id.scan:
-                QrCodeActivity.start(getActivity());
+                startActivity(new Intent(getActivity(),QrCodeActivity.class));
                 break;
             case R.id.collection_and_payment:
                 break;

@@ -71,7 +71,7 @@ public class ETHOrdersAdapter extends RecyclerView.Adapter<ETHOrdersAdapter.MyVi
 
         holder.llItemEthOrdersJump.setOnClickListener(v -> {
             Intent intent = new Intent(context, BlockOrderDetailActivity.class);
-            intent.putExtra("type", "ETH");
+            intent.putExtra("type", "0");
             intent.putExtra("data", listBean);
             context.startActivity(intent);
         });

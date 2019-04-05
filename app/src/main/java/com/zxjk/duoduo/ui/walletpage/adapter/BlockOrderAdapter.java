@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.walletpage.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import java.util.List;
 import javax.crypto.interfaces.PBEKey;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class BlockOrderAdapter extends RecyclerView.Adapter<BlockOrderAdapter.ViewHoder> {
@@ -72,6 +74,7 @@ public class BlockOrderAdapter extends RecyclerView.Adapter<BlockOrderAdapter.Vi
         private TextView tvItemSecond;
         private TextView tvItemTime;
         private TextView tvItemState;
+        private TextView tvItemMoney;
         private LinearLayout llItemClick;
 
         ViewHoder(@NonNull View itemView) {
@@ -82,13 +85,36 @@ public class BlockOrderAdapter extends RecyclerView.Adapter<BlockOrderAdapter.Vi
             tvItemFirst = itemView.findViewById(R.id.tvItemFirst);
             tvItemSecond = itemView.findViewById(R.id.tvItemSecond);
             tvItemTime = itemView.findViewById(R.id.tvItemTime);
+            tvItemMoney = itemView.findViewById(R.id.tvItemMoney);
             tvItemState = itemView.findViewById(R.id.tvItemState);
             llItemClick = itemView.findViewById(R.id.llItemClick);
         }
 
+        @SuppressLint("ResourceType")
         void bindData(GetTransferAllResponse.ListBean bean) {
-//            tvItemTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(bean.getCreateTime()));
+            tvItemTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Long.parseLong(bean.getCreateTime())));
             tvItemState.setText((bean.getTxreceiptStatus().equals("0")) ? R.string.failed : (bean.getTxreceiptStatus().equals("1") ? R.string.success : R.string.procssing));
+
+            if ("2".equals(bean.getSerialType())||"3".equals(bean.getSerialType())){
+                tvItemMoney.setTextColor(ContextCompat.getColor(context,R.color.red_eth_in));
+                tvItemMoney.setText("+"+bean.getBalance()+"HK");
+            }else if ("1".equals(bean.getSerialType())&&"0".equals(bean.getInOrOut())){
+                tvItemMoney.setTextColor(ContextCompat.getColor(context,R.color.themecolor));
+                tvItemMoney.setText("+"+bean.getBalance()+"HKB");
+
+            }else if ("1".equals(bean.getSerialType())&&"1".equals(bean.getInOrOut())){
+                tvItemMoney.setTextColor(ContextCompat.getColor(context,R.color.themecolor));
+                tvItemMoney.setText("-"+bean.getBalance()+"HKB");
+            }else if ("0".equals(bean.getSerialType())&&"0".equals(bean.getInOrOut())){
+                tvItemMoney.setTextColor(ContextCompat.getColor(context,R.color.themecolor));
+                tvItemMoney.setText("+"+bean.getBalance()+"ETH");
+            }else{
+                tvItemMoney.setTextColor(ContextCompat.getColor(context,R.color.themecolor));
+                tvItemMoney.setText("-"+bean.getBalance()+"ETH");
+            }
+
+
+
             if (bean.getSerialType().equals("0") || bean.getSerialType().equals("1")) {
                 tvWalletAddress.setVisibility(View.VISIBLE);
                 tvItemFirst.setVisibility(View.GONE);

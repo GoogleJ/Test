@@ -1,7 +1,7 @@
 package com.zxjk.duoduo.ui.msgpage;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Log;
@@ -13,11 +13,11 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.weight.TitleBar;
 
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
-import cn.bingoogolapple.qrcode.zxing.QRCodeDecoder;
+import cn.bingoogolapple.qrcode.core.ProcessDataTask;
+import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.zxing.ZXingView;
 
 import static com.zxjk.duoduo.utils.PermissionUtils.cameraPremissions;
@@ -28,12 +28,12 @@ import static com.zxjk.duoduo.utils.PermissionUtils.cameraPremissions;
  * @// TODO: 2019\3\19 0019 扫描二维码
  */
 
-public class QrCodeActivity extends BaseActivity implements ZXingView.Delegate {
+public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate {
     @BindView(R.id.m_qr_code_zxing_view)
     ZXingView zxingview;
     @BindView(R.id.m_qr_code_title_bar)
     TitleBar titleBar;
-
+    protected ProcessDataTask mProcessDataTask;
     /**
      * 关于二维码扫描的实现
      */
@@ -47,12 +47,6 @@ public class QrCodeActivity extends BaseActivity implements ZXingView.Delegate {
      */
     private boolean isFlashlight;
 
-    public static void start(FragmentActivity activity) {
-        Intent intent = new Intent(activity, QrCodeActivity.class);
-        activity.startActivity(intent);
-
-
-    }
 
 
     protected void initUI() {
@@ -170,11 +164,12 @@ public class QrCodeActivity extends BaseActivity implements ZXingView.Delegate {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         zxingview.startSpotAndShowRect();
-        if (requestCode == ACTION_LADY_PICKER_FLAG && resultCode == RESULT_OK) {
-            Uri uri = data.getData();
+        zxingview.startSpotAndShowRect(); // 显示扫描框，并开始识别
 
-            QRCodeDecoder.syncDecodeQRCode(uri.getPath());
-             ToastUtils.showShort(QRCodeDecoder.syncDecodeQRCode(uri.getPath())+"");
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY) {
+            final String picturePath = BGAPhotoPickerActivity.getSelectedPhotos(data).get(0);
+            // 本来就用到 QRCodeView 时可直接调 QRCodeView 的方法，走通用的回调
+//            zxingview.decodeQRCode(picturePath);
         }
     }
 

@@ -129,7 +129,7 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
 
                 break;
             case R.id.m_edit_information_header_icon:
-                verifyStoragePermissions(this);
+
                 cameraPremissions(this);
                 selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);

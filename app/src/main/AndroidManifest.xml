@@ -48,6 +48,7 @@
         <activity android:name=".ui.walletpage.ZhuanChuActivity" />
         <activity android:name=".ui.grouppage.ChatInformationActivity"/>
         <activity android:name=".ui.msgpage.ConversationDetailsActivity"/>
+        <activity android:name=".ui.msgpage.SelectContactForCardActivity"/>
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
@@ -99,6 +100,8 @@
         <activity android:name=".ui.msgpage.PeopleRedEnvelopesActivity" />
         <activity android:name=".ui.msgpage.TransferActivity" />
         <activity android:name=".ui.msgpage.TransferInfoActivity" />
+        <activity android:name=".ui.msgpage.ConversationForAddActivity"/>
+
         <activity
             android:name=".ui.WelcomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

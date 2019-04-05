@@ -27,6 +27,7 @@ import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendInformationDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.weight.TitleBar;
+
 import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,7 +44,7 @@ import io.rong.imlib.model.UserInfo;
  * @// TODO: 2019\3\20 0020 个人信息详情页，包含删除的dialog等部分
  */
 @SuppressLint("CheckResult")
-public class FriendDetailsActivity extends BaseActivity implements View.OnClickListener, CommonPopupWindow.ViewInterface{
+public class FriendDetailsActivity extends BaseActivity implements View.OnClickListener, CommonPopupWindow.ViewInterface {
     /**
      * 标题布局
      */
@@ -212,7 +213,9 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
             popupWindow.showAsDropDown(titleBar.getRightImageView());
         });
     }
+
     UserInfo userInfo;
+
     @OnClick({R.id.m_people_information_send_to_message, R.id.m_people_information_voice_calls})
     @Override
     public void onClick(View v) {
@@ -222,15 +225,15 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 if (intentType == 0) {
-                    userInfo=new UserInfo(friendInfoResponse.getId(),friendInfo.getNick(),Uri.parse(friendInfoResponse.getHeadPortrait()));
+                    userInfo = new UserInfo(friendInfoResponse.getId(), friendInfoResponse.getNick(), Uri.parse(friendInfoResponse.getHeadPortrait()));
                     RongIM.getInstance().setCurrentUserInfo(userInfo);
                     RongIM.getInstance().startPrivateChat(this, friendInfoResponse.getId(), friendInfoResponse.getNick());
                 } else if (intentType == 1) {
-                    userInfo=new UserInfo(friendInfo.getId(),friendInfo.getNick(),Uri.parse(friendInfo.getHeadPortrait()));
+                    userInfo = new UserInfo(friendInfo.getId(), friendInfo.getNick(), Uri.parse(friendInfo.getHeadPortrait()));
                     RongIM.getInstance().setCurrentUserInfo(userInfo);
                     RongIM.getInstance().startPrivateChat(this, friendInfo.getId(), friendInfo.getNick());
                 } else {
-                    userInfo=new UserInfo(contactResponse.getId(),contactResponse.getNick(),Uri.parse(contactResponse.getHeadPortrait()));
+                    userInfo = new UserInfo(contactResponse.getId(), contactResponse.getNick(), Uri.parse(contactResponse.getHeadPortrait()));
                     RongIM.getInstance().setCurrentUserInfo(userInfo);
                     RongIM.getInstance().startPrivateChat(this, contactResponse.getId(), contactResponse.getNick());
                 }
@@ -242,7 +245,22 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                 startActivity(new Intent(FriendDetailsActivity.this, ModifyNotesActivity.class));
                 break;
             case R.id.recommend_to_friend:
-                ToastUtils.showShort("暂未实现");
+                Intent intentCard = new Intent(FriendDetailsActivity.this, SelectContactForCardActivity.class);
+                if (intentType == 0) {
+                    intentCard.putExtra("friendInfoResponseId", friendInfoResponse.getId());
+                    intentCard.putExtra("userType", 1);
+                    startActivity(intentCard);
+                    return;
+                } else if (intentType == 1) {
+                    intentCard.putExtra("friendInfoId", friendInfo.getId());
+                    intentCard.putExtra("userType", 2);
+                    startActivity(intentCard);
+                    return;
+                } else {
+                    intentCard.putExtra("contactResponseId", contactResponse.getId());
+                    intentCard.putExtra("userType", 3);
+                    startActivity(intentCard);
+                }
                 break;
             case R.id.delete_friend:
                 dialog = new DeleteFriendInformationDialog(this);
@@ -306,7 +324,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void onStop() {
         super.onStop();
-        if (popupWindow!=null){
+        if (popupWindow != null) {
             popupWindow.dismiss();
         }
     }

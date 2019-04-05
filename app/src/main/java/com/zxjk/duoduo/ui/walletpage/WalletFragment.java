@@ -11,7 +11,6 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.ui.msgpage.QrCodeActivity;
 import com.zxjk.duoduo.ui.walletpage.adapter.WalletPageAdapter;
-import com.zxjk.duoduo.ui.walletpage.model.WalletPageData;
 
 import java.util.ArrayList;
 

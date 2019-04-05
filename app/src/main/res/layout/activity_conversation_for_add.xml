@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/personal_information_1"
+    android:orientation="vertical"
+    tools:ignore="RtlCompat"
+    >
+
+    <com.zxjk.duoduo.weight.TitleBar
+        android:id="@+id/m_information_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:titleBarTextColor="@color/white"
+        android:background="@color/colorPrimary"
+        app:titleBarLeftImage="@drawable/ico_back"
+        app:titleBarTitle="@string/m_information_title_bar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="19dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="19dp"
+            app:cardBackgroundColor="@color/white">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/m_personal_information_icon"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginBottom="65dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="25dp"
+                    android:src="@drawable/tab_user_selected"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <TextView
+                    android:id="@+id/m_personal_information_user_name_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="25dp"
+
+                    android:textColor="@color/black"
+                    android:textSize="22dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/m_personal_information_gender_icon"
+                    android:layout_width="12dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="9dp"
+                    android:src="@drawable/icon_gender_woman"
+                    app:layout_constraintBottom_toBottomOf="@+id/m_personal_information_user_name_text"
+                    app:layout_constraintStart_toEndOf="@+id/m_personal_information_user_name_text"
+                    app:layout_constraintTop_toTopOf="@+id/m_personal_information_user_name_text" />
+
+                <TextView
+                    android:id="@+id/m_personal_information_dudu_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="35dp"
+
+                    android:textColor="@color/m_personal_information_dudu_id"
+                    android:textSize="16dp"
+                    app:layout_constraintStart_toStartOf="@+id/m_personal_information_user_name_text"
+                    app:layout_constraintTop_toBottomOf="@+id/m_personal_information_user_name_text" />
+
+                <TextView
+                    android:id="@+id/m_personal_information_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+
+                    android:textSize="16dp"
+                    app:layout_constraintStart_toStartOf="@+id/m_personal_information_dudu_id"
+                    app:layout_constraintTop_toBottomOf="@+id/m_personal_information_dudu_id" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="11dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/m_personal_information_signature_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="12dp"
+            android:textColor="@color/black"
+            android:text="@string/m_personal_information_signature_label"
+            android:textSize="17dp" />
+        <TextView
+            android:id="@+id/m_personal_information_signature_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:textSize="15dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="21dp"
+            />
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/m_personal_information_add_contact_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="19dp"
+        android:textColor="@color/black"
+        android:background="@color/white"
+        android:text="@string/m_personal_information_signature_text"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        />
+
+
+</LinearLayout>

@@ -5,7 +5,6 @@ import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.Utils;
-import com.zxjk.duoduo.ui.grouppage.ChatInformationActivity;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BasePluginExtensionModule;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardProvider;
@@ -16,7 +15,6 @@ import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferProvider;
 
 import android.app.ActivityManager;
 import android.content.Context;
-import android.content.Intent;
 
 import java.util.List;
 
@@ -26,11 +24,9 @@ import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
 import io.rong.message.ImageMessage;
-import io.rong.message.LocationMessage;
 import io.rong.message.RichContentMessage;
 import io.rong.message.TextMessage;
 import io.rong.message.VoiceMessage;

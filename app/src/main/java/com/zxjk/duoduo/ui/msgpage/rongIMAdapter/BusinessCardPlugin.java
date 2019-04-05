@@ -31,11 +31,13 @@ public class BusinessCardPlugin implements IPluginModule {
 
     @Override
     public void onClick(Fragment fragment, RongExtension rongExtension) {
-        Intent intent = new Intent(fragment.getContext(), SelectContactActivity.class);
+        Intent intent = new Intent(fragment.getContext(), SelectContactForCardActivity.class);
         UserInfo userInfo = RongUserInfoManager.getInstance().getUserInfo(rongExtension.getTargetId());
         if (null == userInfo) {
+            intent.putExtra("userType",0);
             intent.putExtra("userId", rongExtension.getTargetId());
         } else {
+            intent.putExtra("userType",0);
             intent.putExtra("user", userInfo);
         }
         fragment.startActivity(intent);

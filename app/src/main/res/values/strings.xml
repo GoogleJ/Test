@@ -477,5 +477,23 @@
     <string name="yiguoqi">已过期</string>
     <string name="msg_title">多多消息</string>
     <string name="del_my_message">对不起，你无法删除自己</string>
+    <string name="share_business_card">确定分享改名片吗？</string>
+    <string name="sharing_success">分享成功</string>
+    <string name="transfer_failed">转账失败</string>
+    <string name="transfer_in_successful">转入成功</string>
+    <string name="transfer_details">转账详情</string>
+    <string name="receipt_failed">站长失败</string>
+    <string name="pay_failed">付款失败</string>
+    <string name="transfer_in_failed">转入失败</string>
+    <string name="transfer_in_wait">正在转入...</string>
+    <string name="transfer_out_failed">转出失败</string>
+    <string name="transfer_out_successful">转出成功</string>
+    <string name="transfer_out_wait">正在转出中...</string>
+    <string name="transfer_in_title">划转</string>
+    <string name="transfer_commit_failed">提交失败</string>
+    <string name="transfer_commit_successful">提交成功</string>
+    <string name="transfer_commit_wait">等待中...</string>
+    <string name="transfer_commit_title">划转详情</string>
+    <string name="tvBlockOrdersDetailCurrency">划转</string>
 
 </resources>

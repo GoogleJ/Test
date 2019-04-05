@@ -66,6 +66,7 @@ public class OrdersFragment extends BaseFragment {
         blockOrderAdapter.setOnClickListener(data -> {
             Intent intent = new Intent(getActivity(), BlockOrderDetailActivity.class);
             intent.putExtra("data", data);
+            intent.putExtra("type",data.getSerialType());
             startActivity(intent);
         });
         recyclerView.setAdapter(blockOrderAdapter);

@@ -197,7 +197,8 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
 
                 break;
             case R.id.m_contact_new_friend_btn:
-                AddContactActivity.start(getActivity());
+                startActivity(new Intent(getActivity(),AddContactActivity.class));
+
                 break;
             case R.id.m_contact_search_btn:
 

@@ -7,7 +7,6 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.ui.SetUpPaymentPwdActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 
 import androidx.annotation.Nullable;
@@ -42,7 +41,7 @@ public class PaySettingActivity extends BaseActivity {
      * @param view
      */
     public void updatePayPwd(View view) {
-        startActivity(new Intent(PaySettingActivity.this, SetUpPaymentPwdActivity.class));
+        startActivity(new Intent(PaySettingActivity.this, UpdatePayPwdActivity.class));
     }
 
 }

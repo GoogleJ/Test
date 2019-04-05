@@ -4,16 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.blankj.utilcode.util.ToastUtils;
-import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
-import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.HomeActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
@@ -35,7 +33,7 @@ import io.rong.imkit.RongIM;
  * @// TODO: 2019\4\4 0004 这个是对于好友详情做出的一个分支，好友详情逻辑梳理好，加进去容易出错，所以建立分支达到效果
  */
 @SuppressLint("CheckResult")
-public class ConversationDetailsActivity extends BaseActivity implements View.OnClickListener {
+public class ConversationDetailsActivity extends BaseActivity implements View.OnClickListener ,CommonPopupWindow.ViewInterface{
     /**
      * 标题布局
      */
@@ -109,10 +107,9 @@ public class ConversationDetailsActivity extends BaseActivity implements View.On
      * 0是男1是女
      */
     String sex = "0";
-
-
-
-
+    int intentType=0;
+    String userId;
+    String businessCardMessageId;
     FriendInfoResponse friendInfoResponse;
 
     @Override
@@ -120,14 +117,38 @@ public class ConversationDetailsActivity extends BaseActivity implements View.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversation_details);
         ButterKnife.bind(this);
-        String  userId=getIntent().getStringExtra("UserId");
-        getFriendInfoById(userId);
+        initUI();
+        int type = 0;
+        intentType = getIntent().getIntExtra("ConstantUserId", type);
+        if (intentType == 0) {
+            userId= getIntent().getStringExtra("UserId");
+            getFriendInfoById(userId);
+            return;
+        } else if (intentType ==1) {
+            return;
+        } else {
+            businessCardMessageId  = getIntent().getStringExtra("businessCardMessageId");
+            getFriendInfoById(businessCardMessageId);
+            return;
+        }
     }
-
-
-
-
-
+    private void initUI() {
+        titleBar.getLeftImageView().setOnClickListener(v -> finish());
+        titleBar.getRightImageView().setOnClickListener(v -> {
+            if (popupWindow != null && popupWindow.isShowing()) {
+                return;
+            }
+            popupWindow = new CommonPopupWindow.Builder(ConversationDetailsActivity.this)
+                    .setView(R.layout.popup_window_people_information)
+                    .setWidthAndHeight(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                    .setAnimationStyle(R.style.AnimDown)
+                    .setBackGroundLevel(0.5f)
+                    .setViewOnclickListener(ConversationDetailsActivity.this::getChildView)
+                    .setOutsideTouchable(true)
+                    .create();
+            popupWindow.showAsDropDown(titleBar.getRightImageView());
+        });
+    }
 
     @OnClick({R.id.m_people_information_send_to_message, R.id.m_people_information_voice_calls})
     @Override
@@ -137,13 +158,16 @@ public class ConversationDetailsActivity extends BaseActivity implements View.On
                 Intent intent = new Intent(this, HomeActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-//                if (conversationType == 0) {
-//                    RongIM.getInstance().startPrivateChat(this, friendInfoResponse.getId(), friendInfoResponse.getNick());
-//                    voiceBtn.setVisibility(View.GONE);
-//                } else {
-//                    voiceBtn.setVisibility(View.VISIBLE);
-//                    RongIM.getInstance().startPrivateChat(this, friendInfoResponse.getId(), friendInfoResponse.getNick());
-//                }
+                if (intentType == 0) {
+                    RongIM.getInstance().startPrivateChat(this, friendInfoResponse.getId(), friendInfoResponse.getNick());
+                     voiceBtn.setVisibility(View.GONE);
+                     return;
+                 } else if (intentType==1){
+                 return;
+                 }else{
+                    voiceBtn.setVisibility(View.VISIBLE);
+                    RongIM.getInstance().startPrivateChat(this, friendInfoResponse.getId(), friendInfoResponse.getNick());
+                }
                 break;
             case R.id.m_people_information_voice_calls:
                 ToastUtils.showShort("此功能暂未实现");
@@ -152,18 +176,48 @@ public class ConversationDetailsActivity extends BaseActivity implements View.On
                 startActivity(new Intent(this, ModifyNotesActivity.class));
                 break;
             case R.id.recommend_to_friend:
-                ToastUtils.showShort("暂未实现");
+                Intent intentCard=new Intent(ConversationDetailsActivity.this,SelectContactForCardActivity.class);
+//                if (intentType==0){
+//                    intentCard.putExtra("UserIdSelect", userId);
+//                    intentCard.putExtra("userType", 4);
+//                    startActivity(intentCard);
+//                    return;
+//                }else if (intentType==1){
+//                    return;
+//                }else{
+                    intentCard.putExtra("businessCardMessageId",businessCardMessageId);
+                    intentCard.putExtra("userType",4);
+                    startActivity(intentCard);
+//                }
                 break;
             case R.id.delete_friend:
                 dialog = new DeleteFriendInformationDialog(this);
                 dialog.setOnClickListener(() -> {
+                    ToastUtils.showShort(getString(R.string.del_my_message));
+                    if (intentType==0){
+                        deleteFriend(userId);
+                    }else if (intentType==1){
 
-                        ToastUtils.showShort(getString(R.string.del_my_message));
-                        dialog.dismiss();
-
+                    }else{
+                        deleteFriend(businessCardMessageId);
+                    }
+                    dialog.dismiss();
                 });
                 dialog.show(friendInfoResponse.getNick());
 
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void getChildView(View view, int layoutResId) {
+        switch (layoutResId) {
+            case R.layout.popup_window_people_information:
+                view.findViewById(R.id.update_rename).setOnClickListener(this);
+                view.findViewById(R.id.recommend_to_friend).setOnClickListener(this);
+                view.findViewById(R.id.delete_friend).setOnClickListener(this);
                 break;
             default:
                 break;
@@ -177,8 +231,8 @@ public class ConversationDetailsActivity extends BaseActivity implements View.On
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(friendInfoResponse -> {
-
-//                    GlideUtil.loadCornerImg(heardIcon, friendInfoResponse.getHeadPortrait(), 2);
+                    this.friendInfoResponse=new FriendInfoResponse(friendInfoResponse);
+                    GlideUtil.loadCornerImg(heardIcon, friendInfoResponse.getHeadPortrait(), 2);
                     userNameText.setText(friendInfoResponse.getNick());
                     duoduoId.setText(friendInfoResponse.getDuoduoId());
                     areaText.setText(friendInfoResponse.getAddress());
