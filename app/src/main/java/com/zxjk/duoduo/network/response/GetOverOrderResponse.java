@@ -1,6 +1,8 @@
 package com.zxjk.duoduo.network.response;
 
-public class GetOverOrderResponse {
+import java.io.Serializable;
+
+public class GetOverOrderResponse implements Serializable {
 
     /**
      * id : 6
@@ -39,6 +41,17 @@ public class GetOverOrderResponse {
     private String isBuyPay;
     private String payTime;
     private String isDelete;
+
+    public String getSellPayType() {
+        return sellPayType;
+    }
+
+    public void setSellPayType(String sellPayType) {
+        this.sellPayType = sellPayType;
+    }
+
+    private String sellPayType;
+
 
     public String getId() {
         return id;

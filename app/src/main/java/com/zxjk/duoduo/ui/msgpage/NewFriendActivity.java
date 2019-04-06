@@ -119,18 +119,15 @@ public class NewFriendActivity extends BaseActivity {
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<List<FriendInfoResponse>>() {
-                    @Override
-                    public void accept(List<FriendInfoResponse> friendInfoResponses) throws Exception {
-                        for (int i = 0; i < friendInfoResponses.size(); i++) {
-                            if (friendInfoResponses.size() >= 0) {
-                                friendInfoResponse = new FriendInfoResponse(friendInfoResponses.get(i));
-                            } else {
-                                return;
-                            }
+                .subscribe(friendInfoResponses -> {
+                    for (int i = 0; i < friendInfoResponses.size(); i++) {
+                        if (friendInfoResponses.size() >= 0) {
+                            friendInfoResponse = new FriendInfoResponse(friendInfoResponses.get(i));
+                        } else {
+                            return;
                         }
-
                     }
+
                 }, this::handleApiError);
     }
 

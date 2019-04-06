@@ -106,8 +106,9 @@ public class ConfirmBuyActivity extends BaseActivity {
         tvConfirmBuyOrderId.setText(data.getBothOrderId());
         tvConfirmBuyReceiverCount.setText(data.getNumber());
         tvConfirmBuyReceiverSinglePrice.setText(getIntent().getStringExtra("rate"));
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //        tvConfirmBuyOrderTime.setText(format.format(new Date(data.getCreateTime())));
+        tvConfirmBuyOrderTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Long.parseLong(data.getCreateTime())));
         tvConfirmBuyMoney.setText(data.getMoney());
     }
 

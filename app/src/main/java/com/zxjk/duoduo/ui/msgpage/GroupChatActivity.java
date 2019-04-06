@@ -20,6 +20,7 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.GroupChatResponse;
+import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.AllGroupMembersActivity;
@@ -97,8 +98,12 @@ public class GroupChatActivity extends BaseActivity implements TextWatcher {
         groupChatAdapter.notifyDataSetChanged();
         groupChatAdapter.setOnItemChildClickListener((adapter, view, position) -> {
 
-            Constant.groupResponse = groupChatAdapter.getData().get(position);
-            RongIM.getInstance().startGroupChat(this, groupChatAdapter.getData().get(position).getId(), groupChatAdapter.getData().get(position).getGroupNikeName());
+//            Constant.groupResponse = groupChatAdapter.getData().get(position);
+//            RongIM.getInstance().startGroupChat(this, groupChatAdapter.getData().get(position).getId(), groupChatAdapter.getData().get(position).getGroupNikeName());
+
+            Intent intent=new Intent(this,GroupChatInformationActivity.class);
+            intent.putExtra("groupChatInformation", groupChatAdapter.getData().get(position));
+            startActivity(intent);
 
         });
 

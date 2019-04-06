@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -99,13 +98,7 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
         layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         //一行代码实现吸顶悬浮的效果
-//        mRecyclerView.addItemDecoration(new HoverItemDecoration(getContext(), new HoverItemDecoration.BindItemTextCallback() {
-//            @Override
-//            public String getItemText(int position) {
-//                //悬浮的信息
-//                return list.get(position).getSortLetters();
-//            }
-//        }));
+
         mAdapter = new BaseContactAdapter();
 
         getFriendListInfoById();

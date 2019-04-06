@@ -40,8 +40,8 @@ public class NewFriendAdapter extends BaseQuickAdapter<FriendInfoResponse, BaseV
         ConstraintLayout btnLayout=helper.getView(R.id.m_add_btn_layout) ;
         if ("0".equals(item.getStatus())){
             typeBtn.setText(mContext.getString(R.string.add_btn));
-            typeBtn.setBackgroundColor(mContext.getColor(R.color.white));
-            typeBtn.setTextColor(mContext.getColor(R.color.text_select_color));
+            typeBtn.setBackgroundColor(mContext.getColor(R.color.login_btn_pressed));
+            typeBtn.setTextColor(mContext.getColor(R.color.themecolor));
         }else if ("2".equals(item.getStatus())){
             typeBtn.setBackgroundColor(Color.WHITE);
             typeBtn.setText(mContext.getString(R.string.m_item_contact_type_text));

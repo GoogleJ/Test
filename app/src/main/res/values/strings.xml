@@ -502,5 +502,19 @@
     <string name="red_packet_tips1">个红包</string>
     <string name="shouru">收入</string>
     <string name="zhichu">支出</string>
+    <string name="exchange_list_successful">已完成</string>
+    <string name="exchange_list_wait">对方正在支付中</string>
+    <string name="exchange_list_wait_friend">等待对方审核</string>
+    <string name="exchange_list_not_pay">未付款</string>
+    <string name="exchange_list_failed">交易失败</string>
+    <string name="exchange_list_wait_review">等待审核</string>
+    <string name="exchange_list_pending_order">挂单中</string>
+    <string name="title_order">订单</string>
+    <string name="single_number_label">单号</string>
+    <string name="currency_of_sale">出售币种</string>
+    <string name="proposed_price">参考价格</string>
+    <string name="quantity_of_sale">出售数量</string>
+    <string name="sale_amount">出售金额</string>
+    <string name="payment_method">收款方式</string>
 
 </resources>

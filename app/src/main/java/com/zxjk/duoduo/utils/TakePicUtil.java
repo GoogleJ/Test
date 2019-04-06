@@ -16,12 +16,13 @@ import java.io.File;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.FragmentActivity;
 
 public class TakePicUtil {
     public static Uri imageUri = null;
     public static File file = null;
 
-    public static void takePicture(AppCompatActivity activity, int requestCode) {
+    public static void takePicture(FragmentActivity activity, int requestCode) {
         if (hasSdcard()) {
             file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DuoDuo/images/" + System.currentTimeMillis() + ".png");
             file.getParentFile().mkdirs();
@@ -35,7 +36,7 @@ public class TakePicUtil {
         }
     }
 
-    public static void albumPhoto(AppCompatActivity activity, int requestCode) {
+    public static void albumPhoto(FragmentActivity activity, int requestCode) {
         Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
         photoPickerIntent.setType("image/*");
         activity.startActivityForResult(photoPickerIntent, requestCode);

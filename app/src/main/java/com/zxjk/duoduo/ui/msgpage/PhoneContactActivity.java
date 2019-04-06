@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zxjk.duoduo.R;
@@ -33,6 +34,7 @@ public class PhoneContactActivity extends BaseActivity implements TextWatcher {
     TitleBar titleBar;
     RecyclerView mRecyclerView;
     List<PhoneInfo> list=new ArrayList<PhoneInfo>();
+    EditText searchEdit;
 
     private GetPhoneNumberFromMobileUtils getPhoneNumberFromMobile;
     PhoneContactAdapter mAdapter;
@@ -47,6 +49,8 @@ public class PhoneContactActivity extends BaseActivity implements TextWatcher {
         titleBar.getLeftImageView().setOnClickListener(v -> finish());
         getPhoneNumberFromMobile = new GetPhoneNumberFromMobileUtils();
 
+        searchEdit=findViewById(R.id.search_edit);
+        searchEdit.addTextChangedListener(this);
         list = getPhoneNumberFromMobile.getPhoneNumberFromMobile(this);
         LinearLayoutManager manager=new LinearLayoutManager(this);
         manager.setOrientation(RecyclerView.VERTICAL);
@@ -64,7 +68,7 @@ public class PhoneContactActivity extends BaseActivity implements TextWatcher {
 
     }
     private void sendSMS(String smsBody,int position) {
-        Uri smsToUri = Uri.parse("smsto:");
+        Uri smsToUri = Uri.parse("smsto:"+list.get(position).getNumber());
         Intent intent = new Intent(Intent.ACTION_SENDTO, smsToUri);
         intent.putExtra("sms_body", smsBody);
         startActivity(intent);
@@ -86,11 +90,12 @@ public class PhoneContactActivity extends BaseActivity implements TextWatcher {
         String groupname = s.toString();
         if (groupname != null || groupname.length() > 0) {
             List<PhoneInfo> groupnamelist = search(groupname); //查找对应的群组数据
-            mAdapter.setNewData(list);
+            mAdapter.setNewData(groupnamelist);
         } else {
             mAdapter.setNewData(list);
         }
         mAdapter.notifyDataSetChanged();
+
 
     }
 
@@ -106,7 +111,7 @@ public class PhoneContactActivity extends BaseActivity implements TextWatcher {
             String simpleStr = str.replaceAll("\\-|\\s", "");
             for (PhoneInfo contact : list) {
                 if (contact.getName() != null) {
-                    if (contact.getName().contains(simpleStr) || contact.getNumber().contains(str)) {
+                    if (contact.getName().contains(simpleStr) || contact.getName().contains(str)) {
                         if (!filterList.contains(contact)) {
                             filterList.add(contact);
                         }
@@ -139,6 +144,5 @@ public class PhoneContactActivity extends BaseActivity implements TextWatcher {
         }
         return filterList;
     }
-
 
 }

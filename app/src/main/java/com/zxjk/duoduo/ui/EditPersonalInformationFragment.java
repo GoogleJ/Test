@@ -167,9 +167,7 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                     LoginResponse update = new LoginResponse(Constant.userId);
                     update.setHeadPortrait(url);
                     GlideUtil.loadCornerImg(imageSearchBtn, url, 2);
-
                     this.url = url;
-
                 });
             });
         }

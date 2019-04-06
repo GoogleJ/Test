@@ -1,16 +1,17 @@
 package com.zxjk.duoduo.ui.minepage;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
-import android.widget.EditText;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import com.blankj.utilcode.util.ToastUtils;
-import com.ziyeyouhu.library.KeyboardTouchListener;
-import com.ziyeyouhu.library.KeyboardUtil;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -18,6 +19,7 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
+import com.zxjk.duoduo.weight.KeyboardPopupWindow;
 import com.zxjk.duoduo.weight.PayPsdInputView;
 import com.zxjk.duoduo.weight.TitleBar;
 
@@ -34,7 +36,7 @@ public class UpdatePayPwdActivity extends BaseActivity {
     PayPsdInputView payPsdInputView;
     TitleBar titleBar;
     TextView commmitBtn;
-    KeyboardUtil keyboardUtil;
+
 
     LinearLayout rootView;
     ScrollView scrollView;
@@ -44,24 +46,17 @@ public class UpdatePayPwdActivity extends BaseActivity {
     String newPwd;
     String newPwdTwo;
 
-
-    private void initMoveKeyBoard() {
-        keyboardUtil = new KeyboardUtil(this, rootView, scrollView);
-        keyboardUtil.setOtherEdittext(payPsdInputView);
-        // monitor the KeyBarod state
-        keyboardUtil.setKeyBoardStateChangeListener(new UpdatePayPwdActivity.KeyBoardStateListener());
-        // monitor the finish or next Key
-        keyboardUtil.setInputOverListener(new UpdatePayPwdActivity.inputOverListener());
-        payPsdInputView.setOnTouchListener(new KeyboardTouchListener(keyboardUtil, KeyboardUtil.INPUTTYPE_NUM_X, -1));
-    }
+    KeyboardPopupWindow popupWindow;
+    private boolean isUiCreated = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_pay_pwd);
         ButterKnife.bind(this);
+        getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initUI();
-        initMoveKeyBoard();
+
 
     }
 
@@ -129,6 +124,23 @@ public class UpdatePayPwdActivity extends BaseActivity {
             }
         });
         commmitBtn.setOnClickListener(v -> updatePwd(oldPwd, newPwd, newPwdTwo));
+
+        popupWindow = new KeyboardPopupWindow(this, getWindow().getDecorView(), payPsdInputView, false);
+        payPsdInputView.setOnClickListener(v -> {
+            if (popupWindow != null) {
+                popupWindow.show();
+            }
+        });
+        payPsdInputView.setOnFocusChangeListener((v, hasFocus) -> {
+            if (popupWindow != null && isUiCreated) {
+                popupWindow.refreshKeyboardOutSideTouchable(!hasFocus);
+            }
+            //隐藏系统软键盘
+            if (hasFocus) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(payPsdInputView.getWindowToken(), 0);
+            }
+        });
     }
 
 
@@ -144,22 +156,29 @@ public class UpdatePayPwdActivity extends BaseActivity {
                 }, this::handleApiError);
     }
 
-    class KeyBoardStateListener implements KeyboardUtil.KeyBoardStateChangeListener {
-
-        @Override
-        public void KeyBoardStateChange(int state, EditText editText) {
-//            System.out.println("state" + state);
-//            System.out.println("editText" + editText.getText().toString());
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (popupWindow != null && popupWindow.isShowing()) {
+                popupWindow.dismiss();
+                return true;
+            }
         }
+        return super.onKeyDown(keyCode, event);
     }
 
-    class inputOverListener implements KeyboardUtil.InputFinishListener {
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        isUiCreated = true;
+    }
 
-        @Override
-        public void inputHasOver(int onclickType, EditText editText) {
-//            System.out.println("onclickType" + onclickType);
-//            System.out.println("editText" + editText.getText().toString());
+    @Override
+    protected void onDestroy() {
+        if (popupWindow != null) {
+            popupWindow.releaseResources();
         }
+        super.onDestroy();
     }
 
 }

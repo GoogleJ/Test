@@ -13,11 +13,9 @@ import io.rong.imkit.plugin.ImagePlugin;
  * @// TODO: 2019\4\2 0002 选择图片和拍摄图片的plugin
  */
 public class PhotoSelectorPlugin extends ImagePlugin {
-//    obtainDrawable
-
     @Override
     public Drawable obtainDrawable(Context context) {
-        return ContextCompat.getDrawable(context, R.drawable.icon_photography);
+        return ContextCompat.getDrawable(context, R.drawable.icon_album);
     }
 
     @Override

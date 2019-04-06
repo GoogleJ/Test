@@ -183,6 +183,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="20dp"
+        android:layout_marginTop="10dp"
         android:overScrollMode="never"
         app:layout_constraintTop_toBottomOf="@+id/m_constacts_layout1" />
 

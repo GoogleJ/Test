@@ -48,20 +48,20 @@ public class ConversationActivity extends FragmentActivity {
         setContentView(R.layout.activity_conversation);
 
         initView();
-        targetId = getIntent().getData().getQueryParameter("targetId");
-        targetUserInfo = RongUserInfoManager.getInstance().getUserInfo(targetId);
-        if (null == targetUserInfo) {
-            ServiceFactory.getInstance().getBaseService(Api.class)
-                    .getCustomerInfoById(targetId)
-                    .compose(RxSchedulers.normalTrans())
-                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                    .compose(provider.bindToLifecycle())
-                    .subscribe(loginResponse -> {
-                                targetUserInfo = new UserInfo(targetId, loginResponse.getNick(), Uri.parse(loginResponse.getHeadPortrait()));
-                                RongUserInfoManager.getInstance().setUserInfo(targetUserInfo);
-                            },
-                            t -> ToastUtils.showShort(RxException.getMessage(t)));
-        }
+//        targetId = getIntent().getData().getQueryParameter("targetId");
+//        targetUserInfo = RongUserInfoManager.getInstance().getUserInfo(targetId);
+//        if (null == targetUserInfo) {
+//            ServiceFactory.getInstance().getBaseService(Api.class)
+//                    .getCustomerInfoById(targetId)
+//                    .compose(RxSchedulers.normalTrans())
+//                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+//                    .compose(provider.bindToLifecycle())
+//                    .subscribe(loginResponse -> {
+//                                targetUserInfo = new UserInfo(targetId, loginResponse.getNick(), Uri.parse(loginResponse.getHeadPortrait()));
+//                                RongUserInfoManager.getInstance().setUserInfo(targetUserInfo);
+//                            },
+//                            t -> ToastUtils.showShort(RxException.getMessage(t)));
+//        }
 
         RongIM.setConversationClickListener(new RongIM.ConversationClickListener() {
             @Override

@@ -50,8 +50,10 @@ public class AgreeGroupChatActivity extends BaseActivity {
         groupName = findViewById(R.id.group_chat_name);
         pleaseJoinGroup = findViewById(R.id.invite_to_group_chat);
         joinGroupBtn = findViewById(R.id.join_a_group_chat);
+        titleBar=findViewById(R.id.title_bar);
         groupResponse = (GroupResponse) getIntent().getSerializableExtra("groupId");
         groupName.setText(groupResponse.getGroupNikeName());
+
         pleaseJoinGroup.setText(groupResponse.getGroupOwnerId());
         titleBar.getRightImageView().setOnClickListener(new View.OnClickListener() {
             @Override
