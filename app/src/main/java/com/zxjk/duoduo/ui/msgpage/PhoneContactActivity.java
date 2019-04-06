@@ -24,7 +24,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import static com.zxjk.duoduo.utils.PermissionUtils.constantPermission;
-import static com.zxjk.duoduo.utils.PermissionUtils.verifyStoragePermissions;
 
 /**
  * @author Administrator
