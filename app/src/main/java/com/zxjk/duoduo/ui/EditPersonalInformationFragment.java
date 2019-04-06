@@ -36,7 +36,6 @@ import androidx.annotation.Nullable;
 import butterknife.OnClick;
 
 import static com.zxjk.duoduo.utils.PermissionUtils.cameraPremissions;
-import static com.zxjk.duoduo.utils.PermissionUtils.verifyStoragePermissions;
 
 /**
  * @author Administrator
@@ -129,11 +128,9 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
 
                 break;
             case R.id.m_edit_information_header_icon:
-
                 cameraPremissions(this);
                 selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-
                 break;
             default:
                 break;

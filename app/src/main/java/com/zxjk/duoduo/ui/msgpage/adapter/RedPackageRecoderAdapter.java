@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.load.resource.bitmap.BitmapEncoder;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.GetRedPackageRecordResponse;
+import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -24,6 +25,10 @@ public class RedPackageRecoderAdapter extends RecyclerView.Adapter<RedPackageRec
     private List<GetRedPackageRecordResponse.RedpackageListBean> data;
 
     public RedPackageRecoderAdapter(List<GetRedPackageRecordResponse.RedpackageListBean> data) {
+        this.data = data;
+    }
+
+    public void setData(List<GetRedPackageRecordResponse.RedpackageListBean> data) {
         this.data = data;
     }
 
@@ -60,13 +65,19 @@ public class RedPackageRecoderAdapter extends RecyclerView.Adapter<RedPackageRec
             tvRedPackageNick = itemView.findViewById(R.id.tvRedPackageNick);
             tvRedPackageTime = itemView.findViewById(R.id.tvRedPackageTime);
             tvRedPackageMoney = itemView.findViewById(R.id.tvRedPackageMoney);
-
         }
 
         void bindData(GetRedPackageRecordResponse.RedpackageListBean bean) {
             tvRedPackageNick.setText(bean.getNick());
             tvRedPackageTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Long.parseLong(bean.getCreateTime())));
             tvRedPackageMoney.setText(String.valueOf(bean.getMoney()) + "HK");
+            if (bean.getTYPE().equals("1")) {
+                tvRedPackageNick.setCompoundDrawablesRelative(null, null, context.getDrawable(R.drawable.ic_redpackage_pingshouqi), null);
+                tvRedPackageNick.setCompoundDrawablePadding(CommonUtils.dip2px(context, 4));
+            } else {
+                tvRedPackageNick.setCompoundDrawablesRelative(null, null, null, null);
+                tvRedPackageNick.setCompoundDrawablePadding(CommonUtils.dip2px(context, 0));
+            }
         }
     }
 }

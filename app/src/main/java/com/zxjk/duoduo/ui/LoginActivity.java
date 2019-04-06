@@ -199,7 +199,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                     btn_login.setEnabled(false);
                     finish();
-                    LogUtils.e(new Gson().toJson(userInfo));
                 }
 
                 /**

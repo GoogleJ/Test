@@ -30,7 +30,7 @@ public class BaseContactAdapter extends BaseQuickAdapter<FriendInfoResponse, Bas
                 .addOnClickListener(R.id.m_constacts_friend)
                 .addOnLongClickListener(R.id.m_constacts_friend);
         ImageView heardImage = helper.getView(R.id.m_constants_header_icon);
-        GlideUtil.loadImg(heardImage, item.getHeadPortrait());
+        GlideUtil.loadCornerImg(heardImage, item.getHeadPortrait(),2);
 
 
     }

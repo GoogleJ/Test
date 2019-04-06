@@ -41,7 +41,6 @@ import io.reactivex.functions.Consumer;
 import static com.zxjk.duoduo.ui.EditPersonalInformationFragment.REQUEST_ALBUM;
 import static com.zxjk.duoduo.ui.EditPersonalInformationFragment.REQUEST_TAKE;
 import static com.zxjk.duoduo.utils.PermissionUtils.cameraPremissions;
-import static com.zxjk.duoduo.utils.PermissionUtils.verifyStoragePermissions;
 
 /**
  * @author Administrator
@@ -180,14 +179,11 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.account_id_card:
                 if (wechat.equals(types)) {
-
-                    verifyStoragePermissions(this);
                     cameraPremissions(this);
                     selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
                             Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                     return;
                 } else if (alipay.equals(types)) {
-                    verifyStoragePermissions(this);
                     cameraPremissions(this);
                     selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
                             Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);

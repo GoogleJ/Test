@@ -39,7 +39,6 @@ import androidx.annotation.Nullable;
 import io.reactivex.functions.Consumer;
 
 import static com.zxjk.duoduo.utils.PermissionUtils.cameraPremissions;
-import static com.zxjk.duoduo.utils.PermissionUtils.verifyStoragePermissions;
 
 /**
  * @author Administrator
@@ -223,7 +222,6 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
             case R.id.front_photo_of_the_document:
 //                证件正面照
                 currentPictureFlag = 1;
-                verifyStoragePermissions(this);
                 cameraPremissions(this);
                 selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
@@ -231,7 +229,6 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
             case R.id.reverse_photo_of_the_document:
                 //证件反面照
                 currentPictureFlag = 2;
-                verifyStoragePermissions(this);
                 cameraPremissions(this);
                 selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
@@ -239,7 +236,6 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
             case R.id.hand_held_passport_photo:
                 //手持证件照
                 currentPictureFlag = 3;
-                verifyStoragePermissions(this);
                 cameraPremissions(this);
                 selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
