@@ -111,6 +111,8 @@ public class GroupChatInformationActivity extends BaseActivity {
      * @param view
      */
     public void groupAllMembers(View view) {
+//        Intent intent=new Intent()
+
         startActivity(new Intent(this, AllGroupMembersActivity.class));
     }
 
