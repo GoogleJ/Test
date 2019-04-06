@@ -51,17 +51,13 @@ public class ExchangeListAdapter extends BaseQuickAdapter<GetOverOrderResponse, 
         if ("1".equals(type)) {
             if (Constant.userId.equals(item.getBuyId())) {
                 exchange_list_icon.setImageResource(R.drawable.icon_buy);
-                if ("0".equals(item.getStatus())) {
-                    if ("1".equals(item.getIsBuyPay())) {
-                        //对方支付中
-                        exchange_list_type.setText(mContext.getString(R.string.exchange_list_wait));
-                        exchange_list_number.setText(item.getNumber());
-                        exchange_list_money.setText(item.getMoney());
-                        return;
-                    } else {
-                        return;
-                    }
-                } else if ("1".equals(item.getStatus())) {
+                if ("0".equals(item.getStatus()) || "1".equals(item.getStatus()) || "2".equals(item.getStatus())) {
+
+                    exchange_list_type.setText(mContext.getString(R.string.exchange_list_successful));
+                    exchange_list_number.setText(item.getNumber());
+                    exchange_list_money.setText(item.getMoney());
+                    return;
+                } else if ("3".equals(item.getStatus())) {
                     if ("0".equals(item.getIsBuyPay())) {
                         //等待对方审核
                         exchange_list_type.setText(mContext.getString(R.string.exchange_list_wait_friend));
@@ -72,103 +68,55 @@ public class ExchangeListAdapter extends BaseQuickAdapter<GetOverOrderResponse, 
                         exchange_list_type.setText(mContext.getString(R.string.exchange_list_not_pay));
                         exchange_list_number.setText(item.getNumber());
                         exchange_list_money.setText(item.getMoney());
-
                     }
-                } else if ("2".equals(item.getStatus())) {
-                    //交易失败
-                    exchange_list_type.setText(mContext.getString(R.string.exchange_list_failed));
-                    exchange_list_number.setText(item.getNumber());
-                    exchange_list_money.setText(item.getMoney());
-
-                } else {
-                    if ("0".equals(item.getIsBuyPay())) {
-                        //等待审核
-                        exchange_list_type.setText(mContext.getString(R.string.exchange_list_wait_review));
-                        exchange_list_number.setText(item.getNumber());
-                        exchange_list_money.setText(item.getMoney());
-                    } else {
-                        //挂单中
-                        exchange_list_type.setText(mContext.getString(R.string.exchange_list_pending_order));
-                        exchange_list_number.setText(item.getNumber());
-                        exchange_list_money.setText(item.getMoney());
-                    }
-
                 }
             } else if (Constant.userId.equals(item.getSellId())) {
                 exchange_list_icon.setImageResource(R.drawable.icon_sell);
-                if ("0".equals(item.getStatus())) {
-                    if ("1".equals(item.getIsBuyPay())) {
-                        //对方支付中
-                        exchange_list_type.setText(mContext.getString(R.string.exchange_list_wait));
-                        exchange_list_number.setText(item.getNumber());
-                        exchange_list_money.setText(item.getMoney());
-                        return;
-                    } else {
-                        return;
-                    }
-                } else if ("1".equals(item.getStatus())) {
-                    if ("0".equals(item.getIsBuyPay())) {
-                        //等待对方审核
-                        exchange_list_type.setText(mContext.getString(R.string.exchange_list_wait_friend));
-                        exchange_list_number.setText(item.getNumber());
-                        exchange_list_money.setText(item.getMoney());
-                    } else {
-                        //未付款
-                        exchange_list_type.setText(mContext.getString(R.string.exchange_list_not_pay));
-                        exchange_list_number.setText(item.getNumber());
-                        exchange_list_money.setText(item.getMoney());
+                if ("0".equals(item.getStatus()) || "1".equals(item.getStatus()) || "2".equals(item.getStatus())) {
 
-                    }
-                } else if ("2".equals(item.getStatus())) {
-                    //交易失败
-                    exchange_list_type.setText(mContext.getString(R.string.exchange_list_failed));
+                    //对方支付中
+                    exchange_list_type.setText(mContext.getString(R.string.exchange_list_successful));
                     exchange_list_number.setText(item.getNumber());
                     exchange_list_money.setText(item.getMoney());
+                    return;
 
-                } else {
+                } else if ("3".equals(item.getStatus())) {
                     if ("0".equals(item.getIsBuyPay())) {
-                        //等待审核
+                        //等待对方审核
                         exchange_list_type.setText(mContext.getString(R.string.exchange_list_wait_review));
                         exchange_list_number.setText(item.getNumber());
                         exchange_list_money.setText(item.getMoney());
                     } else {
-                        //挂单中
-                        exchange_list_type.setText(mContext.getString(R.string.exchange_list_pending_order));
+                        //未付款
+                        exchange_list_type.setText(mContext.getString(R.string.exchange_list_wait));
                         exchange_list_number.setText(item.getNumber());
                         exchange_list_money.setText(item.getMoney());
-                    }
 
+                    }
                 }
             }
-            return;
-        } else {
+
+        } else if ("0".equals(type)) {
             if (Constant.userId.equals(item.getBuyId())) {
                 exchange_list_icon.setImageResource(R.drawable.icon_buy);
-                if ("0".equals(item.getStatus()) && "0".equals(item.getIsBuyPay())) {
-                    //交易完成
+                if ("0".equals(item.getStatus()) || "1".equals(item.getStatus()) || "2".equals(item.getStatus())) {
+
                     exchange_list_type.setText(mContext.getString(R.string.exchange_list_successful));
                     exchange_list_number.setText(item.getNumber());
                     exchange_list_money.setText(item.getMoney());
-                } else {
-
                     return;
                 }
-
-            } else if (Constant.userId.equals(item.getSellId())) {
+            } else {
                 exchange_list_icon.setImageResource(R.drawable.icon_sell);
-                if ("0".equals(item.getStatus()) && "0".equals(item.getIsBuyPay())) {
-                    //交易完成
+                if ("0".equals(item.getStatus()) || "1".equals(item.getStatus()) || "2".equals(item.getStatus())) {
+                    //对方支付中
                     exchange_list_type.setText(mContext.getString(R.string.exchange_list_successful));
                     exchange_list_number.setText(item.getNumber());
                     exchange_list_money.setText(item.getMoney());
-                } else {
                     return;
                 }
             }
-
         }
-        return;
-
     }
 
     private void initView(BaseViewHolder helper) {

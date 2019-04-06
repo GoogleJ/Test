@@ -2,6 +2,7 @@ package com.zxjk.duoduo.ui.msgpage.rongIMAdapter;
 
 import android.content.Context;
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +51,7 @@ public class TransferProvider extends IContainerItemProvider.MessageProvider<Tra
 
     @Override
     public Spannable getContentSummary(TransferMessage transferMessage) {
-        return null;
+        return new SpannableString("您有一个转账消息");
     }
 
 

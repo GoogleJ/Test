@@ -63,7 +63,7 @@ public class BusinessCardProvider extends IContainerItemProvider.MessageProvider
 
     @Override
     public Spannable getContentSummary(BusinessCardMessage transferMessage) {
-        return new SpannableString("");
+        return new SpannableString("对方向您发送了一张名片");
     }
 
     @Override

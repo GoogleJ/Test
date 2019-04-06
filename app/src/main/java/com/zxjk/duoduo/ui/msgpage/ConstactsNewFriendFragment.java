@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -16,6 +17,7 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.ui.msgpage.adapter.BaseContactAdapter;
 import com.zxjk.duoduo.ui.msgpage.utils.PinyinComparator;
+import com.zxjk.duoduo.ui.msgpage.widget.HoverItemDecoration;
 import com.zxjk.duoduo.ui.msgpage.widget.IndexView;
 import com.zxjk.duoduo.weight.TitleBar;
 import java.util.ArrayList;
@@ -98,7 +100,13 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
         layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         //一行代码实现吸顶悬浮的效果
-
+//        mRecyclerView.addItemDecoration(new HoverItemDecoration(getContext(), new HoverItemDecoration.BindItemTextCallback() {
+//            @Override
+//            public String getItemText(int position) {
+//                //悬浮的信息
+//                return list.get(position).getSortLetters();
+//            }
+//        }));
         mAdapter = new BaseContactAdapter();
 
         getFriendListInfoById();

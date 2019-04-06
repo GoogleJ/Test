@@ -1,12 +1,10 @@
 package com.zxjk.duoduo.ui.walletpage;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.GetOverOrderResponse;
 import com.zxjk.duoduo.ui.base.BaseActivity;
@@ -39,7 +37,7 @@ public class ExchangeListTypeActivity extends BaseActivity {
         setContentView(R.layout.activity_exchange_list_type);
         initView();
         initData();
-        title_bar=findViewById(R.id.title_bar);
+        title_bar = findViewById(R.id.title_bar);
         title_bar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,38 +53,27 @@ public class ExchangeListTypeActivity extends BaseActivity {
 
         currency_of_sale.setText("HK");
 
-        if ("0".equals(data.getStatus())) {
+        if ("0".equals(data.getStatus()) || "1".equals(data.getStatus()) || "2".equals(data.getStatus())) {
+            icon.setImageResource(R.drawable.icon_transfer_successful);
+            description.setText(getString(R.string.exchange_list_successful));
+        } else {
             if ("0".equals(data.getIsBuyPay())) {
-                icon.setImageResource(R.drawable.icon_transfer_successful);
-                description.setText(getString(R.string.exchange_list_successful));
-            } else {
-                icon.setImageResource(R.drawable.icon_caveat);
-                description.setText(getString(R.string.exchange_list_wait));
-            }
-        } else if ("1".equals(data.getStatus())) {
-            if ("0".equals(data.getIsBuyPay())) {
-                icon.setImageResource(R.drawable.icon_caveat);
+                icon.setImageResource(R.drawable.icon_pending);
                 description.setText(getString(R.string.exchange_list_wait_friend));
             } else {
                 icon.setImageResource(R.drawable.icon_caveat);
                 description.setText(getString(R.string.exchange_list_not_pay));
             }
-        } else if ("2".equals(data.getStatus())) {
-            icon.setImageResource(R.drawable.icon_transfer_failed);
-            description.setText(getString(R.string.exchange_list_failed));
-        } else {
-            icon.setImageResource(R.drawable.icon_caveat);
-            description.setText(getString(R.string.exchange_list_wait_review));
         }
-        if ("0".equals(data.getPayType())){
-            wechat=getString(R.string.wechat)+",";
-        }else if ("1".equals(data.getPayType())){
-            alipay=getString(R.string.alipay)+",";
-        }else{
-            bank=getString(R.string.bank);
+        if ("0".equals(data.getPayType())) {
+            wechat = getString(R.string.wechat) + ",";
+        } else if ("1".equals(data.getPayType())) {
+            alipay = getString(R.string.alipay) + ",";
+        } else {
+            bank = getString(R.string.bank);
         }
 
-        payment_method.setText(wechat+alipay+bank);
+        payment_method.setText(wechat + alipay + bank);
         single_number.setText(data.getBothOrderId());
         quantity_to_sale.setText(data.getNumber());
         sale_amount.setText(data.getMoney() + "CNY");
