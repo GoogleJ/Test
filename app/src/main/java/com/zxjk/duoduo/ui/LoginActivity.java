@@ -77,8 +77,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         edit_mobile.setText(SPUtils.getInstance().getString("mobile"));
 
-        login("15935910958","123456");
+        login("18202987805","123456");
+//        login("15249047865","123456");
+//        login("14725836911","123456"8);
 //        login("15935910008","123456");
+//        login("18625658542","123456");
+//        login("18592054972","123456");
     }
 
 
@@ -107,7 +111,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 startActivity(new Intent(LoginActivity.this, ChangeLanguageActivity.class));
                 break;
             case R.id.btn_login:
-
+//
 //                String mobile = edit_mobile.getText().toString().trim();
 //                String password = edit_password.getText().toString().trim();
 //                if (TextUtils.isEmpty(mobile) || TextUtils.isEmpty(password)) {
@@ -123,7 +127,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 //                    return;
 //                }
 
-                login("15935910958","123456");
+
 //                SPUtils.getInstance().put("mobile", edit_mobile.getText().toString().trim());
 
                 break;

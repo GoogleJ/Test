@@ -16,7 +16,12 @@ import java.util.ArrayList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * @author Administrator
+ * @// TODO: 2019\4\6 0006 交易所记录
+ */
 @SuppressLint("CheckResult")
+
 public class ExchangeListActivity extends BaseActivity {
 
     private RecyclerView recyclerExchangeMyOrder;

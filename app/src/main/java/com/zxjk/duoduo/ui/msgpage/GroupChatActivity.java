@@ -156,7 +156,6 @@ public class GroupChatActivity extends BaseActivity implements TextWatcher {
      */
     private List<GroupChatResponse> search(String str) {
         List<GroupChatResponse> filterList = new ArrayList<GroupChatResponse>();// 过滤后的list
-        //if (str.matches("^([0-9]|[/+])*$")) {// 正则表达式 匹配号码
         if (str.matches("^([0-9]|[/+]).*")) {// 正则表达式 匹配以数字或者加号开头的字符串(包括了带空格及-分割的号码)
             String simpleStr = str.replaceAll("\\-|\\s", "");
             for (GroupChatResponse contact : list) {

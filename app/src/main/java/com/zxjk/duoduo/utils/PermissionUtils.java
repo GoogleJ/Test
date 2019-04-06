@@ -63,79 +63,24 @@ public class PermissionUtils {
         }else {
         }
     }
-
-    public static boolean havaReadContacts(Context context) {
-
-        boolean have = false;
-        ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS );
-        if (Build.VERSION.SDK_INT >= 23) {
-            AppOpsManager appOpsManager = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
-            int checkOp = appOpsManager.checkOp(AppOpsManager.OPSTR_READ_CONTACTS, Process.myUid(), context.getPackageName());
-            LogUtils.e("Permission", "checkOp:" + checkOp);
-            switch (checkOp) {
-                case AppOpsManager.MODE_ALLOWED:
-                    LogUtils.e("Permission", "AppOpsManager.MODE_ALLOWED ：有权限");
-                    have = true;
-                    break;
-                case AppOpsManager.MODE_IGNORED:
-                    LogUtils.e("Permission", "AppOpsManager.MODE_IGNORED：被禁止了");
-                    have = false;
-                    break;
-                case AppOpsManager.MODE_DEFAULT:
-                    LogUtils.e("Permission", "AppOpsManager.MODE_DEFAULT");
-
-                    break;
-                case AppOpsManager.MODE_ERRORED:
-                    LogUtils.e("Permission", "AppOpsManager.MODE_ERRORED：出错了");
-                    have = false;
-                    break;
-                case 4:
-                    LogUtils.e("Permission", "AppOpsManager.OTHER：权限需要询问");
-                    have = false;
-                    break;
+    public static void constantPermission(AppCompatActivity activity){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_CONTACTS)
+                    != PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(activity,new String[]{Manifest.permission.WRITE_CONTACTS},1001);
             }
-        } else {
-            have = ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS)
-                    == PackageManager.PERMISSION_GRANTED;
+        }else {
         }
-        return have;
-    }
-    public static boolean havaWriteContacts(Context context) {
-
-        boolean have = false;
-        ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_CONTACTS );
-        if (Build.VERSION.SDK_INT >= 23) {
-            AppOpsManager appOpsManager = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
-            int checkOp = appOpsManager.checkOp(AppOpsManager.OPSTR_WRITE_CONTACTS, Process.myUid(), context.getPackageName());
-            LogUtils.e("Permission", "checkOp:" + checkOp);
-            switch (checkOp) {
-                case AppOpsManager.MODE_ALLOWED:
-                    LogUtils.e("Permission", "AppOpsManager.MODE_ALLOWED ：有权限");
-                    have = true;
-                    break;
-                case AppOpsManager.MODE_IGNORED:
-                    LogUtils.e("Permission", "AppOpsManager.MODE_IGNORED：被禁止了");
-                    have = false;
-                    break;
-                case AppOpsManager.MODE_DEFAULT:
-                    LogUtils.e("Permission", "AppOpsManager.MODE_DEFAULT");
-
-                    break;
-                case AppOpsManager.MODE_ERRORED:
-                    LogUtils.e("Permission", "AppOpsManager.MODE_ERRORED：出错了");
-                    have = false;
-                    break;
-                case 4:
-                    LogUtils.e("Permission", "AppOpsManager.OTHER：权限需要询问");
-                    have = false;
-                    break;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_CONTACTS)
+                    != PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(activity,new String[]{Manifest.permission.READ_CONTACTS},1001);
             }
-        } else {
-            have = ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_CONTACTS)
-                    == PackageManager.PERMISSION_GRANTED;
+        }else {
         }
-        return have;
+
     }
+
 
 
 

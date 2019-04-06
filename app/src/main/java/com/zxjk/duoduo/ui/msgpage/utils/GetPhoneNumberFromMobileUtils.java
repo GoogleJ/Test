@@ -9,16 +9,15 @@ import com.zxjk.duoduo.bean.PhoneInfo;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.zxjk.duoduo.utils.PermissionUtils.havaReadContacts;
-import static com.zxjk.duoduo.utils.PermissionUtils.havaWriteContacts;
+import static com.zxjk.duoduo.utils.PermissionUtils.constantPermission;
+
 
 public class GetPhoneNumberFromMobileUtils {
     private List<PhoneInfo> list;
 
     public List<PhoneInfo> getPhoneNumberFromMobile(Context context) {
         // TODO Auto-generated constructor stub
-        havaWriteContacts(context);
-        havaReadContacts(context);
+
         list = new ArrayList<PhoneInfo>();
         Cursor cursor = context.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                 null, null, null, null);
