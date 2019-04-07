@@ -3,7 +3,6 @@ package com.zxjk.duoduo;
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.Utils;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BasePluginExtensionModule;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardMessage;
@@ -12,20 +11,14 @@ import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketProvider;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferProvider;
-
 import android.app.ActivityManager;
 import android.content.Context;
-import android.content.Intent;
-import android.view.View;
-
 import java.util.List;
-
 import androidx.multidex.MultiDex;
 import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
-import io.rong.imkit.model.UIConversation;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
@@ -34,8 +27,10 @@ import io.rong.message.RichContentMessage;
 import io.rong.message.TextMessage;
 import io.rong.message.VoiceMessage;
 import io.rong.push.PushType;
+import io.rong.push.RongPushClient;
 import io.rong.push.notification.PushMessageReceiver;
 import io.rong.push.notification.PushNotificationMessage;
+import io.rong.push.pushconfig.PushConfig;
 
 /**
  * 这里是Application
@@ -62,8 +57,25 @@ public class Application extends android.app.Application {
         RongIM.registerMessageTemplate(new RedPacketProvider());
         RongIM.registerMessageTemplate(new TransferProvider());
         RongIM.registerMessageTemplate(new BusinessCardProvider());
-        setMyExtensionModule();
         RongIM.getInstance().setMessageAttachedUserInfo(true);
+        setMyExtensionModule();
+
+        PushConfig config = new PushConfig.Builder()
+                .enableHWPush(true)
+                .enableMiPush("小米 appId", "小米 appKey")
+                .enableMeiZuPush("魅族 appId", "魅族 appKey")
+                .enableFCM(true)
+                .build();
+        RongPushClient.setPushConfig(config);
+    }
+
+    @Override
+    public void onTerminate() {
+        Constant.token = "";
+        Constant.userId = "";
+        Constant.phoneUuid = "";
+        Constant.clear();
+        super.onTerminate();
     }
 
     //初始化阿里云OSS上传服务
@@ -113,15 +125,6 @@ public class Application extends android.app.Application {
         public boolean onNotificationMessageClicked(Context context, PushType pushType, PushNotificationMessage pushNotificationMessage) {
             return false;
         }
-    }
-
-    @Override
-    public void onTerminate() {
-        Constant.token = "";
-        Constant.userId = "";
-        Constant.phoneUuid = "";
-        Constant.clear();
-        super.onTerminate();
     }
 
     private class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageListener {
@@ -214,12 +217,6 @@ public class Application extends android.app.Application {
             }
             RongExtensionManager.getInstance().unregisterExtensionModule(defaultModule);
             RongExtensionManager.getInstance().registerExtensionModule(new BasePluginExtensionModule());
-            List<IExtensionModule> moduleList2 = RongExtensionManager.getInstance().getExtensionModules();
-            LogUtils.i("moduleList.size() = " + moduleList2);
-
         }
     }
-
-
-
 }

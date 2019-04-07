@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.msgpage;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -7,11 +8,17 @@ import android.widget.TextView;
 
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.network.Api;
+import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.GetRedPackageStatusResponse;
+import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketMessage;
+import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 
 import androidx.annotation.Nullable;
+import io.reactivex.functions.Consumer;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
@@ -25,22 +32,30 @@ public class PeopleRedEnvelopesActivity extends BaseActivity {
 
     ImageView m_people_red_envelopes_header;
     TextView m_people_red_envelopes_user_name_text;
+    TextView m_people_red_envelopes_money_text;
 
+    @SuppressLint("CheckResult")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_people_red_envelopes);
+
         titleLeftImage = findViewById(R.id.m_people_red_envelopes_title_bar);
-        titleLeftImage.setOnClickListener(v -> finish());
         m_people_red_envelopes_header = findViewById(R.id.m_people_red_envelopes_header);
         m_people_red_envelopes_user_name_text = findViewById(R.id.m_people_red_envelopes_user_name_text);
+        m_people_red_envelopes_money_text = findViewById(R.id.m_people_red_envelopes_money_text);
+        titleLeftImage.setOnClickListener(v -> finish());
 
         Message message = getIntent().getParcelableExtra("msg");
         RedPacketMessage redPacketMessage = (RedPacketMessage) message.getContent();
-
         UserInfo sender = RongUserInfoManager.getInstance().getUserInfo(message.getSenderUserId());
-
         m_people_red_envelopes_user_name_text.setText(sender.getName() + "的红包");
         GlideUtil.loadCornerImg(m_people_red_envelopes_header, sender.getPortraitUri().toString(), 3);
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .personalRedPackageInfo(redPacketMessage.getRedId())
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                .compose(RxSchedulers.normalTrans())
+                .subscribe(response -> m_people_red_envelopes_money_text.setText(response.getRedPachageInfo().getMoney()), this::handleApiError);
     }
 }

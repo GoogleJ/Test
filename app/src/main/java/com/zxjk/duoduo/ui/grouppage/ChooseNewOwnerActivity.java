@@ -34,19 +34,20 @@ public class ChooseNewOwnerActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_new_owner);
+        String groupId = getIntent().getStringExtra("groupId");
+
         titleBar = findViewById(R.id.title_bar);
         mRecyclerView = findViewById(R.id.recycler_view);
-
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(RecyclerView.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
         mAdapter = new ChooseNewOwnerAdapter();
-        getGroupMemByGroupId(Constant.groupId);
+        getGroupMemByGroupId(groupId);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             dialog = new BaseAddTitleDialog(ChooseNewOwnerActivity.this);
             dialog.setOnClickListener(() -> {
-              updateGroupOwner(Constant.groupId, mAdapter.getData().get(position).getId());
+              updateGroupOwner(groupId, mAdapter.getData().get(position).getId());
               dialog.dismiss();
             });
             dialog.show(getString(R.string.determine_select_group));

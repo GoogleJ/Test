@@ -5,9 +5,11 @@ import com.zxjk.duoduo.network.response.BaseResponse;
 import com.zxjk.duoduo.network.response.CreateWalletResponse;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.response.GetBalanceHkResponse;
+import com.zxjk.duoduo.network.response.GetGroupRedPackageInfoResponse;
 import com.zxjk.duoduo.network.response.GetNumbeOfTransactionResponse;
 import com.zxjk.duoduo.network.response.GetOverOrderResponse;
 import com.zxjk.duoduo.network.response.GetRedPackageRecordResponse;
+import com.zxjk.duoduo.network.response.GetRedPackageStatusResponse;
 import com.zxjk.duoduo.network.response.GetReleasePurchaseResponse;
 import com.zxjk.duoduo.network.response.GetTransferAllResponse;
 import com.zxjk.duoduo.network.response.GetTransferEthResponse;
@@ -16,6 +18,8 @@ import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.response.PayInfoResponse;
 import com.zxjk.duoduo.network.response.PayTypeResponse;
+import com.zxjk.duoduo.network.response.PersonalRedPackageInfoResponse;
+import com.zxjk.duoduo.network.response.ReceivePersonalRedPackageResponse;
 import com.zxjk.duoduo.network.response.RedPackageResponse;
 import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
 
@@ -732,6 +736,22 @@ public interface Api {
     @POST("duoduo/redPackage/getRedPackageRecord")
     @FormUrlEncoded
     Observable<BaseResponse<GetRedPackageRecordResponse>> getRedPackageRecord(@Field("type") String type);
+
+    @POST("duoduo/redPackage/receivePersonalRedPackage")
+    @FormUrlEncoded
+    Observable<BaseResponse<ReceivePersonalRedPackageResponse>> receivePersonalRedPackage(@Field("redPackageId") String redPackageId);
+
+    @POST("duoduo/redPackage/getRedPackageStatus")
+    @FormUrlEncoded
+    Observable<BaseResponse<GetRedPackageStatusResponse>> getRedPackageStatus(@Field("redPackageId") String redPackageId);
+
+    @POST("duoduo/redPackage/personalRedPackageInfo")
+    @FormUrlEncoded
+    Observable<BaseResponse<PersonalRedPackageInfoResponse>> personalRedPackageInfo(@Field("redPackageId") String redPackageId);
+
+    @POST("duoduo/redPackage/getGroupRedPackageInfo")
+    @FormUrlEncoded
+    Observable<BaseResponse<GetGroupRedPackageInfoResponse>> getGroupRedPackageInfo(@Field("redPackageId") String redPackageId);
 
 
 }

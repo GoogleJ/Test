@@ -23,7 +23,8 @@ public class GroupManagementActivity extends BaseActivity {
     }
 
     public void transferGroup(View view) {
-
-        startActivity(new Intent(GroupManagementActivity.this, ChooseNewOwnerActivity.class));
+        Intent intent = new Intent(GroupManagementActivity.this, ChooseNewOwnerActivity.class);
+        intent.putExtra("groupId", getIntent().getStringExtra("groupId"));
+        startActivity(intent);
     }
 }

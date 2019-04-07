@@ -502,6 +502,10 @@
     <string name="red_packet_tips1">个红包</string>
     <string name="shouru">收入</string>
     <string name="zhichu">支出</string>
+    <string name="red_beilingqu">已被领取</string>
+    <string name="red_yilingqu">已领取</string>
+    <string name="redrecord">红包记录</string>
+    <string name="red_tips">未领取的红包，将于24小时后退款</string>
     <string name="exchange_list_successful">已完成</string>
     <string name="exchange_list_wait">对方正在支付中</string>
     <string name="exchange_list_wait_friend">等待对方审核</string>

@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.network.Api;
+import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.ui.msgpage.PeopleRedEnvelopesActivity;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketMessage;
 import com.zxjk.duoduo.utils.GlideUtil;
@@ -36,7 +38,16 @@ public class RedEvelopesDialog extends Dialog implements View.OnClickListener {
     private Context context;
 
     private Message message;
-    private UserInfo userInfo;
+
+    private OnOpenListener onOpenListener;
+
+    public void setOnOpenListener(OnOpenListener onOpenListener) {
+        this.onOpenListener = onOpenListener;
+    }
+
+    public interface OnOpenListener {
+        void onOpen();
+    }
 
     public RedEvelopesDialog(@NonNull Context context) {
         super(context, R.style.dialogstyle);
@@ -67,7 +78,6 @@ public class RedEvelopesDialog extends Dialog implements View.OnClickListener {
 
     public void show(Message message, UserInfo userInfo) {
         this.message = message;
-        this.userInfo = userInfo;
         GlideUtil.loadCornerImg(m_transfer_envelopes_heard, userInfo.getPortraitUri().toString(), 2);
         m_red_envelopes_user.setText(userInfo.getName() + "的红包");
         RedPacketMessage m = (RedPacketMessage) message.getContent();
@@ -84,9 +94,9 @@ public class RedEvelopesDialog extends Dialog implements View.OnClickListener {
     public void onClick(View v) {
         dismiss();
         if (v.getId() == R.id.m_red_envelopes_open) {
-            Intent intent = new Intent(v.getContext(), PeopleRedEnvelopesActivity.class);
-            intent.putExtra("msg", message);
-            v.getContext().startActivity(intent);
+            if (null != onOpenListener) {
+                onOpenListener.onOpen();
+            }
         }
     }
 }

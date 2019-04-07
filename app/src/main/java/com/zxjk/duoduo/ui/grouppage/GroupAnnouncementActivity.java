@@ -55,7 +55,7 @@ public class GroupAnnouncementActivity extends BaseActivity {
     public void titleRight(View view){
         GroupResponse groupResponse=new GroupResponse();
         if (!TextUtils.isEmpty(announcementEdit.getText().toString())){
-            groupResponse.setId(Constant.groupId);
+            groupResponse.setId(getIntent().getStringExtra("groupId"));
             groupResponse.setGroupSign(announcementEdit.getText().toString());
             updateGroupInfo(GsonUtils.toJson(groupResponse));
         }

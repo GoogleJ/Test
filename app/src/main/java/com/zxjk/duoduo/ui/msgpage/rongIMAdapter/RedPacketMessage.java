@@ -22,10 +22,9 @@ import io.rong.imlib.model.MessageContent;
 public class RedPacketMessage extends MessageContent {
     /**
      * fromCustomer : 14
-     * receiveUserId : 15
-     * money : 0.001
+     * extra : 0:未领取 1:已领取
      * remark : 恭喜发财，大吉大利
-     * paypwd : 123456
+     * redId : 123456
      */
 
     private String fromCustomer;

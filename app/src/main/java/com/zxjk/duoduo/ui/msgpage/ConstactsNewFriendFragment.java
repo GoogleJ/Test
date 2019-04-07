@@ -50,10 +50,8 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
     @BindView(R.id.m_contact_add_friend_number_message)
     TextView messageNumber;
 
-
     private BaseContactAdapter mAdapter;
     FriendInfoResponse friendInfoResponse;
-
 
     Unbinder unbinder;
     /**
@@ -68,7 +66,6 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
     private LinearLayoutManager layoutManager;
 
     List<FriendInfoResponse> list = new ArrayList<>();
-
 
     public static ConstactsNewFriendFragment newInstance() {
         ConstactsNewFriendFragment fragment = new ConstactsNewFriendFragment();
@@ -86,14 +83,7 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
         return view;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
     private void initView() {
-        getMyFriendsWaiting();
         characterParser = CharacterParser.getInstance();
         pinyinComparator = new PinyinComparator();
         list = filledData(list);
@@ -225,7 +215,6 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
                         if (!friendInfoResponses.get(i).getId().equals(Constant.userId)){
                             list = friendInfoResponses;
                             mAdapter.setNewData(friendInfoResponses);
-                            Constant.friendInfoResponse=friendInfoResponse;
                         }else{
                             if (friendInfoResponses.size()>=0){
                                 friendInfoResponses.remove(i);
@@ -233,31 +222,6 @@ public class ConstactsNewFriendFragment extends BaseFragment implements View.OnC
                         }
                     }
                 }, this::handleApiError);
-    }
-    /**
-     * 获取待添加好友列表
-     */
-    public void getMyFriendsWaiting() {
-        ServiceFactory.getInstance().getBaseService(Api.class)
-                .getMyFirendsWaiting()
-                .compose(bindToLifecycle())
-                .compose(RxSchedulers.ioObserver())
-                .compose(RxSchedulers.normalTrans())
-                .subscribe(s -> {
-//                    if (s.size()>0){
-//                        messageNumber.setVisibility(View.VISIBLE);
-//                        messageNumber.setText(String.valueOf(s.size()));
-//                    }else{
-//                        messageNumber.setText("");
-//                        messageNumber.setVisibility(View.GONE);
-//                    }
-                }, this::handleApiError);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
     }
 
     @Override

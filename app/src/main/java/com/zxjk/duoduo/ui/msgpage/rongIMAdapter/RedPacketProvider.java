@@ -45,13 +45,21 @@ public class RedPacketProvider extends IContainerItemProvider.MessageProvider<Re
         if (uiMessage.getMessageDirection() == Message.MessageDirection.SEND) {
             //消息方向，自己发送的
             holder.sendLayout.setBackgroundResource(R.drawable.icon_red_packet_user);
+            if (redPacketMessage.getExtra().equals("1")) {
+                holder.message.setText(context.getResources().getString(R.string.red_beilingqu));
+            }
         } else {
             holder.sendLayout.setBackgroundResource(R.drawable.icon_send_red_packet_friend);
+            if (redPacketMessage.getExtra().equals("1")) {
+                holder.message.setText(context.getResources().getString(R.string.red_yilingqu));
+            }
         }
-        if (TextUtils.isEmpty(redPacketMessage.getRemark())) {
-            holder.message.setText(context.getResources().getString(R.string.m_red_envelopes_label));
-        } else {
-            holder.message.setText(redPacketMessage.getRemark());
+        if (redPacketMessage.getExtra().equals("0")) {
+            if (TextUtils.isEmpty(redPacketMessage.getRemark())) {
+                holder.message.setText(context.getResources().getString(R.string.m_red_envelopes_label));
+            } else {
+                holder.message.setText(redPacketMessage.getRemark());
+            }
         }
     }
 

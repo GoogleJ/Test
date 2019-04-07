@@ -10,7 +10,6 @@ import io.rong.imkit.plugin.ImagePlugin;
 import io.rong.imkit.widget.provider.FilePlugin;
 import io.rong.imlib.model.Conversation;
 
-
 /**
  * @author Administrator
  * @// TODO: 2019\4\2 0002 自定义+号下的plugin
@@ -28,40 +27,18 @@ public class BasePluginExtensionModule extends DefaultExtensionModule {
         CollectionPlugin collectionPlugin=new CollectionPlugin();
 
         List<IPluginModule> list = super.getPluginModules(conversationType);
-
-
-        IPluginModule temp = null;
-        IPluginModule temp1=null;
-        IPluginModule temp2=null;
-        for (IPluginModule module : list) {
-            if (module instanceof FilePlugin) {
-                temp = module;
-                break;
-            }
-
+        if (list != null) {
+            list.clear();
+            list.add(photoSelectorPlugin);
+            list.add(takePhotoPlugin);
+            list.add(transferPlugin);
+            list.add(voiceCallsPlugin);
+            list.add(packetPlugin);
+            list.add(businessCardPlugin);
+            list.add(locationPlugin);
+            list.add(collectionPlugin);
         }
-        for (IPluginModule module1:list){
-            if (module1 instanceof CombineLocationPlugin) {
-                temp1 = module1;
-                break;
-            }
-        }
-       for (IPluginModule module2:list){
-           if (module2 instanceof ImagePlugin) {
-               temp2 = module2;
-           }
-       }
-        list.remove(temp);
-        list.remove(temp1);
-        list.remove(temp2);
-        list.add(photoSelectorPlugin);
-        list.add(takePhotoPlugin);
-        list.add(transferPlugin);
-        list.add(voiceCallsPlugin);
-        list.add(packetPlugin);
-        list.add(businessCardPlugin);
-        list.add(locationPlugin);
-        list.add(collectionPlugin);
+
         return list;
     }
 }

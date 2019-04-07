@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -46,7 +48,6 @@ public class PrivacyRedPacketActivity extends BaseActivity implements SelectPopu
     EditText m_red_envelopes_money_edit;
     EditText m_red_envelopes_label;
     TextView m_red_envelopes_money_text;
-
     SelectPopupWindow selectPopupWindow;
 
     String money;
@@ -78,6 +79,23 @@ public class PrivacyRedPacketActivity extends BaseActivity implements SelectPopu
             int winHeight = getWindow().getDecorView().getHeight();
             selectPopupWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, winHeight - rect.bottom);
         });
+
+        m_red_envelopes_money_edit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                m_red_envelopes_money_text.setText(s);
+            }
+        });
     }
 
     @SuppressLint("CheckResult")
@@ -102,8 +120,10 @@ public class PrivacyRedPacketActivity extends BaseActivity implements SelectPopu
                     RedPacketMessage message = new RedPacketMessage();
                     message.setFromCustomer(Constant.currentUser.getId());
                     message.setRemark(m_red_envelopes_label.getText().toString().trim());
-                    message.setRedId(redPackageResponse.getRedPackageId());
+                    message.setRedId(redPackageResponse.getId());
+                    message.setExtra("0");
                     Message message1 = Message.obtain(userInfo.getUserId(), Conversation.ConversationType.PRIVATE, message);
+                    message1.setExtra("0");
                     RongIM.getInstance().sendMessage(message1, null, null, new IRongCallback.ISendMessageCallback() {
                         @Override
                         public void onAttached(Message message) {
@@ -120,5 +140,9 @@ public class PrivacyRedPacketActivity extends BaseActivity implements SelectPopu
                         }
                     });
                 }, this::handleApiError);
+    }
+
+    public void showRecord(View view) {
+        startActivity(new Intent(this, RedPackageListActivity.class));
     }
 }

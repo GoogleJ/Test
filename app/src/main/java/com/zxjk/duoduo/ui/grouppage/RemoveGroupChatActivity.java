@@ -124,7 +124,7 @@ public class RemoveGroupChatActivity extends BaseActivity {
             sb.append(",");
         }
             titleBar.setText(getString(R.string.remove_group_chat));
-            moveOutGroup(Constant.groupId,sb.substring(0,sb.length()-1));
+            moveOutGroup(getIntent().getStringExtra("groupId"),sb.substring(0,sb.length()-1));
 
     }
 

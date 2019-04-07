@@ -83,6 +83,7 @@ public class GroupChatInformationActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 intent = new Intent(GroupChatInformationActivity.this, RemoveGroupChatActivity.class);
+                intent.putExtra("groupId", group.getId());
                 startActivity(intent);
             }
         });
@@ -91,6 +92,7 @@ public class GroupChatInformationActivity extends BaseActivity {
             public void onClick(View v) {
                 intent = new Intent(GroupChatInformationActivity.this, SelectContactActivity.class);
                 intent.putExtra("addGroupType", 1);
+                intent.putExtra("groupId", group.getId());
                 startActivity(intent);
             }
         });
@@ -102,7 +104,9 @@ public class GroupChatInformationActivity extends BaseActivity {
      * 跳转群公告
      */
     public void announcement(View view) {
-        startActivity(new Intent(this, GroupAnnouncementActivity.class));
+        Intent intent = new Intent(this, GroupAnnouncementActivity.class);
+        intent.putExtra("groupId", group.getId());
+        startActivity(intent);
     }
 
     /**
@@ -111,7 +115,8 @@ public class GroupChatInformationActivity extends BaseActivity {
      * @param view
      */
     public void groupAllMembers(View view) {
-        Intent intent=new Intent(this,AllGroupMembersActivity.class);
+        Intent intent = new Intent(this, AllGroupMembersActivity.class);
+        intent.putExtra("groupId", group.getId());
         intent.putExtra("allGroupMembers",group);
         startActivity(intent);
     }
@@ -122,7 +127,9 @@ public class GroupChatInformationActivity extends BaseActivity {
      * @param view
      */
     public void groupManagement(View view) {
-        startActivity(new Intent(this, GroupManagementActivity.class));
+        Intent intent = new Intent(this, GroupManagementActivity.class);
+        intent.putExtra("groupId", group.getId());
+        startActivity(intent);
 
     }
 

@@ -66,6 +66,8 @@ public class RedPackageRecordFragment extends BaseFragment {
             tvRedListTips2.setText("共支出");
         }
 
+        swipeRefreshLayout.setOnRefreshListener(() -> initData());
+
         initData();
         return rootView;
     }
@@ -78,6 +80,7 @@ public class RedPackageRecordFragment extends BaseFragment {
                 .compose(RxSchedulers.normalTrans())
                 .compose(bindToLifecycle())
                 .subscribe(response -> {
+                    hasInitData = true;
                     swipeRefreshLayout.setRefreshing(false);
 
                     tvRedListTips3.setText(String.valueOf(response.getTotalRecord().getCount()));

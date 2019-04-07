@@ -362,16 +362,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
-        <receiver
-            android:name=".ui.msgpage.utils.SealNotificationReceiverUtils"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />
-                <action android:name="io.rong.push.intent.MESSAGE_CLICKED" />
-                <action android:name="io.rong.push.intent.THIRD_PARTY_PUSH_STATE" />
-            </intent-filter>
-        </receiver>
-
         <provider
             android:name=".DuoDuoFileProvider"
             android:authorities="com.zxjk.duoduo.FileProvider"

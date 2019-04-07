@@ -60,7 +60,8 @@
             android:inputType="textPassword"
             android:lines="1"
             android:maxLength="14"
-            android:src="@drawable/ic_mine_rightarrow" />
+            android:src="@drawable/ic_mine_rightarrow"
+            android:textSize="15sp" />
 
     </LinearLayout>
 
@@ -99,7 +100,8 @@
             android:inputType="textPassword"
             android:lines="1"
             android:maxLength="14"
-            android:src="@drawable/ic_mine_rightarrow" />
+            android:src="@drawable/ic_mine_rightarrow"
+            android:textSize="15sp" />
 
     </LinearLayout>
 
@@ -138,7 +140,8 @@
             android:inputType="textPassword"
             android:lines="1"
             android:maxLength="14"
-            android:src="@drawable/ic_mine_rightarrow" />
+            android:src="@drawable/ic_mine_rightarrow"
+            android:textSize="15sp" />
 
     </LinearLayout>
 

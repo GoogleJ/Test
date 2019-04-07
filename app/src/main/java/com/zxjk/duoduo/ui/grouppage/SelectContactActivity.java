@@ -152,7 +152,7 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
                 if (type==0){
                     makeGroup(Constant.userId,Constant.userId+","+sb.substring(0,sb.length()-1));
                 }else{
-                    enterGroup(Constant.groupId,Constant.userId,sb.substring(0,sb.length()-1));
+                    enterGroup(getIntent().getStringExtra("groupId"),Constant.userId,sb.substring(0,sb.length()-1));
                 }
                 break;
             default:
@@ -191,7 +191,7 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
                 .subscribe(s -> {
                     SelectContactActivity.this.finish();
                     Intent intent=new Intent(SelectContactActivity.this,AgreeGroupChatActivity.class);
-                    intent.putExtra("groupId",s);
+                    intent.putExtra("groupId",s.getId());
                     startActivity(intent);
                 },this::handleApiError);
     }
