@@ -25,7 +25,7 @@ public class SearchAdapter extends BaseQuickAdapter<FriendInfoResponse, BaseView
 
     @Override
     protected void convert(BaseViewHolder helper, FriendInfoResponse item) {
-        helper.setText(R.id.m_item_search_text, item.getRealname())
+        helper.setText(R.id.m_item_search_text, item.getNick())
                 .setText(R.id.m_item_search_dudu_id, item.getDuoduoId())
                 .addOnClickListener(R.id.m_item_search_layout);
         ImageView heardImage = helper.getView(R.id.m_item_search_icon);

@@ -1,7 +1,6 @@
 package com.zxjk.duoduo.ui.msgpage;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -22,18 +20,13 @@ import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.SearchAdapter;
-import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.weight.TitleBar;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.functions.Consumer;
 
 /**
  * @author Administrator
@@ -54,7 +47,7 @@ public class SearchActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_search);
+        setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
         initData();
         initUI();

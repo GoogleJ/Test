@@ -13,6 +13,7 @@
         android:layout_height="50dp"
         app:titleBarLeftImage="@drawable/ico_back"
         app:titleBarTitle="@string/m_group_chat"
+
         app:titleBarTextColor="@color/white"
         />
 
@@ -25,9 +26,12 @@
         app:layout_constraintTop_toBottomOf="@+id/m_contact_title_bar">
         <EditText
             android:id="@+id/m_group_chat_edit_1"
+            android:singleLine="true"
+            android:maxLines="1"
             style="?attr/checkedTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:imeOptions="actionSearch"
             android:layout_marginBottom="26dp"
             android:layout_marginEnd="24dp"
             android:layout_marginStart="24dp"
@@ -37,6 +41,7 @@
             android:drawableStart="@drawable/ic_search_gray"
             android:paddingEnd="20dp"
             android:paddingStart="20dp"
+
             android:hint="@string/enter_group_chat"
             tools:ignore="HardcodedText" />
     </LinearLayout>

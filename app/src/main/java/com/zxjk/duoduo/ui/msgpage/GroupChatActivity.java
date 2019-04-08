@@ -7,16 +7,22 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.bean.Group;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.GroupChatResponse;
@@ -28,7 +34,6 @@ import com.zxjk.duoduo.ui.grouppage.GroupChatInformationActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.GroupChatAdapter;
 import com.zxjk.duoduo.weight.TitleBar;
 
-import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -65,13 +70,6 @@ public class GroupChatActivity extends BaseActivity implements TextWatcher {
     List<GroupChatResponse> list = new ArrayList<>();
 
     @SuppressLint("WrongConstant")
-
-    public static void start(Activity activity) {
-        Intent intent = new Intent(activity, GroupChatActivity.class);
-        activity.startActivity(intent);
-    }
-
-    @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,34 +77,23 @@ public class GroupChatActivity extends BaseActivity implements TextWatcher {
         ButterKnife.bind(this);
 
         //关闭当前活动
-        mGroupChatTitleBar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        mGroupChatTitleBar.getLeftImageView().setOnClickListener(v -> finish());
         LinearLayoutManager manage = new LinearLayoutManager(this);
         manage.setOrientation(LinearLayoutManager.VERTICAL);
         mGroupChatRecyclerView.setLayoutManager(manage);
         groupChatAdapter = new GroupChatAdapter();
-
-        mGroupChatEdit1.addTextChangedListener(this);
+        mGroupChatEdit1.addTextChangedListener(GroupChatActivity.this);
         //从网络获取用户所有群组信息
         getMyGroupChat(Constant.userId);
 
         mGroupChatRecyclerView.setAdapter(groupChatAdapter);
         groupChatAdapter.notifyDataSetChanged();
         groupChatAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-
             RongIM.getInstance().startGroupChat(this, groupChatAdapter.getData().get(position).getId(), groupChatAdapter.getData().get(position).getGroupNikeName());
-
 //            Intent intent=new Intent(this,GroupChatInformationActivity.class);
 //            intent.putExtra("groupChatInformation", groupChatAdapter.getData().get(position));
 //            startActivity(intent);
-
         });
-
-
     }
 
     @SuppressLint("CheckResult")
@@ -123,18 +110,14 @@ public class GroupChatActivity extends BaseActivity implements TextWatcher {
                         list = s;
                     }
                 }, this::handleApiError);
-
     }
-
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
     }
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-
     }
 
     @Override
@@ -148,9 +131,7 @@ public class GroupChatActivity extends BaseActivity implements TextWatcher {
             groupChatAdapter.setNewData(list);
         }
         groupChatAdapter.notifyDataSetChanged();
-
     }
-
 
     /**
      * 模糊查询
@@ -197,7 +178,5 @@ public class GroupChatActivity extends BaseActivity implements TextWatcher {
         }
         return filterList;
     }
-
-
 
 }

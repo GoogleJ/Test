@@ -39,6 +39,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="“周瑞”邀请你进群"
+        android:ellipsize="end"
+        android:maxLength="15"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/m_item_new_friend_icon"
         app:layout_constraintStart_toStartOf="@+id/m_item_new_friend_user_name_text" />
@@ -48,17 +50,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="13dp"
-        android:text="@string/add_btn"
-        android:background="@color/head_ok_pressed_bg"
         android:textSize="14dp"
         android:paddingTop="7dp"
         android:paddingBottom="7dp"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:textColor="@color/black"
+        android:text="@string/add_btn"
+        android:background="@color/head_ok_pressed_bg"
+        android:textColor="@color/themecolor"
         app:layout_constraintBottom_toBottomOf="@+id/m_item_new_friend_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/m_item_new_friend_icon" />
+
     <View
         app:layout_constraintTop_toBottomOf="@+id/m_item_new_friend_icon"
         android:layout_marginTop="5dp"

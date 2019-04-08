@@ -181,7 +181,7 @@ public interface Api {
      * @return
      */
     @POST("duoduo/friend/getMyfriendsWaiting")
-    Observable<BaseResponse<List<FriendInfoResponse>>> getMyFirendsWaiting();
+    Observable<BaseResponse<List<FriendInfoResponse>>> getMyfriendsWaiting();
 
     /**
      * 同意添加

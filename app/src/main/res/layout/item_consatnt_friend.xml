@@ -40,6 +40,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="6dp"
         android:text="真是姓名"
+        android:maxLength="15"
+        android:ellipsize="end"
 
         android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="@+id/m_constants_header_icon"

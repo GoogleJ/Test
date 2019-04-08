@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -20,7 +21,6 @@ import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.NewFriendAdapter;
-import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendDialog;
 import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendInformationDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.weight.TitleBar;
@@ -30,6 +30,7 @@ import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -57,7 +58,7 @@ public class NewFriendActivity extends BaseActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_new_friend);
+        setContentView(R.layout.activity_new_friend);
         ButterKnife.bind(this);
         initUI();
     }
@@ -66,7 +67,6 @@ public class NewFriendActivity extends BaseActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @SuppressLint("WrongConstant")
-
     protected void initUI() {
 
         titleBar.getLeftImageView().setOnClickListener(v -> finish());
@@ -77,13 +77,30 @@ public class NewFriendActivity extends BaseActivity {
         getFriendListById();
         getMyFriendsWaiting();
         mRecyclerView.setAdapter(mAdapter);
+
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+
             View vp = (View) view.getParent();
-            TextView typeBtn = view.findViewById(R.id.m_item_new_friend_type_btn);
+            TextView typeBtn = vp.findViewById(R.id.m_item_new_friend_type_btn);
             TextView mark = vp.findViewById(R.id.m_item_new_friend_message_label);
+            ConstraintLayout btnLayout = vp.findViewById(R.id.m_add_btn_layout);
+            boolean isTrue = false;
             switch (view.getId()) {
                 case R.id.m_item_new_friend_type_btn:
-                    addFriend(mAdapter.getData().get(position).getId(), mark.getText().toString());
+                    if (isTrue) {
+                        typeBtn.setText(getString(R.string.add_btn));
+                        typeBtn.setBackgroundColor(getColor(R.color.login_btn_pressed));
+                        typeBtn.setTextColor(getColor(R.color.themecolor));
+                        isTrue = true;
+                    } else {
+                        typeBtn.setText(getString(R.string.m_item_contact_type_text));
+                        typeBtn.setBackgroundColor(getColor(R.color.white));
+                        typeBtn.setTextColor(getColor(R.color.m_add_friend_wechat_label_2));
+                        addFriend(mAdapter.getData().get(position).getId(), mark.getText().toString());
+                        typeBtn.setEnabled(false);
+                        btnLayout.setEnabled(false);
+                        isTrue = false;
+                    }
                     break;
                 case R.id.m_add_btn_layout:
                     Intent intent = new Intent(NewFriendActivity.this, AddFriendDetailsActivity.class);
@@ -131,35 +148,31 @@ public class NewFriendActivity extends BaseActivity {
                 }, this::handleApiError);
     }
 
-
     /**
      * 获取待添加好友列表
      */
     public void getMyFriendsWaiting() {
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .getMyFirendsWaiting()
+                .getMyfriendsWaiting()
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<List<FriendInfoResponse>>() {
-                    @Override
-                    public void accept(List<FriendInfoResponse> s) throws Exception {
-                        list.addAll(s);
-                        for (int i = 0; i < s.size(); i++) {
-                            if (friendInfoResponse == null || friendInfoResponse.getId().equals(null) || friendInfoResponse.getId().equals("")) {
-                                mAdapter.addData(s.get(i));
+                .subscribe(s -> {
+                    list.addAll(s);
+                    for (int i = 0; i < s.size(); i++) {
+                        if (friendInfoResponse == null || friendInfoResponse.getId().equals(null) || friendInfoResponse.getId().equals("")) {
+                            mAdapter.addData(s.get(i));
+                        } else {
+                            if (s.get(i).getId().equals(friendInfoResponse.getId()) && s.get(i).getId().equals(Constant.userId) && !TextUtils.isEmpty(friendInfoResponse.getId())) {
+                                mAdapter.getData().remove(i);
                             } else {
-                                if (s.get(i).getId().equals(friendInfoResponse.getId()) && s.get(i).getId().equals(Constant.userId) && !TextUtils.isEmpty(friendInfoResponse.getId())) {
-                                    mAdapter.getData().remove(i);
-                                } else {
-                                    LogUtils.d("DEBUG", s.toString());
-                                    mAdapter.addData(s.get(i));
-                                    mAdapter.notifyDataSetChanged();
-                                }
+                                LogUtils.d("DEBUG", s.toString());
+                                mAdapter.addData(s.get(i));
+                                mAdapter.notifyDataSetChanged();
                             }
                         }
-                        mAdapter.setNewData(s);
                     }
+                    mAdapter.setNewData(s);
                 }, this::handleApiError);
     }
 
@@ -178,6 +191,7 @@ public class NewFriendActivity extends BaseActivity {
                 .subscribe(s -> {
 
                     ToastUtils.showShort(getString(R.string.add_friend_successful));
+                    mAdapter.notifyDataSetChanged();
 
                 }, this::handleApiError);
     }
@@ -194,13 +208,12 @@ public class NewFriendActivity extends BaseActivity {
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) throws Exception {
-                        mAdapter.notifyDataSetChanged();
-                    }
-                }, this::handleApiError);
+                .subscribe(s -> mAdapter.notifyDataSetChanged(), this::handleApiError);
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAdapter.notifyDataSetChanged();
+    }
 }

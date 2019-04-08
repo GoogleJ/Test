@@ -22,12 +22,7 @@ public class ChatInformationActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_information);
         titleBar=findViewById(R.id.m_fragment_chat_information_title_bar);
-        titleBar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        titleBar.getLeftImageView().setOnClickListener(v -> finish());
     }
 
 

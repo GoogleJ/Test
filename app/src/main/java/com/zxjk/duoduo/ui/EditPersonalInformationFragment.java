@@ -30,7 +30,6 @@ import com.zxjk.duoduo.weight.TitleBar;
 
 import java.io.File;
 import java.util.Collections;
-import java.util.concurrent.locks.ReentrantLock;
 
 import androidx.annotation.Nullable;
 import butterknife.OnClick;
@@ -94,7 +93,7 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_edit_personal_information);
+        setContentView(R.layout.activity_edit_personal_information);
         initView();
         initData();
     }

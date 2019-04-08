@@ -46,7 +46,7 @@ public class ConversationActivity extends FragmentActivity {
     private UserInfo targetUserInfo;
     private Group targetGroup;
 
-    @SuppressLint("CheckResult")
+    @SuppressLint({"CheckResult", "WrongViewCast"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +57,8 @@ public class ConversationActivity extends FragmentActivity {
         targetId = getIntent().getData().getQueryParameter("targetId");
         targetUserInfo = RongUserInfoManager.getInstance().getUserInfo(targetId);
         targetGroup = RongUserInfoManager.getInstance().getGroupInfo(targetId);
+        titleBar=findViewById(R.id.conversation_title);
+        titleBar.getLeftImageView().setOnClickListener(v -> finish());
 
         if (null == targetUserInfo && conversationType.equals("private")) {
             // 私聊且未缓存

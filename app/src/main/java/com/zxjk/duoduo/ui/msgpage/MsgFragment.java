@@ -7,22 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.ui.base.ContentActivity;
 import com.zxjk.duoduo.ui.grouppage.SelectContactActivity;
 import com.zxjk.duoduo.ui.msgpage.base.BaseFragment;
 import com.zxjk.duoduo.ui.msgpage.widget.CommonPopupWindow;
 import com.zxjk.duoduo.weight.TitleBar;
 
-import androidx.annotation.DimenRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import butterknife.ButterKnife;
-import io.rong.imkit.RongExtensionManager;
-import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
-import io.rong.imkit.userInfoCache.RongConversationInfo;
-import io.rong.imkit.userInfoCache.RongUserInfoManager;
-import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 
 /**
@@ -54,9 +47,7 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener  ,
         titleBar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ContentActivity.class);
-                intent.putExtra("tag", 3);
-                getActivity().startActivity(intent);
+               startActivity(new Intent(getActivity(),ContactsNewFriendActivity.class));
             }
         });
         titleBar.getRightImageView().setOnClickListener(new View.OnClickListener() {

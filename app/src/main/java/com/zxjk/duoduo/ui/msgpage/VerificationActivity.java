@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -34,7 +33,7 @@ public class VerificationActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_verification);
+        setContentView(R.layout.activity_verification);
         ButterKnife.bind(this);
         initUI();
     }
