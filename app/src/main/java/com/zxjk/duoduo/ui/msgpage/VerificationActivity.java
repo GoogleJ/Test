@@ -53,8 +53,17 @@ public class VerificationActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.m_verification_send_btn:
+                int type=0;
+                int intentType=getIntent().getIntExtra("intentType",type);
+                String conversationForAdd=getIntent().getStringExtra("ConversationForAdd");
+
                 String newFriend=getIntent().getStringExtra("addFriend");
-                applyAddFriend(newFriend, verificationEdit.getText().toString());
+                if (intentType==0){
+                    applyAddFriend(conversationForAdd, verificationEdit.getText().toString());
+                    return;
+                }else{
+                    applyAddFriend(newFriend,verificationEdit.getText().toString());
+                }
                 break;
             case R.id.m_verification_icon:
 

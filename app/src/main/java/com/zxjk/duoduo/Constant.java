@@ -47,4 +47,6 @@ public class Constant {
 
     public static CreateWalletResponse walletResponse;
 
+     public static GroupChatResponse groupChatResponse=new GroupChatResponse();
+
 }

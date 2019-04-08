@@ -32,6 +32,11 @@ public class GroupChatResponse implements Serializable {
         this.headPortrait =data. headPortrait;
     }
 
+    public GroupChatResponse(String id) {
+        this.id = id;
+    }
+
+
     public GroupChatResponse() {
 
     }

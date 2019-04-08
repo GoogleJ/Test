@@ -256,14 +256,22 @@ public class ConversationDetailsActivity extends BaseActivity implements View.On
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) throws Exception {
-                        ToastUtils.showShort("删除成功");
-                        dialog.dismiss();
+                .subscribe(s -> {
+                    ToastUtils.showShort("删除成功");
+                    dialog.dismiss();
 
-                    }
                 }, this::handleApiError);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
+    }
 }

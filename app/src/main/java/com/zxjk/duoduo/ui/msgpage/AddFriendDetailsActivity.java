@@ -96,11 +96,13 @@ public class AddFriendDetailsActivity extends BaseActivity implements View.OnCli
                 if (intentAddType==0){
                     intent=new Intent(this,VerificationActivity.class);
                     intent.putExtra("addFriend",friendInfoResponse.getId());
+                    intent.putExtra("intentType",1);
                     startActivity(intent);
                     return;
                 }else if (intentAddType==1){
                     intent=new Intent(this,VerificationActivity.class);
                     intent.putExtra("addFriend",newFriend.getId());
+                    intent.putExtra("intentType",1);
                     startActivity(intent);
                     return;
                 }

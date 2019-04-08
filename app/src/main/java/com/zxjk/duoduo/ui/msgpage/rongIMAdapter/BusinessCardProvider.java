@@ -74,20 +74,30 @@ public class BusinessCardProvider extends IContainerItemProvider.MessageProvider
         if (list.size()>=0){
             for(FriendInfoResponse friendInfoResponse:list){
                 businessCardMessage.getDuoduoId();
-                if (!friendInfoResponse.getId().equals(businessCardMessage.getUserId())){
+                //跳转到好友详情的页面
+                if (friendInfoResponse.getId().equals(businessCardMessage.getUserId())){
                     Intent intent = new Intent(context, ConversationDetailsActivity.class);
                     intent.putExtra("businessCardMessageId", businessCardMessage.getUserId());
                     intent.putExtra("ConstantUserId", 3);
                     context.startActivity(intent);
-                    return;
+                    break;
                 }else{
+                    //跳转到添加好友的联系人页面
                     Intent intent=new Intent(context, ConversationForAddActivity.class);
-                    intent.putExtra("friendInfoResponses",friendInfoResponse);
+                    intent.putExtra("friendInfoResponses",businessCardMessage.getUserId());
                     context.startActivity(intent);
-                    return;
-
+                    continue;
                 }
             }
+        }else{
+            FriendInfoResponse friendInfoResponse=new FriendInfoResponse();
+            //跳转到添加好友的联系人页面
+            for (int j=0;i<list.size();j++){
+                friendInfoResponse=list.get(i);
+            }
+            Intent intent=new Intent(context, ConversationForAddActivity.class);
+            intent.putExtra("friendInfoResponses",businessCardMessage.getUserId());
+            context.startActivity(intent);
 
         }
 

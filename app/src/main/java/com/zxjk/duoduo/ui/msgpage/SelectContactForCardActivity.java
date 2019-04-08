@@ -3,19 +3,17 @@ package com.zxjk.duoduo.ui.msgpage;
 import android.os.Bundle;
 import android.widget.EditText;
 
-
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
-
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.SelectForCardAdapter;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardMessage;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.weight.TitleBar;
 import com.zxjk.duoduo.weight.dialog.BaseAddTitleDialog;
-
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -68,17 +66,27 @@ public class SelectContactForCardActivity extends BaseActivity {
         getFriendListById();
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            if (intentType == 0) {
-                SelectContactForCardActivity.this.getFriendInfo(userId.getUserId(), position);
-            } else if (intentType == 1) {
-                SelectContactForCardActivity.this.getFriendInfo(friendInfoResponseId, position);
-            } else if (intentType == 2) {
-                SelectContactForCardActivity.this.getFriendInfo(friendInfoId, position);
-            } else if (intentType == 3) {
-                SelectContactForCardActivity.this.getFriendInfo(contactResponseId, position);
+            int groupType=0;
+            int privateOrGroupType=getIntent().getIntExtra("intentType",groupType);
+            if (privateOrGroupType==0){
+                if (intentType==0){
+                    SelectContactForCardActivity.this.getFriendGourp(mAdapter.getData().get(position).getId(), position);
+                }
+                return;
             }else{
-                SelectContactForCardActivity.this.getFriendInfo(businessCardMessageId,position);
+                if (intentType == 0) {
+                    SelectContactForCardActivity.this.getFriendInfo(userId.getUserId(), position);
+                } else if (intentType == 1) {
+                    SelectContactForCardActivity.this.getFriendInfo(friendInfoResponseId, position);
+                } else if (intentType == 2) {
+                    SelectContactForCardActivity.this.getFriendInfo(friendInfoId, position);
+                } else if (intentType == 3) {
+                    SelectContactForCardActivity.this.getFriendInfo(contactResponseId, position);
+                }else{
+                    SelectContactForCardActivity.this.getFriendInfo(businessCardMessageId,position);
+                }
             }
+
         });
     }
 
@@ -133,7 +141,46 @@ public class SelectContactForCardActivity extends BaseActivity {
                             @Override
                             public void onSuccess(Message message) {
                                 RongIM.getInstance().startPrivateChat(SelectContactForCardActivity.this, mAdapter.getData().get(position).getId(), mAdapter.getData().get(position).getNick());
+                                dialog.dismiss();
+                            }
 
+                            @Override
+                            public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+                            }
+                        });
+                    });
+                    dialog.show(getString(R.string.share_business_card));
+                }, this::handleApiError);
+    }
+    /**
+     * 获取好友详情
+     *
+     * @param userId
+     * @param position
+     */
+    private void getFriendGourp(String userId, int position) {
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .getFriendInfoById(userId)
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                .compose(RxSchedulers.normalTrans())
+                .subscribe(friendInfoResponse -> {
+                    BaseAddTitleDialog dialog = new BaseAddTitleDialog(SelectContactForCardActivity.this);
+                    dialog.setOnClickListener(() -> {
+                        BusinessCardMessage message = new BusinessCardMessage();
+                        message.setDuoduoId(friendInfoResponse.getDuoduoId());
+                        message.setHeaderUrl(friendInfoResponse.getHeadPortrait());
+                        message.setUserId(friendInfoResponse.getId());
+                        message.setUserName(friendInfoResponse.getNick());
+                        Message message1 = Message.obtain(Constant.groupChatResponse.getId(), Conversation.ConversationType.GROUP, message);
+                        RongIM.getInstance().sendMessage(message1, null, null, new IRongCallback.ISendMessageCallback() {
+                            @Override
+                            public void onAttached(Message message) {
+                            }
+
+                            @Override
+                            public void onSuccess(Message message) {
+                                RongIM.getInstance().startGroupChat(SelectContactForCardActivity.this, Constant.groupChatResponse.getId(), Constant.groupChatResponse.getGroupNikeName());
                                 dialog.dismiss();
                             }
 

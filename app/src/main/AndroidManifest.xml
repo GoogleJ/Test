@@ -94,7 +94,7 @@
         <activity android:name=".ui.minepage.UpdatePayPwdActivity" />
         <activity android:name=".ui.minepage.RetrievePayPwdActivity" />
         <activity android:name=".ui.minepage.SettingPayPwdActivity" />
-        <activity android:name=".weight.TestActivity" />
+        <activity android:name=".ui.msgpage.SelectContactForGroupCardActivity"/>
         <activity android:name=".ui.grouppage.SelectContactActivity" />
         <activity android:name=".ui.grouppage.AgreeGroupChatActivity" />
         <activity android:name=".ui.msgpage.PhoneContactActivity" />

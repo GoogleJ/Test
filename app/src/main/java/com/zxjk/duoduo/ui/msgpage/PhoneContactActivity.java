@@ -48,7 +48,6 @@ public class PhoneContactActivity extends BaseActivity implements TextWatcher {
         mRecyclerView=findViewById(R.id.phone_contact_recycler_view);
         titleBar.getLeftImageView().setOnClickListener(v -> finish());
         getPhoneNumberFromMobile = new GetPhoneNumberFromMobileUtils();
-
         searchEdit=findViewById(R.id.search_edit);
         searchEdit.addTextChangedListener(this);
         list = getPhoneNumberFromMobile.getPhoneNumberFromMobile(this);
