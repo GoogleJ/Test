@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.msgpage;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Lifecycle;
 import io.rong.imkit.RongIM;
@@ -33,11 +34,13 @@ import com.zxjk.duoduo.weight.dialog.RedEvelopesDialog;
 
 import java.util.List;
 
+import static com.zxjk.duoduo.utils.PermissionUtils.cameraPremissions;
+
 /**
  * @author Administrator
  * @// TODO: 2019\4\1 0001 单聊页面
  */
-public class ConversationActivity extends FragmentActivity {
+public class ConversationActivity extends AppCompatActivity {
 
     private final LifecycleProvider<Lifecycle.Event> provider = AndroidLifecycle.createLifecycleProvider(this);
 
@@ -50,7 +53,9 @@ public class ConversationActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_conversation);
+        cameraPremissions(this);
 
         List<String> pathSegments = getIntent().getData().getPathSegments();
         String conversationType = pathSegments.get(pathSegments.size() - 1);

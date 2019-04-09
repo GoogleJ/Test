@@ -25,16 +25,12 @@ public class Constant {
 
     public static final String FLAG_IS_Delete = "1";
     public static final String FLAG_FIRSTLOGIN = "0";
-
     public static final String HEAD_LOCATION = "86-";
-
     public static String userId = "";
     public static String token = "";
     public static String phoneUuid =
             TextUtils.isEmpty(DeviceUtils.getMacAddress()) ? DeviceUtils.getAndroidID() : DeviceUtils.getMacAddress();
-
     public static String language = "zh-TW";
-
     public static LoginResponse currentUser = new LoginResponse();
 
     public static void clear() {
@@ -45,9 +41,7 @@ public class Constant {
      * 新增（修改收款方式）实体
      */
     public static AddPayInfoBean payInfoBean = new AddPayInfoBean();
-
     public static CreateWalletResponse walletResponse;
-
     public static GroupChatResponse groupChatResponse = new GroupChatResponse();
 
 }

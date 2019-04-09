@@ -1,12 +1,14 @@
 package com.zxjk.duoduo.ui.msgpage;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.EditText;
-
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.SelectForCardAdapter;
@@ -14,6 +16,9 @@ import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardMessage;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.weight.TitleBar;
 import com.zxjk.duoduo.weight.dialog.BaseAddTitleDialog;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,7 +34,7 @@ import io.rong.imlib.model.UserInfo;
  * @author Administrator
  * @// TODO: 2019\4\4 0004 选择联系人发送名片
  */
-public class SelectContactForCardActivity extends BaseActivity {
+public class SelectContactForCardActivity extends BaseActivity implements TextWatcher {
     TitleBar titleBar;
     EditText searchEdit;
     RecyclerView mRecyclerView;
@@ -42,10 +47,13 @@ public class SelectContactForCardActivity extends BaseActivity {
     String contactResponseId;
     String businessCardMessageId;
 
+    List<FriendInfoResponse> list = new ArrayList<>();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_contact_for_card);
+
         initView();
         initRecyclerView();
     }
@@ -56,24 +64,23 @@ public class SelectContactForCardActivity extends BaseActivity {
         friendInfoId = getIntent().getStringExtra("friendInfoId");
         contactResponseId = getIntent().getStringExtra("contactResponseId");
         userId = getIntent().getParcelableExtra("user");
-        businessCardMessageId=getIntent().getStringExtra("businessCardMessageId");
-
-
+        businessCardMessageId = getIntent().getStringExtra("businessCardMessageId");
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(RecyclerView.VERTICAL);
+        searchEdit.addTextChangedListener(SelectContactForCardActivity.this);
         mRecyclerView.setLayoutManager(manager);
         mAdapter = new SelectForCardAdapter();
         getFriendListById();
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            int groupType=0;
-            int privateOrGroupType=getIntent().getIntExtra("intentType",groupType);
-            if (privateOrGroupType==0){
-                if (intentType==0){
+            int groupType = 0;
+            int privateOrGroupType = getIntent().getIntExtra("intentType", groupType);
+            if (privateOrGroupType == 0) {
+                if (intentType == 0) {
                     SelectContactForCardActivity.this.getFriendGourp(mAdapter.getData().get(position).getId(), position);
                 }
                 return;
-            }else{
+            } else {
                 if (intentType == 0) {
                     SelectContactForCardActivity.this.getFriendInfo(userId.getUserId(), position);
                 } else if (intentType == 1) {
@@ -82,8 +89,8 @@ public class SelectContactForCardActivity extends BaseActivity {
                     SelectContactForCardActivity.this.getFriendInfo(friendInfoId, position);
                 } else if (intentType == 3) {
                     SelectContactForCardActivity.this.getFriendInfo(contactResponseId, position);
-                }else{
-                    SelectContactForCardActivity.this.getFriendInfo(businessCardMessageId,position);
+                } else {
+                    SelectContactForCardActivity.this.getFriendInfo(businessCardMessageId, position);
                 }
             }
 
@@ -107,7 +114,7 @@ public class SelectContactForCardActivity extends BaseActivity {
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(friendInfoResponses -> {
-
+                    this.list = friendInfoResponses;
                     mAdapter.setNewData(friendInfoResponses);
                 }, this::handleApiError);
     }
@@ -152,6 +159,7 @@ public class SelectContactForCardActivity extends BaseActivity {
                     dialog.show(getString(R.string.share_business_card));
                 }, this::handleApiError);
     }
+
     /**
      * 获取好友详情
      *
@@ -197,5 +205,73 @@ public class SelectContactForCardActivity extends BaseActivity {
     protected void onStop() {
         super.onStop();
         finish();
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        String groupname = s.toString();
+        if (groupname != null || groupname.length() > 0) {
+            List<FriendInfoResponse> groupnamelist = search(groupname); //查找对应的群组数据
+            mAdapter.setNewData(groupnamelist);
+        } else {
+            mAdapter.setNewData(list);
+        }
+        mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 模糊查询
+     *
+     * @param str
+     * @return
+     */
+    private List<FriendInfoResponse> search(String str) {
+        List<FriendInfoResponse> filterList = new ArrayList<FriendInfoResponse>();// 过滤后的list
+        if (str.matches("^([0-9]|[/+]).*")) {// 正则表达式 匹配以数字或者加号开头的字符串(包括了带空格及-分割的号码)
+            String simpleStr = str.replaceAll("\\-|\\s", "");
+            for (FriendInfoResponse contact : list) {
+                if (contact.getNick() != null) {
+                    if (contact.getNick().contains(simpleStr) || contact.getNick().contains(str)) {
+                        if (!filterList.contains(contact)) {
+                            filterList.add(contact);
+                        }
+                    }
+                }
+            }
+        } else {
+            for (FriendInfoResponse contact : list) {
+                if (contact.getNick() != null) {
+                    //姓名全匹配,姓名首字母简拼匹配,姓名全字母匹配
+                    boolean isNameContains = contact.getNick().toLowerCase(Locale.CHINESE)
+                            .contains(str.toLowerCase(Locale.CHINESE));
+
+//                    boolean isSortKeyContains = contact.sortKey.toLowerCase(Locale.CHINESE).replace(" ", "")
+//                            .contains(str.toLowerCase(Locale.CHINESE));
+//
+//                    boolean isSimpleSpellContains = contact.sortToken.simpleSpell.toLowerCase(Locale.CHINESE)
+//                            .contains(str.toLowerCase(Locale.CHINESE));
+//
+//                    boolean isWholeSpellContains = contact.sortToken.wholeSpell.toLowerCase(Locale.CHINESE)
+//                            .contains(str.toLowerCase(Locale.CHINESE));
+
+                    if (isNameContains) {
+                        if (!filterList.contains(contact)) {
+                            filterList.add(contact);
+                        }
+                    }
+                }
+            }
+        }
+        return filterList;
     }
 }

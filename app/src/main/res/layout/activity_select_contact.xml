@@ -64,6 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
+            android:layout_gravity="center_vertical"
             app:layout_constraintStart_toStartOf="parent" />
 
 
@@ -80,7 +81,6 @@
             android:hint="@string/contact_search"
             android:maxWidth="120dp"
             android:paddingStart="20dp"
-
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/recycler_view_select"
             app:layout_constraintTop_toTopOf="parent"
@@ -92,6 +92,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/all_members_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

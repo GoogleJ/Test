@@ -194,6 +194,8 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
                 case REQUEST_ALBUM:
                     filePath = TakePicUtil.getPath(this, data.getData());
                     break;
+                    default:
+                        break;
             }
         }
 

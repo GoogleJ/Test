@@ -29,6 +29,9 @@ import static com.zxjk.duoduo.ui.EditPersonalInformationFragment.REQUEST_ALBUM;
 public class TakePhotoPlugin implements IPluginModule {
     public static final int REQUEST_ALBUM = 1;
     String userId;
+
+
+    RongExtension extension;
     @Override
     public Drawable obtainDrawable(Context context) {
         return ContextCompat.getDrawable(context, R.drawable.icon_photography);
@@ -41,15 +44,14 @@ public class TakePhotoPlugin implements IPluginModule {
 
     @Override
     public void onClick(Fragment fragment, RongExtension rongExtension) {
-        TakePicUtil.takePicture( fragment.getActivity(), REQUEST_ALBUM);
-        userId=rongExtension.getTargetId();
+         TakePicUtil.takePicture( fragment.getActivity(), REQUEST_ALBUM);
+         userId=rongExtension.getTargetId();
     }
 
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         String filePath = "";
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
@@ -59,31 +61,6 @@ public class TakePhotoPlugin implements IPluginModule {
                 default:
                     break;
             }
-            TakePhotoMessage message=new TakePhotoMessage();
-            message.setFilePath(filePath);
-            Message message1=Message.obtain(userId, Conversation.ConversationType.PRIVATE,message);
-            RongIM.getInstance().sendImageMessage(message1, null, null, new RongIMClient.SendImageMessageCallback() {
-                @Override
-                public void onAttached(Message message) {
-
-                }
-
-                @Override
-                public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-
-                }
-
-                @Override
-                public void onSuccess(Message message) {
-                    ToastUtils.showShort("发送成功");
-                }
-
-                @Override
-                public void onProgress(Message message, int i) {
-
-                }
-            });
-
         }
     }
 }
