@@ -169,7 +169,7 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY) {
             final String picturePath = BGAPhotoPickerActivity.getSelectedPhotos(data).get(0);
             // 本来就用到 QRCodeView 时可直接调 QRCodeView 的方法，走通用的回调
-//            zxingview.decodeQRCode(picturePath);
+//            zxingview.syncDecodeQRCode(picturePath);
         }
     }
 

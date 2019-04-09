@@ -114,14 +114,14 @@ public class CountrySelectActivity extends BaseActivity implements View.OnClickL
 //        final int closeImgId = getResources().getIdentifier("search_close_btn", "id", getPackageName());
         ImageView search_button = searchView.findViewById(R.id.search_button);
 
-        search_button.setImageResource(R.drawable.ic_search);
+        search_button.setImageResource(R.drawable.icon_contract_search);
         //
         ImageView search_mag_icon = searchView.findViewById(R.id.search_mag_icon);
-        search_mag_icon.setImageResource(R.drawable.ic_search);
+        search_mag_icon.setImageResource(R.drawable.icon_contract_search);
         search_mag_icon.setVisibility(View.GONE);
         //删除按钮
         ImageView closeImg = searchView.findViewById(R.id.search_close_btn);
-        closeImg.setImageResource(R.drawable.icon_edit_delete);
+        closeImg.setImageResource(R.drawable.icon_close);
         //输入框
         SearchView.SearchAutoComplete mEditSearchView = (SearchView.SearchAutoComplete) searchView.findViewById(R.id.search_src_text);
         mEditSearchView.setTextColor(Color.WHITE);

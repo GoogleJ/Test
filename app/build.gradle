@@ -117,7 +117,7 @@ dependencies {
     implementation 'cn.bingoogolapple:bga-baseadapter:1.2.9@aar'
     implementation 'cn.bingoogolapple:bga-flowlayout:1.0.0@aar'
     implementation 'cn.bingoogolapple:bga-zxing:1.1.7@aar'
-    implementation 'com.github.qdxxxx:IndexBarLayout:1.0.2'
+    implementation 'com.github.promeg:tinypinyin:2.0.1'
     implementation 'cn.bingoogolapple:bga-qrcodecore:1.1.7@aar'
 
     //通用适配器

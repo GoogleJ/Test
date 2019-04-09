@@ -43,7 +43,7 @@ public class PhoneContactActivity extends BaseActivity implements TextWatcher {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_contact);
-        constantPermission(this);
+
         titleBar=findViewById(R.id.title_bar);
         mRecyclerView=findViewById(R.id.phone_contact_recycler_view);
         titleBar.getLeftImageView().setOnClickListener(v -> finish());

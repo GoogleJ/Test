@@ -69,7 +69,6 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_contact);
-
         fromZhuanChu = getIntent().getBooleanExtra("fromZhuanChu", false);
         initView();
     }
@@ -105,19 +104,15 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
             this.position = position;
             FriendInfoResponse response;
             for (FriendInfoResponse friendInfoResponse : list) {
-
                 if (list.get(position).getId().equals(friendInfoResponse.getId())) {
                     response=new FriendInfoResponse();
-
                     response.setId(friendInfoResponse.getId());
                     response.setHeadPortrait(friendInfoResponse.getHeadPortrait());
                     lists.add(response);
                 }
             }
             topAdapter.setNewData(lists);
-
             selectRecycler.setAdapter(topAdapter);
-
             topAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
                 @Override
                 public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {

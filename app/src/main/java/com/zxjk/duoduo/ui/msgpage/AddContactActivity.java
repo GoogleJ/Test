@@ -11,6 +11,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.zxjk.duoduo.utils.PermissionUtils.constantPermission;
+
 /**
  * @author Administrator
  * @// TODO: 2019\3\19 0019 添加联系人的界面
@@ -22,6 +24,7 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_friend);
+        constantPermission(this);
         ButterKnife.bind(this);
         initUI();
     }

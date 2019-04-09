@@ -81,7 +81,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 //        login("14725836911","123456");
 //        login("15935910008","123456");
 //        login("18625658542","123456");
-//        login("15529419986","123456");
+        login("15529419986","123456");
 //         login("18592054972","123456");
     }
 
@@ -112,22 +112,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.btn_login:
 
-                String mobile = edit_mobile.getText().toString().trim();
-                String password = edit_password.getText().toString().trim();
-                if (TextUtils.isEmpty(mobile) || TextUtils.isEmpty(password)) {
-                    ToastUtils.showShort(getString(R.string.edit_mobile_or_password_tip));
-                    return;
-                }
-                if (TextUtils.isEmpty(mobile) && "".equals(mobile) ) {
-                    ToastUtils.showShort(getString(R.string.edit_mobile_tip));
-                    return;
-                }
-                if (TextUtils.isEmpty(password) || 5 >= password.length() || password.length() >= 14) {
-                    ToastUtils.showShort(getString(R.string.edit_password_reg));
-                    return;
-                }
-                login(mobile,password);
-                SPUtils.getInstance().put("mobile", edit_mobile.getText().toString().trim());
+//                String mobile = edit_mobile.getText().toString().trim();
+//                String password = edit_password.getText().toString().trim();
+//                if (TextUtils.isEmpty(mobile) || TextUtils.isEmpty(password)) {
+//                    ToastUtils.showShort(getString(R.string.edit_mobile_or_password_tip));
+//                    return;
+//                }
+//                if (TextUtils.isEmpty(mobile) && "".equals(mobile) ) {
+//                    ToastUtils.showShort(getString(R.string.edit_mobile_tip));
+//                    return;
+//                }
+//                if (TextUtils.isEmpty(password) || 5 >= password.length() || password.length() >= 14) {
+//                    ToastUtils.showShort(getString(R.string.edit_password_reg));
+//                    return;
+//                }
+//                login(mobile,password);
+//                SPUtils.getInstance().put("mobile", edit_mobile.getText().toString().trim());
                 break;
             default:
                 break;
