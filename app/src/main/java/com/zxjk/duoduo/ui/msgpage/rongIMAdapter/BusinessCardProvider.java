@@ -57,13 +57,13 @@ public class BusinessCardProvider extends IContainerItemProvider.MessageProvider
             holder.sendLayout.setBackgroundResource(R.drawable.icon_business_card_friend);
         }
         holder.userName.setText(businessCardMessage.getUserId());
-        holder.duoduoId.setText(businessCardMessage.getDuoduoId());
-        GlideUtil.loadCornerImg(holder.heardImage, businessCardMessage.getHeaderUrl(), 2);
+        holder.duoduoId.setText(businessCardMessage.getDuoduo());
+        GlideUtil.loadCornerImg(holder.heardImage, businessCardMessage.getIcon(), 2);
     }
 
     @Override
     public Spannable getContentSummary(BusinessCardMessage transferMessage) {
-        return new SpannableString("对方向您发送了一张名片");
+        return new SpannableString("向您推荐了"+transferMessage.getName());
     }
 
     @Override
@@ -73,7 +73,7 @@ public class BusinessCardProvider extends IContainerItemProvider.MessageProvider
 
         if (list.size()>=0){
             for(FriendInfoResponse friendInfoResponse:list){
-                businessCardMessage.getDuoduoId();
+                businessCardMessage.getDuoduo();
                 //跳转到好友详情的页面
                 if (friendInfoResponse.getId().equals(businessCardMessage.getUserId())){
                     Intent intent = new Intent(context, ConversationDetailsActivity.class);

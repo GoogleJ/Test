@@ -18,14 +18,29 @@ import io.rong.imlib.model.MessageContent;
  * @// TODO: 2019\4\3 0003 名片分享 
  */
 @SuppressLint("ParcelCreator")
-@MessageTag(value = "app:business", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
+@MessageTag(value = "MMyCardMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
 public class BusinessCardMessage extends MessageContent {
 
-    private String headerUrl;
-    private String userName;
-    private String duoduoId;
+    /**
+     * //显示的内容  ios
+     * @property (nonatomic, strong) NSString *icon;
+     * @property (nonatomic, strong) NSString *name;
+     * @property (nonatomic, strong) NSString *duoduo;
+     * //附件消息
+     * @property(nonatomic, strong) NSString *extra;
+     *
+     * @property (nonatomic, strong) NSString *userId;
+     */
+
+
+    private String icon;
+    private String name;
+    private String duoduo;
     //这里是userId或者friendId
+    private String extra;
     private String userId;
+
+
 
     public BusinessCardMessage() {
 
@@ -35,9 +50,10 @@ public class BusinessCardMessage extends MessageContent {
     public byte[] encode() {
         JSONObject jsonObj = new JSONObject();
         try {
-            jsonObj.put("headerUrl", getHeaderUrl());
-            jsonObj.put("userName",getUserName());
-            jsonObj.put("duoduoId",getDuoduoId());
+            jsonObj.put("icon", getIcon());
+            jsonObj.put("name",getName());
+            jsonObj.put("duoduo",getDuoduo());
+            jsonObj.put("extra",getExtra());
             jsonObj.put("userId",getUserId());
         } catch (JSONException e) {
             Log.e("JSONException", e.getMessage());
@@ -61,16 +77,19 @@ public class BusinessCardMessage extends MessageContent {
         try {
             JSONObject jsonObj = new JSONObject(jsonStr);
 
-            if (jsonObj.has("headerUrl")) {
-                setHeaderUrl(jsonObj.optString("headerUrl"));
+            if (jsonObj.has("icon")) {
+                setIcon(jsonObj.optString("icon"));
             }
 
-            if (jsonObj.has("userName")) {
-                setUserName(jsonObj.optString("userName"));
+            if (jsonObj.has("name")) {
+                setName(jsonObj.optString("name"));
             }
 
-            if (jsonObj.has("duoduoId")) {
-                setDuoduoId(jsonObj.optString("duoduoId"));
+            if (jsonObj.has("duoduo")) {
+                setDuoduo(jsonObj.optString("duoduo"));
+            }
+            if (jsonObj.has("extra")){
+                setExtra(jsonObj.optString("extra"));
             }
 
             if (jsonObj.has("userId")) {
@@ -88,18 +107,20 @@ public class BusinessCardMessage extends MessageContent {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        ParcelUtils.writeToParcel(dest,headerUrl);
-        ParcelUtils.writeToParcel(dest,userName);
-        ParcelUtils.writeToParcel(dest,duoduoId);
+        ParcelUtils.writeToParcel(dest,icon);
+        ParcelUtils.writeToParcel(dest,name);
+        ParcelUtils.writeToParcel(dest,duoduo);
+        ParcelUtils.writeToParcel(dest,extra);
         ParcelUtils.writeToParcel(dest,userId);
     }
 
     //给消息赋值。
     public BusinessCardMessage(Parcel in) {
-        setHeaderUrl(ParcelUtils.readFromParcel(in));
+        setIcon(ParcelUtils.readFromParcel(in));
         //这里可继续增加你消息的属性
-        setUserName(ParcelUtils.readFromParcel(in));
-        setDuoduoId(ParcelUtils.readFromParcel(in));
+        setName(ParcelUtils.readFromParcel(in));
+        setDuoduo(ParcelUtils.readFromParcel(in));
+        setExtra(ParcelUtils.readFromParcel(in));
         setUserId(ParcelUtils.readFromParcel(in));
     }
     /**
@@ -117,29 +138,36 @@ public class BusinessCardMessage extends MessageContent {
             return new BusinessCardMessage[size];
         }
     };
-
-    public String getHeaderUrl() {
-        return headerUrl;
+    public String getIcon() {
+        return icon;
     }
 
-    public void setHeaderUrl(String headerUrl) {
-        this.headerUrl = headerUrl;
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDuoduoId() {
-        return duoduoId;
+    public String getDuoduo() {
+        return duoduo;
     }
 
-    public void setDuoduoId(String duoduoId) {
-        this.duoduoId = duoduoId;
+    public void setDuoduo(String duoduo) {
+        this.duoduo = duoduo;
+    }
+
+    public String getExtra() {
+        return extra;
+    }
+
+    public void setExtra(String extra) {
+        this.extra = extra;
     }
 
     public String getUserId() {

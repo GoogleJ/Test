@@ -128,10 +128,10 @@ public class SelectContactForCardActivity extends BaseActivity {
                     BaseAddTitleDialog dialog = new BaseAddTitleDialog(SelectContactForCardActivity.this);
                     dialog.setOnClickListener(() -> {
                         BusinessCardMessage message = new BusinessCardMessage();
-                        message.setDuoduoId(friendInfoResponse.getDuoduoId());
-                        message.setHeaderUrl(friendInfoResponse.getHeadPortrait());
+                        message.setDuoduo(friendInfoResponse.getDuoduoId());
+                        message.setIcon(friendInfoResponse.getHeadPortrait());
                         message.setUserId(friendInfoResponse.getId());
-                        message.setUserName(friendInfoResponse.getNick());
+                        message.setName(friendInfoResponse.getNick());
                         Message message1 = Message.obtain(mAdapter.getData().get(position).getId(), Conversation.ConversationType.PRIVATE, message);
                         RongIM.getInstance().sendMessage(message1, null, null, new IRongCallback.ISendMessageCallback() {
                             @Override
@@ -168,10 +168,10 @@ public class SelectContactForCardActivity extends BaseActivity {
                     BaseAddTitleDialog dialog = new BaseAddTitleDialog(SelectContactForCardActivity.this);
                     dialog.setOnClickListener(() -> {
                         BusinessCardMessage message = new BusinessCardMessage();
-                        message.setDuoduoId(friendInfoResponse.getDuoduoId());
-                        message.setHeaderUrl(friendInfoResponse.getHeadPortrait());
+                        message.setDuoduo(friendInfoResponse.getDuoduoId());
+                        message.setIcon(friendInfoResponse.getHeadPortrait());
                         message.setUserId(friendInfoResponse.getId());
-                        message.setUserName(friendInfoResponse.getNick());
+                        message.setName(friendInfoResponse.getNick());
                         Message message1 = Message.obtain(Constant.groupChatResponse.getId(), Conversation.ConversationType.GROUP, message);
                         RongIM.getInstance().sendMessage(message1, null, null, new IRongCallback.ISendMessageCallback() {
                             @Override

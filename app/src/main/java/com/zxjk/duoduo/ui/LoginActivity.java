@@ -40,7 +40,6 @@ import io.rong.imlib.model.UserInfo;
 import static com.zxjk.duoduo.utils.MD5Utils.getMD5;
 
 
-
 /**
  * 此处是登录界面及操作
  *
@@ -127,10 +126,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 //                    ToastUtils.showShort(getString(R.string.edit_password_reg));
 //                    return;
 //                }
-
-
+//                login(mobile,password);
 //                SPUtils.getInstance().put("mobile", edit_mobile.getText().toString().trim());
-
                 break;
             default:
                 break;

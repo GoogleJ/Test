@@ -521,5 +521,6 @@
     <string name="sale_amount">出售金额</string>
     <string name="payment_method">收款方式</string>
     <string name="select_group">选择要分享的群组</string>
+    <string name="search">搜索</string>
 
 </resources>
