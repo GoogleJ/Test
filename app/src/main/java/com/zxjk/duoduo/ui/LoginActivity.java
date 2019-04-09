@@ -58,7 +58,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     EditText edit_mobile;
     @BindView(R.id.edit_password)
     EditText edit_password;
-
+    String EXTRA_DATA = "data";
 
     public static void start(AppCompatActivity activity) {
         Intent intent = new Intent(activity, LoginActivity.class);
@@ -81,7 +81,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 //        login("14725836911","123456");
 //        login("15935910008","123456");
 //        login("18625658542","123456");
-        login("15529419986","123456");
+//        login("15529419986","123456");
 //         login("18592054972","123456");
     }
 
@@ -111,23 +111,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 startActivity(new Intent(LoginActivity.this, ChangeLanguageActivity.class));
                 break;
             case R.id.btn_login:
-//
-//                String mobile = edit_mobile.getText().toString().trim();
-//                String password = edit_password.getText().toString().trim();
-//                if (TextUtils.isEmpty(mobile) || TextUtils.isEmpty(password)) {
-//                    ToastUtils.showShort(getString(R.string.edit_mobile_or_password_tip));
-//                    return;
-//                }
-//                if (TextUtils.isEmpty(mobile) && "".equals(mobile) ) {
-//                    ToastUtils.showShort(getString(R.string.edit_mobile_tip));
-//                    return;
-//                }
-//                if (TextUtils.isEmpty(password) || 5 >= password.length() || password.length() >= 14) {
-//                    ToastUtils.showShort(getString(R.string.edit_password_reg));
-//                    return;
-//                }
-//                login(mobile,password);
-//                SPUtils.getInstance().put("mobile", edit_mobile.getText().toString().trim());
+
+                String mobile = edit_mobile.getText().toString().trim();
+                String password = edit_password.getText().toString().trim();
+                if (TextUtils.isEmpty(mobile) || TextUtils.isEmpty(password)) {
+                    ToastUtils.showShort(getString(R.string.edit_mobile_or_password_tip));
+                    return;
+                }
+                if (TextUtils.isEmpty(mobile) && "".equals(mobile) ) {
+                    ToastUtils.showShort(getString(R.string.edit_mobile_tip));
+                    return;
+                }
+                if (TextUtils.isEmpty(password) || 5 >= password.length() || password.length() >= 14) {
+                    ToastUtils.showShort(getString(R.string.edit_password_reg));
+                    return;
+                }
+                login(mobile,password);
+                SPUtils.getInstance().put("mobile", edit_mobile.getText().toString().trim());
                 break;
             default:
                 break;
@@ -135,12 +135,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
-
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CountryCodeConstantsUtils.REQUESTCODE_COUNTRY_SELECT && resultCode == Activity.RESULT_OK && data != null) {
-            CountryEntity countryEntity = (CountryEntity) data.getSerializableExtra("data");
+            CountryEntity countryEntity = (CountryEntity) data.getSerializableExtra(EXTRA_DATA);
             login_country.setText(" +" + (countryEntity != null ? countryEntity.countryCode : "86"));
         }
     }
@@ -211,6 +210,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
+
     @Override
     protected void onDestroy() {
         if (subscribe != null && !subscribe.isDisposed()) {
@@ -218,4 +218,5 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
         super.onDestroy();
     }
+
 }

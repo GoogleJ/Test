@@ -101,4 +101,9 @@
         <attr name="psw_count" format="integer" />
         <attr name="border_color" format="color" />
     </declare-styleable>
+
+    <declare-styleable name="IndexBar">
+        <attr name="CindexBarTextSize" format="reference|dimension" />
+        <attr name="CindexBarPressBackground" format="reference|color" />
+    </declare-styleable>
 </resources>

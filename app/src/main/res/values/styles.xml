@@ -16,7 +16,7 @@
     <style name="view_shadow_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:background">#aa000000</item>
+        <item name="android:background">#000000</item>
         <item name="android:visibility">gone</item>
     </style>
     <style name="listview_common_style">

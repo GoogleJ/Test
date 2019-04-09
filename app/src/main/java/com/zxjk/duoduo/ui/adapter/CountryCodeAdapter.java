@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
  */
 public class CountryCodeAdapter extends BaseListAdapter<CountryEntity> {
     protected final HashMap<String, Integer> indexes = new HashMap<>();
-    Pattern pattern;
+
     public CountryCodeAdapter(Context context, ArrayList<CountryEntity> list) {
         super(context, list);
         updateIndexes();
@@ -105,12 +105,12 @@ public class CountryCodeAdapter extends BaseListAdapter<CountryEntity> {
         }
         char c = str.trim().substring(0, 1).charAt(0);
         // 正则表达式匹配
-        pattern= Pattern.compile("^[A-Za-z]+$");
+        Pattern pattern = Pattern.compile("^[A-Za-z]+$");
         if (pattern.matcher(c + "").matches()) {
-            // 将小写字母转换为大写
-            return (c + "").toUpperCase();
+            return (c + "").toUpperCase(); // 将小写字母转换为大写
         } else {
             return "#";
         }
     }
+
 }

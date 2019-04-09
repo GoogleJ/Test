@@ -6,10 +6,7 @@
     android:background="@color/login_bg"
     android:orientation="vertical">
 
-    <View
-        android:id="@+id/head_StatusBar"
-        android:layout_width="match_parent"
-        android:layout_height="25dp" />
+
 
     <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/rl_head"
@@ -99,7 +96,7 @@
                 android:textColor="@android:color/white"
                 android:textSize="18sp" />
 
-            <com.example.administrator.duoduo_android.weight.ClearableEditTextWithIcon
+            <com.zxjk.duoduo.weight.ClearableEditTextWithIcon
                 android:id="@+id/edit_search"
                 style="@style/edt_common_style"
                 android:layout_width="match_parent"
