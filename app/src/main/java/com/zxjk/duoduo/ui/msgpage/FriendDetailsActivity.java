@@ -138,10 +138,9 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
 
 
     private void initFriendIntent() {
-        int type = 0;
         //这个模块需要添加数据绑定
         friendInfoResponse = (FriendInfoResponse) getIntent().getSerializableExtra("searchFriendDetails");
-        intentType = getIntent().getIntExtra("intentType", type);
+        intentType = getIntent().getIntExtra("intentType", 0);
         friendInfo = (FriendInfoResponse) getIntent().getSerializableExtra("globalSearchFriendDetails");
         contactResponse = (FriendInfoResponse) getIntent().getSerializableExtra("contactResponse");
 
@@ -160,7 +159,6 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
             } else {
                 genderIcon.setImageDrawable(getDrawable(R.drawable.icon_gender_woman));
             }
-            return;
         } else if (intentType == 1) {
             GlideUtil.loadCornerImg(heardIcon, friendInfo.getHeadPortrait(), 2);
             userNameText.setText(friendInfo.getNick());
@@ -176,7 +174,6 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
             } else {
                 genderIcon.setImageDrawable(getDrawable(R.drawable.icon_gender_woman));
             }
-            return;
         } else {
             GlideUtil.loadCornerImg(heardIcon, contactResponse.getHeadPortrait(), 2);
             userNameText.setText(contactResponse.getNick());
@@ -192,7 +189,6 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
             } else {
                 genderIcon.setImageDrawable(getDrawable(R.drawable.icon_gender_woman));
             }
-            return;
         }
     }
 
@@ -264,19 +260,16 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.delete_friend:
                 dialog = new DeleteFriendInformationDialog(this);
-                dialog.setOnClickListener(new DeleteFriendInformationDialog.OnClickListener() {
-                    @Override
-                    public void onDel() {
-                        if (intentType == 0) {
-                            FriendDetailsActivity.this.deleteFriend(friendInfoResponse.getId());
-                        } else if (intentType == 1) {
-                            FriendDetailsActivity.this.deleteFriend(friendInfo.getId());
-                        } else {
-                            FriendDetailsActivity.this.deleteFriend(contactResponse.getId());
-                        }
-                        dialog.dismiss();
-                        FriendDetailsActivity.this.finish();
+                dialog.setOnClickListener(() -> {
+                    if (intentType == 0) {
+                        FriendDetailsActivity.this.deleteFriend(friendInfoResponse.getId());
+                    } else if (intentType == 1) {
+                        FriendDetailsActivity.this.deleteFriend(friendInfo.getId());
+                    } else {
+                        FriendDetailsActivity.this.deleteFriend(contactResponse.getId());
                     }
+                    dialog.dismiss();
+                    FriendDetailsActivity.this.finish();
                 });
 
                 if (intentType == 0) {

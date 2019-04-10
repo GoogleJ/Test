@@ -14,11 +14,12 @@
         android:background="@color/login_bg">
 
         <ImageView
-            android:padding="12dp"
             android:id="@+id/m_red_envelopes_title_left_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:onClick="back"
+            android:padding="12dp"
             android:src="@drawable/ico_back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,11 +40,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:padding="12dp"
-            android:onClick="showRecord"
             android:id="@+id/m_red_envelopes_title_right_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="showRecord"
+            android:padding="12dp"
             android:text="@string/m_red_envelopes_title_right_text"
             android:textColor="@color/white"
             android:textSize="15sp"

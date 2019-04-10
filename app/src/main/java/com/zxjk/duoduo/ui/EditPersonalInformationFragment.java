@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -128,6 +129,7 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                 break;
             case R.id.m_edit_information_header_icon:
                 cameraPremissions(this);
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
                 selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;

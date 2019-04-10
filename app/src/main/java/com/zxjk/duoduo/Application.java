@@ -4,6 +4,7 @@ import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
 import com.blankj.utilcode.util.Utils;
+import com.zxjk.duoduo.network.response.CreateWalletResponse;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BasePluginExtensionModule;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardProvider;

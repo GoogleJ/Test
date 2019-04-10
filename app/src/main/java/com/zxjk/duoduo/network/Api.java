@@ -203,7 +203,7 @@ public interface Api {
      * @param friendId
      * @return
      */
-    @POST("duoduo/friend/deleteMyfirendsWaiting")
+    @POST("duoduo/friend/deleteMyfriendsWaiting")
     @FormUrlEncoded
     Observable<BaseResponse<String>> deleteMyfirendsWaiting(
             @Field("deleteCustomerId") String friendId
@@ -305,7 +305,7 @@ public interface Api {
      * @param newPwdTwo
      * @return
      */
-    @POST("duoduo/exchange/updatePwd")
+    @POST("duoduo/customer/updatePwd")
     @FormUrlEncoded
     Observable<BaseResponse<String>> updatePwd(
             @Field("oldPwd") String oldPwd,
@@ -752,6 +752,10 @@ public interface Api {
     @POST("duoduo/redPackage/getGroupRedPackageInfo")
     @FormUrlEncoded
     Observable<BaseResponse<GetGroupRedPackageInfoResponse>> getGroupRedPackageInfo(@Field("redPackageId") String redPackageId);
+
+    @POST("duoduo/customer/verifyPayPwd")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> verifyPayPwd(@Field("payPwd") String payPwd);
 
 
 }

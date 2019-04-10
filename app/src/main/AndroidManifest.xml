@@ -39,24 +39,50 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.msgpage.RedPackageListActivity"></activity>
-        <activity android:name=".ui.msgpage.TransferSuccessActivity" />
-        <activity android:name=".ui.walletpage.BlockWalletOrdersActivity" />
-        <activity android:name=".ui.walletpage.ChooseCoinActivity" />
-        <activity android:name=".ui.walletpage.BlockOrderDetailActivity" />
-        <activity android:name=".ui.walletpage.BlockETHOrders" />
-        <activity android:name=".ui.walletpage.HuaZhuanActivity" />
-        <activity android:name=".ui.walletpage.ZhuanChuActivity" />
-        <activity android:name=".ui.grouppage.ChatInformationActivity" />
-        <activity android:name=".ui.msgpage.ConversationDetailsActivity" />
-        <activity android:name=".ui.msgpage.SelectContactForCardActivity"/>
-        <activity android:name=".ui.msgpage.ContactsNewFriendActivity"/>
+        <activity
+            android:name=".ui.msgpage.RedPackageListActivity"
+            android:launchMode="singleTask"></activity>
+        <activity
+            android:name=".ui.msgpage.TransferSuccessActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.walletpage.BlockWalletOrdersActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.walletpage.ChooseCoinActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.walletpage.BlockOrderDetailActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.walletpage.BlockETHOrders"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.walletpage.HuaZhuanActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.walletpage.ZhuanChuActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.grouppage.ChatInformationActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.msgpage.ConversationDetailsActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.msgpage.SelectContactForCardActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.msgpage.ContactsNewFriendActivity"
+            android:launchMode="singleTask" />
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="cf78026d76c3b2dcd0a8384061970712" />
 
-        <activity android:name=".ui.msgpage.ConversationActivity">
+        <activity
+            android:name=".ui.msgpage.ConversationActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -68,48 +94,120 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.walletpage.BlockWalletActivity" />
-        <activity android:name=".ui.walletpage.WaitForJudgeActivity" />
-        <activity android:name=".ui.walletpage.ConfirmSaleActivity" />
-        <activity android:name=".ui.walletpage.ConfirmBuyActivity" />
-        <activity android:name=".ui.walletpage.CancelOrderActivity" />
-        <activity android:name=".ui.walletpage.ExchangeListActivity" />
-        <activity android:name=".ui.walletpage.ExchangeActivity" />
-        <activity android:name=".ui.minepage.ChangePwdActivity" />
-        <activity android:name=".ui.minepage.ChangePhoneActivity" />
-        <activity android:name=".ui.minepage.AccountActivity" />
-        <activity android:name=".ui.msgpage.GlobalSearchActivity" />
-        <activity android:name=".ui.minepage.OnlineServiceActivity" />
+        <activity
+            android:name=".ui.walletpage.BlockWalletActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.walletpage.WaitForJudgeActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.walletpage.ConfirmSaleActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.walletpage.ConfirmBuyActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.walletpage.CancelOrderActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.walletpage.ExchangeListActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.walletpage.ExchangeActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.minepage.ChangePwdActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.minepage.ChangePhoneActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.minepage.AccountActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.msgpage.GlobalSearchActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.minepage.OnlineServiceActivity"
+            android:launchMode="singleTask" />
         <activity
             android:name=".ui.minepage.VerifiedActivity"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".ui.grouppage.AllGroupMembersActivity" />
-        <activity android:name=".ui.grouppage.ChooseNewOwnerActivity" />
-        <activity android:name=".ui.grouppage.GroupAnnouncementActivity" />
-        <activity android:name=".ui.grouppage.GroupChatInformationActivity" />
-        <activity android:name=".ui.grouppage.GroupManagementActivity" />
-        <activity android:name=".ui.grouppage.RemoveGroupChatActivity" />
-        <activity android:name=".ui.grouppage.SendRedEnvelopesActivity" />
-        <activity android:name=".ui.minepage.PaySettingActivity" />
-        <activity android:name=".ui.minepage.UpdatePayPwdActivity" />
-        <activity android:name=".ui.minepage.RetrievePayPwdActivity" />
-        <activity android:name=".ui.minepage.SettingPayPwdActivity" />
-        <activity android:name=".ui.msgpage.SelectContactForGroupCardActivity"/>
-        <activity android:name=".ui.grouppage.SelectContactActivity" />
-        <activity android:name=".ui.grouppage.AgreeGroupChatActivity" />
-        <activity android:name=".ui.msgpage.PhoneContactActivity" />
-        <activity android:name=".ui.msgpage.PrivacyRedPacketActivity" />
-        <activity android:name=".ui.msgpage.PeopleRedEnvelopesActivity" />
-        <activity android:name=".ui.msgpage.TransferActivity" />
-        <activity android:name=".ui.msgpage.TransferInfoActivity" />
-        <activity android:name=".ui.msgpage.ConversationForAddActivity"/>
-        <activity android:name=".ui.msgpage.ReceivedEnvelopesActivity"/>
-        <activity android:name=".ui.msgpage.PeopleUnaccalimedActivity"/>
-        <activity android:name=".ui.walletpage.ExchangeListTypeActivity"/>
+        <activity
+            android:name=".ui.grouppage.AllGroupMembersActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.grouppage.ChooseNewOwnerActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.grouppage.GroupAnnouncementActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.grouppage.GroupChatInformationActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.grouppage.GroupManagementActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.grouppage.RemoveGroupChatActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.grouppage.SendRedEnvelopesActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.minepage.PaySettingActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.minepage.UpdatePayPwdActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.minepage.RetrievePayPwdActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.minepage.SettingPayPwdActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.msgpage.SelectContactForGroupCardActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.grouppage.SelectContactActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.grouppage.AgreeGroupChatActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.msgpage.PhoneContactActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.msgpage.PrivacyRedPacketActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.msgpage.PeopleRedEnvelopesActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.msgpage.TransferActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.msgpage.TransferInfoActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.msgpage.ConversationForAddActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.msgpage.ReceivedEnvelopesActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.msgpage.PeopleUnaccalimedActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.walletpage.ExchangeListTypeActivity"
+            android:launchMode="singleTask" />
 
         <activity
             android:name=".ui.WelcomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Theme_Splash"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
@@ -122,46 +220,55 @@
         <activity
             android:name=".ui.msgpage.ModifyNotesActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Theme_Splash" />
         <activity
             android:name=".ui.minepage.UserInfoActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.minepage.SettingActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.minepage.UpdateUserInfoActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.LoginActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.msgpage.SearchActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.msgpage.AddFriendDetailsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.EditPersonalInformationFragment"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.HomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
             <intent-filter>
@@ -178,56 +285,67 @@
         <activity
             android:name=".ui.ChangeLanguageActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.CountrySelectActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.ForgetRegisterActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.SetUpPaymentPwdActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.RegisterActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.msgpage.AddContactActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.msgpage.MyQrCodeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.msgpage.QrCodeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.msgpage.FriendDetailsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.msgpage.NewFriendActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.msgpage.VerificationActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
             <intent-filter>
@@ -244,6 +362,7 @@
         <activity
             android:name=".ui.minepage.BalanceLeftActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
             <intent-filter>
@@ -260,6 +379,7 @@
         <activity
             android:name=".ui.msgpage.GroupChatActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
             <intent-filter>
@@ -276,6 +396,7 @@
         <activity
             android:name=".ui.minepage.AboutActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
             <intent-filter>
@@ -292,6 +413,7 @@
         <activity
             android:name=".ui.minepage.AccountSwitchActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
             <intent-filter>
@@ -308,6 +430,7 @@
         <activity
             android:name=".ui.minepage.AddMyWayActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
             <intent-filter>
@@ -324,26 +447,31 @@
         <activity
             android:name=".ui.minepage.FeedbackActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.minepage.PrivacyActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.minepage.BillingMessageActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.minepage.ReceiptTypeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.walletpage.CommitSuccessfulActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 

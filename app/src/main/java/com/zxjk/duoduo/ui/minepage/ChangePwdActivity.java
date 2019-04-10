@@ -1,6 +1,7 @@
 package com.zxjk.duoduo.ui.minepage;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
+import com.zxjk.duoduo.ui.LoginActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
@@ -74,7 +76,10 @@ public class ChangePwdActivity extends BaseActivity {
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ChangePwdActivity.this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(response -> {
-                    Constant.currentUser.setPassword(MD5Utils.getMD5(newPass));
+                    Constant.clear();
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                     ToastUtils.showShort(R.string.update_success);
                     finish();
                 }, this::handleApiError);

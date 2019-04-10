@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
@@ -54,18 +55,22 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
     IndexView indexView;
     @BindView(R.id.m_constacts_dialog)
     TextView constactsDialog;
+    @BindView(R.id.dotNewFriend)
+    View dotNewFriend;
     private BaseContactAdapter mAdapter;
     FriendInfoResponse friendInfoResponse;
     Unbinder unbinder;
 
     private LinearLayoutManager layoutManager;
     List<FriendInfoResponse> list = new ArrayList<>();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_constacts_new_friend);
         ButterKnife.bind(this);
         initView();
+        getMyfriendsWaiting();
     }
 
     private void initView() {
@@ -77,13 +82,13 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
         indexView.setOnTouchingLetterChangedListener(new IndexView.OnTouchingLetterChangedListener() {
             @Override
             public void onTouchingLetterChanged(String letter) {
-                int position=0;
-                for(int i=0;i<list.size();i++){
+                int position = 0;
+                for (int i = 0; i < list.size(); i++) {
                     //获取名字的首字母
-                    String letters = PinYinUtils.getPinYin(list.get(i).getNick()).substring(0,1).toUpperCase();
-                    if(letters.equals(letter)){
+                    String letters = PinYinUtils.getPinYin(list.get(i).getNick()).substring(0, 1).toUpperCase();
+                    if (letters.equals(letter)) {
                         //第一次出现的位置
-                        position=i;
+                        position = i;
                         //将listview滚动到该位置
                         mRecyclerView.setScrollingTouchSlop(position);
                         break;
@@ -106,6 +111,7 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
             mAdapter.setEmptyView(view);
         }
     }
+
     @OnClick({R.id.m_constacts_new_friend_group_chat_btn, R.id.m_contact_add_friend_btn, R.id.m_contact_new_friend_btn, R.id.m_contact_search_btn})
     @Override
     public void onClick(View v) {
@@ -114,6 +120,7 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
                 startActivity(new Intent(this, GroupChatActivity.class));
                 break;
             case R.id.m_contact_add_friend_btn:
+                dotNewFriend.setVisibility(View.GONE);
                 startActivityForResult(new Intent(this, NewFriendActivity.class), 10);
                 break;
             case R.id.m_contact_new_friend_btn:
@@ -126,6 +133,7 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
                 break;
         }
     }
+
     /**
      * 获取好友列表
      */
@@ -158,25 +166,22 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(friendInfoResponses -> {
-                    for (int i = 0; i < friendInfoResponses.size(); i++) {
-                        if ("0".equals(friendInfoResponses.get(i).getStatus())) {
-                            addFriendImage.setImageResource(R.drawable.icon_new_friend_hl);
-                        } else {
-                            addFriendImage.setImageResource(R.drawable.icon_contract_friend);
-                        }
+                    int newfriendRequestCount = SPUtils.getInstance().getInt("newfriendRequestCount", 0);
+                    if (friendInfoResponses.size() > newfriendRequestCount) {
+                        dotNewFriend.setVisibility(View.VISIBLE);
                     }
-                    mAdapter.notifyDataSetChanged();
                 }, this::handleApiError);
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
     }
+
     @Override
     public void onResume() {
         super.onResume();
         getFriendListInfoById();
-        getMyfriendsWaiting();
         mAdapter.notifyDataSetChanged();
     }
 

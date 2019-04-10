@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:ignore="MissingConstraints"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="MissingConstraints">
+
     <com.zxjk.duoduo.weight.TitleBar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         app:titleBarLeftImage="@drawable/ico_back"
-        app:titleBarTitle="@string/m_add_friend_contact_label_1"
         app:titleBarTextColor="@color/white"
-        />
+        app:titleBarTitle="@string/m_add_friend_contact_label_1" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/search"
         android:layout_width="match_parent"
@@ -45,16 +46,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/phone_contact_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+            android:overScrollMode="never" />
+
         <com.zxjk.duoduo.ui.msgpage.widget.IndexView
             android:id="@+id/index_view"
             android:layout_width="12dp"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

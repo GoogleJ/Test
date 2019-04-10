@@ -102,14 +102,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 CountrySelectActivity.start(this, CountryCodeConstantsUtils.REQUESTCODE_COUNTRY_SELECT);
                 break;
             case R.id.register_code:
-
                 String mobile = edit_mobile.getText().toString().trim();
-                String country = login_country.getText().toString();
+                String country = login_country.getText().toString().trim();
                 countryCode = country.substring(1);
                 if (!TextUtils.isEmpty(mobile) && RegexUtils.isMobileExact(mobile)) {
-                    String type="0";
-                    registerCode(countryCode + "-" + mobile,type);
-
+                    registerCode(countryCode + "-" + mobile);
                     return;
                 }
                 ToastUtils.showShort(getString(R.string.edit_mobile_tip));
@@ -122,16 +119,16 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 password = edit_password.getText().toString().trim();
                 String code = edit_register_code.getText().toString().trim();
 
-                if (TextUtils.isEmpty(mobile) && RegexUtils.isMobileExact(mobile)) {
+                if (TextUtils.isEmpty(mobile) || !RegexUtils.isMobileExact(mobile)) {
                     ToastUtils.showShort(getString(R.string.edit_mobile_tip));
-                    return;
-                }
-                if ( TextUtils.isEmpty(password)|| 5>= password.length()) {
-                    ToastUtils.showShort(getString(R.string.edit_password_reg));
                     return;
                 }
                 if (TextUtils.isEmpty(code) || code.length() != 6) {
                     ToastUtils.showShort(getString(R.string.edit_code_tip));
+                    return;
+                }
+                if (TextUtils.isEmpty(password) || 5 >= password.length()) {
+                    ToastUtils.showShort(getString(R.string.edit_password_reg));
                     return;
                 }
                 if (!isAgreement) {
@@ -155,7 +152,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -174,7 +170,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     public void register(String phone, String code, String pwd) {
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .register(phone, code,getMD5(pwd))
+                .register(phone, code, getMD5(pwd))
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
@@ -187,10 +183,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 }, this::handleApiError);
     }
 
-    public void registerCode(String phone,String type) {
-
+    public void registerCode(String phone) {
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .getCode(phone,type)
+                .getCode(phone, "0")
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())

@@ -10,12 +10,14 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.trello.lifecycle2.android.lifecycle.AndroidLifecycle;
 import com.trello.rxlifecycle3.LifecycleProvider;
@@ -62,7 +64,7 @@ public class ConversationActivity extends AppCompatActivity {
         targetId = getIntent().getData().getQueryParameter("targetId");
         targetUserInfo = RongUserInfoManager.getInstance().getUserInfo(targetId);
         targetGroup = RongUserInfoManager.getInstance().getGroupInfo(targetId);
-        titleBar=findViewById(R.id.conversation_title);
+        titleBar = findViewById(R.id.conversation_title);
         titleBar.getLeftImageView().setOnClickListener(v -> finish());
 
         if (null == targetUserInfo && conversationType.equals("private")) {
@@ -99,6 +101,7 @@ public class ConversationActivity extends AppCompatActivity {
         RongIM.setConversationClickListener(new RongIM.ConversationClickListener() {
             @Override
             public boolean onUserPortraitClick(Context context, Conversation.ConversationType conversationType, UserInfo userInfo, String s) {
+
                 return false;
             }
 
@@ -184,6 +187,7 @@ public class ConversationActivity extends AppCompatActivity {
             }
         });
     }
+
     private void initView() {
         titleBar = findViewById(R.id.conversation_title);
         titleBar.getLeftImageView().setOnClickListener(v -> finish());

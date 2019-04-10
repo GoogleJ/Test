@@ -27,6 +27,7 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.LoginActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.weight.dialog.ConfirmDialog;
 
 import java.util.List;
 
@@ -75,12 +76,13 @@ public class SettingActivity extends BaseActivity {
     }
 
     private void initView() {
+        boolean hasCompletePay = SPUtils.getInstance().getBoolean(Constant.currentUser.getId(), false);
         tvSettingAuthenticate = findViewById(R.id.tvSettingAuthenticate);
         tvSettingPayment = findViewById(R.id.tvSettingPayment);
         tvSettingNick = findViewById(R.id.tvSettingNick);
         ivSettingAuthen = findViewById(R.id.ivSettingAuthen);
         tvSettingNick.setText(Constant.currentUser.getNick());
-        tvSettingPayment.setText(SPUtils.getInstance().getString("successfulPayType"));
+        tvSettingPayment.setText(hasCompletePay ? R.string.complete_payinfo : R.string.uncomplete_payinfo);
     }
 
     //账户
@@ -129,7 +131,14 @@ public class SettingActivity extends BaseActivity {
      * @param view
      */
     public void billingMessage(View view) {
-        startActivity(new Intent(this, BillingMessageActivity.class));
+        String isAuthentication = Constant.currentUser.getIsAuthentication();
+        if ("0".equals(isAuthentication)) {
+            startActivity(new Intent(this, BillingMessageActivity.class));
+        } else if ("1".equals(isAuthentication)) {
+            ToastUtils.showShort(R.string.notAuthentication);
+        } else {
+            ToastUtils.showShort(R.string.waitAuthentication);
+        }
     }
 
     /**
@@ -140,16 +149,18 @@ public class SettingActivity extends BaseActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void loginOut(View view) {
-        ServiceFactory.getInstance().getBaseService(Api.class)
+        ConfirmDialog dialog = new ConfirmDialog(this, "提示", "您将退出登录", v -> ServiceFactory.getInstance().getBaseService(Api.class)
                 .loginOut()
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
+                    Constant.clear();
                     ToastUtils.showShort(R.string.login_out);
                     Intent intent = new Intent(this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
-                }, this::handleApiError);
+                }, this::handleApiError));
+        dialog.show();
     }
 
     /**
@@ -164,7 +175,6 @@ public class SettingActivity extends BaseActivity {
     public void back(View view) {
         finish();
     }
-
 
 
 }

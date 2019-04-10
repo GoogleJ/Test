@@ -140,7 +140,7 @@
                         android:gravity="center_vertical"
                         android:hint="@string/edit_register_code"
                         android:inputType="number"
-                        android:maxLength="11"
+                        android:maxLength="6"
                         android:textCursorDrawable="@null"
                         android:textSize="16sp" />
 
@@ -151,9 +151,10 @@
                         android:background="@color/text_click_normal" />
 
                     <TextView
+                        android:gravity="center"
                         android:id="@+id/mobile_code"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:text="@string/text_get_code"
                         android:textSize="16sp" />
 

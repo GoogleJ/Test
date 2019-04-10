@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.GsonUtils;
+import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
@@ -22,9 +23,12 @@ import com.zxjk.duoduo.utils.CommonUtils;
 
 import io.reactivex.functions.Consumer;
 
+import static android.text.InputType.TYPE_CLASS_TEXT;
+import static android.text.InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS;
+
 /**
  * @author Administrator
- * @// TODO: 2019\3\25 0025 综合修改个人信息界面 
+ * @// TODO: 2019\3\25 0025 综合修改个人信息界面
  */
 @SuppressLint("CheckResult")
 public class UpdateUserInfoActivity extends BaseActivity {
@@ -76,6 +80,7 @@ public class UpdateUserInfoActivity extends BaseActivity {
         } else if (type == TYPE_EMAIL) {
             tvUpdateInfoTitle.setText(R.string.email);
             etChangeSign.setHint(R.string.hint_email);
+            etChangeSign.setInputType(TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         }
     }
 
@@ -89,6 +94,10 @@ public class UpdateUserInfoActivity extends BaseActivity {
         LoginResponse update = new LoginResponse(Constant.userId);
         switch (type) {
             case TYPE_EMAIL:
+                if (!RegexUtils.isEmail(sign)) {
+                    ToastUtils.showShort(R.string.notaemail);
+                    return;
+                }
                 update.setEmail(sign);
                 break;
             case TYPE_NICK:

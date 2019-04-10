@@ -16,6 +16,7 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.PhoneContactAdapter;
 import com.zxjk.duoduo.ui.msgpage.utils.GetPhoneNumberFromMobileUtils;
 import com.zxjk.duoduo.weight.TitleBar;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -33,7 +34,7 @@ import static com.zxjk.duoduo.utils.PermissionUtils.constantPermission;
 public class PhoneContactActivity extends BaseActivity implements TextWatcher {
     TitleBar titleBar;
     RecyclerView mRecyclerView;
-    List<PhoneInfo> list=new ArrayList<PhoneInfo>();
+    List<PhoneInfo> list = new ArrayList<PhoneInfo>();
     EditText searchEdit;
 
     private GetPhoneNumberFromMobileUtils getPhoneNumberFromMobile;
@@ -44,30 +45,26 @@ public class PhoneContactActivity extends BaseActivity implements TextWatcher {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_contact);
 
-        titleBar=findViewById(R.id.title_bar);
-        mRecyclerView=findViewById(R.id.phone_contact_recycler_view);
+        titleBar = findViewById(R.id.title_bar);
+        mRecyclerView = findViewById(R.id.phone_contact_recycler_view);
         titleBar.getLeftImageView().setOnClickListener(v -> finish());
         getPhoneNumberFromMobile = new GetPhoneNumberFromMobileUtils();
-        searchEdit=findViewById(R.id.search_edit);
+        searchEdit = findViewById(R.id.search_edit);
         searchEdit.addTextChangedListener(this);
         list = getPhoneNumberFromMobile.getPhoneNumberFromMobile(this);
-        LinearLayoutManager manager=new LinearLayoutManager(this);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(RecyclerView.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
-        mAdapter=new PhoneContactAdapter();
+        mAdapter = new PhoneContactAdapter();
         mAdapter.setNewData(list);
         mRecyclerView.setAdapter(mAdapter);
 
-        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                sendSMS("有一个多多好友正在邀请你加入群聊",position);
-            }
-        });
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> sendSMS("您的好友通过多多社区给您留言了啦，赶快注册去查看吧", position));
 
     }
-    private void sendSMS(String smsBody,int position) {
-        Uri smsToUri = Uri.parse("smsto:"+list.get(position).getNumber());
+
+    private void sendSMS(String smsBody, int position) {
+        Uri smsToUri = Uri.parse("smsto:" + list.get(position).getNumber());
         Intent intent = new Intent(Intent.ACTION_SENDTO, smsToUri);
         intent.putExtra("sms_body", smsBody);
         startActivity(intent);

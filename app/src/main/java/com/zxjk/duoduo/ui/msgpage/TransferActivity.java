@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.widget.EditText;
@@ -21,6 +22,7 @@ import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferMessage;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.utils.MD5Utils;
+import com.zxjk.duoduo.utils.MoneyValueFilter;
 import com.zxjk.duoduo.weight.TitleBar;
 import com.zxjk.duoduo.weight.dialog.SelectPopupWindow;
 
@@ -63,6 +65,8 @@ public class TransferActivity extends BaseActivity implements SelectPopupWindow.
         m_transfer_heard_icon = findViewById(R.id.m_transfer_heard_icon);
         m_transfer_nick_name = findViewById(R.id.m_transfer_nick_name);
         commitBtn = findViewById(R.id.m_transfer_commit_btn);
+
+        m_transfer_money_text.setFilters(new InputFilter[]{new MoneyValueFilter()});
 
         commitBtn.setOnClickListener(v -> {
             if (TextUtils.isEmpty(m_transfer_money_text.getText().toString().trim())) {

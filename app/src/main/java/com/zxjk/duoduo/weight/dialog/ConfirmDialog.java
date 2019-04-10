@@ -2,8 +2,11 @@ package com.zxjk.duoduo.weight.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.zxjk.duoduo.R;

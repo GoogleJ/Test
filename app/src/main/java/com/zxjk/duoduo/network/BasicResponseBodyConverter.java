@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.google.gson.TypeAdapter;
 import com.zxjk.duoduo.Constant;
+import com.zxjk.duoduo.network.rx.RxException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,6 +30,9 @@ public class BasicResponseBodyConverter<T> implements Converter<ResponseBody, T>
             String data = jsonObject.optString("data");
             String msg = jsonObject.optString("msg");
             int code = jsonObject.optInt("code", Constant.CODE_SUCCESS);
+            if (code == Constant.CODE_UNLOGIN) {
+                throw new IOException(msg, new RxException.DuplicateLoginExcepiton(msg));
+            }
             if (code != Constant.CODE_SUCCESS && TextUtils.isEmpty(data)) {
                 throw new IOException(msg);
             }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -220,6 +221,7 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
                 certification(AesUtil.getInstance().encrypt(GsonUtils.toJson(bean)));
                 break;
             case R.id.front_photo_of_the_document:
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 //                证件正面照
                 currentPictureFlag = 1;
                 cameraPremissions(this);
@@ -227,6 +229,7 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.reverse_photo_of_the_document:
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
                 //证件反面照
                 currentPictureFlag = 2;
                 cameraPremissions(this);
@@ -234,6 +237,7 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.hand_held_passport_photo:
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
                 //手持证件照
                 currentPictureFlag = 3;
                 cameraPremissions(this);

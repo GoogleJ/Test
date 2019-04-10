@@ -413,7 +413,7 @@
     <string name="determine_select_group">确定选择为新群主吗？</string>
     <string name="add_group_chat">选择联系人</string>
     <string name="send_verification">发送验证</string>
-    <string name="apply_to_add">申请添加</string>
+    <string name="apply_to_add">邀 请</string>
     <string name="verifyfirstpls">请先完成实名认证</string>
     <string name="verifying_pleasewait">正在实名认证中，请等待认证结果</string>
     <string name="time">时间</string>
@@ -522,5 +522,18 @@
     <string name="payment_method">收款方式</string>
     <string name="select_group">选择要分享的群组</string>
     <string name="search">搜索</string>
+    <string name="input_sign">请输入个性签名</string>
+    <string name="save">保存</string>
+    <string name="notaemail">请输入正确的email</string>
+    <string name="complete_payinfo">已完善</string>
+    <string name="uncomplete_payinfo">未完善</string>
+    <string name="notAuthentication">请先完成实名认证</string>
+    <string name="waitAuthentication">请耐心等待审核完成</string>
+    <string name="add">添加</string>
+    <string name="tips">提示</string>
+    <string name="relogintips">该账号已在其他设备登录，请重新登录！如非本人操作，请及时修改密码！</string>
+    <string name="confirm">确  定</string>
+    <string name="inputoldpsd">请输入原支付密码</string>
+    <string name="setsuccess">设置成功</string>
 
 </resources>

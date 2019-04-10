@@ -1,6 +1,7 @@
 package com.zxjk.duoduo.network.response;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * @author Administrator
@@ -326,5 +327,43 @@ public class FriendInfoResponse implements Serializable {
 
     public void setSortLetters(String sortLetters) {
         this.sortLetters = sortLetters;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FriendInfoResponse that = (FriendInfoResponse) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(duoduoId, that.duoduoId) &&
+                Objects.equals(nick, that.nick) &&
+                Objects.equals(realname, that.realname) &&
+                Objects.equals(mobile, that.mobile) &&
+                Objects.equals(password, that.password) &&
+                Objects.equals(address, that.address) &&
+                Objects.equals(email, that.email) &&
+                Objects.equals(headPortrait, that.headPortrait) &&
+                Objects.equals(sex, that.sex) &&
+                Objects.equals(signature, that.signature) &&
+                Objects.equals(walletAddress, that.walletAddress) &&
+                Objects.equals(idCard, that.idCard) &&
+                Objects.equals(isShowRealname, that.isShowRealname) &&
+                Objects.equals(updateTime, that.updateTime) &&
+                Objects.equals(createTime, that.createTime) &&
+                Objects.equals(isDelete, that.isDelete) &&
+                Objects.equals(token, that.token) &&
+                Objects.equals(remark, that.remark) &&
+                Objects.equals(rongToken, that.rongToken) &&
+                Objects.equals(payPwd, that.payPwd) &&
+                Objects.equals(isFirstLogin, that.isFirstLogin) &&
+                Objects.equals(renegeNumber, that.renegeNumber) &&
+                Objects.equals(isConfine, that.isConfine) &&
+                Objects.equals(sortLetters, that.sortLetters) &&
+                Objects.equals(status, that.status);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, duoduoId, nick, realname, mobile, password, address, email, headPortrait, sex, signature, walletAddress, idCard, isShowRealname, updateTime, createTime, isDelete, token, remark, rongToken, payPwd, isFirstLogin, renegeNumber, isConfine, sortLetters, status);
     }
 }

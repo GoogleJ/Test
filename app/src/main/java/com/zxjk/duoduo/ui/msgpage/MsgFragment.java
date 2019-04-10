@@ -29,7 +29,6 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener  ,
     private ConversationListFragment mConversationListFragment = null;
     private CommonPopupWindow popupWindow;
 
-
     View rootView;
 
     @Nullable

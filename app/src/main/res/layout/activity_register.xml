@@ -140,7 +140,7 @@
                         android:textCursorDrawable="@null"
                         android:hint="@string/edit_register_code"
                         android:inputType="number"
-                        android:maxLength="11"
+                        android:maxLength="6"
                         android:textSize="16sp" />
 
                     <TextView

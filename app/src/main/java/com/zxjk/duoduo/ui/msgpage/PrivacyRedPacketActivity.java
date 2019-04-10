@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
@@ -27,6 +28,7 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketMessage;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
+import com.zxjk.duoduo.utils.MoneyValueFilter;
 import com.zxjk.duoduo.weight.dialog.SelectPopupWindow;
 
 import androidx.annotation.Nullable;
@@ -96,6 +98,7 @@ public class PrivacyRedPacketActivity extends BaseActivity implements SelectPopu
                 m_red_envelopes_money_text.setText(s);
             }
         });
+        m_red_envelopes_money_edit.setFilters(new InputFilter[]{new MoneyValueFilter()});
     }
 
     @SuppressLint("CheckResult")
@@ -140,6 +143,10 @@ public class PrivacyRedPacketActivity extends BaseActivity implements SelectPopu
                         }
                     });
                 }, this::handleApiError);
+    }
+
+    public void back(View view) {
+        finish();
     }
 
     public void showRecord(View view) {

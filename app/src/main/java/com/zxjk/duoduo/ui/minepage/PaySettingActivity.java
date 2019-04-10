@@ -27,18 +27,17 @@ public class PaySettingActivity extends BaseActivity {
         setContentView(R.layout.activity_pay_setting);
         retrievePayPwd = findViewById(R.id.retrieve_pay_pwd);
         title_bar=findViewById(R.id.title_bar);
-        title_bar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        title_bar.getLeftImageView().setOnClickListener(v -> finish());
 
     }
 
     public void retrievePayPwd(View view) {
-        if (!Constant.currentUser.getIsAuthentication().equals("0")) {
+        if (Constant.currentUser.getIsAuthentication().equals("1")) {
             ToastUtils.showShort(R.string.verifyfirstpls);
+            return;
+        }
+        if (Constant.currentUser.getIsAuthentication().equals("2")) {
+            ToastUtils.showShort(R.string.waitAuthentication);
             return;
         }
         startActivity(new Intent(PaySettingActivity.this, RetrievePayPwdActivity.class));

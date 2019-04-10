@@ -44,7 +44,7 @@
             android:paddingTop="4dp"
             android:paddingEnd="8dp"
             android:paddingBottom="4dp"
-            android:text="保存"
+            android:text="@string/save"
             android:textColor="@drawable/selector_text_normal"
             android:textSize="15sp" />
 
@@ -66,7 +66,7 @@
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:background="@null"
-            android:hint="请输入个性签名"
+            android:hint="@string/input_sign"
             android:maxLength="20"
             android:textColor="@color/themecolor" />
 
@@ -75,7 +75,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="20"
-            android:textColor="#BCBDC7" />
+            android:textColor="#BCBDC7"
+            android:visibility="gone" />
 
     </LinearLayout>
 

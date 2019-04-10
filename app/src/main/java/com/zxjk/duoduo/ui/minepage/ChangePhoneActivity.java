@@ -28,6 +28,7 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
     private EditText etChangePhone;
     private EditText etChangePhoneVerify;
     private TextView tvChangePhoneGetVerify;
+    private TextView tvChangePhoneCountryCode;
     private String phoneReciveVerify;
 
     CountDownTimer timer = new CountDownTimer(60000, 1000) {
@@ -52,7 +53,10 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
         etChangePhone = findViewById(R.id.etChangePhone);
         etChangePhoneVerify = findViewById(R.id.etChangePhoneVerify);
         tvChangePhoneGetVerify = findViewById(R.id.tvChangePhoneGetVerify);
+        tvChangePhoneCountryCode = findViewById(R.id.tvChangePhoneCountryCode);
         tvChangePhoneGetVerify.setOnClickListener(this);
+
+        tvChangePhoneCountryCode.setText(Constant.HEAD_LOCATION);
     }
 
     //完成
@@ -114,7 +118,7 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
 
     private void getVerifyCode() {
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .getCode(Constant.HEAD_LOCATION + phoneReciveVerify,"1")
+                .getCode(phoneReciveVerify,"0")
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ChangePhoneActivity.this)))
                 .compose(RxSchedulers.normalTrans())

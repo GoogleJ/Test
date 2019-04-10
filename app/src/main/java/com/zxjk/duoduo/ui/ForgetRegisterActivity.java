@@ -1,9 +1,11 @@
 package com.zxjk.duoduo.ui;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -11,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.CountryEntity;
@@ -80,26 +83,25 @@ public class ForgetRegisterActivity extends BaseActivity implements View.OnClick
     @OnClick({R.id.btn_commit, R.id.text_user_agreement, R.id.text_go_login, R.id.mobile_code, R.id.login_country})
     @Override
     public void onClick(View v) {
-        int phoneLength = 11;
         switch (v.getId()) {
             case R.id.btn_commit:
                 mobile = edit_mobile.getText().toString();
                 password = edit_password.getText().toString();
                 code = edit_mobile_code.getText().toString();
-                if (mobile.isEmpty() && "".equals(mobile) && mobile.length() == phoneLength) {
+                if (TextUtils.isEmpty(mobile) || !RegexUtils.isMobileExact(mobile)) {
                     ToastUtils.showShort(getString(R.string.edit_mobile_tip));
                     return;
                 }
-                if (password.isEmpty() || 5 >= password.length() || password.length() >= 14) {
-                    ToastUtils.showShort(getString(R.string.edit_password_reg));
-                    return;
-                }
-                if (code.isEmpty() || code.length() != 6) {
+
+                if (TextUtils.isEmpty(code) || code.length() != 6) {
                     ToastUtils.showShort(getString(R.string.edit_code_tip));
                     return;
                 }
 
-
+                if (TextUtils.isEmpty(password) || 5 >= password.length() || password.length() >= 14) {
+                    ToastUtils.showShort(getString(R.string.edit_password_reg));
+                    return;
+                }
                 forgetPwd(mobile, password, code);
                 break;
             case R.id.text_user_agreement:
@@ -108,15 +110,13 @@ public class ForgetRegisterActivity extends BaseActivity implements View.OnClick
                 LoginActivity.start(this);
                 break;
             case R.id.mobile_code:
-                String countryCode = login_country.getText().toString();
+                String countryCode = login_country.getText().toString().trim().substring(1);
                 mobile = edit_mobile.getText().toString();
                 password = edit_password.getText().toString();
                 code = edit_mobile_code.getText().toString();
-                if (!mobile.isEmpty() && !"".equals(mobile) && mobile.length() == phoneLength) {
-                    String type="0";
-                    registerCode(countryCode + "-" + mobile,type);
+                if (!TextUtils.isEmpty(mobile) && RegexUtils.isMobileExact(mobile)) {
+                    registerCode(countryCode + "-" + mobile);
                     return;
-
                 }
                 ToastUtils.showShort(getString(R.string.edit_mobile_tip));
                 break;
@@ -126,7 +126,6 @@ public class ForgetRegisterActivity extends BaseActivity implements View.OnClick
             default:
                 break;
         }
-
     }
 
     @Override
@@ -143,22 +142,18 @@ public class ForgetRegisterActivity extends BaseActivity implements View.OnClick
         super.onDestroy();
     }
 
-    public void registerCode(String phone,String type) {
-
+    @SuppressLint("CheckResult")
+    public void registerCode(String phone) {
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .getCode(phone,type)
+                .getCode(phone, "0")
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.normalTrans())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) throws Exception {
-                        countDownTimer.start();
-                        ToastUtils.showShort(getString(R.string.code_label));
-                        btn_commit.setEnabled(false);
-                    }
-                }, throwable -> handleApiError(throwable));
+                .subscribe(s -> {
+                    countDownTimer.start();
+                    ToastUtils.showShort(getString(R.string.code_label));
+                    btn_commit.setEnabled(false);
+                }, this::handleApiError);
 
     }
 
@@ -169,18 +164,9 @@ public class ForgetRegisterActivity extends BaseActivity implements View.OnClick
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) throws Exception {
-                        finish();
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        handleApiError(throwable);
-                    }
-                });
+                .subscribe(s -> finish(), throwable -> handleApiError(throwable));
     }
+
     private CountDownTimer countDownTimer = new CountDownTimer(60000, 1000) {
         @Override
         public void onTick(long millisUntilFinished) {

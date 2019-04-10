@@ -7,15 +7,24 @@ import android.widget.FrameLayout;
 import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.network.Api;
+import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.FriendInfoResponse;
+import com.zxjk.duoduo.network.rx.RxSchedulers;
+import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.CommunityFragment;
 import com.zxjk.duoduo.ui.minepage.MineFragment;
 import com.zxjk.duoduo.ui.msgpage.MsgFragment;
 import com.zxjk.duoduo.ui.walletpage.WalletFragment;
 
+import java.util.List;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 
@@ -27,7 +36,7 @@ import static com.google.android.material.tabs.TabLayout.MODE_FIXED;
  *
  * @author Administrator
  */
-public class HomeActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener {
+public class HomeActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
 
     BottomNavigationBar m_bottom_bar;
     FrameLayout fragment_content;
@@ -41,11 +50,13 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationB
     WalletFragment walletFragment;
     MineFragment mineFragment;
 
-    @SuppressLint("WrongConstant")
+    @SuppressLint({"WrongConstant", "CheckResult"})
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        initFriendList();
 
         initFragment();
 
@@ -94,6 +105,15 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationB
                 badgeItem.show(true);
             }
         }, Conversation.ConversationType.PRIVATE);
+    }
+
+    @SuppressLint("CheckResult")
+    private void initFriendList() {
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .getFriendListById()
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.ioObserver())
+                .subscribe(friendInfoResponses -> Constant.friendsList = friendInfoResponses.data, t -> initFriendList());
     }
 
     private void initFragment() {
@@ -153,5 +173,4 @@ public class HomeActivity extends AppCompatActivity implements BottomNavigationB
             mFragment = fragment;
         }
     }
-
 }

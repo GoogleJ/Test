@@ -43,7 +43,7 @@ public class RxException {
     public static class DuplicateLoginExcepiton extends Exception {
         private String msg;
 
-        DuplicateLoginExcepiton(String msg) {
+        public DuplicateLoginExcepiton(String msg) {
             super(msg);
             this.msg = msg;
         }

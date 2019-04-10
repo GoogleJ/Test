@@ -51,7 +51,6 @@ public class RegisterBlockWalletService extends Service {
                     Constant.currentUser.setWalletAddress(walletAddress);
                     stopSelf();
                 }, t -> {
-                    LogUtils.e(t.getCause());
                     Observable.timer(20, TimeUnit.SECONDS)
                             .subscribe(aLong -> startService(intent), throwable -> {
                             });

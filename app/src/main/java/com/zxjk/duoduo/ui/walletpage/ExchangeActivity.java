@@ -91,7 +91,7 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                             totalPrice = count * rate;
                             chooseCountWindow.dismiss();
                             tvExchangeChooseCount.setText(s1);
-                            tvExchangeTotal.setText(String.valueOf(totalPrice));
+                            tvExchangeTotal.setText(String.valueOf(totalPrice)+ " CNY");
                         });
                     });
                     return ServiceFactory.getInstance().getBaseService(Api.class).getPayInfo().compose(RxSchedulers.normalTrans());

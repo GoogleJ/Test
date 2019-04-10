@@ -83,14 +83,12 @@ public class GlobalSearchActivity extends BaseActivity {
             FriendInfoResponse user = mAdapter.getData().get(position);
             getFriendListById();
 
-
-            if (friendInfoResponse==null||friendInfoResponse.getId().equals(null)||friendInfoResponse.getId().equals("")){
+            if (friendInfoResponse == null || friendInfoResponse.getId().equals(null) || friendInfoResponse.getId().equals("")) {
                 intent = new Intent(GlobalSearchActivity.this, AddFriendDetailsActivity.class);
-                intent.putExtra("searchAddFriendDetails", user);
-                intent.putExtra("intentAddType", 0);
+                intent.putExtra("newFriend", user);
                 startActivity(intent);
                 return;
-            }else{
+            } else {
                 if (friendInfoResponse.getId().equals(user.getId())) {
                     intent = new Intent(this, FriendDetailsActivity.class);
                     intent.putExtra("intentType", 1);
@@ -98,15 +96,11 @@ public class GlobalSearchActivity extends BaseActivity {
                     startActivity(intent);
                 } else {
                     intent = new Intent(GlobalSearchActivity.this, AddFriendDetailsActivity.class);
-                    intent.putExtra("searchAddFriendDetails", user);
-                    intent.putExtra("intentAddType", 0);
+                    intent.putExtra("newFriend", user);
                     startActivity(intent);
                 }
                 return;
             }
-
-
-
         });
     }
 

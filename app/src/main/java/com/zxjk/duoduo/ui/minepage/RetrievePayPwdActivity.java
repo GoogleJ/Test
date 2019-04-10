@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.minepage;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -92,8 +93,7 @@ public class RetrievePayPwdActivity extends BaseActivity implements View.OnClick
                 }
                 break;
             case R.id.text_get_code:
-                String type = "1";
-                registerCode(phone.getText().toString(), type);
+                registerCode(phone.getText().toString());
                 break;
             default:
                 break;
@@ -101,19 +101,21 @@ public class RetrievePayPwdActivity extends BaseActivity implements View.OnClick
 
     }
 
-    public void registerCode(String phone, String type) {
-
+    @SuppressLint("CheckResult")
+    public void registerCode(String phone) {
+        countDownTimer.start();
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .getCode(phone, type)
+                .getCode(phone, "1")
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
                     ToastUtils.showShort(getString(R.string.code_label));
                     messagfeCode = s;
-                    countDownTimer.start();
-                }, this::handleApiError);
-
+                }, t -> {
+                    handleApiError(t);
+                    countDownTimer.cancel();
+                });
     }
 
     private CountDownTimer countDownTimer = new CountDownTimer(60000, 1000) {

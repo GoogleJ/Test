@@ -1,6 +1,7 @@
 package com.zxjk.duoduo.ui.base;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -11,6 +12,8 @@ import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.rx.RxException;
+import com.zxjk.duoduo.ui.LoginActivity;
+import com.zxjk.duoduo.weight.dialog.ReLoginDialog;
 
 import java.io.File;
 import java.util.List;
@@ -23,17 +26,20 @@ import top.zibin.luban.Luban;
 
 @SuppressLint({"CheckResult", "Registered"})
 public class BaseActivity extends RxAppCompatActivity {
-
-    private boolean run = false;
-    private final Handler handler = new Handler();
     public void handleApiError(Throwable throwable) {
-        if (throwable instanceof RxException.DuplicateLoginExcepiton) {
-            //TODO code601，后续考虑如何处理(弹对话框、强制退出)
-            LogUtils.e("已经登录，提示用户退出");
-            Constant.currentUser = new LoginResponse();
+        if (throwable.getCause() instanceof RxException.DuplicateLoginExcepiton ||
+                throwable instanceof RxException.DuplicateLoginExcepiton) {
+            // 重复登录，挤掉线
+            ReLoginDialog reLoginDialog = new ReLoginDialog(this);
+            reLoginDialog.setOnClickListener(() -> {
+                Constant.clear();
+                Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            });
+            reLoginDialog.show();
             return;
         }
-        LogUtils.d("DEBUG",throwable.getMessage());
 
         ToastUtils.showShort(RxException.getMessage(throwable));
     }
@@ -64,10 +70,12 @@ public class BaseActivity extends RxAppCompatActivity {
     protected void onResume() {
         super.onResume();
     }
+
     @Override
     protected void onPause() {
         super.onPause();
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -11,10 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.google.gson.Gson;
 import com.zxjk.duoduo.Application;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
@@ -76,15 +75,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         edit_mobile.setText(SPUtils.getInstance().getString("mobile"));
 
-//        login("18202987805","123456");
+        login("18202987805", "123456");
 //        login("15249047865","123456");
 //        login("14725836911","123456");
 //        login("15935910008","123456");
 //        login("18625658542","123456");
-        login("15529419986","123456");
+//        login("15529419986","123456");
 //         login("18592054972","123456");
     }
-
 
     @OnClick({R.id.login_country
             , R.id.text_forget_password
@@ -112,26 +110,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.btn_login:
 
-//                String mobile = edit_mobile.getText().toString().trim();
-//                String password = edit_password.getText().toString().trim();
-//                if (TextUtils.isEmpty(mobile) || TextUtils.isEmpty(password)) {
-//                    ToastUtils.showShort(getString(R.string.edit_mobile_or_password_tip));
-//                    return;
-//                }
-//                if (TextUtils.isEmpty(mobile) && "".equals(mobile) ) {
-//                    ToastUtils.showShort(getString(R.string.edit_mobile_tip));
-//                    return;
-//                }
-//                if (TextUtils.isEmpty(password) || 5 >= password.length() || password.length() >= 14) {
-//                    ToastUtils.showShort(getString(R.string.edit_password_reg));
-//                    return;
-//                }
-//                login(mobile,password);
-//                SPUtils.getInstance().put("mobile", edit_mobile.getText().toString().trim());
+                String mobile = edit_mobile.getText().toString().trim();
+                String password = edit_password.getText().toString().trim();
+                if (TextUtils.isEmpty(mobile) || TextUtils.isEmpty(password)) {
+                    ToastUtils.showShort(getString(R.string.edit_mobile_or_password_tip));
+                    return;
+                }
+                if (TextUtils.isEmpty(mobile) && "".equals(mobile)) {
+                    ToastUtils.showShort(getString(R.string.edit_mobile_tip));
+                    return;
+                }
+                if (TextUtils.isEmpty(password) || 5 >= password.length() || password.length() >= 14) {
+                    ToastUtils.showShort(getString(R.string.edit_password_reg));
+                    return;
+                }
+                login(mobile, password);
+                SPUtils.getInstance().put("mobile", edit_mobile.getText().toString().trim());
                 break;
             default:
                 break;
-
         }
     }
 
@@ -144,10 +141,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
-    Disposable subscribe;
 
+    @SuppressLint("CheckResult")
     public void login(String phone, String pwd) {
-        subscribe = ServiceFactory.getInstance().getBaseService(Api.class)
+        ServiceFactory.getInstance().getBaseService(Api.class)
                 .login(phone, getMD5(pwd))
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
@@ -157,7 +154,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     Constant.userId = loginResponse.getId();
                     Constant.currentUser = loginResponse;
 
-                    if (loginResponse.getIsDelete().equals(Constant.FLAG_IS_Delete)) {
+                    if (loginResponse.getIsDelete().equals(Constant.FLAG_IS_DELETE)) {
                         dialog = new AccountFreezeDialog(LoginActivity.this);
                         dialog.show();
                     } else if (loginResponse.getIsFirstLogin().equals(Constant.FLAG_FIRSTLOGIN)) {
@@ -172,7 +169,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 
     public void connect(String token) {
-        Log.d("GJSONSSSSS", "--token: " + token);
         if (getApplicationInfo().packageName.equals(Application.getCurProcessName(getApplicationContext()))) {
             RongIM.connect(token, new RongIMClient.ConnectCallback() {
                 /**
@@ -181,7 +177,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                  */
                 @Override
                 public void onTokenIncorrect() {
-                    Log.d("GJSONSSSSS", "--TokenIncorrect");
                 }
 
                 /**
@@ -190,7 +185,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                  */
                 @Override
                 public void onSuccess(String userid) {
-                    Log.d("GJSONSSSSS", "--onSuccess" + userid);
                     UserInfo userInfo = new UserInfo(userid, Constant.currentUser.getNick(), Uri.parse(Constant.currentUser.getHeadPortrait()));
                     RongIM.getInstance().setCurrentUserInfo(userInfo);
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
@@ -204,19 +198,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                  */
                 @Override
                 public void onError(RongIMClient.ErrorCode errorCode) {
-                    Log.d("GJSONSSSSS", "--onError" + errorCode);
                 }
             });
         }
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        if (subscribe != null && !subscribe.isDisposed()) {
-            subscribe.dispose();
-        }
-        super.onDestroy();
     }
 
 }

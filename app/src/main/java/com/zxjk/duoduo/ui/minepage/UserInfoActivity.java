@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -123,6 +124,7 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
     //修改头像
     public void changeHeadImg(View view) {
         cameraPremissions(this);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         selectPicPopWindow.showAtLocation(findViewById(android.R.id.content),
                 Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
     }

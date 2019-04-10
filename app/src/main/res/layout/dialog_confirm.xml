@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:gravity="center_horizontal"
+    android:minWidth="200dp"
     android:orientation="vertical">
 
     <TextView
@@ -35,6 +36,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <TextView
@@ -43,8 +45,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:text="@string/cancel"
             android:textColor="@color/textcolor3"
             android:textSize="17sp" />
@@ -60,8 +62,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:text="@string/rc_confirm"
             android:textColor="@color/themecolor"
             android:textSize="17sp" />

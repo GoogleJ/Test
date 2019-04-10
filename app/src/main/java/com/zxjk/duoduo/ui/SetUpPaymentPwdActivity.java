@@ -60,9 +60,11 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
         ButterKnife.bind(this);
         firstLogin = getIntent().getBooleanExtra("firstLogin", false);
 
+        if (!firstLogin) {
+            m_set_payment_pwd_label.setText(R.string.inputoldpsd);
+        }
+
         initUI();
-
-
     }
 
     private void initUI() {
@@ -88,8 +90,6 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
             @Override
             public void inputFinished(String inputPsd) {
                 // TODO: 2018/1/3 输完逻辑
-
-
                 if (TextUtils.isEmpty(oldPwd) && !firstLogin) {
                     payPsdInputView.cleanPsd();
                     oldPwd = inputPsd;
@@ -108,6 +108,7 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
 
                 if (!newPwd.equals(newPwdTwo)) {
                     ToastUtils.showShort(R.string.passnotsame);
+                    payPsdInputView.cleanPsd();
                     newPwdTwo = "";
                     newPwd = "";
                     m_set_payment_pwd_label.setText(R.string.please_set_paypass1);
@@ -118,48 +119,42 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
                 commmitBtn.setVisibility(View.VISIBLE);
             }
         });
-        commmitBtn.setOnClickListener(v -> {
-            updatePwd("", MD5Utils.getMD5(newPwd), MD5Utils.getMD5(newPwdTwo));
-        });
+        commmitBtn.setOnClickListener(v -> updatePwd("", MD5Utils.getMD5(newPwd), MD5Utils.getMD5(newPwdTwo)));
         popupWindow = new KeyboardPopupWindow(this, getWindow().getDecorView(), payPsdInputView, false);
-        payPsdInputView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (popupWindow != null) {
-                    popupWindow.show();
-                }
+        payPsdInputView.setOnClickListener(v -> {
+            if (popupWindow != null) {
+                popupWindow.show();
             }
         });
-        payPsdInputView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (popupWindow != null && isUiCreated) {
-                    popupWindow.refreshKeyboardOutSideTouchable(!hasFocus);
-                }
-                //隐藏系统软键盘
-                if (hasFocus) {
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(payPsdInputView.getWindowToken(), 0);
-                }
+        payPsdInputView.setOnFocusChangeListener((v, hasFocus) -> {
+            if (popupWindow != null && isUiCreated) {
+                popupWindow.refreshKeyboardOutSideTouchable(!hasFocus);
+            }
+            //隐藏系统软键盘
+            if (hasFocus) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(payPsdInputView.getWindowToken(), 0);
             }
         });
-}
-
+    }
 
     public void updatePwd(String oldPwd, String newPwd, String newPwdTwo) {
-
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .updatePayPwd(oldPwd, MD5Utils.getMD5(newPwd), MD5Utils.getMD5(newPwdTwo))
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
-                    ToastUtils.showShort(R.string.modifysuccess);
-                    Intent intent = new Intent(this, LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+                    if (firstLogin) {
+                        startActivity(new Intent(this, HomeActivity.class));
+                        ToastUtils.showShort(R.string.setsuccess);
+                    } else {
+                        ToastUtils.showShort(R.string.modifysuccess);
+                    }
+                    finish();
                 }, this::handleApiError);
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -170,11 +165,13 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         isUiCreated = true;
     }
+
     @Override
     protected void onDestroy() {
         if (popupWindow != null) {
