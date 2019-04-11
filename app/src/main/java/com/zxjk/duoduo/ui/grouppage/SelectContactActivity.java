@@ -3,8 +3,6 @@ package com.zxjk.duoduo.ui.grouppage;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,15 +20,8 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.adapter.AddGroupTopAdapter;
 import com.zxjk.duoduo.ui.grouppage.adapter.SelectContactAdapter;
 import com.zxjk.duoduo.utils.CommonUtils;
-
-import java.lang.invoke.CallSite;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,7 +32,8 @@ import io.reactivex.functions.Consumer;
  * @// TODO: 2019\3\28 0028 选择联系人
  */
 @SuppressLint("CheckResult")
-public class SelectContactActivity extends BaseActivity implements View.OnClickListener , TextWatcher {
+public class SelectContactActivity extends BaseActivity implements View.OnClickListener {
+
     /**
      * 确定按钮
      */
@@ -71,19 +63,17 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
 
 
     int position;
-    List<FriendInfoResponse> lists = new ArrayList<>();
+    List<FriendInfoResponse> lists=new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_contact);
-        fromZhuanChu = getIntent().getBooleanExtra("fromZhuanChu", false);
 
+        fromZhuanChu = getIntent().getBooleanExtra("fromZhuanChu", false);
         initView();
     }
-
     List<FriendInfoResponse> list = new ArrayList<>();
-
     private void initView() {
         titleBarLeftIamge = findViewById(R.id.title_left_image);
         titleRight = findViewById(R.id.title_right);
@@ -98,7 +88,6 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
         recyclerView.setAdapter(mAdapter);
         titleBarLeftIamge.setOnClickListener(this);
         titleRight.setOnClickListener(this);
-        searchEdit.addTextChangedListener(SelectContactActivity.this);
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             if (fromZhuanChu) {
                 String walletAddress = list.get(position).getWalletAddress();
@@ -115,29 +104,28 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
             topAdapter = new AddGroupTopAdapter();
             this.position = position;
             FriendInfoResponse response;
+            for (FriendInfoResponse friendInfoResponse : list) {
 
-            for (int i = 0; i <list.size(); i++) {
-                if (list.get(position).getId().equals(list.get(i).getId())) {
-                    response = new FriendInfoResponse();
-                    response.setId(list.get(i).getId());
-                    response.setHeadPortrait(list.get(i).getHeadPortrait());
+                if (list.get(position).getId().equals(friendInfoResponse.getId())) {
+                    response=new FriendInfoResponse();
+
+                    response.setId(friendInfoResponse.getId());
+                    response.setHeadPortrait(friendInfoResponse.getHeadPortrait());
                     lists.add(response);
                 }
             }
-
-
-
-//            lists = getRemoveList(lists);
             topAdapter.setNewData(lists);
+
             selectRecycler.setAdapter(topAdapter);
+
             topAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
                 @Override
                 public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                    if (topAdapter.getData().size() >= 0) {
+                    if (topAdapter.getData().size()>=0){
                         topAdapter.getData().remove(position);
                         mAdapter.notifyDataSetChanged();
                         topAdapter.notifyDataSetChanged();
-                    } else {
+                    }else{
                         return;
                     }
 
@@ -153,18 +141,18 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
                 finish();
                 break;
             case R.id.title_right:
-                int types = 0;
-                int type = getIntent().getIntExtra("addGroupType", types);
+                int types=0;
+                int type=getIntent().getIntExtra("addGroupType",types);
 
-                StringBuffer sb = new StringBuffer();
-                for (int i = 0; i < lists.size(); i++) {
-                    sb.append(lists.get(i).getId());
-                    sb.append(",");
-                }
-                if (type == 0) {
-                    makeGroup(Constant.userId, Constant.userId + "," + sb.substring(0, sb.length() - 1));
-                } else {
-                    enterGroup(getIntent().getStringExtra("groupId"), Constant.userId, sb.substring(0, sb.length() - 1));
+                    StringBuffer sb=new StringBuffer();
+                    for (int i=0;i<lists.size();i++){
+                        sb.append(lists.get(i).getId());
+                        sb.append(",");
+                    }
+                if (type==0){
+                    makeGroup(Constant.userId,Constant.userId+","+sb.substring(0,sb.length()-1));
+                }else{
+                    enterGroup(getIntent().getStringExtra("groupId"),Constant.userId,sb.substring(0,sb.length()-1));
                 }
                 break;
             default:
@@ -190,35 +178,33 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
                     }
                 }, this::handleApiError);
     }
-
     /**
      * 创建群
      */
 
     public void makeGroup(String groupOwnerId, String customerIds) {
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .makeGroup(groupOwnerId, customerIds)
+                .makeGroup(groupOwnerId,customerIds)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
                     SelectContactActivity.this.finish();
-                    Intent intent = new Intent(SelectContactActivity.this, AgreeGroupChatActivity.class);
-                    intent.putExtra("groupId", s.getId());
+                    Intent intent=new Intent(SelectContactActivity.this,AgreeGroupChatActivity.class);
+                    intent.putExtra("groupId",s);
                     startActivity(intent);
-                }, this::handleApiError);
+                },this::handleApiError);
     }
 
     /**
      * 关于同意添加群的实现
-     *
      * @param groupId
      * @param inviterId
      * @param customerIds
      */
-    public void enterGroup(String groupId, String inviterId, String customerIds) {
+    public void enterGroup(String groupId,String inviterId,String customerIds){
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .enterGroup(groupId, inviterId, customerIds)
+                .enterGroup(groupId,inviterId,customerIds)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
@@ -227,92 +213,7 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
                     public void accept(String s) throws Exception {
                         ToastUtils.showShort(getString(R.string.add_group_chat));
                     }
-                }, this::handleApiError);
+                },this::handleApiError);
 
-    }
-
-    /**
-     * 得到去除重复后的集合
-     *
-     * @param list
-     * @return
-     */
-    private static List<FriendInfoResponse> getRemoveList(List<FriendInfoResponse> list) {
-        Set set = new HashSet();
-        List<FriendInfoResponse> newList = new ArrayList<>();
-        for (Iterator iter = list.iterator(); iter.hasNext(); ) {
-            FriendInfoResponse object = (FriendInfoResponse) iter.next();
-            if (set.add(object)) {
-                newList.add(object);
-            }
-        }
-        return newList;
-    }
-
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-        String groupname = s.toString();
-        if (groupname != null || groupname.length() > 0) {
-            List<FriendInfoResponse> groupnamelist = search(groupname); //查找对应的群组数据
-            mAdapter.setNewData(groupnamelist);
-        } else {
-            mAdapter.setNewData(list);
-        }
-        mAdapter.notifyDataSetChanged();
-    }
-    /**
-     * 模糊查询
-     *
-     * @param str
-     * @return
-     */
-    private List<FriendInfoResponse> search(String str) {
-        List<FriendInfoResponse> filterList = new ArrayList<FriendInfoResponse>();// 过滤后的list
-        if (str.matches("^([0-9]|[/+]).*")) {// 正则表达式 匹配以数字或者加号开头的字符串(包括了带空格及-分割的号码)
-            String simpleStr = str.replaceAll("\\-|\\s", "");
-            for (FriendInfoResponse contact : list) {
-                if (contact.getNick() != null) {
-                    if (contact.getNick().contains(simpleStr) || contact.getNick().contains(str)) {
-                        if (!filterList.contains(contact)) {
-                            filterList.add(contact);
-                        }
-                    }
-                }
-            }
-        } else {
-            for (FriendInfoResponse contact : list) {
-                if (contact.getNick() != null) {
-                    //姓名全匹配,姓名首字母简拼匹配,姓名全字母匹配
-                    boolean isNameContains = contact.getNick().toLowerCase(Locale.CHINESE)
-                            .contains(str.toLowerCase(Locale.CHINESE));
-
-//                    boolean isSortKeyContains = contact.sortKey.toLowerCase(Locale.CHINESE).replace(" ", "")
-//                            .contains(str.toLowerCase(Locale.CHINESE));
-//
-//                    boolean isSimpleSpellContains = contact.sortToken.simpleSpell.toLowerCase(Locale.CHINESE)
-//                            .contains(str.toLowerCase(Locale.CHINESE));
-//
-//                    boolean isWholeSpellContains = contact.sortToken.wholeSpell.toLowerCase(Locale.CHINESE)
-//                            .contains(str.toLowerCase(Locale.CHINESE));
-
-                    if (isNameContains) {
-                        if (!filterList.contains(contact)) {
-                            filterList.add(contact);
-                        }
-                    }
-                }
-            }
-        }
-        return filterList;
     }
 }

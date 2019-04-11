@@ -40,6 +40,7 @@ public class BaseActivity extends RxAppCompatActivity {
             reLoginDialog.show();
             return;
         }
+        LogUtils.d("DEBUG",throwable.getMessage());
 
         ToastUtils.showShort(RxException.getMessage(throwable));
     }

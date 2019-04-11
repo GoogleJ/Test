@@ -58,6 +58,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:paddingEnd="10dp"
                         android:id="@+id/login_country"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -68,7 +69,6 @@
                         android:id="@+id/login_country_bottom"
                         android:layout_width="10dp"
                         android:layout_height="5dp"
-                        android:layout_marginLeft="10dp"
                         app:srcCompat="@drawable/ic_bottom" />
 
                     <com.zxjk.duoduo.weight.ClearableEditTextWithIcon

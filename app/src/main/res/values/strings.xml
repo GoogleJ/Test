@@ -608,5 +608,7 @@
     <string name="tvWalletPageExchange1">火币交易所\\n支持HKB交易</string>
     <string name="tvWalletPageExchange2">嘟嘟交易所\\n火热准备中...</string>
     <string name="industry_information">行业资讯</string>
+    <string name="fanhui">返回</string>
+    <string name="selectcountries">选择国家和地区</string>
 
 </resources>

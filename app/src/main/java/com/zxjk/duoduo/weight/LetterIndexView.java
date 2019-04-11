@@ -38,7 +38,7 @@ public class LetterIndexView extends View{
 
     private Drawable hintDrawable;
 
-    private int stringArrayId = R.array.letter_list;
+    private int stringArrayId = R.array.letter_list3;
 
     public LetterIndexView(Context paramContext) {
         this(paramContext, null);
@@ -54,7 +54,7 @@ public class LetterIndexView extends View{
         this.offset = 0.0F;
         this.hit = false;
         this.normalColor = Color.GRAY;
-        this.touchColor = Color.WHITE;
+        this.touchColor = Color.LTGRAY;
 
         hintDrawable = paramContext.getResources().getDrawable(R.drawable.nim_contact_letter_view_hit_point);
         hintDrawable.setBounds(0, 0, hintDrawable.getIntrinsicWidth(), hintDrawable.getIntrinsicHeight());
@@ -108,7 +108,7 @@ public class LetterIndexView extends View{
         //
         final float letterHeight = ((float) getHeight()) / originalLetters.length;
         float width = getWidth();
-        float textSize = letterHeight * 5 / 6;
+        float textSize = letterHeight * 5 / 8;
         mPaint.setTextSize(textSize);
         float remianHeight = getHeight() - letterHeight * letters.length;
         float padding = remianHeight / (letters.length + 1);
