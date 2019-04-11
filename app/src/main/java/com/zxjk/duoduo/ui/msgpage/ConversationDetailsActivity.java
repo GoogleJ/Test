@@ -170,7 +170,7 @@ public class ConversationDetailsActivity extends BaseActivity implements View.On
                 }
                 break;
             case R.id.m_people_information_voice_calls:
-                ToastUtils.showShort("此功能暂未实现");
+                ToastUtils.showShort(getString(R.string.under_development));
                 break;
             case R.id.update_rename:
                 startActivity(new Intent(this, ModifyNotesActivity.class));
@@ -257,7 +257,7 @@ public class ConversationDetailsActivity extends BaseActivity implements View.On
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
-                    ToastUtils.showShort("删除成功");
+                    ToastUtils.showShort(getString(R.string.the_friend_has_been_deleted));
                     dialog.dismiss();
 
                 }, this::handleApiError);

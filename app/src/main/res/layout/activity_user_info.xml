@@ -48,7 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="头像"
+                    android:text="@string/avatar"
                     android:textColor="@color/themecolor"
                     android:textSize="16sp" />
 
@@ -68,7 +68,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toStartOf="@id/ivUserInfoRightArrow1"
                     android:scaleType="centerCrop"
-                    android:src="#e0e0e0" />
+                    android:src="@color/ivUserInfoHead" />
 
             </RelativeLayout>
 
@@ -76,7 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginStart="10dp"
-                android:background="#dddddd" />
+                android:background="@color/exchange_line" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -91,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="昵称"
+                    android:text="@string/nick"
                     android:textColor="@color/themecolor"
                     android:textSize="16sp" />
 
@@ -118,7 +118,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginStart="10dp"
-                android:background="#dddddd" />
+                android:background="@color/exchange_line" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -133,7 +133,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="性别"
+                    android:text="@string/gender"
                     android:textColor="@color/themecolor"
                     android:textSize="16sp" />
 
@@ -159,7 +159,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:background="#f8f8f8" />
+                android:background="@color/personal_information_line" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -173,7 +173,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="嘟嘟号"
+                    android:text="@string/m_add_my_way_duoduo_id"
                     android:textColor="@color/themecolor"
                     android:textSize="16sp" />
 
@@ -201,7 +201,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginStart="10dp"
-                android:background="#dddddd" />
+                android:background="@color/exchange_line" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -216,7 +216,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="我的二维码"
+                    android:text="@string/my_qr_code"
                     android:textColor="@color/themecolor"
                     android:textSize="16sp" />
 
@@ -242,7 +242,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:background="#f8f8f8" />
+                android:background="@color/personal_information_line" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -256,7 +256,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="姓名"
+                    android:text="@string/name"
                     android:textColor="@color/themecolor"
                     android:textSize="16sp" />
 
@@ -285,7 +285,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginStart="10dp"
-                android:background="#dddddd" />
+                android:background="@color/exchange_line" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -300,7 +300,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="手机号码"
+                    android:text="@string/phone_number_label"
                     android:textColor="@color/themecolor"
                     android:textSize="16sp" />
 
@@ -327,7 +327,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginStart="10dp"
-                android:background="#dddddd" />
+                android:background="@color/exchange_line" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -343,7 +343,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="个性签名"
+                    android:text="@string/sign"
                     android:textColor="@color/themecolor"
                     android:textSize="16sp" />
 
@@ -375,7 +375,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginStart="10dp"
-                android:background="#dddddd" />
+                android:background="@color/exchange_line" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -391,7 +391,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="邮箱"
+                    android:text="@string/email"
                     android:textColor="@color/themecolor"
                     android:textSize="16sp" />
 
@@ -422,7 +422,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:background="#f8f8f8" />
+                android:background="@color/personal_information_line" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -437,7 +437,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="钱包地址"
+                    android:text="@string/wallet_address"
                     android:textColor="@color/themecolor"
                     android:textSize="16sp" />
 
@@ -460,7 +460,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="#f8f8f8" />
+                android:background="@color/personal_information_line" />
 
         </LinearLayout>
 

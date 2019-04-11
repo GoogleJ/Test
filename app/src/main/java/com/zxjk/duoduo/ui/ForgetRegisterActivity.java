@@ -107,7 +107,9 @@ public class ForgetRegisterActivity extends BaseActivity implements View.OnClick
             case R.id.text_user_agreement:
                 break;
             case R.id.text_go_login:
-                LoginActivity.start(this);
+                Intent intent = new Intent(this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 break;
             case R.id.mobile_code:
                 String countryCode = login_country.getText().toString().trim().substring(1);
@@ -171,13 +173,13 @@ public class ForgetRegisterActivity extends BaseActivity implements View.OnClick
         @Override
         public void onTick(long millisUntilFinished) {
             long time = millisUntilFinished / 1000;
-            mobile_code.setText(time + "秒后重新获取");
+            mobile_code.setText(time + getString(R.string.regain_after_seconds));
             mobile_code.setClickable(false);
         }
 
         @Override
         public void onFinish() {
-            mobile_code.setText("重新获取验证码");
+            mobile_code.setText(getString(R.string.regain_verification_code));
             mobile_code.setClickable(true);
         }
     };

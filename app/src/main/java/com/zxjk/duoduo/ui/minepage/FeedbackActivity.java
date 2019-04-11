@@ -41,9 +41,9 @@ public class FeedbackActivity extends BaseActivity {
      */
     public void feedbackDetermine(View view) {
         if (feedbackEdit.getText().toString().isEmpty()) {
-            ToastUtils.showShort("请输入反馈的意见");
+            ToastUtils.showShort(getString(R.string.please_enter_feedback_comments));
         } else {
-            ToastUtils.showShort("提交成功");
+            ToastUtils.showShort(getString(R.string.transfer_commit_successful));
             finish();
         }
     }

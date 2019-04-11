@@ -12,7 +12,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#ffffff"
+        android:background="@color/confirm_buy"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -20,8 +20,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="输入支付密码"
-            android:textColor="#000000"
+            android:text="@string/pay_pwd_enter"
+            android:textColor="@color/black"
             android:textSize="14sp"/>
 
         <com.zxjk.duoduo.weight.dialog.PswView
@@ -34,15 +34,14 @@
 
         <View
             android:layout_marginTop="15dp"
-            android:background="#dedede"
+            android:background="@color/popupWindow"
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
 
         <GridView
-            android:background="#dedede"
+            android:background="@color/popupWindow"
             android:horizontalSpacing="1dp"
             android:verticalSpacing="1dp"
-
             android:id="@+id/gridView"
             android:numColumns="3"
             android:layout_width="match_parent"

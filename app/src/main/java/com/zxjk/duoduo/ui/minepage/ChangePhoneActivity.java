@@ -35,12 +35,12 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
         @Override
         public void onTick(long millisUntilFinished) {
             long time = millisUntilFinished / 1000;
-            tvChangePhoneGetVerify.setText(time + "秒后重新获取");
+            tvChangePhoneGetVerify.setText(time +getString(R.string.regain_after_seconds));
         }
 
         @Override
         public void onFinish() {
-            tvChangePhoneGetVerify.setText("重新获取验证码");
+            tvChangePhoneGetVerify.setText(getString(R.string.regain_verification_code));
             tvChangePhoneGetVerify.setClickable(true);
         }
     };
@@ -63,23 +63,23 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
     public void submit(View view) {
         String phone = etChangePhone.getText().toString();
         if (TextUtils.isEmpty(phone)) {
-            ToastUtils.showShort("请输入手机号");
+            ToastUtils.showShort(getString(R.string.please_enter_phone_number));
             return;
         }
 
         String verifyCode = etChangePhoneVerify.getText().toString();
         if (TextUtils.isEmpty(verifyCode)) {
-            ToastUtils.showShort("请输入验证码");
+            ToastUtils.showShort(getString(R.string.please_enter_verification_code));
             return;
         }
 
         if (!RegexUtils.isMobileExact(phone)) {
-            ToastUtils.showShort("请输入正确手机号");
+            ToastUtils.showShort(getString(R.string.please_enter_a_valid_phone_number));
             return;
         }
 
         if (!phone.equals(phoneReciveVerify)) {
-            ToastUtils.showShort("验证码错误");
+            ToastUtils.showShort(getString(R.string.verification_code_error));
             return;
         }
 
@@ -94,7 +94,7 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
                     Constant.currentUser.setMobile(phoneReciveVerify);
-                    ToastUtils.showShort("修改成功");
+                    ToastUtils.showShort(getString(R.string.successfully_modified));
                     finish();
                 }, this::handleApiError);
     }
@@ -103,7 +103,7 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View v) {
         String phone = etChangePhone.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
-            ToastUtils.showShort("请输入手机号");
+            ToastUtils.showShort(getString(R.string.please_enter_phone_number));
             return;
         }
         if (RegexUtils.isMobileExact(phone)) {
@@ -113,7 +113,7 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
             timer.start();
             return;
         }
-        ToastUtils.showShort("请输入正确手机号");
+        ToastUtils.showShort(getString(R.string.please_enter_a_valid_phone_number));
     }
 
     private void getVerifyCode() {
@@ -122,7 +122,7 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ChangePhoneActivity.this)))
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(s -> ToastUtils.showShort("验证码已发送，请查收"), t -> {
+                .subscribe(s -> ToastUtils.showShort(getString(R.string.the_verification_code_has_been_sent_please_check)), t -> {
                     handleApiError(t);
                     timer.cancel();
                     timer.onFinish();

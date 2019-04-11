@@ -7,7 +7,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="#F8F8F8" />
+        android:background="@color/personal_information_1" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,8 +34,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="6dp"
-                android:text="付款中"
-                android:textColor="#EA2222" />
+                android:text="@string/tvState"
+                android:textColor="@color/m_item_msg_message_number" />
 
             <TextView
                 android:id="@+id/tvCountDown"
@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_marginBottom="10dp"
-            android:background="#EEEEEE" />
+            android:background="@color/m_contact_edit_back" />
 
         <RelativeLayout
             android:layout_width="match_parent"

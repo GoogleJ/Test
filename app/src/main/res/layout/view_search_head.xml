@@ -32,7 +32,7 @@
                 style="@style/tv_head_common_style"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="0dp"
-                tools:text="清除" />
+                tools:text="@string/tv_head_right" />
 
             <TextView
                 android:id="@+id/tv_head_right_second"

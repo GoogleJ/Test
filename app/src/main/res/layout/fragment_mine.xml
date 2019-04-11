@@ -9,9 +9,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="#4B4D5B"
+        android:background="@color/themecolor"
         android:gravity="center"
-        android:text="我的"
+        android:text="@string/my"
         android:textColor="@color/white"
         android:textSize="18sp" />
 
@@ -54,8 +54,8 @@
                             android:id="@+id/tvMineNick"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="爱吃水果"
-                            android:textColor="#393939"
+                            android:text="@string/user_name"
+                            android:textColor="@color/tvMineNick"
                             android:textSize="23sp" />
 
                         <ImageView
@@ -73,7 +73,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_marginBottom="32dp"
-                        android:text="个性签名："
+                        android:text="@string/tvMineSignHead"
                         android:textColor="@color/textcolor3" />
 
                     <TextView
@@ -88,7 +88,7 @@
                         android:lineSpacingExtra="4dp"
                         android:lines="2"
                         android:paddingStart="4dp"
-                        android:text="兑换港币，专业50年好品质，值得信赖sdasdasdasdasdasdaasdasdasdasda"
+                        android:text="@string/tvMineSign"
                         android:textColor="@color/textcolor3" />
 
                     <TextView
@@ -97,7 +97,7 @@
                         android:layout_height="wrap_content"
                         android:layout_above="@id/tvMineSignHead"
                         android:layout_marginBottom="8dp"
-                        android:text="嘟嘟号：135294"
+                        android:text="@string/business_card_duoduo_id"
                         android:textColor="@color/textcolor3" />
 
                     <FrameLayout
@@ -133,7 +133,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="16dp"
-                android:background="#EDEDEE" />
+                android:background="@color/default_placeholder" />
 
             <LinearLayout
                 android:id="@+id/llMineBalanceLeft"
@@ -155,8 +155,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
                     android:layout_weight="1"
-                    android:text="余额"
-                    android:textColor="#4B4D5B"
+                    android:text="@string/balance"
+                    android:textColor="@color/themecolor"
                     android:textSize="15sp" />
 
                 <ImageView
@@ -170,7 +170,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginStart="10dp"
-                android:background="#dddddd" />
+                android:background="@color/exchange_line" />
 
             <LinearLayout
                 android:id="@+id/llMineBlockWallet"
@@ -192,8 +192,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
                     android:layout_weight="1"
-                    android:text="区块链钱包"
-                    android:textColor="#4B4D5B"
+                    android:text="@string/blockWallet"
+                    android:textColor="@color/themecolor"
                     android:textSize="15sp" />
 
                 <ImageView
@@ -207,7 +207,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginStart="10dp"
-                android:background="#dddddd" />
+                android:background="@color/exchange_line" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -228,8 +228,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
                     android:layout_weight="1"
-                    android:text="收款码"
-                    android:textColor="#4B4D5B"
+                    android:text="@string/collection_code"
+                    android:textColor="@color/themecolor"
                     android:textSize="15sp" />
 
                 <ImageView
@@ -242,7 +242,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="16dp"
-                android:background="#EDEDEE" />
+                android:background="@color/default_placeholder" />
 
             <LinearLayout
                 android:id="@+id/llMineSetting"
@@ -264,8 +264,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
                     android:layout_weight="1"
-                    android:text="设置"
-                    android:textColor="#4B4D5B"
+                    android:text="@string/setting_title"
+                    android:textColor="@color/themecolor"
                     android:textSize="15sp" />
 
                 <ImageView
@@ -283,6 +283,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#EDEDEE" />
+        android:background="@color/default_placeholder" />
 
 </LinearLayout>

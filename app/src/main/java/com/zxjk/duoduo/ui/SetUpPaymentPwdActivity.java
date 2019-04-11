@@ -149,7 +149,7 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
                         startActivity(new Intent(this, HomeActivity.class));
                         ToastUtils.showShort(R.string.setsuccess);
                     } else {
-                        ToastUtils.showShort(R.string.modifysuccess);
+                        ToastUtils.showShort(R.string.successfully_modified);
                     }
                     finish();
                 }, this::handleApiError);

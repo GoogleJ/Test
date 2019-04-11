@@ -11,7 +11,7 @@
         android:layout_height="50dp"
         app:titleBarLeftImage="@drawable/ico_back"
         app:titleBarTextColor="@color/white"
-        app:titleBarTitle="@string/user_name"
+
         app:titleBarRightImage="@drawable/icon_right_title"
         />
     <fragment

@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:textSize="16dp"
-        android:text="阿姨"
+        android:text="@string/user_name"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/m_item_contact_heard_icon"
         app:layout_constraintTop_toTopOf="@+id/m_item_contact_heard_icon"

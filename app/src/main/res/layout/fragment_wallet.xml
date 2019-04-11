@@ -10,7 +10,7 @@
         android:layout_height="48dp"
         android:background="@color/themecolor"
         android:gravity="center"
-        android:text="嘟嘟钱包"
+        android:text="@string/duoduo_wallet"
         android:textColor="@color/white"
         android:textSize="18sp" />
 
@@ -40,7 +40,7 @@
                     android:drawableTop="@drawable/ic_walletpage_scan"
                     android:drawablePadding="6dp"
                     android:gravity="center_horizontal"
-                    android:text="扫一扫"
+                    android:text="@string/tvWalletPageTop1"
                     android:textColor="@color/white" />
 
                 <TextView
@@ -51,7 +51,7 @@
                     android:drawableTop="@drawable/ic_walletpage_payment"
                     android:drawablePadding="6dp"
                     android:gravity="center_horizontal"
-                    android:text="收款码"
+                    android:text="@string/tvwalletPageTop2"
                     android:textColor="@color/white" />
 
                 <TextView
@@ -62,7 +62,7 @@
                     android:drawableTop="@drawable/ic_walletpage_wallet"
                     android:drawablePadding="6dp"
                     android:gravity="center_horizontal"
-                    android:text="区块链钱包"
+                    android:text="@string/tvWalletPageTop3"
                     android:textColor="@color/white" />
 
                 <TextView
@@ -73,7 +73,7 @@
                     android:drawableTop="@drawable/ic_walletpage_balance"
                     android:drawablePadding="6dp"
                     android:gravity="center_horizontal"
-                    android:text="港币余额"
+                    android:text="@string/hong_kong_dollar_balance"
                     android:textColor="@color/white" />
 
             </LinearLayout>

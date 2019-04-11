@@ -79,7 +79,7 @@ public class SettingPayPwdActivity extends BaseActivity {
             public void onDifference(String oldPsd, String newPsd) {
                 // TODO: 2018/1/22  和上次输入的密码不一致  做相应的业务逻辑处理
                 payPsdInputView.cleanPsd();
-                ToastUtils.showShort("与上次密码不一致");
+                ToastUtils.showShort(getString(R.string.inconsistent_with_the_last_password));
 
 
                 oldPwd = oldPsd;
@@ -141,7 +141,7 @@ public class SettingPayPwdActivity extends BaseActivity {
                     @Override
                     public void accept(String s) throws Exception {
                         SettingPayPwdActivity.this.finish();
-                        ToastUtils.showShort(SettingPayPwdActivity.this.getString(R.string.update_success));
+                        ToastUtils.showShort(SettingPayPwdActivity.this.getString(R.string.successfully_modified));
                     }
                 }, this::handleApiError);
     }

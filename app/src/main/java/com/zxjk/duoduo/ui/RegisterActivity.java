@@ -201,13 +201,13 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         @Override
         public void onTick(long millisUntilFinished) {
             long time = millisUntilFinished / 1000;
-            register_code.setText(time + "秒后重新获取");
+            register_code.setText(time + getString(R.string.regain_after_seconds));
             register_code.setClickable(false);
         }
 
         @Override
         public void onFinish() {
-            register_code.setText("重新获取验证码");
+            register_code.setText(getString(R.string.regain_verification_code));
             register_code.setClickable(true);
         }
     };

@@ -85,8 +85,8 @@
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="16dp"
-                android:text="隐私"
-                android:textColor="#4B4D5B"
+                android:text="@string/m_privacy_title_bar"
+                android:textColor="@color/themecolor"
                 android:textSize="16sp" />
 
             <View

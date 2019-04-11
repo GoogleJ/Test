@@ -90,7 +90,7 @@
                         android:background="@null"
                         android:cursorVisible="true"
                         android:gravity="center_vertical"
-                        android:hint="@string/edit_phone_number_tip"
+                        android:hint="@string/please_enter_phone_number"
                         android:inputType="phone"
                         android:maxLength="11"
                         android:textCursorDrawable="@null"

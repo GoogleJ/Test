@@ -52,7 +52,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
-        android:background="#eeeeee" />
+        android:background="@color/confirm_sale_line" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -203,10 +203,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
-        android:background="#EEEEEE"
+        android:background="@color/m_contact_edit_back"
         android:onClick="cancelOrder"
         android:text="@string/cancel_order"
-        android:textColor="#BBBBBB"
+        android:textColor="@color/m_my_qr_code_label"
         android:textSize="16sp" />
 
 </LinearLayout>

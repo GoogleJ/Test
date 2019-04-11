@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="#4B4D5B">
+        android:background="@color/themecolor">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="个性签名"
+            android:text="@string/signature_title"
             android:textColor="@color/white"
             android:textSize="18sp" />
 
@@ -75,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="20"
-            android:textColor="#BCBDC7"
+            android:textColor="@color/tvChangeSign"
             android:visibility="gone" />
 
     </LinearLayout>
@@ -86,6 +86,6 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="12dp"
-        android:background="#4B4D5B" />
+        android:background="@color/themecolor" />
 
 </LinearLayout>

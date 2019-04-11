@@ -38,7 +38,7 @@
         android:gravity="end"
         android:paddingEnd="12dp"
         android:text="10:00"
-        android:textColor="#EA2222"
+        android:textColor="@color/m_item_msg_message_number"
         android:textSize="15sp" />
 
     <ImageView
@@ -64,7 +64,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
-        android:background="#eeeeee" />
+        android:background="@color/confirm_sale_line" />
 
     <LinearLayout
         android:layout_width="match_parent"

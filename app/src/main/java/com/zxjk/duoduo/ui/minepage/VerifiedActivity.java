@@ -179,14 +179,14 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
 
                 String s = cardType.getText().toString();
                 String otherIdCardType;
-                if (s.equals("身份证")) {
+                if (s.equals(getString(R.string.id_card))) {
                     otherIdCardType = "1";
-                } else if (s.equals("护照")) {
+                } else if (s.equals(getString(R.string.passport))) {
                     otherIdCardType = "2";
-                } else if (s.equals("其他国家或地区的身份证")) {
+                } else if (s.equals(getString(R.string.other_identity_card))) {
                     otherIdCardType = "3";
                 } else {
-                    ToastUtils.showShort("请选择证件类型");
+                    ToastUtils.showShort(getString(R.string.please_select_the_type_of_document));
                     return;
                 }
 

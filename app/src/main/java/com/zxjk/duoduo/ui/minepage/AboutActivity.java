@@ -38,6 +38,6 @@ public class AboutActivity extends BaseActivity {
      * @param view
      */
     public void aboutVersion(View view){
-        ToastUtils.showShort("此功能暂未实现");
+        ToastUtils.showShort(getString(R.string.under_development));
     }
 }

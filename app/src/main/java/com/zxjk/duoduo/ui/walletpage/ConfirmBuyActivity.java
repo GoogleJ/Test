@@ -115,11 +115,11 @@ public class ConfirmBuyActivity extends BaseActivity {
     //我已完成支付
     public void confirm(View view) {
         if (!flag) {
-            ToastUtils.showShort("请上传支付凭证！");
+            ToastUtils.showShort(getString(R.string.please_upload_a_payment_voucher));
             return;
         }
         if (dialogConfirm == null) {
-            dialogConfirm = new ConfirmDialog(this, "付款确认", "请确认您已向卖家付款，恶意点击 将直接冻结账户。", callback -> {
+            dialogConfirm = new ConfirmDialog(this, getString(R.string.payment_confirmation), getString(R.string.please_confirm_that_you_have_paid_the_seller ), callback -> {
                 ServiceFactory.getInstance().getBaseService(Api.class)
                         .updateBuyPayState("id")
                         .compose(RxSchedulers.normalTrans())
@@ -173,13 +173,13 @@ public class ConfirmBuyActivity extends BaseActivity {
     public void copyNick(View view) {
         ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         clipboardManager.setText(tvConfirmBuyReceiver.getText().toString());
-        ToastUtils.showShort("已复制至剪切板");
+        ToastUtils.showShort(getString(R.string.duplicated_to_clipboard));
     }
 
     public void copyAccount(View view) {
         ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         clipboardManager.setText(tvConfirmBuyReceiverAccount.getText().toString());
-        ToastUtils.showShort("已复制至剪切板");
+        ToastUtils.showShort(getString(R.string.duplicated_to_clipboard));
     }
 
     public void back(View view) {

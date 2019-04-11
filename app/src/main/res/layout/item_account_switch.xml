@@ -24,7 +24,7 @@
         android:id="@+id/account_switch_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="不爱吃水果"
+        android:text="@string/user_name"
         android:textSize="16sp"
         app:layout_constraintTop_toTopOf="@+id/account_switch_header"
         android:layout_marginStart="13dp"

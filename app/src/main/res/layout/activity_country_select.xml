@@ -26,7 +26,7 @@
             android:layout_width="15dip"
             android:layout_height="fill_parent"
             android:layout_alignParentRight="true"
-            android:background="#00000000" />
+            android:background="@color/select_country" />
 
         <TextView
             android:id="@+id/tv_hit_letter"
@@ -35,7 +35,7 @@
             android:layout_height="100dp"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:textColor="#ffffff"
+            android:textColor="@color/confirm_buy"
             android:textSize="40sp"
             android:text="A"
             tools:visibility="visible"

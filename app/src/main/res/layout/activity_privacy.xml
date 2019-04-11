@@ -159,7 +159,7 @@
             android:textColor="@color/m_red_envelopes_unit_text"
             />
         <ImageView
-            android:id="@+id/m_"
+
             android:layout_width="8dp"
             android:layout_height="15dp"
             android:src="@drawable/icon_go"

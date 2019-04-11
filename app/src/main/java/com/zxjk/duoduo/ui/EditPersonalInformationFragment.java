@@ -106,18 +106,19 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.m_edit_information_btn:
-                if (editNickName.getText().toString().isEmpty()) {
-                    ToastUtils.showShort("昵称不能为空");
-                    return;
-                }
-                if (editArea.getText().toString().isEmpty()) {
-                    ToastUtils.showShort("地区不能为空");
-                    return;
-                }
                 if (TextUtils.isEmpty(url)) {
-                    ToastUtils.showShort("请上传头像");
+                    ToastUtils.showShort(getString(R.string.please_upload_an_avatar));
                     return;
                 }
+                if (TextUtils.isEmpty(editNickName.getText().toString()) ) {
+                    ToastUtils.showShort(getString(R.string.username_can_not_be_blank));
+                    return;
+                }
+                if (TextUtils.isEmpty(editArea.getText().toString())) {
+                    ToastUtils.showShort(getString(R.string.area_can_not_be_empty));
+                    return;
+                }
+
 
                 update = new LoginResponse(Constant.userId);
                 update.setHeadPortrait(url);
@@ -198,7 +199,6 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(response -> {
                     GlideUtil.loadCornerImg(imageSearchBtn, url, 2);
-                    ToastUtils.showShort("更新头像成功");
                     Constant.currentUser.setHeadPortrait(update.getHeadPortrait());
                     Constant.currentUser.setNick(update.getNick());
                     Constant.currentUser.setAddress(update.getAddress());

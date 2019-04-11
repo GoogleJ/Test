@@ -7,7 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#eeeeee"
+        android:background="@color/confirm_sale_line"
         android:gravity="center_vertical"
         android:paddingStart="10dp"
         android:paddingTop="8dp"
@@ -18,21 +18,21 @@
             android:layout_width="0dp"
             android:layout_height="0.5dp"
             android:layout_weight="1"
-            android:background="#BBBBBB" />
+            android:background="@color/m_my_qr_code_label" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:text="余额应用"
+            android:text="@string/balance_application"
             android:textColor="@color/textcolor3" />
 
         <View
             android:layout_width="0dp"
             android:layout_height="0.5dp"
             android:layout_weight="1"
-            android:background="#BBBBBB" />
+            android:background="@color/m_my_qr_code_label" />
 
     </LinearLayout>
 
@@ -45,7 +45,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="#EEEEEE" />
+        android:background="@color/m_contact_edit_back" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -62,7 +62,7 @@
             android:drawableTop="@drawable/ic_walletpage_fun1"
             android:drawablePadding="4dp"
             android:gravity="center_horizontal"
-            android:text="火车票机票"
+            android:text="@string/train_ticket"
             android:textColor="@color/textcolor1" />
 
         <TextView
@@ -72,7 +72,7 @@
             android:drawableTop="@drawable/ic_walletpage_fun2"
             android:drawablePadding="4dp"
             android:gravity="center_horizontal"
-            android:text="信用卡还款"
+            android:text="@string/credit_card_payments"
             android:textColor="@color/textcolor1" />
 
         <TextView
@@ -82,7 +82,7 @@
             android:drawableTop="@drawable/ic_walletpage_fun3"
             android:drawablePadding="4dp"
             android:gravity="center_horizontal"
-            android:text="充值中心"
+            android:text="@string/recharge_centre"
             android:textColor="@color/textcolor1" />
 
         <TextView
@@ -92,7 +92,7 @@
             android:drawableTop="@drawable/ic_walletpage_fun4"
             android:drawablePadding="4dp"
             android:gravity="center_horizontal"
-            android:text="嘟嘟金融"
+            android:text="@string/duoduo_financial"
             android:textColor="@color/textcolor1" />
 
     </LinearLayout>
@@ -111,7 +111,7 @@
             android:drawableTop="@drawable/ic_walletpage_fun5"
             android:drawablePadding="4dp"
             android:gravity="center_horizontal"
-            android:text="嘟嘟游戏"
+            android:text="@string/duoduo_game"
             android:textColor="@color/textcolor1" />
 
         <TextView
@@ -121,7 +121,7 @@
             android:drawableTop="@drawable/ic_walletpage_fun6"
             android:drawablePadding="4dp"
             android:gravity="center_horizontal"
-            android:text="滴滴出行"
+            android:text="@string/drip_travel"
             android:textColor="@color/textcolor1" />
 
         <TextView
@@ -131,7 +131,7 @@
             android:drawableTop="@drawable/ic_walletpage_fun7"
             android:drawablePadding="4dp"
             android:gravity="center_horizontal"
-            android:text="生活缴费"
+            android:text="@string/living_payment"
             android:textColor="@color/textcolor1" />
 
         <TextView
@@ -141,7 +141,7 @@
             android:drawableTop="@drawable/ic_walletpage_fun8"
             android:drawablePadding="4dp"
             android:gravity="center_horizontal"
-            android:text="更多"
+            android:text="@string/more"
             android:textColor="@color/textcolor1" />
 
     </LinearLayout>
@@ -149,7 +149,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#eeeeee"
+        android:background="@color/confirm_sale_line"
         android:gravity="center_vertical"
         android:paddingStart="10dp"
         android:paddingTop="8dp"
@@ -160,21 +160,21 @@
             android:layout_width="0dp"
             android:layout_height="0.5dp"
             android:layout_weight="1"
-            android:background="#BBBBBB" />
+            android:background="@color/m_my_qr_code_label" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:text="区块链应用"
+            android:text="@string/blockchain_application"
             android:textColor="@color/textcolor3" />
 
         <View
             android:layout_width="0dp"
             android:layout_height="0.5dp"
             android:layout_weight="1"
-            android:background="#BBBBBB" />
+            android:background="@string/m_my_qr_code_label" />
 
     </LinearLayout>
 
@@ -194,7 +194,7 @@
             android:drawableStart="@drawable/ic_walletpage_news"
             android:drawablePadding="4dp"
             android:gravity="center_vertical"
-            android:text="区块链交易所"
+            android:text="@string/blockchain_exchange"
             android:textColor="@color/textcolor1" />
 
         <View
@@ -202,7 +202,7 @@
             android:layout_height="0.5dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:background="#eeeeee" />
+            android:background="@color/confirm_sale_line" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -216,7 +216,7 @@
                 android:drawableEnd="@drawable/ic_walletpage_exchange1"
                 android:gravity="center"
                 android:lineSpacingExtra="4dp"
-                android:text="火币交易所\n支持HKB交易"
+                android:text="@string/tvWalletPageExchange1"
                 android:textColor="@color/textcolor1"
                 android:textSize="15sp" />
 
@@ -227,7 +227,7 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="12dp"
-                android:background="#eeeeee" />
+                android:background="@color/confirm_sale_line" />
 
             <TextView
                 android:id="@+id/tvWalletPageExchange2"
@@ -237,7 +237,7 @@
                 android:drawableEnd="@drawable/ic_walletpage_exchange2"
                 android:gravity="center"
                 android:lineSpacingExtra="4dp"
-                android:text="嘟嘟交易所\n火热准备中..."
+                android:text="@string/tvWalletPageExchange2"
                 android:textColor="@color/textcolor1"
                 android:textSize="15sp" />
 
@@ -264,7 +264,7 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_walletpage_exchange"
             android:drawablePadding="4dp"
-            android:text="行业资讯"
+            android:text="@string/industry_information"
             android:textColor="@color/textcolor1" />
 
     </LinearLayout>

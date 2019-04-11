@@ -235,7 +235,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                 }
                 break;
             case R.id.m_people_information_voice_calls:
-                ToastUtils.showShort("此功能暂未实现");
+                ToastUtils.showShort(getString(R.string.under_development));
                 break;
             case R.id.update_rename:
                 startActivity(new Intent(FriendDetailsActivity.this, ModifyNotesActivity.class));
@@ -307,7 +307,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String s) throws Exception {
-                        ToastUtils.showShort("删除成功");
+                        ToastUtils.showShort(getString(R.string.the_friend_has_been_deleted));
                         dialog.dismiss();
 
                     }

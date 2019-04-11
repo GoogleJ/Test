@@ -70,4 +70,21 @@
     <color name="click_bg_dark">#BFBFBF</color>
     <color name="click_bg_dark_light">#E0E0E0</color>
     <color name="red_eth_in">#F43532</color>
+    <color name="line">#EFEFEF</color>
+    <color name="please_enter_new_phone_number">#D8D8D8</color>
+    <color name="confirm_buy">#ffffff</color>
+    <color name="count_down">#EB1D1C</color>
+    <color name="confirm_sale_line">#eeeeee</color>
+    <color name="select_country">#00000000</color>
+    <color name="exchange_line">#dddddd</color>
+    <color name="qrcv_maskColor">#80000000</color>
+    <color name="tvChangeSign">#BCBDC7</color>
+    <color name="ivUserInfoHead">#e0e0e0</color>
+    <color name="personal_information_line">#f8f8f8</color>
+    <color name="choosesex_line">#D2D2D2</color>
+    <color name="tvMineNick">#393939</color>
+    <color name="popupWindow">#dedede</color>
+    <color name="tvCancel">#333333</color>
+
+
 </resources>

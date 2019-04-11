@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="14dp"
-        android:text="爱吃水果（王小二）"
+        android:text="@string/user_name"
         android:textColor="@color/black"
         android:textSize="16dp" />
 

@@ -16,7 +16,7 @@
             android:layout_height="48dp"
             android:layout_marginEnd="12dp"
             android:scaleType="centerCrop"
-            android:src="#e0e0e0" />
+            android:src="@color/click_bg_dark_light" />
 
         <TextView
             android:id="@+id/tvNick"

@@ -82,7 +82,7 @@ public class RetrievePayPwdActivity extends BaseActivity implements View.OnClick
                     isTrue = false;
                 } else {
                     if (verifiedCodeEdit.getText().toString().isEmpty() && verifiedCodeEdit.getText().length() < codeLength) {
-                        ToastUtils.showShort(getString(R.string.edit_register_code));
+                        ToastUtils.showShort(getString(R.string.please_enter_verification_code));
                         return;
                     }
                     Intent intent = new Intent(this, SettingPayPwdActivity.class);
@@ -128,7 +128,7 @@ public class RetrievePayPwdActivity extends BaseActivity implements View.OnClick
 
         @Override
         public void onFinish() {
-            textGetCode.setText(getString(R.string.newCode));
+            textGetCode.setText(getString(R.string.regain_verification_code));
             textGetCode.setClickable(true);
         }
     };

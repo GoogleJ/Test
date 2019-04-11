@@ -80,7 +80,7 @@ public class ChangePwdActivity extends BaseActivity {
                     Intent intent = new Intent(this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
-                    ToastUtils.showShort(R.string.update_success);
+                    ToastUtils.showShort(R.string.successfully_modified);
                     finish();
                 }, this::handleApiError);
     }

@@ -110,7 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="12dp"
-            android:textColor="@color/black"
+            android:textColor="@color/themecolor"
             android:text="@string/m_personal_information_signature_label"
             android:textSize="17dp" />
         <TextView
@@ -129,7 +129,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:textSize="19dp"
-        android:textColor="@color/black"
+        android:textColor="@color/themecolor"
         android:background="@color/white"
         android:text="@string/m_personal_information_signature_text"
         android:gravity="center"

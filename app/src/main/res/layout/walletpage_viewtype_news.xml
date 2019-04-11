@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_marginBottom="8dp"
-        android:background="#eeeeee" />
+        android:background="@color/confirm_sale_line" />
 
     <TextView
         android:id="@+id/tvItemWalletPageNewsTitle"
@@ -21,7 +21,7 @@
         android:layout_marginBottom="8dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="欧洲监管机构呼吁在欧盟层面制定加密货币监..."
+        android:text="@string/tvItemWalletPageNewsTitle"
         android:textColor="@color/textcolor1"
         android:textSize="15sp" />
 
@@ -37,7 +37,7 @@
             android:layout_marginEnd="16dp"
             android:layout_weight="1"
             android:scaleType="centerCrop"
-            android:src="#eeeeee" />
+            android:src="@color/confirm_sale_line" />
 
         <RelativeLayout
             android:layout_width="0dp"
@@ -50,7 +50,7 @@
                 android:ellipsize="end"
                 android:lineSpacingExtra="4dp"
                 android:maxLines="3"
-                android:text="欧洲银行管理局执行董事在一份声明中说道：欧洲银行管理局向消费者和机构发出的关于虚拟货币的警告仍然有效。欧洲银行管理局呼吁欧盟委"
+                android:text="@string/news"
                 android:textColor="@color/textcolor2" />
 
             <TextView
@@ -59,7 +59,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentBottom="true"
                 android:text="09:26  AM"
-                android:textColor="#cccccc"
+                android:textColor="@color/about_version_number"
                 android:textSize="13sp" />
 
             <TextView
@@ -69,7 +69,7 @@
                 android:layout_alignParentBottom="true"
                 android:drawableStart="@drawable/ic_walletpage_viewcount"
                 android:text="12580"
-                android:textColor="#cccccc"
+                android:textColor="@color/about_version_number"
                 android:textSize="13sp" />
 
         </RelativeLayout>

@@ -57,7 +57,7 @@ public class ModifyNotesActivity extends BaseActivity implements View.OnClickLis
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(friendInfoResponse -> {
-                    ToastUtils.showShort(getString(R.string.update_success));
+                    ToastUtils.showShort(getString(R.string.successfully_modified));
                     finish();
 
                 }, this::handleApiError);

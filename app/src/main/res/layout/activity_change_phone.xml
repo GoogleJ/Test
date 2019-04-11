@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="#4B4D5B">
+        android:background="@color/themecolor">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="更换手机号"
+            android:text="@string/change_phone_number"
             android:textColor="@color/white"
             android:textSize="18sp" />
 
@@ -59,14 +59,14 @@
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="12dp"
-            android:background="#D8D8D8" />
+            android:background="@color/please_enter_new_phone_number" />
 
         <EditText
             android:id="@+id/etChangePhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:hint="请输入新的手机号码"
+            android:hint="@string/please_enter_new_phone_number"
             android:imeOptions="actionNext"
             android:inputType="phone"
             android:maxLength="11"
@@ -80,7 +80,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp"
-        android:background="#D8D8D8" />
+        android:background="@color/please_enter_new_phone_number" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
-            android:hint="请输入验证码"
+            android:hint="@string/please_enter_verification_code"
             android:imeOptions="actionDone"
             android:inputType="number"
             android:maxLength="8"
@@ -108,13 +108,13 @@
             android:layout_height="match_parent"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
-            android:background="#D8D8D8" />
+            android:background="@color/please_enter_new_phone_number" />
 
         <TextView
             android:id="@+id/tvChangePhoneGetVerify"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="获取验证码"
+            android:text="@string/text_get_code"
             android:textColor="@color/textcolor3"
             android:textSize="16sp" />
 
@@ -126,7 +126,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp"
-        android:background="#D8D8D8" />
+        android:background="@color/please_enter_new_phone_number" />
 
     <Button
         android:layout_width="match_parent"
@@ -136,7 +136,7 @@
         android:layout_marginEnd="32dp"
         android:background="@drawable/selector_login_btn_click_bg"
         android:onClick="submit"
-        android:text="完  成"
+        android:text="@string/carry_out"
         android:textSize="17sp" />
 
     <View

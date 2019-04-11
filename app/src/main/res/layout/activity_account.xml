@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ededee"
+    android:background="@color/background"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="账号"
+            android:text="@string/account_number"
             android:textColor="@color/white"
             android:textSize="18sp" />
 
@@ -46,8 +46,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_weight="1"
-            android:text="嘟嘟号"
-            android:textColor="#4B4D5B"
+            android:text="@string/m_add_my_way_duoduo_id"
+            android:textColor="@color/themecolor"
             android:textSize="16sp" />
 
         <TextView
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="135426"
-            android:textColor="#cccccc" />
+            android:textColor="@color/about_version_number" />
 
     </LinearLayout>
 
@@ -80,8 +80,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="更换手机号"
-            android:textColor="#4B4D5B"
+            android:text="@string/change_phone_number"
+            android:textColor="@color/themecolor"
             android:textSize="16sp" />
 
         <TextView
@@ -110,7 +110,7 @@
         android:paddingTop="16dp"
         android:paddingRight="10dp"
         android:paddingBottom="16dp"
-        android:text="修改密码"
+        android:text="@string/change_password"
         android:textColor="@color/themecolor"
         android:textSize="16sp" />
 

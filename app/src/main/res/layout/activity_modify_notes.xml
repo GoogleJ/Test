@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
-        android:hint="备注名"
+        android:hint="@string/remark_name"
         android:background="@null"
         style="?attr/checkedTextViewStyle"
         android:textSize="16dp"

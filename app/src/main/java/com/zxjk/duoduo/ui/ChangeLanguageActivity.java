@@ -15,11 +15,12 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 这个是语言算则的activity
+ * 这个是语言选择的activity
+ *
  * @author Administrator
  */
 @SuppressWarnings("ALL")
-public class ChangeLanguageActivity extends BaseActivity implements View.OnClickListener{
+public class ChangeLanguageActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.checkbox_zh_cn)
     ImageView checkBoxZhCn;
 
@@ -29,7 +30,7 @@ public class ChangeLanguageActivity extends BaseActivity implements View.OnClick
     @BindView(R.id.checkbox_en_us)
     ImageView checkBoxEnUs;
 
-    int type=0;
+    int type = 0;
 
 
     public static void start(AppCompatActivity activity) {
@@ -46,31 +47,31 @@ public class ChangeLanguageActivity extends BaseActivity implements View.OnClick
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
             return true;
         }
         return super.onKeyDown(keyCode, event);
     }
 
 
-
-    @OnClick({R.id.checkbox_zh_cn,R.id.checkbox_zh_tw,R.id.checkbox_en_us})
+    @OnClick({R.id.checkbox_zh_cn, R.id.checkbox_zh_tw, R.id.checkbox_en_us})
     @Override
     public void onClick(View v) {
 
-        boolean isTrue=true;
+        boolean isTrue = true;
 
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.checkbox_zh_cn:
                 break;
             case R.id.checkbox_zh_tw:
                 break;
             case R.id.checkbox_en_us:
                 break;
-                default:
+            default:
 
-                    break;
+                break;
         }
 
     }

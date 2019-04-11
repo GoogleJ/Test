@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.msgpage;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -23,6 +24,7 @@ import io.reactivex.functions.Consumer;
  * @author Administrator
  * @// TODO: 2019\3\20 0020  发送验证
  */
+@SuppressLint("CheckResult")
 public class VerificationActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.m_verification_title_bar)
     TitleBar titleBar;
@@ -39,13 +41,7 @@ public class VerificationActivity extends BaseActivity implements View.OnClickLi
     }
 
     protected void initUI() {
-        titleBar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
+        titleBar.getLeftImageView().setOnClickListener(v -> finish());
     }
 
     @OnClick({R.id.m_verification_icon, R.id.m_verification_send_btn})
@@ -66,7 +62,6 @@ public class VerificationActivity extends BaseActivity implements View.OnClickLi
                 }
                 break;
             case R.id.m_verification_icon:
-
                 verificationEdit.setText("");
                 break;
             default:
@@ -74,17 +69,15 @@ public class VerificationActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
+
     public void applyAddFriend(String friendId, String remark) {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .applyAddFriend(friendId, remark)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
-                .subscribe(new Consumer<BaseResponse<String>>() {
-                    @Override
-                    public void accept(BaseResponse<String> listBaseResponse) throws Exception {
-                        ToastUtils.showShort("添加成功");
-                        finish();
-                    }
+                .subscribe(listBaseResponse -> {
+                    ToastUtils.showShort(getString(R.string.has_bean_sent));
+                    finish();
                 }, this::handleApiError);
 
     }

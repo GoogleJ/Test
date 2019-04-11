@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/login_bg"
@@ -82,7 +81,7 @@
                         android:background="@null"
                         android:gravity="center_vertical"
                         android:textCursorDrawable="@null"
-                        android:hint="@string/edit_phone_number_tip"
+                        android:hint="@string/please_enter_phone_number"
                         android:inputType="number"
                         android:maxLength="11"
                         android:textSize="16sp" />
@@ -138,7 +137,7 @@
                         android:background="@null"
                         android:gravity="center_vertical"
                         android:textCursorDrawable="@null"
-                        android:hint="@string/edit_register_code"
+                        android:hint="@string/please_enter_verification_code"
                         android:inputType="number"
                         android:maxLength="6"
                         android:textSize="16sp" />

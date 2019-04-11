@@ -40,7 +40,7 @@
             android:background="@color/m_contact_edit_back"
             android:drawableStart="@drawable/ic_search_gray"
             android:drawablePadding="10dp"
-            android:hint="搜索"
+            android:hint="@string/contact_search"
             android:paddingStart="20dp"
             android:paddingEnd="20dp" />
     </LinearLayout>

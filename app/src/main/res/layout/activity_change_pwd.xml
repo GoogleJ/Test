@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="#4B4D5B">
+        android:background="@color/themecolor">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="修改密码"
+            android:text="@string/change_password"
             android:textColor="@color/white"
             android:textSize="18sp" />
 
@@ -43,8 +43,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="原密码"
-            android:textColor="#4B4D5B"
+            android:text="@string/old_password"
+            android:textColor="@color/themecolor"
             android:textSize="16sp" />
 
         <EditText
@@ -55,7 +55,7 @@
             android:layout_weight="1"
             android:background="@null"
             android:gravity="end"
-            android:hint="输入原密码"
+            android:hint="@string/enter_old_password"
             android:imeOptions="actionNext"
             android:inputType="textPassword"
             android:lines="1"
@@ -69,7 +69,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_marginStart="10dp"
-        android:background="#dddddd" />
+        android:background="@color/m_add_friend_line" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -83,8 +83,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="新密码"
-            android:textColor="#4B4D5B"
+            android:text="@string/new_password"
+            android:textColor="@color/themecolor"
             android:textSize="16sp" />
 
         <EditText
@@ -95,7 +95,7 @@
             android:layout_weight="1"
             android:background="@null"
             android:gravity="end"
-            android:hint="输入新密码"
+            android:hint="@string/enter_new_password"
             android:imeOptions="actionNext"
             android:inputType="textPassword"
             android:lines="1"
@@ -109,7 +109,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_marginStart="10dp"
-        android:background="#dddddd" />
+        android:background="@color/m_add_friend_line" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -123,8 +123,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="原密码"
-            android:textColor="#4B4D5B"
+            android:text="@string/old_password"
+            android:textColor="@color/themecolor"
             android:textSize="16sp" />
 
         <EditText
@@ -135,7 +135,7 @@
             android:layout_weight="1"
             android:background="@null"
             android:gravity="end"
-            android:hint="再次填写确认"
+            android:hint="@string/fill_in_again_to_confirm"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:lines="1"
@@ -148,7 +148,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#EDEDEE"
+        android:background="@color/default_placeholder"
         android:orientation="vertical">
 
         <TextView
@@ -157,7 +157,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="如果忘记原密码，请点击退出登录，点击“忘记密码”，重新设置新密码。"
+            android:text="@string/forget_password_reminder"
             android:textColor="@color/textcolor3" />
 
         <TextView
@@ -167,7 +167,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:text="密码6-14个字符，支持数字、大小写字母、标点符号, 不允许 有空格。"
+            android:text="@string/enter_password_reminder"
             android:textColor="@color/textcolor3" />
 
         <Button
@@ -178,7 +178,7 @@
             android:layout_marginEnd="32dp"
             android:background="@drawable/selector_login_btn_click_bg"
             android:onClick="submit"
-            android:text="完  成"
+            android:text="@string/carry_out"
             android:textSize="17sp" />
 
     </LinearLayout>

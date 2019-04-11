@@ -80,7 +80,6 @@ public class UpdatePayPwdActivity extends BaseActivity {
             @Override
             public void onDifference(String oldPsd, String newPsd) {
                 // TODO: 2018/1/22  和上次输入的密码不一致  做相应的业务逻辑处理
-//                ToastUtils.showShort("与上次密码不一致");
             }
 
 
@@ -151,7 +150,7 @@ public class UpdatePayPwdActivity extends BaseActivity {
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
-                    ToastUtils.showShort(R.string.modifysuccess);
+                    ToastUtils.showShort(R.string.successfully_modified);
                     finish();
                 }, this::handleApiError);
     }
