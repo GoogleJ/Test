@@ -15,6 +15,7 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.ui.msgpage.MyQrCodeActivity;
 import com.zxjk.duoduo.ui.walletpage.BlockWalletActivity;
+import com.zxjk.duoduo.ui.walletpage.RecipetQRActivity;
 import com.zxjk.duoduo.utils.GlideUtil;
 
 import androidx.annotation.NonNull;
@@ -42,6 +43,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         LinearLayout llMineSetting = view.findViewById(R.id.llMineSetting);
         LinearLayout llMineBalanceLeft = view.findViewById(R.id.llMineBalanceLeft);
         LinearLayout llMineBlockWallet = view.findViewById(R.id.llMineBlockWallet);
+        LinearLayout llMineRecipetCode = view.findViewById(R.id.llMineRecipetCode);
         CardView cardMineInfo = view.findViewById(R.id.cardMineInfo);
         ivMineHeadImg = view.findViewById(R.id.ivMineHeadImg);
         ivMineAuthSign = view.findViewById(R.id.ivMineAuthSign);
@@ -54,6 +56,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         llMineSetting.setOnClickListener(this);
         llMineBalanceLeft.setOnClickListener(this);
         llMineBlockWallet.setOnClickListener(this);
+        llMineRecipetCode.setOnClickListener(this);
         cardMineInfo.setOnClickListener(this);
         ivMineQRcode.setOnClickListener(this);
         return view;
@@ -95,6 +98,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.llMineBlockWallet:
                 startActivity(new Intent(getActivity(), BlockWalletActivity.class));
+                break;
+            case R.id.llMineRecipetCode:
+                startActivity(new Intent(getActivity(), RecipetQRActivity.class));
                 break;
             default:
         }

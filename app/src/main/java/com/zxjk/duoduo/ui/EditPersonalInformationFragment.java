@@ -45,7 +45,6 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
 
     public static final int REQUEST_TAKE = 1;
     public static final int REQUEST_ALBUM = 2;
-
     /**
      * 这是关于标题栏的控件
      */
@@ -71,12 +70,7 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
     private LoginResponse update;
 
     private void initData() {
-        titleBar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        titleBar.getLeftImageView().setOnClickListener(v -> finish());
     }
 
     private void initView() {
@@ -110,7 +104,7 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                     ToastUtils.showShort(getString(R.string.please_upload_an_avatar));
                     return;
                 }
-                if (TextUtils.isEmpty(editNickName.getText().toString()) ) {
+                if (TextUtils.isEmpty(editNickName.getText().toString())) {
                     ToastUtils.showShort(getString(R.string.username_can_not_be_blank));
                     return;
                 }
@@ -118,7 +112,6 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                     ToastUtils.showShort(getString(R.string.area_can_not_be_empty));
                     return;
                 }
-
 
                 update = new LoginResponse(Constant.userId);
                 update.setHeadPortrait(url);
@@ -129,10 +122,11 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
 
                 break;
             case R.id.m_edit_information_header_icon:
-                cameraPremissions(this);
-                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
-                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                if (cameraPremissions(this)) {
+                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                    selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
+                            Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                }
                 break;
             default:
                 break;
@@ -158,8 +152,8 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                 case REQUEST_ALBUM:
                     filePath = TakePicUtil.getPath(this, data.getData());
                     break;
-                    default:
-                        break;
+                default:
+                    break;
             }
         }
         if (!TextUtils.isEmpty(filePath)) {
@@ -175,7 +169,6 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
         }
 
     }
-
 
     @Override
     public void setOnItemClick(View v) {
@@ -205,17 +198,7 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                     Intent intent = new Intent(EditPersonalInformationFragment.this, SetUpPaymentPwdActivity.class);
                     intent.putExtra("firstLogin", true);
                     startActivity(intent);
-                }, throwable -> handleApiError(throwable));
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        finish();
+                    finish();
+                }, this::handleApiError);
     }
 }

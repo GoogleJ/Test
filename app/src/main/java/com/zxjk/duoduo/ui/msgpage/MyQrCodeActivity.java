@@ -1,31 +1,40 @@
 package com.zxjk.duoduo.ui.msgpage;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 
+import com.blankj.utilcode.util.LogUtils;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.google.gson.Gson;
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.ui.walletpage.RecipetQRActivity;
+import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.weight.TitleBar;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bingoogolapple.qrcode.core.BGAQRCodeUtil;
-import cn.bingoogolapple.qrcode.zxing.QRCodeDecoder;
 import cn.bingoogolapple.qrcode.zxing.QRCodeEncoder;
+import io.reactivex.Observable;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\19 0019 我的二维码页面 
+ * @// TODO: 2019\3\19 0019 我的二维码页面
  */
 public class MyQrCodeActivity extends BaseActivity {
 
@@ -34,19 +43,17 @@ public class MyQrCodeActivity extends BaseActivity {
     @BindView(R.id.m_my_qr_code_qr_code_icon)
     ImageView qrCode;
 
-    public static void start(AppCompatActivity activity){
-        Intent intent=new Intent(activity,MyQrCodeActivity.class);
+    private ImageView m_my_qr_code_header_icon;
+    private TextView m_my_qr_code_user_name_text;
+    private TextView m_my_qr_code_signature_label;
+
+    private Uri uri = new Uri();
+    private String uri2Code;
+
+    public static void start(AppCompatActivity activity) {
+        Intent intent = new Intent(activity, MyQrCodeActivity.class);
         activity.startActivity(intent);
     }
-
- 
-    private void initCreate() {
-
-        createChineseQRCodeWithLogo();
-        createEnglishQRCodeWithLogo();
-
-    }
- 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,75 +61,41 @@ public class MyQrCodeActivity extends BaseActivity {
         setContentView(R.layout.activity_my_qr_code);
         ButterKnife.bind(this);
 
-        titleBar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        initCreate();
+        uri2Code = new Gson().toJson(uri);
+
+        m_my_qr_code_header_icon = findViewById(R.id.m_my_qr_code_header_icon);
+        m_my_qr_code_user_name_text = findViewById(R.id.m_my_qr_code_user_name_text);
+        m_my_qr_code_signature_label = findViewById(R.id.m_my_qr_code_signature_label);
+
+        GlideUtil.loadCornerImg(m_my_qr_code_header_icon, Constant.currentUser.getHeadPortrait(), 2);
+        m_my_qr_code_user_name_text.setText(Constant.currentUser.getNick());
+        m_my_qr_code_signature_label.setText(Constant.currentUser.getSignature());
+
+        titleBar.getLeftImageView().setOnClickListener(v -> finish());
+
+        getCodeBitmap();
     }
 
-    private void createChineseQRCodeWithLogo() {
-        new AsyncTask<Void, Void, Bitmap>() {
-            @Override
-            protected Bitmap doInBackground(Void... params) {
-                Bitmap logoBitmap = BitmapFactory.decodeResource(MyQrCodeActivity.this.getResources(), R.drawable.icon_header);
-                return QRCodeEncoder.syncEncodeQRCode("http://www.baidu.com", BGAQRCodeUtil.dp2px(MyQrCodeActivity.this, 150), Color.parseColor("#ff0000"), logoBitmap);
-            }
-
-            @Override
-            protected void onPostExecute(Bitmap bitmap) {
-                if (bitmap != null) {
-                    qrCode.setImageBitmap(bitmap);
-                } else {
-                    Toast.makeText(MyQrCodeActivity.this, "生成带logo的中文二维码失败", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }.execute();
+    private void getCodeBitmap() {
+        Glide.with(this).asBitmap().load(Constant.currentUser.getHeadPortrait())
+                .into(new SimpleTarget<Bitmap>() {
+                    @SuppressLint("CheckResult")
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        Observable.create((ObservableOnSubscribe<Bitmap>) emitter -> {
+                            Bitmap bitmap = QRCodeEncoder.syncEncodeQRCode(uri2Code, BGAQRCodeUtil.dp2px(MyQrCodeActivity.this, 300),
+                                    Color.BLACK, resource);
+                            emitter.onNext(bitmap);
+                        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(b -> qrCode.setImageBitmap(b), t -> {
+                                });
+                    }
+                });
     }
 
-    private void createEnglishQRCodeWithLogo() {
-        new AsyncTask<Void, Void, Bitmap>() {
-            @Override
-            protected Bitmap doInBackground(Void... params) {
-                Bitmap logoBitmap = BitmapFactory.decodeResource(MyQrCodeActivity.this.getResources(), R.drawable.icon_header);
-                return QRCodeEncoder.syncEncodeQRCode("http://www.baidu.com", BGAQRCodeUtil.dp2px(MyQrCodeActivity.this, 150), Color.BLACK, Color.WHITE,
-                        logoBitmap);
-            }
-
-            @Override
-            protected void onPostExecute(Bitmap bitmap) {
-                if (bitmap != null) {
-                    qrCode.setImageBitmap(bitmap);
-                } else {
-                    Toast.makeText(MyQrCodeActivity.this, "生成带logo的英文二维码失败", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }.execute();
-    }
-
-
-    private void decode(final Bitmap bitmap, final String errorTip) {
-        /*
-        这里为了偷懒，就没有处理匿名 AsyncTask 内部类导致 Activity 泄漏的问题
-        请开发在使用时自行处理匿名内部类导致Activity内存泄漏的问题，处理方式可参考 https://github
-        .com/GeniusVJR/LearningNotes/blob/master/Part1/Android/Android%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E6%80%BB%E7%BB%93.md
-         */
-        new AsyncTask<Void, Void, String>() {
-            @Override
-            protected String doInBackground(Void... params) {
-                return QRCodeDecoder.syncDecodeQRCode(bitmap);
-            }
-
-            @Override
-            protected void onPostExecute(String result) {
-                if (TextUtils.isEmpty(result)) {
-                    Toast.makeText(MyQrCodeActivity.this, errorTip, Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(MyQrCodeActivity.this, result, Toast.LENGTH_SHORT).show();
-                }
-            }
-        }.execute();
+    class Uri {
+        private String schem = "com.zxjk.duoduo";
+        private String data = Constant.userId;
+        private String action = "action2";
     }
 }

@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.grouppage.SelectContactActivity;
 import com.zxjk.duoduo.ui.msgpage.base.BaseFragment;
 import com.zxjk.duoduo.ui.msgpage.widget.CommonPopupWindow;
+import com.zxjk.duoduo.ui.walletpage.RecipetQRActivity;
+import com.zxjk.duoduo.utils.PermissionUtils;
 import com.zxjk.duoduo.weight.TitleBar;
 
 import androidx.annotation.NonNull;
@@ -22,7 +25,7 @@ import io.rong.imlib.model.Conversation;
  * @author Administrator
  * @// TODO: 2019\3\19 0019 聊天列表
  */
-public class MsgFragment extends BaseFragment implements View.OnClickListener  ,CommonPopupWindow.ViewInterface{
+public class MsgFragment extends BaseFragment implements View.OnClickListener, CommonPopupWindow.ViewInterface {
     TitleBar titleBar;
 
     private static final String CONVERSATIONLIST_FRAGMENT_KEY = "conversationlist_fragment_key";
@@ -42,31 +45,24 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener  ,
     }
 
     private void initHear() {
-        titleBar=rootView.findViewById(R.id.title_bar);
-        titleBar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               startActivity(new Intent(getActivity(),ContactsNewFriendActivity.class));
+        titleBar = rootView.findViewById(R.id.title_bar);
+        titleBar.getLeftImageView().setOnClickListener(v -> startActivity(new Intent(getActivity(), ContactsNewFriendActivity.class)));
+        titleBar.getRightImageView().setOnClickListener(v -> {
+            if (popupWindow != null && popupWindow.isShowing()) {
+                return;
             }
-        });
-        titleBar.getRightImageView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (popupWindow != null && popupWindow.isShowing()) {
-                    return;
-                }
-                popupWindow = new CommonPopupWindow.Builder(getActivity())
-                        .setView(R.layout.pop_msg_top)
-                        .setWidthAndHeight(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                        .setAnimationStyle(R.style.AnimDown)
-                        .setBackGroundLevel(0.5f)
-                        .setViewOnclickListener(MsgFragment.this::getChildView)
-                        .setOutsideTouchable(true)
-                        .create();
-                popupWindow.showAsDropDown(titleBar.getRightImageView());
-            }
+            popupWindow = new CommonPopupWindow.Builder(getActivity())
+                    .setView(R.layout.pop_msg_top)
+                    .setWidthAndHeight(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                    .setAnimationStyle(R.style.AnimDown)
+                    .setBackGroundLevel(0.5f)
+                    .setViewOnclickListener(MsgFragment.this::getChildView)
+                    .setOutsideTouchable(true)
+                    .create();
+            popupWindow.showAsDropDown(titleBar.getRightImageView());
         });
     }
+
     @Override
     public void getChildView(View view, int layoutResId) {
         switch (layoutResId) {
@@ -78,6 +74,7 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener  ,
                 break;
         }
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -87,16 +84,17 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener  ,
                 startActivity(intent);
                 break;
             case R.id.invite_friends:
-                startActivity(new Intent(getActivity(),AddContactActivity.class));
-
+                startActivity(new Intent(getActivity(), AddContactActivity.class));
                 break;
             case R.id.scan:
-                startActivity(new Intent(getActivity(),QrCodeActivity.class));
+                if (PermissionUtils.cameraPremissions(getActivity())) {
+                    startActivity(new Intent(getActivity(), QrCodeActivity.class));
+                }
                 break;
             case R.id.collection_and_payment:
+                startActivity(new Intent(getActivity(), RecipetQRActivity.class));
                 break;
             default:
-                break;
         }
     }
 
@@ -137,7 +135,7 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener  ,
     @Override
     public void onStop() {
         super.onStop();
-        if (popupWindow!=null){
+        if (popupWindow != null) {
             popupWindow.dismiss();
         }
     }

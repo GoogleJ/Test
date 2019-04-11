@@ -22,15 +22,11 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
-import com.zxjk.duoduo.utils.CountryCodeConstantsUtils;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.functions.Consumer;
-
 import static com.zxjk.duoduo.utils.MD5Utils.getMD5;
 
 /**
@@ -123,7 +119,7 @@ public class ForgetRegisterActivity extends BaseActivity implements View.OnClick
                 ToastUtils.showShort(getString(R.string.edit_mobile_tip));
                 break;
             case R.id.login_country:
-                CountrySelectActivity.start(this, CountryCodeConstantsUtils.REQUESTCODE_COUNTRY_SELECT);
+                CountrySelectActivity.start(this, 200);
                 break;
             default:
                 break;
@@ -133,7 +129,7 @@ public class ForgetRegisterActivity extends BaseActivity implements View.OnClick
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CountryCodeConstantsUtils.REQUESTCODE_COUNTRY_SELECT && resultCode == Activity.RESULT_OK && data != null) {
+        if (requestCode == 200 && resultCode == Activity.RESULT_OK && data != null) {
             CountryEntity countryEntity = (CountryEntity) data.getSerializableExtra("data");
             login_country.setText(" +" + (countryEntity != null ? countryEntity.countryCode : "86"));
         }

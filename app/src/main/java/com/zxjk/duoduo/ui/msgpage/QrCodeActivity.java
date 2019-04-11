@@ -7,6 +7,7 @@ import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
@@ -33,7 +34,6 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
     ZXingView zxingview;
     @BindView(R.id.m_qr_code_title_bar)
     TitleBar titleBar;
-    protected ProcessDataTask mProcessDataTask;
     /**
      * 关于二维码扫描的实现
      */
@@ -48,48 +48,33 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
     private boolean isFlashlight;
 
 
-
     protected void initUI() {
-
         zxingview.setDelegate(this);
-        titleBar.getRightTitle().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent photoPickerIntent = new BGAPhotoPickerActivity.IntentBuilder(QrCodeActivity.this)
-                        .cameraFileDir(null)
-                        .maxChooseCount(1)
-                        .selectedPhotos(null)
-                        .pauseOnScroll(false)
-                        .build();
-                startActivityForResult(photoPickerIntent, REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY);
-
-            }
+        titleBar.getRightTitle().setOnClickListener(v -> {
+            Intent photoPickerIntent = new BGAPhotoPickerActivity.IntentBuilder(QrCodeActivity.this)
+                    .cameraFileDir(null)
+                    .maxChooseCount(1)
+                    .selectedPhotos(null)
+                    .pauseOnScroll(false)
+                    .build();
+            startActivityForResult(photoPickerIntent, REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY);
         });
-        titleBar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        titleBar.getLeftImageView().setOnClickListener(v -> finish());
     }
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_code);
         ButterKnife.bind(this);
-        cameraPremissions(this);
+
         initUI();
-
-
     }
 
 
     @Override
     public void onScanQRCodeSuccess(String result) {
-        Log.i("ssss", "result:" + result);
-        ToastUtils.showShort(result);
+        LogUtils.e(result);
     }
 
     @Override
@@ -123,9 +108,6 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
     private void openFlashlight() {
         isFlashlight = true;
         zxingview.openFlashlight();
-
-
-        //  idTorch.setImageResource(R.drawable.torch_off);
     }
 
     @Override
@@ -163,7 +145,6 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        zxingview.startSpotAndShowRect();
         zxingview.startSpotAndShowRect(); // 显示扫描框，并开始识别
 
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY) {

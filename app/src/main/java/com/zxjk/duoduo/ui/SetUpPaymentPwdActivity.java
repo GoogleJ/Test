@@ -147,6 +147,7 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
                 .subscribe(s -> {
                     if (firstLogin) {
                         startActivity(new Intent(this, HomeActivity.class));
+                        finish();
                         ToastUtils.showShort(R.string.setsuccess);
                     } else {
                         ToastUtils.showShort(R.string.successfully_modified);

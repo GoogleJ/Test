@@ -1,52 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true">
-     <com.zxjk.duoduo.weight.TitleBar
-         android:id="@+id/m_qr_code_title_bar"
-         android:layout_width="match_parent"
-         android:layout_height="50dp"
-         android:background="@color/black"
-         app:titleBarBackground="@color/black"
-         app:titleBarLeftImage="@drawable/ico_back"
-         app:titleBarTitle="@string/m_add_friend_scan_it_label_1"
-         app:titleBarTextColor="@color/white"
-         app:titleBarRightText="@string/m_qr_code_title_bar"
-         />
-     <cn.bingoogolapple.qrcode.zxing.ZXingView
-         android:id="@+id/m_qr_code_zxing_view"
-         style="@style/MatchMatch"
-         app:qrcv_animTime="2000"
-         app:qrcv_barCodeTipText="@string/sweep_reminder"
-         app:qrcv_borderColor="@android:color/white"
-         app:qrcv_borderSize="1dp"
-         app:qrcv_cornerColor="@color/login_btn_normal"
-         app:qrcv_cornerLength="20dp"
-         app:qrcv_cornerSize="3dp"
-         app:qrcv_isBarcode="false"
-         app:qrcv_isOnlyDecodeScanBoxArea="false"
-         app:qrcv_isScanLineReverse="false"
-         app:qrcv_isShowDefaultGridScanLineDrawable="false"
-         app:qrcv_isShowDefaultScanLineDrawable="false"
-         app:qrcv_isShowTipBackground="false"
-         app:qrcv_isShowTipTextAsSingleLine="false"
-         app:qrcv_isTipTextBelowRect="false"
-         app:qrcv_maskColor="@color/qrcv_maskColor"
-         app:qrcv_qrCodeTipText="@string/sweep_reminder"
-         app:qrcv_rectWidth="200dp"
-         app:qrcv_scanLineColor="@color/confirm_buy"
-         app:qrcv_scanLineMargin="0dp"
-         app:qrcv_scanLineSize="1dp"
-         app:qrcv_tipTextColor="@android:color/white"
-         app:qrcv_tipTextSize="12sp"
-         app:qrcv_toolbarHeight="0dp"
-         app:qrcv_topOffset="180dp"/>
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
+    <com.zxjk.duoduo.weight.TitleBar
+        android:id="@+id/m_qr_code_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/black"
+        app:titleBarBackground="@color/black"
+        app:titleBarLeftImage="@drawable/ico_back"
+        app:titleBarRightText="@string/m_qr_code_title_bar"
+        app:titleBarTextColor="@color/white"
+        app:titleBarTitle="@string/m_add_friend_scan_it_label_1" />
 
-
-
+    <cn.bingoogolapple.qrcode.zxing.ZXingView
+        android:id="@+id/m_qr_code_zxing_view"
+        style="@style/MatchMatch"
+        app:qrcv_animTime="2000"
+        app:qrcv_barCodeTipText="@string/sweep_reminder"
+        app:qrcv_borderColor="@android:color/white"
+        app:qrcv_borderSize="1dp"
+        app:qrcv_cornerColor="@color/login_btn_normal"
+        app:qrcv_cornerLength="20dp"
+        app:qrcv_cornerSize="3dp"
+        app:qrcv_isBarcode="false"
+        app:qrcv_isOnlyDecodeScanBoxArea="false"
+        app:qrcv_isScanLineReverse="false"
+        app:qrcv_isShowDefaultGridScanLineDrawable="false"
+        app:qrcv_isShowDefaultScanLineDrawable="false"
+        app:qrcv_isShowTipBackground="false"
+        app:qrcv_isShowTipTextAsSingleLine="false"
+        app:qrcv_isTipTextBelowRect="false"
+        app:qrcv_maskColor="@color/qrcv_maskColor"
+        app:qrcv_qrCodeTipText="@string/sweep_reminder"
+        app:qrcv_rectWidth="200dp"
+        app:qrcv_scanLineColor="@color/confirm_buy"
+        app:qrcv_scanLineMargin="0dp"
+        app:qrcv_scanLineSize="1dp"
+        app:qrcv_tipTextColor="@android:color/white"
+        app:qrcv_tipTextSize="12sp"
+        app:qrcv_toolbarHeight="0dp"
+        app:qrcv_topOffset="180dp" />
 
 </LinearLayout>

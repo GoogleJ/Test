@@ -19,10 +19,10 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="88dp"
-        android:layout_marginEnd="27dp"
         android:layout_marginStart="27dp"
         android:layout_marginTop="65dp"
+        android:layout_marginEnd="27dp"
+        android:layout_marginBottom="88dp"
         android:paddingBottom="25dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,13 +32,14 @@
 
             <ImageView
                 android:id="@+id/m_my_qr_code_header_icon"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:layout_marginStart="21dp"
                 android:layout_marginTop="20dp"
-                app:srcCompat="@drawable/icon_header"
+                android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/icon_header"
                 tools:ignore="RtlCompat" />
 
             <TextView
@@ -46,7 +47,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="9dp"
-                android:text="@string/user_name"
                 android:textColor="@color/black"
                 android:textSize="19dp"
                 app:layout_constraintStart_toEndOf="@+id/m_my_qr_code_header_icon"
@@ -57,7 +57,6 @@
                 android:id="@+id/m_my_qr_code_signature_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/signature"
                 app:layout_constraintBottom_toBottomOf="@+id/m_my_qr_code_header_icon"
                 app:layout_constraintStart_toStartOf="@+id/m_my_qr_code_user_name_text"
                 app:layout_constraintTop_toBottomOf="@+id/m_my_qr_code_user_name_text" />
@@ -66,29 +65,28 @@
                 android:id="@+id/m_my_qr_code_qr_code_icon"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="100dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="152dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="40dp"
                 android:scaleType="fitXY"
-                app:srcCompat="@drawable/icon_header"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/m_my_qr_code_signature_label" />
+                app:layout_constraintTop_toBottomOf="@+id/m_my_qr_code_signature_label"
+                app:srcCompat="@drawable/icon_header" />
 
             <TextView
                 android:id="@+id/m_my_qr_code_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="25dp"
                 android:layout_marginTop="12dp"
-                android:textColor="@color/m_my_qr_code_label"
+                android:layout_marginBottom="25dp"
                 android:text="@string/m_my_qr_code_label"
+                android:textColor="@color/m_my_qr_code_label"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/m_my_qr_code_qr_code_icon"
                 app:layout_constraintStart_toStartOf="@+id/m_my_qr_code_qr_code_icon"
-                app:layout_constraintTop_toBottomOf="@+id/m_my_qr_code_qr_code_icon"
-                app:layout_constraintBottom_toBottomOf="parent"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/m_my_qr_code_qr_code_icon" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

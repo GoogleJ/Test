@@ -174,7 +174,7 @@
             android:layout_width="0dp"
             android:layout_height="0.5dp"
             android:layout_weight="1"
-            android:background="@string/m_my_qr_code_label" />
+            android:background="@color/m_my_qr_code_label" />
 
     </LinearLayout>
 

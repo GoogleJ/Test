@@ -64,7 +64,6 @@ public class SettingActivity extends BaseActivity {
         super.onResume();
         tvSettingAuthenticate.setText(CommonUtils.getAuthenticate(Constant.currentUser.getIsAuthentication()));
         ivSettingAuthen.setVisibility(Constant.currentUser.getIsAuthentication().equals("0") ? View.VISIBLE : View.GONE);
-
     }
 
     public void gotoVerivy(View view) {
@@ -146,7 +145,6 @@ public class SettingActivity extends BaseActivity {
      *
      * @param view
      */
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void loginOut(View view) {
         ConfirmDialog dialog = new ConfirmDialog(this, "提示", "您将退出登录", v -> ServiceFactory.getInstance().getBaseService(Api.class)
@@ -157,7 +155,7 @@ public class SettingActivity extends BaseActivity {
                     Constant.clear();
                     ToastUtils.showShort(R.string.login_out);
                     Intent intent = new Intent(this, LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }, this::handleApiError));
         dialog.show();

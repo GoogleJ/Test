@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.utils.PermissionUtils;
 import com.zxjk.duoduo.weight.TitleBar;
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -44,7 +45,9 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
                 startActivity(new Intent(this, PhoneContactActivity.class));
                 break;
             case R.id.m_add_friend_scan_it_btn:
-                startActivity(new Intent(this,QrCodeActivity.class));
+                if (PermissionUtils.cameraPremissions(this)) {
+                    startActivity(new Intent(this,QrCodeActivity.class));
+                }
                 break;
             case R.id.m_my_qr_code_btn:
                 MyQrCodeActivity.start(this);
