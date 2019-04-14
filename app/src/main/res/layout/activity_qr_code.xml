@@ -6,7 +6,7 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <com.zxjk.duoduo.weight.TitleBar
+    <com.zxjk.duoduo.ui.widget.TitleBar
         android:id="@+id/m_qr_code_title_bar"
         android:layout_width="match_parent"
         android:layout_height="50dp"

@@ -1,13 +1,10 @@
 package com.zxjk.duoduo.ui.minepage;
 
-import android.app.ActivityManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -16,7 +13,7 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.LoginActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
-import com.zxjk.duoduo.weight.TitleBar;
+import com.zxjk.duoduo.ui.widget.TitleBar;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;

@@ -12,22 +12,19 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.SendHkbOrHkExchangeService;
+import com.zxjk.duoduo.service.SendHkbOrHkExchangeService;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
-import com.zxjk.duoduo.weight.dialog.SafeInputDialog;
+import com.zxjk.duoduo.ui.widget.dialog.SafeInputDialog;
 
 import java.text.DecimalFormat;
-
-import io.reactivex.functions.Consumer;
 
 public class HuaZhuanActivity extends BaseActivity implements SafeInputDialog.OnFinishListener {
 

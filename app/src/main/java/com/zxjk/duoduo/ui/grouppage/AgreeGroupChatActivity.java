@@ -1,16 +1,12 @@
 package com.zxjk.duoduo.ui.grouppage;
 
 import android.Manifest;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
-import com.othershe.combinebitmap.CombineBitmap;
-import com.othershe.combinebitmap.layout.WechatLayoutManager;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -19,13 +15,10 @@ import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
-import com.zxjk.duoduo.weight.TitleBar;
-
-import java.util.List;
+import com.zxjk.duoduo.ui.widget.TitleBar;
 
 import androidx.annotation.Nullable;
 import io.reactivex.functions.Consumer;
-import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**

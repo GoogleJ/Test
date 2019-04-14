@@ -1,54 +1,33 @@
 package com.zxjk.duoduo.ui.msgpage;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.ToastUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.bean.Group;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.GroupChatResponse;
-import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.ui.grouppage.AllGroupMembersActivity;
-import com.zxjk.duoduo.ui.grouppage.GroupChatInformationActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.GroupChatAdapter;
-import com.zxjk.duoduo.weight.TitleBar;
+import com.zxjk.duoduo.ui.widget.TitleBar;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.view.menu.MenuAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongIM;
-import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.Message;
-import io.rong.imlib.model.UserInfo;
 
 /**
  * @author Administrator

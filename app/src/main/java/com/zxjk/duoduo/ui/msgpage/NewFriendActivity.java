@@ -2,19 +2,14 @@ package com.zxjk.duoduo.ui.msgpage;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -24,7 +19,7 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.NewFriendAdapter;
 import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendInformationDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
-import com.zxjk.duoduo.weight.TitleBar;
+import com.zxjk.duoduo.ui.widget.TitleBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,16 +72,14 @@ public class NewFriendActivity extends BaseActivity {
 
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             View vp = (View) view.getParent();
-            TextView typeBtn = vp.findViewById(R.id.m_item_new_friend_type_btn);
             TextView mark = vp.findViewById(R.id.m_item_new_friend_message_label);
             FriendInfoResponse item = (FriendInfoResponse) adapter.getData().get(position);
             boolean isTrue = item.getStatus().equals("0");
             switch (view.getId()) {
                 case R.id.m_item_new_friend_type_btn:
                     if (isTrue) {
-                        typeBtn.setText(getString(R.string.m_item_contact_type_text));
-                        typeBtn.setBackground(null);
-                        typeBtn.setTextColor(ContextCompat.getColor(typeBtn.getContext(), R.color.textcolor3));
+                        item.setStatus("2");
+                        adapter.notifyItemChanged(position);
                         addFriend(mAdapter.getData().get(position).getId(), mark.getText().toString());
                     }
                     break;
@@ -103,7 +96,6 @@ public class NewFriendActivity extends BaseActivity {
                     }
                     break;
                 default:
-                    break;
             }
             mAdapter.notifyDataSetChanged();
         });

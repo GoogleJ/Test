@@ -13,7 +13,7 @@ import com.zxjk.duoduo.ui.msgpage.base.BaseFragment;
 import com.zxjk.duoduo.ui.msgpage.widget.CommonPopupWindow;
 import com.zxjk.duoduo.ui.walletpage.RecipetQRActivity;
 import com.zxjk.duoduo.utils.PermissionUtils;
-import com.zxjk.duoduo.weight.TitleBar;
+import com.zxjk.duoduo.ui.widget.TitleBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

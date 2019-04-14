@@ -20,7 +20,7 @@ import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.SearchAdapter;
-import com.zxjk.duoduo.weight.TitleBar;
+import com.zxjk.duoduo.ui.widget.TitleBar;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;

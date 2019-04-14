@@ -8,7 +8,6 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.WindowUtils;
 import java.util.concurrent.TimeUnit;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import io.reactivex.Observable;
 
@@ -35,7 +34,6 @@ public class WelcomeActivity extends BaseActivity {
         checkUserState();
     }
 
-    @NonNull
     private void goLoginByServer() {
         startActivity(new Intent(this, LoginActivity.class));
         finish();

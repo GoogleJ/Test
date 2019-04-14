@@ -5,13 +5,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <com.zxjk.duoduo.weight.TitleBar
+    <com.zxjk.duoduo.ui.widget.TitleBar
         android:id="@+id/conversation_title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         app:titleBarLeftImage="@drawable/ico_back"
         app:titleBarTextColor="@color/white"
-
         app:titleBarRightImage="@drawable/icon_right_title"
         />
     <fragment

@@ -9,8 +9,8 @@ import android.widget.TextView;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.CountryEntity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.weight.LetterIndexView;
-import com.zxjk.duoduo.weight.SelectContryAdapter;
+import com.zxjk.duoduo.ui.widget.LetterIndexView;
+import com.zxjk.duoduo.ui.widget.SelectContryAdapter;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
@@ -18,7 +18,6 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
-import java.net.PortUnreachableException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;

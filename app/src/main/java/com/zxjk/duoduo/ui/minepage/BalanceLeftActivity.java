@@ -58,7 +58,7 @@ public class BalanceLeftActivity extends BaseActivity {
 
     //订单详情
     public void orderDetail(View view) {
-
+        startActivity(new Intent(this,DetailListActivity.class));
     }
 
     //支付设置

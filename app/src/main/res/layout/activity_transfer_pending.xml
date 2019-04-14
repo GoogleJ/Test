@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     tools:ignore="MissingConstraints,RtlCompat"
     android:layout_height="match_parent">
-    <com.zxjk.duoduo.weight.TitleBar
+    <com.zxjk.duoduo.ui.widget.TitleBar
         android:id="@+id/m_transfer_pending_title_bar"
         android:layout_width="match_parent"
         android:layout_height="50dp"

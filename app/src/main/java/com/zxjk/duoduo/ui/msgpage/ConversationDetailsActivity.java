@@ -19,13 +19,12 @@ import com.zxjk.duoduo.ui.msgpage.widget.CommonPopupWindow;
 import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendInformationDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
-import com.zxjk.duoduo.weight.TitleBar;
+import com.zxjk.duoduo.ui.widget.TitleBar;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongIM;
 
 /**

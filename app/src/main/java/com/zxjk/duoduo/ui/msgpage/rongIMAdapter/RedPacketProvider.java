@@ -1,7 +1,6 @@
 package com.zxjk.duoduo.ui.msgpage.rongIMAdapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -11,14 +10,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.ui.msgpage.PeopleRedEnvelopesActivity;
-import com.zxjk.duoduo.weight.dialog.RedEvelopesDialog;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import io.rong.imkit.model.ProviderTag;
 import io.rong.imkit.model.UIMessage;
 import io.rong.imkit.widget.provider.IContainerItemProvider;
-import io.rong.imlib.ConnectChangeReceiver;
 import io.rong.imlib.model.Message;
 
 /**

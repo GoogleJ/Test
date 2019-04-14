@@ -5,7 +5,7 @@ import java.util.Objects;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\21 0021 好友相关实体 
+ * @// TODO: 2019\3\21 0021 好友相关实体
  */
 public class FriendInfoResponse implements Serializable {
 
@@ -55,37 +55,38 @@ public class FriendInfoResponse implements Serializable {
     private String isFirstLogin;
     private String renegeNumber;
     private String isConfine;
-    private String  sortLetters;
+    private String sortLetters;
     private String status;
 
     public FriendInfoResponse(FriendInfoResponse friendInfoResponse) {
-        this.id =friendInfoResponse. id;
-        this.duoduoId =friendInfoResponse. duoduoId;
-        this.nick =friendInfoResponse. nick;
-        this.realname =friendInfoResponse. realname;
-        this.mobile =friendInfoResponse. mobile;
-        this.password =friendInfoResponse. password;
-        this.address =friendInfoResponse. address;
-        this.email =friendInfoResponse. email;
-        this.headPortrait =friendInfoResponse. headPortrait;
-        this.sex =friendInfoResponse. sex;
-        this.signature =friendInfoResponse. signature;
-        this.walletAddress =friendInfoResponse. walletAddress;
-        this.idCard =friendInfoResponse. idCard;
-        this.isShowRealname =friendInfoResponse. isShowRealname;
-        this.updateTime =friendInfoResponse. updateTime;
-        this.createTime =friendInfoResponse. createTime;
-        this.isDelete =friendInfoResponse. isDelete;
-        this.token =friendInfoResponse. token;
-        this.remark =friendInfoResponse. remark;
-        this.rongToken =friendInfoResponse. rongToken;
-        this.payPwd =friendInfoResponse. payPwd;
-        this.isFirstLogin =friendInfoResponse. isFirstLogin;
-        this.renegeNumber =friendInfoResponse. renegeNumber;
-        this.isConfine =friendInfoResponse. isConfine;
-        this.sortLetters =friendInfoResponse. sortLetters;
-        this.status=friendInfoResponse.status;
+        this.id = friendInfoResponse.id;
+        this.duoduoId = friendInfoResponse.duoduoId;
+        this.nick = friendInfoResponse.nick;
+        this.realname = friendInfoResponse.realname;
+        this.mobile = friendInfoResponse.mobile;
+        this.password = friendInfoResponse.password;
+        this.address = friendInfoResponse.address;
+        this.email = friendInfoResponse.email;
+        this.headPortrait = friendInfoResponse.headPortrait;
+        this.sex = friendInfoResponse.sex;
+        this.signature = friendInfoResponse.signature;
+        this.walletAddress = friendInfoResponse.walletAddress;
+        this.idCard = friendInfoResponse.idCard;
+        this.isShowRealname = friendInfoResponse.isShowRealname;
+        this.updateTime = friendInfoResponse.updateTime;
+        this.createTime = friendInfoResponse.createTime;
+        this.isDelete = friendInfoResponse.isDelete;
+        this.token = friendInfoResponse.token;
+        this.remark = friendInfoResponse.remark;
+        this.rongToken = friendInfoResponse.rongToken;
+        this.payPwd = friendInfoResponse.payPwd;
+        this.isFirstLogin = friendInfoResponse.isFirstLogin;
+        this.renegeNumber = friendInfoResponse.renegeNumber;
+        this.isConfine = friendInfoResponse.isConfine;
+        this.sortLetters = friendInfoResponse.sortLetters;
+        this.status = friendInfoResponse.status;
     }
+
     public FriendInfoResponse() {
 
     }
@@ -125,6 +126,7 @@ public class FriendInfoResponse implements Serializable {
     public String getStatus() {
         return status;
     }
+
     public void setStatus(String status) {
         this.status = status;
     }

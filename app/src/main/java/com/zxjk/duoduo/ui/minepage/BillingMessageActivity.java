@@ -1,36 +1,29 @@
 package com.zxjk.duoduo.ui.minepage;
 
 import android.annotation.SuppressLint;
-import android.app.Service;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.PayInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
-import com.zxjk.duoduo.weight.TitleBar;
-import com.zxjk.duoduo.weight.dialog.BaseAddTitleDialog;
-import com.zxjk.duoduo.weight.dialog.SelectPopupWindow;
-
-import java.util.List;
+import com.zxjk.duoduo.ui.widget.TitleBar;
+import com.zxjk.duoduo.ui.widget.dialog.BaseAddTitleDialog;
+import com.zxjk.duoduo.ui.widget.dialog.SelectPopupWindow;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import io.reactivex.functions.Consumer;
 
 /**
  * @author Administrator

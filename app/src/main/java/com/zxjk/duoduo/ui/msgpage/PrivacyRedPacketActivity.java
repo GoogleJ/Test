@@ -1,8 +1,6 @@
 package com.zxjk.duoduo.ui.msgpage;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -15,24 +13,21 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.RedPackageResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketMessage;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
 import com.zxjk.duoduo.utils.MoneyValueFilter;
-import com.zxjk.duoduo.weight.dialog.SelectPopupWindow;
+import com.zxjk.duoduo.ui.widget.dialog.SelectPopupWindow;
 
 import androidx.annotation.Nullable;
-import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;

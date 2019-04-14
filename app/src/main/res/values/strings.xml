@@ -616,5 +616,12 @@
     <string name="recipetorders">收款记录</string>
     <string name="enter_mybalance">进入我的余额</string>
     <string name="receipttips">嘟嘟结算，瞬间到账</string>
+    <string name="detaillisttitle">账单明细</string>
+    <string name="shouruxiangqing">收入详情</string>
+    <string name="tradeDone">交易成功</string>
+    <string name="tradeType">交易类型</string>
+    <string name="tradeTime">交易时间</string>
+    <string name="tvTradeNumber">流水单号</string>
+    <string name="note">备注</string>
 
 </resources>

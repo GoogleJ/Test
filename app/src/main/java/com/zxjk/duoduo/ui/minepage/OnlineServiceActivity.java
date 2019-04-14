@@ -3,9 +3,6 @@ package com.zxjk.duoduo.ui.minepage;
 import android.annotation.SuppressLint;
 import android.net.http.SslError;
 import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.View;
-import android.webkit.JavascriptInterface;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -14,7 +11,6 @@ import android.webkit.WebViewClient;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.weight.TitleBar;
 
 import androidx.annotation.Nullable;
 

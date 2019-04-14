@@ -24,7 +24,7 @@
             android:textColor="@color/black"
             android:textSize="14sp"/>
 
-        <com.zxjk.duoduo.weight.dialog.PswView
+        <com.zxjk.duoduo.ui.widget.dialog.PswView
             android:id="@+id/pswView"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"

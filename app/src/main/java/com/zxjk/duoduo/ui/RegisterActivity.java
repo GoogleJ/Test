@@ -14,12 +14,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.RegisterBlockWalletService;
+import com.zxjk.duoduo.service.RegisterBlockWalletService;
 import com.zxjk.duoduo.bean.CountryEntity;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -33,7 +32,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
-import io.reactivex.functions.Consumer;
 
 import static com.zxjk.duoduo.utils.MD5Utils.getMD5;
 

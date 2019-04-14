@@ -3,17 +3,15 @@ package com.zxjk.duoduo.ui.base;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 import com.zxjk.duoduo.Constant;
-import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.rx.RxException;
 import com.zxjk.duoduo.ui.LoginActivity;
-import com.zxjk.duoduo.weight.dialog.ReLoginDialog;
+import com.zxjk.duoduo.ui.widget.dialog.ReLoginDialog;
 
 import java.io.File;
 import java.util.List;

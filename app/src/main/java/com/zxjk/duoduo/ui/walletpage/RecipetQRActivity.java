@@ -4,18 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.InputFilter;
-import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.google.gson.Gson;
@@ -23,20 +18,16 @@ import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.minepage.BalanceLeftActivity;
-import com.zxjk.duoduo.ui.msgpage.MyQrCodeActivity;
-import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.utils.MoneyValueFilter;
-import com.zxjk.duoduo.weight.dialog.EditTextDialog;
+import com.zxjk.duoduo.ui.widget.dialog.EditTextDialog;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import cn.bingoogolapple.qrcode.core.BGAQRCodeUtil;
 import cn.bingoogolapple.qrcode.zxing.QRCodeEncoder;
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class RecipetQRActivity extends BaseActivity {

@@ -6,7 +6,7 @@
     android:background="@color/m_friend_search_view"
     android:orientation="vertical">
 
-    <com.zxjk.duoduo.weight.TitleBar
+    <com.zxjk.duoduo.ui.widget.TitleBar
         android:id="@+id/m_envelopes_recording_title_bar"
         android:layout_width="match_parent"
         android:layout_height="50dp"

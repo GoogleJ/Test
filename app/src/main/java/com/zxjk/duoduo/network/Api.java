@@ -3,6 +3,7 @@ package com.zxjk.duoduo.network;
 import com.zxjk.duoduo.network.response.AllGroupMembersResponse;
 import com.zxjk.duoduo.network.response.BaseResponse;
 import com.zxjk.duoduo.network.response.CreateWalletResponse;
+import com.zxjk.duoduo.network.response.DetailListResposne;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.response.GetBalanceHkResponse;
 import com.zxjk.duoduo.network.response.GetGroupRedPackageInfoResponse;
@@ -756,6 +757,10 @@ public interface Api {
     @POST("duoduo/customer/verifyPayPwd")
     @FormUrlEncoded
     Observable<BaseResponse<String>> verifyPayPwd(@Field("payPwd") String payPwd);
+
+    @POST("duoduo/exchange/getDetailList")
+    @FormUrlEncoded
+    Observable<BaseResponse<List<DetailListResposne>>> getDetailList(@Field("type") String type);
 
 
 }

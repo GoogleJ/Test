@@ -6,7 +6,7 @@
     tools:ignore="MissingConstraints,RtlCompat"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
-    <com.zxjk.duoduo.weight.TitleBar
+    <com.zxjk.duoduo.ui.widget.TitleBar
         android:id="@+id/m_successful_transfer_title_bar"
         android:layout_width="match_parent"
         android:layout_height="50dp"

@@ -1,58 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:id="@+id/m_constacts_friend"
-    android:background="@color/white"
     android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:id="@+id/m_constacts_friend"
     android:orientation="vertical"
-
     tools:ignore="MissingConstraints,RtlCompat">
 
-    <ImageView
-        android:scaleType="centerCrop"
-        android:id="@+id/m_constants_header_icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_margin="6dp"
-
-        android:src="@drawable/icon_header"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
-        android:id="@+id/m_user_name"
-        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/tvFirstLetter"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="6dp"
-        android:text="@string/user_name"
-        android:textColor="@color/black"
-        android:textSize="16dp"
-        app:layout_constraintStart_toEndOf="@+id/m_constants_header_icon"
-        app:layout_constraintTop_toTopOf="@+id/m_constants_header_icon" />
+        android:background="#eeeeee"
+        android:paddingStart="8dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:text="A"
+        android:textColor="@color/themecolor" />
 
-    <TextView
-        android:id="@+id/m_singture_text"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="6dp"
-        android:text="@string/bank_real_name"
-        android:maxLength="15"
-        android:ellipsize="end"
+        android:orientation="horizontal"
+        android:padding="8dp">
 
-        android:textSize="14dp"
-        app:layout_constraintBottom_toBottomOf="@+id/m_constants_header_icon"
-        app:layout_constraintStart_toStartOf="@+id/m_user_name" />
+        <ImageView
+            android:id="@+id/m_constants_header_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_header" />
+
+        <TextView
+            android:id="@+id/m_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@id/m_constants_header_icon"
+            android:text="@string/user_name"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/m_singture_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/m_user_name"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_toEndOf="@id/m_constants_header_icon"
+            android:ellipsize="end"
+            android:maxLength="15"
+            android:text="@string/bank_real_name" />
+
+    </RelativeLayout>
 
     <View
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_marginTop="5dp"
-        android:background="@color/bga_adapter_line"
-        app:layout_constraintTop_toBottomOf="@+id/m_constants_header_icon"
-        app:layout_constraintStart_toStartOf="@+id/m_user_name"
-        />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_marginStart="72dp"
+        android:background="@color/bga_adapter_line" />
+
+</LinearLayout>

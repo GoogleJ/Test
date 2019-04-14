@@ -23,8 +23,8 @@ import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.utils.MD5Utils;
 import com.zxjk.duoduo.utils.MoneyValueFilter;
-import com.zxjk.duoduo.weight.TitleBar;
-import com.zxjk.duoduo.weight.dialog.SelectPopupWindow;
+import com.zxjk.duoduo.ui.widget.TitleBar;
+import com.zxjk.duoduo.ui.widget.dialog.SelectPopupWindow;
 
 import androidx.annotation.Nullable;
 import io.rong.imkit.RongIM;

@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -16,12 +15,9 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferMessage;
 import com.zxjk.duoduo.utils.CommonUtils;
-import com.zxjk.duoduo.weight.TitleBar;
+import com.zxjk.duoduo.ui.widget.TitleBar;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import androidx.annotation.Nullable;
 import io.rong.imkit.RongIM;
@@ -87,6 +83,7 @@ public class TransferInfoActivity extends BaseActivity {
                             RongIMClient.getInstance().setMessageExtra(message.getMessageId(), "1", new RongIMClient.ResultCallback<Boolean>() {
                                 @Override
                                 public void onSuccess(Boolean aBoolean) {
+                                    Constant.tempMsg = message;
                                     finish();
                                 }
 

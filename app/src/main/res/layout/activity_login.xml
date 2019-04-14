@@ -81,7 +81,7 @@
                         android:layout_marginLeft="10dp"
                         app:srcCompat="@drawable/ic_bottom" />
 
-                    <com.zxjk.duoduo.weight.ClearableEditTextWithIcon
+                    <com.zxjk.duoduo.ui.widget.ClearableEditTextWithIcon
                         android:id="@+id/edit_mobile"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -130,7 +130,7 @@
                 android:layout_marginLeft="10dp"
                 android:orientation="vertical">
 
-                <com.zxjk.duoduo.weight.ClearableEditTextWithIcon
+                <com.zxjk.duoduo.ui.widget.ClearableEditTextWithIcon
                     android:id="@+id/edit_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

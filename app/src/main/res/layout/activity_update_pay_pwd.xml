@@ -7,7 +7,7 @@
     android:id="@+id/root_view"
 
     android:orientation="vertical">
-    <com.zxjk.duoduo.weight.TitleBar
+    <com.zxjk.duoduo.ui.widget.TitleBar
         android:id="@+id/m_set_payment_pwd_title_bar"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
@@ -38,7 +38,7 @@
                 android:textColor="@color/m_verification_send_btn"
                 android:textSize="19dp" />
 
-            <com.zxjk.duoduo.weight.PayPsdInputView
+            <com.zxjk.duoduo.ui.widget.PayPsdInputView
                 android:id="@+id/m_set_payment_pwd_edit"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"

@@ -22,7 +22,7 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
-import com.zxjk.duoduo.weight.dialog.AccountFreezeDialog;
+import com.zxjk.duoduo.ui.widget.dialog.AccountFreezeDialog;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -121,6 +121,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 }
                 login(mobile, password);
                 SPUtils.getInstance().put("mobile", edit_mobile.getText().toString().trim());
+
                 break;
             default:
                 break;

@@ -27,7 +27,7 @@ import com.zxjk.duoduo.ui.widget.TakePopWindow;
 import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
-import com.zxjk.duoduo.weight.TitleBar;
+import com.zxjk.duoduo.ui.widget.TitleBar;
 
 import java.io.File;
 import java.util.Collections;

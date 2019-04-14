@@ -1,21 +1,17 @@
 package com.zxjk.duoduo.ui.msgpage;
 
 import android.annotation.SuppressLint;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.bean.CountryEntity;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
@@ -25,9 +21,18 @@ import com.zxjk.duoduo.ui.msgpage.adapter.BaseContactAdapter;
 import com.zxjk.duoduo.ui.msgpage.widget.IndexView;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.PinYinUtils;
-import com.zxjk.duoduo.weight.TitleBar;
+import com.zxjk.duoduo.ui.widget.TitleBar;
+
+import net.sourceforge.pinyin4j.PinyinHelper;
+import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
+import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
+import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
+import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import androidx.annotation.Nullable;
@@ -37,7 +42,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import io.reactivex.functions.Consumer;
 
 /**
  * @author Administrator
@@ -58,8 +62,6 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
     @BindView(R.id.dotNewFriend)
     View dotNewFriend;
     private BaseContactAdapter mAdapter;
-    FriendInfoResponse friendInfoResponse;
-    Unbinder unbinder;
 
     private LinearLayoutManager layoutManager;
     List<FriendInfoResponse> list = new ArrayList<>();
@@ -79,20 +81,18 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
         mAdapter = new BaseContactAdapter();
         getFriendListInfoById();
         indexView.setShowTextDialog(constactsDialog);
-        indexView.setOnTouchingLetterChangedListener(new IndexView.OnTouchingLetterChangedListener() {
-            @Override
-            public void onTouchingLetterChanged(String letter) {
-                int position = 0;
-                for (int i = 0; i < list.size(); i++) {
-                    //获取名字的首字母
-                    String letters = PinYinUtils.getPinYin(list.get(i).getNick()).substring(0, 1).toUpperCase();
-                    if (letters.equals(letter)) {
-                        //第一次出现的位置
-                        position = i;
-                        //将listview滚动到该位置
-                        mRecyclerView.setScrollingTouchSlop(position);
-                        break;
-                    }
+        indexView.setOnTouchingLetterChangedListener(letter -> {
+            int position;
+            for (int i = 0; i < list.size(); i++) {
+                //获取名字的首字母
+                String letters = list.get(i).getSortLetters();
+                if (letters.equals(letter)) {
+                    //第一次出现的位置
+                    position = i;
+                    //将listview滚动到该位置
+                    mRecyclerView.scrollToPosition(position);
+//                    mRecyclerView.setScrollingTouchSlop(position);
+                    break;
                 }
             }
         });
@@ -144,19 +144,42 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(friendInfoResponses -> {
-                    for (int i = 0; i < friendInfoResponses.size(); i++) {
-                        friendInfoResponse = new FriendInfoResponse(friendInfoResponses.get(i));
-                        if (!friendInfoResponses.get(i).getId().equals(Constant.userId)) {
-                            list = friendInfoResponses;
-                            mAdapter.setNewData(friendInfoResponses);
-                        } else {
-                            if (friendInfoResponses.size() >= 0) {
-                                friendInfoResponses.remove(i);
-                            }
-                        }
+                    list = friendInfoResponses;
+                    mapList(list);
+                    mAdapter.setNewData(list);
+                    if (Constant.friendsList == null) {
+                        Constant.friendsList = list;
                     }
-                    mAdapter.notifyDataSetChanged();
                 }, this::handleApiError);
+    }
+
+    private void mapList(List<FriendInfoResponse> list) {
+        for (FriendInfoResponse f : list) {
+            f.setSortLetters(converterToFirstSpell(f.getNick()));
+        }
+        Comparator<FriendInfoResponse> comparator = (o1, o2) -> o1.getSortLetters().compareTo(o2.getSortLetters());
+        Collections.sort(list, comparator);
+    }
+
+    public static String converterToFirstSpell(String chines) {
+        StringBuilder pinyinName = new StringBuilder();
+        char[] nameChar = chines.toCharArray();
+        HanyuPinyinOutputFormat defaultFormat = new HanyuPinyinOutputFormat();
+        defaultFormat.setCaseType(HanyuPinyinCaseType.UPPERCASE);
+        defaultFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
+        for (char aNameChar : nameChar) {
+            if (aNameChar > 128) {
+                try {
+                    pinyinName.append(PinyinHelper.toHanyuPinyinStringArray(
+                            aNameChar, defaultFormat)[0].charAt(0));
+                } catch (BadHanyuPinyinOutputFormatCombination e) {
+                    e.printStackTrace();
+                }
+            } else {
+                pinyinName.append(aNameChar);
+            }
+        }
+        return pinyinName.toString().substring(0, 1);
     }
 
     public void getMyfriendsWaiting() {

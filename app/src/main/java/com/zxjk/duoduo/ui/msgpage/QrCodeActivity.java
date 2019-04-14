@@ -4,24 +4,18 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.util.Log;
-import android.view.View;
 
 import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.weight.TitleBar;
+import com.zxjk.duoduo.ui.widget.TitleBar;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
-import cn.bingoogolapple.qrcode.core.ProcessDataTask;
 import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.zxing.ZXingView;
-
-import static com.zxjk.duoduo.utils.PermissionUtils.cameraPremissions;
 
 
 /**

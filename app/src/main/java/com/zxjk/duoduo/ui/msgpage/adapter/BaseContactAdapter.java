@@ -9,13 +9,14 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.utils.GlideUtil;
 
+import java.util.List;
+
 /**
  * @author Administrator
  * @// TODO: 2019\3\19 0019 关于通讯录索引的按钮
  */
 public class BaseContactAdapter extends BaseQuickAdapter<FriendInfoResponse, BaseViewHolder> {
 
-    String type = "0";
     Context context;
 
     public BaseContactAdapter() {
@@ -25,15 +26,22 @@ public class BaseContactAdapter extends BaseQuickAdapter<FriendInfoResponse, Bas
 
     @Override
     protected void convert(BaseViewHolder helper, FriendInfoResponse item) {
+        boolean visiable;
+        List<FriendInfoResponse> data = getData();
+        if (helper.getAdapterPosition() != 0) {
+            visiable = !data.get(helper.getAdapterPosition() - 1).getSortLetters().equals(item.getSortLetters());
+        } else {
+            visiable = true;
+        }
         helper.setText(R.id.m_user_name, item.getNick())
+                .setVisible(R.id.tvFirstLetter,visiable)
                 .setText(R.id.m_singture_text, item.getSignature())
+                .setText(R.id.tvFirstLetter,item.getSortLetters())
                 .addOnClickListener(R.id.m_constacts_friend)
                 .addOnLongClickListener(R.id.m_constacts_friend);
-        ImageView heardImage = helper.getView(R.id.m_constants_header_icon);
-        GlideUtil.loadCornerImg(heardImage, item.getHeadPortrait(),2);
 
+        ImageView heardImage = helper.getView(R.id.m_constants_header_icon);
+        GlideUtil.loadCornerImg(heardImage, item.getHeadPortrait(), 2);
 
     }
-
-
 }

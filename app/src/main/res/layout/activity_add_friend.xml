@@ -9,7 +9,7 @@
 
     tools:ignore="RtlCompat">
 
-    <com.zxjk.duoduo.weight.TitleBar
+    <com.zxjk.duoduo.ui.widget.TitleBar
         android:id="@+id/m_add_friend_title_bar"
         android:layout_width="match_parent"
         android:layout_height="50dp"

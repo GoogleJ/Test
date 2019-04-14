@@ -1,18 +1,13 @@
 package com.zxjk.duoduo.ui.msgpage.adapter;
 
-import android.os.Build;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.utils.GlideUtil;
-
-import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
-
 
 /**
  * @author Administrator

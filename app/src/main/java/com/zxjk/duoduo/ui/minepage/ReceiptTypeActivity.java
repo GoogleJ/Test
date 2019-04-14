@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -13,11 +12,8 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.GsonUtils;
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
@@ -32,16 +28,14 @@ import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
 import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
-import com.zxjk.duoduo.weight.TitleBar;
-import com.zxjk.duoduo.weight.dialog.PaymentTypeDialog;
-import com.zxjk.duoduo.weight.dialog.SelectPopupWindow;
+import com.zxjk.duoduo.ui.widget.TitleBar;
+import com.zxjk.duoduo.ui.widget.dialog.PaymentTypeDialog;
 
 import java.io.File;
 import java.util.Collections;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import io.reactivex.functions.Consumer;
 
 import static com.zxjk.duoduo.ui.EditPersonalInformationFragment.REQUEST_ALBUM;
 import static com.zxjk.duoduo.ui.EditPersonalInformationFragment.REQUEST_TAKE;

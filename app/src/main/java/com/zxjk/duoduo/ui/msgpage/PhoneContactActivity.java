@@ -5,17 +5,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.EditText;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.PhoneInfo;
-import com.zxjk.duoduo.network.response.GroupChatResponse;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.PhoneContactAdapter;
 import com.zxjk.duoduo.ui.msgpage.utils.GetPhoneNumberFromMobileUtils;
-import com.zxjk.duoduo.weight.TitleBar;
+import com.zxjk.duoduo.ui.widget.TitleBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +21,6 @@ import java.util.Locale;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import static com.zxjk.duoduo.utils.PermissionUtils.constantPermission;
 
 /**
  * @author Administrator

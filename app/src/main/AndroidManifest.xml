@@ -39,7 +39,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.walletpage.RecipetQRActivity"></activity>
+        <activity android:name=".ui.minepage.DetailInfoActivity"></activity>
+        <activity android:name=".ui.minepage.DetailListActivity" />
+        <activity
+            android:name=".ui.walletpage.RecipetQRActivity"
+            android:launchMode="singleTask" />
         <activity
             android:name=".ui.msgpage.RedPackageListActivity"
             android:launchMode="singleTask" />
@@ -485,9 +489,9 @@
                 android:resource="@xml/filepaths" />
         </provider>
 
-        <service android:name=".RegisterBlockWalletService" />
-        <service android:name=".SendTransactionService" />
-        <service android:name=".SendHkbOrHkExchangeService" />
+        <service android:name=".service.RegisterBlockWalletService" />
+        <service android:name=".service.SendTransactionService" />
+        <service android:name=".service.SendHkbOrHkExchangeService" />
     </application>
 
 </manifest>

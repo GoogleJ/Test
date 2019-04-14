@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.SendTransactionService;
+import com.zxjk.duoduo.service.SendTransactionService;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
@@ -22,12 +22,11 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.SelectContactActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
-import com.zxjk.duoduo.weight.dialog.SafeInputDialog;
+import com.zxjk.duoduo.ui.widget.dialog.SafeInputDialog;
 
 import java.text.DecimalFormat;
 
 import androidx.annotation.Nullable;
-import io.reactivex.functions.Consumer;
 
 
 @SuppressLint("CheckResult")

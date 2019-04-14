@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -16,9 +15,8 @@ import com.google.gson.Gson;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.ui.walletpage.RecipetQRActivity;
 import com.zxjk.duoduo.utils.GlideUtil;
-import com.zxjk.duoduo.weight.TitleBar;
+import com.zxjk.duoduo.ui.widget.TitleBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

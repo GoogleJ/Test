@@ -26,7 +26,7 @@ import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
-import com.zxjk.duoduo.weight.dialog.ChooseSexDialog;
+import com.zxjk.duoduo.ui.widget.dialog.ChooseSexDialog;
 
 import java.io.File;
 import java.util.Collections;

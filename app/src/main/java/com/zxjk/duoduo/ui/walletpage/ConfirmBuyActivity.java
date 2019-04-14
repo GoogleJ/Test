@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -19,15 +18,13 @@ import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
-import com.zxjk.duoduo.weight.dialog.ConfirmDialog;
+import com.zxjk.duoduo.ui.widget.dialog.ConfirmDialog;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 
 /**
  * @author Administrator

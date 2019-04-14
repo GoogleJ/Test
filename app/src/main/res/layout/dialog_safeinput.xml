@@ -48,7 +48,7 @@
         android:textColor="@color/themecolor"
         android:textSize="20sp" />
 
-    <com.zxjk.duoduo.weight.PayPsdInputView
+    <com.zxjk.duoduo.ui.widget.PayPsdInputView
         android:id="@+id/etSafePsy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

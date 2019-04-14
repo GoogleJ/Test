@@ -1,12 +1,11 @@
 package com.zxjk.duoduo.ui.msgpage;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.weight.TitleBar;
+import com.zxjk.duoduo.ui.widget.TitleBar;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;

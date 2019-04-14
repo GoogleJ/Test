@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <com.zxjk.duoduo.weight.TitleBar
+    <com.zxjk.duoduo.ui.widget.TitleBar
         app:titleBarLeftImage="@drawable/ico_back"
         app:titleBarTitle="@string/commit_successful"
         android:layout_width="match_parent"

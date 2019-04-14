@@ -96,7 +96,7 @@
                 android:textColor="@android:color/white"
                 android:textSize="18sp" />
 
-            <com.zxjk.duoduo.weight.ClearableEditTextWithIcon
+            <com.zxjk.duoduo.ui.widget.ClearableEditTextWithIcon
                 android:id="@+id/edit_search"
                 style="@style/edt_common_style"
                 android:layout_width="match_parent"

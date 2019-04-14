@@ -66,7 +66,7 @@ public class RedPackageRecordFragment extends BaseFragment {
             tvRedListTips2.setText("共支出");
         }
 
-        swipeRefreshLayout.setOnRefreshListener(() -> initData());
+        swipeRefreshLayout.setOnRefreshListener(this::initData);
 
         initData();
         return rootView;

@@ -3,10 +3,9 @@ package com.zxjk.duoduo.network.response;
 import java.util.List;
 
 public class GetRedPackageRecordResponse {
-
     /**
-     * redpackageList : [{"nick":"中兴极客14","money":0.1037,"createTime":"1551326357494","message":"恭喜发财，大吉大利","TYPE":"1","redPackageType":"1"},{"nick":"中兴极客15","money":15.0001,"createTime":"1551333742449","message":"恭喜发财，大吉大利","TYPE":"2","redPackageType":"2"}]
-     * totalRecord : {"count":2,"total_money":15.1038}
+     * redpackageList : [{"nick":"阳","redPackageId":111,"money":4,"createTime":"1554679683111","message":"4","TYPE":"2","redPackageType":"2"},{"nick":"阳","redPackageId":110,"money":44,"createTime":"1554679551337","message":"44","TYPE":"2","redPackageType":"2"},{"nick":"阳","redPackageId":109,"money":6,"createTime":"1554679409990","message":"6","TYPE":"2","redPackageType":"2"},{"nick":"阳","redPackageId":108,"money":4,"createTime":"1554679054536","message":"4","TYPE":"2","redPackageType":"2"},{"nick":"阳","redPackageId":107,"money":7,"createTime":"1554678685772","message":"7","TYPE":"2","redPackageType":"2"},{"nick":"阳","redPackageId":106,"money":3,"createTime":"1554678481607","message":"3","TYPE":"2","redPackageType":"2"},{"nick":"阳","redPackageId":105,"money":55,"createTime":"1554677443994","message":"55","TYPE":"2","redPackageType":"2"},{"nick":"阳","redPackageId":104,"money":5,"createTime":"1554653710803","message":"5","TYPE":"2","redPackageType":"2"},{"nick":"阳","redPackageId":103,"money":8,"createTime":"1554653515398","message":"8","TYPE":"2","redPackageType":"2"},{"nick":"阳","redPackageId":102,"money":55,"createTime":"1554653173553","message":"55","TYPE":"2","redPackageType":"2"},{"nick":"阳","redPackageId":101,"money":6,"createTime":"1554652835029","message":"6","TYPE":"2","redPackageType":"2"},{"nick":"阳","redPackageId":100,"money":1,"createTime":"1554539101125","message":"0.00","TYPE":"2","redPackageType":"2"}]
+     * totalRecord : {"count":12,"total_money":198}
      */
 
     private TotalRecordBean totalRecord;
@@ -30,8 +29,8 @@ public class GetRedPackageRecordResponse {
 
     public static class TotalRecordBean {
         /**
-         * count : 2
-         * total_money : 15.1038
+         * count : 12
+         * total_money : 198.0
          */
 
         private int count;
@@ -56,15 +55,17 @@ public class GetRedPackageRecordResponse {
 
     public static class RedpackageListBean {
         /**
-         * nick : 中兴极客14
-         * money : 0.1037
-         * createTime : 1551326357494
-         * message : 恭喜发财，大吉大利
-         * TYPE : 1
-         * redPackageType : 1
+         * nick : 阳
+         * redPackageId : 111
+         * money : 4.0
+         * createTime : 1554679683111
+         * message : 4
+         * TYPE : 2
+         * redPackageType : 2
          */
 
         private String nick;
+        private int redPackageId;
         private double money;
         private String createTime;
         private String message;
@@ -77,6 +78,14 @@ public class GetRedPackageRecordResponse {
 
         public void setNick(String nick) {
             this.nick = nick;
+        }
+
+        public int getRedPackageId() {
+            return redPackageId;
+        }
+
+        public void setRedPackageId(int redPackageId) {
+            this.redPackageId = redPackageId;
         }
 
         public double getMoney() {

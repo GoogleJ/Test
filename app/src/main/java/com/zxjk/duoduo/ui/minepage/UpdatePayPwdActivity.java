@@ -19,9 +19,9 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
-import com.zxjk.duoduo.weight.KeyboardPopupWindow;
-import com.zxjk.duoduo.weight.PayPsdInputView;
-import com.zxjk.duoduo.weight.TitleBar;
+import com.zxjk.duoduo.ui.widget.KeyboardPopupWindow;
+import com.zxjk.duoduo.ui.widget.PayPsdInputView;
+import com.zxjk.duoduo.ui.widget.TitleBar;
 
 import androidx.annotation.Nullable;
 import butterknife.ButterKnife;

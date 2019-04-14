@@ -7,18 +7,16 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
-import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.AllGroupMembersResponse;
 import com.zxjk.duoduo.network.response.GroupChatResponse;
-import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.adapter.AllGroupMemebersAdapter;
 import com.zxjk.duoduo.utils.CommonUtils;
-import com.zxjk.duoduo.weight.TitleBar;
+import com.zxjk.duoduo.ui.widget.TitleBar;
 
 import java.util.ArrayList;
 import java.util.List;
