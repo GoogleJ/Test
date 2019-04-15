@@ -30,7 +30,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@color/white">
+                android:background="@color/white"
+                android:onClick="changeGroupName">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -38,7 +39,6 @@
                     android:paddingStart="12dp"
                     android:paddingTop="20dp"
                     android:paddingBottom="20dp"
-
                     android:text="@string/group_chat_name_label"
                     android:textColor="@color/themecolor"
                     android:textSize="17sp" />
@@ -107,7 +107,6 @@
                     android:textSize="17sp" />
 
                 <com.suke.widget.SwitchButton
-
                     android:id="@+id/top_chat_switch"
                     android:layout_width="43dp"
                     android:layout_height="26dp"
@@ -186,12 +185,12 @@
                     android:id="@+id/announcement"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
                     android:paddingStart="12dp"
                     android:paddingEnd="36dp"
                     android:paddingBottom="18dp"
                     android:text="@string/announcement"
                     android:textSize="15sp"
-                    android:visibility="visible"
                     app:layout_constraintTop_toBottomOf="@+id/group_announcement" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -202,6 +201,7 @@
                 android:background="@color/m_add_friend_line" />
 
             <TextView
+                android:id="@+id/tvGroupManagement"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -231,13 +231,13 @@
                 android:textSize="17sp" />
 
             <TextView
-                android:onClick="dissolutionGroup"
                 android:id="@+id/dissolution_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:gravity="center"
+                android:onClick="dissolutionGroup"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
                 android:textColor="@color/themecolor"

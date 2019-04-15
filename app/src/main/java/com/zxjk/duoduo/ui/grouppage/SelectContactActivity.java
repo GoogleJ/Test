@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -27,7 +26,6 @@ import java.util.List;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import io.reactivex.functions.Consumer;
 
 /**
  * @author Administrator
@@ -83,7 +81,6 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
         recyclerView = findViewById(R.id.all_members_recycler_view);
         searchEdit = findViewById(R.id.search_select_contact);
         LinearLayoutManager manager = new LinearLayoutManager(this);
-        manager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(manager);
         mAdapter = new SelectContactAdapter();
         getFriendListById();
@@ -197,12 +194,7 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) throws Exception {
-                        ToastUtils.showShort(getString(R.string.add_group_chat));
-                    }
-                }, this::handleApiError);
+                .subscribe(s -> ToastUtils.showShort(getString(R.string.add_group_chat)), this::handleApiError);
 
     }
 }

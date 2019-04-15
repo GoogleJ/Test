@@ -47,18 +47,19 @@ public class BaseAddTitleDialog extends Dialog implements View.OnClickListener {
         layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
         window.setAttributes(layoutParams);
     }
-    public void show(String title){
-       show();
+
+    public void show(String title) {
+        show();
         dialogTitle.setText(title);
     }
 
 
-    @OnClick({R.id.determine_btn,R.id.cancel_btn})
+    @OnClick({R.id.determine_btn, R.id.cancel_btn})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.determine_btn:
-                if (onClickListener!=null){
+                if (onClickListener != null) {
                     onClickListener.determine();
                 }
                 break;

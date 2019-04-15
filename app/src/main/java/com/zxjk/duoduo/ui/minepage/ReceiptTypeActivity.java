@@ -23,13 +23,13 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.TakePopWindow;
+import com.zxjk.duoduo.ui.widget.TitleBar;
+import com.zxjk.duoduo.ui.widget.dialog.PaymentTypeDialog;
 import com.zxjk.duoduo.utils.AesUtil;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
 import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
-import com.zxjk.duoduo.ui.widget.TitleBar;
-import com.zxjk.duoduo.ui.widget.dialog.PaymentTypeDialog;
 
 import java.io.File;
 import java.util.Collections;
@@ -39,7 +39,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import static com.zxjk.duoduo.ui.EditPersonalInformationFragment.REQUEST_ALBUM;
 import static com.zxjk.duoduo.ui.EditPersonalInformationFragment.REQUEST_TAKE;
-import static com.zxjk.duoduo.utils.PermissionUtils.cameraPremissions;
 
 /**
  * @author Administrator
@@ -177,25 +176,20 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
             case R.id.account_id_card:
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
                 if (wechat.equals(types)) {
-                    cameraPremissions(this);
                     selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
                             Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                     return;
                 } else if (alipay.equals(types)) {
-                    cameraPremissions(this);
                     selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
                             Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                     return;
                 } else {
                     dialog = new PaymentTypeDialog(ReceiptTypeActivity.this);
-                    dialog.setOnClickListener(new PaymentTypeDialog.OnClickListener() {
-                        @Override
-                        public void determine(String editContent) {
-                            receiptTypePayment.setText(editContent);
-                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-                            dialog.dismiss();
-                        }
+                    dialog.setOnClickListener(editContent -> {
+                        receiptTypePayment.setText(editContent);
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                        dialog.dismiss();
                     });
                     dialog.show(getString(R.string.open_bank), getString(R.string.please_upload_selector_open_bank), "4");
                 }
@@ -222,7 +216,6 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
                 addPayInfo(AesUtil.getInstance().encrypt(GsonUtils.toJson(addPayInfoBean)));
                 break;
             default:
-                break;
         }
     }
 

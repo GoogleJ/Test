@@ -3,18 +3,12 @@ package com.zxjk.duoduo;
 import android.text.TextUtils;
 
 import com.blankj.utilcode.util.DeviceUtils;
-import com.zxjk.duoduo.bean.AddPayInfoBean;
-import com.zxjk.duoduo.network.response.FriendInfoResponse;
-import com.zxjk.duoduo.bean.VerifiedBean;
 import com.zxjk.duoduo.network.response.CreateWalletResponse;
+import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.response.GroupChatResponse;
-import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.response.LoginResponse;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-
 import java.util.Locale;
 
 import io.rong.imlib.model.Message;
@@ -22,9 +16,9 @@ import io.rong.imlib.model.Message;
 public class Constant {
     //阿里OSS上传地址
     public static final String OSS_URL = "https://zhongxingjike.oss-cn-hongkong.aliyuncs.com/upload/";
-    public static final String BASE_URL = "http://192.168.1.3:8085/";
+    //    public static final String BASE_URL = "http://192.168.1.3:8085/";
 //    public static final String BASE_URL = "http://192.168.0.115:8085/";
-//        public static final String BASE_URL="http://192.168.0.110:8085/";
+        public static final String BASE_URL="http://192.168.0.110:8085/";
 //    public static final String BASE_URL = "http://47.75.115.118:8086/";
 
     public static final int CODE_SUCCESS = 0;
@@ -47,7 +41,7 @@ public class Constant {
         Constant.phoneUuid = "";
         currentUser = null;
         walletResponse = null;
-        friendsList = new ArrayList<>();
+        friendsList = null;
     }
 
     /**
@@ -55,7 +49,8 @@ public class Constant {
      */
     public static CreateWalletResponse walletResponse;
     public static GroupChatResponse groupChatResponse = new GroupChatResponse();
-    public static List<FriendInfoResponse> friendsList = new ArrayList();
+    public static List<FriendInfoResponse> friendsList;
     public static Message tempMsg;
+    public static String changeGroupName = null;
 
 }

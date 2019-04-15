@@ -1,18 +1,19 @@
 package com.zxjk.duoduo.utils;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.ContentUris;
 import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.widget.TextView;
-
 import com.zxjk.duoduo.R;
-
 import java.text.SimpleDateFormat;
 import java.util.Locale;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 @SuppressLint("CheckResult")
 public class CommonUtils {
@@ -58,14 +59,14 @@ public class CommonUtils {
     }
 
     // 屏幕宽度（像素）
-    public static int getWindowWidth(AppCompatActivity activity) {
+    public static int getWindowWidth(Activity activity) {
         DisplayMetrics metric = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(metric);
         return metric.widthPixels;
     }
 
     // 屏幕高度（像素）
-    public static int getWindowHeight(AppCompatActivity activity) {
+    public static int getWindowHeight(Activity activity) {
         DisplayMetrics metric = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(metric);
         return metric.heightPixels;
@@ -88,5 +89,22 @@ public class CommonUtils {
     public static String formatTime(long time) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         return simpleDateFormat.format(time);
+    }
+
+    public static Uri getMediaUriFromPath(Context context, String path) {
+        Uri mediaUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+        Cursor cursor = context.getContentResolver().query(mediaUri,
+                null,
+                MediaStore.Images.Media.DISPLAY_NAME + "= ?",
+                new String[] {path.substring(path.lastIndexOf("/") + 1)},
+                null);
+
+        Uri uri = null;
+        if(cursor.moveToFirst()) {
+            uri = ContentUris.withAppendedId(mediaUri,
+                    cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media._ID)));
+        }
+        cursor.close();
+        return uri;
     }
 }

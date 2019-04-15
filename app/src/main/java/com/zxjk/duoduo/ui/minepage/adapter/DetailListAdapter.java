@@ -6,12 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.DetailListResposne;
 import com.zxjk.duoduo.ui.minepage.DetailInfoActivity;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,6 +39,7 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.Vi
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(holder.itemView.getContext(), DetailInfoActivity.class);
             intent.putExtra("data", data.get(position));
+            intent.putExtra("type", holder.tvItemDetaillistName.getText());
             holder.itemView.getContext().startActivity(intent);
         });
     }
@@ -61,9 +65,21 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.Vi
         }
 
         private void bindData(DetailListResposne bean) {
-            tvItemDetaillistName.setText(bean.getSerialType());
             tvItemDetaillistTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Long.parseLong(bean.getCreateTime())));
             tvItemDetaillistMoney.setText(bean.getHk());
+            if (bean.getSource() == 0 || bean.getSource() == 2) {
+                ivItemDetaillist.setImageResource(R.drawable.ic_detail_item_type1);
+                tvItemDetaillistName.setText(R.string.red_packet);
+            } else if (bean.getSource() == 1) {
+                ivItemDetaillist.setImageResource(R.drawable.ic_detail_item_type2);
+                tvItemDetaillistName.setText(R.string.transfer);
+            } else if (bean.getSource() == 8 || bean.getSource() == 9 || bean.getSource() == -9) {
+                ivItemDetaillist.setImageResource(R.drawable.ic_detail_item_type3);
+                tvItemDetaillistName.setText(R.string.huazhuan);
+            } else {
+                ivItemDetaillist.setImageResource(R.drawable.ic_detail_item_type5);
+                tvItemDetaillistName.setText(R.string.others);
+            }
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.zxjk.duoduo.ui;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -12,10 +11,8 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.liang.permission.annotation.Permission;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -24,18 +21,14 @@ import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.TakePopWindow;
+import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
-import com.zxjk.duoduo.ui.widget.TitleBar;
-
 import java.io.File;
 import java.util.Collections;
-
 import androidx.annotation.Nullable;
 import butterknife.OnClick;
-
-import static com.zxjk.duoduo.utils.PermissionUtils.cameraPremissions;
 
 /**
  * @author Administrator
@@ -93,9 +86,7 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
         initData();
     }
 
-    @Permission({Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE})
-    @OnClick(R.id.m_edit_information_btn)
+    @OnClick({R.id.m_edit_information_btn, R.id.m_edit_information_header_icon})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -122,11 +113,10 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
 
                 break;
             case R.id.m_edit_information_header_icon:
-                if (cameraPremissions(this)) {
-                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                    selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
-                            Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-                }
+
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
+                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             default:
                 break;

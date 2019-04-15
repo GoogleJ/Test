@@ -2,11 +2,12 @@ package com.zxjk.duoduo.ui.base;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Bundle;
+import android.view.View;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
+import com.jakewharton.rxbinding3.view.RxView;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.network.rx.RxException;
@@ -16,7 +17,6 @@ import com.zxjk.duoduo.ui.widget.dialog.ReLoginDialog;
 import java.io.File;
 import java.util.List;
 
-import androidx.annotation.Nullable;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -24,6 +24,41 @@ import top.zibin.luban.Luban;
 
 @SuppressLint({"CheckResult", "Registered"})
 public class BaseActivity extends RxAppCompatActivity {
+    public RxPermissions rxPermissions = new RxPermissions(this);
+
+    public interface PermissionResult {
+        void onResult(boolean granted);
+    }
+
+    public void getPermisson(PermissionResult result, String... permissions) {
+        getPermisson(null, result, permissions);
+    }
+
+    public void getPermisson(View view, PermissionResult result, String... permissions) {
+        if (view != null) {
+            RxView.clicks(view)
+                    .compose(rxPermissions.ensureEachCombined(permissions))
+                    .compose(bindToLifecycle())
+                    .subscribe(permission -> {
+                        if (!permission.granted) {
+                            ToastUtils.showShort("请开启相关权限");
+                        }
+                        if (null != result) {
+                            result.onResult(permission.granted);
+                        }
+                    });
+            return;
+        }
+        rxPermissions.request(permissions)
+                .compose(bindToLifecycle())
+                .compose(rxPermissions.ensure(permissions))
+                .subscribe(granted -> {
+                    if (!granted) {
+                        ToastUtils.showShort("请开启相关权限");
+                    }
+                });
+    }
+
     public void handleApiError(Throwable throwable) {
         if (throwable.getCause() instanceof RxException.DuplicateLoginExcepiton ||
                 throwable instanceof RxException.DuplicateLoginExcepiton) {
@@ -38,7 +73,7 @@ public class BaseActivity extends RxAppCompatActivity {
             reLoginDialog.show();
             return;
         }
-        LogUtils.d("DEBUG",throwable.getMessage());
+
 
         ToastUtils.showShort(RxException.getMessage(throwable));
     }
@@ -59,26 +94,5 @@ public class BaseActivity extends RxAppCompatActivity {
                     }
                 });
     }
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
 
 }

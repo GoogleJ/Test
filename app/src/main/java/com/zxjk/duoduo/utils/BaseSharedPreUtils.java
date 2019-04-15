@@ -1,9 +1,7 @@
 package com.zxjk.duoduo.utils;
 
 import android.content.SharedPreferences;
-
 import java.util.Map;
-
 import androidx.annotation.NonNull;
 
 public abstract class BaseSharedPreUtils {

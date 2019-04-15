@@ -55,6 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:background="@null"
+            android:gravity="end"
             android:hint="@string/m_red_envelopes_money_text"
             android:inputType="numberDecimal"
             android:maxLength="15"
@@ -83,7 +84,6 @@
         android:background="@color/m_add_friend_line" />
 
     <EditText
-        android:lines="1"
         android:id="@+id/etTransferInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -94,6 +94,7 @@
         android:gravity="center"
         android:hint="@string/m_transfer_add_instructions"
         android:imeOptions="actionDone"
+        android:lines="1"
         android:textSize="14sp" />
 
     <TextView

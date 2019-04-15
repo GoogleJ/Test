@@ -5,6 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.blankj.utilcode.util.LogUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.GetGroupRedPackageInfoResponse;
 import com.zxjk.duoduo.utils.GlideUtil;
@@ -56,6 +58,7 @@ public class RedPackageAdapter extends RecyclerView.Adapter<RedPackageAdapter.Vi
         void bindData(GetGroupRedPackageInfoResponse.CustomerInfoBean bean) {
             GlideUtil.loadCornerImg(ivHead, bean.getHeadPortrait(), 2);
             tvNick.setText(bean.getNick());
+            LogUtils.e(bean.getCreateTime());
             tvTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Long.parseLong(bean.getCreateTime())));
             tvMoney.setText(String.valueOf(bean.getMoney()) + "HK");
         }

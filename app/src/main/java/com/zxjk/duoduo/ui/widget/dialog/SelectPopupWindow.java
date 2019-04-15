@@ -66,19 +66,15 @@ public class SelectPopupWindow extends PopupWindow implements View.OnClickListen
         //设置SelectPicPopupWindow弹出窗体的背景
         this.setBackgroundDrawable(dw);
         //mMenuView添加OnTouchListener监听判断获取触屏位置如果在选择框外面则销毁弹出框
-        mMenuView.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int height = mMenuView.findViewById(R.id.pop_layout).getTop();
-                int y = ( int ) event.getY();
-                if ( event.getAction() == MotionEvent.ACTION_UP ) {
-                    if ( y < height ) {
-                        dismiss();
-                    }
+        mMenuView.setOnTouchListener((v, event) -> {
+            int height = mMenuView.findViewById(R.id.pop_layout).getTop();
+            int y = ( int ) event.getY();
+            if ( event.getAction() == MotionEvent.ACTION_UP ) {
+                if ( y < height ) {
+                    dismiss();
                 }
-                return true;
             }
+            return true;
         });
     }
 

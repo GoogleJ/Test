@@ -4,19 +4,20 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
-
-import com.blankj.utilcode.util.LogUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.ui.minepage.scanuri.Action1;
+import com.zxjk.duoduo.ui.minepage.scanuri.BaseUri;
 import com.zxjk.duoduo.ui.widget.TitleBar;
-
+import org.json.JSONObject;
 import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
 import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.zxing.ZXingView;
-
 
 /**
  * @author Administrator
@@ -41,13 +42,12 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
      */
     private boolean isFlashlight;
 
-
     protected void initUI() {
         zxingview.setDelegate(this);
         titleBar.getRightTitle().setOnClickListener(v -> {
             Intent photoPickerIntent = new BGAPhotoPickerActivity.IntentBuilder(QrCodeActivity.this)
                     .cameraFileDir(null)
-                    .maxChooseCount(1)
+                    .maxChooseCount(10)
                     .selectedPhotos(null)
                     .pauseOnScroll(false)
                     .build();
@@ -68,7 +68,34 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
 
     @Override
     public void onScanQRCodeSuccess(String result) {
-        LogUtils.e(result);
+
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            Object schem = jsonObject.opt("schem");
+            if (!schem.equals("com.zxjk.duoduo")) {
+                throw new RuntimeException();
+            }
+
+            Object action = jsonObject.opt("action");
+
+            if (action.equals("action1")) {
+                BaseUri<Action1> uri = new Gson().fromJson(result, new TypeToken<BaseUri<Action1>>() {
+                }.getType());
+                Intent intent = new Intent(this, TransferActivity.class);
+                intent.putExtra("fromScan", true);
+                intent.putExtra("money", uri.data.money);
+                intent.putExtra("userId", uri.data.userId);
+                startActivity(intent);
+            } else if (action.equals("action2")) {
+                BaseUri<String> uri = new Gson().fromJson(result, new TypeToken<BaseUri<String>>() {
+                }.getType());
+                String action2 = uri.data;
+
+            }
+            finish();
+        } catch (Exception e) {
+            zxingview.startSpot();
+        }
     }
 
     @Override

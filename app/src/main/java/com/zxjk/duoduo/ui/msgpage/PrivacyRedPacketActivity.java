@@ -104,7 +104,13 @@ public class PrivacyRedPacketActivity extends BaseActivity implements SelectPopu
         }
 
         SendRedSingleRequest redSingleRequest = new SendRedSingleRequest();
-        redSingleRequest.setMessage(m_red_envelopes_money_text.getText().toString().trim());
+        String msgRemark;
+        if (TextUtils.isEmpty(m_red_envelopes_label.getText().toString().trim())) {
+            msgRemark = getString(R.string.m_red_envelopes_label);
+        } else {
+            msgRemark = m_red_envelopes_label.getText().toString().trim();
+        }
+        redSingleRequest.setMessage(msgRemark);
         redSingleRequest.setMoney(Double.parseDouble(money));
         redSingleRequest.setReceiveCustomerId(userInfo.getUserId());
         redSingleRequest.setPayPwd(MD5Utils.getMD5(psw));
@@ -117,9 +123,8 @@ public class PrivacyRedPacketActivity extends BaseActivity implements SelectPopu
                 .subscribe(redPackageResponse -> {
                     RedPacketMessage message = new RedPacketMessage();
                     message.setFromCustomer(Constant.currentUser.getId());
-                    message.setRemark(m_red_envelopes_label.getText().toString().trim());
+                    message.setRemark(msgRemark);
                     message.setRedId(redPackageResponse.getId());
-                    message.setExtra("0");
                     Message message1 = Message.obtain(userInfo.getUserId(), Conversation.ConversationType.PRIVATE, message);
                     message1.setExtra("0");
                     RongIM.getInstance().sendMessage(message1, null, null, new IRongCallback.ISendMessageCallback() {

@@ -39,8 +39,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.minepage.DetailInfoActivity"></activity>
-        <activity android:name=".ui.minepage.DetailListActivity" />
+        <activity
+            android:name=".ui.msgpage.CreateGroupActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.minepage.DetailInfoActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".ui.minepage.DetailListActivity"
+            android:launchMode="singleTask" />
         <activity
             android:name=".ui.walletpage.RecipetQRActivity"
             android:launchMode="singleTask" />
@@ -203,8 +210,7 @@
             android:name=".ui.msgpage.ReceivedEnvelopesActivity"
             android:launchMode="singleTask" />
         <activity
-            android:name=".ui.msgpage.PeopleUnaccalimedActivity"
-            android:launchMode="singleTask" />
+            android:name=".ui.msgpage.PeopleUnaccalimedActivity" />
         <activity
             android:name=".ui.walletpage.ExchangeListTypeActivity"
             android:launchMode="singleTask" />

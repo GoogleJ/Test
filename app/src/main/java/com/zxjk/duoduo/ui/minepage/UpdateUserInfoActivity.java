@@ -2,6 +2,7 @@ package com.zxjk.duoduo.ui.minepage;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,12 +17,14 @@ import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 
-import io.reactivex.functions.Consumer;
+import io.rong.imkit.userInfoCache.RongUserInfoManager;
+import io.rong.imlib.model.Group;
 
 import static android.text.InputType.TYPE_CLASS_TEXT;
 import static android.text.InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS;
@@ -40,6 +43,7 @@ public class UpdateUserInfoActivity extends BaseActivity {
     private static final int TYPE_SIGN = 1;
     private static final int TYPE_NICK = 2;
     private static final int TYPE_EMAIL = 3;
+    private static final int TYPE_GROUP_TITLE = 4;
     private int type;
 
     @Override
@@ -81,6 +85,9 @@ public class UpdateUserInfoActivity extends BaseActivity {
             tvUpdateInfoTitle.setText(R.string.email);
             etChangeSign.setHint(R.string.hint_email);
             etChangeSign.setInputType(TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        } else if (type == TYPE_GROUP_TITLE) {
+            tvUpdateInfoTitle.setText(R.string.changegroupname);
+            etChangeSign.setHint(R.string.hint_groupname);
         }
     }
 
@@ -91,6 +98,29 @@ public class UpdateUserInfoActivity extends BaseActivity {
             ToastUtils.showShort(R.string.input_empty);
             return;
         }
+
+        GroupResponse data = (GroupResponse) getIntent().getSerializableExtra("data");
+        if (type == TYPE_GROUP_TITLE) {
+            GroupResponse.GroupInfoBean request = new GroupResponse.GroupInfoBean();
+            request.setId(data.getGroupInfo().getId());
+            request.setGroupNikeName(sign);
+            ServiceFactory.getInstance().getBaseService(Api.class)
+                    .updateGroupInfo(GsonUtils.toJson(request))
+                    .compose(bindToLifecycle())
+                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(UpdateUserInfoActivity.this)))
+                    .compose(RxSchedulers.normalTrans())
+                    .subscribe(groupResponse -> {
+                        Constant.changeGroupName = sign; // hardcode 用于返回conversation时更新title
+                        RongUserInfoManager.getInstance().setGroupInfo(new Group(groupResponse.getId(),
+                                groupResponse.getGroupNikeName(), Uri.parse(groupResponse.getHeadPortrait())));
+                        Intent intent = new Intent();
+                        intent.putExtra("result", sign);
+                        setResult(2, intent);
+                        finish();
+                    }, this::handleApiError);
+            return;
+        }
+
         LoginResponse update = new LoginResponse(Constant.userId);
         switch (type) {
             case TYPE_EMAIL:

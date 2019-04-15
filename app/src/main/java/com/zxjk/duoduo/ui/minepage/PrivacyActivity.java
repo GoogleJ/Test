@@ -16,11 +16,12 @@ import androidx.annotation.Nullable;
  */
 public class PrivacyActivity extends BaseActivity {
     TitleBar titleBar;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_privacy);
-        titleBar=findViewById(R.id.m_privacy_title_bar);
+        titleBar = findViewById(R.id.m_privacy_title_bar);
         initView();
     }
 
@@ -36,8 +37,8 @@ public class PrivacyActivity extends BaseActivity {
     /**
      * 添加我的方式页面的跳转
      */
-    public void addMyWay(View view){
-        startActivity(new Intent(this,AddMyWayActivity.class));
+    public void addMyWay(View view) {
+        startActivity(new Intent(this, AddMyWayActivity.class));
 
     }
 

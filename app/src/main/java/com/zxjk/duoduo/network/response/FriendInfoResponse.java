@@ -57,6 +57,33 @@ public class FriendInfoResponse implements Serializable {
     private String isConfine;
     private String sortLetters;
     private String status;
+    private boolean checked;
+    private String firstLeter;
+    private boolean canCheck = true;//是否可以点击（好友列表中的某人已在当前群中）
+
+    public boolean isCanCheck() {
+        return canCheck;
+    }
+
+    public void setCanCheck(boolean canCheck) {
+        this.canCheck = canCheck;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
+    public String getFirstLeter() {
+        return firstLeter;
+    }
+
+    public void setFirstLeter(String firstLeter) {
+        this.firstLeter = firstLeter;
+    }
 
     public FriendInfoResponse(FriendInfoResponse friendInfoResponse) {
         this.id = friendInfoResponse.id;

@@ -15,7 +15,6 @@
         android:textSize="18sp" />
 
     <androidx.core.widget.NestedScrollView
-
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

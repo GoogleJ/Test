@@ -1,7 +1,9 @@
 package com.zxjk.duoduo.ui.grouppage;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -9,13 +11,14 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.adapter.ChooseNewOwnerAdapter;
-import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.ui.msgpage.ConversationActivity;
 import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.ui.widget.dialog.BaseAddTitleDialog;
+import com.zxjk.duoduo.utils.CommonUtils;
+
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import io.reactivex.functions.Consumer;
 
 /**
  * @author Administrator
@@ -64,7 +67,10 @@ public class ChooseNewOwnerActivity extends BaseActivity {
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(allGroupMembersResponses -> mAdapter.setNewData(allGroupMembersResponses), this::handleApiError);
+                .subscribe(allGroupMembersResponses -> {
+                    allGroupMembersResponses.remove(0);
+                    mAdapter.setNewData(allGroupMembersResponses);
+                }, this::handleApiError);
     }
 
     /**
@@ -79,11 +85,11 @@ public class ChooseNewOwnerActivity extends BaseActivity {
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) throws Exception {
-                        ToastUtils.showShort(ChooseNewOwnerActivity.this.getString(R.string.transfer_group_successful));
-                    }
+                .subscribe(s -> {
+                    ToastUtils.showShort(ChooseNewOwnerActivity.this.getString(R.string.transfer_group_successful));
+                    Intent intent = new Intent(ChooseNewOwnerActivity.this, ConversationActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                 },this::handleApiError);
 
     }

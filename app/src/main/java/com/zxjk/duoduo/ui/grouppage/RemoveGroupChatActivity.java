@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.grouppage;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
@@ -8,7 +9,6 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -31,6 +31,7 @@ import io.reactivex.functions.Consumer;
  * @author Administrator
  * @// TODO: 2019\3\26 0026 移除群聊 和添加联系人都在这个里头
  */
+@SuppressLint("CheckResult")
 public class RemoveGroupChatActivity extends BaseActivity {
     ImageView titleLeftImage;
     TextView titleBar;
@@ -147,8 +148,6 @@ public class RemoveGroupChatActivity extends BaseActivity {
                     }
                 }, this::handleApiError);
     }
-
-
 
     /**
      * 查询群成员

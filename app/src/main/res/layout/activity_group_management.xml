@@ -216,28 +216,28 @@
             android:layout_width="43dp"
             android:layout_height="26dp"
             android:layout_marginEnd="12dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/prohibited_send_link"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/prohibited_send_link"
             app:sb_checked="false"
-            app:sb_show_indicator="false"
-            />
+            app:sb_show_indicator="false" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <TextView
-        android:onClick="transferGroup"
         android:id="@+id/transfer_group"
-        android:paddingTop="22dp"
-        android:paddingBottom="22dp"
-        android:drawableEnd="@drawable/icon_go"
-        android:paddingEnd="12dp"
-        android:textColor="@color/themecolor"
-        android:textSize="17sp"
-        android:paddingStart="12dp"
-        android:background="@color/white"
-        android:layout_marginTop="10dp"
-        android:text="@string/transfer_group"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:drawableEnd="@drawable/icon_go"
+        android:onClick="transferGroup"
+        android:paddingStart="12dp"
+        android:paddingTop="22dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="22dp"
+        android:text="@string/transfer_group"
+        android:textColor="@color/themecolor"
+        android:textSize="17sp" />
 
 </LinearLayout>

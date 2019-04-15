@@ -1,5 +1,36 @@
 package com.zxjk.duoduo.ui.msgpage;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+
+import com.blankj.utilcode.util.ToastUtils;
+import com.trello.lifecycle2.android.lifecycle.AndroidLifecycle;
+import com.trello.rxlifecycle3.LifecycleProvider;
+import com.zxjk.duoduo.Application;
+import com.zxjk.duoduo.Constant;
+import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.network.Api;
+import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.GroupResponse;
+import com.zxjk.duoduo.network.response.LoginResponse;
+import com.zxjk.duoduo.network.rx.RxException;
+import com.zxjk.duoduo.network.rx.RxSchedulers;
+import com.zxjk.duoduo.ui.grouppage.ChatInformationActivity;
+import com.zxjk.duoduo.ui.grouppage.GroupChatInformationActivity;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferMessage;
+import com.zxjk.duoduo.ui.widget.TitleBar;
+import com.zxjk.duoduo.ui.widget.dialog.ExpiredEnvelopesDialog;
+import com.zxjk.duoduo.ui.widget.dialog.RedEvelopesDialog;
+import com.zxjk.duoduo.utils.CommonUtils;
+
+import java.util.List;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
@@ -14,35 +45,6 @@ import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.View;
-
-import com.blankj.utilcode.util.ToastUtils;
-import com.trello.lifecycle2.android.lifecycle.AndroidLifecycle;
-import com.trello.rxlifecycle3.LifecycleProvider;
-import com.zxjk.duoduo.Constant;
-import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.Api;
-import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.rx.RxException;
-import com.zxjk.duoduo.network.rx.RxSchedulers;
-import com.zxjk.duoduo.ui.grouppage.ChatInformationActivity;
-import com.zxjk.duoduo.ui.grouppage.GroupChatInformationActivity;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketMessage;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferMessage;
-import com.zxjk.duoduo.utils.CommonUtils;
-import com.zxjk.duoduo.ui.widget.TitleBar;
-import com.zxjk.duoduo.ui.widget.dialog.ExpiredEnvelopesDialog;
-import com.zxjk.duoduo.ui.widget.dialog.RedEvelopesDialog;
-
-import java.util.List;
-
-import static com.zxjk.duoduo.utils.PermissionUtils.cameraPremissions;
-
 /**
  * @author Administrator
  * @// TODO: 2019\4\1 0001 单聊页面
@@ -55,13 +57,13 @@ public class ConversationActivity extends AppCompatActivity {
     private String targetId;
     private UserInfo targetUserInfo;
     private Group targetGroup;
+    private GroupResponse groupResponse;
 
     @SuppressLint({"CheckResult", "WrongViewCast"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversation);
-        cameraPremissions(this);
 
         List<String> pathSegments = getIntent().getData().getPathSegments();
         String conversationType = pathSegments.get(pathSegments.size() - 1);
@@ -69,6 +71,12 @@ public class ConversationActivity extends AppCompatActivity {
         targetUserInfo = RongUserInfoManager.getInstance().getUserInfo(targetId);
         targetGroup = RongUserInfoManager.getInstance().getGroupInfo(targetId);
         titleBar = findViewById(R.id.conversation_title);
+
+        if (conversationType.equals("private")) {
+            Application.setMyExtensionModule(false);
+        } else {
+            Application.setMyExtensionModule(true);
+        }
 
         if (null == targetUserInfo && conversationType.equals("private")) {
             // 私聊且未缓存
@@ -83,7 +91,7 @@ public class ConversationActivity extends AppCompatActivity {
                                 initView();
                             },
                             t -> ToastUtils.showShort(RxException.getMessage(t)));
-        } else if (null == targetGroup && conversationType.equals("group")) {
+        } else if (conversationType.equals("group")) {
             // 群聊且未缓存
             ServiceFactory.getInstance().getBaseService(Api.class)
                     .getGroupByGroupId(targetId)
@@ -91,7 +99,8 @@ public class ConversationActivity extends AppCompatActivity {
                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                     .compose(provider.bindToLifecycle())
                     .subscribe(groupInfo -> {
-                                targetGroup = new Group(groupInfo.getId(), groupInfo.getGroupNikeName(), Uri.parse(groupInfo.getGroupHeadPortrait()));
+                                groupResponse = groupInfo;
+                                targetGroup = new Group(groupInfo.getGroupInfo().getId(), groupInfo.getGroupInfo().getGroupNikeName(), Uri.parse(groupInfo.getGroupInfo().getGroupHeadPortrait()));
                                 RongUserInfoManager.getInstance().setGroupInfo(targetGroup);
                                 initView();
                             },
@@ -134,7 +143,7 @@ public class ConversationActivity extends AppCompatActivity {
                                 startActivity(intent1);
                             } else {
                                 //别人发的红包
-                                if (redPacketMessage.getExtra().equals("0")) {
+                                if (TextUtils.isEmpty(message.getExtra())) {
                                     // 红包未被领取，弹出领取的对话框
                                     RedEvelopesDialog dialog = new RedEvelopesDialog(ConversationActivity.this);
                                     dialog.setOnOpenListener(() -> ServiceFactory.getInstance().getBaseService(Api.class)
@@ -142,24 +151,20 @@ public class ConversationActivity extends AppCompatActivity {
                                             .compose(provider.bindToLifecycle())
                                             .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this)))
                                             .compose(RxSchedulers.normalTrans())
-                                            .subscribe(s -> {
-                                                message.setExtra("1");
-                                                redPacketMessage.setExtra("1");
-                                                RongIMClient.getInstance().setMessageExtra(message.getMessageId(), "1", new RongIMClient.ResultCallback<Boolean>() {
-                                                    @Override
-                                                    public void onSuccess(Boolean aBoolean) {
-                                                        Constant.tempMsg = message;
-                                                        Intent intent2 = new Intent(ConversationActivity.this, PeopleRedEnvelopesActivity.class);
-                                                        intent2.putExtra("msg", message);
-                                                        startActivity(intent2);
-                                                    }
+                                            .subscribe(s -> RongIMClient.getInstance().setMessageExtra(message.getMessageId(), "1", new RongIMClient.ResultCallback<Boolean>() {
+                                                @Override
+                                                public void onSuccess(Boolean aBoolean) {
+                                                    Constant.tempMsg = message;
+                                                    Intent intent2 = new Intent(ConversationActivity.this, PeopleRedEnvelopesActivity.class);
+                                                    intent2.putExtra("msg", message);
+                                                    startActivity(intent2);
+                                                }
 
-                                                    @Override
-                                                    public void onError(RongIMClient.ErrorCode errorCode) {
+                                                @Override
+                                                public void onError(RongIMClient.ErrorCode errorCode) {
 
-                                                    }
-                                                });
-                                            }, t -> ToastUtils.showShort(RxException.getMessage(t))));
+                                                }
+                                            }), t -> ToastUtils.showShort(RxException.getMessage(t))));
                                     dialog.show(message, targetUserInfo);
                                 } else {
                                     // 红包被领取，进入红包详情
@@ -195,6 +200,7 @@ public class ConversationActivity extends AppCompatActivity {
         fragment = (ConversationFragment) fragments.get(0);
         checkedMessages = fragment.getCheckedMessages();
         messageAdapter = fragment.getMessageAdapter();
+
     }
 
     @Override
@@ -207,7 +213,6 @@ public class ConversationActivity extends AppCompatActivity {
                         //转账
                         Message transferMessage = checkedMessages.get(i);
                         transferMessage.setExtra("1");
-//                        transferMessage.getContent().setExtra("1");
                         messageAdapter.notifyDataSetChanged();
                     } else if (content instanceof RedPacketMessage) {
                         //红包
@@ -222,6 +227,11 @@ public class ConversationActivity extends AppCompatActivity {
                 }
             }
         }
+
+        if (null != Constant.changeGroupName) {
+            titleBar.setTitle(Constant.changeGroupName + "(" + groupResponse.getCustomers().size() + ")");
+            Constant.changeGroupName = null;
+        }
         super.onRestart();
     }
 
@@ -232,12 +242,16 @@ public class ConversationActivity extends AppCompatActivity {
     private void initView() {
         titleBar = findViewById(R.id.conversation_title);
         titleBar.getLeftImageView().setOnClickListener(v -> finish());
-        titleBar.setTitle(targetUserInfo == null ? targetGroup.getName() : targetUserInfo.getName());
+        titleBar.setTitle(targetUserInfo == null ? (targetGroup.getName() + "(" + groupResponse.getCustomers().size() + ")") : targetUserInfo.getName());
+        Intent intent = new Intent(ConversationActivity.this, ChatInformationActivity.class);
+        intent.putExtra("bean", targetUserInfo);
         titleBar.getRightImageView().setOnClickListener(v -> {
             if (targetUserInfo == null) {
-                startActivity(new Intent(ConversationActivity.this, GroupChatInformationActivity.class));
+                Intent intent1 = new Intent(this, GroupChatInformationActivity.class);
+                intent1.putExtra("id", targetGroup.getId());
+                startActivityForResult(intent1, 1);
             } else {
-                startActivity(new Intent(ConversationActivity.this, ChatInformationActivity.class));
+                startActivity(intent);
             }
         });
     }

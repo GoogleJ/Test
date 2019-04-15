@@ -23,30 +23,33 @@ public class TransferMessage extends MessageContent {
 
     /**
      * 里头的所有字段实体可根据需求自己定义
-     *toCustomerId 接受者用户Id
+     * toCustomerId 接受者用户Id
      * money 转账金额
-     *payPwd 支付密码
+     * payPwd 支付密码
      * remark 转账说明
      */
-    private String toCustomerId;
     private String money;
-    private String payPwd;
     private String remark;
     private String type;
     private String transferId;
+    private String name;
+    private String extra;
+    private String fromCustomer;
 
-    public TransferMessage(){}
+    public TransferMessage() {
+    }
 
     @Override
     public byte[] encode() {
         JSONObject jsonObj = new JSONObject();
         try {
-            jsonObj.put("toCustomerId", getToCustomerId());
             jsonObj.put("money", getMoney());
-            jsonObj.put("payPwd",getPayPwd());
             jsonObj.put("remark", getRemark());
-            jsonObj.put("type",getType());
-            jsonObj.put("transferId",getTransferId());
+            jsonObj.put("type", getType());
+            jsonObj.put("transferId", getTransferId());
+            jsonObj.put("name", getName());
+            jsonObj.put("extra", getExtra());
+            jsonObj.put("fromCustomer", getFromCustomerId());
         } catch (JSONException e) {
             Log.e("JSONException", e.getMessage());
         }
@@ -59,6 +62,7 @@ public class TransferMessage extends MessageContent {
 
         return null;
     }
+
     public TransferMessage(byte[] data) {
         String jsonStr = null;
 
@@ -71,16 +75,8 @@ public class TransferMessage extends MessageContent {
         try {
             JSONObject jsonObj = new JSONObject(jsonStr);
 
-            if (jsonObj.has("toCustomerId")) {
-                setToCustomerId(jsonObj.optString("toCustomerId"));
-            }
-
             if (jsonObj.has("money")) {
                 setMoney(jsonObj.optString("money"));
-            }
-
-            if (jsonObj.has("payPwd")) {
-                setPayPwd(jsonObj.optString("payPwd"));
             }
 
             if (jsonObj.has("remark")) {
@@ -95,6 +91,18 @@ public class TransferMessage extends MessageContent {
                 setTransferId(jsonObj.optString("transferId"));
             }
 
+            if (jsonObj.has("name")) {
+                setName(jsonObj.optString("name"));
+            }
+
+            if (jsonObj.has("extra")) {
+                setExtra(jsonObj.optString("extra"));
+            }
+
+            if (jsonObj.has("fromCustomer")) {
+                setFromCustomerId(jsonObj.optString("fromCustomer"));
+            }
+
         } catch (JSONException e) {
             Log.d("JSONException", e.getMessage());
         }
@@ -107,23 +115,27 @@ public class TransferMessage extends MessageContent {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        ParcelUtils.writeToParcel(dest,toCustomerId);
         ParcelUtils.writeToParcel(dest, money);
-        ParcelUtils.writeToParcel(dest,payPwd);
         ParcelUtils.writeToParcel(dest, remark);
-        ParcelUtils.writeToParcel(dest,type);
-        ParcelUtils.writeToParcel(dest,transferId);
+        ParcelUtils.writeToParcel(dest, type);
+        ParcelUtils.writeToParcel(dest, transferId);
+        ParcelUtils.writeToParcel(dest, name);
+        ParcelUtils.writeToParcel(dest, extra);
+        ParcelUtils.writeToParcel(dest, fromCustomer);
     }
+
     //给消息赋值。
     public TransferMessage(Parcel in) {
-        setToCustomerId(ParcelUtils.readFromParcel(in));
         //这里可继续增加你消息的属性
         setMoney(ParcelUtils.readFromParcel(in));
-        setPayPwd(ParcelUtils.readFromParcel(in));
         setRemark(ParcelUtils.readFromParcel(in));
         setType(ParcelUtils.readFromParcel(in));
         setTransferId(ParcelUtils.readFromParcel(in));
+        setName(ParcelUtils.readFromParcel(in));
+        setExtra(ParcelUtils.readFromParcel(in));
+        setFromCustomerId(ParcelUtils.readFromParcel(in));
     }
+
     /**
      * 读取接口，目的是要从Parcel中构造一个实现了Parcelable的类的实例处理。
      */
@@ -140,28 +152,12 @@ public class TransferMessage extends MessageContent {
         }
     };
 
-    public String getToCustomerId() {
-        return toCustomerId;
-    }
-
-    public void setToCustomerId(String toCustomerId) {
-        this.toCustomerId = toCustomerId;
-    }
-
     public String getMoney() {
         return money;
     }
 
     public void setMoney(String money) {
         this.money = money;
-    }
-
-    public String getPayPwd() {
-        return payPwd;
-    }
-
-    public void setPayPwd(String payPwd) {
-        this.payPwd = payPwd;
     }
 
     public String getRemark() {
@@ -186,5 +182,33 @@ public class TransferMessage extends MessageContent {
 
     public void setTransferId(String transferId) {
         this.transferId = transferId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getExtra() {
+        return extra;
+    }
+
+    public void setExtra(String extra) {
+        this.extra = extra;
+    }
+
+    public String getFromCustomerId() {
+        return fromCustomer;
+    }
+
+    public void setFromCustomerId(String fromCustomerId) {
+        this.fromCustomer = fromCustomerId;
+    }
+
+    public static Creator<TransferMessage> getCREATOR() {
+        return CREATOR;
     }
 }

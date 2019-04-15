@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.walletpage;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,12 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.PermissionUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.ui.minepage.BalanceLeftActivity;
 import com.zxjk.duoduo.ui.msgpage.QrCodeActivity;
 import com.zxjk.duoduo.ui.walletpage.adapter.WalletPageAdapter;
-import com.zxjk.duoduo.utils.PermissionUtils;
 
 import java.util.ArrayList;
 
@@ -44,12 +45,11 @@ public class WalletFragment extends BaseFragment {
         recyclerWalletPage.setAdapter(new WalletPageAdapter(new ArrayList<>(5)));
         recyclerWalletPage.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
-        tvWalletPageTop1.setOnClickListener(v -> {
-            if (PermissionUtils.cameraPremissions(getActivity())) {
+        getPermisson(tvWalletPageTop1, result -> {
+            if (result) {
                 startActivity(new Intent(getContext(), QrCodeActivity.class));
             }
-        });
-
+        }, Manifest.permission.CAMERA);
         tvWalletPageTop3.setOnClickListener(v -> startActivity(new Intent(getContext(), BlockWalletActivity.class)));
         tvWalletPageTop4.setOnClickListener(v -> startActivity(new Intent(getContext(), BalanceLeftActivity.class)));
         tvWalletPageTop2.setOnClickListener(v -> startActivity(new Intent(getContext(), RecipetQRActivity.class)));

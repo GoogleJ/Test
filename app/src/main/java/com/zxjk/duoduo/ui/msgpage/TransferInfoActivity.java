@@ -72,6 +72,7 @@ public class TransferInfoActivity extends BaseActivity {
                 .subscribe(transferResponse -> {
                     //发送消息
                     transferMessage.setRemark("已领取");
+                    transferMessage.setExtra("1");
                     Message obtain = Message.obtain(message.getSenderUserId(), Conversation.ConversationType.PRIVATE, transferMessage);
                     RongIM.getInstance().sendMessage(obtain, null, null, new IRongCallback.ISendMessageCallback() {
                         @Override
@@ -140,6 +141,5 @@ public class TransferInfoActivity extends BaseActivity {
                         tvShouKuanTime.setText("退还时间：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Long.parseLong(transferResponse.getCloseTime())));
                     }
                 }, this::handleApiError);
-
     }
 }

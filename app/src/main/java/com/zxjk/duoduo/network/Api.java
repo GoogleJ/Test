@@ -18,12 +18,10 @@ import com.zxjk.duoduo.network.response.GroupChatResponse;
 import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.response.PayInfoResponse;
-import com.zxjk.duoduo.network.response.PayTypeResponse;
 import com.zxjk.duoduo.network.response.PersonalRedPackageInfoResponse;
 import com.zxjk.duoduo.network.response.ReceivePersonalRedPackageResponse;
 import com.zxjk.duoduo.network.response.RedPackageResponse;
 import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
-
 import com.zxjk.duoduo.network.response.SignHkbOrHkExchangeResponse;
 import com.zxjk.duoduo.network.response.SignTransactionResponse;
 import com.zxjk.duoduo.network.response.TransferResponse;
@@ -501,7 +499,7 @@ public interface Api {
      */
     @POST("duoduo/group/makeGroup")
     @FormUrlEncoded
-    Observable<BaseResponse<GroupResponse>> makeGroup(
+    Observable<BaseResponse<GroupResponse.GroupInfoBean>> makeGroup(
             @Field("groupOwnerId") String groupOwnerId,
             @Field("customerIds") String customerIds
     );
@@ -552,7 +550,7 @@ public interface Api {
      */
     @POST("duoduo/group/updateGroupInfo")
     @FormUrlEncoded
-    Observable<BaseResponse<GroupResponse>> updateGroupInfo(
+    Observable<BaseResponse<GroupResponse.GroupInfoBean>> updateGroupInfo(
             @Field("groupInfo") String groupInfo
     );
 

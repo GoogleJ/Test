@@ -18,13 +18,16 @@ import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.minepage.BalanceLeftActivity;
-import com.zxjk.duoduo.utils.MoneyValueFilter;
+import com.zxjk.duoduo.ui.minepage.scanuri.Action1;
+import com.zxjk.duoduo.ui.minepage.scanuri.BaseUri;
 import com.zxjk.duoduo.ui.widget.dialog.EditTextDialog;
+import com.zxjk.duoduo.utils.GlideUtil;
+import com.zxjk.duoduo.utils.MoneyValueFilter;
+import com.zxjk.duoduo.utils.QRCodeEncoder;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import cn.bingoogolapple.qrcode.core.BGAQRCodeUtil;
-import cn.bingoogolapple.qrcode.zxing.QRCodeEncoder;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -33,48 +36,39 @@ import io.reactivex.schedulers.Schedulers;
 public class RecipetQRActivity extends BaseActivity {
 
     private ImageView ivRecipetImg;
+    private ImageView ivCodeLogo;
     private TextView tvMoney;
     private EditTextDialog editTextDialog;
 
-    private Uri uri;
+    private BaseUri uri;
     private String uri2Code;
-
-    private int codeWidth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipet_qr);
         ivRecipetImg = findViewById(R.id.ivRecipetImg);
+        ivCodeLogo = findViewById(R.id.ivCodeLogo);
         tvMoney = findViewById(R.id.tvMoney);
 
         editTextDialog = new EditTextDialog();
-
-//        initCodeWidth();
 
         initUri();
 
         getCodeBitmap();
     }
 
-//    private void initCodeWidth() {
-//        int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-//        int h = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-//        ivRecipetImg.measure(w, h);
-//        int height = ivRecipetImg.getMeasuredHeight();
-//        int width = ivRecipetImg.getMeasuredWidth();
-//        codeWidth = (height + width) / 2;
-//    }
-
     private void getCodeBitmap() {
-        Glide.with(this).asBitmap().load(Constant.currentUser.getHeadPortrait())
+        GlideUtil.loadCornerImg(ivCodeLogo,Constant.currentUser.getHeadPortrait(),1);
+        Glide.with(this).asBitmap().centerCrop()
+                .load(Constant.currentUser.getHeadPortrait())
                 .into(new SimpleTarget<Bitmap>() {
                     @SuppressLint("CheckResult")
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                         Observable.create((ObservableOnSubscribe<Bitmap>) emitter -> {
                             Bitmap bitmap = QRCodeEncoder.syncEncodeQRCode(uri2Code, BGAQRCodeUtil.dp2px(RecipetQRActivity.this, 300),
-                                    Color.BLACK, resource);
+                                    Color.BLACK);
                             emitter.onNext(bitmap);
                         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(b -> ivRecipetImg.setImageBitmap(b), t -> {
@@ -84,7 +78,10 @@ public class RecipetQRActivity extends BaseActivity {
     }
 
     private void initUri() {
-        uri = new Uri();
+        uri = new BaseUri("action1");
+        Action1 action1 = new Action1();
+        action1.money = "0.00";
+        uri.data = new Gson().toJson(action1);
         uri2Code = new Gson().toJson(uri);
     }
 
@@ -93,9 +90,11 @@ public class RecipetQRActivity extends BaseActivity {
         editTextDialog.show(this, "请输入金额", "设置", "取消");
         editTextDialog.getEdit().setFilters(new InputFilter[]{new MoneyValueFilter()});
         editTextDialog.getYes().setOnClickListener(v -> {
-            tvMoney.setText(editTextDialog.getText() + "HK");
+            tvMoney.setText(editTextDialog.getText() + " HK");
             editTextDialog.hideDialog();
-            uri.data.money = editTextDialog.getText();
+            Action1 action1 = new Action1();
+            action1.money = editTextDialog.getText();
+            uri.data = new Gson().toJson(action1);
             uri2Code = new Gson().toJson(uri);
             getCodeBitmap();
         });
@@ -108,16 +107,5 @@ public class RecipetQRActivity extends BaseActivity {
 
     public void back(View view) {
         finish();
-    }
-
-    static class Uri {
-        private String schem = "com.zxjk.duoduo";
-        private String action = "action1";
-        private Data data = new Data();
-
-        static class Data {
-            private String userID = Constant.userId;
-            private String money = "0";
-        }
     }
 }

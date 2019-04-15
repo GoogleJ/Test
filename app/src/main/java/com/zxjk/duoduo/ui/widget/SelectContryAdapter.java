@@ -49,6 +49,8 @@ public class SelectContryAdapter extends RecyclerView.Adapter<SelectContryAdapte
             } else {
                 holder.tvTitle.setVisibility(View.VISIBLE);
             }
+        } else {
+            holder.tvTitle.setVisibility(View.VISIBLE);
         }
 
         holder.llContent.setOnClickListener(v -> {

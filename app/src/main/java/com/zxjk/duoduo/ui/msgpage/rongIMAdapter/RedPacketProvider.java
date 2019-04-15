@@ -36,25 +36,23 @@ public class RedPacketProvider extends IContainerItemProvider.MessageProvider<Re
         if (context == null) {
             context = view.getContext();
         }
+
         ViewHolder holder = (ViewHolder) view.getTag();
 
-        if (uiMessage.getMessageDirection() == Message.MessageDirection.SEND) {
-            //消息方向，自己发送的
-            holder.sendLayout.setBackgroundResource(R.drawable.icon_red_packet_user);
-            if (redPacketMessage.getExtra().equals("1")) {
-                holder.message.setText(context.getResources().getString(R.string.red_beilingqu));
-            }
-        } else {
-            holder.sendLayout.setBackgroundResource(R.drawable.icon_send_red_packet_friend);
-            if (redPacketMessage.getExtra().equals("1")) {
-                holder.message.setText(context.getResources().getString(R.string.red_yilingqu));
-            }
-        }
-        if (redPacketMessage.getExtra().equals("0")) {
+        if (TextUtils.isEmpty(uiMessage.getExtra())) {
             if (TextUtils.isEmpty(redPacketMessage.getRemark())) {
                 holder.message.setText(context.getResources().getString(R.string.m_red_envelopes_label));
             } else {
                 holder.message.setText(redPacketMessage.getRemark());
+            }
+        } else {
+            if (uiMessage.getMessageDirection() == Message.MessageDirection.SEND) {
+                //消息方向，自己发送的
+                holder.sendLayout.setBackgroundResource(R.drawable.icon_red_packet_user);
+                holder.message.setText(context.getResources().getString(R.string.red_beilingqu));
+            } else {
+                holder.sendLayout.setBackgroundResource(R.drawable.icon_send_red_packet_friend);
+                holder.message.setText(context.getResources().getString(R.string.red_yilingqu));
             }
         }
     }
@@ -73,9 +71,9 @@ public class RedPacketProvider extends IContainerItemProvider.MessageProvider<Re
     public View newView(Context context, ViewGroup viewGroup) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_red_packet_send, viewGroup, false);
         ViewHolder holder = new ViewHolder();
-        holder.message = (TextView) view.findViewById(R.id.remark);
+        holder.message = view.findViewById(R.id.remark);
         view.setTag(holder);
-        holder.sendLayout = (ConstraintLayout) view.findViewById(R.id.send_red_packet_layout);
+        holder.sendLayout = view.findViewById(R.id.send_red_packet_layout);
         return view;
     }
 }

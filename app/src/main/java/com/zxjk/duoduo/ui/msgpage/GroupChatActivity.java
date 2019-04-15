@@ -26,7 +26,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongIM;
 
 /**
@@ -58,7 +57,6 @@ public class GroupChatActivity extends BaseActivity implements TextWatcher {
         //关闭当前活动
         mGroupChatTitleBar.getLeftImageView().setOnClickListener(v -> finish());
         LinearLayoutManager manage = new LinearLayoutManager(this);
-        manage.setOrientation(LinearLayoutManager.VERTICAL);
         mGroupChatRecyclerView.setLayoutManager(manage);
         groupChatAdapter = new GroupChatAdapter();
         mGroupChatEdit1.addTextChangedListener(GroupChatActivity.this);
@@ -66,13 +64,9 @@ public class GroupChatActivity extends BaseActivity implements TextWatcher {
         getMyGroupChat(Constant.userId);
 
         mGroupChatRecyclerView.setAdapter(groupChatAdapter);
-        groupChatAdapter.notifyDataSetChanged();
         groupChatAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-           Constant.groupChatResponse=groupChatAdapter.getData().get(position);
+            Constant.groupChatResponse = groupChatAdapter.getData().get(position);
             RongIM.getInstance().startGroupChat(this, groupChatAdapter.getData().get(position).getId(), groupChatAdapter.getData().get(position).getGroupNikeName());
-//            Intent intent=new Intent(this,GroupChatInformationActivity.class);
-//            intent.putExtra("groupChatInformation", groupChatAdapter.getData().get(position));
-//            startActivity(intent);
         });
     }
 
@@ -83,12 +77,9 @@ public class GroupChatActivity extends BaseActivity implements TextWatcher {
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<List<GroupChatResponse>>() {
-                    @Override
-                    public void accept(List<GroupChatResponse> s) throws Exception {
-                        groupChatAdapter.setNewData(s);
-                        list = s;
-                    }
+                .subscribe(s -> {
+                    list = s;
+                    groupChatAdapter.setNewData(list);
                 }, this::handleApiError);
     }
 
@@ -104,13 +95,12 @@ public class GroupChatActivity extends BaseActivity implements TextWatcher {
     public void afterTextChanged(Editable s) {
 
         String groupname = s.toString();
-        if (groupname != null || groupname.length() > 0) {
+        if (groupname.length() > 0) {
             List<GroupChatResponse> groupnamelist = search(groupname); //查找对应的群组数据
             groupChatAdapter.setNewData(groupnamelist);
         } else {
             groupChatAdapter.setNewData(list);
         }
-        groupChatAdapter.notifyDataSetChanged();
     }
 
     /**

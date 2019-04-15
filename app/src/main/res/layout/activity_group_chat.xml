@@ -13,7 +13,6 @@
         android:layout_height="50dp"
         app:titleBarLeftImage="@drawable/ico_back"
         app:titleBarTitle="@string/m_group_chat"
-
         app:titleBarTextColor="@color/white"
         />
 

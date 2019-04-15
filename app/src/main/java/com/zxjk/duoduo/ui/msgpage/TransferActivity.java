@@ -13,20 +13,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.BaseResponse;
+import com.zxjk.duoduo.network.response.TransferResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
+import com.zxjk.duoduo.ui.HomeActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferMessage;
+import com.zxjk.duoduo.ui.widget.TitleBar;
+import com.zxjk.duoduo.ui.widget.dialog.SelectPopupWindow;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.utils.MD5Utils;
 import com.zxjk.duoduo.utils.MoneyValueFilter;
-import com.zxjk.duoduo.ui.widget.TitleBar;
-import com.zxjk.duoduo.ui.widget.dialog.SelectPopupWindow;
 
 import androidx.annotation.Nullable;
+import io.reactivex.ObservableSource;
+import io.reactivex.functions.Function;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
@@ -67,6 +73,12 @@ public class TransferActivity extends BaseActivity implements SelectPopupWindow.
         commitBtn = findViewById(R.id.m_transfer_commit_btn);
 
         m_transfer_money_text.setFilters(new InputFilter[]{new MoneyValueFilter()});
+
+        boolean fromScan = getIntent().getBooleanExtra("fromScan", false);
+        if (fromScan) {
+            m_transfer_money_text.setText(getIntent().getStringExtra("money"));
+            m_transfer_money_text.setEnabled(false);
+        }
 
         commitBtn.setOnClickListener(v -> {
             if (TextUtils.isEmpty(m_transfer_money_text.getText().toString().trim())) {
@@ -111,6 +123,25 @@ public class TransferActivity extends BaseActivity implements SelectPopupWindow.
             String hk = m_transfer_money_text.getText().toString().trim();
             String toId = targetUser.getUserId();
 
+            boolean fromScan = getIntent().getBooleanExtra("fromScan", false);
+            if (fromScan) {
+                ServiceFactory.getInstance().getBaseService(Api.class)
+                        .transfer(getIntent().getStringExtra("userId"), getIntent().getStringExtra("money")
+                                , MD5Utils.getMD5(psw), "")
+                        .compose(bindToLifecycle())
+                        .flatMap((Function<BaseResponse<TransferResponse>, ObservableSource<BaseResponse<TransferResponse>>>) response -> ServiceFactory.getInstance().getBaseService(Api.class)
+                                .collect(response.data.getId()))
+                        .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(TransferActivity.this)))
+                        .compose(RxSchedulers.normalTrans())
+                        .subscribe(response -> {
+                            ToastUtils.showShort(R.string.zhuanchusuccess);
+                            Intent intent = new Intent(this, HomeActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        }, this::handleApiError);
+                return;
+            }
+
             ServiceFactory.getInstance().getBaseService(Api.class)
                     .transfer(toId, hk, payPsd, remarks)
                     .compose(bindToLifecycle())
@@ -119,9 +150,10 @@ public class TransferActivity extends BaseActivity implements SelectPopupWindow.
                     .subscribe(s -> {
                         TransferMessage message = new TransferMessage();
                         message.setRemark(remarks);
-                        message.setPayPwd(payPsd);
                         message.setMoney(hk);
                         message.setTransferId(s.getId());
+                        message.setName(targetUser.getName());
+                        message.setFromCustomerId(Constant.userId);
 
                         Message message1 = Message.obtain(targetUser.getUserId(), Conversation.ConversationType.PRIVATE, message);
                         RongIM.getInstance().sendMessage(message1, null, null, new IRongCallback.ISendMessageCallback() {

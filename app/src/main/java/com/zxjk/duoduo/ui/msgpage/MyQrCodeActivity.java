@@ -15,8 +15,9 @@ import com.google.gson.Gson;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.utils.GlideUtil;
+import com.zxjk.duoduo.ui.minepage.scanuri.BaseUri;
 import com.zxjk.duoduo.ui.widget.TitleBar;
+import com.zxjk.duoduo.utils.GlideUtil;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,7 +46,7 @@ public class MyQrCodeActivity extends BaseActivity {
     private TextView m_my_qr_code_user_name_text;
     private TextView m_my_qr_code_signature_label;
 
-    private Uri uri = new Uri();
+    private BaseUri uri = new BaseUri("action2");
     private String uri2Code;
 
     public static void start(AppCompatActivity activity) {
@@ -59,6 +60,7 @@ public class MyQrCodeActivity extends BaseActivity {
         setContentView(R.layout.activity_my_qr_code);
         ButterKnife.bind(this);
 
+        uri.data = Constant.userId;
         uri2Code = new Gson().toJson(uri);
 
         m_my_qr_code_header_icon = findViewById(R.id.m_my_qr_code_header_icon);
@@ -89,11 +91,5 @@ public class MyQrCodeActivity extends BaseActivity {
                                 });
                     }
                 });
-    }
-
-    class Uri {
-        private String schem = "com.zxjk.duoduo";
-        private String data = Constant.userId;
-        private String action = "action2";
     }
 }

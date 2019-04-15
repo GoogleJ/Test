@@ -4,10 +4,7 @@ package com.zxjk.duoduo.ui.msgpage.rongIMAdapter;
 import java.util.List;
 
 import io.rong.imkit.DefaultExtensionModule;
-import io.rong.imkit.plugin.CombineLocationPlugin;
 import io.rong.imkit.plugin.IPluginModule;
-import io.rong.imkit.plugin.ImagePlugin;
-import io.rong.imkit.widget.provider.FilePlugin;
 import io.rong.imlib.model.Conversation;
 
 /**
@@ -15,6 +12,13 @@ import io.rong.imlib.model.Conversation;
  * @// TODO: 2019\4\2 0002 自定义+号下的plugin
  */
 public class BasePluginExtensionModule extends DefaultExtensionModule {
+
+    private boolean isGroupChat;
+
+    public BasePluginExtensionModule(boolean isGroupChat) {
+        this.isGroupChat = isGroupChat;
+    }
+
     @Override
     public List<IPluginModule> getPluginModules(Conversation.ConversationType conversationType) {
         RedPacketPlugin packetPlugin = new RedPacketPlugin();
@@ -22,9 +26,9 @@ public class BasePluginExtensionModule extends DefaultExtensionModule {
         TakePhotoPlugin takePhotoPlugin = new TakePhotoPlugin();
         TransferPlugin transferPlugin = new TransferPlugin();
         VoiceCallsPlugin voiceCallsPlugin = new VoiceCallsPlugin();
-        BusinessCardPlugin businessCardPlugin =new BusinessCardPlugin();
-        MyCombineLocationPlugin locationPlugin=new MyCombineLocationPlugin();
-        CollectionPlugin collectionPlugin=new CollectionPlugin();
+        BusinessCardPlugin businessCardPlugin = new BusinessCardPlugin();
+        MyCombineLocationPlugin locationPlugin = new MyCombineLocationPlugin();
+        CollectionPlugin collectionPlugin = new CollectionPlugin();
 
         List<IPluginModule> list = super.getPluginModules(conversationType);
         if (list != null) {
@@ -37,6 +41,9 @@ public class BasePluginExtensionModule extends DefaultExtensionModule {
             list.add(businessCardPlugin);
             list.add(locationPlugin);
             list.add(collectionPlugin);
+            if (isGroupChat) {
+                list.remove(transferPlugin);
+            }
         }
 
         return list;

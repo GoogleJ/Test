@@ -4,19 +4,18 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.EditText;
 
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.AllGroupMembersResponse;
-import com.zxjk.duoduo.network.response.GroupChatResponse;
+import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.adapter.AllGroupMemebersAdapter;
-import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.ui.widget.TitleBar;
+import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,6 @@ import java.util.Locale;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import io.reactivex.functions.Consumer;
 
 /**
  * @author Administrator
@@ -52,17 +50,12 @@ public class AllGroupMembersActivity extends BaseActivity implements TextWatcher
     }
 
     private void initView() {
-        titleBar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        titleBar.getLeftImageView().setOnClickListener(v -> finish());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 5);
         mRecyclerView.setLayoutManager(gridLayoutManager);
         mAdapter = new AllGroupMemebersAdapter();
-        GroupChatResponse groupResponse= (GroupChatResponse) getIntent().getSerializableExtra("allGroupMembers");
-        getGroupMemByGroupId(groupResponse.getId());
+        GroupResponse groupResponse= (GroupResponse) getIntent().getSerializableExtra("allGroupMembers");
+        getGroupMemByGroupId(groupResponse.getGroupInfo().getId());
 
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -73,12 +66,9 @@ public class AllGroupMembersActivity extends BaseActivity implements TextWatcher
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<List<AllGroupMembersResponse>>() {
-                    @Override
-                    public void accept(List<AllGroupMembersResponse> allGroupMembersResponses) throws Exception {
-                         list.addAll(allGroupMembersResponses);
-                         mAdapter.setNewData(list);
-                    }
+                .subscribe(allGroupMembersResponses -> {
+                     list.addAll(allGroupMembersResponses);
+                     mAdapter.setNewData(list);
                 }, this::handleApiError);
     }
 
@@ -95,7 +85,7 @@ public class AllGroupMembersActivity extends BaseActivity implements TextWatcher
     @Override
     public void afterTextChanged(Editable s) {
         String groupname = s.toString();
-        if (groupname != null || groupname.length() > 0) {
+        if (groupname.length() > 0) {
             List<AllGroupMembersResponse> groupnamelist = search(groupname); //查找对应的群组数据
             mAdapter.setNewData(list);
         } else {

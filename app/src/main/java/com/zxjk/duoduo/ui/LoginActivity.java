@@ -159,9 +159,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     }
 
                 }, this::handleApiError);
-
     }
-
 
     public void connect(String token) {
         if (getApplicationInfo().packageName.equals(Application.getCurProcessName(getApplicationContext()))) {

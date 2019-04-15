@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.utils;
 
+import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -22,7 +23,7 @@ public class TakePicUtil {
     public static Uri imageUri = null;
     public static File file = null;
 
-    public static void takePicture(FragmentActivity activity, int requestCode) {
+    public static void takePicture(Activity activity, int requestCode) {
         if (hasSdcard()) {
             file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DuoDuo/images/" + System.currentTimeMillis() + ".png");
             file.getParentFile().mkdirs();

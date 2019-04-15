@@ -26,10 +26,6 @@ import java.util.Random;
  */
 public class KeyboardPopupWindow extends PopupWindow {
 
-
-
-
-
     private static final String TAG = "KeyboardPopupWindow";
     private Context context;
     private View anchorView;

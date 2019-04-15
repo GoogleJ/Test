@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.minepage;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -33,8 +34,6 @@ import java.util.Collections;
 
 import androidx.annotation.Nullable;
 
-import static com.zxjk.duoduo.utils.PermissionUtils.cameraPremissions;
-
 /**
  * @author Administrator
  * 个人资料页面
@@ -55,10 +54,10 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
     private TakePopWindow selectPicPopWindow;
     private static final int REQUEST_TAKE = 1;
     private static final int REQUEST_ALBUM = 2;
-    String type="type";
-    int changeNick=2;
-    int changeSign=1;
-    int changeEmail=3;
+    String type = "type";
+    int changeNick = 2;
+    int changeSign = 1;
+    int changeEmail = 3;
 
     private ChooseSexDialog dialog;
 
@@ -119,14 +118,14 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
         tvUserInfoSign = findViewById(R.id.tvUserInfoSign);
         tvUserInfoEmail = findViewById(R.id.tvUserInfoEmail);
         tvUserInfoWallet = findViewById(R.id.tvUserInfoWallet);
-    }
 
-    //修改头像
-    public void changeHeadImg(View view) {
-        cameraPremissions(this);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        selectPicPopWindow.showAtLocation(findViewById(android.R.id.content),
-                Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        getPermisson(ivUserInfoHead, result -> {
+            if (result) {
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                selectPicPopWindow.showAtLocation(findViewById(android.R.id.content),
+                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+            }
+        }, Manifest.permission.CAMERA);
     }
 
     //修改昵称
@@ -148,7 +147,7 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
 
     //我的二维码
     public void myQRCode(View view) {
-        startActivity(new Intent(this,MyQrCodeActivity.class));
+        startActivity(new Intent(this, MyQrCodeActivity.class));
     }
 
     //修改个性签名
@@ -196,8 +195,8 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
                 case REQUEST_ALBUM:
                     filePath = TakePicUtil.getPath(this, data.getData());
                     break;
-                    default:
-                        break;
+                default:
+                    break;
             }
         }
 

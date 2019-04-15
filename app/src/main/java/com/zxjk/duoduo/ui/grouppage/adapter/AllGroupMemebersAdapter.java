@@ -1,6 +1,8 @@
 package com.zxjk.duoduo.ui.grouppage.adapter;
 
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -16,12 +18,15 @@ public class AllGroupMemebersAdapter extends BaseQuickAdapter<AllGroupMembersRes
 
     @Override
     protected void convert(BaseViewHolder helper, AllGroupMembersResponse item) {
-        helper.setText(R.id.nick_name,item.getNick());
-        ImageView heardImage=helper.getView(R.id.header_image);
-        GlideUtil.loadCornerImg(heardImage,item.getHeadPortrait(),2);
+        helper.setText(R.id.nick_name, item.getNick());
+        ImageView heardImage = helper.getView(R.id.header_image);
+        TextView nick_owner = helper.getView(R.id.nick_owner);
+        GlideUtil.loadCornerImg(heardImage, item.getHeadPortrait(), 2);
 
+        if (helper.getAdapterPosition() == 0) {
+            nick_owner.setVisibility(View.VISIBLE);
+        } else {
+            nick_owner.setVisibility(View.GONE);
+        }
     }
-
-
-
 }

@@ -130,7 +130,7 @@ public class CountrySelectActivity extends BaseActivity {
                 pinyinName.append(aNameChar);
             }
         }
-        return pinyinName.toString().substring(0, 1);
+        return pinyinName.toString().substring(0, 1).toUpperCase();
     }
 
     public void back(View view) {

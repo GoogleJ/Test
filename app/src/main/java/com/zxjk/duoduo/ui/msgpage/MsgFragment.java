@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.msgpage;
 
+import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,15 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.ui.grouppage.SelectContactActivity;
-import com.zxjk.duoduo.ui.msgpage.base.BaseFragment;
+import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.ui.msgpage.widget.CommonPopupWindow;
 import com.zxjk.duoduo.ui.walletpage.RecipetQRActivity;
-import com.zxjk.duoduo.utils.PermissionUtils;
 import com.zxjk.duoduo.ui.widget.TitleBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import butterknife.ButterKnife;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imlib.model.Conversation;
@@ -69,7 +70,12 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
             case R.layout.pop_msg_top:
                 view.findViewById(R.id.send_group_chat).setOnClickListener(this);
                 view.findViewById(R.id.invite_friends).setOnClickListener(this);
-                view.findViewById(R.id.scan).setOnClickListener(this);
+
+                getPermisson(view.findViewById(R.id.scan), result -> {
+                    if (result) startActivity(new Intent(getActivity(), QrCodeActivity.class));
+                    popupWindow.dismiss();
+                }, Manifest.permission.CAMERA);
+
                 view.findViewById(R.id.collection_and_payment).setOnClickListener(this);
                 break;
         }
@@ -79,17 +85,12 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.send_group_chat:
-                Intent intent = new Intent(getActivity(), SelectContactActivity.class);
-                intent.putExtra("addGroupType", 0);
+                Intent intent = new Intent(getActivity(), CreateGroupActivity.class);
+                intent.putExtra("eventType", 1);
                 startActivity(intent);
                 break;
             case R.id.invite_friends:
                 startActivity(new Intent(getActivity(), AddContactActivity.class));
-                break;
-            case R.id.scan:
-                if (PermissionUtils.cameraPremissions(getActivity())) {
-                    startActivity(new Intent(getActivity(), QrCodeActivity.class));
-                }
                 break;
             case R.id.collection_and_payment:
                 startActivity(new Intent(getActivity(), RecipetQRActivity.class));
@@ -138,5 +139,41 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
         if (popupWindow != null) {
             popupWindow.dismiss();
         }
+    }
+
+    private static final String CURRENT_FRAGMENT_KEY = "current_fragment_key";
+    protected Fragment mCurrentFragment;
+
+    protected <T extends Fragment> T getFragment(String tag) {
+        return (T) getChildFragmentManager()
+                .findFragmentByTag(tag);
+    }
+
+    protected Fragment getCurrentFragment(Bundle bundle) {
+        String currentFragmentTag = bundle.getString(CURRENT_FRAGMENT_KEY, CURRENT_FRAGMENT_KEY);
+        return getFragment(currentFragmentTag);
+    }
+
+    protected void switchFragment(Fragment targetFragment, int contentId) {
+
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        if (targetFragment == mCurrentFragment) {
+            return;
+        }
+
+        if (mCurrentFragment != null) {
+            transaction.hide(mCurrentFragment);
+        }
+
+        if (!targetFragment.isAdded()) {
+            transaction.add(contentId, targetFragment, targetFragment.getClass().getSimpleName());
+        } else {
+            transaction.show(targetFragment);
+        }
+
+        transaction.commitAllowingStateLoss();
+
+        mCurrentFragment = targetFragment;
+
     }
 }

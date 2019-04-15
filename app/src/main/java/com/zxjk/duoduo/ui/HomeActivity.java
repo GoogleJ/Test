@@ -11,7 +11,7 @@ import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.FriendInfoResponse;
+import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.CommunityFragment;
@@ -19,12 +19,8 @@ import com.zxjk.duoduo.ui.minepage.MineFragment;
 import com.zxjk.duoduo.ui.msgpage.MsgFragment;
 import com.zxjk.duoduo.ui.walletpage.WalletFragment;
 
-import java.util.List;
-
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 
@@ -105,6 +101,17 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                 badgeItem.show(true);
             }
         }, Conversation.ConversationType.PRIVATE);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        boolean fromCreateGroup = getIntent().getBooleanExtra("fromCreateGroup", false);
+        if (fromCreateGroup) {
+            GroupResponse.GroupInfoBean fromCreateGroupInfo = (GroupResponse.GroupInfoBean) getIntent().getSerializableExtra("fromCreateGroupInfo");
+            RongIM.getInstance().startConversation(this, Conversation.ConversationType.GROUP,
+                    fromCreateGroupInfo.getId(), fromCreateGroupInfo.getGroupNikeName());
+        }
     }
 
     @SuppressLint("CheckResult")

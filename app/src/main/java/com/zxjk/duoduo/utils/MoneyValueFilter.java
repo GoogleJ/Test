@@ -4,6 +4,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.DigitsKeyListener;
 
+//限制最多输入小数点后两位
 public class MoneyValueFilter extends DigitsKeyListener {
 
     private static final String TAG = "MoneyValueFilter";

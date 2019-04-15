@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.minepage;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -11,7 +12,6 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -23,20 +23,16 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.TakePopWindow;
+import com.zxjk.duoduo.ui.widget.TitleBar;
+import com.zxjk.duoduo.ui.widget.dialog.DocumentSelectionDialog;
 import com.zxjk.duoduo.utils.AesUtil;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
-import com.zxjk.duoduo.ui.widget.TitleBar;
-import com.zxjk.duoduo.ui.widget.dialog.DocumentSelectionDialog;
-
 import java.io.File;
 import java.util.Collections;
-
 import androidx.annotation.Nullable;
-
-import static com.zxjk.duoduo.utils.PermissionUtils.cameraPremissions;
 
 /**
  * @author Administrator
@@ -124,10 +120,62 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
         reversePhotoOfTheDocumentEdit = findViewById(R.id.reverse_photo_of_the_document_edit);
         handHeldPassportPhoto = findViewById(R.id.hand_held_passport_photo);
         handHeldPassportPhotoEdit = findViewById(R.id.hand_held_passport_photo_edit);
-        verifiedCommit.setOnClickListener(this);
+        verifiedCommit.setOnClickListener(v -> commit());
         frontPhotoOfTheDocument.setOnClickListener(this);
         reversePhotoOfTheDocument.setOnClickListener(this);
         handHeldPassportPhoto.setOnClickListener(this);
+    }
+
+    private void commit() {
+        realNames = realName.getText().toString().trim();
+        idCards = idCard.getText().toString().trim();
+        if (TextUtils.isEmpty(realNames)) {
+            ToastUtils.showShort(R.string.edit_real_name);
+            return;
+        }
+
+        String s = cardType.getText().toString();
+        String otherIdCardType;
+        if (s.equals(getString(R.string.id_card))) {
+            otherIdCardType = "1";
+        } else if (s.equals(getString(R.string.passport))) {
+            otherIdCardType = "2";
+        } else if (s.equals(getString(R.string.other_identity_card))) {
+            otherIdCardType = "3";
+        } else {
+            ToastUtils.showShort(getString(R.string.please_select_the_type_of_document));
+            return;
+        }
+
+        if (TextUtils.isEmpty(idCards)) {
+            ToastUtils.showShort(R.string.edit_id_cards);
+            return;
+        }
+
+        if (TextUtils.isEmpty(url1)) {
+            ToastUtils.showShort(R.string.verified_realname1);
+            return;
+        }
+
+        if (TextUtils.isEmpty(url2)) {
+            ToastUtils.showShort(R.string.verified_realname2);
+            return;
+        }
+
+        if (TextUtils.isEmpty(url3)) {
+            ToastUtils.showShort(R.string.verified_realname3);
+            return;
+        }
+
+        VerifiedBean bean = new VerifiedBean();
+
+        bean.setNumber(idCards);
+        bean.setRealName(realNames);
+        bean.setType(otherIdCardType);
+        bean.setPictureFront(url1);
+        bean.setPictureHand(url2);
+        bean.setPictureReverse(url3);
+        certification(AesUtil.getInstance().encrypt(GsonUtils.toJson(bean)));
     }
 
     @SuppressLint("NewApi")
@@ -164,85 +212,24 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        realNames = realName.getText().toString().trim();
-        idCards = idCard.getText().toString().trim();
-
         switch (v.getId()) {
-            case R.id.verified_commit:
-                if (TextUtils.isEmpty(realNames)) {
-                    ToastUtils.showShort(R.string.edit_real_name);
-                    return;
-                }
-
-                String s = cardType.getText().toString();
-                String otherIdCardType;
-                if (s.equals(getString(R.string.id_card))) {
-                    otherIdCardType = "1";
-                } else if (s.equals(getString(R.string.passport))) {
-                    otherIdCardType = "2";
-                } else if (s.equals(getString(R.string.other_identity_card))) {
-                    otherIdCardType = "3";
-                } else {
-                    ToastUtils.showShort(getString(R.string.please_select_the_type_of_document));
-                    return;
-                }
-
-                if (TextUtils.isEmpty(idCards)) {
-                    ToastUtils.showShort(R.string.edit_id_cards);
-                    return;
-                }
-
-                if (TextUtils.isEmpty(url1)) {
-                    ToastUtils.showShort(R.string.verified_realname1);
-                    return;
-                }
-
-                if (TextUtils.isEmpty(url2)) {
-                    ToastUtils.showShort(R.string.verified_realname2);
-                    return;
-                }
-
-                if (TextUtils.isEmpty(url3)) {
-                    ToastUtils.showShort(R.string.verified_realname3);
-                    return;
-                }
-
-                VerifiedBean bean = new VerifiedBean();
-
-                bean.setNumber(idCards);
-                bean.setRealName(realNames);
-                bean.setType(otherIdCardType);
-                bean.setPictureFront(url1);
-                bean.setPictureHand(url2);
-                bean.setPictureReverse(url3);
-                certification(AesUtil.getInstance().encrypt(GsonUtils.toJson(bean)));
-                break;
             case R.id.front_photo_of_the_document:
-                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-//                证件正面照
                 currentPictureFlag = 1;
-                cameraPremissions(this);
-                selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
-                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.reverse_photo_of_the_document:
-                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                //证件反面照
                 currentPictureFlag = 2;
-                cameraPremissions(this);
-                selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
-                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.hand_held_passport_photo:
-                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                //手持证件照
                 currentPictureFlag = 3;
-                cameraPremissions(this);
+        }
+
+        getPermisson(v, result -> {
+            if (result) {
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
                 selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-                break;
-            default:
-        }
+            }
+        }, Manifest.permission.CAMERA);
     }
 
     @Override
@@ -297,7 +284,7 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
                 .subscribe(s -> {
                     Constant.currentUser.setIsAuthentication("2");
                     Constant.currentUser.setRealname(realNames);
-                    SPUtils.getInstance().put("realNames",realNames);
+                    SPUtils.getInstance().put("realNames", realNames);
                     ToastUtils.showShort(R.string.verified_success);
                     finish();
                 }, this::handleApiError);

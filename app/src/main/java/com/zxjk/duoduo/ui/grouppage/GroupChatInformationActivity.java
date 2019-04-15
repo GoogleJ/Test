@@ -14,17 +14,21 @@ import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.GroupChatResponse;
+import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
+import com.zxjk.duoduo.ui.HomeActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.adapter.AllGroupMemebersAdapter;
-import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.ui.minepage.UpdateUserInfoActivity;
+import com.zxjk.duoduo.ui.msgpage.ConversationActivity;
+import com.zxjk.duoduo.ui.msgpage.CreateGroupActivity;
 import com.zxjk.duoduo.ui.widget.TitleBar;
+import com.zxjk.duoduo.ui.widget.dialog.ConfirmDialog;
+import com.zxjk.duoduo.utils.CommonUtils;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import io.reactivex.functions.Consumer;
 
 /**
  * @author Administrator
@@ -34,6 +38,7 @@ import io.reactivex.functions.Consumer;
 public class GroupChatInformationActivity extends BaseActivity {
     TitleBar titleBar;
     TextView groupChatName;
+    TextView see_more_group_members;
     RecyclerView groupChatRecyclerView;
     SwitchButton topChatSwitch;
     SwitchButton messageAvoidanceSwitch;
@@ -43,19 +48,40 @@ public class GroupChatInformationActivity extends BaseActivity {
     TextView dissolutionGroup;
 
     AllGroupMemebersAdapter mAdapter;
-    GroupChatResponse group;
+
     Intent intent;
+
+    private GroupResponse group;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_chat_information);
-        initView();
+        see_more_group_members = findViewById(R.id.see_more_group_members);
 
+        TextView tvGroupManagement = findViewById(R.id.tvGroupManagement);
+
+        String id = getIntent().getStringExtra("id");
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .getGroupByGroupId(id)
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                .compose(RxSchedulers.normalTrans())
+                .subscribe(groupResponse -> {
+                    group = groupResponse;
+                    if (groupResponse.getGroupInfo().getGroupOwnerId().equals(Constant.userId)) {
+                        tvGroupManagement.setVisibility(View.VISIBLE);
+                    } else {
+                        tvGroupManagement.setVisibility(View.GONE);
+                    }
+                    initView();
+                }, this::handleApiError);
     }
 
     private void initView() {
         titleBar = findViewById(R.id.title_bar);
+        titleBar.setTitle(titleBar.getTitleView().getText().toString().trim()
+                + "(" + group.getCustomers().size() + ")");
         groupChatName = findViewById(R.id.group_chat_name);
         groupChatRecyclerView = findViewById(R.id.group_chat_recycler_view);
         topChatSwitch = findViewById(R.id.top_chat_switch);
@@ -68,37 +94,54 @@ public class GroupChatInformationActivity extends BaseActivity {
         mAdapter = new AllGroupMemebersAdapter();
 
         initFooterView();
-        group = (GroupChatResponse) getIntent().getSerializableExtra("groupChatInformation");
-        getGroupMemByGroupId(group.getId());
-        getGroupByGroupId(group.getId());
+
+        getGroupMemByGroupId(group.getGroupInfo().getId());
+
+        groupChatName.setText(group.getGroupInfo().getGroupNikeName());
+        announcement.setText(group.getGroupInfo().getGroupNotice());
+        announcement.setVisibility(View.VISIBLE);
+        groupChatRecyclerView.setAdapter(mAdapter);
+        if (Constant.userId.equals(group.getGroupInfo().getGroupOwnerId())) {
+            dissolutionGroup.setText(getString(R.string.dissolution_group));
+        } else {
+            dissolutionGroup.setText(getString(R.string.exit_group));
+        }
     }
 
     private void initFooterView() {
         View footerView = LayoutInflater.from(this).inflate(R.layout.view_bottom_del, null);
         ImageView delMembers = footerView.findViewById(R.id.delete_members);
         ImageView addMembers = footerView.findViewById(R.id.add_members);
-        delMembers.setOnClickListener(v -> {
-            intent = new Intent(GroupChatInformationActivity.this, RemoveGroupChatActivity.class);
-            intent.putExtra("groupId", group.getId());
-            startActivity(intent);
-        });
+        if (group.getGroupInfo().getGroupOwnerId().equals(Constant.userId)) {
+            //群主才能踢人
+            delMembers.setVisibility(View.VISIBLE);
+            delMembers.setOnClickListener(v -> {
+                intent = new Intent(GroupChatInformationActivity.this, CreateGroupActivity.class);
+                intent.putExtra("eventType", 3);
+                intent.putExtra("members", group);
+                startActivity(intent);
+            });
+        }
+
         addMembers.setOnClickListener(v -> {
-            intent = new Intent(GroupChatInformationActivity.this, SelectContactActivity.class);
-            intent.putExtra("addGroupType", 1);
-            intent.putExtra("groupId", group.getId());
+            intent = new Intent(GroupChatInformationActivity.this, CreateGroupActivity.class);
+            intent.putExtra("eventType", 2);
+            intent.putExtra("members", group);
             startActivity(intent);
         });
         mAdapter.addFooterView(footerView);
     }
 
-
     /**
      * 跳转群公告
      */
     public void announcement(View view) {
+        if (!group.getGroupInfo().getGroupOwnerId().equals(Constant.userId)) {
+            return;
+        }
         Intent intent = new Intent(this, GroupAnnouncementActivity.class);
-        intent.putExtra("groupId", group.getId());
-        startActivity(intent);
+        intent.putExtra("groupId", group.getGroupInfo().getId());
+        startActivityForResult(intent, 1);
     }
 
     /**
@@ -108,8 +151,8 @@ public class GroupChatInformationActivity extends BaseActivity {
      */
     public void groupAllMembers(View view) {
         Intent intent = new Intent(this, AllGroupMembersActivity.class);
-        intent.putExtra("groupId", group.getId());
-        intent.putExtra("allGroupMembers",group);
+        intent.putExtra("groupId", group.getGroupInfo().getId());
+        intent.putExtra("allGroupMembers", group);
         startActivity(intent);
     }
 
@@ -120,22 +163,26 @@ public class GroupChatInformationActivity extends BaseActivity {
      */
     public void groupManagement(View view) {
         Intent intent = new Intent(this, GroupManagementActivity.class);
-        intent.putExtra("groupId", group.getId());
+        intent.putExtra("groupId", group.getGroupInfo().getId());
         startActivity(intent);
-
     }
 
     /**
      * 解散和退出群聊
      */
     public void dissolutionGroup(View view) {
-        if (Constant.userId.equals(group.getGroupOwnerId())) {
-            disBandGroup(group.getId(), Constant.userId);
+        ConfirmDialog confirmDialog;
+        if (Constant.userId.equals(group.getGroupInfo().getGroupOwnerId())) {
+            confirmDialog = new ConfirmDialog(this, "提示", "确定要删除群组么", v -> {
+                disBandGroup(group.getGroupInfo().getId(), Constant.userId);
+            });
         } else {
-            exitGroup(group.getId(), Constant.userId);
+            confirmDialog = new ConfirmDialog(this, "提示", "确定要删除群组么", v -> {
+                exitGroup(group.getGroupInfo().getId(), Constant.userId);
+            });
         }
+        confirmDialog.show();
     }
-
 
     /**
      * 查询群成员
@@ -148,7 +195,13 @@ public class GroupChatInformationActivity extends BaseActivity {
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(allGroupMembersResponses -> mAdapter.setNewData(allGroupMembersResponses), this::handleApiError);
+                .subscribe(allGroupMembersResponses -> {
+                    mAdapter.setNewData(allGroupMembersResponses);
+                    if (allGroupMembersResponses.size() <= 9) {
+                        see_more_group_members.setClickable(false);
+                        see_more_group_members.setVisibility(View.INVISIBLE);
+                    }
+                }, this::handleApiError);
     }
 
     /**
@@ -164,7 +217,9 @@ public class GroupChatInformationActivity extends BaseActivity {
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
-                    finish();
+                    Intent intent = new Intent(this, HomeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                     ToastUtils.showShort(getString(R.string.you_have_disbanded_the_group));
                 }, this::handleApiError);
     }
@@ -182,34 +237,29 @@ public class GroupChatInformationActivity extends BaseActivity {
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
-                    finish();
+                    Intent intent = new Intent(this, ConversationActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                     ToastUtils.showShort(getString(R.string.you_have_left_the_group_chat));
                 }, this::handleApiError);
     }
 
-    /**
-     * 查询群信息
-     *
-     * @param groupId
-     */
-
-    public void getGroupByGroupId(String groupId) {
-        ServiceFactory.getInstance().getBaseService(Api.class)
-                .getGroupByGroupId(groupId)
-                .compose(bindToLifecycle())
-                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                .compose(RxSchedulers.normalTrans())
-                .subscribe(groupResponse -> {
-                    groupChatName.setText(groupResponse.getGroupNikeName());
-                    announcement.setText(groupResponse.getGroupSign());
-                        announcement.setVisibility(View.VISIBLE);
-                    groupChatRecyclerView.setAdapter(mAdapter);
-                    if (Constant.userId.equals(groupResponse.getGroupOwnerId())) {
-                        dissolutionGroup.setText(getString(R.string.dissolution_group));
-                    } else {
-                        dissolutionGroup.setText(getString(R.string.exit_group));
-                    }
-                }, this::handleApiError);
+    public void changeGroupName(View view) {
+        Intent intent = new Intent(this, UpdateUserInfoActivity.class);
+        intent.putExtra("type", 4);
+        intent.putExtra("data", group);
+        startActivityForResult(intent, 1);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == 2) {
+            groupChatName.setText(data.getStringExtra("result"));
+        }
+        if (requestCode == 1 && resultCode == 3) {
+            announcement.setText(data.getStringExtra("result"));
+        }
+    }
 }

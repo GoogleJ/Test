@@ -1,20 +1,22 @@
 package com.zxjk.duoduo;
 
+import android.app.ActivityManager;
+import android.content.Context;
+
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
 import com.blankj.utilcode.util.Utils;
-import com.zxjk.duoduo.network.response.CreateWalletResponse;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BasePluginExtensionModule;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardProvider;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketProvider;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketProvider;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferProvider;
-import android.app.ActivityManager;
-import android.content.Context;
+
 import java.util.List;
+
 import androidx.multidex.MultiDex;
 import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.IExtensionModule;
@@ -27,17 +29,9 @@ import io.rong.message.ImageMessage;
 import io.rong.message.RichContentMessage;
 import io.rong.message.TextMessage;
 import io.rong.message.VoiceMessage;
-import io.rong.push.PushType;
 import io.rong.push.RongPushClient;
-import io.rong.push.notification.PushMessageReceiver;
-import io.rong.push.notification.PushNotificationMessage;
 import io.rong.push.pushconfig.PushConfig;
 
-/**
- * 这里是Application
- *
- * @author Administrator
- */
 public class Application extends android.app.Application {
 
     public static OSS oss;
@@ -59,7 +53,7 @@ public class Application extends android.app.Application {
         RongIM.registerMessageTemplate(new TransferProvider());
         RongIM.registerMessageTemplate(new BusinessCardProvider());
         RongIM.getInstance().setMessageAttachedUserInfo(true);
-        setMyExtensionModule();
+        setMyExtensionModule(false);
 
         PushConfig config = new PushConfig.Builder()
                 .enableHWPush(true)
@@ -72,9 +66,6 @@ public class Application extends android.app.Application {
 
     @Override
     public void onTerminate() {
-        Constant.token = "";
-        Constant.userId = "";
-        Constant.phoneUuid = "";
         Constant.clear();
         super.onTerminate();
     }
@@ -111,21 +102,6 @@ public class Application extends android.app.Application {
             }
         }
         return null;
-    }
-
-    public class MyRongReceiver extends PushMessageReceiver {
-
-
-        @Override
-        public boolean onNotificationMessageArrived(Context context, PushType pushType, PushNotificationMessage pushNotificationMessage) {
-            //false是系统的，true是需要自定义
-            return false;
-        }
-
-        @Override
-        public boolean onNotificationMessageClicked(Context context, PushType pushType, PushNotificationMessage pushNotificationMessage) {
-            return false;
-        }
     }
 
     private class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageListener {
@@ -205,7 +181,7 @@ public class Application extends android.app.Application {
         }
     }
 
-    public void setMyExtensionModule() {
+    public static void setMyExtensionModule(boolean fromGroup) {
         List<IExtensionModule> moduleList = RongExtensionManager.getInstance().getExtensionModules();
 
         if (moduleList != null) {
@@ -217,7 +193,7 @@ public class Application extends android.app.Application {
                 }
             }
             RongExtensionManager.getInstance().unregisterExtensionModule(defaultModule);
-            RongExtensionManager.getInstance().registerExtensionModule(new BasePluginExtensionModule());
+            RongExtensionManager.getInstance().registerExtensionModule(new BasePluginExtensionModule(fromGroup));
         }
     }
 }

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 
 import io.rong.imkit.model.ProviderTag;
@@ -41,8 +42,21 @@ public class TransferProvider extends IContainerItemProvider.MessageProvider<Tra
             holder.sendLayout.setBackgroundResource(R.drawable.icon_send_red_packet_friend);
         }
 
-        if (!TextUtils.isEmpty(uiMessage.getExtra())) {
-            holder.remark.setText("已被领取");
+        if (!TextUtils.isEmpty(transferMessage.getExtra())) {
+            // 已被领取
+            if (transferMessage.getFromCustomerId().equals(Constant.userId)) {
+                if (uiMessage.getMessageDirection().equals(Message.MessageDirection.RECEIVE)) {
+                    holder.remark.setText("已领取");
+                } else {
+                    holder.remark.setText("已被领取");
+                }
+            } else {
+                if (uiMessage.getMessageDirection().equals(Message.MessageDirection.RECEIVE)) {
+                    holder.remark.setText("已被领取");
+                } else {
+                    holder.remark.setText("已领取");
+                }
+            }
         } else {
             holder.remark.setText(transferMessage.getRemark());
         }
