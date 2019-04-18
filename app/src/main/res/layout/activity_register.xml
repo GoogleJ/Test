@@ -3,19 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/login_bg"
-    >
+    android:background="@color/login_bg">
 
     <ImageView
         android:id="@+id/login_logo"
         android:layout_width="217dp"
         android:layout_height="130dp"
         android:layout_marginTop="100dp"
-        app:srcCompat="@drawable/login_logo"
         app:layout_constraintBottom_toTopOf="@id/login_bottom"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/login_logo" />
 
     <LinearLayout
         android:id="@+id/login_bottom"
@@ -58,10 +57,10 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:paddingEnd="10dp"
                         android:id="@+id/login_country"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:paddingEnd="10dp"
                         android:text="+86"
                         android:textSize="16sp" />
 
@@ -77,13 +76,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
-                        android:cursorVisible="true"
                         android:background="@null"
+                        android:cursorVisible="true"
                         android:gravity="center_vertical"
-                        android:textCursorDrawable="@null"
                         android:hint="@string/please_enter_phone_number"
                         android:inputType="number"
                         android:maxLength="11"
+                        android:textCursorDrawable="@null"
                         android:textSize="16sp" />
 
 
@@ -133,13 +132,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
-                        android:cursorVisible="true"
                         android:background="@null"
+                        android:cursorVisible="true"
                         android:gravity="center_vertical"
-                        android:textCursorDrawable="@null"
                         android:hint="@string/please_enter_verification_code"
                         android:inputType="number"
                         android:maxLength="6"
+                        android:textCursorDrawable="@null"
                         android:textSize="16sp" />
 
                     <TextView
@@ -194,13 +193,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:cursorVisible="true"
                     android:background="@null"
+                    android:cursorVisible="true"
                     android:gravity="center_vertical"
-                    android:textCursorDrawable="@null"
                     android:hint="@string/edit_password_reg"
                     android:inputType="textPassword"
                     android:maxLength="14"
+                    android:textCursorDrawable="@null"
                     android:textSize="16sp" />
 
                 <View
@@ -213,7 +212,7 @@
 
         </LinearLayout>
 
-        <FrameLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
@@ -224,20 +223,30 @@
                 android:id="@+id/text_user_agreement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/user_agreement"
                 android:textColor="@drawable/selector_text_click_bg"
                 android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/text_user_agreement"
+                android:onClick="showSign"
+                android:text="@string/user_agreement"
+                android:textColor="@color/themecolor"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/text_go_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 android:layout_gravity="right"
                 android:text="@string/go_login"
                 android:textColor="@drawable/selector_text_click_bg"
                 android:textSize="18sp" />
 
-        </FrameLayout>
+        </RelativeLayout>
 
         <Button
             android:id="@+id/btn_register"

@@ -103,7 +103,8 @@
                 android:layout_height="120dp"
                 android:layout_marginTop="20dp"
                 android:background="@color/white"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/label"
@@ -169,7 +170,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/m_chat_information_chat_and_picture_btn"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp">
+                    android:layout_height="60dp"
+                    android:visibility="gone">
 
                     <TextView
 
@@ -204,7 +206,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/m_chat_information_find_chat_history_btn"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp">
+                    android:layout_height="60dp"
+                    android:visibility="gone">
 
                     <TextView
 
@@ -238,7 +241,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/m_chat_information_set_current_time_btn"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp">
+                    android:layout_height="60dp"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -275,6 +279,22 @@
                 android:paddingEnd="12dp"
                 android:paddingBottom="22dp"
                 android:text="@string/clear_chat_history"
+                android:textColor="@color/themecolor"
+                android:textSize="17sp"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:drawableEnd="@drawable/icon_go"
+                android:onClick="report"
+                android:paddingStart="12dp"
+                android:paddingTop="22dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="22dp"
+                android:text="@string/report"
                 android:textColor="@color/themecolor"
                 android:textSize="17sp"
                 app:layout_constraintStart_toStartOf="parent" />

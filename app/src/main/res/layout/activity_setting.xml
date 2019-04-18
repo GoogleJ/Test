@@ -59,6 +59,7 @@
                 android:background="@color/personal_information_1" />
 
             <TextView
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_mine_rightarrow"
@@ -77,6 +78,7 @@
                 android:background="@color/m_add_friend_line" />
 
             <TextView
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_mine_rightarrow"
@@ -190,7 +192,8 @@
                 android:paddingBottom="16dp"
                 android:text="@string/help_center"
                 android:textColor="@color/themecolor"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="gone" />
 
             <View
                 android:layout_width="match_parent"
@@ -246,7 +249,8 @@
                 android:paddingBottom="16dp"
                 android:text="@string/language_switching"
                 android:textColor="@color/themecolor"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="gone" />
 
             <View
                 android:layout_width="match_parent"
@@ -280,7 +284,8 @@
                 android:paddingLeft="10dp"
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
-                android:paddingBottom="16dp">
+                android:paddingBottom="16dp"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="0dp"

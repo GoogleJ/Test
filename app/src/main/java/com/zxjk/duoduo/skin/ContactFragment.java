@@ -1,10 +1,11 @@
-package com.zxjk.duoduo.ui.msgpage;
+package com.zxjk.duoduo.skin;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,8 +16,13 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
+import com.zxjk.duoduo.network.rx.RxException;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
-import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.ui.msgpage.AddContactActivity;
+import com.zxjk.duoduo.ui.msgpage.FriendDetailsActivity;
+import com.zxjk.duoduo.ui.msgpage.GroupChatActivity;
+import com.zxjk.duoduo.ui.msgpage.NewFriendActivity;
+import com.zxjk.duoduo.ui.msgpage.SearchActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.BaseContactAdapter;
 import com.zxjk.duoduo.ui.msgpage.widget.IndexView;
 import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendInformationDialog;
@@ -34,7 +40,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -46,11 +54,7 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.message.CommandMessage;
 
-/**
- * @author Administrator
- */
-@SuppressLint("CheckResult")
-public class ContactsNewFriendActivity extends BaseActivity implements View.OnClickListener {
+public class ContactFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.m_constacts_new_friend_title_bar)
     TitleBar titleBar;
     @BindView(R.id.m_contact_add_friend_icon)
@@ -70,18 +74,21 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
 
     DeleteFriendInformationDialog deleteDialog;
 
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_constacts_new_friend);
-        ButterKnife.bind(this);
-        deleteDialog = new DeleteFriendInformationDialog(this);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        View rootview = LayoutInflater.from(getContext()).inflate(R.layout.activity_constacts_new_friend, container, false);
+        ButterKnife.bind(this, rootview);
+        deleteDialog = new DeleteFriendInformationDialog(getActivity());
         initView();
         getMyfriendsWaiting();
+
+        return rootview;
     }
 
     private void initView() {
-        layoutManager = new LinearLayoutManager(this);
+        layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new BaseContactAdapter();
         getFriendListInfoById();
@@ -99,11 +106,9 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
         });
 
         mRecyclerView.setAdapter(mAdapter);
-        titleBar.setLeftImageResource(R.drawable.ico_back);
-        titleBar.getLeftImageView().setOnClickListener(v -> this.finish());
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             FriendInfoResponse friendInfoResponse = mAdapter.getData().get(position);
-            Intent intent = new Intent(this, FriendDetailsActivity.class);
+            Intent intent = new Intent(getActivity(), FriendDetailsActivity.class);
             intent.putExtra("intentType", 2);
             intent.putExtra("contactResponse", friendInfoResponse);
             startActivity(intent);
@@ -113,8 +118,7 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
             deleteDialog.show(friendInfoResponse.getNick());
             deleteDialog.setOnClickListener(() -> ServiceFactory.getInstance().getBaseService(Api.class)
                     .deleteFriend(friendInfoResponse.getId())
-                    .compose(bindToLifecycle())
-                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ContactsNewFriendActivity.this)))
+                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(getActivity())))
                     .compose(RxSchedulers.normalTrans())
                     .subscribe(s -> {
                         Constant.deleteFriendMessageId = friendInfoResponse.getId();
@@ -142,11 +146,12 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
 
                             }
                         });
-                    }, ContactsNewFriendActivity.this::handleApiError));
+                    }, t -> ToastUtils.showShort(RxException.getMessage(t))));
+
             return false;
         });
         if (mAdapter.getData().size() == 0) {
-            View view = LayoutInflater.from(this).inflate(R.layout.view_app_null_type, null);
+            View view = LayoutInflater.from(getActivity()).inflate(R.layout.view_app_null_type, null);
             mAdapter.setEmptyView(view);
         }
     }
@@ -156,30 +161,29 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.m_constacts_new_friend_group_chat_btn:
-                startActivity(new Intent(this, GroupChatActivity.class));
+                startActivity(new Intent(getActivity(), GroupChatActivity.class));
                 break;
             case R.id.m_contact_add_friend_btn:
                 dotNewFriend.setVisibility(View.GONE);
-                startActivityForResult(new Intent(this, NewFriendActivity.class), 10);
+                startActivityForResult(new Intent(getActivity(), NewFriendActivity.class), 10);
                 break;
             case R.id.m_contact_new_friend_btn:
-                startActivity(new Intent(this, AddContactActivity.class));
+                startActivity(new Intent(getActivity(), AddContactActivity.class));
                 break;
             case R.id.m_contact_search_btn:
-                startActivity(new Intent(this, SearchActivity.class));
+                startActivity(new Intent(getActivity(), SearchActivity.class));
                 break;
             default:
-                break;
         }
     }
 
     /**
      * 获取好友列表
      */
+    @SuppressLint("CheckResult")
     public void getFriendListInfoById() {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .getFriendListById()
-                .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(friendInfoResponses -> {
@@ -189,7 +193,7 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
                     if (Constant.friendsList == null) {
                         Constant.friendsList = list;
                     }
-                }, this::handleApiError);
+                }, t -> ToastUtils.showShort(RxException.getMessage(t)));
     }
 
     private void mapList(List<FriendInfoResponse> list) {
@@ -226,18 +230,18 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
         return pinyinName.toString().substring(0, 1).toUpperCase();
     }
 
+    @SuppressLint("CheckResult")
     public void getMyfriendsWaiting() {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .getMyfriendsWaiting()
-                .compose(bindToLifecycle())
-                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(getActivity())))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(friendInfoResponses -> {
                     int newfriendRequestCount = SPUtils.getInstance().getInt("newfriendRequestCount", 0);
                     if (friendInfoResponses.size() > newfriendRequestCount) {
                         dotNewFriend.setVisibility(View.VISIBLE);
                     }
-                }, this::handleApiError);
+                }, t -> ToastUtils.showShort(RxException.getMessage(t)));
     }
 
     @Override
@@ -246,5 +250,4 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
         getFriendListInfoById();
         mAdapter.notifyDataSetChanged();
     }
-
 }

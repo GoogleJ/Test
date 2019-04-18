@@ -12,6 +12,7 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
+import com.zxjk.duoduo.skin.SkinReportActivity;
 import com.zxjk.duoduo.ui.HomeActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.CreateGroupActivity;
@@ -86,5 +87,9 @@ public class ChatInformationActivity extends BaseActivity {
         Intent intent = new Intent(this, CreateGroupActivity.class);
         intent.putExtra("eventType", 1);
         startActivity(intent);
+    }
+
+    public void report(View view) {
+        startActivity(new Intent(this, SkinReportActivity.class));
     }
 }

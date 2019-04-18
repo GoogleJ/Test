@@ -20,21 +20,25 @@ import androidx.annotation.Nullable;
 @SuppressLint("JavascriptInterface")
 public class OnlineServiceActivity extends BaseActivity {
     WebView webView;
+    String url;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_online_service);
-        webView=findViewById(R.id.web_view);
+        webView = findViewById(R.id.web_view);
+        url = getIntent().getStringExtra("url");
         initSetting();
     }
+
     private void initSetting() {
-        webView.loadUrl(Constant.currentUser.getOnlineService());
+        webView.loadUrl(url == null ? Constant.currentUser.getOnlineService() : url);
         WebSettings settings = webView.getSettings();
         // 如果访问的页面中要与Javascript交互，则webview必须设置支持Javascript
         settings.setJavaScriptEnabled(true);
-        webView.setWebViewClient(new WebViewClient(){
+        webView.setWebViewClient(new WebViewClient() {
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url){
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
             }

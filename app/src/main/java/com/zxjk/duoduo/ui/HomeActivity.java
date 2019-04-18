@@ -15,6 +15,7 @@ import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
+import com.zxjk.duoduo.skin.ContactFragment;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.CommunityFragment;
 import com.zxjk.duoduo.ui.minepage.MineFragment;
@@ -50,6 +51,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
     CommunityFragment communityFragment;
     WalletFragment walletFragment;
     MineFragment mineFragment;
+    ContactFragment contactFragment;
 
     @SuppressLint({"WrongConstant", "CheckResult"})
     @Override
@@ -77,24 +79,45 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
 
         m_bottom_bar.setMode(BottomNavigationBar.MODE_FIXED);
         // 设置mode
-        m_bottom_bar.setMode(MODE_FIXED)
-                // 背景样式
-                .setBackgroundStyle(BACKGROUND_STYLE_RIPPLE)
-                // 背景颜色
-                .setBarBackgroundColor("#2FA8E1")
-                // 未选中状态颜色
-                .setInActiveColor("#929292")
-                // 选中状态颜色
-                .setActiveColor("#ffffff")
-                // 添加Item
-                .addItem(new BottomNavigationItem(R.drawable.tab_message_icon_nl, "消息").setInactiveIconResource(R.drawable.tab_message_icon_hl).setBadgeItem(badgeItem))
-                .addItem(new BottomNavigationItem(R.drawable.tab_qun_icon_nl, "社群").setInactiveIconResource(R.drawable.tab_qun_icon_hl))
-                .addItem(new BottomNavigationItem(R.drawable.tab_wallet_icon_nl, "钱包").setInactiveIconResource(R.drawable.tab_wallet_icon_hl))
-                .addItem(new BottomNavigationItem(R.drawable.tab_setting_icon_nl, "我的").setInactiveIconResource(R.drawable.tab_setting_icon_hl))
-                //设置默认选中位置
-                .setFirstSelectedPosition(0)
-                // 提交初始化（完成配置）
-                .initialise();
+        if (Constant.update) {
+            m_bottom_bar.setMode(MODE_FIXED)
+                    // 背景样式
+                    .setBackgroundStyle(BACKGROUND_STYLE_RIPPLE)
+                    // 背景颜色
+                    .setBarBackgroundColor("#2FA8E1")
+                    // 未选中状态颜色
+                    .setInActiveColor("#929292")
+                    // 选中状态颜色
+                    .setActiveColor("#ffffff")
+                    // 添加Item
+                    .addItem(new BottomNavigationItem(R.drawable.tab_message_icon_nl, "消息").setInactiveIconResource(R.drawable.tab_message_icon_hl).setBadgeItem(badgeItem))
+                    .addItem(new BottomNavigationItem(R.drawable.tab_wallet_icon_nl, "联系人").setInactiveIconResource(R.drawable.tab_wallet_icon_hl))
+                    .addItem(new BottomNavigationItem(R.drawable.tab_setting_icon_nl, "我的").setInactiveIconResource(R.drawable.tab_setting_icon_hl))
+                    //设置默认选中位置
+                    .setFirstSelectedPosition(0)
+                    // 提交初始化（完成配置）
+                    .initialise();
+        } else {
+            m_bottom_bar.setMode(MODE_FIXED)
+                    // 背景样式
+                    .setBackgroundStyle(BACKGROUND_STYLE_RIPPLE)
+                    // 背景颜色
+                    .setBarBackgroundColor("#2FA8E1")
+                    // 未选中状态颜色
+                    .setInActiveColor("#929292")
+                    // 选中状态颜色
+                    .setActiveColor("#ffffff")
+                    // 添加Item
+                    .addItem(new BottomNavigationItem(R.drawable.tab_message_icon_nl, "消息").setInactiveIconResource(R.drawable.tab_message_icon_hl).setBadgeItem(badgeItem))
+                    .addItem(new BottomNavigationItem(R.drawable.tab_qun_icon_nl, "社群").setInactiveIconResource(R.drawable.tab_qun_icon_hl))
+                    .addItem(new BottomNavigationItem(R.drawable.tab_wallet_icon_nl, "钱包").setInactiveIconResource(R.drawable.tab_wallet_icon_hl))
+                    .addItem(new BottomNavigationItem(R.drawable.tab_setting_icon_nl, "我的").setInactiveIconResource(R.drawable.tab_setting_icon_hl))
+                    //设置默认选中位置
+                    .setFirstSelectedPosition(0)
+                    // 提交初始化（完成配置）
+                    .initialise();
+        }
+
 
         m_bottom_bar.setTabSelectedListener(this);
 
@@ -149,6 +172,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
         communityFragment = new CommunityFragment();
         walletFragment = new WalletFragment();
         mineFragment = new MineFragment();
+        contactFragment = new ContactFragment();
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.fragment_content, msgFragment)
@@ -163,16 +187,23 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                 switchFragment(msgFragment);
                 break;
             case 1:
+                if (Constant.update) {
+                    switchFragment(contactFragment);
+                    break;
+                }
                 switchFragment(communityFragment);
                 break;
             case 2:
+                if (Constant.update) {
+                    switchFragment(mineFragment);
+                    break;
+                }
                 switchFragment(walletFragment);
                 break;
             case 3:
                 switchFragment(mineFragment);
                 break;
             default:
-                break;
         }
     }
 

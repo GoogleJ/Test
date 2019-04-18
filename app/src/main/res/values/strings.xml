@@ -214,7 +214,7 @@
     <string name="about_title">关于多多</string>
     <string name="about_release_notes">版本说明</string>
     <string name="about_version">版本号</string>
-    <string name="about_version_number">10.1.58</string>
+    <string name="about_version_number">1.0</string>
     <string name="about_label">软件许可及服务协议 隐私政策</string>
     <string name="about_label_1">©1998-2019 Tencent Inc.All rights reserved.</string>
     <string name="community">社群</string>
@@ -673,5 +673,9 @@
     <string name="uploadSign">上传凭证:</string>
     <string name="uploadSignTip">（不超过三张）</string>
     <string name="input_reason">请填写申诉信息</string>
+    <string name="report">举报</string>
+    <string name="report_edit">请输入要举报的内容，我们会认真审核违规内容并将结果通知给您</string>
+    <string name="input_skin">请输入内容</string>
+    <string name="report_success">举报成功</string>
 
 </resources>

@@ -48,7 +48,7 @@ public class ExchangeListActivity extends BaseActivity {
         mAdapter = new ExchangeListAdapter(new ArrayList<>());
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             GetOverOrderResponse g = (GetOverOrderResponse) adapter.getData().get(position);
-            Intent intent;
+            Intent intent = new Intent();
             if (g.getStatus().equals("3")) {
                 //交易中
                 if (g.getBuyNick().equals(Constant.currentUser.getNick())) {

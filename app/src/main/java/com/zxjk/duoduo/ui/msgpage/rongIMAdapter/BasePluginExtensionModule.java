@@ -1,6 +1,8 @@
 package com.zxjk.duoduo.ui.msgpage.rongIMAdapter;
 
 
+import com.zxjk.duoduo.Constant;
+
 import java.util.List;
 
 import io.rong.imkit.DefaultExtensionModule;
@@ -35,13 +37,16 @@ public class BasePluginExtensionModule extends DefaultExtensionModule {
             list.add(photoSelectorPlugin);
             list.add(takePhotoPlugin);
             list.add(transferPlugin);
-            list.add(voiceCallsPlugin);
+//            list.add(voiceCallsPlugin);
             list.add(packetPlugin);
             list.add(businessCardPlugin);
             list.add(locationPlugin);
-            list.add(collectionPlugin);
+//            list.add(collectionPlugin);
             if (isGroupChat) {
                 list.remove(transferPlugin);
+                if (Constant.update) {
+                    list.remove(packetPlugin);
+                }
             }
         }
 

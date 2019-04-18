@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.GsonUtils;
@@ -41,6 +42,7 @@ import androidx.annotation.Nullable;
 @SuppressLint("CheckResult")
 public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnItemClickListener {
 
+    private RelativeLayout rlWalletAddress;
     private ImageView ivUserInfoHead;
     private TextView tvUserInfoNick;
     private TextView tvUserInfoSex;
@@ -109,6 +111,10 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
     }
 
     private void findViews() {
+        rlWalletAddress = findViewById(R.id.rlWalletAddress);
+        if (Constant.update) {
+            rlWalletAddress.setVisibility(View.GONE);
+        }
         ivUserInfoHead = findViewById(R.id.ivUserInfoHead);
         tvUserInfoNick = findViewById(R.id.tvUserInfoNick);
         tvUserInfoSex = findViewById(R.id.tvUserInfoSex);

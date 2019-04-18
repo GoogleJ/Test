@@ -16,6 +16,7 @@ import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
+import com.zxjk.duoduo.skin.SkinReportActivity;
 import com.zxjk.duoduo.ui.HomeActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.adapter.AllGroupMemebersAdapter;
@@ -70,6 +71,9 @@ public class GroupChatInformationActivity extends BaseActivity {
                     group = groupResponse;
                     if (groupResponse.getGroupInfo().getGroupOwnerId().equals(Constant.userId)) {
                         tvGroupManagement.setVisibility(View.VISIBLE);
+                        if (Constant.update) {
+                            tvGroupManagement.setVisibility(View.GONE);
+                        }
                     } else {
                         tvGroupManagement.setVisibility(View.GONE);
                     }
@@ -111,6 +115,9 @@ public class GroupChatInformationActivity extends BaseActivity {
         View footerView = LayoutInflater.from(this).inflate(R.layout.view_bottom_del, null);
         ImageView delMembers = footerView.findViewById(R.id.delete_members);
         ImageView addMembers = footerView.findViewById(R.id.add_members);
+        if (Constant.update) {
+            addMembers.setVisibility(View.GONE);
+        }
         if (group.getGroupInfo().getGroupOwnerId().equals(Constant.userId)) {
             //群主才能踢人
             delMembers.setVisibility(View.VISIBLE);
@@ -260,5 +267,9 @@ public class GroupChatInformationActivity extends BaseActivity {
         if (requestCode == 1 && resultCode == 3) {
             announcement.setText(data.getStringExtra("result"));
         }
+    }
+
+    public void report(View view) {
+        startActivity(new Intent(this, SkinReportActivity.class));
     }
 }

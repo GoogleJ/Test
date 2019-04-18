@@ -39,7 +39,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.walletpage.ShenSuActivity"></activity>
+        <activity android:name=".skin.SkinReportActivity"></activity>
+        <activity android:name=".ui.walletpage.ShenSuActivity" />
         <activity android:name=".ui.walletpage.ExchangeOrderFailedActivity" />
         <activity android:name=".ui.walletpage.ExchangeOrderCancelActivity" />
         <activity android:name=".ui.walletpage.ExchangeOrderSuccessActivity" />

@@ -201,6 +201,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
 
     private void initUI() {
         titleBar.getLeftImageView().setOnClickListener(v -> finish());
+
         titleBar.getRightImageView().setOnClickListener(v -> {
             if (popupWindow != null && popupWindow.isShowing()) {
                 return;

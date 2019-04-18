@@ -74,8 +74,7 @@ public class MyQrCodeActivity extends BaseActivity {
             @Override
             public void onGlobalLayout() {
                 qrCode.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                int width = qrCode.getWidth();
-                imgSize = width;
+                imgSize = qrCode.getWidth();
 
                 ViewGroup.LayoutParams layoutParams = qrCode.getLayoutParams();
                 layoutParams.width = imgSize;

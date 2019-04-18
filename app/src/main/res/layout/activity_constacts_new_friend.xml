@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleBarLeftImage="@drawable/ico_back"
         app:titleBarTextColor="@color/white"
         app:titleBarTitle="@string/m_constacts_new_friend_title_bar" />
 

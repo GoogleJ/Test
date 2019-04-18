@@ -9,7 +9,6 @@
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        app:titleBarLeftImage="@drawable/ic_head_address_book"
         app:titleBarRightImage="@drawable/ic_head_add"
         app:titleBarTextColor="@color/white"
         app:titleBarTitle="@string/msg_title" />

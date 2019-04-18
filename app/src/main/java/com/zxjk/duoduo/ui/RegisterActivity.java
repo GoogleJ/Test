@@ -23,6 +23,7 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.service.RegisterBlockWalletService;
 import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.ui.minepage.OnlineServiceActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 import androidx.annotation.Nullable;
@@ -186,7 +187,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     countDownTimer.onFinish();
                     handleApiError(t);
                 });
+    }
 
+    public void showSign(View view) {
+        Intent intent = new Intent(this, OnlineServiceActivity.class);
+        intent.putExtra("url", "https://timorzc.github.io/duoduo.github.io/");
+        startActivity(intent);
     }
 
     private CountDownTimer countDownTimer = new CountDownTimer(60000, 1000) {

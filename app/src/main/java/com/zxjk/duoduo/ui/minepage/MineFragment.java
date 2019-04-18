@@ -54,6 +54,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
         llMineSetting.setOnClickListener(this);
         llMineBalanceLeft.setOnClickListener(this);
+        if (Constant.update) {
+            llMineBlockWallet.setVisibility(View.GONE);
+        }
         llMineBlockWallet.setOnClickListener(this);
         llMineRecipetCode.setOnClickListener(this);
         cardMineInfo.setOnClickListener(this);

@@ -56,7 +56,10 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
 
     private void initHear() {
         titleBar = rootView.findViewById(R.id.title_bar);
-        titleBar.getLeftImageView().setOnClickListener(v -> startActivity(new Intent(getActivity(), ContactsNewFriendActivity.class)));
+        if (!Constant.update) {
+            titleBar.setLeftImageResource(R.drawable.ic_head_address_book);
+            titleBar.getLeftImageView().setOnClickListener(v -> startActivity(new Intent(getActivity(), ContactsNewFriendActivity.class)));
+        }
         titleBar.getRightImageView().setOnClickListener(v -> {
             if (popupWindow != null && popupWindow.isShowing()) {
                 return;
