@@ -7,6 +7,7 @@ import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
 import com.blankj.utilcode.util.Utils;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BasePluginExtensionModule;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardProvider;
@@ -14,6 +15,7 @@ import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketProvider;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferProvider;
+import com.zxjk.duoduo.utils.WeChatShareUtil;
 
 import java.util.List;
 
@@ -36,15 +38,31 @@ public class Application extends android.app.Application {
 
     public static OSS oss;
 
+    private static final String APP_ID = "wx95412ba899539c33";
+
+    private void regToWx() {
+        // 通过WXAPIFactory工厂，获取IWXAPI的实例
+        WeChatShareUtil.wxShare = WXAPIFactory.createWXAPI(this, APP_ID, true);
+        // 将应用的appId注册到微信
+        WeChatShareUtil.wxShare.registerApp(APP_ID);
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
 
+        //微信分享
+        regToWx();
+
+        //工具类初始化
         Utils.init(this);
 
+        //OSS初始化
         new Thread(this::initOSS).start();
 
         MultiDex.install(this);
+
+        //融云初始化
         RongIM.init(this);
         RongIM.registerMessageType(RedPacketMessage.class);
         RongIM.registerMessageType(BusinessCardMessage.class);
@@ -54,7 +72,6 @@ public class Application extends android.app.Application {
         RongIM.registerMessageTemplate(new BusinessCardProvider());
         RongIM.getInstance().setMessageAttachedUserInfo(true);
         setMyExtensionModule(false);
-
         PushConfig config = new PushConfig.Builder()
                 .enableHWPush(true)
                 .enableMiPush("小米 appId", "小米 appKey")
@@ -62,6 +79,7 @@ public class Application extends android.app.Application {
                 .enableFCM(true)
                 .build();
         RongPushClient.setPushConfig(config);
+
     }
 
     @Override
@@ -181,13 +199,14 @@ public class Application extends android.app.Application {
         }
     }
 
+    //修改会话页底部按钮
     public static void setMyExtensionModule(boolean fromGroup) {
         List<IExtensionModule> moduleList = RongExtensionManager.getInstance().getExtensionModules();
 
         if (moduleList != null) {
             IExtensionModule defaultModule = null;
             for (IExtensionModule module : moduleList) {
-                if (module instanceof DefaultExtensionModule) {
+                if (module instanceof BasePluginExtensionModule || module instanceof DefaultExtensionModule) {
                     defaultModule = module;
                     break;
                 }

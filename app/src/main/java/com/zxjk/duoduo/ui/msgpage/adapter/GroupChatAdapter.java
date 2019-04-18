@@ -12,7 +12,6 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.GroupChatResponse;
 
 /**
- * TODO:群聊信息的适配器
  *
  * @author Administrator
  */

@@ -32,7 +32,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\26 0026 群组--聊天信息页面
  */
 @SuppressLint("CheckResult")
 public class GroupChatInformationActivity extends BaseActivity {

@@ -1,8 +1,10 @@
 package com.zxjk.duoduo.ui.minepage;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -20,14 +22,13 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.KeyboardPopupWindow;
 import com.zxjk.duoduo.ui.widget.PayPsdInputView;
 import com.zxjk.duoduo.ui.widget.TitleBar;
+import com.zxjk.duoduo.utils.CommonUtils;
 
 import androidx.annotation.Nullable;
 import butterknife.ButterKnife;
-import io.reactivex.functions.Consumer;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\28 0028 支付密码设置
  */
 public class SettingPayPwdActivity extends BaseActivity {
     PayPsdInputView payPsdInputView;
@@ -39,13 +40,10 @@ public class SettingPayPwdActivity extends BaseActivity {
     ScrollView scrollView;
     TextView m_set_payment_pwd_label;
 
-    String oldPwd = "";
     String newPwd;
     String newPwdTwo;
     KeyboardPopupWindow popupWindow;
     private boolean isUiCreated = false;
-
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,7 +51,7 @@ public class SettingPayPwdActivity extends BaseActivity {
         setContentView(R.layout.activity_update_pay_pwd);
         ButterKnife.bind(this);
         initUI();
-        getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
     }
 
@@ -65,44 +63,44 @@ public class SettingPayPwdActivity extends BaseActivity {
         titleBar = findViewById(R.id.m_set_payment_pwd_title_bar);
         payPsdInputView = findViewById(R.id.m_set_payment_pwd_edit);
         commmitBtn = findViewById(R.id.m_edit_information_btn);
-        titleBar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        titleBar.getLeftImageView().setOnClickListener(v -> finish());
+        m_set_payment_pwd_label.setText(R.string.input_newpaypwd);
 
         payPsdInputView.setComparePassword(new PayPsdInputView.onPasswordListener() {
 
             @Override
             public void onDifference(String oldPsd, String newPsd) {
-                // TODO: 2018/1/22  和上次输入的密码不一致  做相应的业务逻辑处理
-                payPsdInputView.cleanPsd();
-                ToastUtils.showShort(getString(R.string.inconsistent_with_the_last_password));
-
-
-                oldPwd = oldPsd;
             }
 
 
             @Override
             public void onEqual(String psd) {
-                // TODO: 2017/5/7 两次输入密码相同，那就去进行支付楼
-
-                commmitBtn.setVisibility(View.VISIBLE);
-
-                newPwd = psd;
-
-                newPwdTwo = psd;
             }
 
             @Override
             public void inputFinished(String inputPsd) {
-                // TODO: 2018/1/3 输完逻辑
-                m_set_payment_pwd_label.setText("请再次输入支付密码");
-                payPsdInputView.setComparePassword(inputPsd);
-                payPsdInputView.setText("");
+                if (TextUtils.isEmpty(newPwd)) {
+                    payPsdInputView.cleanPsd();
+                    newPwd = inputPsd;
+                    m_set_payment_pwd_label.setText(R.string.please_set_paypass_twtice);
+                    return;
+                }
 
+                if (TextUtils.isEmpty(newPwdTwo)) {
+                    newPwdTwo = inputPsd;
+                }
+
+                if (!newPwd.equals(newPwdTwo)) {
+                    payPsdInputView.cleanPsd();
+                    ToastUtils.showShort(R.string.passnotsame);
+                    newPwdTwo = "";
+                    newPwd = "";
+                    m_set_payment_pwd_label.setText(R.string.please_set_paypass1);
+                    return;
+                }
+
+                m_set_payment_pwd_label.setText(R.string.please_set_paypass2);
+                commmitBtn.setVisibility(View.VISIBLE);
             }
         });
         commmitBtn.setOnClickListener(v -> {
@@ -130,20 +128,19 @@ public class SettingPayPwdActivity extends BaseActivity {
     }
 
 
+    @SuppressLint("CheckResult")
     public void settingPayPwd(String number, String securityCode, String newPwd, String newPwdTwo) {
-
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .fandPayPwd(number, securityCode, newPwd, newPwdTwo)
-                .compose(RxSchedulers.ioObserver())
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) throws Exception {
-                        SettingPayPwdActivity.this.finish();
-                        ToastUtils.showShort(SettingPayPwdActivity.this.getString(R.string.successfully_modified));
-                    }
+                .subscribe(s -> {
+                    ToastUtils.showShort(SettingPayPwdActivity.this.getString(R.string.successfully_modified));
+                    SettingPayPwdActivity.this.finish();
                 }, this::handleApiError);
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {

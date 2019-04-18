@@ -42,7 +42,6 @@ import static com.zxjk.duoduo.ui.EditPersonalInformationFragment.REQUEST_TAKE;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\23 0023 获取支付类型的字符
  */
 @SuppressLint("CheckResult")
 public class ReceiptTypeActivity extends BaseActivity implements View.OnClickListener, TakePopWindow.OnItemClickListener {

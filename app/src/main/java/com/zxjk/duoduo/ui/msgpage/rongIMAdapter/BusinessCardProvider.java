@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.text.Spannable;
-import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +11,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
-import com.zxjk.duoduo.ui.msgpage.ConversationDetailsActivity;
-import com.zxjk.duoduo.ui.msgpage.ConversationForAddActivity;
+import com.zxjk.duoduo.ui.msgpage.AddFriendDetailsActivity;
+import com.zxjk.duoduo.ui.msgpage.FriendDetailsActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import io.rong.imkit.model.ProviderTag;
@@ -31,14 +28,8 @@ import io.rong.imkit.model.UIMessage;
 import io.rong.imkit.widget.provider.IContainerItemProvider;
 import io.rong.imlib.model.Message;
 
-/**
- * @author Administrator
- * @// TODO: 2019\4\4 0004 个人名片的provider
- */
 @ProviderTag(messageContent = BusinessCardMessage.class)
 public class BusinessCardProvider extends IContainerItemProvider.MessageProvider<BusinessCardMessage> {
-
-    List<FriendInfoResponse> list = new ArrayList<>();
 
     class ViewHolder {
         TextView userName;
@@ -47,60 +38,39 @@ public class BusinessCardProvider extends IContainerItemProvider.MessageProvider
         ConstraintLayout sendLayout;
     }
 
+    Context context;
+
     @Override
     public void bindView(View view, int i, BusinessCardMessage businessCardMessage, UIMessage uiMessage) {
+        if (context == null) {
+            context = view.getContext();
+        }
         ViewHolder holder = (ViewHolder) view.getTag();
 
         if (uiMessage.getMessageDirection() == Message.MessageDirection.SEND) {
             //消息方向，自己发送的
+            holder.sendLayout.setBackgroundResource(R.drawable.icon_business_card_user);
         } else {
             holder.sendLayout.setBackgroundResource(R.drawable.icon_business_card_friend);
         }
-        holder.userName.setText(businessCardMessage.getUserId());
+
+        holder.userName.setText(businessCardMessage.getName());
         holder.duoduoId.setText(businessCardMessage.getDuoduo());
         GlideUtil.loadCornerImg(holder.heardImage, businessCardMessage.getIcon(), 2);
     }
 
     @Override
-    public Spannable getContentSummary(BusinessCardMessage transferMessage) {
-        return new SpannableString("向您推荐了"+transferMessage.getName());
+    public Spannable getContentSummary(BusinessCardMessage businessCardMessage) {
+        return null;
     }
 
     @Override
     public void onItemClick(View view, int i, BusinessCardMessage businessCardMessage, UIMessage uiMessage) {
-        Context context = view.getContext();
-        getFriendListById(context);
-
-        if (list.size()>=0){
-            for(FriendInfoResponse friendInfoResponse:list){
-                businessCardMessage.getDuoduo();
-                //跳转到好友详情的页面
-                if (friendInfoResponse.getId().equals(businessCardMessage.getUserId())){
-                    Intent intent = new Intent(context, ConversationDetailsActivity.class);
-                    intent.putExtra("businessCardMessageId", businessCardMessage.getUserId());
-                    intent.putExtra("ConstantUserId", 3);
-                    context.startActivity(intent);
-                    break;
-                }else{
-                    //跳转到添加好友的联系人页面
-                    Intent intent=new Intent(context, ConversationForAddActivity.class);
-                    intent.putExtra("friendInfoResponses",businessCardMessage.getUserId());
-                    context.startActivity(intent);
-                    continue;
-                }
-            }
-        }else{
-            FriendInfoResponse friendInfoResponse=new FriendInfoResponse();
-            //跳转到添加好友的联系人页面
-            for (int j=0;i<list.size();j++){
-                friendInfoResponse=list.get(i);
-            }
-            Intent intent=new Intent(context, ConversationForAddActivity.class);
-            intent.putExtra("friendInfoResponses",businessCardMessage.getUserId());
-            context.startActivity(intent);
-
+        if (null == Constant.friendsList) {
+            getFriendListById(businessCardMessage.getUserId());
+        } else {
+            handleFriendList(businessCardMessage.getUserId());
         }
-
     }
 
     @Override
@@ -116,12 +86,40 @@ public class BusinessCardProvider extends IContainerItemProvider.MessageProvider
     }
 
     @SuppressLint("CheckResult")
-    public void getFriendListById(Context context) {
+    public void getFriendListById(String userId) {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .getFriendListById()
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(context)))
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(friendInfoResponses -> list = friendInfoResponses, throwable -> LogUtils.d(throwable.getMessage()));
+                .subscribe(friendInfoResponses -> {
+                    if (null == Constant.friendsList) {
+                        Constant.friendsList = friendInfoResponses;
+                        handleFriendList(userId);
+                    }
+                }, throwable -> LogUtils.d(throwable.getMessage()));
+    }
 
+    private void handleFriendList(String userId) {
+        if (userId.equals(Constant.userId)) {
+            //扫到了自己
+            Intent intent = new Intent(context, FriendDetailsActivity.class);
+            intent.putExtra("friendId", userId);
+            context.startActivity(intent);
+            return;
+        }
+        for (FriendInfoResponse f : Constant.friendsList) {
+            if (f.getId().equals(userId)) {
+                //扫到了自己的好友，进入详情页（可聊天）
+                Intent intent = new Intent(context, FriendDetailsActivity.class);
+                intent.putExtra("searchFriendDetails", f);
+                context.startActivity(intent);
+                return;
+            }
+        }
+
+        //扫到了陌生人，进入加好友页面
+        Intent intent = new Intent(context, AddFriendDetailsActivity.class);
+        intent.putExtra("newFriendId", userId);
+        context.startActivity(intent);
     }
 }

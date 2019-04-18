@@ -9,16 +9,11 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 
-import java.io.Serializable;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 
 @SuppressLint("CheckResult")
 public class WaitForJudgeActivity extends BaseActivity {
@@ -79,7 +74,7 @@ public class WaitForJudgeActivity extends BaseActivity {
         tvWaitForJudgePrice.setText(getIntent().getStringExtra("rate"));
         tvWaitForJudgeCount.setText(data.getNumber());
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        tvWaitForJudgeTime.setText(format.format(new Date(data.getCreateTime())));
+        tvWaitForJudgeTime.setText(format.format(Long.parseLong(data.getCreateTime())));
         tvWaitForJudgeReceiver.setText(data.getNick());
         tvWaitForJudgeReceiverAccount.setText(data.getReceiptNumber());
     }

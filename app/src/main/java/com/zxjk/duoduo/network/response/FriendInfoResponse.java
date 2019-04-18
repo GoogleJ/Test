@@ -5,7 +5,6 @@ import java.util.Objects;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\21 0021 好友相关实体
  */
 public class FriendInfoResponse implements Serializable {
 

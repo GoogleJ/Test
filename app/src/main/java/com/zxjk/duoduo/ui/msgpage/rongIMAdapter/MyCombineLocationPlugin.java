@@ -10,7 +10,6 @@ import io.rong.imkit.plugin.CombineLocationPlugin;
 
 /**
  * @author Administrator
- * @// TODO: 2019\4\3 0003 位置相关
  */
 public class MyCombineLocationPlugin extends CombineLocationPlugin {
     @Override

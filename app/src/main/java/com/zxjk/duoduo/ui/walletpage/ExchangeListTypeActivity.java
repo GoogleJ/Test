@@ -1,7 +1,6 @@
 package com.zxjk.duoduo.ui.walletpage;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,7 +13,6 @@ import androidx.annotation.Nullable;
 
 /**
  * @author Administrator
- * @// TODO: 2019\4\6 0006 关于交易所卖家支付的详情
  */
 public class ExchangeListTypeActivity extends BaseActivity {
     ImageView icon;
@@ -38,12 +36,7 @@ public class ExchangeListTypeActivity extends BaseActivity {
         initView();
         initData();
         title_bar = findViewById(R.id.title_bar);
-        title_bar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        title_bar.getLeftImageView().setOnClickListener(v -> finish());
 
     }
 

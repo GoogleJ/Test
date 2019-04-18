@@ -4,42 +4,38 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
-import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.ui.widget.TitleBar;
+import com.zxjk.duoduo.utils.CommonUtils;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-/**
- * @author Administrator
- * @// TODO: 2019\3\27 0027 找回支付密码身份证验证
- */
 public class RetrievePayPwdActivity extends BaseActivity implements View.OnClickListener {
     ImageView idCardImage;
     ImageView phoneCodeImage;
-    ConstraintLayout idCardLayout;
+    LinearLayout idCardLayout;
     ConstraintLayout phoneCodeLayout;
     EditText idCardEdit;
     TextView phone;
     TextView textGetCode;
     EditText verifiedCodeEdit;
     TextView commitBtn;
-    int length = 10;
-    int codeLength = 5;
     boolean isTrue = true;
+    TitleBar title;
 
     //短信验证
     String messagfeCode;
@@ -52,6 +48,7 @@ public class RetrievePayPwdActivity extends BaseActivity implements View.OnClick
     }
 
     private void initView() {
+        title = findViewById(R.id.title_bar);
         idCardImage = findViewById(R.id.id_card_image);
         phoneCodeImage = findViewById(R.id.phone_code_image);
         idCardLayout = findViewById(R.id.id_card_layout);
@@ -64,30 +61,44 @@ public class RetrievePayPwdActivity extends BaseActivity implements View.OnClick
         commitBtn.setOnClickListener(this);
         textGetCode.setOnClickListener(this);
         phone.setText(Constant.currentUser.getMobile());
+        title.getLeftImageView().setOnClickListener(v -> finish());
     }
 
     @Override
     public void onClick(View v) {
-
         switch (v.getId()) {
             case R.id.commit_btn:
                 if (isTrue) {
-                    if (idCardEdit.getText().toString().isEmpty() && idCardEdit.getText().length() > length) {
+                    if (TextUtils.isEmpty(idCardEdit.getText().toString().trim())) {
                         ToastUtils.showShort(getString(R.string.please_input_id_card));
                         return;
                     }
-                    idCardLayout.setVisibility(View.GONE);
-                    phoneCodeLayout.setVisibility(View.VISIBLE);
-                    phoneCodeImage.setImageResource(R.drawable.icon_phone_code);
-                    isTrue = false;
+
+                    ServiceFactory.getInstance().getBaseService(Api.class)
+                            .verifyPaperworkNumber(idCardEdit.getText().toString())
+                            .compose(bindToLifecycle())
+                            .compose(RxSchedulers.normalTrans())
+                            .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                            .subscribe(s -> {
+                                idCardLayout.setVisibility(View.GONE);
+                                phoneCodeLayout.setVisibility(View.VISIBLE);
+                                phoneCodeImage.setImageResource(R.drawable.icon_phone_code);
+                                isTrue = false;
+                            }, t -> handleApiError(t));
                 } else {
-                    if (verifiedCodeEdit.getText().toString().isEmpty() && verifiedCodeEdit.getText().length() < codeLength) {
+                    if (TextUtils.isEmpty(verifiedCodeEdit.getText().toString().trim())) {
                         ToastUtils.showShort(getString(R.string.please_enter_verification_code));
                         return;
                     }
+
+                    if (6 != verifiedCodeEdit.getText().toString().trim().length()) {
+                        ToastUtils.showShort(getString(R.string.edit_code_tip));
+                        return;
+                    }
+
                     Intent intent = new Intent(this, SettingPayPwdActivity.class);
                     intent.putExtra("idCardEdit", idCardEdit.getText().toString());
-                    intent.putExtra("verifiedCodeEdit", verifiedCodeEdit.getText().toString());
+                    intent.putExtra("verifiedCodeEdit", verifiedCodeEdit.getText().toString().trim());
                     startActivity(intent);
                     finish();
                 }
@@ -96,9 +107,7 @@ public class RetrievePayPwdActivity extends BaseActivity implements View.OnClick
                 registerCode(phone.getText().toString());
                 break;
             default:
-                break;
         }
-
     }
 
     @SuppressLint("CheckResult")
@@ -114,6 +123,7 @@ public class RetrievePayPwdActivity extends BaseActivity implements View.OnClick
                     messagfeCode = s;
                 }, t -> {
                     handleApiError(t);
+                    countDownTimer.onFinish();
                     countDownTimer.cancel();
                 });
     }

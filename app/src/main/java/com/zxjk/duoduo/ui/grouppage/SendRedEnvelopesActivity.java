@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\26 0026 群组发红包界面
  */
 public class SendRedEnvelopesActivity extends BaseActivity {
     ImageView right_title_image;

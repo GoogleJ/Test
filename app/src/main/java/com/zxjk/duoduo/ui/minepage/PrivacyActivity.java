@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\23 0023 隐私界面
  */
 public class PrivacyActivity extends BaseActivity {
     TitleBar titleBar;

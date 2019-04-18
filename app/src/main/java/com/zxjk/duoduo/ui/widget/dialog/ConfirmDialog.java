@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\26 0026 购买dialog
  */
 public class ConfirmDialog extends Dialog {
 

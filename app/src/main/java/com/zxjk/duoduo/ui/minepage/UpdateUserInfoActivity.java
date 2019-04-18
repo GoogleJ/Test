@@ -31,7 +31,6 @@ import static android.text.InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\25 0025 综合修改个人信息界面
  */
 @SuppressLint("CheckResult")
 public class UpdateUserInfoActivity extends BaseActivity {

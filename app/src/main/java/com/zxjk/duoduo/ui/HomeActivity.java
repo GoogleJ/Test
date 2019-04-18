@@ -7,6 +7,8 @@ import android.widget.FrameLayout;
 import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.blankj.utilcode.util.ToastUtils;
+import com.trello.rxlifecycle3.android.ActivityEvent;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -19,8 +21,11 @@ import com.zxjk.duoduo.ui.minepage.MineFragment;
 import com.zxjk.duoduo.ui.msgpage.MsgFragment;
 import com.zxjk.duoduo.ui.walletpage.WalletFragment;
 
+import java.util.concurrent.TimeUnit;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import io.reactivex.Observable;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 
@@ -28,7 +33,7 @@ import static com.ashokvarma.bottomnavigation.BottomNavigationBar.BACKGROUND_STY
 import static com.google.android.material.tabs.TabLayout.MODE_FIXED;
 
 /**
- * 这里是首页的activity
+ * todo 1.微信分享  2.exchangelist  3.转账更新
  *
  * @author Administrator
  */
@@ -82,10 +87,10 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                 // 选中状态颜色
                 .setActiveColor("#ffffff")
                 // 添加Item
-                .addItem(new BottomNavigationItem(R.drawable.tab_message_icon_hl, "消息").setInactiveIconResource(R.drawable.tab_message_icon_nl).setBadgeItem(badgeItem))
-                .addItem(new BottomNavigationItem(R.drawable.tab_qun_icon_hl, "社群").setInactiveIconResource(R.drawable.tab_qun_icon_nl))
-                .addItem(new BottomNavigationItem(R.drawable.tab_wallet_icon_hl, "钱包").setInactiveIconResource(R.drawable.tab_wallet_icon_nl))
-                .addItem(new BottomNavigationItem(R.drawable.tab_setting_icon_hl, "我的").setInactiveIconResource(R.drawable.tab_setting_icon_nl))
+                .addItem(new BottomNavigationItem(R.drawable.tab_message_icon_nl, "消息").setInactiveIconResource(R.drawable.tab_message_icon_hl).setBadgeItem(badgeItem))
+                .addItem(new BottomNavigationItem(R.drawable.tab_qun_icon_nl, "社群").setInactiveIconResource(R.drawable.tab_qun_icon_hl))
+                .addItem(new BottomNavigationItem(R.drawable.tab_wallet_icon_nl, "钱包").setInactiveIconResource(R.drawable.tab_wallet_icon_hl))
+                .addItem(new BottomNavigationItem(R.drawable.tab_setting_icon_nl, "我的").setInactiveIconResource(R.drawable.tab_setting_icon_hl))
                 //设置默认选中位置
                 .setFirstSelectedPosition(0)
                 // 提交初始化（完成配置）
@@ -101,6 +106,22 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                 badgeItem.show(true);
             }
         }, Conversation.ConversationType.PRIVATE);
+    }
+
+    private boolean canFinish = false;
+
+    @SuppressLint("CheckResult")
+    @Override
+    public void onBackPressed() {
+        if (!canFinish) {
+            ToastUtils.showShort(R.string.pressagain2finish);
+            canFinish = true;
+            Observable.timer(2, TimeUnit.SECONDS)
+                    .compose(bindUntilEvent(ActivityEvent.DESTROY))
+                    .subscribe(aLong -> canFinish = false);
+            return;
+        }
+        super.onBackPressed();
     }
 
     @Override

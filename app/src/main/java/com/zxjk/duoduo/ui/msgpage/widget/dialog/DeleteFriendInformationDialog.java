@@ -19,7 +19,6 @@ import butterknife.OnClick;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\21 0021 删除好友的dialog
  */
 public class DeleteFriendInformationDialog extends Dialog implements View.OnClickListener {
     @BindView(R.id.m_cancel_btn)
@@ -71,6 +70,7 @@ public class DeleteFriendInformationDialog extends Dialog implements View.OnClic
                 break;
             case R.id.m_delete_btn:
                 if (onClickListener != null) {
+                    dismiss();
                     onClickListener.onDel();
                 }
                 break;

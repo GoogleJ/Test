@@ -27,10 +27,6 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
 
-/**
- * @author Administrator
- * @// TODO: 2019\4\3 0003 转账详情
- */
 public class TransferInfoActivity extends BaseActivity {
     TitleBar titleBar;
     TextView commitBtn;
@@ -74,6 +70,7 @@ public class TransferInfoActivity extends BaseActivity {
                     transferMessage.setRemark("已领取");
                     transferMessage.setExtra("1");
                     Message obtain = Message.obtain(message.getSenderUserId(), Conversation.ConversationType.PRIVATE, transferMessage);
+                    obtain.setExtra("1");
                     RongIM.getInstance().sendMessage(obtain, null, null, new IRongCallback.ISendMessageCallback() {
                         @Override
                         public void onAttached(Message message) {

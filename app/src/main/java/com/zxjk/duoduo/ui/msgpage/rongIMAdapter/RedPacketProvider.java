@@ -17,10 +17,6 @@ import io.rong.imkit.model.UIMessage;
 import io.rong.imkit.widget.provider.IContainerItemProvider;
 import io.rong.imlib.model.Message;
 
-/**
- * @author Administrator
- * @// TODO: 2019\4\4 0004 关于红包的provider
- */
 @ProviderTag(messageContent = RedPacketMessage.class)
 public class RedPacketProvider extends IContainerItemProvider.MessageProvider<RedPacketMessage> {
 
@@ -39,6 +35,13 @@ public class RedPacketProvider extends IContainerItemProvider.MessageProvider<Re
 
         ViewHolder holder = (ViewHolder) view.getTag();
 
+        if (uiMessage.getMessageDirection() == Message.MessageDirection.SEND) {
+            //消息方向，自己发送的
+            holder.sendLayout.setBackgroundResource(R.drawable.icon_red_packet_user);
+        } else {
+            holder.sendLayout.setBackgroundResource(R.drawable.icon_send_red_packet_friend);
+        }
+
         if (TextUtils.isEmpty(uiMessage.getExtra())) {
             if (TextUtils.isEmpty(redPacketMessage.getRemark())) {
                 holder.message.setText(context.getResources().getString(R.string.m_red_envelopes_label));
@@ -48,10 +51,8 @@ public class RedPacketProvider extends IContainerItemProvider.MessageProvider<Re
         } else {
             if (uiMessage.getMessageDirection() == Message.MessageDirection.SEND) {
                 //消息方向，自己发送的
-                holder.sendLayout.setBackgroundResource(R.drawable.icon_red_packet_user);
                 holder.message.setText(context.getResources().getString(R.string.red_beilingqu));
             } else {
-                holder.sendLayout.setBackgroundResource(R.drawable.icon_send_red_packet_friend);
                 holder.message.setText(context.getResources().getString(R.string.red_yilingqu));
             }
         }
@@ -59,7 +60,7 @@ public class RedPacketProvider extends IContainerItemProvider.MessageProvider<Re
 
     @Override
     public Spannable getContentSummary(RedPacketMessage redPacketMessage) {
-        return new SpannableString("您有一个红包未领取");
+        return new SpannableString("您有一条红包消息");
     }
 
     @Override

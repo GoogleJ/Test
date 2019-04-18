@@ -1,10 +1,11 @@
 apply plugin: 'com.android.application'
+
 android {
     signingConfigs {
         release {
             keyAlias 'duoduo'
             keyPassword 'duoduo'
-            storeFile file('C:/WorkSpace/DuoDuo-Android/duoduo.jks')
+            storeFile file("../duoduo.jks")
             storePassword 'duoduo'
         }
     }
@@ -26,7 +27,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            debuggable false
+            debuggable true
             signingConfig signingConfigs.release
             zipAlignEnabled true
         }
@@ -88,9 +89,6 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.ashokvarma.android:bottom-navigation-bar:1.3.1'
 
-    //zxing
-    implementation 'com.google.zxing:core:3.3.2'
-
     //AliyunOSS
     implementation 'com.aliyun.dpa:oss-android-sdk:+'
 
@@ -121,12 +119,7 @@ dependencies {
     implementation 'coder.siy:password-textView:1.0.0'
 
     //扫描二维码
-    implementation 'cn.bingoogolapple:bga-photopicker:1.2.8@aar'
-    implementation 'cn.bingoogolapple:bga-baseadapter:1.2.9@aar'
-    implementation 'cn.bingoogolapple:bga-flowlayout:1.0.0@aar'
-    implementation 'cn.bingoogolapple:bga-zxing:1.1.7@aar'
-    implementation 'com.github.promeg:tinypinyin:2.0.1'
-    implementation 'cn.bingoogolapple:bga-qrcodecore:1.1.7@aar'
+    implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.3.6'
 
     // 通用适配器
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
@@ -142,4 +135,7 @@ dependencies {
 
     // indicator
     implementation 'com.github.hackware1993:MagicIndicator:1.6.0'
+
+    //微信分享
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 }

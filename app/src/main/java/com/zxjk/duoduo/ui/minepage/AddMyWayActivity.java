@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\23 0023 添加我的方式页面
  */
 public class AddMyWayActivity extends BaseActivity {
   TitleBar titleBar;

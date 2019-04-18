@@ -57,7 +57,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@null"
-            android:textColor="#FF3B30"
+            android:textColor="#0079FF"
             android:textSize="15sp" />
 
         <View
@@ -71,7 +71,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@null"
-            android:textColor="#0079FF"
+            android:textColor="#FF3B30"
             android:textSize="15sp" />
 
     </LinearLayout>

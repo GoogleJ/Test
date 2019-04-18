@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * @author Administrator
- * @// TODO: 2019\4\9 0009 选择群组分享个人名片
  */
 public class SelectContactForGroupCardActivity extends BaseActivity {
     RecyclerView card_recycler_view;

@@ -15,7 +15,6 @@ import io.rong.imlib.model.MessageContent;
 
 /**
  * @author Administrator
- * @// TODO: 2019\4\3 0003 关于红包的自定义消息 
  */
 @SuppressLint("ParcelCreator")
 @MessageTag(value = "MRedPackageMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)

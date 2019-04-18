@@ -16,7 +16,6 @@ import androidx.annotation.Nullable;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\30 0030 在线客服功能的制作
  */
 @SuppressLint("JavascriptInterface")
 public class OnlineServiceActivity extends BaseActivity {

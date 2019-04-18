@@ -39,6 +39,7 @@ public class SelectPopupWindow extends PopupWindow implements View.OnClickListen
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            mCurrPsw = "";
             pswView.setDatas("");
             dismiss();
         }
@@ -106,7 +107,7 @@ public class SelectPopupWindow extends PopupWindow implements View.OnClickListen
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //对空按钮不作处理
-                if ( i != 9 ) {
+                if (i != 9) {
                     if ( i == 11 ) {
                         //删除
                         if ( mCurrPsw.length() > 0 ) {
@@ -133,7 +134,6 @@ public class SelectPopupWindow extends PopupWindow implements View.OnClickListen
                         }
                     }
                 }
-
             }
         });
     }

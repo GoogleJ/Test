@@ -7,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -18,13 +17,14 @@ import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.service.RegisterBlockWalletService;
 import com.zxjk.duoduo.bean.CountryEntity;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
+import com.zxjk.duoduo.service.RegisterBlockWalletService;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,10 +35,6 @@ import butterknife.OnClick;
 
 import static com.zxjk.duoduo.utils.MD5Utils.getMD5;
 
-/**
- * @author Mr.Chen
- * @// TODO: 2019\3\17 0017 注册
- */
 @SuppressLint("CheckResult")
 public class RegisterActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.btn_register)
@@ -142,7 +138,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     @OnCheckedChanged({R.id.text_user_agreement})
     public void agreement(CheckBox view, boolean isChecked) {
-        Log.e("TestActivity", "view: " + isChecked);
         isAgreement = isChecked;
 
     }
@@ -180,16 +175,17 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     public void registerCode(String phone) {
+        countDownTimer.start();
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .getCode(phone, "0")
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(s -> {
-                    countDownTimer.start();
-                    ToastUtils.showShort(getString(R.string.code_label));
-
-                }, this::handleApiError);
+                .subscribe(s -> ToastUtils.showShort(getString(R.string.code_label)), t -> {
+                    countDownTimer.cancel();
+                    countDownTimer.onFinish();
+                    handleApiError(t);
+                });
 
     }
 

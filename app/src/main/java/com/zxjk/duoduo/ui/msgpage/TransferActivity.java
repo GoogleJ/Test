@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
@@ -40,10 +41,6 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
 
-/**
- * @author Administrator
- * @// TODO: 2019\4\3 0003 转账的activity
- */
 public class TransferActivity extends BaseActivity implements SelectPopupWindow.OnPopWindowClickListener {
 
     TitleBar titleBar;
@@ -89,6 +86,7 @@ public class TransferActivity extends BaseActivity implements SelectPopupWindow.
                 ToastUtils.showShort(R.string.inputzhuanzhangmoney1);
                 return;
             }
+            KeyboardUtils.hideSoftInput(this);
             Rect rect = new Rect();
             getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
             int winHeight = getWindow().getDecorView().getHeight();

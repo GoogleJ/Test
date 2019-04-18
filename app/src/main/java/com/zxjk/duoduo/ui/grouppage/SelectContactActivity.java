@@ -29,7 +29,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\28 0028 选择联系人
  */
 @SuppressLint("CheckResult")
 public class SelectContactActivity extends BaseActivity implements View.OnClickListener {

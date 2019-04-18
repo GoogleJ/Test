@@ -208,17 +208,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
+            <ImageView
                 android:id="@+id/tvWalletPageExchange1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableEnd="@drawable/ic_walletpage_exchange1"
-                android:gravity="center"
-                android:lineSpacingExtra="4dp"
-                android:text="@string/tvWalletPageExchange1"
-                android:textColor="@color/textcolor1"
-                android:textSize="15sp" />
+                android:src="@drawable/ic_walletpage_exchange1" />
 
             <View
                 android:layout_width="0.5dp"
@@ -229,17 +224,12 @@
                 android:layout_marginBottom="12dp"
                 android:background="@color/confirm_sale_line" />
 
-            <TextView
+            <ImageView
                 android:id="@+id/tvWalletPageExchange2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableEnd="@drawable/ic_walletpage_exchange2"
-                android:gravity="center"
-                android:lineSpacingExtra="4dp"
-                android:text="@string/tvWalletPageExchange2"
-                android:textColor="@color/textcolor1"
-                android:textSize="15sp" />
+                android:src="@drawable/ic_walletpage_exchange2" />
 
         </LinearLayout>
 

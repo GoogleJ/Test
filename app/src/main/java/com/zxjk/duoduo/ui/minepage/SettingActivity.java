@@ -35,7 +35,6 @@ public class SettingActivity extends BaseActivity {
     private TextView tvSettingPayment;
     private TextView tvSettingNick;
 
-
     private ImageView ivSettingAuthen;
 
     @Override

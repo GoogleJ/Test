@@ -15,7 +15,6 @@ import io.rong.imlib.model.MessageContent;
 
 /**
  * @author Administrator
- * @// TODO: 2019\4\3 0003 名片分享 
  */
 @SuppressLint("ParcelCreator")
 @MessageTag(value = "MMyCardMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)

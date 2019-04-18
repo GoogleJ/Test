@@ -9,7 +9,6 @@ import androidx.annotation.Nullable;
 
 /**
  * @author Administrator
- * @// TODO: 2019\4\6 0006 红包记录页面
  */
 public class ReceivedEnvelopesActivity extends BaseActivity {
     @Override

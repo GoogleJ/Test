@@ -3,6 +3,7 @@ package com.zxjk.duoduo.ui.msgpage;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.zxjk.duoduo.Constant;
@@ -22,10 +24,10 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketMessage;
+import com.zxjk.duoduo.ui.widget.dialog.SelectPopupWindow;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
 import com.zxjk.duoduo.utils.MoneyValueFilter;
-import com.zxjk.duoduo.ui.widget.dialog.SelectPopupWindow;
 
 import androidx.annotation.Nullable;
 import io.rong.imkit.RongIM;
@@ -35,10 +37,6 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
 
-/**
- * @author Administrator
- * @// TODO: 2019\4\2 0002  跳转到发送红包的界面
- */
 public class PrivacyRedPacketActivity extends BaseActivity implements SelectPopupWindow.OnPopWindowClickListener {
 
     TextView sendMessageBtn;
@@ -50,6 +48,7 @@ public class PrivacyRedPacketActivity extends BaseActivity implements SelectPopu
     String money;
     UserInfo userInfo;
 
+    @SuppressLint("CheckResult")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,14 +62,23 @@ public class PrivacyRedPacketActivity extends BaseActivity implements SelectPopu
         sendMessageBtn = findViewById(R.id.m_red_envelopes_commit_btn);
 
         userInfo = getIntent().getParcelableExtra("user");
+        if (null == userInfo) {
+            ServiceFactory.getInstance().getBaseService(Api.class)
+                    .getCustomerInfoById(getIntent().getStringExtra("userId"))
+                    .compose(bindToLifecycle())
+                    .compose(RxSchedulers.normalTrans())
+                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                    .subscribe(loginResponse -> userInfo = new UserInfo(loginResponse.getId(), loginResponse.getNick(), Uri.parse(loginResponse.getHeadPortrait())), this::handleApiError);
+        }
 
         sendMessageBtn.setOnClickListener(v -> {
             money = m_red_envelopes_money_edit.getText().toString().trim();
-            if (TextUtils.isEmpty(money)) {
+            if (((TextUtils.isEmpty(money) || Double.parseDouble(money) == 0))) {
                 ToastUtils.showShort(R.string.input_redmoney);
                 return;
             }
 
+            KeyboardUtils.hideSoftInput(this);
             Rect rect = new Rect();
             getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
             int winHeight = getWindow().getDecorView().getHeight();
@@ -126,7 +134,6 @@ public class PrivacyRedPacketActivity extends BaseActivity implements SelectPopu
                     message.setRemark(msgRemark);
                     message.setRedId(redPackageResponse.getId());
                     Message message1 = Message.obtain(userInfo.getUserId(), Conversation.ConversationType.PRIVATE, message);
-                    message1.setExtra("0");
                     RongIM.getInstance().sendMessage(message1, null, null, new IRongCallback.ISendMessageCallback() {
                         @Override
                         public void onAttached(Message message) {

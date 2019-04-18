@@ -18,24 +18,19 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.NewFriendAdapter;
 import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendInformationDialog;
-import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.ui.widget.TitleBar;
+import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * @author Administrator
- * @// TODO: 2019\3\20 0020  新的朋友
- */
 @SuppressLint("CheckResult")
 public class NewFriendActivity extends BaseActivity {
     @BindView(R.id.m_fragment_new_friend_title_bar)
@@ -86,7 +81,6 @@ public class NewFriendActivity extends BaseActivity {
                 case R.id.m_add_btn_layout:
                     if (isTrue) {
                         Intent intent = new Intent(NewFriendActivity.this, AddFriendDetailsActivity.class);
-                        intent.putExtra("intentAddType", 1);
                         intent.putExtra("newFriend", mAdapter.getData().get(position));
                         startActivity(intent);
                     } else {

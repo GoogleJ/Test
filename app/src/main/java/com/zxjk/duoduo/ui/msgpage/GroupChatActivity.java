@@ -30,7 +30,6 @@ import io.rong.imkit.RongIM;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\29 0029 群聊页面
  */
 public class GroupChatActivity extends BaseActivity implements TextWatcher {
 

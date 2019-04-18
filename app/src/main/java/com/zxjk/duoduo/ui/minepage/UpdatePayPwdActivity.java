@@ -1,6 +1,7 @@
 package com.zxjk.duoduo.ui.minepage;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -29,7 +31,6 @@ import butterknife.ButterKnife;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\27 0027 修改支付密码
  */
 public class UpdatePayPwdActivity extends BaseActivity {
 
@@ -54,12 +55,10 @@ public class UpdatePayPwdActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_pay_pwd);
         ButterKnife.bind(this);
-        getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initUI();
 
-
     }
-
 
     private void initUI() {
         m_set_payment_pwd_label = findViewById(R.id.m_set_payment_pwd_label);
@@ -79,20 +78,17 @@ public class UpdatePayPwdActivity extends BaseActivity {
 
             @Override
             public void onDifference(String oldPsd, String newPsd) {
-                // TODO: 2018/1/22  和上次输入的密码不一致  做相应的业务逻辑处理
             }
 
 
             @Override
             public void onEqual(String psd) {
-                // TODO: 2017/5/7 两次输入密码相同，那就去进行支付楼
 
 
             }
 
             @Override
             public void inputFinished(String inputPsd) {
-                // TODO: 2018/1/3 输完逻辑
 
                 if (TextUtils.isEmpty(oldPwd)) {
                     payPsdInputView.cleanPsd();
@@ -111,6 +107,7 @@ public class UpdatePayPwdActivity extends BaseActivity {
                 }
 
                 if (!newPwd.equals(newPwdTwo)) {
+                    payPsdInputView.cleanPsd();
                     ToastUtils.showShort(R.string.passnotsame);
                     newPwdTwo = "";
                     newPwd = "";
@@ -143,6 +140,7 @@ public class UpdatePayPwdActivity extends BaseActivity {
     }
 
 
+    @SuppressLint("CheckResult")
     public void updatePwd(String oldPwd, String newPwd, String newPwdTwo) {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .updatePayPwd(MD5Utils.getMD5(oldPwd), MD5Utils.getMD5(newPwd), MD5Utils.getMD5(newPwdTwo))
@@ -152,7 +150,10 @@ public class UpdatePayPwdActivity extends BaseActivity {
                 .subscribe(s -> {
                     ToastUtils.showShort(R.string.successfully_modified);
                     finish();
-                }, this::handleApiError);
+                }, t -> {
+                    handleApiError(t);
+                    finish();
+                });
     }
 
     @Override

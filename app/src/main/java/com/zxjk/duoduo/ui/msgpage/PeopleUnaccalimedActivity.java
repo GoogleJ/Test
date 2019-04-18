@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -15,21 +17,20 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.RedPackageAdapter;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
+
 import java.util.ArrayList;
+
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-/**
- * @author Administrator
- * @// TODO: 2019\4\6 0006 红包未领取界面
- */
 public class PeopleUnaccalimedActivity extends BaseActivity {
 
     private TextView title;
     private ImageView head;
     private TextView name;
     private TextView tips;
+    private TextView tvRedFromList;
     private RecyclerView recycler;
 
     @SuppressLint("CheckResult")
@@ -39,6 +40,7 @@ public class PeopleUnaccalimedActivity extends BaseActivity {
         setContentView(R.layout.activity_people_unaccalimed);
 
         title = findViewById(R.id.title);
+        tvRedFromList = findViewById(R.id.tvRedFromList);
         head = findViewById(R.id.head);
         name = findViewById(R.id.name);
         tips = findViewById(R.id.tips);
@@ -50,6 +52,11 @@ public class PeopleUnaccalimedActivity extends BaseActivity {
         recycler.setAdapter(adapter);
 
         String id = getIntent().getStringExtra("id");
+        boolean fromList = getIntent().getBooleanExtra("fromList", false);
+        if (fromList) {
+            tvRedFromList.setVisibility(View.GONE);
+        }
+
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .getRedPackageStatus(id)
                 .compose(bindToLifecycle())
@@ -75,7 +82,7 @@ public class PeopleUnaccalimedActivity extends BaseActivity {
                     } else {
                         //个人红包
                         ServiceFactory.getInstance().getBaseService(Api.class)
-                                .personalRedPackageInfo(id)
+                                .personalRedPackageInfo(id, Integer.parseInt(Constant.userId))
                                 .compose(bindToLifecycle())
                                 .compose(RxSchedulers.normalTrans())
                                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))

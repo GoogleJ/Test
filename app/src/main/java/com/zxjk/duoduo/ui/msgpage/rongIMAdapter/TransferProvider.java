@@ -19,10 +19,6 @@ import io.rong.imkit.model.UIMessage;
 import io.rong.imkit.widget.provider.IContainerItemProvider;
 import io.rong.imlib.model.Message;
 
-/**
- * @author Administrator
- * @// TODO: 2019\4\3 0003 完成转账的自定义Provider
- */
 @ProviderTag(messageContent = TransferMessage.class)
 public class TransferProvider extends IContainerItemProvider.MessageProvider<TransferMessage> {
     class ViewHolder {
@@ -42,7 +38,7 @@ public class TransferProvider extends IContainerItemProvider.MessageProvider<Tra
             holder.sendLayout.setBackgroundResource(R.drawable.icon_send_red_packet_friend);
         }
 
-        if (!TextUtils.isEmpty(transferMessage.getExtra())) {
+        if (!TextUtils.isEmpty(uiMessage.getExtra())) {
             // 已被领取
             if (transferMessage.getFromCustomerId().equals(Constant.userId)) {
                 if (uiMessage.getMessageDirection().equals(Message.MessageDirection.RECEIVE)) {
@@ -58,6 +54,7 @@ public class TransferProvider extends IContainerItemProvider.MessageProvider<Tra
                 }
             }
         } else {
+            // 未被领取
             holder.remark.setText(transferMessage.getRemark());
         }
         holder.transferMoney.setText(transferMessage.getMoney() + "HK");
@@ -65,7 +62,7 @@ public class TransferProvider extends IContainerItemProvider.MessageProvider<Tra
 
     @Override
     public Spannable getContentSummary(TransferMessage transferMessage) {
-        return new SpannableString("您有一个转账消息");
+        return new SpannableString("您有一条转账消息");
     }
 
 

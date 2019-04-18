@@ -96,11 +96,11 @@
                 android:background="@color/m_add_friend_line" />
 
             <LinearLayout
-                android:onClick="gotoVerivy"
                 android:id="@+id/verified"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
+                android:onClick="gotoVerivy"
                 android:paddingLeft="10dp"
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
@@ -118,6 +118,8 @@
                     android:id="@+id/tvSettingAuthenticate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:drawablePadding="2dp"
+                    android:gravity="center_vertical"
                     android:text="@string/verified_successful" />
 
                 <ImageView

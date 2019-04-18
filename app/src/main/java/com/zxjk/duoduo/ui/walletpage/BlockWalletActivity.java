@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,9 +18,6 @@ import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 
 import java.text.DecimalFormat;
-
-import io.reactivex.functions.Consumer;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 @SuppressLint("CheckResult")
 public class BlockWalletActivity extends BaseActivity {

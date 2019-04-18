@@ -20,7 +20,6 @@ import io.rong.imlib.model.UserInfo;
 
 /**
  * @author Administrator
- * @// TODO: 2019\4\3 0003 领取红包的弹窗
  */
 public class RedEvelopesDialog extends Dialog implements View.OnClickListener {
     ImageView redOpenBtn;

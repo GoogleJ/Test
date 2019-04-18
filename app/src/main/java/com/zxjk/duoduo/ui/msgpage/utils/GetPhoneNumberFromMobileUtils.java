@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.zxjk.duoduo.bean.PhoneInfo;
 
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ public class GetPhoneNumberFromMobileUtils {
     private List<PhoneInfo> list;
 
     public List<PhoneInfo> getPhoneNumberFromMobile(Context context) {
-        // TODO Auto-generated constructor stub
         list = new ArrayList<>();
         Cursor cursor = context.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                 null, null, null, null);

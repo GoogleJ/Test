@@ -44,7 +44,6 @@ import sun.misc.BASE64Encoder;
 
 /**
  * @author Administrator
- * @// TODO: 2019\4\3 0003 关于拍摄的自定义plugin
  */
 public class TakePhotoPlugin implements IPluginModule {
     private Context context;

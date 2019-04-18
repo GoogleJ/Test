@@ -11,7 +11,6 @@ import com.zxjk.duoduo.utils.GlideUtil;
 
 /**
  * @author Administrator
- * @// TODO: 2019\4\8 0008 搜索适配器
  */
 public class GlobalSearchAdapter extends BaseQuickAdapter<FriendInfoResponse, BaseViewHolder> {
 

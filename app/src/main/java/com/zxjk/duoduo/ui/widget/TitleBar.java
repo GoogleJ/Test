@@ -22,7 +22,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\18 0018 标题布局自定义 
  */
 public class TitleBar extends LinearLayout {
     ImageView mLeftImage;

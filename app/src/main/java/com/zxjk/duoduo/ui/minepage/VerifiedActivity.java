@@ -12,7 +12,9 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.blankj.utilcode.util.GsonUtils;
+import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
@@ -30,16 +32,14 @@ import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
+
 import java.io.File;
 import java.util.Collections;
+
 import androidx.annotation.Nullable;
 
-/**
- * @author Administrator
- * @// TODO: 2019\3\25 0025 实名认证界面
- */
 @SuppressLint("CheckResult")
-public class VerifiedActivity extends BaseActivity implements View.OnClickListener, TakePopWindow.OnItemClickListener {
+public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnItemClickListener {
     public static final int REQUEST_TAKE = 1;
     public static final int REQUEST_ALBUM = 2;
     /**
@@ -94,18 +94,50 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
     private TakePopWindow selectPicPopWindow;
 
     private int currentPictureFlag;
+    private String otherIdCardType = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verified);
+        initDialog();
         initView();
     }
 
+    private void initDialog() {
+        dialog = new DocumentSelectionDialog(this);
+        dialog.setOnClickListener(new DocumentSelectionDialog.OnClickListener() {
+            @Override
+            public void onSelectedIdCard(String idCard) {
+                //点击身份证的时候赋值
+                otherIdCardType = "1";
+                cardType.setTextColor(getColor(R.color.themecolor));
+                cardType.setText(idCard);
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onSelectedPassport(String passport) {
+                //点击护照的时候给赋值
+                otherIdCardType = "2";
+                cardType.setTextColor(getColor(R.color.themecolor));
+                cardType.setText(passport);
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onSelectedOther(String other) {
+                //点击其他的时候给赋值
+                otherIdCardType = "3";
+                cardType.setTextColor(getColor(R.color.themecolor));
+                cardType.setText(other);
+                dialog.dismiss();
+            }
+        });
+    }
 
     @SuppressLint("WrongViewCast")
     private void initView() {
-
         titleBar = findViewById(R.id.title_bar);
         titleBar.getLeftImageView().setOnClickListener(v -> finish());
         selectPicPopWindow = new TakePopWindow(this);
@@ -121,9 +153,36 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
         handHeldPassportPhoto = findViewById(R.id.hand_held_passport_photo);
         handHeldPassportPhotoEdit = findViewById(R.id.hand_held_passport_photo_edit);
         verifiedCommit.setOnClickListener(v -> commit());
-        frontPhotoOfTheDocument.setOnClickListener(this);
-        reversePhotoOfTheDocument.setOnClickListener(this);
-        handHeldPassportPhoto.setOnClickListener(this);
+
+        getPermisson(frontPhotoOfTheDocument, result -> {
+            if (result) {
+                currentPictureFlag = 1;
+                KeyboardUtils.hideSoftInput(this);
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
+                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+            }
+        }, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
+
+        getPermisson(reversePhotoOfTheDocument, result -> {
+            if (result) {
+                currentPictureFlag = 2;
+                KeyboardUtils.hideSoftInput(this);
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
+                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+            }
+        }, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
+
+        getPermisson(handHeldPassportPhoto, result -> {
+            if (result) {
+                currentPictureFlag = 3;
+                KeyboardUtils.hideSoftInput(this);
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
+                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+            }
+        }, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
     }
 
     private void commit() {
@@ -134,15 +193,7 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
             return;
         }
 
-        String s = cardType.getText().toString();
-        String otherIdCardType;
-        if (s.equals(getString(R.string.id_card))) {
-            otherIdCardType = "1";
-        } else if (s.equals(getString(R.string.passport))) {
-            otherIdCardType = "2";
-        } else if (s.equals(getString(R.string.other_identity_card))) {
-            otherIdCardType = "3";
-        } else {
+        if (otherIdCardType.equals("")) {
             ToastUtils.showShort(getString(R.string.please_select_the_type_of_document));
             return;
         }
@@ -180,56 +231,7 @@ public class VerifiedActivity extends BaseActivity implements View.OnClickListen
 
     @SuppressLint("NewApi")
     public void pleaseSelectTheTypeOfDocument(View view) {
-        dialog = new DocumentSelectionDialog(this);
-        dialog.setOnClickListener(new DocumentSelectionDialog.OnClickListener() {
-
-            @Override
-            public void onSelectedIdCard(String idCard) {
-                //点击身份证的时候赋值
-                cardType.setTextColor(getColor(R.color.themecolor));
-                cardType.setText(idCard);
-                dialog.dismiss();
-            }
-
-            @Override
-            public void onSelectedPassport(String passport) {
-                //点击护照的时候给赋值
-                cardType.setTextColor(getColor(R.color.themecolor));
-                cardType.setText(passport);
-                dialog.dismiss();
-            }
-
-            @Override
-            public void onSelectedOther(String other) {
-                //点击其他的时候给赋值
-                cardType.setTextColor(getColor(R.color.themecolor));
-                cardType.setText(other);
-                dialog.dismiss();
-            }
-        });
         dialog.show();
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.front_photo_of_the_document:
-                currentPictureFlag = 1;
-                break;
-            case R.id.reverse_photo_of_the_document:
-                currentPictureFlag = 2;
-                break;
-            case R.id.hand_held_passport_photo:
-                currentPictureFlag = 3;
-        }
-
-        getPermisson(v, result -> {
-            if (result) {
-                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
-                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-            }
-        }, Manifest.permission.CAMERA);
     }
 
     @Override

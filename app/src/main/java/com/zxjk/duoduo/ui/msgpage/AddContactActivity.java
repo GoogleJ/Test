@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.ui.widget.SharePopWindow;
 import com.zxjk.duoduo.ui.widget.TitleBar;
 
 import androidx.annotation.Nullable;
@@ -16,7 +17,6 @@ import butterknife.OnClick;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\19 0019 添加联系人的界面
  */
 public class AddContactActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.m_add_friend_title_bar)
@@ -50,6 +50,8 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.m_add_friend_wechat_btn:
+                new SharePopWindow(this)
+                        .showPopupWindow();
                 break;
             case R.id.m_my_qr_code_btn:
                 MyQrCodeActivity.start(this);

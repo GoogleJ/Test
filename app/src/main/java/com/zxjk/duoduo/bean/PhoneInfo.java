@@ -2,11 +2,8 @@ package com.zxjk.duoduo.bean;
 
 import java.util.Objects;
 
-import androidx.annotation.Nullable;
-
 /**
  * @author Administrator
- * @// TODO: 2019\3\30 0030 获取手机联系人的实体 
  */
 public class PhoneInfo {
     private String name;

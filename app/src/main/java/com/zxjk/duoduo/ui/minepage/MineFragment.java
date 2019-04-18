@@ -24,7 +24,6 @@ import androidx.cardview.widget.CardView;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\19 0019
  */
 public class MineFragment extends BaseFragment implements View.OnClickListener {
 

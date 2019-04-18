@@ -125,7 +125,7 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
                 selectPicPopWindow.showAtLocation(findViewById(android.R.id.content),
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
             }
-        }, Manifest.permission.CAMERA);
+        }, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
     //修改昵称

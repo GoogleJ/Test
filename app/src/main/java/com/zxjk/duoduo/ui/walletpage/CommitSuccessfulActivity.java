@@ -9,7 +9,6 @@ import androidx.annotation.Nullable;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\23 0023 提交成功页面
  */
 public class CommitSuccessfulActivity extends BaseActivity {
     @Override

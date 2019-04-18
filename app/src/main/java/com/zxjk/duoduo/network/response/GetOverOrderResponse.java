@@ -8,12 +8,17 @@ public class GetOverOrderResponse implements Serializable {
      * id : 6
      * buyId :
      * buyDuoduoId :
+     * buyOrderId : 155418663766844
+     * buyNick : 周晓睿
      * sellId : 4
      * sellDuoduoId :
+     * sellOrderId : 155420700147526
+     * sellNick :
      * bothOrderId : 15518722638311000000510000004
      * number : 500
      * money : 500.00
      * currency : 1
+     * sellPayType : 1,2
      * payType : 1
      * createTime : 1551872263831
      * closeTime : 1551876423945
@@ -22,17 +27,27 @@ public class GetOverOrderResponse implements Serializable {
      * isBuyPay : 1
      * payTime :
      * isDelete : 0
+     * payNumber :
+     * openBank :
+     * payPicture :
+     * wechatNick :
+     * zhifubaoNumber :
      */
 
     private String id;
     private String buyId;
     private String buyDuoduoId;
+    private String buyOrderId;
+    private String buyNick;
     private String sellId;
     private String sellDuoduoId;
+    private String sellOrderId;
+    private String sellNick;
     private String bothOrderId;
     private String number;
     private String money;
     private String currency;
+    private String sellPayType;
     private String payType;
     private String createTime;
     private String closeTime;
@@ -41,17 +56,11 @@ public class GetOverOrderResponse implements Serializable {
     private String isBuyPay;
     private String payTime;
     private String isDelete;
-
-    public String getSellPayType() {
-        return sellPayType;
-    }
-
-    public void setSellPayType(String sellPayType) {
-        this.sellPayType = sellPayType;
-    }
-
-    private String sellPayType;
-
+    private String payNumber;
+    private String openBank;
+    private String payPicture;
+    private String wechatNick;
+    private String zhifubaoNumber;
 
     public String getId() {
         return id;
@@ -77,6 +86,22 @@ public class GetOverOrderResponse implements Serializable {
         this.buyDuoduoId = buyDuoduoId;
     }
 
+    public String getBuyOrderId() {
+        return buyOrderId;
+    }
+
+    public void setBuyOrderId(String buyOrderId) {
+        this.buyOrderId = buyOrderId;
+    }
+
+    public String getBuyNick() {
+        return buyNick;
+    }
+
+    public void setBuyNick(String buyNick) {
+        this.buyNick = buyNick;
+    }
+
     public String getSellId() {
         return sellId;
     }
@@ -91,6 +116,22 @@ public class GetOverOrderResponse implements Serializable {
 
     public void setSellDuoduoId(String sellDuoduoId) {
         this.sellDuoduoId = sellDuoduoId;
+    }
+
+    public String getSellOrderId() {
+        return sellOrderId;
+    }
+
+    public void setSellOrderId(String sellOrderId) {
+        this.sellOrderId = sellOrderId;
+    }
+
+    public String getSellNick() {
+        return sellNick;
+    }
+
+    public void setSellNick(String sellNick) {
+        this.sellNick = sellNick;
     }
 
     public String getBothOrderId() {
@@ -123,6 +164,14 @@ public class GetOverOrderResponse implements Serializable {
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    public String getSellPayType() {
+        return sellPayType;
+    }
+
+    public void setSellPayType(String sellPayType) {
+        this.sellPayType = sellPayType;
     }
 
     public String getPayType() {
@@ -187,5 +236,45 @@ public class GetOverOrderResponse implements Serializable {
 
     public void setIsDelete(String isDelete) {
         this.isDelete = isDelete;
+    }
+
+    public String getPayNumber() {
+        return payNumber;
+    }
+
+    public void setPayNumber(String payNumber) {
+        this.payNumber = payNumber;
+    }
+
+    public String getOpenBank() {
+        return openBank;
+    }
+
+    public void setOpenBank(String openBank) {
+        this.openBank = openBank;
+    }
+
+    public String getPayPicture() {
+        return payPicture;
+    }
+
+    public void setPayPicture(String payPicture) {
+        this.payPicture = payPicture;
+    }
+
+    public String getWechatNick() {
+        return wechatNick;
+    }
+
+    public void setWechatNick(String wechatNick) {
+        this.wechatNick = wechatNick;
+    }
+
+    public String getZhifubaoNumber() {
+        return zhifubaoNumber;
+    }
+
+    public void setZhifubaoNumber(String zhifubaoNumber) {
+        this.zhifubaoNumber = zhifubaoNumber;
     }
 }

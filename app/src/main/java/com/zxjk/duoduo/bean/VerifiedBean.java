@@ -2,7 +2,6 @@ package com.zxjk.duoduo.bean;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\27 0027 审核的实体 
  */
 public class VerifiedBean {
     private String number;

@@ -11,7 +11,6 @@ import com.zxjk.duoduo.utils.GlideUtil;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\30 0030 群主转让
  */
 public class ChooseNewOwnerAdapter extends BaseQuickAdapter<AllGroupMembersResponse, BaseViewHolder> {
     public ChooseNewOwnerAdapter() {

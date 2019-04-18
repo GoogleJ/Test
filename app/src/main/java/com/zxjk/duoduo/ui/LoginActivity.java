@@ -21,8 +21,8 @@ import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.ui.widget.dialog.AccountFreezeDialog;
+import com.zxjk.duoduo.utils.CommonUtils;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -74,10 +74,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 //        login("18202987805", "123456");
 //        login("15249047865","123456");
 //        login("14725836911","123456");
-//        login("15935910008","123456");
+//        login("15935910958","000000");
 //        login("18625658542","123456");
 //        login("15529419986","123456");
 //        login("18592054972","123456");
+
+
     }
 
     @OnClick({R.id.login_country
@@ -105,6 +107,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 startActivity(new Intent(LoginActivity.this, ChangeLanguageActivity.class));
                 break;
             case R.id.btn_login:
+
                 String mobile = edit_mobile.getText().toString().trim();
                 String password = edit_password.getText().toString().trim();
                 if (TextUtils.isEmpty(mobile) || TextUtils.isEmpty(password)) {
@@ -121,7 +124,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 }
                 login(mobile, password);
                 SPUtils.getInstance().put("mobile", edit_mobile.getText().toString().trim());
-
                 break;
             default:
                 break;
@@ -161,23 +163,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 }, this::handleApiError);
     }
 
-    public void connect(String token) {
+    // 连接融云
+    private void connect(String token) {
         if (getApplicationInfo().packageName.equals(Application.getCurProcessName(getApplicationContext()))) {
+            CommonUtils.initDialog(this).show();
             RongIM.connect(token, new RongIMClient.ConnectCallback() {
-                /**
-                 * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
-                 *                  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
-                 */
+
                 @Override
                 public void onTokenIncorrect() {
+                    CommonUtils.destoryDialog();
                 }
 
-                /**
-                 * 连接融云成功
-                 * @param userid 当前 token 对应的用户 id
-                 */
                 @Override
                 public void onSuccess(String userid) {
+                    CommonUtils.destoryDialog();
                     UserInfo userInfo = new UserInfo(userid, Constant.currentUser.getNick(), Uri.parse(Constant.currentUser.getHeadPortrait()));
                     RongIM.getInstance().setCurrentUserInfo(userInfo);
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
@@ -185,12 +184,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     finish();
                 }
 
-                /**
-                 * 连接融云失败
-                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
-                 */
                 @Override
                 public void onError(RongIMClient.ErrorCode errorCode) {
+                    CommonUtils.destoryDialog();
                 }
             });
         }

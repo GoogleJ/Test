@@ -32,7 +32,6 @@ import io.rong.imlib.model.UserInfo;
 
 /**
  * @author Administrator
- * @// TODO: 2019\4\4 0004 选择联系人发送名片
  */
 public class SelectContactForCardActivity extends BaseActivity implements TextWatcher {
     TitleBar titleBar;
@@ -40,7 +39,6 @@ public class SelectContactForCardActivity extends BaseActivity implements TextWa
     RecyclerView mRecyclerView;
     SelectForCardAdapter mAdapter;
     UserInfo userId;
-    int type = 0;
     int intentType;
     String friendInfoResponseId;
     String friendInfoId;
@@ -59,7 +57,7 @@ public class SelectContactForCardActivity extends BaseActivity implements TextWa
     }
 
     private void initRecyclerView() {
-        intentType = getIntent().getIntExtra("userType", type);
+        intentType = getIntent().getIntExtra("userType", 0);
         friendInfoResponseId = getIntent().getStringExtra("friendInfoResponseId");
         friendInfoId = getIntent().getStringExtra("friendInfoId");
         contactResponseId = getIntent().getStringExtra("contactResponseId");
@@ -70,16 +68,15 @@ public class SelectContactForCardActivity extends BaseActivity implements TextWa
         searchEdit.addTextChangedListener(SelectContactForCardActivity.this);
         mRecyclerView.setLayoutManager(manager);
         mAdapter = new SelectForCardAdapter();
-        getFriendListById();
         mRecyclerView.setAdapter(mAdapter);
+        getFriendListById();
+
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            int groupType = 0;
-            int privateOrGroupType = getIntent().getIntExtra("intentType", groupType);
+            int privateOrGroupType = getIntent().getIntExtra("intentType", 0);
             if (privateOrGroupType == 0) {
                 if (intentType == 0) {
-                    SelectContactForCardActivity.this.getFriendGourp(mAdapter.getData().get(position).getId(), position);
+                    SelectContactForCardActivity.this.getFriendGourp(mAdapter.getData().get(position).getId());
                 }
-                return;
             } else {
                 if (intentType == 0) {
                     SelectContactForCardActivity.this.getFriendInfo(userId.getUserId(), position);
@@ -93,7 +90,6 @@ public class SelectContactForCardActivity extends BaseActivity implements TextWa
                     SelectContactForCardActivity.this.getFriendInfo(businessCardMessageId, position);
                 }
             }
-
         });
     }
 
@@ -127,18 +123,18 @@ public class SelectContactForCardActivity extends BaseActivity implements TextWa
      */
     private void getFriendInfo(String userId, int position) {
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .getFriendInfoById(userId)
+                .getCustomerInfoById(userId)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(friendInfoResponse -> {
+                .subscribe(response -> {
                     BaseAddTitleDialog dialog = new BaseAddTitleDialog(SelectContactForCardActivity.this);
                     dialog.setOnClickListener(() -> {
                         BusinessCardMessage message = new BusinessCardMessage();
-                        message.setDuoduo(friendInfoResponse.getDuoduoId());
-                        message.setIcon(friendInfoResponse.getHeadPortrait());
-                        message.setUserId(friendInfoResponse.getId());
-                        message.setName(friendInfoResponse.getNick());
+                        message.setDuoduo(response.getDuoduoId());
+                        message.setIcon(response.getHeadPortrait());
+                        message.setUserId(response.getId());
+                        message.setName(response.getNick());
                         Message message1 = Message.obtain(mAdapter.getData().get(position).getId(), Conversation.ConversationType.PRIVATE, message);
                         RongIM.getInstance().sendMessage(message1, null, null, new IRongCallback.ISendMessageCallback() {
                             @Override
@@ -164,11 +160,10 @@ public class SelectContactForCardActivity extends BaseActivity implements TextWa
      * 获取好友详情
      *
      * @param userId
-     * @param position
      */
-    private void getFriendGourp(String userId, int position) {
+    private void getFriendGourp(String userId) {
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .getFriendInfoById(userId)
+                .getCustomerInfoById(userId)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
@@ -199,12 +194,6 @@ public class SelectContactForCardActivity extends BaseActivity implements TextWa
                     });
                     dialog.show(getString(R.string.share_business_card));
                 }, this::handleApiError);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        finish();
     }
 
     @Override

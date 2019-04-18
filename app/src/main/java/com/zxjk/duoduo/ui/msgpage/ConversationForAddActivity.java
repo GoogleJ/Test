@@ -22,7 +22,6 @@ import butterknife.OnClick;
 
 /**
  * @author Administrator
- * @// TODO: 2019\4\5 0005 从名片跳转到添加好友的详情模块
  */
 
 public class ConversationForAddActivity extends BaseActivity implements View.OnClickListener {

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -13,20 +15,18 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.HomeActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.CreateGroupActivity;
+import com.zxjk.duoduo.ui.msgpage.FriendDetailsActivity;
 import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.ui.widget.dialog.ConfirmDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
+
 import androidx.annotation.Nullable;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 
-
-/**
- * @author Administrator
- * @// TODO: 2019\3\29 0029 关于群组详情的实现
- */
+@SuppressLint("CheckResult")
 public class ChatInformationActivity extends BaseActivity {
     TitleBar titleBar;
 
@@ -35,7 +35,6 @@ public class ChatInformationActivity extends BaseActivity {
     private TextView m_chat_information_signature_label;
     private UserInfo userInfo;
 
-    @SuppressLint("CheckResult")
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,26 +58,28 @@ public class ChatInformationActivity extends BaseActivity {
     }
 
     public void clearChatHistory(View view) {
-        ConfirmDialog dialog = new ConfirmDialog(this, "提示", "确定要清空当前聊天记录么", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RongIMClient.getInstance().cleanHistoryMessages(Conversation.ConversationType.PRIVATE
-                        , userInfo.getUserId(), 0, false, new RongIMClient.OperationCallback() {
-                            @Override
-                            public void onSuccess() {
-                                Intent intent = new Intent(ChatInformationActivity.this, HomeActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
-                            }
+        ConfirmDialog dialog = new ConfirmDialog(this, "提示", "确定要清空当前聊天记录么", v -> RongIMClient.getInstance().cleanHistoryMessages(Conversation.ConversationType.PRIVATE
+                , userInfo.getUserId(), 0, false, new RongIMClient.OperationCallback() {
+                    @Override
+                    public void onSuccess() {
+                        Intent intent = new Intent(ChatInformationActivity.this, HomeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
 
-                            @Override
-                            public void onError(RongIMClient.ErrorCode errorCode) {
-
-                            }
-                        });
-            }
-        });
+                    @Override
+                    public void onError(RongIMClient.ErrorCode errorCode) {
+                        ToastUtils.showShort(R.string.function_fail);
+                    }
+                }));
         dialog.show();
+    }
+
+    //跳转详情页
+    public void jump2Detail(View view) {
+        Intent intent = new Intent(this, FriendDetailsActivity.class);
+        intent.putExtra("friendId", userInfo.getUserId());
+        startActivity(intent);
     }
 
     public void createGroup(View view) {

@@ -18,7 +18,6 @@ import io.rong.imlib.model.UserInfo;
 
 /**
  * @author Administrator
- * @// TODO: 2019\4\3 0003 关于转账的自定义plugin
  */
 public class TransferPlugin implements IPluginModule {
     @Override

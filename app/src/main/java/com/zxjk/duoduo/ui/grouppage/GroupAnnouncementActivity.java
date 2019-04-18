@@ -26,7 +26,6 @@ import io.rong.imlib.model.Group;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\26 0026  群公告
  */
 @SuppressLint("CheckResult")
 public class GroupAnnouncementActivity extends BaseActivity {

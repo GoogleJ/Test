@@ -19,7 +19,6 @@ import androidx.annotation.Nullable;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\28 0028  同意加入群聊
  */
 public class AgreeGroupChatActivity extends BaseActivity {
     ImageView groupHeader;

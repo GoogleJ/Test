@@ -22,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\26 0026 选择新群主
  */
 @SuppressLint("CheckResult")
 public class ChooseNewOwnerActivity extends BaseActivity {

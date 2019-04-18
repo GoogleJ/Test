@@ -12,7 +12,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
@@ -22,17 +21,20 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 import static com.zxjk.duoduo.utils.MD5Utils.getMD5;
 
 /**
  * @author Administrator
  * 忘记密码
  */
+@SuppressLint("CheckResult")
 public class ForgetRegisterActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.btn_commit)
@@ -142,27 +144,30 @@ public class ForgetRegisterActivity extends BaseActivity implements View.OnClick
 
     @SuppressLint("CheckResult")
     public void registerCode(String phone) {
+        countDownTimer.start();
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .getCode(phone, "0")
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.normalTrans())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                .subscribe(s -> {
-                    countDownTimer.start();
-                    ToastUtils.showShort(getString(R.string.code_label));
-                    btn_commit.setEnabled(false);
-                }, this::handleApiError);
-
+                .subscribe(s -> ToastUtils.showShort(getString(R.string.code_label)), t -> {
+                    handleApiError(t);
+                    countDownTimer.cancel();
+                    countDownTimer.onFinish();
+                });
     }
 
-    public void forgetPwd(String phone, String pwd, String code) {
 
+    public void forgetPwd(String phone, String pwd, String code) {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .forgetPwd(phone, getMD5(pwd), code)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(s -> finish(), throwable -> handleApiError(throwable));
+                .subscribe(s -> {
+                    ToastUtils.showShort(R.string.change_password_success);
+                    finish();
+                }, this::handleApiError);
     }
 
     private CountDownTimer countDownTimer = new CountDownTimer(60000, 1000) {

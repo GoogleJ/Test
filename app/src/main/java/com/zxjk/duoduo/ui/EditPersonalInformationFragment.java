@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
@@ -25,15 +27,13 @@ import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
+
 import java.io.File;
 import java.util.Collections;
+
 import androidx.annotation.Nullable;
 import butterknife.OnClick;
 
-/**
- * @author Administrator
- * @// TODO: 2019\3\18 0018 个人实名界面
- */
 public class EditPersonalInformationFragment extends BaseActivity implements View.OnClickListener, TakePopWindow.OnItemClickListener {
 
     public static final int REQUEST_TAKE = 1;
@@ -74,7 +74,14 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
         editNickName = findViewById(R.id.m_edit_information_area_edit);
         selectPicPopWindow = new TakePopWindow(this);
         selectPicPopWindow.setOnItemClickListener(this);
+
         imageSearchBtn.setOnClickListener(this);
+        getPermisson(imageSearchBtn, granted -> {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+            selectPicPopWindow.showAtLocation(EditPersonalInformationFragment.this.findViewById(android.R.id.content),
+                    Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        }, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE);
+
         commitBtn.setOnClickListener(this);
     }
 
@@ -112,14 +119,7 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                 updateCustomerInfo(GsonUtils.toJson(update));
 
                 break;
-            case R.id.m_edit_information_header_icon:
-
-                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
-                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-                break;
             default:
-                break;
         }
     }
 

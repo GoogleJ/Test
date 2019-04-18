@@ -16,8 +16,8 @@ import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.response.GroupResponse;
-import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.rx.RxException;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.grouppage.ChatInformationActivity;
@@ -34,8 +34,10 @@ import java.util.List;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
+import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationFragment;
+import io.rong.imkit.model.UIMessage;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imkit.widget.adapter.MessageListAdapter;
 import io.rong.imlib.RongIMClient;
@@ -45,11 +47,7 @@ import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
 
-/**
- * @author Administrator
- * @// TODO: 2019\4\1 0001 单聊页面
- */
-public class ConversationActivity extends AppCompatActivity {
+public class ConversationActivity extends AppCompatActivity implements RongIMClient.OnReceiveMessageListener {
 
     private final LifecycleProvider<Lifecycle.Event> provider = AndroidLifecycle.createLifecycleProvider(this);
 
@@ -63,20 +61,26 @@ public class ConversationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_conversation);
 
+        //获取聊天类型（单聊、群聊）
         List<String> pathSegments = getIntent().getData().getPathSegments();
         String conversationType = pathSegments.get(pathSegments.size() - 1);
-        targetId = getIntent().getData().getQueryParameter("targetId");
-        targetUserInfo = RongUserInfoManager.getInstance().getUserInfo(targetId);
-        targetGroup = RongUserInfoManager.getInstance().getGroupInfo(targetId);
-        titleBar = findViewById(R.id.conversation_title);
 
+        //修改底部plugin（群聊无转账）
         if (conversationType.equals("private")) {
             Application.setMyExtensionModule(false);
         } else {
             Application.setMyExtensionModule(true);
         }
+
+        setContentView(R.layout.activity_conversation);
+
+        RongIM.getInstance().setOnReceiveMessageListener(this);
+
+        targetId = getIntent().getData().getQueryParameter("targetId");
+        targetUserInfo = RongUserInfoManager.getInstance().getUserInfo(targetId);
+        targetGroup = RongUserInfoManager.getInstance().getGroupInfo(targetId);
+        titleBar = findViewById(R.id.conversation_title);
 
         if (null == targetUserInfo && conversationType.equals("private")) {
             // 私聊且未缓存
@@ -113,6 +117,25 @@ public class ConversationActivity extends AppCompatActivity {
         RongIM.setConversationClickListener(new RongIM.ConversationClickListener() {
             @Override
             public boolean onUserPortraitClick(Context context, Conversation.ConversationType conversationType, UserInfo userInfo, String s) {
+                if (conversationType == Conversation.ConversationType.GROUP) {
+                    if (Constant.friendsList == null) {
+                        ServiceFactory.getInstance().getBaseService(Api.class)
+                                .getFriendListById()
+                                .compose(provider.bindToLifecycle())
+                                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this)))
+                                .compose(RxSchedulers.normalTrans())
+                                .subscribe(friendInfoResponses -> {
+                                    Constant.friendsList = friendInfoResponses;
+                                    handleFriendList(userInfo.getUserId());
+                                }, t -> ToastUtils.showShort(RxException.getMessage(t)));
+                    } else {
+                        handleFriendList(userInfo.getUserId());
+                    }
+                } else {
+                    Intent intent = new Intent(ConversationActivity.this, FriendDetailsActivity.class);
+                    intent.putExtra("friendId", userInfo.getUserId());
+                    startActivity(intent);
+                }
                 return false;
             }
 
@@ -198,34 +221,56 @@ public class ConversationActivity extends AppCompatActivity {
 
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
         fragment = (ConversationFragment) fragments.get(0);
-        checkedMessages = fragment.getCheckedMessages();
         messageAdapter = fragment.getMessageAdapter();
+    }
 
+    private void handleFriendList(String userId) {
+        if (userId.equals(Constant.userId)) {
+            //扫到了自己
+            Intent intent = new Intent(this, FriendDetailsActivity.class);
+            intent.putExtra("friendId", userId);
+            startActivity(intent);
+            return;
+        }
+        for (FriendInfoResponse f : Constant.friendsList) {
+            if (f.getId().equals(userId)) {
+                //自己的好友，进入详情页（可聊天）
+                Intent intent = new Intent(this, FriendDetailsActivity.class);
+                intent.putExtra("searchFriendDetails", f);
+                startActivity(intent);
+                finish();
+                return;
+            }
+        }
+
+        //陌生人，进入加好友页面
+        Intent intent = new Intent(this, AddFriendDetailsActivity.class);
+        intent.putExtra("newFriendId", userId);
+        startActivity(intent);
+        finish();
     }
 
     @Override
     protected void onRestart() {
         if (Constant.tempMsg != null) {
-            for (int i = 0; i < checkedMessages.size(); i++) {
-                if (checkedMessages.get(i).getMessageId() == Constant.tempMsg.getMessageId()) {
+            for (int i = 0; i < messageAdapter.getCount(); i++) {
+                if (messageAdapter.getItem(i).getMessageId() == Constant.tempMsg.getMessageId()) {
                     MessageContent content = Constant.tempMsg.getContent();
                     if (content instanceof TransferMessage) {
                         //转账
-                        Message transferMessage = checkedMessages.get(i);
+                        UIMessage transferMessage = messageAdapter.getItem(i);
                         transferMessage.setExtra("1");
                         messageAdapter.notifyDataSetChanged();
                     } else if (content instanceof RedPacketMessage) {
                         //红包
-                        Message redMessage = checkedMessages.get(i);
+                        UIMessage redMessage = messageAdapter.getItem(i);
                         redMessage.setExtra("1");
-                        RedPacketMessage red = (RedPacketMessage) redMessage.getContent();
-                        red.setExtra("1");
                         messageAdapter.notifyDataSetChanged();
                     }
-                    Constant.tempMsg = null;
                     break;
                 }
             }
+            Constant.tempMsg = null;
         }
 
         if (null != Constant.changeGroupName) {
@@ -236,7 +281,6 @@ public class ConversationActivity extends AppCompatActivity {
     }
 
     private ConversationFragment fragment;
-    private List<Message> checkedMessages;
     private MessageListAdapter messageAdapter;
 
     private void initView() {
@@ -254,5 +298,35 @@ public class ConversationActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    //融云会话页面收到消息回调
+    @Override
+    public boolean onReceived(Message message, int i) {
+
+        if (message.getContent() instanceof TransferMessage) {
+            //收到一条转账消息
+            for (int j = 0; j < messageAdapter.getCount(); j++) {
+                TransferMessage t = (TransferMessage) messageAdapter.getItem(j).getContent();
+                if (t.getFromCustomerId().equals(Constant.userId)) {
+                    int finalJ = j;
+                    RongIM.getInstance().setMessageExtra(messageAdapter.getItem(j).getMessageId()
+                            , "1", new RongIMClient.ResultCallback<Boolean>() {
+                                @Override
+                                public void onSuccess(Boolean aBoolean) {
+                                    messageAdapter.getItem(finalJ).setExtra("1");
+                                    messageAdapter.notifyDataSetChanged();
+                                }
+
+                                @Override
+                                public void onError(RongIMClient.ErrorCode errorCode) {
+
+                                }
+                            });
+                    break;
+                }
+            }
+        }
+        return false;
     }
 }

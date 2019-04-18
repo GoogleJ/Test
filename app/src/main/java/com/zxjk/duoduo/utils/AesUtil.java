@@ -7,10 +7,6 @@ import javax.crypto.spec.SecretKeySpec;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
-/**
- * @author dingH
- * @// TODO: 2019/3/11 对等加密
- */
 public class AesUtil {
     /*
      * 加密用的Key 可以用26个字母和数字组成

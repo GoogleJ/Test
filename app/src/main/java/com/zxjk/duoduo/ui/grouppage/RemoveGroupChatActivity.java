@@ -29,7 +29,6 @@ import io.reactivex.functions.Consumer;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\26 0026 移除群聊 和添加联系人都在这个里头
  */
 @SuppressLint("CheckResult")
 public class RemoveGroupChatActivity extends BaseActivity {

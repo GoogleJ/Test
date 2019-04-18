@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\23 0023 意见反馈界面
  */
 public class FeedbackActivity extends BaseActivity {
     EditText feedbackEdit;

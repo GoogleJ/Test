@@ -12,7 +12,6 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\25 0025 关于账户切换页面
  */
 public class AccountActivity extends BaseActivity {
 

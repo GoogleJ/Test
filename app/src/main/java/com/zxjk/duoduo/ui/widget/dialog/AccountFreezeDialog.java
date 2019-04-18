@@ -14,7 +14,6 @@ import com.zxjk.duoduo.R;
 
 /**
  * @author Administrator\
- * todo 关于用户冻结的dialog
  *
  */
 public class AccountFreezeDialog extends Dialog implements View.OnClickListener {

@@ -9,7 +9,6 @@ import io.rong.imlib.model.Conversation;
 
 /**
  * @author Administrator
- * @// TODO: 2019\4\2 0002 自定义+号下的plugin
  */
 public class BasePluginExtensionModule extends DefaultExtensionModule {
 

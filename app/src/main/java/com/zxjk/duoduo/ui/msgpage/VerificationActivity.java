@@ -20,7 +20,6 @@ import butterknife.OnClick;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\20 0020  发送验证
  */
 @SuppressLint("CheckResult")
 public class VerificationActivity extends BaseActivity implements View.OnClickListener {

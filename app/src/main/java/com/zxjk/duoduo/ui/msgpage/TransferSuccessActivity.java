@@ -7,14 +7,8 @@ import android.widget.TextView;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 
-import io.rong.imkit.RongIM;
-import io.rong.imlib.IRongCallback;
-import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Message;
-
 /**
  * @author Administrator
- * @// TODO: 2019\4\4 0004 转账成功
  */
 public class TransferSuccessActivity extends BaseActivity {
 

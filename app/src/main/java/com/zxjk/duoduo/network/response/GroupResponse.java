@@ -5,7 +5,6 @@ import java.util.List;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\29 0029  关于群组的实体
  */
 public class GroupResponse implements Serializable {
 

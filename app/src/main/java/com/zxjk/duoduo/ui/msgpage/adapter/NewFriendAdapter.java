@@ -11,7 +11,6 @@ import androidx.core.content.ContextCompat;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\20 0020 新的朋友的列表适配器
  */
 public class NewFriendAdapter extends BaseQuickAdapter<FriendInfoResponse, BaseViewHolder> {
     public NewFriendAdapter() {

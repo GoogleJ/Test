@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bga_adapter_line"
+    android:background="@color/divider"
     android:orientation="vertical"
     tools:ignore="RtlCompat,MissingConstraints">
 
@@ -26,7 +26,7 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/bga_adapter_line"
+            android:background="@color/divider"
             android:orientation="vertical"
             android:paddingBottom="100dp">
 
@@ -142,7 +142,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:layout_marginStart="12dp"
-                    android:background="@color/bga_adapter_line"
+                    android:background="@color/divider"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/m_people_information_phone_label" />
 
@@ -181,7 +181,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:layout_marginStart="12dp"
-                    android:background="@color/bga_adapter_line"
+                    android:background="@color/divider"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/m_people_information_email_label" />
 
@@ -219,7 +219,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:layout_marginStart="12dp"
-                    android:background="@color/bga_adapter_line"
+                    android:background="@color/divider"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/m_people_information_signature_label" />
 

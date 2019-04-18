@@ -26,7 +26,6 @@ import top.zibin.luban.Luban;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\18 0018  关于Fragment的基类
  */
 @SuppressLint("CheckResult")
 public class BaseFragment extends RxFragment {

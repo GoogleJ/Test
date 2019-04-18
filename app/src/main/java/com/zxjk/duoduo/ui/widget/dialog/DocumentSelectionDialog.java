@@ -19,14 +19,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * @author Administrator
- * @// TODO: 2019\3\25 0025 实名认证的dialog，用来选择证件类型
- */
 public class DocumentSelectionDialog extends Dialog implements View.OnClickListener {
     private View view;
     Context context;
-
     @BindView(R.id.id_card_icon)
     ImageView idCardIcon;
     @BindView(R.id.passport_icon)
@@ -64,12 +59,15 @@ public class DocumentSelectionDialog extends Dialog implements View.OnClickListe
     }
 
     public void show(String type) {
+        idCardIcon.setImageResource(R.drawable.icon_document_selection_no);
+        passportIcon.setImageResource(R.drawable.icon_document_selection_no);
+        otherIdentityCardIcon.setImageResource(R.drawable.icon_document_selection_no);
         if (type.equals("1")) {
-
+            idCardIcon.setImageResource(R.drawable.icon_document_selection_successful);
         } else if (type.equals("2")) {
-
+            passportIcon.setImageResource(R.drawable.icon_document_selection_successful);
         } else {
-
+            otherIdentityCardIcon.setImageResource(R.drawable.icon_document_selection_successful);
         }
         show();
     }
@@ -86,7 +84,6 @@ public class DocumentSelectionDialog extends Dialog implements View.OnClickListe
                 if (onClickListener != null) {
                     onClickListener.onSelectedIdCard(idCard.getText().toString());
                 }
-
                 break;
             case R.id.passport_icon:
                 idCardIcon.setImageResource(R.drawable.icon_document_selection_no);
@@ -105,10 +102,8 @@ public class DocumentSelectionDialog extends Dialog implements View.OnClickListe
                 }
                 break;
             default:
-                break;
 
         }
-
     }
 
     public OnClickListener onClickListener;

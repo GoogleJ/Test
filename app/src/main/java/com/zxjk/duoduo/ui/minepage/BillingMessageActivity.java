@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
@@ -25,10 +26,6 @@ import com.zxjk.duoduo.ui.widget.dialog.SelectPopupWindow;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-/**
- * @author Administrator
- * @// TODO: 2019\3\23 0023 收款信息页面
- */
 @SuppressLint("CheckResult")
 public class BillingMessageActivity extends BaseActivity implements View.OnClickListener, SelectPopupWindow.OnPopWindowClickListener {
     ConstraintLayout wechatBtn, alipyBtn, bankBtn;
@@ -43,7 +40,7 @@ public class BillingMessageActivity extends BaseActivity implements View.OnClick
     String isTag;
     BaseAddTitleDialog dialog;
 
-    SelectPopupWindow selectPopupWindow;
+     SelectPopupWindow selectPopupWindow;
 
     Intent intent;
 
@@ -121,6 +118,7 @@ public class BillingMessageActivity extends BaseActivity implements View.OnClick
 
     //打开输入密码的对话框
     public void inoutPsw() {
+        KeyboardUtils.hideSoftInput(BillingMessageActivity.this);
         selectPopupWindow = new SelectPopupWindow(this, this);
         Rect rect = new Rect();
         getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);

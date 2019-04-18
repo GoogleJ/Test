@@ -1,14 +1,20 @@
 package com.zxjk.duoduo.ui.walletpage;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -17,21 +23,29 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.ui.widget.TakePopWindow;
 import com.zxjk.duoduo.ui.widget.dialog.ConfirmDialog;
+import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.utils.OssUtils;
+import com.zxjk.duoduo.utils.TakePicUtil;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
+import androidx.annotation.Nullable;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
-/**
- * @author Administrator
- * @// TODO: 2019\3\26 0026 购买
- */
 @SuppressLint("CheckResult")
-public class ConfirmBuyActivity extends BaseActivity {
+public class ConfirmBuyActivity extends BaseActivity implements TakePopWindow.OnItemClickListener {
+
+    private String pictureUrl = ""; //支付凭证
+
+    private static final int REQUEST_TAKE = 1;
+    private static final int REQUEST_ALBUM = 2;
+
     private ReleaseSaleResponse data;
 
     private TextView tvConfirmBuyPayType; //支付类型
@@ -49,13 +63,22 @@ public class ConfirmBuyActivity extends BaseActivity {
     private ConfirmDialog dialogConfirm;
     private ConfirmDialog dialogCancel;
 
-    private boolean flag;
+    private TakePopWindow selectPicPopWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_buy);
 
+        getPermisson(findViewById(R.id.llUploadSign), granted -> {
+            KeyboardUtils.hideSoftInput(ConfirmBuyActivity.this);
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+            selectPicPopWindow.showAtLocation(ConfirmBuyActivity.this.findViewById(android.R.id.content),
+                    Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        }, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        selectPicPopWindow = new TakePopWindow(this);
+        selectPicPopWindow.setOnItemClickListener(this);
         tvConfirmBuyPayType = findViewById(R.id.tvConfirmBuyPayType);
         tvConfirmBuyMoney = findViewById(R.id.tvConfirmBuyMoney);
         tvConfirmBuyReceiver = findViewById(R.id.tvConfirmBuyReceiver);
@@ -103,22 +126,20 @@ public class ConfirmBuyActivity extends BaseActivity {
         tvConfirmBuyOrderId.setText(data.getBothOrderId());
         tvConfirmBuyReceiverCount.setText(data.getNumber());
         tvConfirmBuyReceiverSinglePrice.setText(getIntent().getStringExtra("rate"));
-//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        tvConfirmBuyOrderTime.setText(format.format(new Date(data.getCreateTime())));
         tvConfirmBuyOrderTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Long.parseLong(data.getCreateTime())));
         tvConfirmBuyMoney.setText(data.getMoney());
     }
 
     //我已完成支付
     public void confirm(View view) {
-        if (!flag) {
+        if (TextUtils.isEmpty(pictureUrl)) {
             ToastUtils.showShort(getString(R.string.please_upload_a_payment_voucher));
             return;
         }
         if (dialogConfirm == null) {
-            dialogConfirm = new ConfirmDialog(this, getString(R.string.payment_confirmation), getString(R.string.please_confirm_that_you_have_paid_the_seller ), callback -> {
+            dialogConfirm = new ConfirmDialog(this, getString(R.string.payment_confirmation), getString(R.string.please_confirm_that_you_have_paid_the_seller), callback -> {
                 ServiceFactory.getInstance().getBaseService(Api.class)
-                        .updateBuyPayState("id")
+                        .updateBuyPayState("id", pictureUrl)
                         .compose(RxSchedulers.normalTrans())
                         .compose(bindToLifecycle())
                         .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
@@ -162,11 +183,6 @@ public class ConfirmBuyActivity extends BaseActivity {
         dialogCancel.show();
     }
 
-    //上传支付凭证
-    public void uploadSign(View view) {
-        flag = true;
-    }
-
     public void copyNick(View view) {
         ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         clipboardManager.setText(tvConfirmBuyReceiver.getText().toString());
@@ -183,4 +199,45 @@ public class ConfirmBuyActivity extends BaseActivity {
         finish();
     }
 
+    @Override
+    public void setOnItemClick(View v) {
+        selectPicPopWindow.dismiss();
+        switch (v.getId()) {
+            case R.id.tvCamera:
+                TakePicUtil.takePicture(this, REQUEST_TAKE);
+                break;
+            case R.id.tvPhoto:
+                TakePicUtil.albumPhoto(this, REQUEST_ALBUM);
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        String filePath = "";
+
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_TAKE:
+                    filePath = TakePicUtil.file.getAbsolutePath();
+                    break;
+                case REQUEST_ALBUM:
+                    filePath = TakePicUtil.getPath(this, data.getData());
+                    break;
+                default:
+            }
+        }
+
+        if (!TextUtils.isEmpty(filePath)) {
+            zipFile(Collections.singletonList(filePath), files -> {
+                File file = files.get(0);
+                OssUtils.uploadFile(file.getAbsolutePath(), url -> {
+                    flagConfirmBuy.setTextColor(R.string.upload_done);
+                    ToastUtils.showShort(R.string.upload_done);
+                    pictureUrl = url;
+                });
+            });
+        }
+    }
 }

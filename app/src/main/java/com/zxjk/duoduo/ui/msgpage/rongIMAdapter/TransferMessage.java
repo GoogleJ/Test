@@ -15,7 +15,6 @@ import io.rong.imlib.model.MessageContent;
 
 /**
  * @author Administrator
- * @// TODO: 2019\4\3 0003 关于转账的自定义消息
  */
 @SuppressLint("ParcelCreator")
 @MessageTag(value = "app:transfer", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)

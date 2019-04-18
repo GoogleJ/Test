@@ -3,20 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/transfer_send_layout"
-    android:layout_width="match_parent"
-
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:ignore="MissingConstraints">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-
         android:id="@+id/send_red_packet_layout"
         android:layout_width="224dp"
         android:layout_height="85dp"
-
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
         android:background="@drawable/icon_business_card_user">
 
         <ImageView
@@ -57,7 +53,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="20dp"
             android:layout_marginStart="10dp"
-            android:background="@color/bga_adapter_line"
+            android:background="@color/divider"
             app:layout_constraintTop_toBottomOf="@+id/business_card_header" />
         <TextView
             android:text="@string/business_card_label"

@@ -19,7 +19,6 @@ import butterknife.OnClick;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\26 0026 移除群聊的dialog
  */
 public class BaseAddTitleDialog extends Dialog implements View.OnClickListener {
     private View view;
@@ -59,6 +58,7 @@ public class BaseAddTitleDialog extends Dialog implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.determine_btn:
+                dismiss();
                 if (onClickListener != null) {
                     onClickListener.determine();
                 }

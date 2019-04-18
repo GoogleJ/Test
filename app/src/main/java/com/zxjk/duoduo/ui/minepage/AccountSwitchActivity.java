@@ -20,7 +20,6 @@ import androidx.annotation.RequiresApi;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\23 0023 切换账号登录
  */
 public class AccountSwitchActivity extends BaseActivity {
     TitleBar titleBar;

@@ -29,7 +29,6 @@ import io.rong.imkit.RongIM;
 
 /**
  * @author Administrator
- * @// TODO: 2019\4\4 0004 这个是对于好友详情做出的一个分支，好友详情逻辑梳理好，加进去容易出错，所以建立分支达到效果
  */
 @SuppressLint("CheckResult")
 public class ConversationDetailsActivity extends BaseActivity implements View.OnClickListener ,CommonPopupWindow.ViewInterface{

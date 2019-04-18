@@ -12,7 +12,6 @@ import com.zxjk.duoduo.utils.GlideUtil;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\20 0020 搜索的适配器
  */
 public class SearchAdapter extends BaseQuickAdapter<FriendInfoResponse, BaseViewHolder> {
 

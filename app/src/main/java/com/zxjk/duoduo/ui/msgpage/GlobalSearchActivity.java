@@ -29,7 +29,6 @@ import io.reactivex.functions.Consumer;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\20 0020 搜索--搜索用户，添加好友
  */
 @SuppressLint("CheckResult")
 public class GlobalSearchActivity extends BaseActivity {

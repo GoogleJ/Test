@@ -2,13 +2,11 @@ package com.zxjk.duoduo.ui.msgpage.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.wifi.hotspot2.omadm.PpsMoParser;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bumptech.glide.load.resource.bitmap.BitmapEncoder;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.GetRedPackageRecordResponse;
 import com.zxjk.duoduo.ui.msgpage.PeopleUnaccalimedActivity;
@@ -19,7 +17,6 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import io.rong.imageloader.core.display.FadeInBitmapDisplayer;
 
 import static com.blankj.utilcode.util.ActivityUtils.startActivity;
 
@@ -47,10 +44,12 @@ public class RedPackageRecoderAdapter extends RecyclerView.Adapter<RedPackageRec
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bindData(data.get(position));
+        GetRedPackageRecordResponse.RedpackageListBean redpackageListBean = data.get(position);
+        holder.bindData(redpackageListBean);
         holder.itemView.setOnClickListener(v -> {
             Intent intent1 = new Intent(context, PeopleUnaccalimedActivity.class);
-            intent1.putExtra("id", data.get(position).getRedPackageId());
+            intent1.putExtra("id", String.valueOf(data.get(holder.getAdapterPosition()).getRedPackageId()));
+            intent1.putExtra("fromList", true);
             startActivity(intent1);
         });
     }

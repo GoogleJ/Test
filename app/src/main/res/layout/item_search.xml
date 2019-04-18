@@ -47,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0.5dp"
         android:layout_marginTop="5dp"
-        android:background="@color/bga_adapter_line"
+        android:background="@color/divider"
         app:layout_constraintStart_toStartOf="@+id/m_item_search_dudu_id"
         app:layout_constraintTop_toBottomOf="@+id/m_item_search_icon" />
 </androidx.constraintlayout.widget.ConstraintLayout>

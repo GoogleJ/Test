@@ -2,8 +2,10 @@ package com.zxjk.duoduo.ui.minepage;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
@@ -14,7 +16,6 @@ import androidx.annotation.Nullable;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\27 0027 支付设置
  */
 public class PaySettingActivity extends BaseActivity {
 
@@ -32,6 +33,10 @@ public class PaySettingActivity extends BaseActivity {
     }
 
     public void retrievePayPwd(View view) {
+        if (TextUtils.isEmpty(Constant.currentUser.getIsAuthentication())) {
+            ToastUtils.showShort(R.string.verifyfirstpls);
+            return;
+        }
         if (Constant.currentUser.getIsAuthentication().equals("1")) {
             ToastUtils.showShort(R.string.verifyfirstpls);
             return;
@@ -40,7 +45,7 @@ public class PaySettingActivity extends BaseActivity {
             ToastUtils.showShort(R.string.waitAuthentication);
             return;
         }
-        startActivity(new Intent(PaySettingActivity.this, RetrievePayPwdActivity.class));
+        startActivity(new Intent(this, RetrievePayPwdActivity.class));
     }
 
     /**

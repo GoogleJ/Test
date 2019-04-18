@@ -2,7 +2,6 @@ package com.zxjk.duoduo.bean;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\25 0025 支付类型的实体 
  */
 public class AddPayInfoBean {
 

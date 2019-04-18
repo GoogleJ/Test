@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
@@ -15,14 +16,14 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.service.SendHkbOrHkExchangeService;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
+import com.zxjk.duoduo.service.SendHkbOrHkExchangeService;
 import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.ui.widget.dialog.SafeInputDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
-import com.zxjk.duoduo.ui.widget.dialog.SafeInputDialog;
 
 import java.text.DecimalFormat;
 
@@ -35,6 +36,7 @@ public class HuaZhuanActivity extends BaseActivity implements SafeInputDialog.On
     private TextView tvHuaZhuan3;
     private TextView tvHuaZhuan4;
     private TextView tvHuaZhuan5;
+    private TextView tvHUaZhuanRate;
 
     //type==3
     private LinearLayout llHuaZhuanType3;
@@ -54,6 +56,8 @@ public class HuaZhuanActivity extends BaseActivity implements SafeInputDialog.On
 
     private SafeInputDialog dialog;
 
+    DecimalFormat DecimalFormat = new DecimalFormat("#0.00");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +71,7 @@ public class HuaZhuanActivity extends BaseActivity implements SafeInputDialog.On
         tvHuaZhuan3 = findViewById(R.id.tvHuaZhuan3);
         tvHuaZhuan4 = findViewById(R.id.tvHuaZhuan4);
         tvHuaZhuan5 = findViewById(R.id.tvHuaZhuan5);
+        tvHUaZhuanRate = findViewById(R.id.tvHUaZhuanRate);
         llHuaZhuanType3 = findViewById(R.id.llHuaZhuanType3);
         tvHuaZhuanBlock = findViewById(R.id.tvHuaZhuanBlock);
         tvHuaZhuanBlockWallet = findViewById(R.id.tvHuaZhuanBlockWallet);
@@ -109,7 +114,12 @@ public class HuaZhuanActivity extends BaseActivity implements SafeInputDialog.On
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                tvHuaZhuanReceiveBalance.setText(s.toString() + (type.equals("2") ? "HKB" : "HK"));
+                if (!TextUtils.isEmpty(s) && type.equals("2")) {
+                    String format = DecimalFormat.format(Float.parseFloat(s.toString()) * (1 - Float.parseFloat(Constant.walletResponse.getRate())));
+                    tvHuaZhuanReceiveBalance.setText(format + "HKB");
+                } else if (type.equals("3")) {
+                    tvHuaZhuanReceiveBalance.setText(s.toString() + "HK");
+                }
             }
 
             @Override
@@ -145,6 +155,7 @@ public class HuaZhuanActivity extends BaseActivity implements SafeInputDialog.On
         tvHuaZhuanBlockWallet.setText(s3);
 
         if (type.equals("2")) {
+            tvHUaZhuanRate.setText("1:" + (1 - Float.parseFloat(Constant.walletResponse.getRate())));
             llHuaZhuanType3.setVisibility(View.GONE);
             llHuaZhuanType2.setVisibility(View.VISIBLE);
             tvHuaZhuan1.setText(R.string.balance);
@@ -154,6 +165,7 @@ public class HuaZhuanActivity extends BaseActivity implements SafeInputDialog.On
             tvHuaZhuan5.setText(R.string.receive);
             tvHuaZhuanReceiveBalance.setText("0HKB");
         } else {
+            tvHUaZhuanRate.setText("1:1");
             llHuaZhuanType2.setVisibility(View.GONE);
             llHuaZhuanType3.setVisibility(View.VISIBLE);
             tvHuaZhuan2.setText(R.string.balance);

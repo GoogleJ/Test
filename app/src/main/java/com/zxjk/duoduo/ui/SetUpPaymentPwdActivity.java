@@ -31,7 +31,6 @@ import butterknife.ButterKnife;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\21 0021  设置支付密码
  */
 @SuppressLint("CheckResult")
 @RequiresApi(api = Build.VERSION_CODES.M)
@@ -89,7 +88,6 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
 
             @Override
             public void inputFinished(String inputPsd) {
-                // TODO: 2018/1/3 输完逻辑
                 if (TextUtils.isEmpty(oldPwd) && !firstLogin) {
                     payPsdInputView.cleanPsd();
                     oldPwd = inputPsd;

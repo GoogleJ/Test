@@ -29,10 +29,6 @@ import java.util.List;
 import io.reactivex.ObservableSource;
 import io.reactivex.functions.Function;
 
-/**
- * @author Administrator
- * @// TODO: 2019\3\26 0026 交易所
- */
 @SuppressLint("CheckResult")
 public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
 
@@ -169,7 +165,7 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                     }, this::handleApiError);
         } else {
             api.releasePurchase(String.valueOf(count), String.valueOf(totalPrice),
-                    "1", MD5Utils.getMD5("123456"), getPayTypes())
+                    "HK", MD5Utils.getMD5("123456"), getPayTypes())
                     .compose(bindToLifecycle())
                     .compose(RxSchedulers.normalTrans())
                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
@@ -191,7 +187,9 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
     }
 
     public void jump2List(View view) {
-        startActivity(new Intent(this, ExchangeListActivity.class));
+        Intent intent = new Intent(this, ExchangeListActivity.class);
+        intent.putExtra("rate", tvExchangePrice.getText().toString());
+        startActivity(intent);
     }
 
     public void back(View view) {
@@ -244,7 +242,6 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
 
     public void chooseCount(View view) {
         chooseCountWindow.showPopupWindow(R.id.tvExchangeChooseCount);
-//        chooseCountWindow.showPopupWindow(tvExchangeChooseCount);
     }
 
     @Override

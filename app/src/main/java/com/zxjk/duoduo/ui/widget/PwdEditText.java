@@ -16,11 +16,8 @@ import com.zxjk.duoduo.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.appcompat.widget.AppCompatEditText;
-
 /**
  * @author Administrator
- * @// TODO: 2019\3\27 0027 支付密码输入框
  */
 @SuppressLint("AppCompatCustomView")
 public class PwdEditText extends EditText {

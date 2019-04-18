@@ -291,10 +291,10 @@
                 android:background="@color/personal_information_1" />
 
             <LinearLayout
+                android:id="@+id/llUploadSign"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:onClick="uploadSign"
                 android:paddingStart="16dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="16dp"
@@ -336,7 +336,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:layout_marginEnd="40dp"
-                android:background="@color/confirm_buy"
+                android:background="@drawable/shape_bac_cancel"
                 android:onClick="cancelOrder"
                 android:text="@string/cancel_order"
                 android:textColor="@color/m_my_qr_code_label"

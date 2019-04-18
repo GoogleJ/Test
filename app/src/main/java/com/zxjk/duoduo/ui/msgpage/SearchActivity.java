@@ -30,7 +30,6 @@ import butterknife.ButterKnife;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\20 0020 搜索--添加好友，搜索范围，全局
  */
 @SuppressLint("CheckResult")
 public class SearchActivity extends BaseActivity {

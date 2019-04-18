@@ -8,23 +8,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.ui.msgpage.widget.CommonPopupWindow;
 import com.zxjk.duoduo.ui.walletpage.RecipetQRActivity;
 import com.zxjk.duoduo.ui.widget.TitleBar;
 
+import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import butterknife.ButterKnife;
+import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
+import io.rong.imkit.widget.adapter.ConversationListAdapter;
+import io.rong.imlib.NativeClient;
+import io.rong.imlib.NativeObject;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Message;
+import io.rong.message.CommandNotificationMessage;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\19 0019 聊天列表
  */
 public class MsgFragment extends BaseFragment implements View.OnClickListener, CommonPopupWindow.ViewInterface {
     TitleBar titleBar;
@@ -108,10 +117,19 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
 
         if (mConversationListFragment == null) {
             mConversationListFragment = createConversationList();
+            RongIM.getInstance().setOnReceiveMessageListener((message, i) -> {
+                if (message.getContent() instanceof CommandNotificationMessage) {
+                    RongIMClient.getInstance().removeConversation(Conversation.ConversationType.PRIVATE
+                            , message.getSenderUserId(), null);
+                }
+                return false;
+            });
         }
 
         switchFragment(mConversationListFragment, R.id.conversationlist);
     }
+
+
 
     private ConversationListFragment createConversationList() {
         ConversationListFragment listFragment = new ConversationListFragment();
@@ -175,5 +193,23 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
 
         mCurrentFragment = targetFragment;
 
+    }
+
+    @Override
+    public void onResume() {
+        if (Constant.deleteFriendMessageId != null && mConversationListFragment != null) {
+            RongIMClient.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
+                @Override
+                public void onSuccess(List<Conversation> conversations) {
+
+                }
+
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+
+                }
+            });
+        }
+        super.onResume();
     }
 }

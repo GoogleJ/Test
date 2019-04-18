@@ -3,26 +3,28 @@ package com.zxjk.duoduo.ui.msgpage;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Vibrator;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.network.Api;
+import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.FriendInfoResponse;
+import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.minepage.scanuri.Action1;
 import com.zxjk.duoduo.ui.minepage.scanuri.BaseUri;
 import com.zxjk.duoduo.ui.widget.TitleBar;
+import com.zxjk.duoduo.utils.CommonUtils;
+
 import org.json.JSONObject;
+
 import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
 import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.zxing.ZXingView;
-
-/**
- * @author Administrator
- * @// TODO: 2019\3\19 0019 扫描二维码
- */
 
 public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate {
     @BindView(R.id.m_qr_code_zxing_view)
@@ -37,21 +39,18 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
      * 关于二维码的实现
      */
     final int REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY = 666;
-    /**
-     * 判断是否开灯
-     */
-    private boolean isFlashlight;
+
 
     protected void initUI() {
         zxingview.setDelegate(this);
         titleBar.getRightTitle().setOnClickListener(v -> {
-            Intent photoPickerIntent = new BGAPhotoPickerActivity.IntentBuilder(QrCodeActivity.this)
-                    .cameraFileDir(null)
-                    .maxChooseCount(10)
-                    .selectedPhotos(null)
-                    .pauseOnScroll(false)
-                    .build();
-            startActivityForResult(photoPickerIntent, REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY);
+//            Intent photoPickerIntent = new BGAPhotoPickerActivity.IntentBuilder(QrCodeActivity.this)
+//                    .cameraFileDir(null)
+//                    .maxChooseCount(10)
+//                    .selectedPhotos(null)
+//                    .pauseOnScroll(false)
+//                    .build();
+//            startActivityForResult(photoPickerIntent, REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY);
         });
         titleBar.getLeftImageView().setOnClickListener(v -> finish());
     }
@@ -86,21 +85,76 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
                 intent.putExtra("money", uri.data.money);
                 intent.putExtra("userId", uri.data.userId);
                 startActivity(intent);
+                finish();
             } else if (action.equals("action2")) {
                 BaseUri<String> uri = new Gson().fromJson(result, new TypeToken<BaseUri<String>>() {
                 }.getType());
-                String action2 = uri.data;
 
+                String userId = uri.data;
+
+                if (userId.equals(Constant.userId)) {
+                    //扫到了自己的二维码
+                    finish();
+                    return;
+                }
+
+                if (Constant.friendsList == null) {
+                    ServiceFactory.getInstance().getBaseService(Api.class)
+                            .getFriendListById()
+                            .compose(bindToLifecycle())
+                            .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                            .compose(RxSchedulers.normalTrans())
+                            .subscribe(friendInfoResponses -> {
+                                if (Constant.friendsList == null) {
+                                    Constant.friendsList = friendInfoResponses;
+                                }
+
+                                handleFriendList(userId);
+                            }, this::handleApiError);
+                } else {
+                    handleFriendList(userId);
+                }
             }
-            finish();
         } catch (Exception e) {
-            zxingview.startSpot();
+            e.printStackTrace();
         }
     }
 
     @Override
-    public void onScanQRCodeOpenCameraError() {
+    public void onCameraAmbientBrightnessChanged(boolean isDark) {
+        if (isDark) {
+            zxingview.openFlashlight();
+        }
+    }
 
+    private void handleFriendList(String userId) {
+        if (userId.equals(Constant.userId)) {
+            //扫到了自己
+            Intent intent = new Intent(this, FriendDetailsActivity.class);
+            intent.putExtra("friendId", userId);
+            startActivity(intent);
+            return;
+        }
+        for (FriendInfoResponse f : Constant.friendsList) {
+            if (f.getId().equals(userId)) {
+                //扫到了自己的好友，进入详情页（可聊天）
+                Intent intent = new Intent(this, FriendDetailsActivity.class);
+                intent.putExtra("searchFriendDetails", f);
+                startActivity(intent);
+                finish();
+                return;
+            }
+        }
+
+        //扫到了陌生人，进入加好友页面
+        Intent intent = new Intent(this, AddFriendDetailsActivity.class);
+        intent.putExtra("newFriendId", userId);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onScanQRCodeOpenCameraError() {
     }
 
     /**
@@ -118,17 +172,7 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
     private void stopScan() {
         zxingview.stopCamera();
         zxingview.stopSpotAndHiddenRect();
-        if (isFlashlight) {
-            closeFlashlight();
-        }
-    }
-
-    /**
-     * 开灯
-     */
-    private void openFlashlight() {
-        isFlashlight = true;
-        zxingview.openFlashlight();
+        zxingview.closeFlashlight();
     }
 
     @Override
@@ -143,12 +187,10 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
         super.onStop();
     }
 
-    /**
-     * 关灯
-     */
-    private void closeFlashlight() {
-        zxingview.closeFlashlight();
-        isFlashlight = false;
+    @Override
+    protected void onDestroy() {
+        zxingview.onDestroy();
+        super.onDestroy();
     }
 
 
@@ -158,18 +200,13 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
         startActivityForResult(intent, ACTION_LADY_PICKER_FLAG);
     }
 
-    private void vibrate() {
-        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        vibrator.vibrate(200);
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         zxingview.startSpotAndShowRect(); // 显示扫描框，并开始识别
 
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY) {
-            final String picturePath = BGAPhotoPickerActivity.getSelectedPhotos(data).get(0);
+//            final String picturePath = BGAPhotoPickerActivity.getSelectedPhotos(data).get(0);
             // 本来就用到 QRCodeView 时可直接调 QRCodeView 的方法，走通用的回调
 //            zxingview.syncDecodeQRCode(picturePath);
         }

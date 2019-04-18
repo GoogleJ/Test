@@ -7,7 +7,6 @@ import com.zxjk.duoduo.network.response.AllGroupMembersResponse;
 import com.zxjk.duoduo.utils.GlideUtil;
 /**
  * @author Administrator
- * @// TODO: 2019\3\30 0030 删除或者添加群成员
  */
 public class GroupAddOrRemoveAdapter extends BaseQuickAdapter<AllGroupMembersResponse, BaseViewHolder> {
     public GroupAddOrRemoveAdapter() {

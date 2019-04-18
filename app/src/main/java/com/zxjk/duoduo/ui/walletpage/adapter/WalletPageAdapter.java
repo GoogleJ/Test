@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.walletpage.ExchangeActivity;
@@ -57,8 +57,8 @@ public class WalletPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     class TopHolder extends RecyclerView.ViewHolder {
-        private TextView tvWalletPageExchange1;
-        private TextView tvWalletPageExchange2;
+        private ImageView tvWalletPageExchange1;
+        private ImageView tvWalletPageExchange2;
 
         TopHolder(@NonNull View itemView) {
             super(itemView);

@@ -2,7 +2,6 @@ package com.zxjk.duoduo.ui.msgpage;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -19,22 +19,16 @@ import com.zxjk.duoduo.ui.HomeActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.widget.CommonPopupWindow;
 import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendInformationDialog;
-import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.ui.widget.TitleBar;
+import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.utils.GlideUtil;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongIM;
-import io.rong.imlib.model.UserInfo;
 
-
-/**
- * @author Administrator
- * @// TODO: 2019\3\20 0020 个人信息详情页，包含删除的dialog等部分
- */
 @SuppressLint("CheckResult")
 public class FriendDetailsActivity extends BaseActivity implements View.OnClickListener, CommonPopupWindow.ViewInterface {
     /**
@@ -47,11 +41,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
      */
     @BindView(R.id.m_people_information_send_to_message)
     TextView sendMsgBtn;
-    /**
-     * 语音通话按钮
-     */
-    @BindView(R.id.m_people_information_voice_calls)
-    TextView voiceBtn;
+
     /**
      * 头像
      */
@@ -128,15 +118,34 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
 
     }
 
-
     private void initFriendIntent() {
         //这个模块需要添加数据绑定
-        friendInfoResponse = (FriendInfoResponse) getIntent().getSerializableExtra("searchFriendDetails");
         intentType = getIntent().getIntExtra("intentType", 0);
+        friendInfoResponse = (FriendInfoResponse) getIntent().getSerializableExtra("searchFriendDetails");
         friendInfo = (FriendInfoResponse) getIntent().getSerializableExtra("globalSearchFriendDetails");
         contactResponse = (FriendInfoResponse) getIntent().getSerializableExtra("contactResponse");
 
+        if (intentType == 0 && friendInfoResponse == null) {
+            String friendId = getIntent().getStringExtra("friendId");
+            ServiceFactory.getInstance().getBaseService(Api.class)
+                    .getFriendInfoById(friendId)
+                    .compose(bindToLifecycle())
+                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                    .compose(RxSchedulers.normalTrans())
+                    .subscribe(r -> {
+                        friendInfoResponse = r;
+                        handData();
+                    }, this::handleApiError);
+            return;
+        }
+        handData();
+    }
+
+    private void handData() {
         if (intentType == 0) {
+            if (friendInfoResponse.getId().equals(Constant.userId)) {
+                titleBar.setRightImageVisibility(View.GONE);
+            }
             GlideUtil.loadCornerImg(heardIcon, friendInfoResponse.getHeadPortrait(), 2);
             userNameText.setText(friendInfoResponse.getNick());
             duoduoId.setText(friendInfoResponse.getDuoduoId());
@@ -152,6 +161,9 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                 genderIcon.setImageDrawable(getDrawable(R.drawable.icon_gender_woman));
             }
         } else if (intentType == 1) {
+            if (friendInfo.getId().equals(Constant.userId)) {
+                titleBar.setRightImageVisibility(View.GONE);
+            }
             GlideUtil.loadCornerImg(heardIcon, friendInfo.getHeadPortrait(), 2);
             userNameText.setText(friendInfo.getNick());
             duoduoId.setText(friendInfo.getDuoduoId());
@@ -167,6 +179,9 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                 genderIcon.setImageDrawable(getDrawable(R.drawable.icon_gender_woman));
             }
         } else {
+            if (contactResponse.getId().equals(Constant.userId)) {
+                titleBar.setRightImageVisibility(View.GONE);
+            }
             GlideUtil.loadCornerImg(heardIcon, contactResponse.getHeadPortrait(), 2);
             userNameText.setText(contactResponse.getNick());
             duoduoId.setText(contactResponse.getDuoduoId());
@@ -202,9 +217,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
         });
     }
 
-    UserInfo userInfo;
-
-    @OnClick({R.id.m_people_information_send_to_message, R.id.m_people_information_voice_calls})
+    @OnClick({R.id.m_people_information_send_to_message})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -213,40 +226,43 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 if (intentType == 0) {
-                    userInfo = new UserInfo(friendInfoResponse.getId(), friendInfoResponse.getNick(), Uri.parse(friendInfoResponse.getHeadPortrait()));
-                    RongIM.getInstance().setCurrentUserInfo(userInfo);
                     RongIM.getInstance().startPrivateChat(this, friendInfoResponse.getId(), friendInfoResponse.getNick());
                 } else if (intentType == 1) {
-                    userInfo = new UserInfo(friendInfo.getId(), friendInfo.getNick(), Uri.parse(friendInfo.getHeadPortrait()));
-                    RongIM.getInstance().setCurrentUserInfo(userInfo);
                     RongIM.getInstance().startPrivateChat(this, friendInfo.getId(), friendInfo.getNick());
                 } else {
-                    userInfo = new UserInfo(contactResponse.getId(), contactResponse.getNick(), Uri.parse(contactResponse.getHeadPortrait()));
-                    RongIM.getInstance().setCurrentUserInfo(userInfo);
                     RongIM.getInstance().startPrivateChat(this, contactResponse.getId(), contactResponse.getNick());
                 }
                 break;
-            case R.id.m_people_information_voice_calls:
-                ToastUtils.showShort(getString(R.string.under_development));
-                break;
             case R.id.update_rename:
-                startActivity(new Intent(FriendDetailsActivity.this, ModifyNotesActivity.class));
+                Intent intent1 = new Intent(FriendDetailsActivity.this, ModifyNotesActivity.class);
+                String id;
+                if (intentType == 0) {
+                    id = friendInfoResponse.getId();
+                } else if (intentType == 1) {
+                    id = friendInfo.getId();
+                } else {
+                    id = contactResponse.getId();
+                }
+                intent1.putExtra("friendId", id);
+                startActivity(intent1);
                 break;
             case R.id.recommend_to_friend:
                 Intent intentCard = new Intent(FriendDetailsActivity.this, SelectContactForCardActivity.class);
                 if (intentType == 0) {
-                    intentCard.putExtra("friendInfoResponseId", friendInfoResponse.getId());
                     intentCard.putExtra("userType", 1);
+                    intentCard.putExtra("intentType", 1);
+                    intentCard.putExtra("friendInfoResponseId", friendInfoResponse.getId());
                     startActivity(intentCard);
                     return;
                 } else if (intentType == 1) {
-                    intentCard.putExtra("friendInfoId", friendInfo.getId());
                     intentCard.putExtra("userType", 2);
+                    intentCard.putExtra("intentType", 1);
+                    intentCard.putExtra("friendInfoId", friendInfo.getId());
                     startActivity(intentCard);
-                    return;
                 } else {
-                    intentCard.putExtra("contactResponseId", contactResponse.getId());
                     intentCard.putExtra("userType", 3);
+                    intentCard.putExtra("intentType", 1);
+                    intentCard.putExtra("contactResponseId", contactResponse.getId());
                     startActivity(intentCard);
                 }
                 break;
@@ -296,13 +312,9 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) throws Exception {
-                        ToastUtils.showShort(getString(R.string.the_friend_has_been_deleted));
-                        dialog.dismiss();
-
-                    }
+                .subscribe(s -> {
+                    ToastUtils.showShort(getString(R.string.the_friend_has_been_deleted));
+                    dialog.dismiss();
                 }, this::handleApiError);
     }
 
@@ -313,6 +325,4 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
             popupWindow.dismiss();
         }
     }
-
-
 }

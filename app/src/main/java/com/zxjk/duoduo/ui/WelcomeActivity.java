@@ -3,11 +3,14 @@ package com.zxjk.duoduo.ui;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.WindowUtils;
+
 import java.util.concurrent.TimeUnit;
+
 import androidx.annotation.Nullable;
 import io.reactivex.Observable;
 
@@ -28,6 +31,16 @@ public class WelcomeActivity extends BaseActivity {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        if (!isTaskRoot()) {
+//            if (Constant.userId.equals("")) {
+//                startActivity(new Intent(this, LoginActivity.class));
+//            } else {
+//                startActivity(new Intent(this, HomeActivity.class));
+//            }
+
+            finish();
+            return;
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         WindowUtils.hideBottomUIMenu(this);

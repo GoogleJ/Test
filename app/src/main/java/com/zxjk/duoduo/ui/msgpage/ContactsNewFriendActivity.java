@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -18,6 +19,7 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.BaseContactAdapter;
 import com.zxjk.duoduo.ui.msgpage.widget.IndexView;
+import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendInformationDialog;
 import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.CommonUtils;
 
@@ -38,10 +40,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.rong.imlib.IRongCallback;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Message;
+import io.rong.message.CommandMessage;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\20 0020 通讯录
  */
 @SuppressLint("CheckResult")
 public class ContactsNewFriendActivity extends BaseActivity implements View.OnClickListener {
@@ -62,11 +68,14 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
     private LinearLayoutManager layoutManager;
     List<FriendInfoResponse> list = new ArrayList<>();
 
+    DeleteFriendInformationDialog deleteDialog;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_constacts_new_friend);
         ButterKnife.bind(this);
+        deleteDialog = new DeleteFriendInformationDialog(this);
         initView();
         getMyfriendsWaiting();
     }
@@ -83,7 +92,6 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
                 String letters = list.get(i).getSortLetters();
                 if (letters.equals(letter)) {
                     //第一次出现的位置
-                    //将listview滚动到该位置
                     mRecyclerView.scrollToPosition(i);
                     break;
                 }
@@ -98,6 +106,43 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
             intent.putExtra("intentType", 2);
             intent.putExtra("contactResponse", friendInfoResponse);
             startActivity(intent);
+        });
+        mAdapter.setOnItemChildLongClickListener((adapter, view, position) -> {
+            FriendInfoResponse friendInfoResponse = mAdapter.getData().get(position);
+            deleteDialog.show(friendInfoResponse.getNick());
+            deleteDialog.setOnClickListener(() -> ServiceFactory.getInstance().getBaseService(Api.class)
+                    .deleteFriend(friendInfoResponse.getId())
+                    .compose(bindToLifecycle())
+                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ContactsNewFriendActivity.this)))
+                    .compose(RxSchedulers.normalTrans())
+                    .subscribe(s -> {
+                        Constant.deleteFriendMessageId = friendInfoResponse.getId();
+                        ToastUtils.showShort(R.string.delete_friend_succesed);
+                        adapter.getData().remove(position);
+                        adapter.notifyItemRemoved(position);
+
+                        RongIMClient.getInstance().removeConversation(Conversation.ConversationType.PRIVATE
+                                , friendInfoResponse.getId(), null);
+                        Message myMessage = Message.obtain(friendInfoResponse.getId(), Conversation.ConversationType.PRIVATE, CommandMessage.obtain("deleteFriend", ""));
+                        RongIMClient.getInstance().sendMessage(myMessage, null, null, new IRongCallback.ISendMessageCallback() {
+                            @Override
+                            public void onAttached(Message message) {
+
+                            }
+
+                            @Override
+                            public void onSuccess(Message message) {
+                                RongIMClient.getInstance().removeConversation(Conversation.ConversationType.PRIVATE
+                                        , friendInfoResponse.getId(), null);
+                            }
+
+                            @Override
+                            public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+
+                            }
+                        });
+                    }, ContactsNewFriendActivity.this::handleApiError));
+            return false;
         });
         if (mAdapter.getData().size() == 0) {
             View view = LayoutInflater.from(this).inflate(R.layout.view_app_null_type, null);

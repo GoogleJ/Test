@@ -25,9 +25,7 @@ import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
 import com.zxjk.duoduo.network.response.SignHkbOrHkExchangeResponse;
 import com.zxjk.duoduo.network.response.SignTransactionResponse;
 import com.zxjk.duoduo.network.response.TransferResponse;
-
 import java.util.List;
-
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -389,7 +387,8 @@ public interface Api {
     Observable<BaseResponse<String>> overOrder(@Field("buyCustomerId") String buyCustomerId
             , @Field("buyOrderId") String buyOrderId
             , @Field("sellOrderId") String sellOrderId
-            , @Field("bothOrderId") String bothOrderId);
+            , @Field("bothOrderId") String bothOrderId
+            , @Field("payPwd") String payPwd);
 
     /**
      * 卖家拒绝审核
@@ -429,7 +428,8 @@ public interface Api {
      */
     @POST("duoduo/exchange/updateBuyPayState")
     @FormUrlEncoded
-    Observable<BaseResponse<String>> updateBuyPayState(@Field("bothOrderId") String bothOrderId);
+    Observable<BaseResponse<String>> updateBuyPayState(@Field("bothOrderId") String bothOrderId
+            , @Field("picture") String picture);
 
     /**
      * 判断是否允许修改支付方式
@@ -746,7 +746,8 @@ public interface Api {
 
     @POST("duoduo/redPackage/personalRedPackageInfo")
     @FormUrlEncoded
-    Observable<BaseResponse<PersonalRedPackageInfoResponse>> personalRedPackageInfo(@Field("redPackageId") String redPackageId);
+    Observable<BaseResponse<PersonalRedPackageInfoResponse>> personalRedPackageInfo(@Field("redPackageId") String redPackageId,
+                                                                                    @Field("customerId") int customerId);
 
     @POST("duoduo/redPackage/getGroupRedPackageInfo")
     @FormUrlEncoded
@@ -759,6 +760,14 @@ public interface Api {
     @POST("duoduo/exchange/getDetailList")
     @FormUrlEncoded
     Observable<BaseResponse<List<DetailListResposne>>> getDetailList(@Field("type") String type);
+
+    @POST("duoduo/customer/verifyPaperworkNumber")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> verifyPaperworkNumber(@Field("number") String number);
+
+    @POST("duoduo/exchange/addAppeal")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> addAppeal(@Field("orderAppealStr") String orderAppealStr);
 
 
 }

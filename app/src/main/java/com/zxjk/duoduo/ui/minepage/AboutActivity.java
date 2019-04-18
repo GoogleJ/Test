@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 
 /**
  * @author Administrator
- * @// TODO: 2019\3\23 0023 关于嘟嘟界面
  */
 public class AboutActivity extends BaseActivity {
     TitleBar titleBar;

@@ -72,6 +72,19 @@ public class GetRedPackageRecordResponse {
         private String TYPE;
         private String redPackageType;
 
+        @Override
+        public String toString() {
+            return "RedpackageListBean{" +
+                    "nick='" + nick + '\'' +
+                    ", redPackageId=" + redPackageId +
+                    ", money=" + money +
+                    ", createTime='" + createTime + '\'' +
+                    ", message='" + message + '\'' +
+                    ", TYPE='" + TYPE + '\'' +
+                    ", redPackageType='" + redPackageType + '\'' +
+                    '}';
+        }
+
         public String getNick() {
             return nick;
         }

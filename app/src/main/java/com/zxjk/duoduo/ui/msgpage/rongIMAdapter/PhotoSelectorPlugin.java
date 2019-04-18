@@ -10,7 +10,6 @@ import io.rong.imkit.plugin.ImagePlugin;
 
 /**
  * @author Administrator
- * @// TODO: 2019\4\2 0002 选择图片和拍摄图片的plugin
  */
 public class PhotoSelectorPlugin extends ImagePlugin {
     @Override

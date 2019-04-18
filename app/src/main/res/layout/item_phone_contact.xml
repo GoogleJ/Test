@@ -48,7 +48,7 @@
     <View
         android:layout_width="wrap_content"
         android:layout_height="0.5dp"
-        android:background="@color/bga_adapter_line"
+        android:background="@color/divider"
         app:layout_constraintStart_toStartOf="@+id/user_name"
         app:layout_constraintTop_toBottomOf="@+id/phone_contact_header" />
 

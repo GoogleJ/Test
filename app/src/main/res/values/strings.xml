@@ -52,7 +52,6 @@
     <string name="permission_banned">为了您的体验，请您授权所需的的权限</string>
     <string name="setting">去授权</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_friend_title_bar">添加联系人</string>
     <string name="m_add_friend_search_edit">输入手机号/多多号</string>
@@ -111,7 +110,7 @@
     <string name="update_rename">修改备注</string>
     <string name="recommend_to_friend">推荐给好友</string>
     <string name="m_delete_friend_constant">删除联系人</string>
-    <string name="m_delete_friend_label">将联系人“%1$s”，删除，同时删除与个该联系人的聊天记录</string>
+    <string name="m_delete_friend_label">将联系人“%1$s”，删除，同时删除与该联系人的聊天记录</string>
     <string name="m_cancel_btn">取消</string>
     <string name="m_modify_notes_title_bar">备注</string>
     <string name="m_modify_notes_right_title_bar">确定</string>
@@ -531,7 +530,7 @@
     <string name="inputoldpsd">请输入原支付密码</string>
     <string name="setsuccess">设置成功</string>
     <string name="has_bean_sent">发送成功</string>
-    <string name="regain_verification_code">重新获取验证码</string>
+    <string name="regain_verification_code">重新获取</string>
     <string name="regain_after_seconds">秒后重新获取</string>
     <string name="please_upload_an_avatar">请上传头像</string>
     <string name="username_can_not_be_blank">昵称不能为空</string>
@@ -634,5 +633,45 @@
     <string name="select_remove_member">请至少选择一位要移除的群成员</string>
     <string name="select_invite_member">请至少选择一位要邀请的好友</string>
     <string name="group_owner">群主</string>
+    <string name="change_password_success">密码修改成功</string>
+    <string name="function_fail">操作失败</string>
+    <string name="input_origin_paypwd">请输入原支付密码</string>
+    <string name="input_newpaypwd">请输入新支付密码</string>
+    <string name="pressagain2finish">再次按下退出应用</string>
+    <string name="delete_friend_succesed">删除成功</string>
+    <string name="timeline">朋友圈</string>
+    <string name="tradeFailed">交易失败</string>
+    <string name="tradeDone1">已完成</string>
+    <string name="tradeCancel">已取消</string>
+    <string name="guadan">挂单中</string>
+    <string name="wait_for_others_to_pay">对方支付中</string>
+    <string name="pinshouqi">拼手气红包</string>
+    <string name="red_packet1">普通红包</string>
+    <string name="singlemoney">单个金额</string>
+    <string name="samemoney">抢到的金额一样</string>
+    <string name="packagenum">红包个数</string>
+    <string name="input_number">填写个数</string>
+    <string name="upload_done">已上传</string>
+    <string name="wait_for_buy_to_pay">买家正在支付，请稍等</string>
+    <string name="buy_done">买家已完成支付</string>
+    <string name="buyer">买家</string>
+    <string name="orderprice">订单价格</string>
+    <string name="price_single">单价</string>
+    <string name="butPayType">付款方式</string>
+    <string name="paytime">付款时间</string>
+    <string name="money_received">钱已到账，通过审核</string>
+    <string name="money_notreceived">钱未到账，拒绝审核</string>
+    <string name="judgefinish">审核完成</string>
+    <string name="rejectfinish">拒绝成功</string>
+    <string name="closetime">结束时间</string>
+    <string name="price">金额</string>
+    <string name="reason">原因</string>
+    <string name="sale_reject">卖家拒绝审核</string>
+    <string name="shensu">申诉</string>
+    <string name="paytype1">付款方式</string>
+    <string name="input_shensu">请填写您需要申诉的信息...</string>
+    <string name="uploadSign">上传凭证:</string>
+    <string name="uploadSignTip">（不超过三张）</string>
+    <string name="input_reason">请填写申诉信息</string>
 
 </resources>

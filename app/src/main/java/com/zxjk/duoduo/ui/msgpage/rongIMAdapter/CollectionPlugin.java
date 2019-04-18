@@ -13,7 +13,6 @@ import io.rong.imkit.plugin.IPluginModule;
 
 /**
  * @author Administrator
- * @// TODO: 2019\4\3 0003 关于收藏的plugin 
  */
 public class CollectionPlugin implements IPluginModule {
     @Override
