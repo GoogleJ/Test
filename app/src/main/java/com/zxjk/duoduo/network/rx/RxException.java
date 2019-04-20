@@ -54,26 +54,4 @@ public class RxException {
         }
     }
 
-    public static class EmptyDataExceptioin extends Exception {
-        private String msg;
-        private int code;
-
-        public EmptyDataExceptioin(String msg) {
-            this(msg, -1);
-        }
-
-        public EmptyDataExceptioin(String msg, int code) {
-            this.msg = msg;
-            this.code = code;
-        }
-
-        @Override
-        public String getMessage() {
-            return msg;
-        }
-
-        public int getCode() {
-            return code;
-        }
-    }
 }

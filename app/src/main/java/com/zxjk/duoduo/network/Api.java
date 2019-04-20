@@ -19,13 +19,17 @@ import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.response.PayInfoResponse;
 import com.zxjk.duoduo.network.response.PersonalRedPackageInfoResponse;
+import com.zxjk.duoduo.network.response.ReceiveGroupRedPackageResponse;
 import com.zxjk.duoduo.network.response.ReceivePersonalRedPackageResponse;
 import com.zxjk.duoduo.network.response.RedPackageResponse;
 import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
+import com.zxjk.duoduo.network.response.SendGroupRedPackageResponse;
 import com.zxjk.duoduo.network.response.SignHkbOrHkExchangeResponse;
 import com.zxjk.duoduo.network.response.SignTransactionResponse;
 import com.zxjk.duoduo.network.response.TransferResponse;
+
 import java.util.List;
+
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -769,5 +773,12 @@ public interface Api {
     @FormUrlEncoded
     Observable<BaseResponse<String>> addAppeal(@Field("orderAppealStr") String orderAppealStr);
 
+    @POST("duoduo/redPackage/sendGroupRedPackage")
+    @FormUrlEncoded
+    Observable<BaseResponse<SendGroupRedPackageResponse>> sendGroupRedPackage(@Field("data") String data);
+
+    @POST("duoduo/redPackage/receiveGroupRedPackage")
+    @FormUrlEncoded
+    Observable<BaseResponse<ReceiveGroupRedPackageResponse>> receiveGroupRedPackage(@Field("redPackageId") String redPackageId);
 
 }

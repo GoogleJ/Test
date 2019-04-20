@@ -2,6 +2,12 @@ package com.zxjk.duoduo.ui.msgpage.rongIMAdapter;
 
 
 import com.zxjk.duoduo.Constant;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameDownScorePlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameDuobaoPlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameRecordPlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameRulesPlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameStartPlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameUpScorePlugin;
 
 import java.util.List;
 
@@ -14,10 +20,11 @@ import io.rong.imlib.model.Conversation;
  */
 public class BasePluginExtensionModule extends DefaultExtensionModule {
 
-    private boolean isGroupChat;
+    //1001.游戏 1.单聊 3.群聊
+    private int custmoerType;
 
-    public BasePluginExtensionModule(boolean isGroupChat) {
-        this.isGroupChat = isGroupChat;
+    public BasePluginExtensionModule(int custmoerType) {
+        this.custmoerType = custmoerType;
     }
 
     @Override
@@ -31,7 +38,23 @@ public class BasePluginExtensionModule extends DefaultExtensionModule {
         MyCombineLocationPlugin locationPlugin = new MyCombineLocationPlugin();
         CollectionPlugin collectionPlugin = new CollectionPlugin();
 
+
         List<IPluginModule> list = super.getPluginModules(conversationType);
+
+        if (custmoerType == 1001) {
+            if (list != null) {
+                list.clear();
+                list.add(packetPlugin);
+                list.add(new GameUpScorePlugin());
+                list.add(new GameRecordPlugin());
+                list.add(new GameDownScorePlugin());
+                list.add(new GameDuobaoPlugin());
+                list.add(new GameStartPlugin());
+                list.add(new GameRulesPlugin());
+                return list;
+            }
+        }
+
         if (list != null) {
             list.clear();
             list.add(photoSelectorPlugin);
@@ -42,7 +65,7 @@ public class BasePluginExtensionModule extends DefaultExtensionModule {
             list.add(businessCardPlugin);
             list.add(locationPlugin);
 //            list.add(collectionPlugin);
-            if (isGroupChat) {
+            if (custmoerType == 3) {
                 list.remove(transferPlugin);
                 if (Constant.update) {
                     list.remove(packetPlugin);

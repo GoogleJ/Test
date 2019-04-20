@@ -105,21 +105,21 @@
                         android:layout_width="72dp"
                         android:layout_height="72dp"
                         android:layout_alignTop="@id/llMineNickParent"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:clipChildren="false">
 
                         <ImageView
                             android:id="@+id/ivMineHeadImg"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_margin="8dp"
+                            android:layout_margin="6dp"
                             android:scaleType="centerCrop"
                             app:srcCompat="@color/default_placeholder" />
 
                         <ImageView
                             android:id="@+id/ivMineAuthSign"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
                             android:layout_gravity="end|bottom"
                             android:src="@drawable/ic_mine_authenticate"
                             android:visibility="invisible" />

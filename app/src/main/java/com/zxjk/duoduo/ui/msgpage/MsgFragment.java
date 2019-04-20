@@ -30,6 +30,7 @@ import io.rong.imlib.NativeObject;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
+import io.rong.message.CommandMessage;
 import io.rong.message.CommandNotificationMessage;
 
 /**
@@ -121,8 +122,8 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
         if (mConversationListFragment == null) {
             mConversationListFragment = createConversationList();
             RongIM.getInstance().setOnReceiveMessageListener((message, i) -> {
-                if (message.getContent() instanceof CommandNotificationMessage) {
-                    RongIMClient.getInstance().removeConversation(Conversation.ConversationType.PRIVATE
+                if (message.getContent() instanceof CommandMessage) {
+                    RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE
                             , message.getSenderUserId(), null);
                 }
                 return false;
@@ -196,23 +197,5 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
 
         mCurrentFragment = targetFragment;
 
-    }
-
-    @Override
-    public void onResume() {
-        if (Constant.deleteFriendMessageId != null && mConversationListFragment != null) {
-            RongIMClient.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
-                @Override
-                public void onSuccess(List<Conversation> conversations) {
-
-                }
-
-                @Override
-                public void onError(RongIMClient.ErrorCode errorCode) {
-
-                }
-            });
-        }
-        super.onResume();
     }
 }

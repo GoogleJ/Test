@@ -30,6 +30,7 @@ public class RedPacketMessage extends MessageContent {
     private String remark;
     private String extra;
     private String redId;
+    private String isGame;
 
     public RedPacketMessage() {
 
@@ -44,6 +45,7 @@ public class RedPacketMessage extends MessageContent {
             jsonObj.put("remark", getRemark());
             jsonObj.put("extra", getExtra());
             jsonObj.put("redId", getRedId());
+            jsonObj.put("isGame", getIsGame());
         } catch (JSONException e) {
             Log.e("JSONException", e.getMessage());
         }
@@ -82,13 +84,13 @@ public class RedPacketMessage extends MessageContent {
             if (jsonObj.has("redId")) {
                 setRedId(jsonObj.optString("redId"));
             }
-
+            if (jsonObj.has("isGame")) {
+                setIsGame(jsonObj.optString("isGame"));
+            }
         } catch (JSONException e) {
             Log.d("JSONException", e.getMessage());
         }
     }
-
-
 
     @Override
     public int describeContents() {
@@ -101,6 +103,7 @@ public class RedPacketMessage extends MessageContent {
         ParcelUtils.writeToParcel(dest, remark);
         ParcelUtils.writeToParcel(dest, redId);
         ParcelUtils.writeToParcel(dest, extra);
+        ParcelUtils.writeToParcel(dest, isGame);
     }
 
     //给消息赋值。
@@ -109,6 +112,7 @@ public class RedPacketMessage extends MessageContent {
         setRemark(ParcelUtils.readFromParcel(in));
         setRedId(ParcelUtils.readFromParcel(in));
         setExtra(ParcelUtils.readFromParcel(in));
+        setIsGame(ParcelUtils.readFromParcel(in));
     }
     /**
      * 读取接口，目的是要从Parcel中构造一个实现了Parcelable的类的实例处理。
@@ -158,5 +162,13 @@ public class RedPacketMessage extends MessageContent {
 
     public void setRedId(String redId) {
         this.redId = redId;
+    }
+
+    public String getIsGame() {
+        return isGame;
+    }
+
+    public void setIsGame(String isGame) {
+        this.isGame = isGame;
     }
 }

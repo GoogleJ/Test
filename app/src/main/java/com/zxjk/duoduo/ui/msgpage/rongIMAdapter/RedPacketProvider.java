@@ -9,9 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.zxjk.duoduo.R;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import io.rong.imkit.model.ProviderTag;
 import io.rong.imkit.model.UIMessage;
 import io.rong.imkit.widget.provider.IContainerItemProvider;
@@ -42,19 +43,16 @@ public class RedPacketProvider extends IContainerItemProvider.MessageProvider<Re
             holder.sendLayout.setBackgroundResource(R.drawable.icon_send_red_packet_friend);
         }
 
-        if (TextUtils.isEmpty(uiMessage.getExtra())) {
-            if (TextUtils.isEmpty(redPacketMessage.getRemark())) {
-                holder.message.setText(context.getResources().getString(R.string.m_red_envelopes_label));
-            } else {
-                holder.message.setText(redPacketMessage.getRemark());
-            }
+        if (TextUtils.isEmpty(redPacketMessage.getRemark())) {
+            holder.message.setText(context.getResources().getString(R.string.m_red_envelopes_label));
         } else {
-            if (uiMessage.getMessageDirection() == Message.MessageDirection.SEND) {
-                //消息方向，自己发送的
-                holder.message.setText(context.getResources().getString(R.string.red_beilingqu));
-            } else {
-                holder.message.setText(context.getResources().getString(R.string.red_yilingqu));
-            }
+            holder.message.setText(redPacketMessage.getRemark());
+        }
+
+        if (TextUtils.isEmpty(uiMessage.getExtra()) || TextUtils.isEmpty(redPacketMessage.getExtra())) {
+            holder.sendLayout.setAlpha(1);
+        } else {
+            holder.sendLayout.setAlpha(0.6f);
         }
     }
 

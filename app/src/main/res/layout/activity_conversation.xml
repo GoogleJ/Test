@@ -2,17 +2,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <com.zxjk.duoduo.ui.widget.TitleBar
-        android:id="@+id/conversation_title"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:titleBarLeftImage="@drawable/ico_back"
-        app:titleBarTextColor="@color/white"
-        app:titleBarRightImage="@drawable/icon_right_title"
-        />
+        android:layout_height="48dp"
+        android:background="@color/themecolor">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:onClick="back"
+            android:padding="12dp"
+            android:src="@drawable/ico_back" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:onClick="detail"
+            android:padding="12dp"
+            android:src="@drawable/icon_right_title" />
+
+    </RelativeLayout>
+
     <fragment
         android:id="@+id/conversation"
         android:name="io.rong.imkit.fragment.ConversationFragment"

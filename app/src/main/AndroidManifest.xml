@@ -39,14 +39,38 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".skin.SkinReportActivity"></activity>
-        <activity android:name=".ui.walletpage.ShenSuActivity" />
-        <activity android:name=".ui.walletpage.ExchangeOrderFailedActivity" />
-        <activity android:name=".ui.walletpage.ExchangeOrderCancelActivity" />
-        <activity android:name=".ui.walletpage.ExchangeOrderSuccessActivity" />
-        <activity android:name=".ui.walletpage.OverOrderActivity" />
-        <activity android:name=".ui.walletpage.WaitForPayOverActivity" />
-        <activity android:name=".ui.msgpage.GroupRedPacketActivity" />
+        <activity
+            android:name=".skin.SkinReportActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.walletpage.ShenSuActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.walletpage.ExchangeOrderFailedActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.walletpage.ExchangeOrderCancelActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.walletpage.ExchangeOrderSuccessActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.walletpage.OverOrderActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.walletpage.WaitForPayOverActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.msgpage.GroupRedPacketActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.msgpage.CreateGroupActivity"
             android:launchMode="singleTask"
@@ -282,11 +306,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Theme_Splash"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".ui.msgpage.ModifyNotesActivity"

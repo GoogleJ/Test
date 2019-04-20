@@ -28,6 +28,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.IRongCallback;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Message;
+import io.rong.message.CommandMessage;
 
 @SuppressLint("CheckResult")
 public class FriendDetailsActivity extends BaseActivity implements View.OnClickListener, CommonPopupWindow.ViewInterface {
@@ -314,8 +319,26 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
-                    ToastUtils.showShort(getString(R.string.the_friend_has_been_deleted));
-                    dialog.dismiss();
+                    Message myMessage = Message.obtain(friendId, Conversation.ConversationType.PRIVATE, CommandMessage.obtain("deleteFriend", ""));
+                    RongIM.getInstance().sendMessage(myMessage, null, null, new IRongCallback.ISendMessageCallback() {
+                        @Override
+                        public void onAttached(Message message) {
+
+                        }
+
+                        @Override
+                        public void onSuccess(Message message) {
+                            ToastUtils.showShort(getString(R.string.the_friend_has_been_deleted));
+                            dialog.dismiss();
+                            RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE
+                                    , friendId, null);
+                        }
+
+                        @Override
+                        public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+
+                        }
+                    });
                 }, this::handleApiError);
     }
 

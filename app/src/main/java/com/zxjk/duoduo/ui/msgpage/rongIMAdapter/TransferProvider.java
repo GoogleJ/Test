@@ -38,8 +38,9 @@ public class TransferProvider extends IContainerItemProvider.MessageProvider<Tra
             holder.sendLayout.setBackgroundResource(R.drawable.icon_send_red_packet_friend);
         }
 
-        if (!TextUtils.isEmpty(uiMessage.getExtra())) {
+        if (!TextUtils.isEmpty(uiMessage.getExtra()) || !TextUtils.isEmpty(transferMessage.getExtra())) {
             // 已被领取
+            holder.sendLayout.setAlpha(0.6f);
             if (transferMessage.getFromCustomerId().equals(Constant.userId)) {
                 if (uiMessage.getMessageDirection().equals(Message.MessageDirection.RECEIVE)) {
                     holder.remark.setText("已领取");
@@ -55,6 +56,7 @@ public class TransferProvider extends IContainerItemProvider.MessageProvider<Tra
             }
         } else {
             // 未被领取
+            holder.sendLayout.setAlpha(1f);
             holder.remark.setText(transferMessage.getRemark());
         }
         holder.transferMoney.setText(transferMessage.getMoney() + "HK");

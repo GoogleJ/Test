@@ -2,6 +2,7 @@ package com.zxjk.duoduo.ui.msgpage.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +77,11 @@ public class RedPackageRecoderAdapter extends RecyclerView.Adapter<RedPackageRec
             tvRedPackageNick.setText(bean.getNick());
             tvRedPackageTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Long.parseLong(bean.getCreateTime())));
             tvRedPackageMoney.setText(String.valueOf(bean.getMoney()) + "HK");
+            if (TextUtils.isEmpty(bean.getTYPE())) {
+                tvRedPackageNick.setCompoundDrawablesRelative(null, null, null, null);
+                tvRedPackageNick.setCompoundDrawablePadding(CommonUtils.dip2px(context, 0));
+                return;
+            }
             if (bean.getTYPE().equals("1")) {
                 tvRedPackageNick.setCompoundDrawablesRelative(null, null, context.getDrawable(R.drawable.ic_redpackage_pingshouqi), null);
                 tvRedPackageNick.setCompoundDrawablePadding(CommonUtils.dip2px(context, 4));

@@ -46,16 +46,17 @@
         android:layout_height="wrap_content"
         android:background="@color/white">
 
-        <CheckBox
+        <TextView
+            android:id="@+id/tvRed1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:button="@null"
             android:gravity="center"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
-            android:text="@string/pinshouqi" />
+            android:onClick="shouqiRed"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:text="@string/pinshouqi"
+            android:textColor="@color/textcolor1" />
 
         <View
             android:layout_width="1dp"
@@ -64,24 +65,27 @@
             android:layout_marginBottom="8dp"
             android:background="@color/divider" />
 
-        <CheckBox
+        <TextView
+            android:id="@+id/tvRed2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:button="@null"
             android:gravity="center"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
-            android:text="@string/red_packet1" />
+            android:onClick="normalRed"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:text="@string/red_packet1"
+            android:textColor="@color/textcolor3" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-4dp">
 
         <View
+            android:id="@+id/red1Line"
             android:layout_width="0dp"
             android:layout_height="3dp"
             android:layout_marginStart="72dp"
@@ -91,13 +95,15 @@
             android:minWidth="56dp" />
 
         <View
+            android:id="@+id/red2Line"
             android:layout_width="0dp"
             android:layout_height="3dp"
             android:layout_marginStart="72dp"
             android:layout_marginEnd="72dp"
             android:layout_weight="1"
             android:background="@color/themecolor"
-            android:minWidth="56dp" />
+            android:minWidth="56dp"
+            android:visibility="invisible" />
 
     </LinearLayout>
 
@@ -112,6 +118,7 @@
         android:padding="12dp">
 
         <TextView
+            android:id="@+id/tvGroupRedLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/singlemoney"
@@ -119,6 +126,7 @@
             android:textSize="16sp" />
 
         <EditText
+            android:id="@+id/etGroupRed1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -139,6 +147,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tvRedTips"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -164,6 +173,7 @@
             android:textSize="16sp" />
 
         <EditText
+            android:id="@+id/etGroupRed2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -178,12 +188,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="个"
+            android:text="@string/ge"
             android:textSize="15sp" />
 
     </LinearLayout>
 
     <TextView
+        android:id="@+id/tvGroupRedGroupnums"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -202,6 +213,7 @@
         android:padding="12dp">
 
         <EditText
+            android:id="@+id/etGroupRed3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -224,22 +236,35 @@
         android:paddingEnd="12dp">
 
         <TextView
-            android:text="asdasdasdasdada"
-            android:gravity="end"
+            android:id="@+id/tvGroupRedMoney"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
+            android:gravity="end"
             android:lines="1"
+            android:text="0.00"
             android:textColor="@color/themecolor"
             android:textSize="28sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="HK"
+            android:text=" HK"
             android:textColor="@color/textcolor2"
             android:textSize="25sp" />
 
     </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/selector_login_btn_click_bg"
+        android:onClick="sendRed"
+        android:text="@string/send_group_red"
+        android:textColor="@color/themecolor"
+        android:textSize="17sp" />
 
 </LinearLayout>

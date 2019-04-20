@@ -677,5 +677,22 @@
     <string name="report_edit">请输入要举报的内容，我们会认真审核违规内容并将结果通知给您</string>
     <string name="input_skin">请输入内容</string>
     <string name="report_success">举报成功</string>
+    <string name="conversation_inputing">对方正在输入</string>
+    <string name="conversation_speaking">对方正在讲话</string>
+    <string name="ge">个</string>
+    <string name="totalmoney">总金额</string>
+    <string name="redtips1">拼手气红包，抢到的金额随机不等</string>
+    <string name="redtips2">抢到的金额一样</string>
+    <string name="error_retry">网络异常，请退出重试</string>
+    <string name="send_group_red">塞进红包</string>
+    <string name="input_money">请输入金额</string>
+    <string name="input_num">请输入红包个数</string>
+    <string name="red_packet_tips2">手慢了、红包被抢完了</string>
+    <string name="downscore">下分</string>
+    <string name="upscore">上分</string>
+    <string name="game_start">开始下注</string>
+    <string name="gamerule">游戏规则</string>
+    <string name="game_duobao">多宝游戏</string>
+    <string name="gamerecord">积分详情</string>
 
 </resources>

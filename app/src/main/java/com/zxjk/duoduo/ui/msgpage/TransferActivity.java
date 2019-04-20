@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
@@ -31,7 +33,6 @@ import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.utils.MD5Utils;
 import com.zxjk.duoduo.utils.MoneyValueFilter;
 
-import androidx.annotation.Nullable;
 import io.reactivex.ObservableSource;
 import io.reactivex.functions.Function;
 import io.rong.imkit.RongIM;
@@ -152,7 +153,6 @@ public class TransferActivity extends BaseActivity implements SelectPopupWindow.
                         message.setTransferId(s.getId());
                         message.setName(targetUser.getName());
                         message.setFromCustomerId(Constant.userId);
-
                         Message message1 = Message.obtain(targetUser.getUserId(), Conversation.ConversationType.PRIVATE, message);
                         RongIM.getInstance().sendMessage(message1, null, null, new IRongCallback.ISendMessageCallback() {
                             @Override

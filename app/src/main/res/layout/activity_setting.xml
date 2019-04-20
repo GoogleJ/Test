@@ -59,7 +59,6 @@
                 android:background="@color/personal_information_1" />
 
             <TextView
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_mine_rightarrow"
@@ -69,16 +68,17 @@
                 android:paddingBottom="16dp"
                 android:text="@string/new_message_notificatino"
                 android:textColor="@color/themecolor"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="gone" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginStart="10dp"
-                android:background="@color/m_add_friend_line" />
+                android:background="@color/m_add_friend_line"
+                android:visibility="gone" />
 
             <TextView
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_mine_rightarrow"
@@ -89,13 +89,15 @@
                 android:paddingBottom="16dp"
                 android:text="@string/m_privacy_title_bar"
                 android:textColor="@color/themecolor"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="gone" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginStart="10dp"
-                android:background="@color/m_add_friend_line" />
+                android:background="@color/m_add_friend_line"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/verified"
@@ -199,7 +201,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginStart="10dp"
-                android:background="@color/m_add_friend_line" />
+                android:background="@color/m_add_friend_line"
+                android:visibility="gone" />
 
             <TextView
                 android:layout_width="match_parent"

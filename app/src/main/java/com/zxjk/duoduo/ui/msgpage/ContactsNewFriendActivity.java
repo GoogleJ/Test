@@ -8,6 +8,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
@@ -34,12 +38,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -117,15 +119,12 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ContactsNewFriendActivity.this)))
                     .compose(RxSchedulers.normalTrans())
                     .subscribe(s -> {
-                        Constant.deleteFriendMessageId = friendInfoResponse.getId();
                         ToastUtils.showShort(R.string.delete_friend_succesed);
                         adapter.getData().remove(position);
                         adapter.notifyItemRemoved(position);
 
-                        RongIMClient.getInstance().removeConversation(Conversation.ConversationType.PRIVATE
-                                , friendInfoResponse.getId(), null);
                         Message myMessage = Message.obtain(friendInfoResponse.getId(), Conversation.ConversationType.PRIVATE, CommandMessage.obtain("deleteFriend", ""));
-                        RongIMClient.getInstance().sendMessage(myMessage, null, null, new IRongCallback.ISendMessageCallback() {
+                        RongIM.getInstance().sendMessage(myMessage, null, null, new IRongCallback.ISendMessageCallback() {
                             @Override
                             public void onAttached(Message message) {
 
@@ -133,7 +132,7 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
 
                             @Override
                             public void onSuccess(Message message) {
-                                RongIMClient.getInstance().removeConversation(Conversation.ConversationType.PRIVATE
+                                RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE
                                         , friendInfoResponse.getId(), null);
                             }
 

@@ -48,6 +48,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -121,15 +122,12 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(getActivity())))
                     .compose(RxSchedulers.normalTrans())
                     .subscribe(s -> {
-                        Constant.deleteFriendMessageId = friendInfoResponse.getId();
                         ToastUtils.showShort(R.string.delete_friend_succesed);
                         adapter.getData().remove(position);
                         adapter.notifyItemRemoved(position);
 
-                        RongIMClient.getInstance().removeConversation(Conversation.ConversationType.PRIVATE
-                                , friendInfoResponse.getId(), null);
                         Message myMessage = Message.obtain(friendInfoResponse.getId(), Conversation.ConversationType.PRIVATE, CommandMessage.obtain("deleteFriend", ""));
-                        RongIMClient.getInstance().sendMessage(myMessage, null, null, new IRongCallback.ISendMessageCallback() {
+                        RongIM.getInstance().sendMessage(myMessage, null, null, new IRongCallback.ISendMessageCallback() {
                             @Override
                             public void onAttached(Message message) {
 
@@ -137,7 +135,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
 
                             @Override
                             public void onSuccess(Message message) {
-                                RongIMClient.getInstance().removeConversation(Conversation.ConversationType.PRIVATE
+                                RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE
                                         , friendInfoResponse.getId(), null);
                             }
 

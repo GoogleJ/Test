@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -14,12 +16,11 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferMessage;
-import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.ui.widget.TitleBar;
+import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.text.SimpleDateFormat;
 
-import androidx.annotation.Nullable;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
@@ -67,7 +68,6 @@ public class TransferInfoActivity extends BaseActivity {
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(transferResponse -> {
                     //发送消息
-                    transferMessage.setRemark("已领取");
                     transferMessage.setExtra("1");
                     Message obtain = Message.obtain(message.getSenderUserId(), Conversation.ConversationType.PRIVATE, transferMessage);
                     obtain.setExtra("1");
@@ -78,18 +78,8 @@ public class TransferInfoActivity extends BaseActivity {
 
                         @Override
                         public void onSuccess(Message m) {
-                            RongIMClient.getInstance().setMessageExtra(message.getMessageId(), "1", new RongIMClient.ResultCallback<Boolean>() {
-                                @Override
-                                public void onSuccess(Boolean aBoolean) {
-                                    Constant.tempMsg = message;
-                                    finish();
-                                }
-
-                                @Override
-                                public void onError(RongIMClient.ErrorCode errorCode) {
-
-                                }
-                            });
+                            Constant.tempMsg = message;
+                            finish();
                         }
 
                         @Override

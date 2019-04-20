@@ -32,12 +32,6 @@ public class WelcomeActivity extends BaseActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         if (!isTaskRoot()) {
-//            if (Constant.userId.equals("")) {
-//                startActivity(new Intent(this, LoginActivity.class));
-//            } else {
-//                startActivity(new Intent(this, HomeActivity.class));
-//            }
-
             finish();
             return;
         }

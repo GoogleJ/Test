@@ -4,6 +4,9 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -24,13 +27,12 @@ import com.zxjk.duoduo.ui.walletpage.WalletFragment;
 
 import java.util.concurrent.TimeUnit;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import io.reactivex.Observable;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 
 import static com.ashokvarma.bottomnavigation.BottomNavigationBar.BACKGROUND_STYLE_RIPPLE;
+import static com.ashokvarma.bottomnavigation.BottomNavigationBar.BACKGROUND_STYLE_STATIC;
 import static com.google.android.material.tabs.TabLayout.MODE_FIXED;
 
 /**
@@ -100,24 +102,22 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
         } else {
             m_bottom_bar.setMode(MODE_FIXED)
                     // 背景样式
-                    .setBackgroundStyle(BACKGROUND_STYLE_RIPPLE)
+                    .setBackgroundStyle(BACKGROUND_STYLE_STATIC)
                     // 背景颜色
-                    .setBarBackgroundColor("#2FA8E1")
-                    // 未选中状态颜色
-                    .setInActiveColor("#929292")
+                    .setBarBackgroundColor("#ffffff")
                     // 选中状态颜色
-                    .setActiveColor("#ffffff")
+                    .setActiveColor("#4B4D5B")
+                    .setInActiveColor("#BEC4CF")
                     // 添加Item
-                    .addItem(new BottomNavigationItem(R.drawable.tab_message_icon_nl, "消息").setInactiveIconResource(R.drawable.tab_message_icon_hl).setBadgeItem(badgeItem))
-                    .addItem(new BottomNavigationItem(R.drawable.tab_qun_icon_nl, "社群").setInactiveIconResource(R.drawable.tab_qun_icon_hl))
-                    .addItem(new BottomNavigationItem(R.drawable.tab_wallet_icon_nl, "钱包").setInactiveIconResource(R.drawable.tab_wallet_icon_hl))
-                    .addItem(new BottomNavigationItem(R.drawable.tab_setting_icon_nl, "我的").setInactiveIconResource(R.drawable.tab_setting_icon_hl))
+                    .addItem(new BottomNavigationItem(R.drawable.tab_message_icon_hl, "消息").setBadgeItem(badgeItem))
+                    .addItem(new BottomNavigationItem(R.drawable.tab_qun_icon_hl, "社群"))
+                    .addItem(new BottomNavigationItem(R.drawable.tab_wallet_icon_hl, "钱包"))
+                    .addItem(new BottomNavigationItem(R.drawable.tab_setting_icon_hl, "我的"))
                     //设置默认选中位置
                     .setFirstSelectedPosition(0)
                     // 提交初始化（完成配置）
                     .initialise();
         }
-
 
         m_bottom_bar.setTabSelectedListener(this);
 

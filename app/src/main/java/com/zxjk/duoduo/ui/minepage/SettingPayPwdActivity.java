@@ -23,6 +23,7 @@ import com.zxjk.duoduo.ui.widget.KeyboardPopupWindow;
 import com.zxjk.duoduo.ui.widget.PayPsdInputView;
 import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.utils.MD5Utils;
 
 import androidx.annotation.Nullable;
 import butterknife.ButterKnife;
@@ -54,7 +55,6 @@ public class SettingPayPwdActivity extends BaseActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
     }
-
 
     private void initUI() {
         m_set_payment_pwd_label = findViewById(R.id.m_set_payment_pwd_label);
@@ -107,7 +107,7 @@ public class SettingPayPwdActivity extends BaseActivity {
             Intent intent = getIntent();
             String number = intent.getStringExtra("idCardEdit");
             String verifiedCodeEdit = intent.getStringExtra("verifiedCodeEdit");
-            settingPayPwd(number, verifiedCodeEdit, newPwd, newPwdTwo);
+            settingPayPwd(number, verifiedCodeEdit, MD5Utils.getMD5(newPwd), MD5Utils.getMD5(newPwdTwo));
         });
         popupWindow = new KeyboardPopupWindow(this, getWindow().getDecorView(), payPsdInputView, false);
         payPsdInputView.setOnClickListener(v -> {
