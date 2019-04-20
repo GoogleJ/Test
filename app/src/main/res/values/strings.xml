@@ -694,5 +694,19 @@
     <string name="gamerule">游戏规则</string>
     <string name="game_duobao">多宝游戏</string>
     <string name="gamerecord">积分详情</string>
+    <string name="type">类型:</string>
+    <string name="game_niuniu">牛牛</string>
+    <string name="game_daxiao">大小</string>
+    <string name="game_baijiale">百家乐</string>
+    <string name="xiazhu">下注:</string>
+    <string name="peilv">赔率:</string>
+    <string name="gametotalmoney">下注总金额:</string>
+    <string name="xiazhu2">下注</string>
+    <string name="gameTips">请在20S内选择(填写)并下注，20S后页面将关闭</string>
+    <string name="select_game_type">请选择游戏类型</string>
+    <string name="qingxiazhu">请下注</string>
+    <string name="select_beilv">请选择倍率</string>
+    <string name="record">记录</string>
+    <string name="downscorecommit">确认下分</string>
 
 </resources>

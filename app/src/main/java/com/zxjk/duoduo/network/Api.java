@@ -6,6 +6,7 @@ import com.zxjk.duoduo.network.response.CreateWalletResponse;
 import com.zxjk.duoduo.network.response.DetailListResposne;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.response.GetBalanceHkResponse;
+import com.zxjk.duoduo.network.response.GetGroupGameParameterResponse;
 import com.zxjk.duoduo.network.response.GetGroupRedPackageInfoResponse;
 import com.zxjk.duoduo.network.response.GetNumbeOfTransactionResponse;
 import com.zxjk.duoduo.network.response.GetOverOrderResponse;
@@ -37,13 +38,6 @@ import retrofit2.http.POST;
 
 public interface Api {
 
-    /**
-     * 这里是登录
-     *
-     * @param phone
-     * @param pwd
-     * @return
-     */
     @POST("duoduo/login")
     @FormUrlEncoded
     Observable<BaseResponse<LoginResponse>> login(
@@ -51,14 +45,6 @@ public interface Api {
             @Field("pwd") String pwd
     );
 
-    /**
-     * 这里是注册接口
-     *
-     * @param phone
-     * @param code
-     * @param pwd
-     * @return
-     */
     @POST("duoduo/customer/appUserRegister")
     @FormUrlEncoded
     Observable<BaseResponse<LoginResponse>> register(
@@ -67,12 +53,6 @@ public interface Api {
             @Field("pwd") String pwd
     );
 
-    /**
-     * 这里是短信验证码接口
-     *
-     * @param phone
-     * @return
-     */
     @POST("duoduo/getCode")
     @FormUrlEncoded
     Observable<BaseResponse<String>> getCode(
@@ -80,14 +60,6 @@ public interface Api {
             @Field("type") String type
     );
 
-    /**
-     * 这里是忘记密码
-     *
-     * @param phone
-     * @param pwd
-     * @param code
-     * @return
-     */
     @FormUrlEncoded
     @POST("duoduo/customer/forgetPwd")
     Observable<BaseResponse<String>> forgetPwd(
@@ -96,20 +68,10 @@ public interface Api {
             @Field("securityCode") String code
     );
 
-
-    //更新用户信息
     @POST("duoduo/customer/updateCustomerInfo")
     @FormUrlEncoded
     Observable<BaseResponse<LoginResponse>> updateUserInfo(@Field("customerInfo") String customerInfo);
 
-    /**
-     * 修改支付密码
-     *
-     * @param oldPwd
-     * @param newPwdOne
-     * @param newPwdTwo
-     * @return
-     */
     @POST("duoduo/customer/updatePayPwd")
     @FormUrlEncoded
     Observable<BaseResponse<LoginResponse>> updatePayPwd(
@@ -118,57 +80,27 @@ public interface Api {
             @Field("newPayPwdTwo") String newPwdTwo
     );
 
-    /**
-     * 获取好友详情
-     *
-     * @param friendId
-     * @return
-     */
     @POST("duoduo/friend/getFriendInfoById")
     @FormUrlEncoded
     Observable<BaseResponse<FriendInfoResponse>> getFriendInfoById(
             @Field("friendId") String friendId
     );
 
-    /**
-     * 获取好友列表
-     *
-     * @return
-     */
     @POST("duoduo/friend/getFriendListById")
     Observable<BaseResponse<List<FriendInfoResponse>>> getFriendListById();
 
-    /**
-     * 模糊搜索好友
-     *
-     * @param data
-     * @return
-     */
     @POST("duoduo/friend/searchFriend")
     @FormUrlEncoded
     Observable<BaseResponse<List<FriendInfoResponse>>> searchFriend(
             @Field("data") String data
     );
 
-    /**
-     * 模糊搜索用户
-     *
-     * @param data
-     * @return
-     */
     @POST("duoduo/friend/searchCustomer")
     @FormUrlEncoded
     Observable<BaseResponse<List<FriendInfoResponse>>> searchCustomerInfo(
             @Field("data") String data
     );
 
-    /**
-     * 申请添加好友
-     *
-     * @param friendId
-     * @param remark
-     * @return
-     */
     @POST("duoduo/friend/applyAddFriend")
     @FormUrlEncoded
     Observable<BaseResponse<String>> applyAddFriend(
@@ -176,21 +108,9 @@ public interface Api {
             @Field("remark") String remark
     );
 
-    /**
-     * 获取待添加的好友列表
-     *
-     * @return
-     */
     @POST("duoduo/friend/getMyfriendsWaiting")
     Observable<BaseResponse<List<FriendInfoResponse>>> getMyfriendsWaiting();
 
-    /**
-     * 同意添加
-     *
-     * @param friendId
-     * @param markName
-     * @return
-     */
     @FormUrlEncoded
     @POST("duoduo/friend/addFriend")
     Observable<BaseResponse<String>> addFriend(
@@ -198,25 +118,12 @@ public interface Api {
             @Field("markName") String markName
     );
 
-    /**
-     * 删除好友申请
-     *
-     * @param friendId
-     * @return
-     */
     @POST("duoduo/friend/deleteMyfriendsWaiting")
     @FormUrlEncoded
     Observable<BaseResponse<String>> deleteMyfirendsWaiting(
             @Field("deleteCustomerId") String friendId
     );
 
-    /**
-     * 修改手机号
-     *
-     * @param newMobile
-     * @param securityCode
-     * @return
-     */
     @POST("duoduo/customer/updateMobile")
     @FormUrlEncoded
     Observable<BaseResponse<String>> updateMobile(
@@ -224,54 +131,21 @@ public interface Api {
             @Field("securityCode") String securityCode
     );
 
-    /**
-     * 获取所有群组信息
-     */
     @POST("duoduo/group/getGroupByCustomId")
     @FormUrlEncoded
     Observable<BaseResponse<List<GroupChatResponse>>> getMygroupinformation(@Field("customerId") String customerId);
 
-
-    /**
-     * 个人中心-获取账户信息
-     *
-     * @return
-     */
     @POST("duoduo/exchange/getBalanceHk")
     Observable<BaseResponse<GetBalanceHkResponse>> getBalanceHk();
 
-    /**
-     * 获取交易额度
-     *
-     * @return
-     */
     @POST("duoduo/exchange/getNumbeOfTransaction")
     Observable<BaseResponse<GetNumbeOfTransactionResponse>> getNumbeOfTransaction();
 
-    /**
-     * 个人发布出售币种
-     *
-     * @param number
-     * @param money
-     * @param currency
-     * @param paypwd
-     * @param payTpye
-     * @return
-     */
     @POST("duoduo/exchange/releasePurchase")
     @FormUrlEncoded
     Observable<BaseResponse<ReleasePurchase>> releasePurchase(@Field("number") String number,
                                                               @Field("money") String money, @Field("currency") String currency, @Field("payPwd") String paypwd, @Field("payTpye") String payTpye);
 
-    /**
-     * 发布购买币种信息
-     *
-     * @param number
-     * @param money
-     * @param currency
-     * @param payTpye
-     * @return
-     */
     @POST("duoduo/exchange/releaseSale")
     @FormUrlEncoded
     Observable<BaseResponse<ReleaseSaleResponse>> releaseSale(@Field("number") String number,
@@ -279,33 +153,15 @@ public interface Api {
                                                               @Field("currency") String currency,
                                                               @Field("payTpye") String payTpye);
 
-    /**
-     * 获取用户收款方式
-     *
-     * @return
-     */
     @POST("duoduo/customer/getPayInfo")
     Observable<BaseResponse<List<PayInfoResponse>>> getPayInfo();
 
-    /**
-     * 删除好友相关
-     *
-     * @return
-     */
     @POST("duoduo/friend/deleteFriend")
     @FormUrlEncoded
     Observable<BaseResponse<String>> deleteFriend(
             @Field("friendId") String friendId
     );
 
-    /**
-     * 修改登录密码
-     *
-     * @param oldPwd
-     * @param newPwdOne
-     * @param newPwdTwo
-     * @return
-     */
     @POST("duoduo/customer/updatePwd")
     @FormUrlEncoded
     Observable<BaseResponse<String>> updatePwd(
@@ -314,78 +170,34 @@ public interface Api {
             @Field("newPwdTwo") String newPwdTwo
     );
 
-    /**
-     * 退出登录
-     *
-     * @return
-     */
     @POST("duoduo/loginOut")
     Observable<BaseResponse<String>> loginOut();
 
-    /**
-     * 新增（修改收款方式）
-     *
-     * @return
-     */
     @POST("duoduo/customer/addPayInfo")
     @FormUrlEncoded
     Observable<BaseResponse<String>> addPayInfo(
             @Field("data") String data
     );
 
-    /**
-     * 实名认证
-     *
-     * @param data
-     * @return
-     */
     @POST("duoduo/customer/certification")
     @FormUrlEncoded
     Observable<BaseResponse<String>> certification(
             @Field("data") String data
     );
 
-    /**
-     * 撤销发布的卖单
-     *
-     * @param sellOrderId
-     * @return
-     */
     @POST("duoduo/exchange/closeSellOrder")
     @FormUrlEncoded
     Observable<BaseResponse<String>> closeSellOrder(@Field("sellOrderId") String sellOrderId);
 
-    /**
-     * 买家撤销订单
-     *
-     * @param buyOrderId
-     * @param bothOrderId
-     * @param sellOrderId
-     * @return
-     */
     @POST("duoduo/exchange/cancelled")
     @FormUrlEncoded
     Observable<BaseResponse<String>> cancelled(@Field("buyOrderId") String buyOrderId
             , @Field("bothOrderId") String bothOrderId
             , @Field("sellOrderId") String sellOrderId);
 
-    /**
-     * 查询用户是否可以进行买单操作
-     *
-     * @return
-     */
     @POST("duoduo/exchange/isConfine")
     Observable<BaseResponse<String>> isConfine();
 
-    /**
-     * 完成交易
-     *
-     * @param buyCustomerId
-     * @param buyOrderId
-     * @param sellOrderId
-     * @param bothOrderId
-     * @return
-     */
     @POST("duoduo/exchange/overOrder")
     @FormUrlEncoded
     Observable<BaseResponse<String>> overOrder(@Field("buyCustomerId") String buyCustomerId
@@ -394,14 +206,6 @@ public interface Api {
             , @Field("bothOrderId") String bothOrderId
             , @Field("payPwd") String payPwd);
 
-    /**
-     * 卖家拒绝审核
-     *
-     * @param buyOrderId
-     * @param bothOrderId
-     * @param sellOrderId
-     * @return
-     */
     @POST("duoduo/exchange/rejectAudit")
     @FormUrlEncoded
     Observable<BaseResponse<String>> rejectAudit(
@@ -409,13 +213,6 @@ public interface Api {
             , @Field("bothOrderId") String bothOrderId
             , @Field("sellOrderId") String sellOrderId);
 
-    /**
-     * 修改好友备注
-     *
-     * @param friendId
-     * @param remark
-     * @return
-     */
     @POST("duoduo/friend/updateRemark")
     @FormUrlEncoded
     Observable<BaseResponse<FriendInfoResponse>> updateRemark(
@@ -423,67 +220,30 @@ public interface Api {
             @Field("remark") String remark
     );
 
-
-    /**
-     * 买家确认付款
-     *
-     * @param bothOrderId
-     * @return
-     */
     @POST("duoduo/exchange/updateBuyPayState")
     @FormUrlEncoded
     Observable<BaseResponse<String>> updateBuyPayState(@Field("bothOrderId") String bothOrderId
             , @Field("picture") String picture);
 
-    /**
-     * 判断是否允许修改支付方式
-     *
-     * @return
-     */
     @POST("duoduo/customer/updatePayInfo")
     @FormUrlEncoded
     Observable<BaseResponse<String>> updatePayInfo(
             @Field("payType") String payType
     );
 
-    /**
-     * 获取用户实名认证状态
-     *
-     * @return
-     */
     @POST("duoduo/customer/getCustomerAuth")
     Observable<BaseResponse<String>> getCustomerAuth();
 
-    /**
-     * 获取用户已完成订单
-     *
-     * @return
-     */
     @POST("duoduo/exchange/getOverOrder")
     Observable<BaseResponse<List<GetOverOrderResponse>>> getOverOrder();
 
-    /***
-     * 获取用户发布的出售列表
-     * @return
-     */
     @POST("duoduo/exchange/getReleasePurchase")
     Observable<BaseResponse<List<GetReleasePurchaseResponse>>> getReleasePurchase();
 
-    /**
-     * 查看钱包地址及余额
-     *
-     * @param customerDuoDuoId
-     * @return
-     */
     @POST("duoduo/wallet/getWallet")
     @FormUrlEncoded
     Observable<BaseResponse<CreateWalletResponse>> getWallet(@Field("customerDuoDuoId") String customerDuoDuoId);
 
-    /**
-     * 找回支付密码
-     *
-     * @return
-     */
     @POST("duoduo/customer/fandPayPwd")
     @FormUrlEncoded
     Observable<BaseResponse<String>> fandPayPwd(
@@ -494,13 +254,6 @@ public interface Api {
 
     );
 
-    /**
-     * 创建群
-     *
-     * @param groupOwnerId
-     * @param customerIds
-     * @return
-     */
     @POST("duoduo/group/makeGroup")
     @FormUrlEncoded
     Observable<BaseResponse<GroupResponse.GroupInfoBean>> makeGroup(
@@ -508,23 +261,11 @@ public interface Api {
             @Field("customerIds") String customerIds
     );
 
-    /**
-     * 查看群成员
-     */
     @POST("duoduo/group/getGroupMemByGroupId")
     @FormUrlEncoded
     Observable<BaseResponse<List<AllGroupMembersResponse>>> getGroupMemByGroupId(
             @Field("groupId") String groupId
     );
-
-    /**
-     * 同意加入群聊
-     *
-     * @param groupId
-     * @param inviterId
-     * @param customerIds
-     * @return
-     */
 
     @POST("duoduo/group/enterGroup")
     @FormUrlEncoded
@@ -534,37 +275,18 @@ public interface Api {
             @Field("customerIds") String customerIds
     );
 
-    /**
-     * 根据groupId查看群信息
-     *
-     * @param groupId
-     * @return
-     */
     @POST("duoduo/group/getGroupByGroupId")
     @FormUrlEncoded
     Observable<BaseResponse<GroupResponse>> getGroupByGroupId(
             @Field("groupId") String groupId
     );
 
-    /**
-     * 修改群信息
-     *
-     * @param groupInfo
-     * @return
-     */
     @POST("duoduo/group/updateGroupInfo")
     @FormUrlEncoded
     Observable<BaseResponse<GroupResponse.GroupInfoBean>> updateGroupInfo(
             @Field("groupInfo") String groupInfo
     );
 
-    /**
-     * 解散群
-     *
-     * @param groupId
-     * @param groupOwnerId
-     * @return
-     */
     @POST("duoduo/group/disBandGroup")
     @FormUrlEncoded
     Observable<BaseResponse<String>> disBandGroup(
@@ -572,13 +294,6 @@ public interface Api {
             @Field("groupOwnerId") String groupOwnerId
     );
 
-    /**
-     * 退出群组
-     *
-     * @param groupId
-     * @param customerId
-     * @return
-     */
     @POST("duoduo/group/exitGroup")
     @FormUrlEncoded
     Observable<BaseResponse<String>> exitGroup(
@@ -586,13 +301,6 @@ public interface Api {
             @Field("customerId") String customerId
     );
 
-    /**
-     * 移除群组
-     *
-     * @param groupId
-     * @param customerIds
-     * @return
-     */
     @POST("duoduo/group/moveOutGroup")
     @FormUrlEncoded
     Observable<BaseResponse<String>> moveOutGroup(
@@ -600,13 +308,6 @@ public interface Api {
             @Field("customerIds") String customerIds
     );
 
-    /**
-     * 群主转让
-     *
-     * @param groupId
-     * @param customerId
-     * @return
-     */
     @POST("duoduo/group/updateGroupOwner")
     @FormUrlEncoded
     Observable<BaseResponse<String>> updateGroupOwner(
@@ -614,42 +315,14 @@ public interface Api {
             @Field("customerId") String customerId
     );
 
-    /**
-     * 创建钱包
-     *
-     * @param customerDuoDuoId
-     * @return
-     */
     @POST("duoduo/wallet/createWallet")
     @FormUrlEncoded
     Observable<BaseResponse<CreateWalletResponse>> createWallet(@Field("customerDuoDuoId") String customerDuoDuoId);
 
-    /**
-     * 查看eth转账记录
-     *
-     * @param address
-     * @param page
-     * @param offset
-     * @return
-     */
     @POST("duoduo/wallet/getTransferEth")
     @FormUrlEncoded
     Observable<BaseResponse<GetTransferEthResponse>> getTransferEth(@Field("address") String address, @Field("page") String page, @Field("offset") String offset);
 
-
-    /**
-     * 转账
-     *
-     * @param payPwd
-     * @param type
-     * @param fromaddress
-     * @param toaddress
-     * @param gasPrice
-     * @param number
-     * @param keyStore
-     * @param duoduoId
-     * @return
-     */
     @POST("duoduo/wallet/signTransaction")
     @FormUrlEncoded
     Observable<BaseResponse<SignTransactionResponse>>
@@ -677,12 +350,6 @@ public interface Api {
     Observable<BaseResponse<String>> sendHkbOrHkExchange(@Field("type") String type, @Field("number") String number,
                                                          @Field("transactionHash") String transactionHash, @Field("rawTransaction") String rawTransaction);
 
-    /**
-     * 个人对个人进行发送红包
-     *
-     * @param data
-     * @return
-     */
     @POST("duoduo/redPackage/sendSingleRedPackage")
     @FormUrlEncoded
     Observable<BaseResponse<RedPackageResponse>> sendSingleRedPackage(
@@ -779,6 +446,27 @@ public interface Api {
 
     @POST("duoduo/redPackage/receiveGroupRedPackage")
     @FormUrlEncoded
-    Observable<BaseResponse<ReceiveGroupRedPackageResponse>> receiveGroupRedPackage(@Field("redPackageId") String redPackageId);
+    Observable<BaseResponse<ReceiveGroupRedPackageResponse>> receiveGroupRedPackage(@Field("redPackageId") String redPackageId
+            , @Field("isGame") String isGame);
+
+    @POST("duoduo/group/game/getGroupGameParameter")
+    @FormUrlEncoded
+    Observable<BaseResponse<GetGroupGameParameterResponse>> getGroupGameParameter(@Field("groupId") String groupId);
+
+    @POST("duoduo/group/game/getGroupMemberPoints")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> getGroupMemberPoints(@Field("groupId") String groupId);
+
+    @POST("duoduo/group/game/upPoints")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> upPoints(@Field("groupId") String groupId
+            , @Field("hk") String hk
+            , @Field("pwd") String pwd);
+
+    @POST("duoduo/group/game/onPoints")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> onPoints(@Field("groupId") String groupId
+            , @Field("hk") String hk
+            , @Field("pwd") String pwd);
 
 }

@@ -5,14 +5,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Application;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
@@ -21,11 +22,10 @@ import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GamePopupWindow;
 import com.zxjk.duoduo.ui.widget.dialog.AccountFreezeDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -62,7 +62,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     AccountFreezeDialog dialog;
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,13 +71,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         edit_mobile.setText(SPUtils.getInstance().getString("mobile"));
 
 //        login("18202987805", "123456");
-//        login("15249047865","123456");
-//        login("14725836911","123456");
-//        login("15935910958","000000");
-//        login("18625658542","123456");
-//        login("15529419986","123456");
-//        login("18592054972","123456");
-
 
     }
 
@@ -107,26 +99,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 startActivity(new Intent(LoginActivity.this, ChangeLanguageActivity.class));
                 break;
             case R.id.btn_login:
-
-                String mobile = edit_mobile.getText().toString().trim();
-                String password = edit_password.getText().toString().trim();
-                if (TextUtils.isEmpty(mobile) || TextUtils.isEmpty(password)) {
-                    ToastUtils.showShort(getString(R.string.edit_mobile_or_password_tip));
-                    return;
-                }
-                if (TextUtils.isEmpty(mobile) && "".equals(mobile)) {
-                    ToastUtils.showShort(getString(R.string.edit_mobile_tip));
-                    return;
-                }
-                if (TextUtils.isEmpty(password) || 5 >= password.length() || password.length() >= 14) {
-                    ToastUtils.showShort(getString(R.string.edit_password_reg));
-                    return;
-                }
-                login(mobile, password);
-                SPUtils.getInstance().put("mobile", edit_mobile.getText().toString().trim());
+                new GamePopupWindow(this).showPopupWindow();
+//                String mobile = edit_mobile.getText().toString().trim();
+//                String password = edit_password.getText().toString().trim();
+//                if (TextUtils.isEmpty(mobile) || TextUtils.isEmpty(password)) {
+//                    ToastUtils.showShort(getString(R.string.edit_mobile_or_password_tip));
+//                    return;
+//                }
+//                if (TextUtils.isEmpty(mobile) && "".equals(mobile)) {
+//                    ToastUtils.showShort(getString(R.string.edit_mobile_tip));
+//                    return;
+//                }
+//                if (TextUtils.isEmpty(password) || 5 >= password.length() || password.length() >= 14) {
+//                    ToastUtils.showShort(getString(R.string.edit_password_reg));
+//                    return;
+//                }
+//                login(mobile, password);
+//                SPUtils.getInstance().put("mobile", edit_mobile.getText().toString().trim());
                 break;
             default:
-                break;
         }
     }
 

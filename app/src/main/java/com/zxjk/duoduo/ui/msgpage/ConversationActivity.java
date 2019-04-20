@@ -257,7 +257,7 @@ public class ConversationActivity extends AppCompatActivity implements RongIMCli
                                                     }, t -> ToastUtils.showShort(RxException.getMessage(t))));
                                         } else if (message.getConversationType().equals(Conversation.ConversationType.GROUP)) {
                                             dialog.setOnOpenListener(() -> ServiceFactory.getInstance().getBaseService(Api.class)
-                                                    .receiveGroupRedPackage(redPacketMessage.getRedId())
+                                                    .receiveGroupRedPackage(redPacketMessage.getRedId(), redPacketMessage.getIsGame())
                                                     .compose(provider.bindToLifecycle())
                                                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this)))
                                                     .compose(RxSchedulers.normalTrans())

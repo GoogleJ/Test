@@ -39,6 +39,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ui.msgpage.GameDownScoreActivity"></activity>
         <activity
             android:name=".skin.SkinReportActivity"
             android:launchMode="singleTask"
@@ -306,13 +307,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Theme_Splash"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".ui.msgpage.ModifyNotesActivity"
