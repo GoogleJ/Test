@@ -1,91 +1,74 @@
 package com.zxjk.duoduo.ui.msgpage;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.ui.minepage.BillingMessageActivity;
-import com.zxjk.duoduo.ui.minepage.RetrievePayPwdActivity;
 import com.zxjk.duoduo.ui.widget.dialog.SelectPopupWindow;
 import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.utils.MD5Utils;
 
 import io.reactivex.functions.Consumer;
 
-@SuppressLint("CheckResult")
-public class GameDownScoreActivity extends BaseActivity {
+public class GameUpScoreActivity extends BaseActivity {
 
+    private ImageView ivHead;
+    private TextView tvName;
     private EditText et;
-    private TextView tv;
-    private String total;
 
     private String groupId;
-
     private SelectPopupWindow selectPopupWindow;
 
+    @SuppressLint("CheckResult")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game_down_score);
-
-        et = findViewById(R.id.et);
-        tv = findViewById(R.id.tv);
+        setContentView(R.layout.activity_game_up_score);
 
         groupId = getIntent().getStringExtra("groupId");
+
+        ivHead = findViewById(R.id.ivHead);
+        tvName = findViewById(R.id.tvName);
+        et = findViewById(R.id.et);
+
+        GlideUtil.loadCornerImg(ivHead, Constant.currentUser.getHeadPortrait(), 3);
+        tvName.setText(Constant.currentUser.getNick());
 
         selectPopupWindow = new SelectPopupWindow(this, (psw, complete) -> {
             if (complete) {
                 ServiceFactory.getInstance().getBaseService(Api.class)
-                        .upPoints(groupId, et.getText().toString().trim(), MD5Utils.getMD5(psw))
-                        .compose(RxSchedulers.normalTrans())
+                        .onPoints(groupId, et.getText().toString().trim(), MD5Utils.getMD5(psw))
                         .compose(bindToLifecycle())
+                        .compose(RxSchedulers.normalTrans())
                         .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                         .subscribe(s -> {
-                            ToastUtils.showShort(R.string.input_downscore2);
+                            Intent intent = new Intent(this, GameUpScoreConfirmActivity.class);
+                            intent.putExtra("hk", et.getText().toString().trim());
+                            startActivity(intent);
                             finish();
                         }, this::handleApiError);
             }
         });
-
-        ServiceFactory.getInstance().getBaseService(Api.class)
-                .getGroupMemberPoints(groupId)
-                .compose(bindToLifecycle())
-                .compose(RxSchedulers.normalTrans())
-                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                .subscribe(s -> {
-                    total = s;
-                    tv.setText("当前可下分总额" + s + "HK");
-                }, this::handleApiError);
     }
 
-    //下分
-    public void commit(View view) {
-        if (TextUtils.isEmpty(et.getText().toString().trim())) {
-            ToastUtils.showShort(R.string.input_downscore);
-            return;
-        }
-        if (Double.parseDouble(total) < Double.parseDouble(et.getText().toString().trim())) {
-            ToastUtils.showShort(R.string.input_downscore1);
-            return;
-        }
-        KeyboardUtils.hideSoftInput(this);
-        Rect rect = new Rect();
-        getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
-        int winHeight = getWindow().getDecorView().getHeight();
-        selectPopupWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, winHeight - rect.bottom);
+    public void back(View view) {
+        finish();
     }
 
     //记录
@@ -93,9 +76,18 @@ public class GameDownScoreActivity extends BaseActivity {
 
     }
 
-    //返回
-    public void back(View view) {
-        finish();
-    }
+    //确认上分
+    public void commit(View view) {
+        String trim = et.getText().toString().trim();
+        if (TextUtils.isEmpty(trim)) {
+            ToastUtils.showShort(R.string.inputupscore);
+            return;
+        }
 
+        KeyboardUtils.hideSoftInput(this);
+        Rect rect = new Rect();
+        getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+        int winHeight = getWindow().getDecorView().getHeight();
+        selectPopupWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, winHeight - rect.bottom);
+    }
 }

@@ -5,11 +5,14 @@ import com.zxjk.duoduo.network.response.BaseResponse;
 import com.zxjk.duoduo.network.response.CreateWalletResponse;
 import com.zxjk.duoduo.network.response.DetailListResposne;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
+import com.zxjk.duoduo.network.response.GetAllPlayGroupResponse;
 import com.zxjk.duoduo.network.response.GetBalanceHkResponse;
 import com.zxjk.duoduo.network.response.GetGroupGameParameterResponse;
 import com.zxjk.duoduo.network.response.GetGroupRedPackageInfoResponse;
+import com.zxjk.duoduo.network.response.GetIntegralDetailsResponse;
 import com.zxjk.duoduo.network.response.GetNumbeOfTransactionResponse;
 import com.zxjk.duoduo.network.response.GetOverOrderResponse;
+import com.zxjk.duoduo.network.response.GetRebateByIdResponse;
 import com.zxjk.duoduo.network.response.GetRedPackageRecordResponse;
 import com.zxjk.duoduo.network.response.GetRedPackageStatusResponse;
 import com.zxjk.duoduo.network.response.GetReleasePurchaseResponse;
@@ -468,5 +471,19 @@ public interface Api {
     Observable<BaseResponse<String>> onPoints(@Field("groupId") String groupId
             , @Field("hk") String hk
             , @Field("pwd") String pwd);
+
+    @POST("duoduo/group/game/getIntegralDetails")
+    @FormUrlEncoded
+    Observable<BaseResponse<List<GetIntegralDetailsResponse>>> getIntegralDetails(@Field("groupId") String groupId);
+
+    @POST("duoduo/playRebate/getRebateById")
+    @FormUrlEncoded
+    Observable<BaseResponse<GetRebateByIdResponse>> getRebateById(@Field("groupId") String groupId);
+
+    @POST("duoduo/group/getAllPlayGroup")
+    @FormUrlEncoded
+    Observable<BaseResponse<GetAllPlayGroupResponse>> getAllPlayGroup(@Field("customerId") String customerId);
+
+
 
 }

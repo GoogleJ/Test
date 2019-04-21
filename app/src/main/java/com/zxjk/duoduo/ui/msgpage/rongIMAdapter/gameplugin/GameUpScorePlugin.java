@@ -8,6 +8,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.ui.msgpage.GameDownScoreActivity;
+import com.zxjk.duoduo.ui.msgpage.GameUpScoreActivity;
 
 import io.rong.imkit.RongExtension;
 import io.rong.imkit.plugin.IPluginModule;
@@ -25,7 +27,9 @@ public class GameUpScorePlugin implements IPluginModule {
 
     @Override
     public void onClick(Fragment fragment, RongExtension rongExtension) {
-
+        Intent intent = new Intent(fragment.getContext(), GameUpScoreActivity.class);
+        intent.putExtra("groupId", rongExtension.getTargetId());
+        fragment.startActivity(intent);
     }
 
     @Override

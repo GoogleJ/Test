@@ -224,7 +224,7 @@ public class ConversationActivity extends AppCompatActivity implements RongIMCli
                                     if (TextUtils.isEmpty(message.getExtra())) {
                                         Constant.tempMsg = message;
                                     }
-                                    if (message.getSenderUserId().equals(Constant.currentUser.getId()) && message.getConversationType().equals(Conversation.ConversationType.PRIVATE)) {
+                                    if (s.getRedPackageState().equals("3")) {
                                         //个人发的红包，直接进入详情页
                                         Intent intent1 = new Intent(context, PeopleUnaccalimedActivity.class);
                                         intent1.putExtra("id", redPacketMessage.getRedId());
@@ -236,12 +236,14 @@ public class ConversationActivity extends AppCompatActivity implements RongIMCli
                                         ExpiredEnvelopesDialog dialog = new ExpiredEnvelopesDialog(ConversationActivity.this);
                                         dialog.show(RongUserInfoManager.getInstance().getUserInfo(message.getSenderUserId()),
                                                 true, redPacketMessage.getRedId());
-                                    } else if (s.getRedPackageState().equals("2")) {
+                                    }
+                                    if (s.getRedPackageState().equals("2")) {
                                         //手慢了，已被领完
                                         ExpiredEnvelopesDialog dialog = new ExpiredEnvelopesDialog(ConversationActivity.this);
                                         dialog.show(RongUserInfoManager.getInstance().getUserInfo(message.getSenderUserId()),
                                                 false, redPacketMessage.getRedId());
-                                    } else if (s.getRedPackageState().equals("0")) {
+                                    }
+                                    if (s.getRedPackageState().equals("0")) {
                                         //可领取
                                         RedEvelopesDialog dialog = new RedEvelopesDialog(ConversationActivity.this);
                                         if (message.getConversationType().equals(Conversation.ConversationType.PRIVATE)) {
@@ -327,13 +329,13 @@ public class ConversationActivity extends AppCompatActivity implements RongIMCli
                         UIMessage transferMessage = messageAdapter.getItem(i);
                         RongIM.getInstance().setMessageExtra(transferMessage.getMessageId(), "1", null);
                         transferMessage.setExtra("1");
-                        messageAdapter.notifyDataSetChanged();
+                        messageAdapter.notifyDataSetInvalidated();
                     } else if (content instanceof RedPacketMessage) {
                         //红包
                         UIMessage redMessage = messageAdapter.getItem(i);
                         RongIM.getInstance().setMessageExtra(redMessage.getMessageId(), "1", null);
                         redMessage.setExtra("1");
-                        messageAdapter.notifyDataSetChanged();
+                        messageAdapter.notifyDataSetInvalidated();
                     }
                     break;
                 }
@@ -388,7 +390,7 @@ public class ConversationActivity extends AppCompatActivity implements RongIMCli
                                     @Override
                                     public void onSuccess(Boolean aBoolean) {
                                         messageAdapter.getItem(finalJ).setExtra("1");
-                                        messageAdapter.notifyDataSetChanged();
+                                        messageAdapter.notifyDataSetInvalidated();
                                     }
 
                                     @Override

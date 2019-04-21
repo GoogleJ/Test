@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
@@ -19,19 +17,15 @@ import com.zxjk.duoduo.network.response.GetTransferAllResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.ui.walletpage.adapter.BlockOrderAdapter;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import io.reactivex.Observable;
-import io.reactivex.functions.Consumer;
 
 public class OrdersFragment extends BaseFragment {
     private RecyclerView recyclerView;
@@ -45,7 +39,6 @@ public class OrdersFragment extends BaseFragment {
     private BlockOrderAdapter blockOrderAdapter;
     private List<GetTransferAllResponse.ListBean> data = new ArrayList<>();
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,7 +59,7 @@ public class OrdersFragment extends BaseFragment {
         blockOrderAdapter.setOnClickListener(data -> {
             Intent intent = new Intent(getActivity(), BlockOrderDetailActivity.class);
             intent.putExtra("data", data);
-            intent.putExtra("type",data.getSerialType());
+            intent.putExtra("type", data.getSerialType());
             startActivity(intent);
         });
         recyclerView.setAdapter(blockOrderAdapter);
@@ -147,7 +140,9 @@ public class OrdersFragment extends BaseFragment {
                     }
                     data.addAll(response.getList());
                     blockOrderAdapter.notifyDataSetChanged();
-                    if (!hasInitData){ hasInitData = true;}
+                    if (!hasInitData) {
+                        hasInitData = true;
+                    }
                 }, t -> {
                     handleApiError(t);
                     ((SwipeRefreshLayout) rootView).setRefreshing(false);

@@ -39,7 +39,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.msgpage.GameDownScoreActivity"></activity>
+        <activity android:name=".ui.grouppage.AllGroupActivity"></activity>
+        <activity android:name=".ui.msgpage.GameRecordActivity" />
+        <activity android:name=".ui.msgpage.GameUpScoreConfirmActivity" />
+        <activity android:name=".ui.msgpage.GameUpScoreActivity" />
+        <activity android:name=".ui.msgpage.GameDownScoreActivity" />
         <activity
             android:name=".skin.SkinReportActivity"
             android:launchMode="singleTask"
@@ -231,10 +235,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.grouppage.RemoveGroupChatActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.grouppage.SendRedEnvelopesActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity

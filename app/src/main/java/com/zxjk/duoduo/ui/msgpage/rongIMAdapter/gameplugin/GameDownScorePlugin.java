@@ -27,7 +27,9 @@ public class GameDownScorePlugin implements IPluginModule {
 
     @Override
     public void onClick(Fragment fragment, RongExtension rongExtension) {
-        fragment.startActivity(new Intent(fragment.getContext(), GameDownScoreActivity.class));
+        Intent intent = new Intent(fragment.getContext(), GameDownScoreActivity.class);
+        intent.putExtra("groupId", rongExtension.getTargetId());
+        fragment.startActivity(intent);
     }
 
     @Override

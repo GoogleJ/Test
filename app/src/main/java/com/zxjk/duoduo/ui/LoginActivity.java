@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Application;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
@@ -99,23 +101,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 startActivity(new Intent(LoginActivity.this, ChangeLanguageActivity.class));
                 break;
             case R.id.btn_login:
-                new GamePopupWindow(this).showPopupWindow();
-//                String mobile = edit_mobile.getText().toString().trim();
-//                String password = edit_password.getText().toString().trim();
-//                if (TextUtils.isEmpty(mobile) || TextUtils.isEmpty(password)) {
-//                    ToastUtils.showShort(getString(R.string.edit_mobile_or_password_tip));
-//                    return;
-//                }
-//                if (TextUtils.isEmpty(mobile) && "".equals(mobile)) {
-//                    ToastUtils.showShort(getString(R.string.edit_mobile_tip));
-//                    return;
-//                }
-//                if (TextUtils.isEmpty(password) || 5 >= password.length() || password.length() >= 14) {
-//                    ToastUtils.showShort(getString(R.string.edit_password_reg));
-//                    return;
-//                }
-//                login(mobile, password);
-//                SPUtils.getInstance().put("mobile", edit_mobile.getText().toString().trim());
+                String mobile = edit_mobile.getText().toString().trim();
+                String password = edit_password.getText().toString().trim();
+                if (TextUtils.isEmpty(mobile) || TextUtils.isEmpty(password)) {
+                    ToastUtils.showShort(getString(R.string.edit_mobile_or_password_tip));
+                    return;
+                }
+                if (TextUtils.isEmpty(mobile) && "".equals(mobile)) {
+                    ToastUtils.showShort(getString(R.string.edit_mobile_tip));
+                    return;
+                }
+                if (TextUtils.isEmpty(password) || 5 >= password.length() || password.length() >= 14) {
+                    ToastUtils.showShort(getString(R.string.edit_password_reg));
+                    return;
+                }
+                login(mobile, password);
+                SPUtils.getInstance().put("mobile", edit_mobile.getText().toString().trim());
                 break;
             default:
         }

@@ -708,5 +708,25 @@
     <string name="select_beilv">请选择倍率</string>
     <string name="record">记录</string>
     <string name="downscorecommit">确认下分</string>
+    <string name="input_downscore">请输入要下分的数额</string>
+    <string name="input_downscore1">下分数额大于当前可下分总额</string>
+    <string name="input_downscore2">下分成功</string>
+    <string name="upscoretotal">上分额度</string>
+    <string name="upscorecommit">确认上分</string>
+    <string name="inputupscore">请输入上分额度</string>
+    <string name="upscore1">成功上分 </string>
+    <string name="scoredetail">积分详情</string>
+    <string name="jifen">积分</string>
+    <string name="dailifanyong">代理返佣</string>
+    <string name="mydaili">我的代理</string>
+    <string name="zongyeji">总业绩</string>
+    <string name="zongshouyi">总收益</string>
+    <string name="myshouyi">我的收益</string>
+    <string name="shangzhoushouyi">上周收益</string>
+    <string name="mycrew">我的团队</string>
+    <string name="allmembers">团队总人数</string>
+    <string name="zhituirenshu">直推人数</string>
+    <string name="input_group_name">请输入群名</string>
+    <string name="game_together">一起游戏</string>
 
 </resources>

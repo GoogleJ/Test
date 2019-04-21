@@ -37,7 +37,6 @@ public class BlockOrderDetailActivity extends BaseActivity {
     private LinearLayout collectionAddress;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,9 +50,7 @@ public class BlockOrderDetailActivity extends BaseActivity {
         String type = getIntent().getStringExtra("type");
         GetTransferAllResponse.ListBean data = (GetTransferAllResponse.ListBean) getIntent().getSerializableExtra("data");
 
-
-
-        if ("0".equals(type )) {
+        if ("0".equals(type)) {
             //eth转入失败-成功-进行中
             if (data.getInOrOut().equals("0") && data.getTxreceiptStatus().equals("0")) {
                 ivBlockOrdersDetailTitle.setImageResource(R.drawable.icon_transfer_failed);
@@ -161,19 +158,19 @@ public class BlockOrderDetailActivity extends BaseActivity {
             tvBlockOrdeerDetailBlock.setText(data.getBlockNumber());
             tvItemSecond.setText("HKB");
 
-        } else if ("2".equals(type)||"3".equals(type))  {
-            if ("0".equals(data.getTxreceiptStatus())){
+        } else if ("2".equals(type) || "3".equals(type)) {
+            if ("0".equals(data.getTxreceiptStatus())) {
                 ivBlockOrdersDetailTitle.setImageResource(R.drawable.icon_transfer_failed);
                 tvBlockOrdersDetailTips.setText(getString(R.string.transfer_commit_failed));
-                tvBlockOrdersDetailMoney.setText("+"+data.getBalance() + "HK");
-            }else if ("1".equals(data.getTxreceiptStatus())){
+                tvBlockOrdersDetailMoney.setText("+" + data.getBalance() + "HK");
+            } else if ("1".equals(data.getTxreceiptStatus())) {
                 ivBlockOrdersDetailTitle.setImageResource(R.drawable.icon_transfer_successful);
                 tvBlockOrdersDetailTips.setText(getString(R.string.transfer_commit_successful));
-                tvBlockOrdersDetailMoney.setText("+"+data.getBalance() + "HK");
-            }else{
+                tvBlockOrdersDetailMoney.setText("+" + data.getBalance() + "HK");
+            } else {
                 ivBlockOrdersDetailTitle.setImageResource(R.drawable.icon_caveat);
                 tvBlockOrdersDetailTips.setText(getString(R.string.transfer_commit_wait));
-                tvBlockOrdersDetailMoney.setText("+"+data.getBalance()+"HK");
+                tvBlockOrdersDetailMoney.setText("+" + data.getBalance() + "HK");
             }
             tvItemFirst.setVisibility(View.VISIBLE);
             ivItemArrow.setVisibility(View.VISIBLE);
@@ -187,8 +184,6 @@ public class BlockOrderDetailActivity extends BaseActivity {
             collectionAddress.setVisibility(View.GONE);
             tvBlockOrdersDetailLast2.setText(data.getTransactionHash());
             llBlockOrdeerDetailBlock.setVisibility(View.GONE);
-
-
 
         }
 
@@ -209,10 +204,10 @@ public class BlockOrderDetailActivity extends BaseActivity {
         tvBlockOrdersDetailLast2 = findViewById(R.id.tvBlockOrdersDetailLast2);
         tvBlockOrdeerDetailBlock = findViewById(R.id.tvBlockOrdeerDetailBlock);
         llBlockOrdeerDetailBlock = findViewById(R.id.llBlockOrdeerDetailBlock);
-        tvBlockOrdersDetailCurrency=findViewById(R.id.tvBlockOrdersDetailCurrency);
-        tvItemFirst=findViewById(R.id.tvItemFirst);
-        ivItemArrow=findViewById(R.id.ivItemArrow);
-        collectionAddress=findViewById(R.id.collectionAddress);
+        tvBlockOrdersDetailCurrency = findViewById(R.id.tvBlockOrdersDetailCurrency);
+        tvItemFirst = findViewById(R.id.tvItemFirst);
+        ivItemArrow = findViewById(R.id.ivItemArrow);
+        collectionAddress = findViewById(R.id.collectionAddress);
     }
 
     public void back(View view) {

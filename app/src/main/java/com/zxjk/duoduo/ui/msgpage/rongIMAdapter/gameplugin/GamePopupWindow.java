@@ -131,7 +131,6 @@ public class GamePopupWindow extends BasePopupWindow {
             public void afterTextChanged(Editable s) {
                 if (s.length() != 0) {
                     rgGame2.clearCheck();
-
                 }
             }
         });

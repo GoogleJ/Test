@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.ui.msgpage.GameRecordActivity;
 
 import io.rong.imkit.RongExtension;
 import io.rong.imkit.plugin.IPluginModule;
@@ -25,7 +26,9 @@ public class GameRecordPlugin implements IPluginModule {
 
     @Override
     public void onClick(Fragment fragment, RongExtension rongExtension) {
-
+        Intent intent = new Intent(fragment.getActivity(), GameRecordActivity.class);
+        intent.putExtra("groupId", rongExtension.getTargetId());
+        fragment.getActivity().startActivity(intent);
     }
 
     @Override
