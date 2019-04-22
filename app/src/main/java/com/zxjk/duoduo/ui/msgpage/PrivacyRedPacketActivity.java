@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
@@ -29,7 +31,6 @@ import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
 import com.zxjk.duoduo.utils.MoneyValueFilter;
 
-import androidx.annotation.Nullable;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
@@ -133,6 +134,7 @@ public class PrivacyRedPacketActivity extends BaseActivity implements SelectPopu
                     message.setFromCustomer(Constant.currentUser.getId());
                     message.setRemark(msgRemark);
                     message.setRedId(redPackageResponse.getId());
+                    message.setIsGame("1");
                     Message message1 = Message.obtain(userInfo.getUserId(), Conversation.ConversationType.PRIVATE, message);
                     RongIM.getInstance().sendMessage(message1, null, null, new IRongCallback.ISendMessageCallback() {
                         @Override

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,12 +18,14 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.adapter.AllGroupAdapter;
 import com.zxjk.duoduo.utils.CommonUtils;
 
-import io.reactivex.functions.Consumer;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AllGroupActivity extends BaseActivity {
 
     private EditText etSearch;
     private RecyclerView recycler;
+    private AllGroupAdapter adapter;
 
     @SuppressLint("CheckResult")
     @Override
@@ -36,18 +37,27 @@ public class AllGroupActivity extends BaseActivity {
         recycler = findViewById(R.id.recycler);
 
         recycler.setLayoutManager(new LinearLayoutManager(this));
-        recycler.setAdapter(new AllGroupAdapter());
+        adapter = new AllGroupAdapter();
+        recycler.setAdapter(adapter);
 
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .getAllPlayGroup(Constant.userId)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<GetAllPlayGroupResponse>() {
-                    @Override
-                    public void accept(GetAllPlayGroupResponse getAllPlayGroupResponse) throws Exception {
-
+                .subscribe(response -> {
+                    List<GetAllPlayGroupResponse.GroupListBean> groupList = new ArrayList<>();
+                    groupList.addAll(response.getGroupList());
+                    for (GetAllPlayGroupResponse.GroupListBean bean : response.getGroupList()) {
+                        for (String groupid : response.getJoin()) {
+                            if (groupid.equals(bean.getId())) {
+                                groupList.remove(bean);
+                                bean.setHasJoined(true);
+                                groupList.add(0, bean);
+                            }
+                        }
                     }
+                    adapter.setData(groupList);
                 }, this::handleApiError);
     }
 

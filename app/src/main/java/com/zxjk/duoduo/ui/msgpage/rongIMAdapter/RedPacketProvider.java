@@ -49,7 +49,7 @@ public class RedPacketProvider extends IContainerItemProvider.MessageProvider<Re
             holder.message.setText(redPacketMessage.getRemark());
         }
 
-        if (TextUtils.isEmpty(uiMessage.getExtra()) || TextUtils.isEmpty(redPacketMessage.getExtra())) {
+        if (TextUtils.isEmpty(uiMessage.getExtra()) && TextUtils.isEmpty(redPacketMessage.getExtra())) {
             holder.sendLayout.setAlpha(1);
         } else {
             holder.sendLayout.setAlpha(0.6f);

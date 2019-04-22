@@ -71,7 +71,7 @@ public class Application extends android.app.Application {
         RongIM.registerMessageTemplate(new TransferProvider());
         RongIM.registerMessageTemplate(new BusinessCardProvider());
         RongIM.getInstance().setMessageAttachedUserInfo(true);
-        setMyExtensionModule(1);
+//        setMyExtensionModule(1);
         PushConfig config = new PushConfig.Builder()
                 .enableHWPush(true)
                 .enableMiPush("小米 appId", "小米 appKey")

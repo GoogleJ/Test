@@ -3,9 +3,14 @@ package com.zxjk.duoduo.ui.msgpage;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
@@ -19,10 +24,6 @@ import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 
 import java.util.ArrayList;
-
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class PeopleUnaccalimedActivity extends BaseActivity {
 
@@ -52,13 +53,17 @@ public class PeopleUnaccalimedActivity extends BaseActivity {
         recycler.setAdapter(adapter);
 
         String id = getIntent().getStringExtra("id");
+        String isGame = getIntent().getStringExtra("isGame");
+        if (TextUtils.isEmpty(isGame)) {
+            isGame = "1";
+        }
         boolean fromList = getIntent().getBooleanExtra("fromList", false);
         if (fromList) {
             tvRedFromList.setVisibility(View.GONE);
         }
 
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .getRedPackageStatus(id)
+                .getRedPackageStatus(id, isGame)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
@@ -74,9 +79,13 @@ public class PeopleUnaccalimedActivity extends BaseActivity {
                                 .compose(RxSchedulers.normalTrans())
                                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                                 .subscribe(response -> {
-                                    String money = response.getRedPackageInfo().getMoney();
+                                    for (GetGroupRedPackageInfoResponse.CustomerInfoBean bean : response.getCustomerInfo()) {
+                                        if (String.valueOf(bean.getCustomerId()).equals(Constant.userId)) {
+
+                                        }
+                                    }
                                     int number = response.getRedPackageInfo().getNumber();
-                                    tips.setText(number + "个红包，共" + money + "HK");
+                                    tips.setText(number + "个红包，共" + response.getRedPackageInfo().getMoney() + "HK");
                                     adapter.setData(response.getCustomerInfo());
                                 }, this::handleApiError);
                     } else {

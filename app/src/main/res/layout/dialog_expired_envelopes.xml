@@ -40,12 +40,13 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
                     android:gravity="center">
 
                     <ImageView
                         android:id="@+id/m_transfer_envelopes_heard"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
                         android:layout_marginEnd="8dp"
                         android:src="@drawable/icon_header" />
 
@@ -64,6 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="40dp"
                     android:gravity="center"
                     android:text="@string/m_expired_envelopes_text"
                     android:textColor="@color/white"

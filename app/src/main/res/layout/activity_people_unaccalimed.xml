@@ -15,6 +15,7 @@
             android:id="@+id/m_people_red_envelopes_title_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
             android:onClick="back"
             android:padding="12dp"
             android:src="@drawable/ico_back" />

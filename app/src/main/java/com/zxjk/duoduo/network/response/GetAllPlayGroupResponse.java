@@ -53,6 +53,15 @@ public class GetAllPlayGroupResponse {
         private String isInviteConfirm;
         private String headPortrait;
         private String duoduoId;
+        private boolean hasJoined;
+
+        public boolean isHasJoined() {
+            return hasJoined;
+        }
+
+        public void setHasJoined(boolean hasJoined) {
+            this.hasJoined = hasJoined;
+        }
 
         public String getId() {
             return id;

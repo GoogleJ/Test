@@ -9,6 +9,10 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.trello.lifecycle2.android.lifecycle.AndroidLifecycle;
 import com.trello.rxlifecycle3.LifecycleProvider;
@@ -17,14 +21,17 @@ import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.BaseResponse;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.rx.RxException;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
+import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.ChatInformationActivity;
 import com.zxjk.duoduo.ui.grouppage.GroupChatInformationActivity;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GamePopupWindow;
 import com.zxjk.duoduo.ui.widget.dialog.ExpiredEnvelopesDialog;
 import com.zxjk.duoduo.ui.widget.dialog.RedEvelopesDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
@@ -33,20 +40,24 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Lifecycle;
-
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.internal.operators.observable.ObservableError;
+import io.reactivex.schedulers.Schedulers;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationFragment;
-import io.rong.imkit.model.UIMessage;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imkit.widget.adapter.MessageListAdapter;
+import io.rong.imlib.IRongCallback;
 import io.rong.imlib.MessageTag;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.Group;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
@@ -55,14 +66,14 @@ import io.rong.message.TextMessage;
 import io.rong.message.VoiceMessage;
 
 @SuppressLint("CheckResult")
-public class ConversationActivity extends AppCompatActivity implements RongIMClient.OnReceiveMessageListener {
+public class ConversationActivity extends BaseActivity implements RongIMClient.OnReceiveMessageListener {
     private final LifecycleProvider<Lifecycle.Event> provider = AndroidLifecycle.createLifecycleProvider(this);
 
     private TextView tvTitle;
     private String targetId;
     private UserInfo targetUserInfo;
-    private Group targetGroup;
     private GroupResponse groupResponse;
+    private RongIM.OnSendMessageListener onSendMessageListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +84,73 @@ public class ConversationActivity extends AppCompatActivity implements RongIMCli
         setContentView(R.layout.activity_conversation);
 
         RongIM.getInstance().setOnReceiveMessageListener(this);
+
+        onSendMessageListener = new RongIM.OnSendMessageListener() {
+            @Override
+            public Message onSend(Message message) {
+                MessageContent content = message.getContent();
+                if (content instanceof TextMessage) {
+                    if (!TextUtils.isEmpty(((TextMessage) message.getContent()).getExtra()) &&
+                            ((TextMessage) message.getContent()).getExtra().equals("pass")
+                            && ((TextMessage) content).getContent().equals("开始下注")) {
+                        //开始下注
+                        runOnUiThread(() -> ServiceFactory.getInstance().getBaseService(Api.class)
+                                .beforeBet(groupResponse.getGroupInfo().getId())
+                                .compose(bindToLifecycle())
+                                .compose(RxSchedulers.normalTrans())
+                                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this)))
+                                .subscribe(s -> {
+                                    TextMessage myTextMessage = TextMessage.obtain("开始下注");
+                                    myTextMessage.setExtra("start");
+                                    Message myMessage = Message.obtain(groupResponse.getGroupInfo().getId(), Conversation.ConversationType.GROUP, myTextMessage);
+                                    RongIM.getInstance().sendMessage(myMessage, null, null, new IRongCallback.ISendMessageCallback() {
+                                        @Override
+                                        public void onAttached(Message message1) {
+                                        }
+
+                                        @Override
+                                        public void onSuccess(Message message1) {
+                                            runOnUiThread(() -> {
+                                                //发送完"开始下注" 计时20S
+                                                Observable.timer(20, TimeUnit.SECONDS, Schedulers.io())
+                                                        .flatMap(aLong -> ServiceFactory.getInstance().getBaseService(Api.class)
+                                                                .getBetConutBygroupId(groupResponse.getGroupInfo().getId()))
+                                                        .compose(bindToLifecycle())
+                                                        .compose(RxSchedulers.normalTrans())
+                                                        .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this)))
+                                                        .subscribe(response -> {
+                                                            Intent intent = new Intent(ConversationActivity.this, GroupRedPacketActivity.class);
+                                                            intent.putExtra("isGame", "0");
+                                                            intent.putExtra("groupId", groupResponse.getGroupInfo().getId());
+                                                            intent.putExtra("fromeGame", response);
+                                                            ConversationActivity.this.startActivityForResult(intent, 1);
+                                                        }, t -> {
+                                                            //todo 调用流局接口
+                                                            ConversationActivity.this.handleApiError(t);
+                                                        });
+
+                                            });
+                                        }
+
+                                        @Override
+                                        public void onError(Message message1, RongIMClient.ErrorCode errorCode) {
+                                            ToastUtils.showShort(R.string.xiazhushibai);
+                                        }
+                                    });
+                                }, ConversationActivity.this::handleApiError));
+                        return null;
+                    }
+                }
+                return message;
+            }
+
+            @Override
+            public boolean onSent(Message message, RongIM.SentMessageErrorCode sentMessageErrorCode) {
+                return false;
+            }
+        };
+
+        RongIM.getInstance().setSendMessageListener(onSendMessageListener);
 
         handleBean(conversationType);
 
@@ -116,27 +194,12 @@ public class ConversationActivity extends AppCompatActivity implements RongIMCli
         //获取聊天类型（单聊、群聊）
         List<String> pathSegments = getIntent().getData().getPathSegments();
         String conversationType = pathSegments.get(pathSegments.size() - 1);
-
-        //特殊类型会话页（如游戏），特殊定义底部plugin
-        int custmoerType = getIntent().getIntExtra("custmoerType", -1);
-        if (custmoerType != -1) {
-            Application.setMyExtensionModule(custmoerType);
-            return conversationType;
-        }
-
-        //修改底部plugin（群聊无转账）
-        if (conversationType.equals("private")) {
-            Application.setMyExtensionModule(1);
-        } else {
-            Application.setMyExtensionModule(3);
-        }
         return conversationType;
     }
 
     private void handleBean(String conversationType) {
         targetId = getIntent().getData().getQueryParameter("targetId");
         targetUserInfo = RongUserInfoManager.getInstance().getUserInfo(targetId);
-        targetGroup = RongUserInfoManager.getInstance().getGroupInfo(targetId);
         if (null == targetUserInfo && conversationType.equals("private")) {
             // 私聊且未缓存
             ServiceFactory.getInstance().getBaseService(Api.class)
@@ -145,27 +208,30 @@ public class ConversationActivity extends AppCompatActivity implements RongIMCli
                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                     .compose(provider.bindToLifecycle())
                     .subscribe(loginResponse -> {
-                                targetUserInfo = new UserInfo(targetId, loginResponse.getNick(), Uri.parse(loginResponse.getHeadPortrait()));
-                                RongUserInfoManager.getInstance().setUserInfo(targetUserInfo);
-                                initView();
-                            },
-                            t -> ToastUtils.showShort(RxException.getMessage(t)));
+                        Application.setMyExtensionModule(1);
+                        targetUserInfo = new UserInfo(targetId, loginResponse.getNick(), Uri.parse(loginResponse.getHeadPortrait()));
+                        RongUserInfoManager.getInstance().setUserInfo(targetUserInfo);
+                        initView();
+                    }, ConversationActivity.this::handleApiError);
         } else if (conversationType.equals("group")) {
-            // 群聊且未缓存
+            // 群聊必须每次请求
             ServiceFactory.getInstance().getBaseService(Api.class)
                     .getGroupByGroupId(targetId)
                     .compose(RxSchedulers.normalTrans())
                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                     .compose(provider.bindToLifecycle())
                     .subscribe(groupInfo -> {
-                                groupResponse = groupInfo;
-                                targetGroup = new Group(groupInfo.getGroupInfo().getId(), groupInfo.getGroupInfo().getGroupNikeName(), Uri.parse(groupInfo.getGroupInfo().getGroupHeadPortrait()));
-                                RongUserInfoManager.getInstance().setGroupInfo(targetGroup);
-                                initView();
-                            },
-                            t -> ToastUtils.showShort(RxException.getMessage(t)));
+                        if (groupInfo.getGroupInfo().getGroupType().equals("1")) {
+                            Application.setMyExtensionModule(1001);
+                        } else {
+                            Application.setMyExtensionModule(3);
+                        }
+                        groupResponse = groupInfo;
+                        initView();
+                    }, ConversationActivity.this::handleApiError);
         } else {
-            // 本地有缓存（私聊、群聊） 直接加载
+            // 本地有缓存（私聊） 直接加载
+            Application.setMyExtensionModule(1);
             initView();
         }
     }
@@ -184,7 +250,7 @@ public class ConversationActivity extends AppCompatActivity implements RongIMCli
                                 .subscribe(friendInfoResponses -> {
                                     Constant.friendsList = friendInfoResponses;
                                     handleFriendList(userInfo.getUserId());
-                                }, t -> ToastUtils.showShort(RxException.getMessage(t)));
+                                }, ConversationActivity.this::handleApiError);
                     } else {
                         handleFriendList(userInfo.getUserId());
                     }
@@ -216,7 +282,7 @@ public class ConversationActivity extends AppCompatActivity implements RongIMCli
                         RedPacketMessage redPacketMessage = (RedPacketMessage) message.getContent();
                         //获取红包状态
                         ServiceFactory.getInstance().getBaseService(Api.class)
-                                .getRedPackageStatus(redPacketMessage.getRedId())
+                                .getRedPackageStatus(redPacketMessage.getRedId(), redPacketMessage.getIsGame())
                                 .compose(provider.bindToLifecycle())
                                 .compose(RxSchedulers.normalTrans())
                                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this)))
@@ -229,7 +295,6 @@ public class ConversationActivity extends AppCompatActivity implements RongIMCli
                                         Intent intent1 = new Intent(context, PeopleUnaccalimedActivity.class);
                                         intent1.putExtra("id", redPacketMessage.getRedId());
                                         startActivity(intent1);
-                                        return;
                                     }
                                     if (s.getRedPackageState().equals("1")) {
                                         //红包已过期
@@ -238,25 +303,24 @@ public class ConversationActivity extends AppCompatActivity implements RongIMCli
                                                 true, redPacketMessage.getRedId());
                                     }
                                     if (s.getRedPackageState().equals("2")) {
-                                        //手慢了，已被领完
-                                        ExpiredEnvelopesDialog dialog = new ExpiredEnvelopesDialog(ConversationActivity.this);
-                                        dialog.show(RongUserInfoManager.getInstance().getUserInfo(message.getSenderUserId()),
-                                                false, redPacketMessage.getRedId());
+                                        if (message.getConversationType().equals(Conversation.ConversationType.PRIVATE)) {
+                                            Intent intent1 = new Intent(context, PeopleUnaccalimedActivity.class);
+                                            intent1.putExtra("id", redPacketMessage.getRedId());
+                                            startActivity(intent1);
+                                        } else {
+                                            //手慢了，已被领完
+                                            ExpiredEnvelopesDialog dialog = new ExpiredEnvelopesDialog(ConversationActivity.this);
+                                            dialog.show(RongUserInfoManager.getInstance().getUserInfo(message.getSenderUserId()),
+                                                    false, redPacketMessage.getRedId());
+                                        }
                                     }
                                     if (s.getRedPackageState().equals("0")) {
                                         //可领取
                                         RedEvelopesDialog dialog = new RedEvelopesDialog(ConversationActivity.this);
-                                        if (message.getConversationType().equals(Conversation.ConversationType.PRIVATE)) {
-                                            dialog.setOnOpenListener(() -> ServiceFactory.getInstance().getBaseService(Api.class)
-                                                    .receivePersonalRedPackage(redPacketMessage.getRedId())
-                                                    .compose(provider.bindToLifecycle())
-                                                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this)))
-                                                    .compose(RxSchedulers.normalTrans())
-                                                    .subscribe(s1 -> {
-                                                        Intent intent2 = new Intent(ConversationActivity.this, PeopleRedEnvelopesActivity.class);
-                                                        intent2.putExtra("msg", message);
-                                                        startActivity(intent2);
-                                                    }, t -> ToastUtils.showShort(RxException.getMessage(t))));
+                                        if (message.getConversationType().equals(Conversation.ConversationType.PRIVATE) && message.getSenderUserId().equals(Constant.userId)) {
+                                            Intent intent1 = new Intent(context, PeopleUnaccalimedActivity.class);
+                                            intent1.putExtra("id", redPacketMessage.getRedId());
+                                            startActivity(intent1);
                                         } else if (message.getConversationType().equals(Conversation.ConversationType.GROUP)) {
                                             dialog.setOnOpenListener(() -> ServiceFactory.getInstance().getBaseService(Api.class)
                                                     .receiveGroupRedPackage(redPacketMessage.getRedId(), redPacketMessage.getIsGame())
@@ -268,9 +332,21 @@ public class ConversationActivity extends AppCompatActivity implements RongIMCli
                                                         intent2.putExtra("msg", message);
                                                         intent2.putExtra("fromGroup", true);
                                                         startActivity(intent2);
-                                                    }, t -> ToastUtils.showShort(RxException.getMessage(t))));
+                                                    }, ConversationActivity.this::handleApiError));
+                                            dialog.show(message, RongUserInfoManager.getInstance().getUserInfo(message.getSenderUserId()));
+                                        } else {
+                                            dialog.setOnOpenListener(() -> ServiceFactory.getInstance().getBaseService(Api.class)
+                                                    .receivePersonalRedPackage(redPacketMessage.getRedId())
+                                                    .compose(provider.bindToLifecycle())
+                                                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this)))
+                                                    .compose(RxSchedulers.normalTrans())
+                                                    .subscribe(s1 -> {
+                                                        Intent intent2 = new Intent(ConversationActivity.this, PeopleRedEnvelopesActivity.class);
+                                                        intent2.putExtra("msg", message);
+                                                        startActivity(intent2);
+                                                    }, ConversationActivity.this::handleApiError));
+                                            dialog.show(message, RongUserInfoManager.getInstance().getUserInfo(message.getSenderUserId()));
                                         }
-                                        dialog.show(message, RongUserInfoManager.getInstance().getUserInfo(message.getSenderUserId()));
                                     }
                                 }, t -> ToastUtils.showShort(RxException.getMessage(t)));
                         break;
@@ -323,24 +399,13 @@ public class ConversationActivity extends AppCompatActivity implements RongIMCli
         if (Constant.tempMsg != null) {
             for (int i = 0; i < messageAdapter.getCount(); i++) {
                 if (messageAdapter.getItem(i).getMessageId() == Constant.tempMsg.getMessageId()) {
-                    MessageContent content = Constant.tempMsg.getContent();
-                    if (content instanceof TransferMessage) {
-                        //转账
-                        UIMessage transferMessage = messageAdapter.getItem(i);
-                        RongIM.getInstance().setMessageExtra(transferMessage.getMessageId(), "1", null);
-                        transferMessage.setExtra("1");
-                        messageAdapter.notifyDataSetInvalidated();
-                    } else if (content instanceof RedPacketMessage) {
-                        //红包
-                        UIMessage redMessage = messageAdapter.getItem(i);
-                        RongIM.getInstance().setMessageExtra(redMessage.getMessageId(), "1", null);
-                        redMessage.setExtra("1");
-                        messageAdapter.notifyDataSetInvalidated();
-                    }
+                    RongIM.getInstance().setMessageExtra(Constant.tempMsg.getMessageId(), "1", null);
+                    messageAdapter.getItem(i).setExtra("1");
+                    messageAdapter.notifyDataSetInvalidated();
+                    Constant.tempMsg = null;
                     break;
                 }
             }
-            Constant.tempMsg = null;
         }
 
         if (null != Constant.changeGroupName) {
@@ -361,7 +426,7 @@ public class ConversationActivity extends AppCompatActivity implements RongIMCli
         intent.putExtra("bean", targetUserInfo);
         if (targetUserInfo == null) {
             Intent intent1 = new Intent(this, GroupChatInformationActivity.class);
-            intent1.putExtra("id", targetGroup.getId());
+            intent1.putExtra("id", groupResponse.getGroupInfo().getId());
             startActivityForResult(intent1, 1);
         } else {
             startActivity(intent);
@@ -370,7 +435,7 @@ public class ConversationActivity extends AppCompatActivity implements RongIMCli
 
     private void initView() {
         tvTitle = findViewById(R.id.tvTitle);
-        tvTitle.setText(targetUserInfo == null ? (targetGroup.getName() + "(" + groupResponse.getCustomers().size() + ")") : targetUserInfo.getName());
+        tvTitle.setText(targetUserInfo == null ? (groupResponse.getGroupInfo().getGroupNikeName() + "(" + groupResponse.getCustomers().size() + ")") : targetUserInfo.getName());
         registerOnTitleChange();
     }
 
@@ -401,7 +466,55 @@ public class ConversationActivity extends AppCompatActivity implements RongIMCli
                     }
                 }
             }
+        } else if (message.getContent() instanceof TextMessage) {
+            //收到 "开始下注" 消息 并且不是群主（群主无法参与）
+            if (!TextUtils.isEmpty(((TextMessage) message.getContent()).getExtra())
+                    && ((TextMessage) message.getContent()).getExtra().equals("start")
+                    && !Constant.userId.equals(groupResponse.getGroupInfo().getGroupOwnerId()))
+                runOnUiThread(() -> ServiceFactory.getInstance().getBaseService(Api.class)
+                        .getGroupGameParameter(groupResponse.getGroupInfo().getId())
+                        .compose(bindToLifecycle())
+                        .compose(RxSchedulers.normalTrans())
+                        .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this)))
+                        .subscribe(getGroupGameParameterResponse -> {
+                            GamePopupWindow gamePopupWindow = new GamePopupWindow(ConversationActivity.this);
+                            gamePopupWindow.setGroupId(groupResponse.getGroupInfo().getId());
+                            gamePopupWindow.setOnCommit(data ->
+                                    ServiceFactory.getInstance().getBaseService(Api.class)
+                                            .groupGamebetting(data)
+                                            .compose(RxSchedulers.normalTrans())
+                                            .compose(RxSchedulers.ioObserver())
+                                            .compose(bindToLifecycle())
+                                            .subscribe(s -> {
+                                                gamePopupWindow.dismiss();
+                                                ToastUtils.showShort(R.string.xiazhuchenggong);
+                                            }, ConversationActivity.this::handleApiError));
+                            gamePopupWindow.show(getGroupGameParameterResponse);
+                        }, ConversationActivity.this::handleApiError));
         }
         return false;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == 2) {
+            String groupId = data.getStringExtra("groupId");
+            String redId = data.getStringExtra("redId");
+            Observable.timer(20, TimeUnit.SECONDS)
+                    .flatMap((Function<Long, ObservableSource<BaseResponse<String>>>) aLong -> ServiceFactory.getInstance().getBaseService(Api.class)
+                            .settlementGame(redId, groupId))
+                    .compose(bindToLifecycle())
+                    .compose(RxSchedulers.normalTrans())
+                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                    .subscribe(s -> {
+                    }, this::handleApiError);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        onSendMessageListener = null;
+        super.onDestroy();
     }
 }

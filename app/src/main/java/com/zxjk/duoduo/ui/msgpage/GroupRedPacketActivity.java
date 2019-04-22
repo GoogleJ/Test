@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -20,6 +22,7 @@ import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.GetBetConutBygroupIdResponse;
 import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
@@ -31,7 +34,6 @@ import com.zxjk.duoduo.utils.MoneyValueFilter;
 
 import java.text.NumberFormat;
 
-import androidx.core.content.ContextCompat;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
@@ -61,15 +63,21 @@ public class GroupRedPacketActivity extends BaseActivity implements SelectPopupW
 
     private NumberFormat nf;
 
+    private String isGame = "1";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_red_packet);
 
+        String groupId = getIntent().getStringExtra("groupId");
+        isGame = getIntent().getStringExtra("isGame");
+        if (TextUtils.isEmpty(isGame)) {
+            isGame = "1";
+        }
+
         nf = NumberFormat.getNumberInstance();
         nf.setMaximumFractionDigits(2);
-
-        String groupId = getIntent().getStringExtra("groupId");
 
         tvRed1 = findViewById(R.id.tvRed1);
         tvRed2 = findViewById(R.id.tvRed2);
@@ -89,6 +97,16 @@ public class GroupRedPacketActivity extends BaseActivity implements SelectPopupW
         addTextWatcher();
 
         getGroupInfo(groupId);
+
+        GetBetConutBygroupIdResponse fromeGame = (GetBetConutBygroupIdResponse) getIntent().getSerializableExtra("fromeGame");
+        if (fromeGame != null) {
+            tvRed2.setClickable(false);
+            tvRed2.setEnabled(false);
+            etGroupRed1.setText(String.valueOf(fromeGame.getMoney()));
+            etGroupRed2.setText(String.valueOf(fromeGame.getCount()));
+            etGroupRed1.setEnabled(false);
+            etGroupRed2.setEnabled(false);
+        }
     }
 
     private void addTextWatcher() {
@@ -241,7 +259,7 @@ public class GroupRedPacketActivity extends BaseActivity implements SelectPopupW
         request.setType(redType);
         request.setMessage(TextUtils.isEmpty(message) ? getString(R.string.m_red_envelopes_label) : message);
         request.setTotalAmount(tvGroupRedMoney.getText().toString());
-        request.setIsGame("1");
+        request.setIsGame(isGame);
         request.setNumber(num);
         if (redType.equals("2")) {
             request.setMoney(price);
@@ -254,7 +272,7 @@ public class GroupRedPacketActivity extends BaseActivity implements SelectPopupW
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(GroupRedPacketActivity.this)))
                 .subscribe(s -> {
                     RedPacketMessage redPacketMessage = new RedPacketMessage();
-                    redPacketMessage.setIsGame("1");
+                    redPacketMessage.setIsGame(isGame);
                     redPacketMessage.setFromCustomer(Constant.userId);
                     redPacketMessage.setRemark(TextUtils.isEmpty(message) ? getString(R.string.m_red_envelopes_label) : message);
                     redPacketMessage.setRedId(s.getId());
@@ -268,6 +286,12 @@ public class GroupRedPacketActivity extends BaseActivity implements SelectPopupW
 
                                 @Override
                                 public void onSuccess(Message message) {
+                                    if (isGame.equals("0")) {
+                                        Intent intent = new Intent();
+                                        intent.putExtra("redId", redPacketMessage.getRedId());
+                                        intent.putExtra("groupId", group.getGroupInfo().getId());
+                                        setResult(2, intent);
+                                    }
                                     finish();
                                 }
 

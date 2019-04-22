@@ -2,16 +2,12 @@ package com.zxjk.duoduo.network.rx;
 
 import android.app.Dialog;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.zxjk.duoduo.network.response.BaseResponse;
 import com.zxjk.duoduo.utils.CommonUtils;
-
-import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;

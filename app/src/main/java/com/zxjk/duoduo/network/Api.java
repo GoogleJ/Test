@@ -7,6 +7,7 @@ import com.zxjk.duoduo.network.response.DetailListResposne;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.response.GetAllPlayGroupResponse;
 import com.zxjk.duoduo.network.response.GetBalanceHkResponse;
+import com.zxjk.duoduo.network.response.GetBetConutBygroupIdResponse;
 import com.zxjk.duoduo.network.response.GetGroupGameParameterResponse;
 import com.zxjk.duoduo.network.response.GetGroupRedPackageInfoResponse;
 import com.zxjk.duoduo.network.response.GetIntegralDetailsResponse;
@@ -416,7 +417,8 @@ public interface Api {
 
     @POST("duoduo/redPackage/getRedPackageStatus")
     @FormUrlEncoded
-    Observable<BaseResponse<GetRedPackageStatusResponse>> getRedPackageStatus(@Field("redPackageId") String redPackageId);
+    Observable<BaseResponse<GetRedPackageStatusResponse>> getRedPackageStatus(@Field("redPackageId") String redPackageId
+            , @Field("isGame") String isGame);
 
     @POST("duoduo/redPackage/personalRedPackageInfo")
     @FormUrlEncoded
@@ -484,6 +486,21 @@ public interface Api {
     @FormUrlEncoded
     Observable<BaseResponse<GetAllPlayGroupResponse>> getAllPlayGroup(@Field("customerId") String customerId);
 
+    @POST("duoduo/group/game/beforeBet")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> beforeBet(@Field("groupId") String groupId);
 
+    @POST("duoduo/group/game/groupGamebetting")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> groupGamebetting(@Field("data") String data);
+
+    @POST("duoduo/group/game/getBetConutBygroupId")
+    @FormUrlEncoded
+    Observable<BaseResponse<GetBetConutBygroupIdResponse>> getBetConutBygroupId(@Field("groupId") String groupId);
+
+    @POST("duoduo/redPackage/settlementGame")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> settlementGame(@Field("redPackageId") String redPackageId,
+                                                    @Field("groupId") String groupId);
 
 }

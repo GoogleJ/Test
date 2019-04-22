@@ -687,7 +687,7 @@
     <string name="send_group_red">塞进红包</string>
     <string name="input_money">请输入金额</string>
     <string name="input_num">请输入红包个数</string>
-    <string name="red_packet_tips2">手慢了、红包被抢完了</string>
+    <string name="red_packet_tips2">手慢了,红包被抢完了</string>
     <string name="downscore">下分</string>
     <string name="upscore">上分</string>
     <string name="game_start">开始下注</string>
@@ -728,5 +728,12 @@
     <string name="zhituirenshu">直推人数</string>
     <string name="input_group_name">请输入群名</string>
     <string name="game_together">一起游戏</string>
+    <string name="dehongbao">的红包</string>
+    <string name="mygamegroup">我的游戏群</string>
+    <string name="allgamegroup">所有游戏群</string>
+    <string name="timeout_game">时间已过，无法下注</string>
+    <string name="morethenmax">下注不可超过最大数</string>
+    <string name="xiazhuchenggong">下注成功</string>
+    <string name="xiazhushibai">下注失败</string>
 
 </resources>

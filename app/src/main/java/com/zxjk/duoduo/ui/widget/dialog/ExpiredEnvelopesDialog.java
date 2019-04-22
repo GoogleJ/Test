@@ -35,6 +35,7 @@ public class ExpiredEnvelopesDialog extends Dialog {
         super(context, R.style.dialogstyle);
         this.view = View.inflate(context, R.layout.dialog_expired_envelopes, null);
         this.context = context;
+        initUI();
     }
 
     @Override
@@ -49,7 +50,6 @@ public class ExpiredEnvelopesDialog extends Dialog {
         layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
         layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
         window.setAttributes(layoutParams);
-        initUI();
     }
 
     private void initUI() {
@@ -64,7 +64,7 @@ public class ExpiredEnvelopesDialog extends Dialog {
 
     public void show(UserInfo userInfo, boolean isExpired, String redId) {
         GlideUtil.loadCornerImg(m_transfer_envelopes_heard, userInfo.getPortraitUri().toString(), 2);
-        m_red_envelopes_user.setText(userInfo.getName());
+        m_red_envelopes_user.setText(userInfo.getName() + context.getString(R.string.dehongbao));
 
         if (!isExpired) {
             m_expired_envelopes_text.setText(R.string.red_packet_tips2);
@@ -76,6 +76,7 @@ public class ExpiredEnvelopesDialog extends Dialog {
                 dismiss();
             });
         }
+        show();
     }
 
 }
