@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
@@ -24,16 +26,14 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.MyQrCodeActivity;
 import com.zxjk.duoduo.ui.widget.TakePopWindow;
+import com.zxjk.duoduo.ui.widget.dialog.ChooseSexDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
-import com.zxjk.duoduo.ui.widget.dialog.ChooseSexDialog;
 
 import java.io.File;
 import java.util.Collections;
-
-import androidx.annotation.Nullable;
 
 /**
  * @author Administrator
@@ -91,6 +91,7 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void bindData() {
         GlideUtil.loadCornerImg(ivUserInfoHead, Constant.currentUser.getHeadPortrait(), 3);
         String mobile = Constant.currentUser.getMobile();

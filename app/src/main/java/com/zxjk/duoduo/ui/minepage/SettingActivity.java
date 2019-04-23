@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
+
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
@@ -17,10 +19,9 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.LoginActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.ui.widget.dialog.ConfirmDialog;
+import com.zxjk.duoduo.utils.CommonUtils;
 
-import androidx.annotation.RequiresApi;
 import io.rong.imkit.RongIM;
 
 /**
@@ -44,6 +45,7 @@ public class SettingActivity extends BaseActivity {
 
         initView();
 
+        isAuthentication();
     }
 
     @Override
@@ -61,6 +63,27 @@ public class SettingActivity extends BaseActivity {
         }
     }
 
+    private void isAuthentication() {
+        if (Constant.currentUser.getIsAuthentication().equals("2")
+                || Constant.currentUser.getIsAuthentication().equals("0")) {
+            ServiceFactory.getInstance().getBaseService(Api.class)
+                    .getCustomerAuth()
+                    .compose(bindToLifecycle())
+                    .compose(RxSchedulers.normalTrans())
+                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                    .subscribe(s -> {
+                        Constant.currentUser.setIsAuthentication(s);
+                        if (s.equals("0")) {
+                            tvSettingAuthenticate.setText("已认证");
+                        } else if (s.equals("2")) {
+                            tvSettingAuthenticate.setText("认证审核中");
+                        } else {
+                            tvSettingAuthenticate.setText("未认证");
+                        }
+                    }, this::handleApiError);
+        }
+    }
+
     private void initView() {
         boolean hasCompletePay = SPUtils.getInstance().getBoolean(Constant.currentUser.getId(), false);
         tvSettingAuthenticate = findViewById(R.id.tvSettingAuthenticate);
@@ -69,7 +92,9 @@ public class SettingActivity extends BaseActivity {
         ivSettingAuthen = findViewById(R.id.ivSettingAuthen);
         tvSettingNick.setText(Constant.currentUser.getNick());
         tvSettingPayment.setText(hasCompletePay ? R.string.complete_payinfo : R.string.uncomplete_payinfo);
+
     }
+
 
     //账户
     public void jump2Account(View view) {

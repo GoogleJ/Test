@@ -70,8 +70,8 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
         titleBar = findViewById(R.id.m_edit_information_title_bar);
         commitBtn = findViewById(R.id.m_edit_information_btn);
         imageSearchBtn = findViewById(R.id.m_edit_information_header_icon);
-        editArea = findViewById(R.id.m_edit_information_name_edit);
-        editNickName = findViewById(R.id.m_edit_information_area_edit);
+        editNickName  = findViewById(R.id.m_edit_information_name_edit);
+        editArea = findViewById(R.id.m_edit_information_area_edit);
         selectPicPopWindow = new TakePopWindow(this);
         selectPicPopWindow.setOnItemClickListener(this);
 

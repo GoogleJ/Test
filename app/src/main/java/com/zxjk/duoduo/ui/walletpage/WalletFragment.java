@@ -22,6 +22,9 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * 钱包模块
+ */
 public class WalletFragment extends BaseFragment {
 
     private TextView tvWalletPageTop1;

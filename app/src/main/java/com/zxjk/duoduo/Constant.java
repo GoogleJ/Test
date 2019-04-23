@@ -34,6 +34,8 @@ public class Constant {
             TextUtils.isEmpty(DeviceUtils.getMacAddress()) ? DeviceUtils.getAndroidID() : DeviceUtils.getMacAddress();
     public static String language = Locale.getDefault().toString().replace("_", "-");
 
+    public static String authentication = "";
+
     public static LoginResponse currentUser = new LoginResponse();
 
     public static void clear() {

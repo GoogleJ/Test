@@ -8,11 +8,14 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import androidx.annotation.Nullable;
+
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 
-import androidx.annotation.Nullable;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author Administrator
@@ -26,6 +29,7 @@ public class OnlineServiceActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_online_service);
+        ButterKnife.bind(this);
         webView = findViewById(R.id.web_view);
         url = getIntent().getStringExtra("url");
         initSetting();
@@ -50,5 +54,11 @@ public class OnlineServiceActivity extends BaseActivity {
                 handler.proceed();
             }
         });
+    }
+
+    @OnClick(R.id.iv_back)
+    public void onViewClicked() {
+        finish();
+
     }
 }

@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.msgpage;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,7 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.zxing.ZXingView;
-
+@SuppressLint("CheckResult")
 public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate {
     @BindView(R.id.m_qr_code_zxing_view)
     ZXingView zxingview;
@@ -63,6 +64,7 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
 
         initUI();
     }
+
 
 
     @Override
@@ -155,6 +157,7 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
 
     @Override
     public void onScanQRCodeOpenCameraError() {
+
     }
 
     /**

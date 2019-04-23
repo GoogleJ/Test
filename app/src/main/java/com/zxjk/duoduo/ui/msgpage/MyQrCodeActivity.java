@@ -28,6 +28,7 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
+
 public class MyQrCodeActivity extends BaseActivity {
 
     @BindView(R.id.m_qr_code_title_bar_me)

@@ -35,6 +35,7 @@ import io.rong.message.CommandNotificationMessage;
 
 /**
  * @author Administrator
+ * 消息模块
  */
 public class MsgFragment extends BaseFragment implements View.OnClickListener, CommonPopupWindow.ViewInterface {
     TitleBar titleBar;

@@ -7,23 +7,28 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.PhoneInfo;
+import com.zxjk.duoduo.network.Api;
+import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.PhoneContactAdapter;
 import com.zxjk.duoduo.ui.msgpage.utils.GetPhoneNumberFromMobileUtils;
 import com.zxjk.duoduo.ui.widget.TitleBar;
+import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 /**
  * @author Administrator
+ * 联系人
  */
 public class PhoneContactActivity extends BaseActivity implements TextWatcher {
     TitleBar titleBar;
@@ -38,7 +43,6 @@ public class PhoneContactActivity extends BaseActivity implements TextWatcher {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_contact);
-
         titleBar = findViewById(R.id.title_bar);
         mRecyclerView = findViewById(R.id.phone_contact_recycler_view);
         titleBar.getLeftImageView().setOnClickListener(v -> finish());
@@ -46,18 +50,41 @@ public class PhoneContactActivity extends BaseActivity implements TextWatcher {
         searchEdit = findViewById(R.id.search_edit);
         searchEdit.addTextChangedListener(this);
         list = getPhoneNumberFromMobile.getPhoneNumberFromMobile(this);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        manager.setOrientation(RecyclerView.VERTICAL);
-        mRecyclerView.setLayoutManager(manager);
-        mAdapter = new PhoneContactAdapter();
-        mAdapter.setNewData(list);
-        mRecyclerView.setAdapter(mAdapter);
+        getFriendListById();
 
-        mAdapter.setOnItemChildClickListener((adapter, view, position) -> sendSMS("您的好友通过多多社区给您留言了啦，赶快注册去查看吧", position));
 
     }
 
+    //获取好友列表
+    public void getFriendListById() {
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .getFriendListById()
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                .compose(RxSchedulers.normalTrans())
+                .subscribe(friendInfoResponses -> {
+                    for (int i = 0; i < list.size(); i++) {
+                        for (int j = 0; j < friendInfoResponses.size(); j++) {
+                            if (list.get(i).getNumber().replace(" ", "").equals(friendInfoResponses.get(j).getMobile())) {
+                                list.get(i).setAdd(true);
+                            }
+                        }
+                    }
+                    LinearLayoutManager manager = new LinearLayoutManager(PhoneContactActivity.this);
+                    manager.setOrientation(RecyclerView.VERTICAL);
+                    mRecyclerView.setLayoutManager(manager);
+                    mAdapter = new PhoneContactAdapter(this);
+                    mAdapter.setNewData(list);
+                    mRecyclerView.setAdapter(mAdapter);
+                    mAdapter.setOnItemChildClickListener((adapter, view, position) -> sendSMS("您的好友通过多多社区给您留言了啦，赶快注册去查看吧", position));
+//
+                }, this::handleApiError);
+    }
+
     private void sendSMS(String smsBody, int position) {
+        if (list.get(position).isAdd()) {
+            return;
+        }
         Uri smsToUri = Uri.parse("smsto:" + list.get(position).getNumber());
         Intent intent = new Intent(Intent.ACTION_SENDTO, smsToUri);
         intent.putExtra("sms_body", smsBody);

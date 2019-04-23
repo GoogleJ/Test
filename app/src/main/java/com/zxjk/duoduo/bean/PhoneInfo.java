@@ -8,7 +8,17 @@ import java.util.Objects;
 public class PhoneInfo {
     private String name;
     private String number;
-  
+    private boolean isAdd;
+
+
+    public boolean isAdd() {
+        return isAdd;
+    }
+
+    public void setAdd(boolean add) {
+        isAdd = add;
+    }
+
 
     public String getName() {
         return name;
@@ -44,7 +54,7 @@ public class PhoneInfo {
     public PhoneInfo(String name, String number) {
         this.name = name;
         this.number = number;
-      
+
     }
 
     public static void main(String[] args) {

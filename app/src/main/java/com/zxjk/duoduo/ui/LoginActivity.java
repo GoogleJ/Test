@@ -3,6 +3,7 @@ package com.zxjk.duoduo.ui;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -24,7 +25,6 @@ import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GamePopupWindow;
 import com.zxjk.duoduo.ui.widget.dialog.AccountFreezeDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
 
@@ -57,6 +57,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     EditText edit_password;
     String EXTRA_DATA = "data";
 
+
     public static void start(AppCompatActivity activity) {
         Intent intent = new Intent(activity, LoginActivity.class);
         activity.startActivity(intent);
@@ -64,17 +65,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     AccountFreezeDialog dialog;
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-
         edit_mobile.setText(SPUtils.getInstance().getString("mobile"));
+
 
 //        login("18202987805", "123456");
 
     }
+
+
+
 
     @OnClick({R.id.login_country
             , R.id.text_forget_password
@@ -142,7 +147,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     Constant.token = loginResponse.getToken();
                     Constant.userId = loginResponse.getId();
                     Constant.currentUser = loginResponse;
-
+                    Constant.authentication = loginResponse.getIsAuthentication();
                     if (loginResponse.getIsDelete().equals(Constant.FLAG_IS_DELETE)) {
                         dialog = new AccountFreezeDialog(LoginActivity.this);
                         dialog.show();
@@ -168,6 +173,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                 @Override
                 public void onSuccess(String userid) {
+                    
                     CommonUtils.destoryDialog();
                     UserInfo userInfo = new UserInfo(userid, Constant.currentUser.getNick(), Uri.parse(Constant.currentUser.getHeadPortrait()));
                     RongIM.getInstance().setCurrentUserInfo(userInfo);
@@ -183,5 +189,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             });
         }
     }
+
 
 }

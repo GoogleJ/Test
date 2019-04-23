@@ -407,7 +407,7 @@
     <string name="determine_select_group">确定选择为新群主吗？</string>
     <string name="add_group_chat">选择联系人</string>
     <string name="send_verification">发送验证</string>
-    <string name="apply_to_add">邀 请</string>
+    <string name="apply_to_add">邀请</string>
     <string name="verifyfirstpls">请先完成实名认证</string>
     <string name="verifying_pleasewait">正在实名认证中，请等待认证结果</string>
     <string name="time">时间</string>
@@ -735,5 +735,7 @@
     <string name="morethenmax">下注不可超过最大数</string>
     <string name="xiazhuchenggong">下注成功</string>
     <string name="xiazhushibai">下注失败</string>
+    <string name="nomoney">无金额</string>
+    <string name="keFu">客服</string>
 
 </resources>

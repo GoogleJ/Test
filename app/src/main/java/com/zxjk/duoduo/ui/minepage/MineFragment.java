@@ -24,6 +24,9 @@ import androidx.cardview.widget.CardView;
 
 /**
  * @author Administrator
+ * 我的模块
+ *
+ *
  */
 public class MineFragment extends BaseFragment implements View.OnClickListener {
 

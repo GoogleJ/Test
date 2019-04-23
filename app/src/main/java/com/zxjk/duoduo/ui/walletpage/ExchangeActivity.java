@@ -87,7 +87,7 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                             totalPrice = count * rate;
                             chooseCountWindow.dismiss();
                             tvExchangeChooseCount.setText(s1);
-                            tvExchangeTotal.setText(String.valueOf(totalPrice)+ " CNY");
+                            tvExchangeTotal.setText(String.valueOf(totalPrice) + " CNY");
                         });
                     });
                     return ServiceFactory.getInstance().getBaseService(Api.class).getPayInfo().compose(RxSchedulers.normalTrans());
@@ -147,7 +147,6 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
             ToastUtils.showShort(R.string.select_saletype_tips);
             return;
         }
-
         Api api = ServiceFactory.getInstance().getBaseService(Api.class);
 
         if (buyOrSale) {

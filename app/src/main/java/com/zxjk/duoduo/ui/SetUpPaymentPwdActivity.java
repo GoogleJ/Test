@@ -3,6 +3,7 @@ package com.zxjk.duoduo.ui;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,21 +14,27 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+
 import com.blankj.utilcode.util.ToastUtils;
+import com.zxjk.duoduo.Application;
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.utils.CommonUtils;
-import com.zxjk.duoduo.utils.MD5Utils;
 import com.zxjk.duoduo.ui.widget.KeyboardPopupWindow;
 import com.zxjk.duoduo.ui.widget.PayPsdInputView;
 import com.zxjk.duoduo.ui.widget.TitleBar;
+import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.utils.MD5Utils;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import butterknife.ButterKnife;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
 
 /**
  * @author Administrator
@@ -144,8 +151,7 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
                     if (firstLogin) {
-                        startActivity(new Intent(this, HomeActivity.class));
-                        finish();
+                        connect(Constant.currentUser.getRongToken());
                         ToastUtils.showShort(R.string.setsuccess);
                     } else {
                         ToastUtils.showShort(R.string.successfully_modified);
@@ -177,5 +183,33 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
             popupWindow.releaseResources();
         }
         super.onDestroy();
+    }
+
+    private void connect(String token) {
+        if (getApplicationInfo().packageName.equals(Application.getCurProcessName(getApplicationContext()))) {
+            CommonUtils.initDialog(this).show();
+            RongIM.connect(token, new RongIMClient.ConnectCallback() {
+
+                @Override
+                public void onTokenIncorrect() {
+                    CommonUtils.destoryDialog();
+                }
+
+                @Override
+                public void onSuccess(String userid) {
+
+                    CommonUtils.destoryDialog();
+                    UserInfo userInfo = new UserInfo(userid, Constant.currentUser.getNick(), Uri.parse(Constant.currentUser.getHeadPortrait()));
+                    RongIM.getInstance().setCurrentUserInfo(userInfo);
+                    startActivity(new Intent(SetUpPaymentPwdActivity.this, HomeActivity.class));
+                    finish();
+                }
+
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+                    CommonUtils.destoryDialog();
+                }
+            });
+        }
     }
 }

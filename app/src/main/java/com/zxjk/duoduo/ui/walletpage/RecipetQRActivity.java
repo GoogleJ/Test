@@ -30,17 +30,21 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
+/**
+ * 收款码
+ */
 public class RecipetQRActivity extends BaseActivity {
 
     private ImageView ivRecipetImg;
     private ImageView ivCodeLogo;
-    private TextView tvMoney;
+    private TextView tvMoney, tv_setMoney;
     private EditTextDialog editTextDialog;
 
     private BaseUri uri;
     private String uri2Code;
 
     private int imgSize;
+    private boolean isSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,7 @@ public class RecipetQRActivity extends BaseActivity {
         ivRecipetImg = findViewById(R.id.ivRecipetImg);
         ivCodeLogo = findViewById(R.id.ivCodeLogo);
         tvMoney = findViewById(R.id.tvMoney);
+        tv_setMoney = findViewById(R.id.tv_setMoney);
 
         editTextDialog = new EditTextDialog();
 
@@ -99,17 +104,33 @@ public class RecipetQRActivity extends BaseActivity {
 
     // 设置金额
     public void setMoney(View view) {
-        editTextDialog.show(this, "请输入金额", "设置", "取消");
-        editTextDialog.getEdit().setFilters(new InputFilter[]{new MoneyValueFilter()});
-        editTextDialog.getYes().setOnClickListener(v -> {
-            tvMoney.setText(editTextDialog.getText() + " HK");
-            editTextDialog.hideDialog();
+        if (!isSet) {
+            editTextDialog.show(this, "请输入金额", "设置", "取消");
+            editTextDialog.getEdit().setFilters(new InputFilter[]{new MoneyValueFilter()});
+            editTextDialog.getYes().setOnClickListener(v -> {
+                tvMoney.setText(editTextDialog.getText() + " HK");
+                editTextDialog.hideDialog();
+                Action1 action1 = new Action1();
+                action1.money = editTextDialog.getText();
+                uri.data = action1;
+                uri2Code = new Gson().toJson(uri);
+                getCodeBitmap();
+                tv_setMoney.setText("清除金额");
+                isSet = true;
+
+            });
+        } else {
+            tvMoney.setText("无金额");
             Action1 action1 = new Action1();
-            action1.money = editTextDialog.getText();
+            action1.money = "0.00";
             uri.data = action1;
             uri2Code = new Gson().toJson(uri);
             getCodeBitmap();
-        });
+            tv_setMoney.setText("设置金额");
+            isSet = false;
+        }
+
+
     }
 
     // 进入我的余额

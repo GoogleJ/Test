@@ -50,6 +50,7 @@ import io.rong.message.CommandMessage;
 
 /**
  * @author Administrator
+ * 通讯录
  */
 @SuppressLint("CheckResult")
 public class ContactsNewFriendActivity extends BaseActivity implements View.OnClickListener {

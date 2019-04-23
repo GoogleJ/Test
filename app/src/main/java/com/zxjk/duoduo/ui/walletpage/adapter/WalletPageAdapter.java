@@ -7,14 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.walletpage.ExchangeActivity;
 import com.zxjk.duoduo.ui.walletpage.model.WalletPageData;
 
 import java.util.ArrayList;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class WalletPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -65,8 +66,7 @@ public class WalletPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             tvWalletPageExchange1 = itemView.findViewById(R.id.tvWalletPageExchange1);
             tvWalletPageExchange2 = itemView.findViewById(R.id.tvWalletPageExchange2);
-
-            tvWalletPageExchange1.setOnClickListener(v -> context.startActivity(new Intent(context, ExchangeActivity.class)));
+            tvWalletPageExchange1.setOnClickListener(v -> ToastUtils.showShort("暂未开放"));
             tvWalletPageExchange2.setOnClickListener(v -> context.startActivity(new Intent(context, ExchangeActivity.class)));
         }
     }

@@ -17,6 +17,7 @@ import butterknife.OnClick;
 
 /**
  * @author Administrator
+ * 添加联系人
  */
 public class AddContactActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.m_add_friend_title_bar)
