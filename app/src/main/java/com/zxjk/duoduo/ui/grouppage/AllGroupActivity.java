@@ -62,6 +62,7 @@ public class AllGroupActivity extends BaseActivity {
     }
 
     public void back(View view) {
+        CommonUtils.hideInputMethod(this);
         finish();
     }
 }

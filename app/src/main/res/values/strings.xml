@@ -579,7 +579,7 @@
     <string name="fill_in_the_current_weChat_nickname">填写现在的微信昵称</string>
     <string name="my">我的</string>
     <string name="tvMineSignHead">个性签名：</string>
-    <string name="tvMineSign">兑换港币，专业50年好品质，值得信赖sdasdasdasdasdasdaasdasdasdasda</string>
+    <string name="tvMineSign">兑换港币，专业50年好品质，值得信赖;兑换港币，专业50年好品质，值得信赖</string>
     <string name="duoduo_wallet">多多钱包</string>
     <string name="tvWalletPageTop1">扫一扫</string>
     <string name="tvwalletPageTop2">收款码</string>
@@ -737,5 +737,14 @@
     <string name="xiazhushibai">下注失败</string>
     <string name="nomoney">无金额</string>
     <string name="keFu">客服</string>
+    <string name="set">设置</string>
+    <string name="clear_money">清除金额</string>
+    <string name="set_money">请设置金额</string>
+    <string name="please_set_money">请设置金额</string>
+    <string name="duoduo_id">多多号:</string>
+    <string name="personalized_signature">个性签名:</string>
+    <string name="account_phone">1813992960</string>
+    <string name="no_search">亲~没有搜索到唉！</string>
+    <string name="no_qunzu">暂无群组</string>
 
 </resources>

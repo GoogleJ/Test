@@ -10,6 +10,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseFragment;
@@ -18,15 +22,9 @@ import com.zxjk.duoduo.ui.walletpage.BlockWalletActivity;
 import com.zxjk.duoduo.ui.walletpage.RecipetQRActivity;
 import com.zxjk.duoduo.utils.GlideUtil;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
-
 /**
  * @author Administrator
  * 我的模块
- *
- *
  */
 public class MineFragment extends BaseFragment implements View.OnClickListener {
 
@@ -66,6 +64,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         ivMineQRcode.setOnClickListener(this);
         return view;
     }
+
 
     @Override
     public void onResume() {

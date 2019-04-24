@@ -57,9 +57,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="@string/nomoney"
             android:textColor="@color/themecolor"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <FrameLayout
             android:layout_width="match_parent"

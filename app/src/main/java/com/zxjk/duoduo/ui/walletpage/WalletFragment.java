@@ -8,7 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.PermissionUtils;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.ui.minepage.BalanceLeftActivity;
@@ -16,11 +20,6 @@ import com.zxjk.duoduo.ui.msgpage.QrCodeActivity;
 import com.zxjk.duoduo.ui.walletpage.adapter.WalletPageAdapter;
 
 import java.util.ArrayList;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * 钱包模块
@@ -53,6 +52,7 @@ public class WalletFragment extends BaseFragment {
                 startActivity(new Intent(getContext(), QrCodeActivity.class));
             }
         }, Manifest.permission.CAMERA);
+
         tvWalletPageTop3.setOnClickListener(v -> startActivity(new Intent(getContext(), BlockWalletActivity.class)));
         tvWalletPageTop4.setOnClickListener(v -> startActivity(new Intent(getContext(), BalanceLeftActivity.class)));
         tvWalletPageTop2.setOnClickListener(v -> startActivity(new Intent(getContext(), RecipetQRActivity.class)));

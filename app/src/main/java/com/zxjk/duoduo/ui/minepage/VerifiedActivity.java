@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.SPUtils;
@@ -35,8 +37,6 @@ import com.zxjk.duoduo.utils.TakePicUtil;
 
 import java.io.File;
 import java.util.Collections;
-
-import androidx.annotation.Nullable;
 
 @SuppressLint("CheckResult")
 public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnItemClickListener {
@@ -139,7 +139,10 @@ public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnIt
     @SuppressLint("WrongViewCast")
     private void initView() {
         titleBar = findViewById(R.id.title_bar);
-        titleBar.getLeftImageView().setOnClickListener(v -> finish());
+        titleBar.getLeftImageView().setOnClickListener(v -> {
+            CommonUtils.hideInputMethod(this);
+            finish();
+        });
         selectPicPopWindow = new TakePopWindow(this);
         selectPicPopWindow.setOnItemClickListener(this);
         cardType = findViewById(R.id.card_type);

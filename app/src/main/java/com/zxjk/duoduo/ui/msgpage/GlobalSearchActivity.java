@@ -4,8 +4,15 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
@@ -16,13 +23,11 @@ import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.GlobalSearchAdapter;
-import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.ui.widget.TitleBar;
+import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.util.List;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.functions.Consumer;
@@ -42,6 +47,8 @@ public class GlobalSearchActivity extends BaseActivity {
     GlobalSearchAdapter mAdapter;
     Intent intent;
 
+    View emptyView;
+
     FriendInfoResponse friendInfoResponse;
 
     @Override
@@ -49,6 +56,14 @@ public class GlobalSearchActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_global_search);
         ButterKnife.bind(this);
+        emptyView = getLayoutInflater().inflate(R.layout.view_app_null_type, null);
+        emptyView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
+        ImageView app_type = emptyView.findViewById(R.id.app_type);
+        TextView app_prompt_text = emptyView.findViewById(R.id.app_prompt_text);
+        app_type.setImageResource(R.drawable.icon_no_search);
+        app_prompt_text.setText(getString(R.string.no_search));
+
         getFriendListById();
         initData();
         initUI();
@@ -72,10 +87,14 @@ public class GlobalSearchActivity extends BaseActivity {
     }
 
     private void initUI() {
-        titleBar.getLeftImageView().setOnClickListener(v -> finish());
+        titleBar.getLeftImageView().setOnClickListener(v -> {
+            CommonUtils.hideInputMethod(this);
+            finish();
+        });
         LinearLayoutManager manager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(manager);
         mAdapter = new GlobalSearchAdapter();
+        mAdapter.setEmptyView(emptyView);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             FriendInfoResponse user = mAdapter.getData().get(position);

@@ -54,7 +54,7 @@ public class TransferActivity extends BaseActivity implements SelectPopupWindow.
     SelectPopupWindow selectPopupWindow;
     UserInfo targetUser;
 
-    @SuppressLint("CheckResult")
+    @SuppressLint({"CheckResult", "SetTextI18n"})
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +63,10 @@ public class TransferActivity extends BaseActivity implements SelectPopupWindow.
         selectPopupWindow = new SelectPopupWindow(this, this);
 
         titleBar = findViewById(R.id.m_transfer_title_bar);
-        titleBar.getLeftImageView().setOnClickListener(v -> finish());
+        titleBar.getLeftImageView().setOnClickListener(v -> {
+            CommonUtils.hideInputMethod(this);
+            finish();
+        });
         etTransferInfo = findViewById(R.id.etTransferInfo);
         m_transfer_money_text = findViewById(R.id.m_transfer_money_text);
         m_transfer_heard_icon = findViewById(R.id.m_transfer_heard_icon);
@@ -73,11 +76,16 @@ public class TransferActivity extends BaseActivity implements SelectPopupWindow.
         m_transfer_money_text.setFilters(new InputFilter[]{new MoneyValueFilter()});
 
         boolean fromScan = getIntent().getBooleanExtra("fromScan", false);
-        if (fromScan && getIntent().getStringExtra("money").equals("0.00")) {
-            m_transfer_money_text.setText(getIntent().getStringExtra("money"));
-            m_transfer_money_text.setEnabled(false);
+        if (fromScan) {
+            if (getIntent().getStringExtra("money").equals("0.00")) {
+                m_transfer_money_text.setHint("0.00");
+                m_transfer_money_text.setEnabled(true);
+                m_transfer_money_text.setSelection(m_transfer_money_text.getText().length());
+            } else {
+                m_transfer_money_text.setText(getIntent().getStringExtra("money"));
+                m_transfer_money_text.setEnabled(false);
+            }
         }
-
         commitBtn.setOnClickListener(v -> {
             if (TextUtils.isEmpty(m_transfer_money_text.getText().toString().trim())) {
                 ToastUtils.showShort(R.string.inputzhuanzhangmoney);

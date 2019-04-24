@@ -161,6 +161,8 @@ public class UpdateUserInfoActivity extends BaseActivity {
 
     public void back(View view) {
         finish();
+        CommonUtils.hideInputMethod(this);
+
     }
 
 }

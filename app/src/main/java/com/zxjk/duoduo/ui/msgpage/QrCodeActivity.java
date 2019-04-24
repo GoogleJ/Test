@@ -26,6 +26,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.zxing.ZXingView;
+
+/**
+ *
+ */
 @SuppressLint("CheckResult")
 public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate {
     @BindView(R.id.m_qr_code_zxing_view)

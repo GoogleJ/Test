@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="all">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="50dp"
         android:background="@color/themecolor"
         android:gravity="center"
         android:text="@string/my"
         android:textColor="@color/white"
         android:textSize="18sp" />
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:overScrollMode="never"
@@ -30,24 +32,20 @@
                 android:id="@+id/cardMineInfo"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="16dp"
+                android:layout_margin="15dp"
                 android:background="@color/white"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="6dp">
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="12dp">
+                    android:layout_margin="10dp">
 
                     <LinearLayout
                         android:id="@+id/llMineNickParent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
                         android:gravity="center_vertical">
 
                         <TextView
@@ -56,49 +54,17 @@
                             android:layout_height="wrap_content"
                             android:text="@string/user_name"
                             android:textColor="@color/tvMineNick"
-                            android:textSize="23sp" />
+                            android:textSize="20sp" />
 
                         <ImageView
                             android:id="@+id/ivMineQRcode"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="8dp"
+                            android:layout_margin="10dp"
                             app:srcCompat="@drawable/ic_mine_code2" />
 
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/tvMineSignHead"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="32dp"
-                        android:text="@string/tvMineSignHead"
-                        android:textColor="@color/textcolor3" />
-
-                    <TextView
-                        android:id="@+id/tvMineSign"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignTop="@id/tvMineSignHead"
-                        android:layout_alignParentBottom="true"
-                        android:layout_toStartOf="@id/flMineHeadImgParent"
-                        android:layout_toEndOf="@id/tvMineSignHead"
-                        android:ellipsize="end"
-                        android:lineSpacingExtra="4dp"
-                        android:lines="2"
-                        android:paddingStart="4dp"
-                        android:text="@string/tvMineSign"
-                        android:textColor="@color/textcolor3" />
-
-                    <TextView
-                        android:id="@+id/tvMineDuNum"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_above="@id/tvMineSignHead"
-                        android:layout_marginBottom="8dp"
-                        android:text="@string/business_card_duoduo_id"
-                        android:textColor="@color/textcolor3" />
 
                     <FrameLayout
                         android:id="@+id/flMineHeadImgParent"
@@ -112,19 +78,57 @@
                             android:id="@+id/ivMineHeadImg"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_margin="6dp"
+                            android:layout_margin="2dp"
                             android:scaleType="centerCrop"
                             app:srcCompat="@color/default_placeholder" />
 
                         <ImageView
                             android:id="@+id/ivMineAuthSign"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
                             android:layout_gravity="end|bottom"
                             android:src="@drawable/ic_mine_authenticate"
                             android:visibility="invisible" />
 
                     </FrameLayout>
+
+
+                    <TextView
+                        android:id="@+id/tvMineDuNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@id/tv_signature"
+                        android:layout_marginBottom="10dp"
+                        android:text="@string/business_card_duoduo_id"
+                        android:textColor="@color/textcolor3"
+                        android:textSize="15sp" />
+
+
+                    <TextView
+                        android:id="@+id/tv_signature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="20dp"
+                        android:text="@string/personalized_signature"
+                        android:textColor="@color/textcolor3"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tvMineSign"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/tv_signature"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_toEndOf="@id/tv_signature"
+                        android:ellipsize="end"
+                        android:lines="2"
+                        android:text="@string/tvMineSign"
+                        android:textColor="@color/textcolor3"
+                        android:textSize="15sp" />
+
 
                 </RelativeLayout>
 
@@ -132,18 +136,16 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="16dp"
+                android:layout_height="15dp"
                 android:background="@color/default_placeholder" />
 
             <LinearLayout
                 android:id="@+id/llMineBalanceLeft"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:paddingTop="16dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="16dp">
+                android:layout_height="60dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:gravity="center_vertical">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -153,7 +155,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:text="@string/balance"
                     android:textColor="@color/themecolor"
@@ -168,19 +170,18 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
+                android:layout_height="0.1dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:background="@color/exchange_line" />
 
             <LinearLayout
                 android:id="@+id/llMineBlockWallet"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:paddingTop="16dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="16dp">
+                android:layout_height="60dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:gravity="center_vertical">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -190,7 +191,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:text="@string/blockWallet"
                     android:textColor="@color/themecolor"
@@ -205,19 +206,18 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
+                android:layout_height="0.1dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:background="@color/exchange_line" />
 
             <LinearLayout
                 android:id="@+id/llMineRecipetCode"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:paddingTop="16dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="16dp">
+                android:layout_height="60dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:gravity="center_vertical">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -227,7 +227,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:text="@string/collection_code"
                     android:textColor="@color/themecolor"
@@ -242,18 +242,16 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="16dp"
+                android:layout_height="15dp"
                 android:background="@color/default_placeholder" />
 
             <LinearLayout
                 android:id="@+id/llMineSetting"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:paddingTop="16dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="16dp">
+                android:layout_height="60dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:gravity="center_vertical">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -263,7 +261,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:text="@string/setting_title"
                     android:textColor="@color/themecolor"
@@ -278,7 +276,7 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <View
         android:layout_width="match_parent"

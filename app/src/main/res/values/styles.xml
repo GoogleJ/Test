@@ -19,6 +19,7 @@
         <item name="android:background">#000000</item>
         <item name="android:visibility">gone</item>
     </style>
+
     <style name="listview_common_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
@@ -31,7 +32,7 @@
         <item name="android:listSelector">@android:color/transparent</item>
     </style>
 
-    //这是国家选择代码的ListView的适配器的Item  Style
+    //这是国家选择代码的ListView的适配器的Item Style
 
     <style name="tv_common_column_title_style">
         <item name="android:layout_width">wrap_content</item>
@@ -44,12 +45,14 @@
     </style>
 
     //这里是国家代码的头部吧标题的
+
     <style name="rl_head_bg_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">50dp</item>
         <item name="android:minHeight">50dp</item>
     </style>
     //这里是searchHeader中的属性
+
     <style name="edt_common_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -69,6 +72,7 @@
         <item name="android:layout_marginRight">50dp</item>
     </style>
     //首页进来的图标
+
     <style name="AppTheme.Theme_Splash">
         <item name="android:windowBackground">@drawable/splash</item>
         <item name="android:windowFullscreen">true</item>
@@ -77,6 +81,7 @@
         <item name="android:clipToPadding">true</item>
     </style>
     //dialog的基本属性
+
     <style name="dialogstyle" parent="AppTheme">
         <item name="android:windowBackground">@android:color/transparent</item> 
         <item name="android:windowFrame">@null</item>
@@ -87,10 +92,11 @@
     </style>
     //dialog进来时的动画
     <!--<style name="bottom">-->
-        <!--<item name="android:windowEnterAnimation">@anim/dialog_enter</item>-->
-        <!--&lt;!&ndash;<item name="android:windowExitAnimation">@anim/dialog_exit</item>&lt;!&ndash;//退出时的动画&ndash;&gt;&ndash;&gt;-->
+    <!--<item name="android:windowEnterAnimation">@anim/dialog_enter</item>-->
+    <!--&lt;!&ndash;<item name="android:windowExitAnimation">@anim/dialog_exit</item>&lt;!&ndash;//退出时的动画&ndash;&gt;&ndash;&gt;-->
     <!--</style>-->
     //自定义标题的线的颜色
+
     <style name="line">
         <item name="android:layout_height">1dp</item>
         <item name="android:layout_width">match_parent</item>
@@ -120,6 +126,7 @@
         <item name="android:textSize">18sp</item>
     </style>
     //会话列表界面的头部menu属性
+
     <style name="msg_top_pop_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -128,10 +135,12 @@
         <item name="android:layout_margin">16dp</item>
         <item name="android:orientation">horizontal</item>
     </style>
+
     <style name="msg_top_pop_img_style">
         <item name="android:layout_width">25dp</item>
         <item name="android:layout_height">25dp</item>
     </style>
+
     <style name="msg_top_pop_text_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -141,13 +150,16 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
     //关于PopupWindow的属性
+
     <style name="AnimDown" parent="@android:style/Animation">
         <item name="android:windowEnterAnimation">@anim/push_scale_in</item>
         <item name="android:windowExitAnimation">@anim/push_scale_out</item>
     </style>
+
     <style name="dialog_style" parent="android:Animation">
         <item name="@android:windowEnterAnimation">@anim/dialog_enter_psd</item>
         <item name="@android:windowExitAnimation">@anim/dialog_exit_psd</item>
     </style>
+
 
 </resources>

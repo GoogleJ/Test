@@ -78,8 +78,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
 
-
-
     @OnClick({R.id.login_country
             , R.id.text_forget_password
             , R.id.text_go_register
@@ -175,7 +173,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                 @Override
                 public void onSuccess(String userid) {
-                    
+
                     CommonUtils.destoryDialog();
                     UserInfo userInfo = new UserInfo(userid, Constant.currentUser.getNick(), Uri.parse(Constant.currentUser.getHeadPortrait()));
                     RongIM.getInstance().setCurrentUserInfo(userInfo);
@@ -191,6 +189,4 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             });
         }
     }
-
-
 }

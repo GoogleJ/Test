@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import androidx.annotation.Nullable;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-
-import androidx.annotation.Nullable;
+import com.zxjk.duoduo.utils.CommonUtils;
 
 /**
  * @author Administrator
@@ -30,6 +31,7 @@ public class FeedbackActivity extends BaseActivity {
      * @param view
      */
     public void returnBtn(View view) {
+        CommonUtils.hideInputMethod(this);
         finish();
     }
 
@@ -43,6 +45,7 @@ public class FeedbackActivity extends BaseActivity {
             ToastUtils.showShort(getString(R.string.please_enter_feedback_comments));
         } else {
             ToastUtils.showShort(getString(R.string.transfer_commit_successful));
+            CommonUtils.hideInputMethod(this);
             finish();
         }
     }

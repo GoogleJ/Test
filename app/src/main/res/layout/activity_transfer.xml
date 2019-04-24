@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:ignore="MissingConstraints,RtlCompat">
+    tools:ignore="all">
 
     <com.zxjk.duoduo.ui.widget.TitleBar
         android:id="@+id/m_transfer_title_bar"
@@ -32,7 +32,7 @@
         android:layout_marginTop="14dp"
         android:text="@string/user_name"
         android:textColor="@color/black"
-        android:textSize="16dp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/m_transfer_money_label"
@@ -44,16 +44,19 @@
         android:textColor="@color/m_red_envelopes_unit_text"
         android:textSize="15sp" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp">
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/m_transfer_money_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
             android:background="@null"
             android:gravity="end"
             android:hint="@string/m_red_envelopes_money_text"
@@ -61,26 +64,22 @@
             android:inputType="numberDecimal"
             android:maxLength="15"
             android:textColor="@color/black"
-            android:textSize="35sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:textSize="30sp" />
 
         <TextView
-            android:id="@+id/m_red_envelopes_unit_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="13dp"
+            android:layout_marginStart="5dp"
             android:text="@string/m_red_envelopes_unit_label"
-            android:textColor="@color/m_red_envelopes_unit_text"
-            android:textSize="25sp"
-            app:layout_constraintBottom_toBottomOf="@+id/m_transfer_money_text"
-            app:layout_constraintStart_toEndOf="@+id/m_transfer_money_text"
-            app:layout_constraintTop_toTopOf="@+id/m_transfer_money_text" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:textColor="@color/login_btn_pressed"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="0.1dp"
         android:layout_marginTop="20dp"
         android:background="@color/m_add_friend_line" />
 
@@ -103,9 +102,9 @@
         android:id="@+id/m_transfer_commit_btn"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="75dp"
-        android:layout_marginEnd="80dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="70dp"
         android:background="@drawable/shape_bac_normal"
         android:gravity="center"
         android:text="@string/m_transfer_commit_btn" />

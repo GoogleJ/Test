@@ -1,12 +1,16 @@
 package com.zxjk.duoduo.ui.msgpage;
 
 import android.annotation.SuppressLint;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
@@ -23,7 +27,6 @@ import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 
-import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -223,10 +226,16 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
         });
     }
 
-    @OnClick({R.id.m_people_information_send_to_message})
+    @OnClick({R.id.m_people_information_send_to_message, R.id.m_people_information_copy_wallet_address})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.m_people_information_copy_wallet_address:
+                ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                cm.setText(walletAddressText.getText().toString());
+                ToastUtils.showShort(getString(R.string.duplicated_to_clipboard));
+                break;
+
             case R.id.m_people_information_send_to_message:
                 Intent intent = new Intent(this, HomeActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -294,6 +303,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                     dialog.show(contactResponse.getNick());
                 }
                 break;
+
             default:
                 break;
         }
@@ -349,4 +359,6 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
             popupWindow.dismiss();
         }
     }
+
+
 }

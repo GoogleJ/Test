@@ -8,6 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseFragment;
@@ -15,23 +20,11 @@ import com.zxjk.duoduo.ui.msgpage.widget.CommonPopupWindow;
 import com.zxjk.duoduo.ui.walletpage.RecipetQRActivity;
 import com.zxjk.duoduo.ui.widget.TitleBar;
 
-import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
-import io.rong.imkit.widget.adapter.ConversationListAdapter;
-import io.rong.imlib.NativeClient;
-import io.rong.imlib.NativeObject;
-import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.Message;
 import io.rong.message.CommandMessage;
-import io.rong.message.CommandNotificationMessage;
 
 /**
  * @author Administrator
@@ -133,7 +126,6 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
 
         switchFragment(mConversationListFragment, R.id.conversationlist);
     }
-
 
 
     private ConversationListFragment createConversationList() {

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <com.zxjk.duoduo.ui.widget.TitleBar
@@ -12,9 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         app:titleBarLeftImage="@drawable/ico_back"
-        app:titleBarTitle="@string/m_group_chat"
         app:titleBarTextColor="@color/white"
-        />
+        app:titleBarTitle="@string/m_group_chat" />
 
     <LinearLayout
         android:id="@+id/m_group_chat_edit"
@@ -23,34 +22,32 @@
         android:background="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/m_contact_title_bar">
+
         <EditText
             android:id="@+id/m_group_chat_edit_1"
-            android:singleLine="true"
-            android:maxLines="1"
             style="?attr/checkedTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:imeOptions="actionSearch"
-            android:layout_marginBottom="26dp"
-            android:layout_marginEnd="24dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="26dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="26dp"
             android:background="@color/m_contact_edit_back"
-            android:drawablePadding="10dp"
             android:drawableStart="@drawable/ic_search_gray"
-            android:paddingEnd="20dp"
-            android:paddingStart="20dp"
-
+            android:drawablePadding="10dp"
             android:hint="@string/enter_group_chat"
+            android:imeOptions="actionSearch"
+            android:maxLines="1"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:singleLine="true"
             tools:ignore="HardcodedText" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:overScrollMode="never"
         android:id="@+id/m_group_chat_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="20dp"
-        />
+        android:layout_height="match_parent"
+        android:overScrollMode="never" />
 
 </LinearLayout>

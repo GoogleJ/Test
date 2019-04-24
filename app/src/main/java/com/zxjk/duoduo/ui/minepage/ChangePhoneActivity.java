@@ -128,5 +128,6 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
 
     public void back(View view) {
         finish();
+        CommonUtils.hideInputMethod(this);
     }
 }

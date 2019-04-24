@@ -10,10 +10,15 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+
 import com.zxjk.duoduo.R;
+
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 @SuppressLint("CheckResult")
 public class CommonUtils {
@@ -96,15 +101,28 @@ public class CommonUtils {
         Cursor cursor = context.getContentResolver().query(mediaUri,
                 null,
                 MediaStore.Images.Media.DISPLAY_NAME + "= ?",
-                new String[] {path.substring(path.lastIndexOf("/") + 1)},
+                new String[]{path.substring(path.lastIndexOf("/") + 1)},
                 null);
 
         Uri uri = null;
-        if(cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             uri = ContentUris.withAppendedId(mediaUri,
                     cursor.getLong(cursor.getColumnIndex(MediaStore.Images.Media._ID)));
         }
         cursor.close();
         return uri;
     }
+
+    /**
+     * 键盘隐藏的方法
+     *
+     * @param activity
+     */
+    public static void hideInputMethod(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(activity.getWindow().getDecorView().getWindowToken(), 0);
+        }
+    }
+
 }

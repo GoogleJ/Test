@@ -1,12 +1,15 @@
 package com.zxjk.duoduo.ui.walletpage;
 
 import android.annotation.SuppressLint;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -19,6 +22,9 @@ import com.zxjk.duoduo.utils.GlideUtil;
 
 import java.text.DecimalFormat;
 
+/**
+ * 区块链钱包
+ */
 @SuppressLint("CheckResult")
 public class BlockWalletActivity extends BaseActivity {
 
@@ -46,6 +52,11 @@ public class BlockWalletActivity extends BaseActivity {
 
         GlideUtil.loadCornerImg(ivBlockWalletHeadImg, Constant.currentUser.getHeadPortrait(), 3);
         tvBlockWalletAddress.setText(Constant.currentUser.getWalletAddress());
+        tvBlockWalletAddress.setOnClickListener(v -> {
+            ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            cm.setText(tvBlockWalletAddress.getText().toString());
+            ToastUtils.showShort(getString(R.string.duplicated_to_clipboard));
+        });
         tvBlockWalletNick.setText(Constant.currentUser.getNick());
 
         ServiceFactory.getInstance().getBaseService(Api.class)

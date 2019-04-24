@@ -4,8 +4,15 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
@@ -21,15 +28,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
 
 /**
  * @author Administrator
+ * 群聊
  */
 public class GroupChatActivity extends BaseActivity implements TextWatcher {
 
@@ -44,6 +49,8 @@ public class GroupChatActivity extends BaseActivity implements TextWatcher {
 
     GroupChatAdapter groupChatAdapter;
 
+    View emptyView;
+
     List<GroupChatResponse> list = new ArrayList<>();
 
     @SuppressLint("WrongConstant")
@@ -52,17 +59,24 @@ public class GroupChatActivity extends BaseActivity implements TextWatcher {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_chat);
         ButterKnife.bind(this);
+        emptyView = getLayoutInflater().inflate(R.layout.view_app_null_type, null);
+        emptyView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
 
+        TextView app_prompt_text = emptyView.findViewById(R.id.app_prompt_text);
+        app_prompt_text.setText(getString(R.string.no_qunzu));
         //关闭当前活动
-        mGroupChatTitleBar.getLeftImageView().setOnClickListener(v -> finish());
+        mGroupChatTitleBar.getLeftImageView().setOnClickListener(v ->
+                finish());
         LinearLayoutManager manage = new LinearLayoutManager(this);
         mGroupChatRecyclerView.setLayoutManager(manage);
         groupChatAdapter = new GroupChatAdapter();
         mGroupChatEdit1.addTextChangedListener(GroupChatActivity.this);
         //从网络获取用户所有群组信息
         getMyGroupChat(Constant.userId);
-
+        groupChatAdapter.setEmptyView(emptyView);
         mGroupChatRecyclerView.setAdapter(groupChatAdapter);
+
         groupChatAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             Constant.groupChatResponse = groupChatAdapter.getData().get(position);
             RongIM.getInstance().startGroupChat(this, groupChatAdapter.getData().get(position).getId(), groupChatAdapter.getData().get(position).getGroupNikeName());

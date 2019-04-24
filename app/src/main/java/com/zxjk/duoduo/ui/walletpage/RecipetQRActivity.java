@@ -6,12 +6,14 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputFilter;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
@@ -103,30 +105,34 @@ public class RecipetQRActivity extends BaseActivity {
     }
 
     // 设置金额
+    @SuppressLint("SetTextI18n")
     public void setMoney(View view) {
         if (!isSet) {
-            editTextDialog.show(this, "请输入金额", "设置", "取消");
+            editTextDialog.show(this, getString(R.string.input_money), getString(R.string.set), getString(R.string.cancel));
             editTextDialog.getEdit().setFilters(new InputFilter[]{new MoneyValueFilter()});
             editTextDialog.getYes().setOnClickListener(v -> {
-                tvMoney.setText(editTextDialog.getText() + " HK");
-                editTextDialog.hideDialog();
-                Action1 action1 = new Action1();
-                action1.money = editTextDialog.getText();
-                uri.data = action1;
-                uri2Code = new Gson().toJson(uri);
-                getCodeBitmap();
-                tv_setMoney.setText("清除金额");
-                isSet = true;
-
+                if (!TextUtils.isEmpty(editTextDialog.getText())) {
+                    tvMoney.setText(editTextDialog.getText() + " HK");
+                    editTextDialog.hideDialog();
+                    Action1 action1 = new Action1();
+                    action1.money = editTextDialog.getText();
+                    uri.data = action1;
+                    uri2Code = new Gson().toJson(uri);
+                    getCodeBitmap();
+                    tv_setMoney.setText(getString(R.string.clear_money));
+                    isSet = true;
+                } else {
+                    ToastUtils.showShort(getString(R.string.please_set_money));
+                }
             });
         } else {
-            tvMoney.setText("无金额");
+            tvMoney.setText("");
             Action1 action1 = new Action1();
             action1.money = "0.00";
             uri.data = action1;
             uri2Code = new Gson().toJson(uri);
             getCodeBitmap();
-            tv_setMoney.setText("设置金额");
+            tv_setMoney.setText(getString(R.string.set_money));
             isSet = false;
         }
 
