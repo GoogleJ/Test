@@ -21,9 +21,10 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
     public void setData(List<GetGroupGameParameterResponse.ParentListBean.ChildListBean> data) {
         checkedPosition = -1;
         this.data = data;
+        notifyDataSetChanged();
     }
 
-    public void setCheckedPosition(int checkedPosition) {
+    private void setCheckedPosition(int checkedPosition) {
         this.checkedPosition = checkedPosition;
         notifyDataSetChanged();
     }

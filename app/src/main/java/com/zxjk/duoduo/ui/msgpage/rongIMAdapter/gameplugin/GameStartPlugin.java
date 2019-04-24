@@ -48,7 +48,7 @@ public class GameStartPlugin implements IPluginModule {
         }
         finish = false;
 
-        Observable.interval(1, TimeUnit.SECONDS)
+        Observable.interval(0, 1, TimeUnit.SECONDS)
                 .take(4)
                 .subscribe(aLong -> {
                     if (aLong == 3) {

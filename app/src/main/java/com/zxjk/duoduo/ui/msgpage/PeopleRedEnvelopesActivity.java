@@ -5,17 +5,19 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.GetGroupRedPackageInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketMessage;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 
-import androidx.annotation.Nullable;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
@@ -53,7 +55,13 @@ public class PeopleRedEnvelopesActivity extends BaseActivity {
                     .compose(bindToLifecycle())
                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                     .compose(RxSchedulers.normalTrans())
-                    .subscribe(response -> m_people_red_envelopes_money_text.setText(response.getRedPackageInfo().getMoney()), this::handleApiError);
+                    .subscribe(response -> {
+                        for (GetGroupRedPackageInfoResponse.CustomerInfoBean bean : response.getCustomerInfo()) {
+                            if (String.valueOf(bean.getCustomerId()).equals(Constant.userId)) {
+                                m_people_red_envelopes_money_text.setText(String.valueOf(bean.getMoney()));
+                            }
+                        }
+                    }, this::handleApiError);
         } else {
             ServiceFactory.getInstance().getBaseService(Api.class)
                     .personalRedPackageInfo(redPacketMessage.getRedId(), Integer.parseInt(Constant.userId))

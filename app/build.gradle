@@ -139,4 +139,7 @@ dependencies {
 
     //微信分享
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+
+    //群组头像
+    implementation 'com.jaeger.ninegridimageview:library:1.1.1'
 }

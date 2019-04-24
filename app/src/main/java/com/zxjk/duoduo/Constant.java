@@ -27,7 +27,7 @@ public class Constant {
 
     public static final String FLAG_IS_DELETE = "1";
     public static final String FLAG_FIRSTLOGIN = "0";
-    public static final String HEAD_LOCATION = "86-";
+    public static String HEAD_LOCATION = "86";
     public static String userId = "";
     public static String token = "";
     public static String phoneUuid =

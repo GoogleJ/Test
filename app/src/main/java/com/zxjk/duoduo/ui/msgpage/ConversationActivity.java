@@ -16,7 +16,6 @@ import androidx.lifecycle.Lifecycle;
 import com.blankj.utilcode.util.ToastUtils;
 import com.trello.lifecycle2.android.lifecycle.AndroidLifecycle;
 import com.trello.rxlifecycle3.LifecycleProvider;
-import com.zxjk.duoduo.Application;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -30,8 +29,16 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.ChatInformationActivity;
 import com.zxjk.duoduo.ui.grouppage.GroupChatInformationActivity;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferPlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameDownScorePlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameDuobaoPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GamePopupWindow;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameRecordPlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameRulesPlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameStartPlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameUpScorePlugin;
 import com.zxjk.duoduo.ui.widget.dialog.ExpiredEnvelopesDialog;
 import com.zxjk.duoduo.ui.widget.dialog.RedEvelopesDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
@@ -44,14 +51,12 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
-import io.reactivex.Scheduler;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
-import io.reactivex.internal.operators.observable.ObservableError;
 import io.reactivex.schedulers.Schedulers;
+import io.rong.imkit.RongExtension;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationFragment;
+import io.rong.imkit.plugin.IPluginModule;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imkit.widget.adapter.MessageListAdapter;
 import io.rong.imlib.IRongCallback;
@@ -74,6 +79,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
     private UserInfo targetUserInfo;
     private GroupResponse groupResponse;
     private RongIM.OnSendMessageListener onSendMessageListener;
+    private RongExtension extension;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +88,8 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
         String conversationType = resolvePlugin();
 
         setContentView(R.layout.activity_conversation);
+
+        extension = findViewById(io.rong.imkit.R.id.rc_extension);
 
         RongIM.getInstance().setOnReceiveMessageListener(this);
 
@@ -110,26 +118,20 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
 
                                         @Override
                                         public void onSuccess(Message message1) {
-                                            runOnUiThread(() -> {
-                                                //发送完"开始下注" 计时20S
-                                                Observable.timer(20, TimeUnit.SECONDS, Schedulers.io())
-                                                        .flatMap(aLong -> ServiceFactory.getInstance().getBaseService(Api.class)
-                                                                .getBetConutBygroupId(groupResponse.getGroupInfo().getId()))
-                                                        .compose(bindToLifecycle())
-                                                        .compose(RxSchedulers.normalTrans())
-                                                        .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this)))
-                                                        .subscribe(response -> {
-                                                            Intent intent = new Intent(ConversationActivity.this, GroupRedPacketActivity.class);
-                                                            intent.putExtra("isGame", "0");
-                                                            intent.putExtra("groupId", groupResponse.getGroupInfo().getId());
-                                                            intent.putExtra("fromeGame", response);
-                                                            ConversationActivity.this.startActivityForResult(intent, 1);
-                                                        }, t -> {
-                                                            //todo 调用流局接口
-                                                            ConversationActivity.this.handleApiError(t);
-                                                        });
-
-                                            });
+                                            //发送完"开始下注" 计时20S
+                                            Observable.timer(20, TimeUnit.SECONDS, Schedulers.io())
+                                                    .flatMap(aLong -> ServiceFactory.getInstance().getBaseService(Api.class)
+                                                            .getBetConutBygroupId(groupResponse.getGroupInfo().getId()))
+                                                    .compose(bindToLifecycle())
+                                                    .compose(RxSchedulers.normalTrans())
+                                                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this)))
+                                                    .subscribe(response -> {
+                                                        Intent intent = new Intent(ConversationActivity.this, GroupRedPacketActivity.class);
+                                                        intent.putExtra("isGame", "0");
+                                                        intent.putExtra("groupId", groupResponse.getGroupInfo().getId());
+                                                        intent.putExtra("fromeGame", response);
+                                                        ConversationActivity.this.startActivityForResult(intent, 1);
+                                                    }, ConversationActivity.this::handleApiError);
                                         }
 
                                         @Override
@@ -208,7 +210,6 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                     .compose(provider.bindToLifecycle())
                     .subscribe(loginResponse -> {
-                        Application.setMyExtensionModule(1);
                         targetUserInfo = new UserInfo(targetId, loginResponse.getNick(), Uri.parse(loginResponse.getHeadPortrait()));
                         RongUserInfoManager.getInstance().setUserInfo(targetUserInfo);
                         initView();
@@ -221,17 +222,43 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                     .compose(provider.bindToLifecycle())
                     .subscribe(groupInfo -> {
+                        List<IPluginModule> pluginModules = extension.getPluginModules();
                         if (groupInfo.getGroupInfo().getGroupType().equals("1")) {
-                            Application.setMyExtensionModule(1001);
+                            //游戏plugin
+                            Iterator<IPluginModule> iterator = pluginModules.iterator();
+                            while (iterator.hasNext()) {
+                                IPluginModule next = iterator.next();
+                                iterator.remove();
+                                extension.removePlugin(next);
+                            }
+                            extension.addPlugin(new RedPacketPlugin());
+                            extension.addPlugin(new GameUpScorePlugin());
+                            extension.addPlugin(new GameRecordPlugin());
+                            extension.addPlugin(new GameDownScorePlugin());
+                            extension.addPlugin(new GameDuobaoPlugin());
+                            if (groupInfo.getGroupInfo().getGroupOwnerId().equals(Constant.userId)) {
+                                //只有群主才能开始下注
+                                extension.addPlugin(new GameStartPlugin());
+                            }
+                            extension.addPlugin(new GameRulesPlugin());
                         } else {
-                            Application.setMyExtensionModule(3);
+                            //群组plugin
+                            IPluginModule temp = null;
+                            for (IPluginModule module : pluginModules) {
+                                if (module instanceof TransferPlugin) {
+                                    temp = module;
+                                    break;
+                                }
+                            }
+                            if (null != temp) {
+                                extension.removePlugin(temp);
+                            }
                         }
                         groupResponse = groupInfo;
                         initView();
                     }, ConversationActivity.this::handleApiError);
         } else {
             // 本地有缓存（私聊） 直接加载
-            Application.setMyExtensionModule(1);
             initView();
         }
     }
@@ -270,6 +297,10 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
             @Override
             public boolean onMessageClick(Context context, View view, Message message) {
                 switch (message.getObjectName()) {
+                    case "MGroupCardMsg":
+                        //群邀请
+
+                        break;
                     case "app:transfer":
                         //转账
                         Intent intent = new Intent(context, TransferInfoActivity.class);
@@ -328,10 +359,9 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                                                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this)))
                                                     .compose(RxSchedulers.normalTrans())
                                                     .subscribe(s2 -> {
-                                                        Intent intent2 = new Intent(ConversationActivity.this, PeopleRedEnvelopesActivity.class);
-                                                        intent2.putExtra("msg", message);
-                                                        intent2.putExtra("fromGroup", true);
-                                                        startActivity(intent2);
+                                                        Intent intent1 = new Intent(context, PeopleUnaccalimedActivity.class);
+                                                        intent1.putExtra("id", redPacketMessage.getRedId());
+                                                        startActivity(intent1);
                                                     }, ConversationActivity.this::handleApiError));
                                             dialog.show(message, RongUserInfoManager.getInstance().getUserInfo(message.getSenderUserId()));
                                         } else {
@@ -506,7 +536,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                             .settlementGame(redId, groupId))
                     .compose(bindToLifecycle())
                     .compose(RxSchedulers.normalTrans())
-                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                    .compose(RxSchedulers.ioObserver())
                     .subscribe(s -> {
                     }, this::handleApiError);
         }

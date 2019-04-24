@@ -73,7 +73,7 @@ public class TransferActivity extends BaseActivity implements SelectPopupWindow.
         m_transfer_money_text.setFilters(new InputFilter[]{new MoneyValueFilter()});
 
         boolean fromScan = getIntent().getBooleanExtra("fromScan", false);
-        if (fromScan) {
+        if (fromScan && getIntent().getStringExtra("money").equals("0.00")) {
             m_transfer_money_text.setText(getIntent().getStringExtra("money"));
             m_transfer_money_text.setEnabled(false);
         }

@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.msgpage.adapter;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,28 @@ public class GameRecordAdapter extends RecyclerView.Adapter<GameRecordAdapter.Vi
         }
 
         void bindData(GetIntegralDetailsResponse bean) {
-            tvTitle.setText(bean.getTitle());
+            if (bean.getTitle().equals("上分")) {
+                iv.setImageResource(R.drawable.ic_game_record_list10);
+            }
+            if (bean.getTitle().equals("下分")) {
+                iv.setImageResource(R.drawable.ic_game_record_list7);
+            }
+            if (bean.getTitle().equals("牛牛")) {
+                iv.setImageResource(R.drawable.ic_game_record_list3);
+            }
+            if (bean.getTitle().equals("百家乐")) {
+                iv.setImageResource(R.drawable.ic_game_record_list1);
+            }
+            if (bean.getTitle().equals("大小单")) {
+                iv.setImageResource(R.drawable.ic_game_record_list6);
+            }
+
+
+            if (TextUtils.isEmpty(bean.getSettlementCardType())) {
+                tvTitle.setText(bean.getTitle());
+            } else {
+                tvTitle.setText(bean.getTitle() + "-" + bean.getSettlementCardType());
+            }
             tvTime.setText(simpleDateFormat.format(Long.valueOf(bean.getTime())));
             if (bean.getType().equals("0")) {
                 //转进

@@ -2,7 +2,6 @@ package com.zxjk.duoduo.ui.msgpage;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.os.Parcel;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +54,7 @@ public class GameRecordDaiLiFragment extends BaseFragment {
                 .compose(RxSchedulers.normalTrans())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(getActivity())))
                 .subscribe(response -> {
+                    hasInitData = true;
                     tvDaiLi.setText(response.getGrade());
                     tvNum1.setText(response.getTeamNum());
                     tvNum2.setText(response.getDirectNum());

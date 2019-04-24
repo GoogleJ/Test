@@ -3,7 +3,6 @@ package com.zxjk.duoduo.ui;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -133,6 +132,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         if (requestCode == 200 && resultCode == Activity.RESULT_OK && data != null) {
             CountryEntity countryEntity = (CountryEntity) data.getSerializableExtra(EXTRA_DATA);
             login_country.setText(" +" + (countryEntity != null ? countryEntity.countryCode : "86"));
+            if (countryEntity != null) {
+                Constant.HEAD_LOCATION = countryEntity.countryCode;
+            }
         }
     }
 

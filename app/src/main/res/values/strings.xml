@@ -183,7 +183,7 @@
     <string name="m_red_envelopes_user">爱吃水果的红包</string>
     <string name="m_red_envelopes_signature_text">鸿运当头，大吉大利</string>
     <string name="m_transfer_unaccalimed_text">红包金额50HK,等待对方领取</string>
-    <string name="m_expired_envelopes_text">该红包已超过24小时，\n可在红包记录中查看。</string>
+    <string name="m_expired_envelopes_text">红包已过期</string>
     <string name="m_expired_envelopes_info">查看领取详情 ></string>
     <string name="m_envelopes_text">1个红包共50HK</string>
     <string name="m_received_envelopes_text">包子</string>
@@ -388,7 +388,7 @@
     <string name="inputZhuanChuCount">请输入转出数量</string>
     <string name="zhuanchuCount">转出数量</string>
     <string name="kuanggongprice">矿工费用</string>
-    <string name="invite_to_group_chat">邀请加入群聊</string>
+    <string name="invite_to_group_chat">邀请你加入群聊</string>
     <string name="join_a_group_chat">加入群聊</string>
     <string name="announcement_edit_successful">群公告修改成功</string>
     <string name="please_input_announcement">请先填写群公告</string>
@@ -610,7 +610,7 @@
     <string name="fanhui">返回</string>
     <string name="selectcountries">选择国家和地区</string>
     <string name="receiptCode">收款码</string>
-    <string name="recipettips">嘟嘟扫一扫，向我支付港币（HK）</string>
+    <string name="recipettips">多多扫一扫，向我支付港币（HK）</string>
     <string name="setmoney">设置金额</string>
     <string name="recipetorders">收款记录</string>
     <string name="enter_mybalance">进入我的余额</string>

@@ -21,11 +21,7 @@ import io.rong.imlib.model.Conversation;
 public class BasePluginExtensionModule extends DefaultExtensionModule {
 
     //1001.游戏 1.单聊 3.群聊
-    private int custmoerType;
-
-    public BasePluginExtensionModule(int custmoerType) {
-        this.custmoerType = custmoerType;
-    }
+    public static int custmoerType;
 
     @Override
     public List<IPluginModule> getPluginModules(Conversation.ConversationType conversationType) {

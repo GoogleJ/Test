@@ -3,13 +3,17 @@ package com.zxjk.duoduo.ui.grouppage.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.othershe.combinebitmap.CombineBitmap;
+import com.othershe.combinebitmap.layout.WechatLayoutManager;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.GetAllPlayGroupResponse;
+import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +44,15 @@ public class AllGroupAdapter extends RecyclerView.Adapter<AllGroupAdapter.ViewHo
         }
         holder.tvGroupName.setText(data.get(position).getGroupNikeName());
         holder.tvType.setText(data.get(position).isHasJoined() ? R.string.mygamegroup : R.string.allgamegroup);
+
+        CombineBitmap.init(holder.itemView.getContext())
+                .setLayoutManager(new WechatLayoutManager()) // 必选， 设置图片的组合形式，支持WechatLayoutManager、DingLayoutManager
+                .setGapColor(holder.itemView.getContext().getResources().getColor(R.color.grey)) // 单个图片间距的颜色，默认白色
+                .setSize(CommonUtils.dip2px(holder.itemView.getContext(),56)) // 必选，组合后Bitmap的尺寸，单位dp
+                .setGap(CommonUtils.dip2px(holder.itemView.getContext(),2)) // 单个Bitmap之间的距离，单位dp，默认0dp
+                .setUrls(data.get(position).getHeadPortrait().split(",")) // 要加载的图片url数组
+                .setImageView(holder.nineImg) // 直接设置要显示图片的ImageView
+                .build();
     }
 
     @Override
@@ -50,11 +63,13 @@ public class AllGroupAdapter extends RecyclerView.Adapter<AllGroupAdapter.ViewHo
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tvGroupName;
         private TextView tvType;
+        private ImageView nineImg;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvGroupName = itemView.findViewById(R.id.tvGroupName);
             tvType = itemView.findViewById(R.id.tvType);
+            nineImg = itemView.findViewById(R.id.nineImg);
             itemView.setOnClickListener(v -> {
                 GetAllPlayGroupResponse.GroupListBean groupListBean = data.get(getAdapterPosition());
                 if (groupListBean.isHasJoined()) {

@@ -31,7 +31,7 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
         @Override
         public void onTick(long millisUntilFinished) {
             long time = millisUntilFinished / 1000;
-            tvChangePhoneGetVerify.setText(time +getString(R.string.regain_after_seconds));
+            tvChangePhoneGetVerify.setText(time + getString(R.string.regain_after_seconds));
             tvChangePhoneGetVerify.setClickable(false);
         }
 
@@ -53,7 +53,7 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
         tvChangePhoneCountryCode = findViewById(R.id.tvChangePhoneCountryCode);
         tvChangePhoneGetVerify.setOnClickListener(this);
 
-        tvChangePhoneCountryCode.setText(Constant.HEAD_LOCATION);
+        tvChangePhoneCountryCode.setText("+" + Constant.HEAD_LOCATION);
     }
 
     //完成
@@ -85,7 +85,7 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
 
     private void doChangePhone(String verifyCode) {
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .updateMobile(Constant.HEAD_LOCATION + phoneReciveVerify, verifyCode)
+                .updateMobile(phoneReciveVerify, verifyCode)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ChangePhoneActivity.this)))
                 .compose(RxSchedulers.normalTrans())
@@ -115,7 +115,7 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
     private void getVerifyCode() {
         timer.start();
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .getCode(phoneReciveVerify,"0")
+                .getCode(phoneReciveVerify, "0")
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ChangePhoneActivity.this)))
                 .compose(RxSchedulers.normalTrans())

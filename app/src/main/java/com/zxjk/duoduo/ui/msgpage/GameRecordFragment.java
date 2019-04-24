@@ -14,15 +14,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.GetIntegralDetailsResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.ui.msgpage.adapter.GameRecordAdapter;
 import com.zxjk.duoduo.utils.CommonUtils;
-
-import java.util.List;
-
-import io.reactivex.functions.Consumer;
 
 public class GameRecordFragment extends BaseFragment {
 
@@ -55,6 +50,7 @@ public class GameRecordFragment extends BaseFragment {
                 .compose(RxSchedulers.normalTrans())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(getActivity())))
                 .subscribe(getIntegralDetailsResponses -> {
+                    hasInitData = true;
                     ((SwipeRefreshLayout) rootView).setRefreshing(false);
                     adapter.setData(getIntegralDetailsResponses);
                 }, t -> {

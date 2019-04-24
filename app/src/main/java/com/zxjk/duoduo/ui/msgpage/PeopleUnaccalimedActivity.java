@@ -79,11 +79,6 @@ public class PeopleUnaccalimedActivity extends BaseActivity {
                                 .compose(RxSchedulers.normalTrans())
                                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                                 .subscribe(response -> {
-                                    for (GetGroupRedPackageInfoResponse.CustomerInfoBean bean : response.getCustomerInfo()) {
-                                        if (String.valueOf(bean.getCustomerId()).equals(Constant.userId)) {
-
-                                        }
-                                    }
                                     int number = response.getRedPackageInfo().getNumber();
                                     tips.setText(number + "个红包，共" + response.getRedPackageInfo().getMoney() + "HK");
                                     adapter.setData(response.getCustomerInfo());

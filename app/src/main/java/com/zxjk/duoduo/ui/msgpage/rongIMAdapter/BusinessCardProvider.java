@@ -4,11 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.zxjk.duoduo.Constant;
@@ -22,7 +25,6 @@ import com.zxjk.duoduo.ui.msgpage.FriendDetailsActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import io.rong.imkit.model.ProviderTag;
 import io.rong.imkit.model.UIMessage;
 import io.rong.imkit.widget.provider.IContainerItemProvider;
@@ -61,7 +63,7 @@ public class BusinessCardProvider extends IContainerItemProvider.MessageProvider
 
     @Override
     public Spannable getContentSummary(BusinessCardMessage businessCardMessage) {
-        return null;
+        return new SpannableString("您有一条名片消息");
     }
 
     @Override

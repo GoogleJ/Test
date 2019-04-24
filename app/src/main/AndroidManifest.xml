@@ -39,7 +39,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.grouppage.AllGroupActivity"/>
+        <activity android:name=".ui.grouppage.AllGroupActivity" />
         <activity android:name=".ui.msgpage.GameRecordActivity" />
         <activity android:name=".ui.msgpage.GameUpScoreConfirmActivity" />
         <activity android:name=".ui.msgpage.GameUpScoreActivity" />
@@ -147,6 +147,7 @@
 
         <activity
             android:name=".ui.msgpage.ConversationActivity"
+            android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -362,6 +363,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
+            android:exported="true"
             android:name=".ui.HomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
@@ -369,12 +371,10 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <data
                     android:host="com.zxjk.duoduo"
-                    android:pathPrefix="/conversationlist"
+                    android:pathPrefix="/conversationlist/"
                     android:scheme="rong" />
             </intent-filter>
         </activity>
@@ -443,103 +443,39 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data
-                    android:host="com.zxjk.duoduo"
-                    android:pathPrefix="/push_message"
-                    android:scheme="rong" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".ui.minepage.BalanceLeftActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data
-                    android:host="com.zxjk.duoduo"
-                    android:pathPrefix="/push_message"
-                    android:scheme="rong" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.msgpage.GroupChatActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data
-                    android:host="com.zxjk.duoduo"
-                    android:pathPrefix="/push_message"
-                    android:scheme="rong" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.minepage.AboutActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data
-                    android:host="com.zxjk.duoduo"
-                    android:pathPrefix="/push_message"
-                    android:scheme="rong" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.minepage.AccountSwitchActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data
-                    android:host="com.zxjk.duoduo"
-                    android:pathPrefix="/push_message"
-                    android:scheme="rong" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.minepage.AddMyWayActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data
-                    android:host="com.zxjk.duoduo"
-                    android:pathPrefix="/push_message"
-                    android:scheme="rong" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".ui.minepage.FeedbackActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

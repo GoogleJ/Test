@@ -31,8 +31,6 @@ import io.rong.message.ImageMessage;
 import io.rong.message.RichContentMessage;
 import io.rong.message.TextMessage;
 import io.rong.message.VoiceMessage;
-import io.rong.push.RongPushClient;
-import io.rong.push.pushconfig.PushConfig;
 
 public class Application extends android.app.Application {
 
@@ -71,14 +69,7 @@ public class Application extends android.app.Application {
         RongIM.registerMessageTemplate(new TransferProvider());
         RongIM.registerMessageTemplate(new BusinessCardProvider());
         RongIM.getInstance().setMessageAttachedUserInfo(true);
-//        setMyExtensionModule(1);
-        PushConfig config = new PushConfig.Builder()
-                .enableHWPush(true)
-                .enableMiPush("小米 appId", "小米 appKey")
-                .enableMeiZuPush("魅族 appId", "魅族 appKey")
-                .enableFCM(true)
-                .build();
-        RongPushClient.setPushConfig(config);
+        setMyExtensionModule();
     }
 
     @Override
@@ -180,19 +171,19 @@ public class Application extends android.app.Application {
     }
 
     //修改会话页底部按钮
-    public static void setMyExtensionModule(int conversationType) {
+    public static void setMyExtensionModule() {
         List<IExtensionModule> moduleList = RongExtensionManager.getInstance().getExtensionModules();
 
         if (moduleList != null) {
             IExtensionModule defaultModule = null;
             for (IExtensionModule module : moduleList) {
-                if (module instanceof BasePluginExtensionModule || module instanceof DefaultExtensionModule) {
+                if (module instanceof DefaultExtensionModule) {
                     defaultModule = module;
                     break;
                 }
             }
             RongExtensionManager.getInstance().unregisterExtensionModule(defaultModule);
-            RongExtensionManager.getInstance().registerExtensionModule(new BasePluginExtensionModule(conversationType));
+            RongExtensionManager.getInstance().registerExtensionModule(new BasePluginExtensionModule());
         }
     }
 }

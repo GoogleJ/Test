@@ -1,8 +1,8 @@
 package com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.GsonUtils;
+import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
@@ -26,6 +27,7 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import razerdp.basepopup.BasePopupWindow;
 
 public class GamePopupWindow extends BasePopupWindow {
@@ -45,6 +47,7 @@ public class GamePopupWindow extends BasePopupWindow {
     private RadioButton rbGame5;
     private GameAdapter gameAdapter;
     private GetGroupGameParameterResponse data;
+    private GetGroupGameParameterResponse.ParentListBean currentSelect;
 
     private OnCommit onCommit;
 
@@ -63,6 +66,8 @@ public class GamePopupWindow extends BasePopupWindow {
     public GamePopupWindow(Context context) {
         super(context);
 
+        setAllowDismissWhenTouchOutside(false);
+
         rbGame1 = findViewById(R.id.rbGame1);
         rbGame2 = findViewById(R.id.rbGame2);
         rbGame3 = findViewById(R.id.rbGame3);
@@ -76,7 +81,10 @@ public class GamePopupWindow extends BasePopupWindow {
         recyclerGame = findViewById(R.id.recyclerGame);
         tvGameTotalMoney = findViewById(R.id.tvGameTotalMoney);
 
-        findViewById(R.id.ivGameClose).setOnClickListener(v -> dismiss());
+        findViewById(R.id.ivGameClose).setOnClickListener(v -> {
+            KeyboardUtils.hideSoftInput(et);
+            dismiss();
+        });
 
         findViewById(R.id.btnGameStart).setOnClickListener(v -> {
             //开始游戏
@@ -95,7 +103,7 @@ public class GamePopupWindow extends BasePopupWindow {
                 return;
             }
 
-            if (Double.parseDouble(et.getText().toString().trim()) > Double.parseDouble(data.getMaxBet())) {
+            if (Double.parseDouble(tvGameTotalMoney.getText().toString().trim()) > Double.parseDouble(data.getMaxBet())) {
                 ToastUtils.showShort(R.string.morethenmax);
                 return;
             }
@@ -105,10 +113,12 @@ public class GamePopupWindow extends BasePopupWindow {
             requeust.setPlayId(currentID);
             requeust.setPlayName(currentName);
             requeust.setCustomerId(Constant.userId);
-            requeust.setMultiple(rgGame2.getCheckedRadioButtonId() == R.id.rbGame4 ? rbGame4.getText().toString() : (
-                    rgGame2.getCheckedRadioButtonId() == R.id.rbGame5 ? rbGame5.getText().toString().trim() : et.getText().toString().trim()
-            ));
-            requeust.setBetCardType(currentSlect.getChildList().get(gameAdapter.getCheckedPosition()).getPlayName());
+            requeust.setMultiple("0.00");
+            requeust.setBetCardType("");
+            if (llGamePeiLv.getVisibility() == View.VISIBLE) {
+                requeust.setMultiple(currentSelect.getChildList().get(gameAdapter.getCheckedPosition()).getMultiple());
+                requeust.setBetCardType(currentSelect.getChildList().get(gameAdapter.getCheckedPosition()).getPlayName());
+            }
             requeust.setGroupId(groupId);
             if (this.onCommit != null) {
                 onCommit.onCommit(GsonUtils.toJson(requeust));
@@ -122,16 +132,31 @@ public class GamePopupWindow extends BasePopupWindow {
                     currentID = niuniuID;
                     currentName = "牛牛";
                     llGamePeiLv.setVisibility(View.GONE);
+                    currentSelect = null;
                     break;
                 case R.id.rbGame2:
                     currentID = daxiaoID;
-                    currentName = "大小单双和";
+                    currentName = "大小单双合";
                     llGamePeiLv.setVisibility(View.VISIBLE);
+                    gameAdapter.setData(data.getParentList().get(0).getChildList());
+                    for (GetGroupGameParameterResponse.ParentListBean bean : data.getParentList()) {
+                        if (bean.getPlayName().equals("大小单双合")) {
+                            currentSelect = bean;
+                            gameAdapter.setData(currentSelect.getChildList());
+                        }
+                    }
                     break;
                 case R.id.rbGame3:
                     currentID = baijialeID;
                     currentName = "百家乐";
                     llGamePeiLv.setVisibility(View.VISIBLE);
+                    gameAdapter.setData(data.getParentList().get(0).getChildList());
+                    for (GetGroupGameParameterResponse.ParentListBean bean : data.getParentList()) {
+                        if (bean.getPlayName().equals("百家乐")) {
+                            currentSelect = bean;
+                            gameAdapter.setData(currentSelect.getChildList());
+                        }
+                    }
                     break;
                 default:
             }
@@ -141,19 +166,28 @@ public class GamePopupWindow extends BasePopupWindow {
         rgGame2.setOnCheckedChangeListener((group, checkedId) -> {
             switch (checkedId) {
                 case R.id.rbGame4:
-                    et.setText("");
+                    if (!TextUtils.isEmpty(et.getText().toString().trim())) {
+                        et.setText("");
+                    }
+                    tvGameTotalMoney.setText(rbGame4.getText().toString());
                     break;
                 case R.id.rbGame5:
-                    et.setText("");
+                    if (!TextUtils.isEmpty(et.getText().toString().trim())) {
+                        et.setText("");
+                    }
+                    tvGameTotalMoney.setText(rbGame5.getText().toString());
                     break;
                 default:
             }
         });
 
+
         et.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                if (rgGame2.getCheckedRadioButtonId() != -1) {
+                    rgGame2.clearCheck();
+                }
             }
 
             @Override
@@ -164,7 +198,6 @@ public class GamePopupWindow extends BasePopupWindow {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length() != 0) {
-                    rgGame2.clearCheck();
                     tvGameTotalMoney.setText(s);
                 }
             }
@@ -176,9 +209,10 @@ public class GamePopupWindow extends BasePopupWindow {
         recyclerGame.setAdapter(gameAdapter);
     }
 
-    @SuppressLint("CheckResult")
+    private Disposable subscribe;
+
     public void show(GetGroupGameParameterResponse data) {
-        Observable.interval(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+        subscribe = Observable.interval(0, 1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
                 .take(20)
                 .subscribe(l -> {
                     tvGameCountDown.setText((20 - l) + "");
@@ -193,20 +227,26 @@ public class GamePopupWindow extends BasePopupWindow {
         this.showPopupWindow();
     }
 
+    @Override
+    public void onDismiss() {
+        if (subscribe != null && !subscribe.isDisposed()) {
+            subscribe.dispose();
+        }
+        super.onDismiss();
+    }
+
     private String niuniuID;
     private String daxiaoID;
     private String baijialeID;
     private String currentID;
     private String currentName;
-    private GetGroupGameParameterResponse.ParentListBean currentSlect;
 
     private void bindData() {
         for (GetGroupGameParameterResponse.ParentListBean parentListBean : data.getParentList()) {
-            currentSlect = parentListBean;
             if (parentListBean.getPlayName().equals("牛牛")) {
                 niuniuID = parentListBean.getPlayId();
                 rbGame1.setClickable(true);
-            } else if (parentListBean.getPlayName().equals("大小单双和")) {
+            } else if (parentListBean.getPlayName().equals("大小单双合")) {
                 daxiaoID = parentListBean.getPlayId();
                 rbGame2.setClickable(true);
             } else if (parentListBean.getPlayName().equals("百家乐")) {
@@ -217,7 +257,6 @@ public class GamePopupWindow extends BasePopupWindow {
 
         rbGame4.setText(getFormatNum(Double.parseDouble(data.getMinBet())));
         rbGame5.setText(getFormatNum(Double.parseDouble(data.getMaxBet())));
-        gameAdapter.setData(data.getParentList().get(0).getChildList());
     }
 
     private String getFormatNum(double number) {
