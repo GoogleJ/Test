@@ -16,7 +16,7 @@ public class MyGroupAdapter extends BaseQuickAdapter<GetTeamInfoResponse, BaseVi
         helper.setText(R.id.tv_nickname, item.getNick());
         helper.setText(R.id.tv_totalMoney, item.getBetTotalMoney());
         helper.setText(R.id.tv_grade, item.getGrade());
-        helper.setText(R.id.tv_groupNum, item.getTeamNum());
+        helper.setText(R.id.tv_groupNum, String.valueOf(item.getTeamNum()));
         helper.setText(R.id.tv_lastContribution, item.getCurrentDirectPer());
         helper.setText(R.id.tv_lastGroupContribution, item.getCurrentTeamPer());
     }

@@ -8,8 +8,8 @@ import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.response.GetAllPlayGroupResponse;
 import com.zxjk.duoduo.network.response.GetBalanceHkResponse;
 import com.zxjk.duoduo.network.response.GetBetConutBygroupIdResponse;
-import com.zxjk.duoduo.network.response.GetExtractRecordResponse;
 import com.zxjk.duoduo.network.response.GetBetInfoDetailsResponse;
+import com.zxjk.duoduo.network.response.GetExtractRecordResponse;
 import com.zxjk.duoduo.network.response.GetGroupGameParameterResponse;
 import com.zxjk.duoduo.network.response.GetGroupRedPackageInfoResponse;
 import com.zxjk.duoduo.network.response.GetIntegralDetailsResponse;
@@ -535,5 +535,11 @@ public interface Api {
     @POST("duoduo/playRebate/getExtractRecord")
     @FormUrlEncoded
     Observable<BaseResponse<GetExtractRecordResponse>> getExtractRecord(@Field("groupId") String groupId, @Field("page") int page, @Field("offset") int offset);
+
+
+    @POST("duoduo/playRebate/withdrawalAmount")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> getWithdrawalAmount(@Field("groupId") String groupId, @Field("groupOwnerId") String groupOwnerId, @Field("num") String num, @Field("payPwd") String payPwd);
+
 
 }

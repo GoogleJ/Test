@@ -39,18 +39,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.msgpage.ExtractRewardRecordActivity"
+        <activity
+            android:name=".ui.msgpage.WithdrawalSuccessActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.msgpage.ExtractRewardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.msgpage.ExtractRewardRecordActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.msgpage.DetailedStatementActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.msgpage.ExtractRewardActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.msgpage.AgentBenefitActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.msgpage.DetailedStatementActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.msgpage.AgentBenefitActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.msgpage.MyGroupActivity"
             android:launchMode="singleTask"

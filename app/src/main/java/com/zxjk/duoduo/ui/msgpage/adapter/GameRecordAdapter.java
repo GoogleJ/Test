@@ -49,7 +49,7 @@ public class GameRecordAdapter extends RecyclerView.Adapter<GameRecordAdapter.Vi
             GetIntegralDetailsResponse getIntegralDetailsResponse = data.get(holder.getAdapterPosition());
             if (getIntegralDetailsResponse.getTitle().equals("流局") || getIntegralDetailsResponse.getSettlementCardType().equals("流局")) {
                 gameRecordPopupWindow.show(3, data.get(holder.getAdapterPosition()));
-            }else if (getIntegralDetailsResponse.getTitle().equals("上分")) {
+            } else if (getIntegralDetailsResponse.getTitle().equals("上分")) {
                 gameRecordPopupWindow.show(1, data.get(holder.getAdapterPosition()));
             } else if (getIntegralDetailsResponse.getTitle().equals("下分")) {
                 gameRecordPopupWindow.show(2, data.get(holder.getAdapterPosition()));

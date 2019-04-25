@@ -142,4 +142,6 @@ dependencies {
 
     //群组头像
     implementation 'com.jaeger.ninegridimageview:library:1.1.1'
+
+    implementation 'com.github.SheHuan:NiceDialog:1.1.9'
 }

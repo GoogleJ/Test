@@ -761,5 +761,6 @@
     <string name="hint_money">提现金额输入有误,请重新输入</string>
     <string name="game_daxiao1">大小单</string>
     <string name="gamedetail">游戏详情</string>
+    <string name="accomplish">完成</string>
 
 </resources>

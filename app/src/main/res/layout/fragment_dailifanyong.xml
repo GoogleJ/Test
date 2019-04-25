@@ -73,7 +73,7 @@
                     android:id="@+id/tvHk"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="HK"
+                    android:text="0HK"
                     android:textColor="@color/textcolor1"
                     android:textSize="17sp" />
 
@@ -104,7 +104,7 @@
                     android:id="@+id/tvShouYi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0.01%"
+                    android:text="0.00%"
                     android:textColor="@color/textcolor1"
                     android:textSize="17sp" />
 
@@ -178,7 +178,7 @@
                     android:id="@+id/tvHkShouYi1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="HK"
+                    android:text="0HK"
                     android:textColor="@color/textcolor1"
                     android:textSize="17sp" />
 
@@ -209,7 +209,7 @@
                     android:id="@+id/tvHkShouYi2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="HK"
+                    android:text="0HK"
                     android:textColor="@color/textcolor1"
                     android:textSize="17sp" />
 
@@ -284,7 +284,7 @@
                     android:id="@+id/tvNum1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="56"
+                    android:text="0"
                     android:textColor="@color/textcolor1"
                     android:textSize="17sp" />
 
@@ -315,7 +315,7 @@
                     android:id="@+id/tvNum2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10"
+                    android:text="0"
                     android:textColor="@color/textcolor1"
                     android:textSize="17sp" />
 

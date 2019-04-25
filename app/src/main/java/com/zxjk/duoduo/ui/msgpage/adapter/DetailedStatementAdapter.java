@@ -16,6 +16,7 @@ public class DetailedStatementAdapter extends BaseQuickAdapter<GetRebateDetailsR
         helper.setText(R.id.tv_nickname, "周收益");
         helper.setText(R.id.tv_time, CommonUtils.timeStamp2Date(String.valueOf(item.getCreateDate())));
         helper.setText(R.id.tv_hk, item.getRebateTotalAmount() + "HK");
+        helper.setImageResource(R.id.iv_head, R.drawable.ic_game_record_list1);
 
 
     }
