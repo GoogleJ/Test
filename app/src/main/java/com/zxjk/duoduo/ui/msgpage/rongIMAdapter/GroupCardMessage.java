@@ -11,7 +11,7 @@ import io.rong.imlib.MessageTag;
 import io.rong.imlib.model.MessageContent;
 
 @SuppressLint("ParcelCreator")
-@MessageTag(value = "MRedPackageMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
+@MessageTag(value = "MGroupCardMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
 public class GroupCardMessage extends MessageContent {
     private String icon;
     private String groupName;
@@ -20,10 +20,13 @@ public class GroupCardMessage extends MessageContent {
     private String inviterId;
     private String groupId;
 
+    public GroupCardMessage() {
+
+    }
+
     @Override
     public byte[] encode() {
         JSONObject jsonObj = new JSONObject();
-
         try {
             jsonObj.put("icon", getIcon());
             jsonObj.put("groupName", getGroupName());

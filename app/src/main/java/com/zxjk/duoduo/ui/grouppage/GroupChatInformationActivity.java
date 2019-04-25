@@ -8,6 +8,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.suke.widget.SwitchButton;
 import com.zxjk.duoduo.Constant;
@@ -26,10 +30,6 @@ import com.zxjk.duoduo.ui.msgpage.CreateGroupActivity;
 import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.ui.widget.dialog.ConfirmDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
-
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * @author Administrator
@@ -179,11 +179,11 @@ public class GroupChatInformationActivity extends BaseActivity {
     public void dissolutionGroup(View view) {
         ConfirmDialog confirmDialog;
         if (Constant.userId.equals(group.getGroupInfo().getGroupOwnerId())) {
-            confirmDialog = new ConfirmDialog(this, "提示", "确定要删除群组么", v -> {
+            confirmDialog = new ConfirmDialog(this, "提示", "确定要解散群组么", v -> {
                 disBandGroup(group.getGroupInfo().getId(), Constant.userId);
             });
         } else {
-            confirmDialog = new ConfirmDialog(this, "提示", "确定要删除群组么", v -> {
+            confirmDialog = new ConfirmDialog(this, "提示", "确定要退出该群么", v -> {
                 exitGroup(group.getGroupInfo().getId(), Constant.userId);
             });
         }

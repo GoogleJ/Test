@@ -105,7 +105,6 @@ public class SearchActivity extends BaseActivity {
                 intent.putExtra("searchFriendDetails", friendInfoResponse);
                 intent.putExtra("intentType", 0);
                 startActivity(intent);
-                return;
             }
         });
         mAdapter.notifyDataSetChanged();

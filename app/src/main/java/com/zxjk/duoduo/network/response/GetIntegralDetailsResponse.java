@@ -16,6 +16,15 @@ public class GetIntegralDetailsResponse {
     private String remainingIntegral;
     private String type;
     private String settlementCardType;
+    private String redPackageId;
+
+    public String getRedPackageId() {
+        return redPackageId;
+    }
+
+    public void setRedPackageId(String redPackageId) {
+        this.redPackageId = redPackageId;
+    }
 
     public String getTitle() {
         return title;

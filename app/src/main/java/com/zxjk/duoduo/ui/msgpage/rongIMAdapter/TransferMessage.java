@@ -207,7 +207,4 @@ public class TransferMessage extends MessageContent {
         this.fromCustomer = fromCustomerId;
     }
 
-    public static Creator<TransferMessage> getCREATOR() {
-        return CREATOR;
-    }
 }

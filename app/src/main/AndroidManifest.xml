@@ -39,11 +39,30 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.grouppage.AllGroupActivity" />
-        <activity android:name=".ui.msgpage.GameRecordActivity" />
-        <activity android:name=".ui.msgpage.GameUpScoreConfirmActivity" />
-        <activity android:name=".ui.msgpage.GameUpScoreActivity" />
-        <activity android:name=".ui.msgpage.GameDownScoreActivity" />
+        <activity
+            android:name=".ui.msgpage.GameRecordDetailActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".ui.grouppage.AllGroupActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.msgpage.GameRecordActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.msgpage.GameUpScoreConfirmActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.msgpage.GameUpScoreActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.msgpage.GameDownScoreActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".skin.SkinReportActivity"
             android:launchMode="singleTask"
@@ -365,15 +384,17 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
-            android:exported="true"
             android:name=".ui.HomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data
                     android:host="com.zxjk.duoduo"
                     android:pathPrefix="/conversationlist/"
@@ -445,8 +466,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
-
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.minepage.BalanceLeftActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -477,7 +497,6 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-
         <activity
             android:name=".ui.minepage.FeedbackActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

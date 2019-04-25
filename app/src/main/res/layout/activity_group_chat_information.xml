@@ -73,6 +73,7 @@
                     android:id="@+id/group_chat_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:overScrollMode="never"
                     android:paddingStart="12dp"
                     android:paddingTop="12dp"
                     android:paddingBottom="12dp" />

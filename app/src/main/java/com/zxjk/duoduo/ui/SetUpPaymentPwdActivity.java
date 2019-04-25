@@ -124,7 +124,7 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
                 commmitBtn.setVisibility(View.VISIBLE);
             }
         });
-        commmitBtn.setOnClickListener(v -> updatePwd("", MD5Utils.getMD5(newPwd), MD5Utils.getMD5(newPwdTwo)));
+        commmitBtn.setOnClickListener(v -> updatePwd("", newPwd, newPwdTwo));
         popupWindow = new KeyboardPopupWindow(this, getWindow().getDecorView(), payPsdInputView, false);
         payPsdInputView.setOnClickListener(v -> {
             if (popupWindow != null) {

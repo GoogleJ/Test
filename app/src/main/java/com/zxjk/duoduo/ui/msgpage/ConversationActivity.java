@@ -297,10 +297,6 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
             @Override
             public boolean onMessageClick(Context context, View view, Message message) {
                 switch (message.getObjectName()) {
-                    case "MGroupCardMsg":
-                        //群邀请
-
-                        break;
                     case "app:transfer":
                         //转账
                         Intent intent = new Intent(context, TransferInfoActivity.class);

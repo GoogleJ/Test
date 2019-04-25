@@ -13,6 +13,8 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BasePluginExtensionModule;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardProvider;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.GroupCardMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.GroupCardProvider;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketProvider;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferMessage;
@@ -65,9 +67,11 @@ public class Application extends android.app.Application {
         RongIM.registerMessageType(RedPacketMessage.class);
         RongIM.registerMessageType(BusinessCardMessage.class);
         RongIM.registerMessageType(TransferMessage.class);
+        RongIM.registerMessageType(GroupCardMessage.class);
         RongIM.registerMessageTemplate(new RedPacketProvider());
         RongIM.registerMessageTemplate(new TransferProvider());
         RongIM.registerMessageTemplate(new BusinessCardProvider());
+        RongIM.registerMessageTemplate(new GroupCardProvider());
         RongIM.getInstance().setMessageAttachedUserInfo(true);
         setMyExtensionModule();
     }

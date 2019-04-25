@@ -5,12 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.Nullable;
+
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.SharePopWindow;
 import com.zxjk.duoduo.ui.widget.TitleBar;
 
-import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -63,6 +64,8 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
             default:
         }
     }
+
+
 
     private void initUI() {
         titleBar.getLeftImageView().setOnClickListener(v -> finish());

@@ -37,6 +37,7 @@ public class GameRecordFragment extends BaseFragment {
         ((SwipeRefreshLayout) rootView).setOnRefreshListener(() -> initData());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new GameRecordAdapter();
+        adapter.groupId = groupId;
         recyclerView.setAdapter(adapter);
 
         return rootView;

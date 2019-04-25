@@ -135,8 +135,6 @@ public class RecipetQRActivity extends BaseActivity {
             tv_setMoney.setText(getString(R.string.set_money));
             isSet = false;
         }
-
-
     }
 
     // 进入我的余额

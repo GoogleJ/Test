@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
@@ -20,6 +23,7 @@ import com.zxjk.duoduo.ui.msgpage.adapter.CreateGroupAdapter;
 import com.zxjk.duoduo.ui.msgpage.adapter.CreateGroupTopAdapter;
 import com.zxjk.duoduo.ui.msgpage.adapter.GroupMemberAdapter;
 import com.zxjk.duoduo.ui.msgpage.adapter.GroupMemberTopAdapter;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.GroupCardMessage;
 import com.zxjk.duoduo.ui.msgpage.widget.IndexView;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.PinYinUtils;
@@ -29,8 +33,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.IRongCallback;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Message;
 
 @SuppressLint("CheckResult")
 public class CreateGroupActivity extends BaseActivity {
@@ -63,10 +70,19 @@ public class CreateGroupActivity extends BaseActivity {
     private final int EVENT_ADDMENBER = 2; //添加成员
     private final int EVENT_DELETEMEMBER = 3; //删除成员
 
+    //temp
+    List<GroupResponse.CustomersBean> c = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
+
+        GroupResponse group = (GroupResponse) getIntent().getSerializableExtra("members");
+        if (group != null) {
+            List<GroupResponse.CustomersBean> customers = group.getCustomers();
+            c.addAll(customers);
+        }
 
         eventType = getIntent().getIntExtra("eventType", -1);
 
@@ -265,7 +281,38 @@ public class CreateGroupActivity extends BaseActivity {
     }
 
     private void inviteMember() {
+        GroupResponse group = (GroupResponse) getIntent().getSerializableExtra("members");
+        StringBuilder stringBuilder = new StringBuilder();
+        for (GroupResponse.CustomersBean b : c) {
+            stringBuilder.append(b.getHeadPortrait() + ",");
+        }
 
+        GroupCardMessage groupCardMessage = new GroupCardMessage();
+        groupCardMessage.setIcon(stringBuilder.substring(0, stringBuilder.length() - 1));
+        groupCardMessage.setGroupId(group.getGroupInfo().getId());
+        groupCardMessage.setInviterId(Constant.userId);
+        groupCardMessage.setName(Constant.currentUser.getNick());
+        groupCardMessage.setGroupName(group.getGroupInfo().getGroupNikeName());
+        for (FriendInfoResponse f : data1) {
+            Message message = Message.obtain(f.getId(), Conversation.ConversationType.PRIVATE, groupCardMessage);
+            RongIM.getInstance().sendMessage(message, null, null, new IRongCallback.ISendMessageCallback() {
+                @Override
+                public void onAttached(Message message) {
+
+                }
+
+                @Override
+                public void onSuccess(Message message) {
+
+                }
+
+                @Override
+                public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+
+                }
+            });
+        }
+        finish();
     }
 
     private void deleteMember() {

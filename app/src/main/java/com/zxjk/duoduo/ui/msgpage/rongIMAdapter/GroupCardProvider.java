@@ -1,6 +1,7 @@
 package com.zxjk.duoduo.ui.msgpage.rongIMAdapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.view.LayoutInflater;
@@ -12,7 +13,9 @@ import android.widget.TextView;
 
 import com.othershe.combinebitmap.CombineBitmap;
 import com.othershe.combinebitmap.layout.WechatLayoutManager;
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.ui.grouppage.AgreeGroupChatActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.util.Arrays;
@@ -21,11 +24,9 @@ import java.util.List;
 import io.rong.imkit.model.ProviderTag;
 import io.rong.imkit.model.UIMessage;
 import io.rong.imkit.widget.provider.IContainerItemProvider;
-import io.rong.imlib.MessageTag;
 import io.rong.imlib.model.Message;
 
 @ProviderTag(messageContent = GroupCardMessage.class)
-@MessageTag(value = "MGroupCardMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
 public class GroupCardProvider extends IContainerItemProvider.MessageProvider<GroupCardMessage> {
 
     public GroupCardProvider() {
@@ -50,12 +51,22 @@ public class GroupCardProvider extends IContainerItemProvider.MessageProvider<Gr
             return;
         }
 
+        String[] split = groupCardMessage.getIcon().split(",");
+        if (split.length > 9) {
+            List<String> strings = Arrays.asList(split);
+            List<String> strings1 = strings.subList(0, 9);
+            split = new String[strings1.size()];
+            for (int j = 0; j < strings1.size(); j++) {
+                split[j] = strings1.get(j);
+            }
+        }
+
         CombineBitmap.init(view.getContext())
                 .setLayoutManager(new WechatLayoutManager()) // 必选， 设置图片的组合形式，支持WechatLayoutManager、DingLayoutManager
                 .setGapColor(view.getContext().getResources().getColor(R.color.grey)) // 单个图片间距的颜色，默认白色
                 .setSize(CommonUtils.dip2px(view.getContext(), 56)) // 必选，组合后Bitmap的尺寸，单位dp
                 .setGap(CommonUtils.dip2px(view.getContext(), 2)) // 单个Bitmap之间的距离，单位dp，默认0dp
-                .setUrls(groupCardMessage.getIcon().split(",")) // 要加载的图片url数组
+                .setUrls(split) // 要加载的图片url数组
                 .setImageView(holder.nineImg) // 直接设置要显示图片的ImageView
                 .build();
     }
@@ -67,7 +78,14 @@ public class GroupCardProvider extends IContainerItemProvider.MessageProvider<Gr
 
     @Override
     public void onItemClick(View view, int i, GroupCardMessage groupCardMessage, UIMessage uiMessage) {
-
+        if (!uiMessage.getSenderUserId().equals(Constant.userId)) {
+            Intent intent = new Intent(view.getContext(), AgreeGroupChatActivity.class);
+            intent.putExtra("inviterId", groupCardMessage.getInviterId());
+            intent.putExtra("groupId", groupCardMessage.getGroupId());
+            intent.putExtra("groupName", groupCardMessage.getGroupName());
+            intent.putExtra("headUrls", groupCardMessage.getIcon());
+            view.getContext().startActivity(intent);
+        }
     }
 
     @Override
