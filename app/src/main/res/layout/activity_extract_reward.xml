@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/personal_information_line"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title_back" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/extract_reward"
+            android:textColor="@color/textcolor1"
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_withdrawalAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:background="@null"
+                android:gravity="center_vertical|end"
+                android:hint="0.00"
+                android:inputType="number|numberDecimal"
+                android:paddingTop="10dp"
+                android:paddingBottom="15dp"
+                android:textColor="@color/textcolor1"
+                android:textSize="35sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:text="HK"
+                android:textColor="@android:color/black"
+                android:textSize="25sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/textcolor3" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="46dp"
+                android:layout_marginStart="15dp"
+                android:gravity="center"
+                android:text="@string/amount_withdrawn"
+                android:textColor="@color/textcolor2"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/tv_amountWithdrawal"
+                android:layout_width="wrap_content"
+                android:layout_height="46dp"
+                android:gravity="center"
+                android:text="8600HK"
+                android:textColor="@color/textcolor2"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_confirmWithdrawal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/selector_login_btn_click_bg"
+        android:gravity="center"
+        android:text="@string/confirm_withdrawal"
+        android:textColor="#4B4D5B"
+        android:textSize="19sp" />
+
+
+</LinearLayout>

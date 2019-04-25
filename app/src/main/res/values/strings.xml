@@ -746,6 +746,19 @@
     <string name="account_phone">1813992960</string>
     <string name="no_search">亲~没有搜索到唉！</string>
     <string name="no_qunzu">暂无群组</string>
+    <string name="my_group">我的团队</string>
+    <string name="grade">级别</string>
+    <string name="performance">整线业绩</string>
+    <string name="commission_rate">提成比例</string>
+    <string name="agent_benefit">代理收益介绍</string>
+    <string name="extract_reward_record">提取奖励记录</string>
+    <string name="extract_reward">提取奖励</string>
+    <string name="confirm_withdrawal">确认提现</string>
+    <string name="amount_withdrawn">当前待提取奖励</string>
+    <string name="detailed_statement">收益明细</string>
+    <string name="hint_amount">输入的金额超过了可提现的金额</string>
+    <string name="gain_recording">收益记录</string>
+    <string name="hint_money">提现金额输入有误,请重新输入</string>
     <string name="game_daxiao1">大小单</string>
     <string name="gamedetail">游戏详情</string>
 

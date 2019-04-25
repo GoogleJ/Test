@@ -8,6 +8,7 @@ import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.response.GetAllPlayGroupResponse;
 import com.zxjk.duoduo.network.response.GetBalanceHkResponse;
 import com.zxjk.duoduo.network.response.GetBetConutBygroupIdResponse;
+import com.zxjk.duoduo.network.response.GetExtractRecordResponse;
 import com.zxjk.duoduo.network.response.GetBetInfoDetailsResponse;
 import com.zxjk.duoduo.network.response.GetGroupGameParameterResponse;
 import com.zxjk.duoduo.network.response.GetGroupRedPackageInfoResponse;
@@ -15,9 +16,12 @@ import com.zxjk.duoduo.network.response.GetIntegralDetailsResponse;
 import com.zxjk.duoduo.network.response.GetNumbeOfTransactionResponse;
 import com.zxjk.duoduo.network.response.GetOverOrderResponse;
 import com.zxjk.duoduo.network.response.GetRebateByIdResponse;
+import com.zxjk.duoduo.network.response.GetRebateDetailsResponse;
+import com.zxjk.duoduo.network.response.GetRebateInfoResponse;
 import com.zxjk.duoduo.network.response.GetRedPackageRecordResponse;
 import com.zxjk.duoduo.network.response.GetRedPackageStatusResponse;
 import com.zxjk.duoduo.network.response.GetReleasePurchaseResponse;
+import com.zxjk.duoduo.network.response.GetTeamInfoResponse;
 import com.zxjk.duoduo.network.response.GetTransferAllResponse;
 import com.zxjk.duoduo.network.response.GetTransferEthResponse;
 import com.zxjk.duoduo.network.response.GroupChatResponse;
@@ -508,5 +512,28 @@ public interface Api {
     @FormUrlEncoded
     Observable<BaseResponse<GetBetInfoDetailsResponse>> getBetInfolDetails(@Field("redPackageId") String redPackageId,
                                                                            @Field("groupId") String groupId);
+
+    @POST("duoduo/playRebate/getTeamInfo")
+    @FormUrlEncoded
+    Observable<BaseResponse<List<GetTeamInfoResponse>>> getTeamInfo(@Field("groupId") String groupId);
+
+
+    @POST("duoduo/playRebate/getRebateInfoByGroupId")
+    @FormUrlEncoded
+    Observable<BaseResponse<List<GetRebateInfoResponse>>> getRebateInfoByGroupId(@Field("groupId") String groupId);
+
+
+    @POST("duoduo/playRebate/getRebateAmount")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> getRebateAmount(@Field("groupId") String groupId);
+
+    @POST("duoduo/playRebate/getRebateDetails")
+    @FormUrlEncoded
+    Observable<BaseResponse<GetRebateDetailsResponse>> getRebateDetails(@Field("groupId") String groupId, @Field("page") int page, @Field("offset") int offset);
+
+
+    @POST("duoduo/playRebate/getExtractRecord")
+    @FormUrlEncoded
+    Observable<BaseResponse<GetExtractRecordResponse>> getExtractRecord(@Field("groupId") String groupId, @Field("page") int page, @Field("offset") int offset);
 
 }

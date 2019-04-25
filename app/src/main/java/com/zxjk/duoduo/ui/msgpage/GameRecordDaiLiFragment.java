@@ -1,6 +1,7 @@
 package com.zxjk.duoduo.ui.msgpage;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,8 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.utils.CommonUtils;
 
+import java.text.DecimalFormat;
+
 public class GameRecordDaiLiFragment extends BaseFragment {
 
     public String groupId;
@@ -29,6 +32,7 @@ public class GameRecordDaiLiFragment extends BaseFragment {
     private TextView tvHkShouYi2;
     private TextView tvNum1;
     private TextView tvNum2;
+    DecimalFormat df = new DecimalFormat("0.00%");
 
     @Nullable
     @Override
@@ -43,10 +47,11 @@ public class GameRecordDaiLiFragment extends BaseFragment {
         tvNum1 = rootView.findViewById(R.id.tvNum1);
         tvNum2 = rootView.findViewById(R.id.tvNum2);
 
+
         return rootView;
     }
 
-    @SuppressLint("CheckResult")
+    @SuppressLint({"CheckResult", "SetTextI18n"})
     private void initData() {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .getRebateById(groupId)
@@ -58,6 +63,51 @@ public class GameRecordDaiLiFragment extends BaseFragment {
                     tvDaiLi.setText(response.getGrade());
                     tvNum1.setText(response.getTeamNum());
                     tvNum2.setText(response.getDirectNum());
+                    tvShouYi.setText(df.format(Double.parseDouble(response.getRebateRate())));
+                    tvHk.setText(response.getCurrentTeamPer() + "HK");
+                    tvHkShouYi1.setText(response.getRebateAmount() + "HK");
+                    tvHkShouYi2.setText(response.getRebateTotalAmount() + "HK");
+                    //我的代理
+                    rootView.findViewById(R.id.ll_myAgency).setOnClickListener(v -> {
+                        Intent intent = new Intent(getActivity(), AgentBenefitActivity.class);
+                        intent.putExtra("groupId", response.getGroupId());
+                        startActivity(intent);
+                    });
+                    //上周收益
+                    rootView.findViewById(R.id.ll_lastEarnings).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getActivity(), ExtractRewardActivity.class);
+                            intent.putExtra("groupId", response.getGroupId());
+                            startActivity(intent);
+
+
+                        }
+                    });
+                    //总收益
+                    rootView.findViewById(R.id.ll_totalEarnings).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getActivity(), DetailedStatementActivity.class);
+                            intent.putExtra("groupId", response.getGroupId());
+                            intent.putExtra("currentDirectPer", response.getCurrentDirectPer());
+                            intent.putExtra("currentTeamPer", response.getCurrentTeamPer());
+
+                            startActivity(intent);
+
+
+                        }
+                    });
+
+
+                    //我的团队
+                    rootView.findViewById(R.id.ll_myGroup).setOnClickListener(v -> {
+                        Intent intent = new Intent(getActivity(), MyGroupActivity.class);
+                        intent.putExtra("groupId", response.getGroupId());
+                        startActivity(intent);
+                    });
+
+
                 }, this::handleApiError);
     }
 
@@ -76,4 +126,6 @@ public class GameRecordDaiLiFragment extends BaseFragment {
         }
         super.onStart();
     }
+
+
 }

@@ -39,6 +39,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ui.msgpage.ExtractRewardRecordActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.msgpage.ExtractRewardActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.msgpage.DetailedStatementActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.msgpage.AgentBenefitActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.msgpage.MyGroupActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ui.msgpage.GameRecordDetailActivity"
             android:launchMode="singleTask"
@@ -490,7 +506,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.minepage.AddMyWayActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

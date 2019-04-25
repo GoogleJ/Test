@@ -15,7 +15,9 @@ import android.widget.TextView;
 
 import com.zxjk.duoduo.R;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
@@ -125,4 +127,17 @@ public class CommonUtils {
         }
     }
 
+
+    public static String timeStamp2Date(String time) {
+        Long timeLong = Long.parseLong(time);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//要转换的时间格式
+        Date date;
+        try {
+            date = sdf.parse(sdf.format(timeLong));
+            return sdf.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
