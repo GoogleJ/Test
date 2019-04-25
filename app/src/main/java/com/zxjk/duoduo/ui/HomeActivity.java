@@ -147,17 +147,6 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
         super.onBackPressed();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        boolean fromCreateGroup = getIntent().getBooleanExtra("fromCreateGroup", false);
-        if (fromCreateGroup) {
-            GroupResponse.GroupInfoBean fromCreateGroupInfo = (GroupResponse.GroupInfoBean) getIntent().getSerializableExtra("fromCreateGroupInfo");
-            RongIM.getInstance().startConversation(this, Conversation.ConversationType.GROUP,
-                    fromCreateGroupInfo.getId(), fromCreateGroupInfo.getGroupNikeName());
-        }
-    }
-
     @SuppressLint("CheckResult")
     private void initFriendList() {
         ServiceFactory.getInstance().getBaseService(Api.class)

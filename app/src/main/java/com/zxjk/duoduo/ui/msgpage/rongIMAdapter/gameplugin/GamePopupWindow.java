@@ -255,12 +255,8 @@ public class GamePopupWindow extends BasePopupWindow {
             }
         }
 
-        rbGame4.setText(getFormatNum(Double.parseDouble(data.getMinBet())));
-        rbGame5.setText(getFormatNum(Double.parseDouble(data.getMaxBet())));
-    }
-
-    private String getFormatNum(double number) {
-        return String.valueOf(number > 10000 ? ((number - number % 1000) / 10000 + 'W') : number);
+        rbGame4.setText(data.getMinBet());
+        rbGame5.setText(data.getMaxBet());
     }
 
     @Override

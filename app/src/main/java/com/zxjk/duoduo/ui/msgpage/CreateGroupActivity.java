@@ -348,9 +348,8 @@ public class CreateGroupActivity extends BaseActivity {
                 .subscribe(s -> {
                     Intent intent = new Intent(this, HomeActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent.putExtra("fromCreateGroup", true);
-                    intent.putExtra("fromCreateGroupInfo", s);
                     startActivity(intent);
+                    RongIM.getInstance().startGroupChat(this, s.getId(), s.getGroupNikeName());
                 }, this::handleApiError);
     }
 }

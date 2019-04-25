@@ -746,5 +746,7 @@
     <string name="account_phone">1813992960</string>
     <string name="no_search">亲~没有搜索到唉！</string>
     <string name="no_qunzu">暂无群组</string>
+    <string name="game_daxiao1">大小单</string>
+    <string name="gamedetail">游戏详情</string>
 
 </resources>

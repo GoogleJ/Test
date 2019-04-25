@@ -213,6 +213,17 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                         targetUserInfo = new UserInfo(targetId, loginResponse.getNick(), Uri.parse(loginResponse.getHeadPortrait()));
                         RongUserInfoManager.getInstance().setUserInfo(targetUserInfo);
                         initView();
+                        if (targetId.equals(Constant.userId)) {
+                            List<IPluginModule> pluginModules = extension.getPluginModules();
+                            Iterator<IPluginModule> iterator = pluginModules.iterator();
+                            while (iterator.hasNext()) {
+                                IPluginModule next = iterator.next();
+                                if (next instanceof TransferPlugin || next instanceof RedPacketPlugin) {
+                                    iterator.remove();
+                                    extension.removePlugin(next);
+                                }
+                            }
+                        }
                     }, ConversationActivity.this::handleApiError);
         } else if (conversationType.equals("group")) {
             // 群聊必须每次请求
@@ -241,6 +252,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                                 extension.addPlugin(new GameStartPlugin());
                             }
                             extension.addPlugin(new GameRulesPlugin());
+                            Constant.ownerIdForGameChat = groupInfo.getGroupInfo().getGroupOwnerId();
                         } else {
                             //群组plugin
                             IPluginModule temp = null;
@@ -260,6 +272,17 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
         } else {
             // 本地有缓存（私聊） 直接加载
             initView();
+            if (targetId.equals(Constant.userId)) {
+                List<IPluginModule> pluginModules = extension.getPluginModules();
+                Iterator<IPluginModule> iterator = pluginModules.iterator();
+                while (iterator.hasNext()) {
+                    IPluginModule next = iterator.next();
+                    if (next instanceof TransferPlugin || next instanceof RedPacketPlugin) {
+                        iterator.remove();
+                        extension.removePlugin(next);
+                    }
+                }
+            }
         }
     }
 

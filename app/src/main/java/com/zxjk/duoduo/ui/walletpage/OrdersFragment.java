@@ -2,11 +2,17 @@ package com.zxjk.duoduo.ui.walletpage;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
@@ -17,14 +23,10 @@ import com.zxjk.duoduo.network.response.GetTransferAllResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.ui.walletpage.adapter.BlockOrderAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import io.reactivex.Observable;
 
 public class OrdersFragment extends BaseFragment {
@@ -69,7 +71,7 @@ public class OrdersFragment extends BaseFragment {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (!recyclerView.canScrollVertically(1)) {
-                    if (!hasNextPage) {
+                    if (!hasNextPage && hasInitData) {
                         ToastUtils.showShort(R.string.nomore);
                         return;
                     }
@@ -137,6 +139,8 @@ public class OrdersFragment extends BaseFragment {
                     }
                     if (page == 1) {
                         data.clear();
+                    } else {
+                        page += 1;
                     }
                     data.addAll(response.getList());
                     blockOrderAdapter.notifyDataSetChanged();

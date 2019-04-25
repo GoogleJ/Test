@@ -6,10 +6,38 @@
     android:orientation="vertical"
     tools:context=".ui.msgpage.GameRecordDetailActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/themecolor">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:onClick="back"
+            android:padding="12dp"
+            android:src="@drawable/ico_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/gamedetail"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
     <net.lucode.hackware.magicindicator.MagicIndicator
         android:id="@+id/indicator"
         android:layout_width="match_parent"
         android:layout_height="40dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#FAFAFA" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/pager"

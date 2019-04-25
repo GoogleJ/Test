@@ -8,6 +8,7 @@ import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.response.GetAllPlayGroupResponse;
 import com.zxjk.duoduo.network.response.GetBalanceHkResponse;
 import com.zxjk.duoduo.network.response.GetBetConutBygroupIdResponse;
+import com.zxjk.duoduo.network.response.GetBetInfoDetailsResponse;
 import com.zxjk.duoduo.network.response.GetGroupGameParameterResponse;
 import com.zxjk.duoduo.network.response.GetGroupRedPackageInfoResponse;
 import com.zxjk.duoduo.network.response.GetIntegralDetailsResponse;
@@ -502,5 +503,10 @@ public interface Api {
     @FormUrlEncoded
     Observable<BaseResponse<String>> settlementGame(@Field("redPackageId") String redPackageId,
                                                     @Field("groupId") String groupId);
+
+    @POST("duoduo/group/game/getBetInfolDetails")
+    @FormUrlEncoded
+    Observable<BaseResponse<GetBetInfoDetailsResponse>> getBetInfolDetails(@Field("redPackageId") String redPackageId,
+                                                                           @Field("groupId") String groupId);
 
 }

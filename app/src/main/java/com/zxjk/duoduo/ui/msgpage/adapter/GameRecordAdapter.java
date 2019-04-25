@@ -48,19 +48,18 @@ public class GameRecordAdapter extends RecyclerView.Adapter<GameRecordAdapter.Vi
         holder.itemView.setOnClickListener(v -> {
             GetIntegralDetailsResponse getIntegralDetailsResponse = data.get(holder.getAdapterPosition());
             if (getIntegralDetailsResponse.getTitle().equals("流局") || getIntegralDetailsResponse.getSettlementCardType().equals("流局")) {
-                gameRecordPopupWindow.show(3,data.get(holder.getAdapterPosition()));
+                gameRecordPopupWindow.show(3, data.get(holder.getAdapterPosition()));
+            }else if (getIntegralDetailsResponse.getTitle().equals("上分")) {
+                gameRecordPopupWindow.show(1, data.get(holder.getAdapterPosition()));
+            } else if (getIntegralDetailsResponse.getTitle().equals("下分")) {
+                gameRecordPopupWindow.show(2, data.get(holder.getAdapterPosition()));
+            } else {
+                String redPackageId = getIntegralDetailsResponse.getRedPackageId();
+                Intent intent = new Intent(holder.itemView.getContext(), GameRecordDetailActivity.class);
+                intent.putExtra("redPackageId", redPackageId);
+                intent.putExtra("groupId", groupId);
+                holder.itemView.getContext().startActivity(intent);
             }
-            if (getIntegralDetailsResponse.equals("上分")) {
-                gameRecordPopupWindow.show(1,data.get(holder.getAdapterPosition()));
-            }
-            if (getIntegralDetailsResponse.equals("下分")) {
-                gameRecordPopupWindow.show(2,data.get(holder.getAdapterPosition()));
-            }
-
-            String redPackageId = getIntegralDetailsResponse.getRedPackageId();
-            Intent intent = new Intent(holder.itemView.getContext(), GameRecordDetailActivity.class);
-            intent.putExtra("redPackageId", redPackageId);
-            intent.putExtra("groupId", groupId);
         });
     }
 
@@ -86,22 +85,22 @@ public class GameRecordAdapter extends RecyclerView.Adapter<GameRecordAdapter.Vi
         }
 
         void bindData(GetIntegralDetailsResponse bean) {
-            if ("上分".equals(bean.getTitle())) {
+            if (bean.getTitle().contains("上分") || bean.getSettlementCardType().contains("上分")) {
                 iv.setImageResource(R.drawable.ic_game_record_list10);
             }
-            if ("下分".equals(bean.getTitle())) {
+            if (bean.getTitle().contains("下分") || bean.getSettlementCardType().contains("下分")) {
                 iv.setImageResource(R.drawable.ic_game_record_list7);
             }
-            if ("牛牛".equals(bean.getTitle())) {
+            if (bean.getTitle().contains("牛") || bean.getSettlementCardType().contains("牛")) {
                 iv.setImageResource(R.drawable.ic_game_record_list3);
             }
-            if ("百家乐".equals(bean.getTitle())) {
+            if (bean.getTitle().contains("百家乐") || bean.getSettlementCardType().contains("百家乐")) {
                 iv.setImageResource(R.drawable.ic_game_record_list1);
             }
-            if ("大小单双合".equals(bean.getTitle())) {
+            if (bean.getTitle().contains("大小单双合") || bean.getSettlementCardType().contains("大小单双合")) {
                 iv.setImageResource(R.drawable.ic_game_record_list6);
             }
-            if ("流局".equals(bean.getTitle()) || "流局".equals(bean.getSettlementCardType())) {
+            if (bean.getTitle().contains("流局") || bean.getSettlementCardType().contains("流局")) {
                 iv.setImageResource(R.drawable.ic_game_record_list4);
             }
 

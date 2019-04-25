@@ -64,8 +64,7 @@ public class SettingActivity extends BaseActivity {
     }
 
     private void isAuthentication() {
-        if (Constant.currentUser.getIsAuthentication().equals("2")
-                || Constant.currentUser.getIsAuthentication().equals("0")) {
+        if (!Constant.currentUser.getIsAuthentication().equals("0")) {
             ServiceFactory.getInstance().getBaseService(Api.class)
                     .getCustomerAuth()
                     .compose(bindToLifecycle())

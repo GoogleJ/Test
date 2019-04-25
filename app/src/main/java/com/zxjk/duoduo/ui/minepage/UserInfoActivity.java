@@ -108,7 +108,28 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
     @Override
     protected void onResume() {
         super.onResume();
+        isAuthentication();
         bindData();
+    }
+
+    private void isAuthentication() {
+        if (!Constant.currentUser.getIsAuthentication().equals("0")) {
+            ServiceFactory.getInstance().getBaseService(Api.class)
+                    .getCustomerAuth()
+                    .compose(bindToLifecycle())
+                    .compose(RxSchedulers.normalTrans())
+                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                    .subscribe(s -> {
+                        Constant.currentUser.setIsAuthentication(s);
+                        if (s.equals("0")) {
+                            tvUserInfoRealName.setText("已认证");
+                        } else if (s.equals("2")) {
+                            tvUserInfoRealName.setText("认证审核中");
+                        } else {
+                            tvUserInfoRealName.setText("未认证");
+                        }
+                    }, this::handleApiError);
+        }
     }
 
     private void findViews() {

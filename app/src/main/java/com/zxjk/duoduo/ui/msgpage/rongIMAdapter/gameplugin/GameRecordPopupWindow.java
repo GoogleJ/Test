@@ -48,6 +48,7 @@ public class GameRecordPopupWindow extends BasePopupWindow {
             tv2.setText("流局时间：" + sf.format(Long.parseLong(bean.getTime())));
             tv3.setText("剩余积分：" + bean.getRemainingIntegral() + "HK");
         }
+        showPopupWindow();
     }
 
     @Override
