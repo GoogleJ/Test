@@ -4,6 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -15,10 +19,6 @@ import com.zxjk.duoduo.ui.msgpage.ConversationActivity;
 import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.ui.widget.dialog.BaseAddTitleDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
-
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * @author Administrator
@@ -38,6 +38,7 @@ public class ChooseNewOwnerActivity extends BaseActivity {
         String groupId = getIntent().getStringExtra("groupId");
 
         titleBar = findViewById(R.id.title_bar);
+        titleBar.setLeftBack(this);
         mRecyclerView = findViewById(R.id.recycler_view);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(RecyclerView.VERTICAL);

@@ -4,10 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.Nullable;
+
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-
-import androidx.annotation.Nullable;
+import com.zxjk.duoduo.ui.widget.TitleBar;
 
 /**
  * @author Administrator
@@ -17,6 +18,9 @@ public class GroupManagementActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_management);
+
+        TitleBar tittle = findViewById(R.id.tittle);
+        tittle.setLeftLayoutClickListener(v -> finish());
     }
 
     public void transferGroup(View view) {

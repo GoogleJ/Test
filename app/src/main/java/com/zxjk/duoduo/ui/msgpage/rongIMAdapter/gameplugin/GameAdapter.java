@@ -45,14 +45,10 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.bindData(data.get(position));
         if (position == checkedPosition) {
-            data.get(position).setChecked(true);
             holder.itemView.setBackgroundResource(R.drawable.bac_game_checked);
             return;
         }
-        if (data.get(position).isChecked() && position != checkedPosition) {
-            data.get(position).setChecked(false);
-            holder.itemView.setBackgroundResource(R.drawable.bac_game_normal);
-        }
+        holder.itemView.setBackgroundResource(R.drawable.bac_game_normal);
     }
 
     @Override

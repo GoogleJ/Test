@@ -3,9 +3,12 @@ package com.zxjk.duoduo.ui.msgpage;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -17,7 +20,6 @@ import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 
-import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -59,14 +61,13 @@ public class AddFriendDetailsActivity extends BaseActivity implements View.OnCli
                     .compose(bindToLifecycle())
                     .compose(RxSchedulers.normalTrans())
                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                    .subscribe(loginResponse -> {
-                        userName.setText(loginResponse.getNick());
-                        duduId.setText(loginResponse.getDuoduoId());
-                        address.setText(loginResponse.getAddress());
-                        signtureText.setText(loginResponse.getSignature());
-                        GlideUtil.loadImg(heardImage, loginResponse.getHeadPortrait());
-                        String sex = "0";
-                        if (sex.equals(loginResponse.getSex())) {
+                    .subscribe(response -> {
+                        userName.setText(response.getNick());
+                        duduId.setText(response.getDuoduoId());
+                        address.setText(response.getAddress());
+                        signtureText.setText(TextUtils.isEmpty(response.getSignature()) ? getString(R.string.none) : response.getSignature());
+                        GlideUtil.loadCornerImg(heardImage, response.getHeadPortrait(), 3);
+                        if ("0".equals(response.getSex())) {
                             genderImage.setImageDrawable(getDrawable(R.drawable.icon_gender_man));
                         } else {
                             genderImage.setImageDrawable(getDrawable(R.drawable.icon_gender_woman));
@@ -105,11 +106,5 @@ public class AddFriendDetailsActivity extends BaseActivity implements View.OnCli
                 startActivity(intent);
             default:
         }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        finish();
     }
 }

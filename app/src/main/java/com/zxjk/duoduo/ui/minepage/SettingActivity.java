@@ -127,6 +127,10 @@ public class SettingActivity extends BaseActivity {
         startActivity(new Intent(this, AboutActivity.class));
     }
 
+    public void jump2Help(View view) {
+        startActivity(new Intent(this, HelpActivity.class));
+    }
+
     /**
      * 隐私界面的跳转
      *
