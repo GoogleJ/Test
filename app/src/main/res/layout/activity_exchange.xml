@@ -153,29 +153,100 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
+        android:orientation="vertical"
         android:paddingLeft="10dp"
         android:paddingTop="16dp"
         android:paddingRight="10dp"
-        android:paddingBottom="16dp">
+        android:paddingBottom="12dp">
 
-        <TextView
-            android:id="@+id/tvExchangeLine3"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/exchange1_buy2"
-            android:textColor="@color/themecolor"
-            android:textSize="16sp" />
+            android:layout_marginBottom="8dp"
+            android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/tvExchangeChooseCount"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/tvExchangeLine3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/exchange1_buy2"
+                android:textColor="@color/themecolor"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/etExchangeChooseCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:gravity="end"
+                android:hint="@string/choosecount"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:padding="4dp"
+                android:textColor="@color/textcolor1"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llChooseMinMax"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/ic_exchange_dropdown"
-            android:drawablePadding="4dp"
-            android:onClick="chooseCount"
-            android:padding="4dp"
-            android:text="@string/choosecount" />
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:text="@string/xianliang_xuantian"
+                android:textColor="@color/themecolor" />
+
+            <EditText
+                android:id="@+id/etMinMoney"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/shape_stroke_conor"
+                android:gravity="center"
+                android:hint="@string/input_minbuy"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:paddingStart="16dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                android:textColor="@color/themecolor"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="~"
+                android:textColor="@color/textcolor3"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/etMaxMoney"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="48dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape_stroke_conor"
+                android:gravity="center"
+                android:hint="@string/input_minbuy"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:paddingStart="16dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                android:textColor="@color/themecolor"
+                android:textSize="15sp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

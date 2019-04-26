@@ -71,7 +71,7 @@ public class GroupChatInformationActivity extends BaseActivity {
                     group = groupResponse;
                     if (groupResponse.getGroupInfo().getGroupOwnerId().equals(Constant.userId)) {
                         tvGroupManagement.setVisibility(View.VISIBLE);
-                        if (Constant.update) {
+                        if (Constant.isVerifyVerision) {
                             tvGroupManagement.setVisibility(View.GONE);
                         }
                     } else {
@@ -115,7 +115,7 @@ public class GroupChatInformationActivity extends BaseActivity {
         View footerView = LayoutInflater.from(this).inflate(R.layout.view_bottom_del, null);
         ImageView delMembers = footerView.findViewById(R.id.delete_members);
         ImageView addMembers = footerView.findViewById(R.id.add_members);
-        if (Constant.update) {
+        if (Constant.isVerifyVerision) {
             addMembers.setVisibility(View.GONE);
         }
         if (group.getGroupInfo().getGroupOwnerId().equals(Constant.userId)) {

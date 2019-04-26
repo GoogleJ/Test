@@ -182,18 +182,9 @@ public class ConversationDetailsActivity extends BaseActivity implements View.On
                 break;
             case R.id.recommend_to_friend:
                 Intent intentCard = new Intent(ConversationDetailsActivity.this, SelectContactForCardActivity.class);
-//                if (intentType==0){
-//                    intentCard.putExtra("UserIdSelect", userId);
-//                    intentCard.putExtra("userType", 4);
-//                    startActivity(intentCard);
-//                    return;
-//                }else if (intentType==1){
-//                    return;
-//                }else{
                 intentCard.putExtra("businessCardMessageId", businessCardMessageId);
                 intentCard.putExtra("userType", 4);
                 startActivity(intentCard);
-//                }
                 break;
             case R.id.delete_friend:
                 dialog = new DeleteFriendInformationDialog(this);

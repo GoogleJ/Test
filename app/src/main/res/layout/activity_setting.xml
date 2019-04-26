@@ -185,10 +185,10 @@
                 android:background="@color/personal_information_1" />
 
             <TextView
-                android:onClick="jump2Help"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_mine_rightarrow"
+                android:onClick="jump2Help"
                 android:paddingLeft="10dp"
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"

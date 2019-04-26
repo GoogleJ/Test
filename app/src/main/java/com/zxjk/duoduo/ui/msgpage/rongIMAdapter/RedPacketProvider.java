@@ -7,9 +7,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.zxjk.duoduo.R;
 
@@ -25,7 +24,7 @@ public class RedPacketProvider extends IContainerItemProvider.MessageProvider<Re
 
     class ViewHolder {
         TextView message;
-        ConstraintLayout sendLayout;
+        LinearLayout sendLayout;
     }
 
     @Override

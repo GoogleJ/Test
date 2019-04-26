@@ -40,8 +40,7 @@
     <LinearLayout
         android:id="@+id/delete_friend"
         style="@style/msg_top_pop_style"
-        android:paddingStart="20dp"
-        android:visibility="gone">
+        android:paddingStart="20dp">
 
         <ImageView
             style="@style/msg_top_pop_img_style"

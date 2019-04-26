@@ -55,7 +55,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
         llMineSetting.setOnClickListener(this);
         llMineBalanceLeft.setOnClickListener(this);
-        if (Constant.update) {
+        if (Constant.isVerifyVerision) {
             llMineBlockWallet.setVisibility(View.GONE);
         }
         llMineBlockWallet.setOnClickListener(this);
@@ -70,7 +70,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         tvMineNick.setText(Constant.currentUser.getNick());
-        if (TextUtils.isEmpty(tvMineSign.getText())) {
+        if (TextUtils.isEmpty(Constant.currentUser.getSignature())) {
             tvMineSign.setText(R.string.none);
         } else {
             tvMineSign.setText(Constant.currentUser.getSignature());

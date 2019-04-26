@@ -33,6 +33,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="12dp"
+            android:scaleType="centerCrop"
             android:src="@drawable/icon_header" />
 
         <TextView

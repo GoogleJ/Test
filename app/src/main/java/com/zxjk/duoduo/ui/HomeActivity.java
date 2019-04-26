@@ -16,7 +16,6 @@ import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.skin.ContactFragment;
 import com.zxjk.duoduo.ui.base.BaseActivity;
@@ -81,7 +80,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
 
         m_bottom_bar.setMode(BottomNavigationBar.MODE_FIXED);
         // 设置mode
-        if (Constant.update) {
+        if (Constant.isVerifyVerision) {
             m_bottom_bar.setMode(MODE_FIXED)
                     // 背景样式
                     .setBackgroundStyle(BACKGROUND_STYLE_RIPPLE)
@@ -176,14 +175,14 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                 switchFragment(msgFragment);
                 break;
             case 1:
-                if (Constant.update) {
+                if (Constant.isVerifyVerision) {
                     switchFragment(contactFragment);
                     break;
                 }
                 switchFragment(communityFragment);
                 break;
             case 2:
-                if (Constant.update) {
+                if (Constant.isVerifyVerision) {
                     switchFragment(mineFragment);
                     break;
                 }

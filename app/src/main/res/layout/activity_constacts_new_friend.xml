@@ -153,8 +153,7 @@
             android:id="@+id/m_contact_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="never"
-            android:paddingBottom="20dp" />
+            android:overScrollMode="never" />
 
         <com.zxjk.duoduo.ui.msgpage.widget.IndexView
             android:id="@+id/index_view"

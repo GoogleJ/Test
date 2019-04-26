@@ -137,21 +137,21 @@
     <string name="exchange1_sale2">出售数量</string>
     <string name="exchange1_sale3">出售总金额</string>
     <string name="exchange1_sale4">收款方式</string>
-    <string name="exchange1_sale5">确认出售</string>
+    <string name="exchange1_sale5">一键出售</string>
     <string name="exchange1_buy1">购买币种</string>
     <string name="exchange1_buy2">购买数量</string>
     <string name="exchange1_buy3">需支付金额</string>
     <string name="exchange1_buy4">支付方式</string>
-    <string name="exchange1_buy5">确认购买</string>
+    <string name="exchange1_buy5">一键购买</string>
     <string name="paytype">支付方式</string>
     <string name="wechat">微信</string>
     <string name="alipay">支付宝</string>
     <string name="bankcard">银行卡</string>
     <string name="sale_success">下单成功</string>
-    <string name="select_count_tips">请选择数量</string>
+    <string name="select_count_tips">请输入数量</string>
     <string name="select_buytype_tips">请选择支付方式</string>
     <string name="select_saletype_tips">请选择至少一种收款方式</string>
-    <string name="choosecount">请选择数量</string>
+    <string name="choosecount">请输入数量</string>
 
     //红包相关
     <string name="m_red_envelopes_title_text">发红包</string>
@@ -766,5 +766,9 @@
     <string name="helper_tips1">多多優社是什么平台？</string>
     <string name="helper_tips2">多多優社是一款“区块链+社交+金融”的DAPP应用，为区块链生态打造真正应用场景落地的项目，通过区块链技术解决支付问题；</string>
     <string name="accomplish">完成</string>
+    <string name="input_xiazhu">输入下注金额</string>
+    <string name="xianliang_xuantian">限量(选填)</string>
+    <string name="input_minbuy">最小购买数量</string>
+    <string name="input_outrate">不可超过总售出额，请重新输入</string>
 
 </resources>

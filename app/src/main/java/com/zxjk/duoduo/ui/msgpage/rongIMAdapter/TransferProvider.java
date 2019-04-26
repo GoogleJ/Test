@@ -33,7 +33,7 @@ public class TransferProvider extends IContainerItemProvider.MessageProvider<Tra
         ViewHolder holder = (ViewHolder) view.getTag();
 
         if (uiMessage.getMessageDirection() == Message.MessageDirection.SEND) {
-            holder.sendLayout.setBackgroundResource(R.drawable.ic_zhuanzhang_send_bg);
+            holder.sendLayout.setBackgroundResource(R.drawable.icon_red_packet_user);
         } else {
             holder.sendLayout.setBackgroundResource(R.drawable.icon_send_red_packet_friend);
         }

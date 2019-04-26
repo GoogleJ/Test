@@ -143,7 +143,7 @@
                     android:paddingBottom="6dp"
                     android:text="100"
                     android:textColor="@color/select_normaltext"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <EditText
                     android:id="@+id/et"
@@ -151,12 +151,13 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1.6"
                     android:background="@drawable/bac_game_normal"
+                    android:hint="@string/input_xiazhu"
                     android:imeOptions="actionDone"
                     android:inputType="numberDecimal"
                     android:paddingStart="8dp"
                     android:paddingEnd="8dp"
                     android:textColor="@color/textcolor2"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <RadioButton
                     android:id="@+id/rbGame5"
@@ -172,7 +173,7 @@
                     android:paddingBottom="6dp"
                     android:text="2w"
                     android:textColor="@color/select_normaltext"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
             </RadioGroup>
 

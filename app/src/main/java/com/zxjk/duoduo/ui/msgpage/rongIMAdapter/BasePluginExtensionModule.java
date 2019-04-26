@@ -20,9 +20,6 @@ import io.rong.imlib.model.Conversation;
  */
 public class BasePluginExtensionModule extends DefaultExtensionModule {
 
-    //1001.游戏 1.单聊 3.群聊
-    public static int custmoerType;
-
     @Override
     public List<IPluginModule> getPluginModules(Conversation.ConversationType conversationType) {
         RedPacketPlugin packetPlugin = new RedPacketPlugin();
@@ -34,22 +31,7 @@ public class BasePluginExtensionModule extends DefaultExtensionModule {
         MyCombineLocationPlugin locationPlugin = new MyCombineLocationPlugin();
         CollectionPlugin collectionPlugin = new CollectionPlugin();
 
-
         List<IPluginModule> list = super.getPluginModules(conversationType);
-
-        if (custmoerType == 1001) {
-            if (list != null) {
-                list.clear();
-                list.add(packetPlugin);
-                list.add(new GameUpScorePlugin());
-                list.add(new GameRecordPlugin());
-                list.add(new GameDownScorePlugin());
-                list.add(new GameDuobaoPlugin());
-                list.add(new GameStartPlugin());
-                list.add(new GameRulesPlugin());
-                return list;
-            }
-        }
 
         if (list != null) {
             list.clear();
@@ -61,12 +43,7 @@ public class BasePluginExtensionModule extends DefaultExtensionModule {
             list.add(businessCardPlugin);
             list.add(locationPlugin);
 //            list.add(collectionPlugin);
-            if (custmoerType == 3) {
-                list.remove(transferPlugin);
-                if (Constant.update) {
-                    list.remove(packetPlugin);
-                }
-            }
+
         }
 
         return list;

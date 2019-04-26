@@ -58,7 +58,8 @@ public class SettingActivity extends BaseActivity {
     public void gotoVerivy(View view) {
         if (Constant.currentUser.getIsAuthentication().equals("2")) {
             ToastUtils.showShort(R.string.verifying_pleasewait);
-        } else if (Constant.currentUser.getIsAuthentication().equals("1")) {
+        } else if (!Constant.currentUser.getIsAuthentication().equals("0") &&
+                !Constant.currentUser.getIsAuthentication().equals("1")) {
             startActivity(new Intent(this, VerifiedActivity.class));
         }
     }
@@ -76,6 +77,8 @@ public class SettingActivity extends BaseActivity {
                             tvSettingAuthenticate.setText("已认证");
                         } else if (s.equals("2")) {
                             tvSettingAuthenticate.setText("认证审核中");
+                        } else if (s.equals("1")) {
+                            tvSettingAuthenticate.setText("认证未通过");
                         } else {
                             tvSettingAuthenticate.setText("未认证");
                         }
@@ -146,12 +149,13 @@ public class SettingActivity extends BaseActivity {
      */
     public void billingMessage(View view) {
         String isAuthentication = Constant.currentUser.getIsAuthentication();
+
         if ("0".equals(isAuthentication)) {
             startActivity(new Intent(this, BillingMessageActivity.class));
-        } else if ("1".equals(isAuthentication)) {
-            ToastUtils.showShort(R.string.notAuthentication);
-        } else {
+        } else if ("2".equals(isAuthentication)) {
             ToastUtils.showShort(R.string.waitAuthentication);
+        } else {
+            ToastUtils.showShort(R.string.notAuthentication);
         }
     }
 

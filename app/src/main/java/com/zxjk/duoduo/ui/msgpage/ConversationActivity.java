@@ -246,7 +246,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                             extension.addPlugin(new GameUpScorePlugin());
                             extension.addPlugin(new GameRecordPlugin());
                             extension.addPlugin(new GameDownScorePlugin());
-                            extension.addPlugin(new GameDuobaoPlugin());
+//                            extension.addPlugin(new GameDuobaoPlugin());
                             if (groupInfo.getGroupInfo().getGroupOwnerId().equals(Constant.userId)) {
                                 //只有群主才能开始下注
                                 extension.addPlugin(new GameStartPlugin());

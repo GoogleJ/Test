@@ -2,15 +2,22 @@ package com.zxjk.duoduo.ui.walletpage;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -20,6 +27,7 @@ import com.zxjk.duoduo.network.response.PayInfoResponse;
 import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.ui.widget.dialog.SelectPopupWindow;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
 
@@ -30,9 +38,9 @@ import io.reactivex.ObservableSource;
 import io.reactivex.functions.Function;
 
 @SuppressLint("CheckResult")
-public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener {
+public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener, SelectPopupWindow.OnPopWindowClickListener {
 
-    private ChooseCountWindow chooseCountWindow;
+    private SelectPopupWindow selectPopupWindow;
 
     private TextView tvExchangePrice;
     private TextView tvExchangeTotal;
@@ -41,12 +49,15 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
     private TextView tvExchangeLine3;
     private TextView tvExchangeLine4;
     private TextView tvExchangePayType;
-    private TextView tvExchangeChooseCount;
     private Button btnExchangeConfirm;
+    private EditText etExchangeChooseCount;
+    private EditText etMinMoney;
+    private EditText etMaxMoney;
 
     private RelativeLayout rlExchangeType1;
     private RelativeLayout rlExchangeType2;
     private RelativeLayout rlExchangeType3;
+    private LinearLayout llChooseMinMax;
     private CheckBox cbExchangePayType1;
     private CheckBox cbExchangePayType2;
     private CheckBox cbExchangePayType3;
@@ -80,15 +91,6 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                     runOnUiThread(() -> {
                         rate = Float.parseFloat(s.getHkPrice());
                         tvExchangePrice.setText(rate + " CNY=1HK");
-                        chooseCountWindow = new ChooseCountWindow(this);
-                        chooseCountWindow.setData(s.getNumbeOfTransaction());
-                        chooseCountWindow.setOnChooseCount(s1 -> {
-                            count = Integer.parseInt(s1);
-                            totalPrice = count * rate;
-                            chooseCountWindow.dismiss();
-                            tvExchangeChooseCount.setText(s1);
-                            tvExchangeTotal.setText(String.valueOf(totalPrice) + " CNY");
-                        });
                     });
                     return ServiceFactory.getInstance().getBaseService(Api.class).getPayInfo().compose(RxSchedulers.normalTrans());
                 })
@@ -107,6 +109,8 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
     }
 
     private void initViews() {
+        selectPopupWindow = new SelectPopupWindow(this, this);
+        llChooseMinMax = findViewById(R.id.llChooseMinMax);
         rlExchangeType1 = findViewById(R.id.rlExchangeType1);
         rlExchangeType2 = findViewById(R.id.rlExchangeType2);
         rlExchangeType3 = findViewById(R.id.rlExchangeType3);
@@ -127,8 +131,75 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
         tvExchangeLine3 = findViewById(R.id.tvExchangeLine3);
         tvExchangeLine4 = findViewById(R.id.tvExchangeLine4);
         tvExchangePayType = findViewById(R.id.tvExchangePayType);
-        tvExchangeChooseCount = findViewById(R.id.tvExchangeChooseCount);
         btnExchangeConfirm = findViewById(R.id.btnExchangeConfirm);
+        etExchangeChooseCount = findViewById(R.id.etExchangeChooseCount);
+        etMinMoney = findViewById(R.id.etMinMoney);
+        etMaxMoney = findViewById(R.id.etMaxMoney);
+        etExchangeChooseCount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() == 0) {
+                    return;
+                }
+                count = Integer.parseInt(s.toString());
+                totalPrice = count * rate;
+                tvExchangeTotal.setText(String.valueOf(totalPrice));
+            }
+        });
+        etMinMoney.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().length() == 0) {
+                    return;
+                }
+                if (!TextUtils.isEmpty(etExchangeChooseCount.getText().toString().trim()) &&
+                        Integer.parseInt(s.toString()) > Integer.parseInt(etExchangeChooseCount.getText().toString().trim())) {
+                    ToastUtils.showShort(R.string.input_outrate);
+                }
+            }
+        });
+        etMaxMoney.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().length() == 0) {
+                    return;
+                }
+                if (!TextUtils.isEmpty(etExchangeChooseCount.getText().toString().trim()) &&
+                        Integer.parseInt(s.toString()) > Integer.parseInt(etExchangeChooseCount.getText().toString().trim())) {
+                    ToastUtils.showShort(R.string.input_outrate);
+                }
+            }
+        });
 
         rgExchangeTop.setOnCheckedChangeListener(this);
         rgExchangeTop.check(R.id.rb1);
@@ -163,17 +234,11 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                         startActivity(intent);
                     }, this::handleApiError);
         } else {
-            api.releasePurchase(String.valueOf(count), String.valueOf(totalPrice),
-                    "HK", MD5Utils.getMD5("123456"), getPayTypes())
-                    .compose(bindToLifecycle())
-                    .compose(RxSchedulers.normalTrans())
-                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                    .subscribe(s -> {
-                        Intent intent = new Intent(this, ConfirmSaleActivity.class);
-                        intent.putExtra("data", s);
-                        intent.putExtra("rate", tvExchangePrice.getText().toString());
-                        startActivity(intent);
-                    }, this::handleApiError);
+            KeyboardUtils.hideSoftInput(this);
+            Rect rect = new Rect();
+            getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+            int winHeight = getWindow().getDecorView().getHeight();
+            selectPopupWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, winHeight - rect.bottom);
         }
     }
 
@@ -200,7 +265,6 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
         buyType = "";
         paytypes.clear();
         count = 0;
-        tvExchangeChooseCount.setText(R.string.choosecount);
         cbExchangePayType1.setChecked(false);
         cbExchangePayType2.setChecked(false);
         cbExchangePayType3.setChecked(false);
@@ -212,6 +276,7 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                 tvExchangeLine4.setText(R.string.exchange1_sale3);
                 tvExchangePayType.setText(R.string.exchange1_sale4);
                 btnExchangeConfirm.setText(R.string.exchange1_sale5);
+                llChooseMinMax.setVisibility(View.VISIBLE);
 
                 if (tvExchangePayInfo1.getText().toString().length() != 0) {
                     tvExchangePayInfo1.setVisibility(View.VISIBLE);
@@ -231,16 +296,13 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                 tvExchangeLine4.setText(R.string.exchange1_buy3);
                 tvExchangePayType.setText(R.string.exchange1_buy4);
                 btnExchangeConfirm.setText(R.string.exchange1_buy5);
+                llChooseMinMax.setVisibility(View.GONE);
 
                 tvExchangePayInfo1.setVisibility(View.GONE);
                 tvExchangePayInfo2.setVisibility(View.GONE);
                 tvExchangePayInfo3.setVisibility(View.GONE);
                 break;
         }
-    }
-
-    public void chooseCount(View view) {
-        chooseCountWindow.showPopupWindow(R.id.tvExchangeChooseCount);
     }
 
     @Override
@@ -289,6 +351,24 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                 }
                 break;
             default:
+        }
+    }
+
+    @Override
+    public void onPopWindowClickListener(String psw, boolean complete) {
+        if (complete) {
+            ServiceFactory.getInstance().getBaseService(Api.class)
+                    .releasePurchase(String.valueOf(count), String.valueOf(totalPrice),
+                            "1", MD5Utils.getMD5(psw), getPayTypes(), etMinMoney.getText().toString().trim(), etMaxMoney.getText().toString().trim())
+                    .compose(bindToLifecycle())
+                    .compose(RxSchedulers.normalTrans())
+                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                    .subscribe(s -> {
+                        Intent intent = new Intent(this, ConfirmSaleActivity.class);
+                        intent.putExtra("data", s);
+                        intent.putExtra("rate", tvExchangePrice.getText().toString());
+                        startActivity(intent);
+                    }, this::handleApiError);
         }
     }
 }

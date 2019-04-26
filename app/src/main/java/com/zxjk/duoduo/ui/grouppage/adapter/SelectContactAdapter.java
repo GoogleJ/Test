@@ -18,10 +18,10 @@ public class SelectContactAdapter extends BaseQuickAdapter<FriendInfoResponse, B
 
     @Override
     protected void convert(BaseViewHolder helper, FriendInfoResponse item) {
-        helper.setText(R.id.user_name,item.getNick())
-        .addOnClickListener(R.id.add_del_group_layout);
-        ImageView heardImage=helper.getView(R.id.remove_headers);
-        GlideUtil.loadImg(heardImage,item.getHeadPortrait());
+        helper.setText(R.id.user_name, item.getNick())
+                .addOnClickListener(R.id.add_del_group_layout);
+        ImageView heardImage = helper.getView(R.id.remove_headers);
+        GlideUtil.loadCornerImg(heardImage, item.getHeadPortrait(), 2);
 
     }
 }

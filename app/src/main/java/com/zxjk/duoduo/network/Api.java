@@ -153,7 +153,8 @@ public interface Api {
     @POST("duoduo/exchange/releasePurchase")
     @FormUrlEncoded
     Observable<BaseResponse<ReleasePurchase>> releasePurchase(@Field("number") String number,
-                                                              @Field("money") String money, @Field("currency") String currency, @Field("payPwd") String paypwd, @Field("payTpye") String payTpye);
+                                                              @Field("money") String money, @Field("currency") String currency, @Field("payPwd") String paypwd, @Field("payTpye") String payTpye,
+                                                              @Field("minNum") String minNum, @Field("maxNum") String maxNum);
 
     @POST("duoduo/exchange/releaseSale")
     @FormUrlEncoded
@@ -541,5 +542,7 @@ public interface Api {
     @FormUrlEncoded
     Observable<BaseResponse<String>> getWithdrawalAmount(@Field("groupId") String groupId, @Field("groupOwnerId") String groupOwnerId, @Field("num") String num, @Field("payPwd") String payPwd);
 
+    @POST("duoduo/customer/getAppVersion")
+    Observable<BaseResponse<String>> getAppVersion();
 
 }

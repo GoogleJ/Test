@@ -125,6 +125,8 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
                             tvUserInfoRealName.setText("已认证");
                         } else if (s.equals("2")) {
                             tvUserInfoRealName.setText("认证审核中");
+                        } else if (s.equals("1")) {
+                            tvUserInfoRealName.setText("认证未通过");
                         } else {
                             tvUserInfoRealName.setText("未认证");
                         }
@@ -134,7 +136,7 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
 
     private void findViews() {
         rlWalletAddress = findViewById(R.id.rlWalletAddress);
-        if (Constant.update) {
+        if (Constant.isVerifyVerision) {
             rlWalletAddress.setVisibility(View.GONE);
         }
         ivUserInfoHead = findViewById(R.id.ivUserInfoHead);
@@ -224,7 +226,6 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
                     filePath = TakePicUtil.getPath(this, data.getData());
                     break;
                 default:
-                    break;
             }
         }
 
