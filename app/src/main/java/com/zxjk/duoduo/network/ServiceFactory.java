@@ -13,7 +13,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public  class ServiceFactory {
+public class ServiceFactory {
     private Retrofit retrofit;
 
     private static ServiceFactory instance;
@@ -39,9 +39,12 @@ public  class ServiceFactory {
                     Request request = requestBuilder.build();
                     return chain.proceed(request);
                 })
+                .sslSocketFactory(SslContextFactory.getSSlSocketFactory(SslContextFactory.getInputStream()))
+                .hostnameVerifier(SslContextFactory.getHostnameVerifier())
                 .readTimeout(60, TimeUnit.SECONDS)
                 .writeTimeout(60, TimeUnit.SECONDS)
                 .build();
+
         //buildApi
         retrofit = new Retrofit.Builder().baseUrl(Constant.BASE_URL)
                 .client(client)

@@ -16,7 +16,7 @@ import io.rong.imlib.model.Message;
 public class Constant {
     //阿里OSS上传地址
     public static final String OSS_URL = "https://zhongxingjike.oss-cn-hongkong.aliyuncs.com/upload/";
-    public static final String BASE_URL = "http://192.168.0.110:8085/";
+    public static final String BASE_URL = "https://192.168.0.110:8085/";
 //        public static final String BASE_URL = "http://47.75.115.118:8086/";
 
     public static boolean isVerifyVerision = true;
