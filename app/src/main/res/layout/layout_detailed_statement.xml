@@ -22,7 +22,7 @@
             android:layout_alignTop="@+id/iv_head"
             android:layout_marginStart="12dp"
             android:layout_toEndOf="@id/iv_head"
-            android:text="昵称"
+            android:text="@string/nick"
             android:textColor="@color/textcolor1"
             android:textSize="16sp" />
 

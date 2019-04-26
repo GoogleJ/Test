@@ -33,8 +33,10 @@ public class PeopleUnaccalimedActivity extends BaseActivity {
     private TextView tips;
     private TextView tvRedFromList;
     private RecyclerView recycler;
+    private boolean isShow;
+    private TextView tv_redEnvelope;
 
-    @SuppressLint("CheckResult")
+    @SuppressLint({"CheckResult", "SetTextI18n"})
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +47,7 @@ public class PeopleUnaccalimedActivity extends BaseActivity {
         head = findViewById(R.id.head);
         name = findViewById(R.id.name);
         tips = findViewById(R.id.tips);
+        tv_redEnvelope = findViewById(R.id.tv_redEnvelope);
         recycler = findViewById(R.id.recycler);
 
         recycler.setLayoutManager(new LinearLayoutManager(this));
@@ -53,6 +56,12 @@ public class PeopleUnaccalimedActivity extends BaseActivity {
         recycler.setAdapter(adapter);
 
         String id = getIntent().getStringExtra("id");
+        isShow = getIntent().getBooleanExtra("isShow", true);
+        if (!isShow) {
+            tv_redEnvelope.setVisibility(View.GONE);
+        } else {
+            tv_redEnvelope.setVisibility(View.VISIBLE);
+        }
         String isGame = getIntent().getStringExtra("isGame");
         if (TextUtils.isEmpty(isGame)) {
             isGame = "1";
@@ -70,7 +79,7 @@ public class PeopleUnaccalimedActivity extends BaseActivity {
                 .subscribe(getRedPackageStatusResponse -> {
                     title.setText(getRedPackageStatusResponse.getMessage());
                     GlideUtil.loadCornerImg(head, getRedPackageStatusResponse.getHeadPortrait(), 3);
-                    name.setText(getRedPackageStatusResponse.getUsernick());
+                    name.setText(getRedPackageStatusResponse.getUsernick() + getString(R.string.red_envelope));
                     if (getRedPackageStatusResponse.getRedPackageType() == 1) {
                         //群组红包
                         ServiceFactory.getInstance().getBaseService(Api.class)
@@ -79,6 +88,12 @@ public class PeopleUnaccalimedActivity extends BaseActivity {
                                 .compose(RxSchedulers.normalTrans())
                                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                                 .subscribe(response -> {
+                                    for (int i = 0; i < response.getCustomerInfo().size(); i++) {
+                                        if (String.valueOf(response.getCustomerInfo().get(i).getCustomerId()).equals(Constant.currentUser.getId())) {
+                                            tv_redEnvelope.setText(response.getCustomerInfo().get(i).getMoney() + " HK");
+                                        }
+                                    }
+
                                     int number = response.getRedPackageInfo().getNumber();
                                     tips.setText(number + "个红包，共" + response.getRedPackageInfo().getMoney() + "HK");
                                     adapter.setData(response.getCustomerInfo());
@@ -92,6 +107,7 @@ public class PeopleUnaccalimedActivity extends BaseActivity {
                                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                                 .subscribe(response -> {
                                     String money = response.getRedPachageInfo().getMoney();
+                                    tv_redEnvelope.setText(money + " HK");
                                     if (response.getRedPachageInfo().getStatus().equals("0")) {
                                         //未领取
                                         tips.setText("红包金额" + money + "HK,等待对方领取");

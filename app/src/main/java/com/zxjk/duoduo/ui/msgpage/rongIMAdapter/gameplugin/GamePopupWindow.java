@@ -56,7 +56,8 @@ public class GamePopupWindow extends BasePopupWindow {
     }
 
     public interface OnCommit {
-        void onCommit(String data);
+
+        void onCommit(String data, long parseLong);
     }
 
     public void setGroupId(String groupId) {
@@ -121,7 +122,7 @@ public class GamePopupWindow extends BasePopupWindow {
             }
             requeust.setGroupId(groupId);
             if (this.onCommit != null) {
-                onCommit.onCommit(GsonUtils.toJson(requeust));
+                onCommit.onCommit(GsonUtils.toJson(requeust), Long.parseLong(tvGameCountDown.getText().toString()));
             }
         });
 

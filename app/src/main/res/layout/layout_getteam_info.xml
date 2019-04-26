@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="多多账号"
+            android:text=""
             android:textColor="@color/textcolor1"
             android:textSize="15sp" />
 
@@ -30,8 +30,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:ellipsize="end"
             android:gravity="center"
-            android:text="昵称"
+            android:maxEms="5"
+            android:singleLine="true"
+            android:text=""
             android:textColor="@color/textcolor1"
             android:textSize="15sp" />
 
@@ -46,7 +49,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="总业绩"
+            android:text=""
             android:textColor="@color/textcolor1"
             android:textSize="15sp" />
 
@@ -61,7 +64,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="级别"
+            android:text=""
             android:textColor="@color/textcolor1"
             android:textSize="15sp" />
 
@@ -76,7 +79,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="团队人数"
+            android:text=""
             android:textColor="@color/textcolor1"
             android:textSize="15sp" />
 
@@ -91,7 +94,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="上周贡献"
+            android:text=""
             android:textColor="@color/textcolor1"
             android:textSize="15sp" />
 
@@ -106,7 +109,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="上周团队贡献"
+            android:text=""
             android:textColor="@color/textcolor1"
             android:textSize="15sp" />
 

@@ -13,7 +13,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 
+import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.shehuan.nicedialog.BaseNiceDialog;
+import com.shehuan.nicedialog.NiceDialog;
+import com.shehuan.nicedialog.ViewConvertListener;
+import com.shehuan.nicedialog.ViewHolder;
 import com.trello.lifecycle2.android.lifecycle.AndroidLifecycle;
 import com.trello.rxlifecycle3.LifecycleProvider;
 import com.zxjk.duoduo.Constant;
@@ -51,6 +56,8 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import io.rong.imkit.RongExtension;
@@ -528,16 +535,64 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                         .subscribe(getGroupGameParameterResponse -> {
                             GamePopupWindow gamePopupWindow = new GamePopupWindow(ConversationActivity.this);
                             gamePopupWindow.setGroupId(groupResponse.getGroupInfo().getId());
-                            gamePopupWindow.setOnCommit(data ->
-                                    ServiceFactory.getInstance().getBaseService(Api.class)
-                                            .groupGamebetting(data)
-                                            .compose(RxSchedulers.normalTrans())
-                                            .compose(RxSchedulers.ioObserver())
-                                            .compose(bindToLifecycle())
-                                            .subscribe(s -> {
-                                                gamePopupWindow.dismiss();
-                                                ToastUtils.showShort(R.string.xiazhuchenggong);
-                                            }, ConversationActivity.this::handleApiError));
+
+                            gamePopupWindow.setOnCommit((data, time
+                            ) -> {
+                                gamePopupWindow.dismiss();
+                                NiceDialog.init().setLayoutId(R.layout.layout_dialog_fragment)
+                                        .setConvertListener(new ViewConvertListener() {
+                                            @Override
+                                            protected void convertView(ViewHolder viewHolder, BaseNiceDialog baseNiceDialog) {
+                                                TextView tv_type = viewHolder.getView(R.id.tv_type);
+                                                TextView tv_bet = viewHolder.getView(R.id.tv_bet);
+                                                TextView tv_theOdds = viewHolder.getView(R.id.tv_theOdds);
+                                                TextView tvGameCountDown = viewHolder.getView(R.id.tvGameCountDown);
+                                                GroupGamebettingRequeust requeust = GsonUtils.fromJson(data, GroupGamebettingRequeust.class);
+                                                tv_type.setText(requeust.getPlayName());
+                                                tv_bet.setText(requeust.getBetMoneny());
+                                                if (requeust.getPlayName().equals("牛牛")) {
+                                                    tv_theOdds.setVisibility(View.GONE);
+                                                } else {
+                                                    tv_theOdds.setVisibility(View.VISIBLE);
+                                                    tv_theOdds.setText(requeust.getBetCardType());
+                                                }
+                                                Disposable subscribe = Observable.interval(0, 1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+                                                        .take(time)
+                                                        .subscribe(l -> {
+                                                            tvGameCountDown.setText((time - l) + "");
+                                                            if (l == time - 1) {
+                                                                ToastUtils.showShort(R.string.timeout_game);
+                                                                baseNiceDialog.dismiss();
+                                                            }
+                                                        }, t -> {
+                                                        });
+
+                                                viewHolder.getView(R.id.tv_cancel).setOnClickListener(v -> {
+                                                    baseNiceDialog.dismiss();
+                                                    subscribe.dispose();
+                                                });
+
+                                                viewHolder.getView(R.id.tv_determine).setOnClickListener(v -> {
+                                                    baseNiceDialog.dismiss();
+                                                    subscribe.dispose();
+                                                    ServiceFactory.getInstance().getBaseService(Api.class)
+                                                            .groupGamebetting(data)
+                                                            .compose(RxSchedulers.normalTrans())
+                                                            .compose(RxSchedulers.ioObserver())
+                                                            .compose(bindToLifecycle())
+                                                            .subscribe(s -> {
+                                                                ToastUtils.showShort(R.string.xiazhuchenggong);
+                                                            }, ConversationActivity.this::handleApiError);
+                                                });
+
+                                            }
+                                        })
+                                        .setDimAmount(0.3f)
+                                        .setOutCancel(false)
+                                        .show(getSupportFragmentManager());
+                            });
+
+
                             gamePopupWindow.show(getGroupGameParameterResponse);
                         }, ConversationActivity.this::handleApiError));
         }

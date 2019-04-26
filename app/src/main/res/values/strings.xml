@@ -770,5 +770,13 @@
     <string name="xianliang_xuantian">限量(选填)</string>
     <string name="input_minbuy">最小购买数量</string>
     <string name="input_outrate">不可超过总售出额，请重新输入</string>
+    <string name="duo_duo_account">多多账号</string>
+    <string name="group_number">团队人数</string>
+    <string name="last_week_contribution">上周贡献</string>
+    <string name="last_week_group_contribution">上周团队贡献</string>
+    <string name="red_envelope">的红包</string>
+    <string name="quxiao">取消</string>
+    <string name="xiazhu_info">下注详情</string>
+    <string name="zonge">总额:</string>
 
 </resources>

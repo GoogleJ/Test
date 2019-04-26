@@ -72,6 +72,7 @@ public class ExpiredEnvelopesDialog extends Dialog {
             m_expired_envelopes_info.setOnClickListener(v -> {
                 Intent intent1 = new Intent(context, PeopleUnaccalimedActivity.class);
                 intent1.putExtra("id", redId);
+                intent1.putExtra("isShow", false);
                 context.startActivity(intent1);
                 dismiss();
             });

@@ -22,7 +22,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="多多账号"
+            android:text="@string/duo_duo_account"
             android:textColor="@android:color/white"
             android:textSize="15sp" />
 
@@ -36,7 +36,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="昵称"
+            android:text="@string/nick"
             android:textColor="@android:color/white"
             android:textSize="15sp" />
 
@@ -50,7 +50,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="总业绩"
+            android:text="@string/zongyeji"
             android:textColor="@android:color/white"
             android:textSize="15sp" />
 
@@ -64,7 +64,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="级别"
+            android:text="@string/grade"
             android:textColor="@android:color/white"
             android:textSize="15sp" />
 
@@ -78,7 +78,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="团队人数"
+            android:text="@string/group_number"
             android:textColor="@android:color/white"
             android:textSize="15sp" />
 
@@ -92,7 +92,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="上周贡献"
+            android:text="@string/last_week_contribution"
             android:textColor="@android:color/white"
             android:textSize="15sp" />
 
@@ -106,7 +106,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="上周团队贡献"
+            android:text="@string/last_week_group_contribution"
             android:textColor="@android:color/white"
             android:textSize="15sp" />
 
