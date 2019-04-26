@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
@@ -34,7 +36,6 @@ import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
-import androidx.annotation.Nullable;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
@@ -233,7 +234,7 @@ public class ConfirmBuyActivity extends BaseActivity implements TakePopWindow.On
             zipFile(Collections.singletonList(filePath), files -> {
                 File file = files.get(0);
                 OssUtils.uploadFile(file.getAbsolutePath(), url -> {
-                    flagConfirmBuy.setTextColor(R.string.upload_done);
+                    flagConfirmBuy.setText(R.string.upload_done);
                     ToastUtils.showShort(R.string.upload_done);
                     pictureUrl = url;
                 });

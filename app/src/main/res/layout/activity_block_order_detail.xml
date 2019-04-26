@@ -75,7 +75,7 @@
         android:paddingEnd="12dp">
 
         <TextView
-             android:id="@+id/tvBlockOrdersDetailCurrency"
+            android:id="@+id/tvBlockOrdersDetailCurrency"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
@@ -85,8 +85,10 @@
 
         <LinearLayout
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_height="wrap_content">
+            android:gravity="center_vertical|end">
+
             <TextView
                 android:id="@+id/tvItemFirst"
                 android:layout_width="wrap_content"
@@ -99,9 +101,9 @@
                 android:id="@+id/ivItemArrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginStart="3dp"
                 android:layout_marginEnd="3dp"
-                android:layout_gravity="center"
                 android:src="@drawable/ic_blockorders_arrow"
                 android:visibility="gone" />
 
