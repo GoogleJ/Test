@@ -23,6 +23,17 @@ import io.rong.imkit.RongIM;
 
 public class AllGroupAdapter extends RecyclerView.Adapter<AllGroupAdapter.ViewHolder> {
 
+    private OnItemClickLitener mOnItemClickLitener;
+
+    //设置回调接口
+    public interface OnItemClickLitener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {
+        this.mOnItemClickLitener = mOnItemClickLitener;
+    }
+
     private List<GetAllPlayGroupResponse.GroupListBean> data = new ArrayList<>();
 
     public void setData(List<GetAllPlayGroupResponse.GroupListBean> data) {
@@ -45,6 +56,18 @@ public class AllGroupAdapter extends RecyclerView.Adapter<AllGroupAdapter.ViewHo
         }
         holder.tvGroupName.setText(data.get(position).getGroupNikeName());
         holder.tvType.setText(data.get(position).isHasJoined() ? R.string.mygamegroup : R.string.allgamegroup);
+
+        if (mOnItemClickLitener != null) {
+            holder.itemView.setOnClickListener(view -> {
+                GetAllPlayGroupResponse.GroupListBean groupListBean = data.get(holder.getAdapterPosition());
+                if (groupListBean.isHasJoined()) {
+                    RongIM.getInstance().startGroupChat(holder.itemView.getContext(), groupListBean.getId(), groupListBean.getGroupNikeName());
+                } else {
+                    mOnItemClickLitener.onItemClick(holder.getAdapterPosition());
+                }
+            });
+        }
+
 
         String[] split = data.get(position).getHeadPortrait().split(",");
         if (split.length > 9) {
@@ -81,12 +104,6 @@ public class AllGroupAdapter extends RecyclerView.Adapter<AllGroupAdapter.ViewHo
             tvGroupName = itemView.findViewById(R.id.tvGroupName);
             tvType = itemView.findViewById(R.id.tvType);
             nineImg = itemView.findViewById(R.id.nineImg);
-            itemView.setOnClickListener(v -> {
-                GetAllPlayGroupResponse.GroupListBean groupListBean = data.get(getAdapterPosition());
-                if (groupListBean.isHasJoined()) {
-                    RongIM.getInstance().startGroupChat(itemView.getContext(), groupListBean.getId(), groupListBean.getGroupNikeName());
-                }
-            });
         }
     }
 

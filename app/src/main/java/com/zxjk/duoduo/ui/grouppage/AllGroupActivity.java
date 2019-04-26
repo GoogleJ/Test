@@ -1,13 +1,21 @@
 package com.zxjk.duoduo.ui.grouppage;
 
 import android.annotation.SuppressLint;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ToastUtils;
+import com.shehuan.nicedialog.BaseNiceDialog;
+import com.shehuan.nicedialog.NiceDialog;
+import com.shehuan.nicedialog.ViewConvertListener;
+import com.shehuan.nicedialog.ViewHolder;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -21,6 +29,7 @@ import com.zxjk.duoduo.utils.CommonUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressLint("SetTextI18n")
 public class AllGroupActivity extends BaseActivity {
 
     private EditText etSearch;
@@ -58,7 +67,31 @@ public class AllGroupActivity extends BaseActivity {
                         }
                     }
                     adapter.setData(groupList);
+                    adapter.setOnItemClickLitener(position -> {
+                        GetAllPlayGroupResponse.GroupListBean groupListBean = groupList.get(position);
+                        NiceDialog.init().setLayoutId(R.layout.layout_general_dialog1).setConvertListener(new ViewConvertListener() {
+
+                            @Override
+                            protected void convertView(ViewHolder viewHolder, BaseNiceDialog baseNiceDialog) {
+                                TextView tv_content = viewHolder.getView(R.id.tv_content);
+                                TextView tv_notarize = viewHolder.getView(R.id.tv_notarize);
+                                tv_content.setText(getString(R.string.hint_duoduo_id) + " " + groupListBean.getDuoduoId());
+                                tv_notarize.setText(getString(R.string.fuzhi_duoduo_id));
+                                viewHolder.getView(R.id.tv_notarize).setOnClickListener(v -> {
+                                    ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                                    cm.setText(groupListBean.getDuoduoId());
+                                    ToastUtils.showShort(getString(R.string.duplicated_to_clipboard));
+                                    baseNiceDialog.dismiss();
+
+                                });
+                            }
+                        }).setDimAmount(0.3f)
+                                .setOutCancel(true)
+                                .show(getSupportFragmentManager());
+                    });
                 }, this::handleApiError);
+
+
     }
 
     public void back(View view) {
