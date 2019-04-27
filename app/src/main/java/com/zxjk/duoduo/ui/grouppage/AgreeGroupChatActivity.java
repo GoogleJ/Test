@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 /**
  * @author Administrator
@@ -52,6 +53,12 @@ public class AgreeGroupChatActivity extends BaseActivity {
         String groupId = getIntent().getStringExtra("groupId");
         groupName = getIntent().getStringExtra("groupName");
         String headUrls = getIntent().getStringExtra("headUrls");
+        boolean overtime = getIntent().getBooleanExtra("overtime", false);
+        if (overtime) {
+            joinGroupBtn.setClickable(false);
+            joinGroupBtn.setEnabled(false);
+            joinGroupBtn.setText(R.string.hasjoined);
+        }
 
         String[] split = headUrls.split(",");
         if (split.length > 9) {
@@ -83,10 +90,21 @@ public class AgreeGroupChatActivity extends BaseActivity {
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
-                    Intent intent = new Intent(this, HomeActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    RongIM.getInstance().startGroupChat(this, groupId, groupName);
+                    int id = getIntent().getIntExtra("id", -1);
+                    RongIM.getInstance().setMessageExtra(id, "1", new RongIMClient.ResultCallback<Boolean>() {
+                        @Override
+                        public void onSuccess(Boolean aBoolean) {
+                            Intent intent = new Intent(AgreeGroupChatActivity.this, HomeActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            RongIM.getInstance().startGroupChat(AgreeGroupChatActivity.this, groupId, groupName);
+                        }
+
+                        @Override
+                        public void onError(RongIMClient.ErrorCode errorCode) {
+
+                        }
+                    });
                 }, this::handleApiError);
     }
 }

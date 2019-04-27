@@ -342,6 +342,8 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                             dialog.dismiss();
                             RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE
                                     , friendId, null);
+                            RongIMClient.getInstance().cleanHistoryMessages(Conversation.ConversationType.PRIVATE,
+                                    friendId,0,false,null);
                         }
 
                         @Override

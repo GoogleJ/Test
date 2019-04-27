@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,6 +85,10 @@ public class GroupCardProvider extends IContainerItemProvider.MessageProvider<Gr
             intent.putExtra("groupId", groupCardMessage.getGroupId());
             intent.putExtra("groupName", groupCardMessage.getGroupName());
             intent.putExtra("headUrls", groupCardMessage.getIcon());
+            intent.putExtra("id", uiMessage.getMessageId());
+            if (!TextUtils.isEmpty(uiMessage.getExtra())) {
+                intent.putExtra("overtime", true);
+            }
             view.getContext().startActivity(intent);
         }
     }

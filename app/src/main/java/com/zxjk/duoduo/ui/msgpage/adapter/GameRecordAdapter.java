@@ -53,6 +53,8 @@ public class GameRecordAdapter extends RecyclerView.Adapter<GameRecordAdapter.Vi
                 gameRecordPopupWindow.show(1, data.get(holder.getAdapterPosition()));
             } else if (getIntegralDetailsResponse.getTitle().equals("下分")) {
                 gameRecordPopupWindow.show(2, data.get(holder.getAdapterPosition()));
+            } else if (getIntegralDetailsResponse.getTitle().equals("提现")) {
+                gameRecordPopupWindow.show(4, data.get(holder.getAdapterPosition()));
             } else {
                 String redPackageId = getIntegralDetailsResponse.getRedPackageId();
                 Intent intent = new Intent(holder.itemView.getContext(), GameRecordDetailActivity.class);
@@ -102,6 +104,9 @@ public class GameRecordAdapter extends RecyclerView.Adapter<GameRecordAdapter.Vi
             }
             if (bean.getTitle().contains("流局") || bean.getSettlementCardType().contains("流局")) {
                 iv.setImageResource(R.drawable.ic_game_record_list4);
+            }
+            if (bean.getTitle().equals("提现")) {
+                iv.setImageResource(R.drawable.ic_game_record_list11);
             }
 
             if (TextUtils.isEmpty(bean.getSettlementCardType())) {

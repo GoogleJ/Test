@@ -26,6 +26,13 @@
             app:RCDefDrawable="@drawable/rc_default_portrait"
             app:RCShape="square" />
 
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/rc_mask"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:visibility="gone" />
+
         <FrameLayout
             android:id="@+id/rc_unread_view_left"
             android:layout_width="wrap_content"

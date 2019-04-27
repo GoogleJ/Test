@@ -135,6 +135,8 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
                             public void onSuccess(Message message) {
                                 RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE
                                         , friendInfoResponse.getId(), null);
+                                RongIMClient.getInstance().cleanHistoryMessages(Conversation.ConversationType.PRIVATE,
+                                        friendInfoResponse.getId(),0,false,null);
                             }
 
                             @Override

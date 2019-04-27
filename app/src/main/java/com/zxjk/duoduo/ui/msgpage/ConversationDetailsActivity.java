@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -22,7 +24,6 @@ import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 
-import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -266,6 +267,8 @@ public class ConversationDetailsActivity extends BaseActivity implements View.On
                             dialog.dismiss();
                             RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE
                                     , friendId, null);
+                            RongIMClient.getInstance().cleanHistoryMessages(Conversation.ConversationType.PRIVATE,
+                                    friendId,0,false,null);
                         }
 
                         @Override

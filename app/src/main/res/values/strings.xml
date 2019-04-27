@@ -778,6 +778,7 @@
     <string name="quxiao">取消</string>
     <string name="xiazhu_info">下注详情</string>
     <string name="zonge">总额:</string>
+    <string name="hasjoined">已接受</string>
     <string name="noxiazhu">本局没有人下注</string>
     <string name="hint_duoduo_id">好友/群主邀请才能进入该游戏群\n\n群主多多号: </string>
     <string name="fuzhi_duoduo_id">复制多多号</string>

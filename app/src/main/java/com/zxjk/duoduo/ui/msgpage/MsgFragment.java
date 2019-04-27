@@ -34,7 +34,7 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
     TitleBar titleBar;
 
     private static final String CONVERSATIONLIST_FRAGMENT_KEY = "conversationlist_fragment_key";
-    private ConversationListFragment mConversationListFragment = null;
+    private CusConversationListFragment mConversationListFragment = null;
     private CommonPopupWindow popupWindow;
 
     View rootView;
@@ -110,7 +110,7 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
         if (bundle != null) {
             mCurrentFragment = getCurrentFragment(bundle);
             String currentFragmentTag = bundle.getString(CONVERSATIONLIST_FRAGMENT_KEY, CONVERSATIONLIST_FRAGMENT_KEY);
-            mConversationListFragment = (ConversationListFragment) getFragment(currentFragmentTag);
+            mConversationListFragment = (CusConversationListFragment) getFragment(currentFragmentTag);
         }
 
         if (mConversationListFragment == null) {
@@ -128,8 +128,8 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
     }
 
 
-    private ConversationListFragment createConversationList() {
-        ConversationListFragment listFragment = new ConversationListFragment();
+    private CusConversationListFragment createConversationList() {
+        CusConversationListFragment listFragment = new CusConversationListFragment();
         Uri uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversationlist")
                 //设置私聊会话是否聚合显示

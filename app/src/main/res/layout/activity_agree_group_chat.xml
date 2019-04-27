@@ -61,7 +61,6 @@
         android:text="@string/join_a_group_chat"
         android:textColor="@color/themecolor"
         android:textSize="19sp"
-
         />
 
 </LinearLayout>

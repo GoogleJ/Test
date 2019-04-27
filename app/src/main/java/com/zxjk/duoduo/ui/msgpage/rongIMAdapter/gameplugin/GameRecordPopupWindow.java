@@ -48,6 +48,12 @@ public class GameRecordPopupWindow extends BasePopupWindow {
             tv2.setText("流局时间：" + sf.format(Long.parseLong(bean.getTime())));
             tv3.setText("剩余积分：" + bean.getRemainingIntegral() + "HK");
         }
+        if (type == 4) {
+            iv.setImageResource(R.drawable.ic_tixian_big);
+            tv1.setText("提现金额：" + bean.getIntegral() + "HK");
+            tv2.setText("提现时间：" + sf.format(Long.parseLong(bean.getTime())));
+            tv3.setText("剩余积分：" + bean.getRemainingIntegral() + "HK");
+        }
         showPopupWindow();
     }
 

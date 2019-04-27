@@ -79,7 +79,7 @@ public class TransferProvider extends IContainerItemProvider.MessageProvider<Tra
         holder.remark = (TextView) view.findViewById(R.id.remark);
         holder.transferMoney = (TextView) view.findViewById(R.id.transfer_money);
         holder.transferIconType = (ImageView) view.findViewById(R.id.transfer_type_icon);
-        holder.sendLayout = (LinearLayout) view.findViewById(R.id.transfer_send_layout);
+        holder.sendLayout = (LinearLayout) view.findViewById(R.id.send_red_packet_layout);
         view.setTag(holder);
         return view;
     }
