@@ -44,8 +44,8 @@ public class ExchangeListActivity extends BaseActivity {
 
         String rate = getIntent().getStringExtra("rate");
 
-        mAdapter = new ExchangeListAdapter(new ArrayList<>());
-        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+        mAdapter = new ExchangeListAdapter();
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
             GetOverOrderResponse g = (GetOverOrderResponse) adapter.getData().get(position);
             Intent intent = new Intent();
             if (g.getStatus().equals("3")) {
@@ -143,6 +143,7 @@ public class ExchangeListActivity extends BaseActivity {
             }
             startActivity(intent);
         });
+
 
         rgExchangeTop = findViewById(R.id.rgExchangeTop);
         refreshLayout = findViewById(R.id.refreshLayout);

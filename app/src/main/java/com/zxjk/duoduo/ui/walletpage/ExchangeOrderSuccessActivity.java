@@ -4,12 +4,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.GetOverOrderResponse;
 
 import java.text.SimpleDateFormat;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class ExchangeOrderSuccessActivity extends AppCompatActivity {
 
@@ -25,6 +25,13 @@ public class ExchangeOrderSuccessActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exchange_order_detail);
+
+        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         tv2 = findViewById(R.id.tv2);
         tv3 = findViewById(R.id.tv3);
@@ -53,7 +60,5 @@ public class ExchangeOrderSuccessActivity extends AppCompatActivity {
         tv8.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Long.parseLong(data.getCloseTime())));
     }
 
-    public void back(View view) {
-        finish();
-    }
+
 }

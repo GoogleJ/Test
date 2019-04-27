@@ -15,6 +15,9 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
+/**
+ * 等待审核
+ */
 @SuppressLint("CheckResult")
 public class WaitForJudgeActivity extends BaseActivity {
 

@@ -11,7 +11,7 @@
         android:id="@+id/tvDialogTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="27dp"
         android:textColor="@color/themecolor"
         android:textSize="18sp" />
 
@@ -20,8 +20,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
         android:gravity="center"
         android:lineSpacingExtra="4dp"
         android:textColor="@color/themecolor"
@@ -45,8 +45,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:text="@string/cancel"
             android:textColor="@color/textcolor3"
             android:textSize="17sp" />
@@ -62,8 +62,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:text="@string/rc_confirm"
             android:textColor="@color/themecolor"
             android:textSize="17sp" />

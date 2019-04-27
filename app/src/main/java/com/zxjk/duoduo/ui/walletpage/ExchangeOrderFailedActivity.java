@@ -6,10 +6,10 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.GetOverOrderResponse;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class ExchangeOrderFailedActivity extends AppCompatActivity {
 
@@ -24,6 +24,12 @@ public class ExchangeOrderFailedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exchange_order_failed);
+        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         tvConfirmSaleOrderId = findViewById(R.id.tvConfirmSaleOrderId);
         tvConfirmSaleCoinType = findViewById(R.id.tvConfirmSaleCoinType);
@@ -49,9 +55,6 @@ public class ExchangeOrderFailedActivity extends AppCompatActivity {
         }
     }
 
-    public void back(View view) {
-        finish();
-    }
 
     public void shensu(View view) {
         Intent intent = new Intent(this, ShenSuActivity.class);

@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
     android:background="@color/white"
-    tools:ignore="MissingConstraints,UnknownId">
+    tools:ignore="all">
 
     <TextView
         android:id="@+id/exchange_list_date"
@@ -80,7 +80,6 @@
         android:layout_marginStart="28dp"
         android:text="@string/count"
         android:textColor="@color/m_add_friend_wechat_label_2"
-        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/exchange_list_icon"
         app:layout_constraintStart_toEndOf="@+id/exchange_list_icon" />
 
