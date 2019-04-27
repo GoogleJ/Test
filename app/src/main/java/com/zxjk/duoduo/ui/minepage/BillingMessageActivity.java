@@ -185,10 +185,13 @@ public class BillingMessageActivity extends BaseActivity implements View.OnClick
             if (resultCode == 1000 && requestCode == 2000) {
                 if (data.getStringExtra("pay").equals("1")) {
                     wechatText.setText(getString(R.string.pay_type_update_successful));
+                    wechatIcon.setVisibility(View.VISIBLE);
                 } else if (data.getStringExtra("pay").equals("2")) {
                     alipyText.setText(getString(R.string.pay_type_update_successful));
+                    alipyIcon.setVisibility(View.VISIBLE);
                 } else {
                     bankText.setText(getString(R.string.pay_type_update_successful));
+                    bankIcon.setVisibility(View.VISIBLE);
                 }
                 if ((wechatText.getText().toString().equals(getString(R.string.pay_type_update_successful)))
                         && (alipyText.getText().toString().equals(getString(R.string.pay_type_update_successful)))
