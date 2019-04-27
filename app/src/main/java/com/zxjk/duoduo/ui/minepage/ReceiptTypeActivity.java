@@ -14,6 +14,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
@@ -34,9 +37,6 @@ import com.zxjk.duoduo.utils.TakePicUtil;
 
 import java.io.File;
 import java.util.Collections;
-
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import static com.zxjk.duoduo.ui.EditPersonalInformationFragment.REQUEST_ALBUM;
 import static com.zxjk.duoduo.ui.EditPersonalInformationFragment.REQUEST_TAKE;
@@ -147,6 +147,43 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
                 dialog.show(getString(R.string.open_bank), getString(R.string.please_upload_selector_open_bank), "4");
             });
         }
+
+        getPayInfo();
+    }
+
+    private void getPayInfo() {
+        ServiceFactory.getInstance().getBaseService(Api.class).getPayInfo()
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                .compose(RxSchedulers.normalTrans())
+                .subscribe(payInfoResponses -> {
+
+                    for (int i = 0; i < payInfoResponses.size(); i++) {
+                        if (payInfoResponses.get(i).getPayType().equals("1") && types.equals("1")) {
+                            receiptTypeRealName.setText(payInfoResponses.get(i).getWechatNick());
+                            if (!TextUtils.isEmpty(payInfoResponses.get(i).getPayPicture())) {
+                                receiptTypePayment.setText("已上传");
+                            }
+                            receiptTypeRealCardName.setText(Constant.currentUser.getRealname());
+                        } else if (payInfoResponses.get(i).getPayType().equals("2") && types.equals("2")) {
+                            receiptTypeRealName.setText(payInfoResponses.get(i).getZhifubaoNumber());
+                            if (!TextUtils.isEmpty(payInfoResponses.get(i).getPayPicture())) {
+                                receiptTypePayment.setText("已上传");
+                            }
+                            receiptTypeRealCardName.setText(Constant.currentUser.getRealname());
+                        } else if (payInfoResponses.get(i).getPayType().equals("3") && types.equals("3")) {
+                            receiptTypeRealName.setText(Constant.currentUser.getRealname());
+                            receiptTypeRealCardName.setText(payInfoResponses.get(i).getPayNumber());
+                            receiptTypePayment.setText(payInfoResponses.get(i).getOpenBank());
+                        }
+
+
+                    }
+
+
+                });
+
+
     }
 
     @Override
@@ -253,6 +290,9 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
                 .subscribe(s -> {
                     commitBtn.setEnabled(false);
                     ToastUtils.showShort(getString(R.string.pay_type_successful));
+                    Intent intent = new Intent();
+                    intent.putExtra("pay", types);
+                    setResult(1000, intent);
                     finish();
                 }, this::handleApiError);
     }

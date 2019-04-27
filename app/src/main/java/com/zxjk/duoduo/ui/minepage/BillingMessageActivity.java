@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.zxjk.duoduo.Constant;
@@ -17,14 +20,11 @@ import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.utils.CommonUtils;
-import com.zxjk.duoduo.utils.MD5Utils;
 import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.ui.widget.dialog.BaseAddTitleDialog;
 import com.zxjk.duoduo.ui.widget.dialog.SelectPopupWindow;
-
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.utils.MD5Utils;
 
 @SuppressLint("CheckResult")
 public class BillingMessageActivity extends BaseActivity implements View.OnClickListener, SelectPopupWindow.OnPopWindowClickListener {
@@ -40,7 +40,7 @@ public class BillingMessageActivity extends BaseActivity implements View.OnClick
     String isTag;
     BaseAddTitleDialog dialog;
 
-     SelectPopupWindow selectPopupWindow;
+    SelectPopupWindow selectPopupWindow;
 
     Intent intent;
 
@@ -51,7 +51,6 @@ public class BillingMessageActivity extends BaseActivity implements View.OnClick
         intent = new Intent(this, ReceiptTypeActivity.class);
 
         initView();
-
         getPayInfo();
     }
 
@@ -75,6 +74,7 @@ public class BillingMessageActivity extends BaseActivity implements View.OnClick
         billingMessageTitle.getLeftImageView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 finish();
             }
         });
@@ -108,7 +108,7 @@ public class BillingMessageActivity extends BaseActivity implements View.OnClick
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(s -> startActivity(intent), throwable -> {
+                .subscribe(s -> startActivityForResult(intent, 2000), throwable -> {
                     dialog = new BaseAddTitleDialog(BillingMessageActivity.this);
                     dialog.setOnClickListener(() -> dialog.dismiss());
                     dialog.show(throwable.getMessage());
@@ -176,5 +176,28 @@ public class BillingMessageActivity extends BaseActivity implements View.OnClick
                         }
                     }
                 }, this::handleApiError);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null) {
+            if (resultCode == 1000 && requestCode == 2000) {
+                if (data.getStringExtra("pay").equals("1")) {
+                    wechatText.setText(getString(R.string.pay_type_update_successful));
+                } else if (data.getStringExtra("pay").equals("2")) {
+                    alipyText.setText(getString(R.string.pay_type_update_successful));
+                } else {
+                    bankText.setText(getString(R.string.pay_type_update_successful));
+                }
+                if ((wechatText.getText().toString().equals(getString(R.string.pay_type_update_successful)))
+                        && (alipyText.getText().toString().equals(getString(R.string.pay_type_update_successful)))
+                        && (bankText.getText().toString().equals(getString(R.string.pay_type_update_successful)))) {
+                    SPUtils.getInstance().put(Constant.currentUser.getId(), true);
+                }
+
+            }
+        }
+
     }
 }

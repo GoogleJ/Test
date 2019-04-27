@@ -73,9 +73,9 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
+                android:layout_height="0.1dp"
                 android:layout_marginStart="10dp"
-                android:background="@color/m_add_friend_line"
+                android:background="#EEEEEE"
                 android:visibility="gone" />
 
             <TextView
@@ -96,7 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginStart="10dp"
-                android:background="@color/m_add_friend_line"
+                android:background="#EEEEEE"
                 android:visibility="gone" />
 
             <LinearLayout
@@ -141,11 +141,7 @@
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="10dp"
-                android:background="@color/m_add_friend_line" />
+            <include layout="@layout/layout_line" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -197,11 +193,7 @@
                 android:textColor="@color/themecolor"
                 android:textSize="16sp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="10dp"
-                android:background="@color/m_add_friend_line" />
+            <include layout="@layout/layout_line" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -216,11 +208,7 @@
                 android:textColor="@color/themecolor"
                 android:textSize="16sp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="10dp"
-                android:background="@color/m_add_friend_line" />
+            <include layout="@layout/layout_line" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -235,11 +223,7 @@
                 android:textColor="@color/themecolor"
                 android:textSize="16sp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="10dp"
-                android:background="@color/m_add_friend_line" />
+            <include layout="@layout/layout_line" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -254,11 +238,6 @@
                 android:textSize="16sp"
                 android:visibility="gone" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="10dp"
-                android:background="@color/m_add_friend_line" />
 
             <TextView
                 android:layout_width="match_parent"

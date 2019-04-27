@@ -94,7 +94,8 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
 
                         tvExchangePrice.setText(s.getHkPrice() + " CNY=1HK");
                     });
-                    return ServiceFactory.getInstance().getBaseService(Api.class).getPayInfo().compose(RxSchedulers.normalTrans());
+                    return ServiceFactory.getInstance().getBaseService(Api.class)
+                            .getPayInfo().compose(RxSchedulers.normalTrans());
                 })
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .subscribe(listBaseResponse -> {

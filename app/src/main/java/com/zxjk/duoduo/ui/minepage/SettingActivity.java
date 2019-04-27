@@ -53,6 +53,11 @@ public class SettingActivity extends BaseActivity {
         super.onResume();
         tvSettingAuthenticate.setText(CommonUtils.getAuthenticate(Constant.currentUser.getIsAuthentication()));
         ivSettingAuthen.setVisibility(Constant.currentUser.getIsAuthentication().equals("0") ? View.VISIBLE : View.GONE);
+
+        if (SPUtils.getInstance().getBoolean(Constant.currentUser.getId(), false)) {
+            tvSettingPayment.setText(getString(R.string.complete_payinfo));
+        }
+
     }
 
     public void gotoVerivy(View view) {

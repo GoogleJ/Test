@@ -20,6 +20,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#F8F8F8"
         android:overScrollMode="never"
         android:scrollbars="none">
 
@@ -31,7 +32,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardMineInfo"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="160dp"
                 android:layout_margin="15dp"
                 android:background="@color/white"
                 app:cardCornerRadius="5dp"
@@ -40,7 +41,9 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="10dp">
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginEnd="15dp">
 
                     <LinearLayout
                         android:id="@+id/llMineNickParent"
@@ -97,8 +100,7 @@
                         android:id="@+id/tvMineDuNum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_above="@id/tv_signature"
-                        android:layout_marginBottom="10dp"
+                        android:layout_alignBottom="@id/flMineHeadImgParent"
                         android:text="@string/business_card_duoduo_id"
                         android:textColor="@color/textcolor3"
                         android:textSize="15sp" />
@@ -108,8 +110,8 @@
                         android:id="@+id/tv_signature"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="20dp"
+                        android:layout_below="@+id/tvMineDuNum"
+                        android:layout_marginTop="20dp"
                         android:text="@string/personalized_signature"
                         android:textColor="@color/textcolor3"
                         android:textSize="15sp" />
@@ -136,7 +138,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="15dp"
+                android:layout_height="10dp"
                 android:background="@color/default_placeholder" />
 
             <LinearLayout
@@ -242,7 +244,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="15dp"
+                android:layout_height="10dp"
                 android:background="@color/default_placeholder" />
 
             <LinearLayout

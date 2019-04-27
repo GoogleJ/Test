@@ -25,11 +25,9 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="125dp"
                 android:background="@color/themecolor"
-                android:gravity="center_vertical"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp">
+                android:gravity="center_vertical">
 
                 <TextView
                     android:id="@+id/tvWalletPageTop1"
@@ -37,7 +35,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/ic_walletpage_scan"
-                    android:drawablePadding="6dp"
+                    android:drawablePadding="10dp"
                     android:gravity="center_horizontal"
                     android:text="@string/tvWalletPageTop1"
                     android:textColor="@color/white" />
@@ -48,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/ic_walletpage_payment"
-                    android:drawablePadding="6dp"
+                    android:drawablePadding="10dp"
                     android:gravity="center_horizontal"
                     android:text="@string/tvwalletPageTop2"
                     android:textColor="@color/white" />
@@ -59,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/ic_walletpage_wallet"
-                    android:drawablePadding="6dp"
+                    android:drawablePadding="10dp"
                     android:gravity="center_horizontal"
                     android:text="@string/tvWalletPageTop3"
                     android:textColor="@color/white" />
@@ -70,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/ic_walletpage_balance"
-                    android:drawablePadding="6dp"
+                    android:drawablePadding="10dp"
                     android:gravity="center_horizontal"
                     android:text="@string/hong_kong_dollar_balance"
                     android:textColor="@color/white" />
@@ -81,8 +79,7 @@
                 android:id="@+id/recyclerWalletPage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:overScrollMode="never"
-                />
+                android:overScrollMode="never" />
         </LinearLayout>
 
 

@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.minepage;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -35,6 +36,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private TextView tvMineSign;
     private ImageView ivMineQRcode;
 
+    @SuppressLint("SetTextI18n")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,7 +53,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         tvMineDuNum = view.findViewById(R.id.tvMineDuNum);
         tvMineSign = view.findViewById(R.id.tvMineSign);
         ivMineQRcode = view.findViewById(R.id.ivMineQRcode);
-        tvMineDuNum.setText(Constant.currentUser.getDuoduoId());
+        tvMineDuNum.setText(getString(R.string.duoduo_acount) + Constant.currentUser.getDuoduoId());
 
         llMineSetting.setOnClickListener(this);
         llMineBalanceLeft.setOnClickListener(this);

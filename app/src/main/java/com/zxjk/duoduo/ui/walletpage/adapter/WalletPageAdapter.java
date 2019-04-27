@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -54,18 +55,24 @@ public class WalletPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public int getItemCount() {
-        return 10;
+        return 2;
     }
 
     class TopHolder extends RecyclerView.ViewHolder {
         private ImageView tvWalletPageExchange1;
         private ImageView tvWalletPageExchange2;
+        private LinearLayout ll_1;
+        private LinearLayout ll_2;
 
         TopHolder(@NonNull View itemView) {
             super(itemView);
 
             tvWalletPageExchange1 = itemView.findViewById(R.id.tvWalletPageExchange1);
             tvWalletPageExchange2 = itemView.findViewById(R.id.tvWalletPageExchange2);
+            ll_1 = itemView.findViewById(R.id.ll_1);
+            ll_2 = itemView.findViewById(R.id.ll_2);
+            ll_1.setOnClickListener(v -> ToastUtils.showShort("暂未开放"));
+            ll_2.setOnClickListener(v -> ToastUtils.showShort("暂未开放"));
             tvWalletPageExchange1.setOnClickListener(v -> ToastUtils.showShort("暂未开放"));
             tvWalletPageExchange2.setOnClickListener(v -> context.startActivity(new Intent(context, ExchangeActivity.class)));
         }
