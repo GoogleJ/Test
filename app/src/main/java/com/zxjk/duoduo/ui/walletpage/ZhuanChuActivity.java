@@ -11,22 +11,23 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.service.SendTransactionService;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
+import com.zxjk.duoduo.service.SendTransactionService;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.SelectContactActivity;
+import com.zxjk.duoduo.ui.widget.dialog.SafeInputDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
-import com.zxjk.duoduo.ui.widget.dialog.SafeInputDialog;
+import com.zxjk.duoduo.utils.MoneyValueFilter;
 
 import java.text.DecimalFormat;
-
-import androidx.annotation.Nullable;
 
 
 @SuppressLint("CheckResult")
@@ -42,6 +43,7 @@ public class ZhuanChuActivity extends BaseActivity implements SeekBar.OnSeekBarC
     private EditText etCount;
 
     private SafeInputDialog safeInputDialog;
+    private MoneyValueFilter moneyValueFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +52,11 @@ public class ZhuanChuActivity extends BaseActivity implements SeekBar.OnSeekBarC
 
         safeInputDialog = new SafeInputDialog(this);
         safeInputDialog.setOnFinishListener(this);
-
+        moneyValueFilter = new MoneyValueFilter();
         seekZhuanchu = findViewById(R.id.seekZhuanchu);
         etCount = findViewById(R.id.etCount);
+        moneyValueFilter.setDigits(2);
+        etCount.setFilters(new InputFilter[]{moneyValueFilter});
         etWalletAddress = findViewById(R.id.etWalletAddress);
         tvZhuanChuCoinType = findViewById(R.id.tvZhuanChuCoinType);
         tvKuanggongPrice = findViewById(R.id.tvKuanggongPrice);
@@ -143,10 +147,14 @@ public class ZhuanChuActivity extends BaseActivity implements SeekBar.OnSeekBarC
             tvZhuanChuCoinType.setText(coin);
             Drawable drawable;
             if (coin.equals("ETH")) {
+                moneyValueFilter.setDigits(4);
+                etCount.setFilters(new InputFilter[]{moneyValueFilter});
                 type = "0";
                 drawable = getDrawable(R.drawable.ic_blockwallet_eth);
                 etCount.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
             } else {
+                moneyValueFilter.setDigits(2);
+                etCount.setFilters(new InputFilter[]{moneyValueFilter});
                 type = "1";
                 etCount.setFilters(new InputFilter[]{new InputFilter.LengthFilter(2)});
                 drawable = getDrawable(R.drawable.ic_exchange_coins);

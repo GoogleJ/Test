@@ -6,11 +6,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.CountryEntity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.LetterIndexView;
 import com.zxjk.duoduo.ui.widget.SelectContryAdapter;
+import com.zxjk.duoduo.utils.PinYinUtils;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
@@ -22,9 +26,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Demo class
@@ -106,7 +107,7 @@ public class CountrySelectActivity extends BaseActivity {
             CountryEntity countryEntity = new CountryEntity();
             countryEntity.countryName = country[i];
             countryEntity.countryCode = countryCode[i];
-            countryEntity.pinyin = converterToFirstSpell(countryEntity.countryName);
+            countryEntity.pinyin = PinYinUtils.converterToFirstSpell(countryEntity.countryName);
             entities.add(countryEntity);
         }
         return entities;

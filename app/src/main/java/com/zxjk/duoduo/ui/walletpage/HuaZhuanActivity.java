@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.dialog.SafeInputDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
+import com.zxjk.duoduo.utils.MoneyValueFilter;
 
 import java.text.DecimalFormat;
 
@@ -79,6 +81,7 @@ public class HuaZhuanActivity extends BaseActivity implements SafeInputDialog.On
         tvHuaZhuanGasPrice1 = findViewById(R.id.tvHuaZhuanGasPrice1);
         tvHuaZhuanGasPrice2 = findViewById(R.id.tvHuaZhuanGasPrice2);
         etHuaZhuanCount = findViewById(R.id.etHuaZhuanCount);
+        etHuaZhuanCount.setFilters(new InputFilter[]{new MoneyValueFilter()});
         seekHuaZhuan = findViewById(R.id.seekHuaZhuan);
         seekHuaZhuan.setMax(1000);
         llHuaZhuanType2 = findViewById(R.id.llHuaZhuanType2);
