@@ -1,12 +1,14 @@
 package com.zxjk.duoduo.ui.walletpage;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
+import com.zxjk.duoduo.ui.ImgActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 
 import java.text.SimpleDateFormat;
@@ -38,7 +40,7 @@ public class WaitForJudgeActivity extends BaseActivity {
         setContentView(R.layout.activity_wait_for_judge);
 
         tvWaitForJudgeCountDown = findViewById(R.id.tvWaitForJudgeCountDown);
-        Observable.interval(0,1, TimeUnit.SECONDS)
+        Observable.interval(0, 1, TimeUnit.SECONDS)
                 .take(600)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(l -> {
@@ -80,6 +82,13 @@ public class WaitForJudgeActivity extends BaseActivity {
         tvWaitForJudgeTime.setText(format.format(Long.parseLong(data.getCreateTime())));
         tvWaitForJudgeReceiver.setText(data.getNick());
         tvWaitForJudgeReceiverAccount.setText(data.getReceiptNumber());
+    }
+
+    public void showQR(View view) {
+        ReleaseSaleResponse data = (ReleaseSaleResponse) getIntent().getSerializableExtra("data");
+        Intent intent = new Intent(this, ImgActivity.class);
+        intent.putExtra("url", data.getReceiptPicture());
+        startActivity(intent);
     }
 
     public void back(View view) {

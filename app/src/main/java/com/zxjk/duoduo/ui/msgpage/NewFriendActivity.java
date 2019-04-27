@@ -84,9 +84,10 @@ public class NewFriendActivity extends BaseActivity {
                     break;
                 case R.id.m_add_btn_layout:
                     if (isTrue) {
-                        Intent intent = new Intent(NewFriendActivity.this, AddFriendDetailsActivity.class);
-                        intent.putExtra("newFriend", mAdapter.getData().get(position));
-                        startActivity(intent);
+//                        Intent intent = new Intent(NewFriendActivity.this, AddFriendDetailsActivity.class);
+//                        intent.putExtra("fromwaiting", true);
+//                        intent.putExtra("newFriend", mAdapter.getData().get(position));
+//                        startActivity(intent);
                     } else {
                         Intent intent = new Intent(NewFriendActivity.this, FriendDetailsActivity.class);
                         intent.putExtra("searchFriendDetails", mAdapter.getData().get(position));
@@ -97,20 +98,20 @@ public class NewFriendActivity extends BaseActivity {
             }
             mAdapter.notifyDataSetChanged();
         });
-        mAdapter.setOnItemChildLongClickListener((adapter, view, position) -> {
-            dialog = new DeleteFriendInformationDialog(NewFriendActivity.this);
-            dialog.setOnClickListener(() -> {
-                dialog.dismiss();
-                deleteMyfirendsWaiting(list.get(position).getId());
-            });
-            dialog.show(list.get(position).getNick());
-            return false;
-        });
+//        mAdapter.setOnItemChildLongClickListener((adapter, view, position) -> {
+//            dialog = new DeleteFriendInformationDialog(NewFriendActivity.this);
+//            dialog.setOnClickListener(() -> {
+//                dialog.dismiss();
+//                deleteMyfirendsWaiting(list.get(position).getId());
+//            });
+//            dialog.show(list.get(position).getNick());
+//            return false;
+//        });
         if (mAdapter.getData().size() == 0) {
             View view = LayoutInflater.from(this).inflate(R.layout.view_app_null_type, null);
             mAdapter.setEmptyView(view);
         }
-        textView.setOnClickListener(v -> startActivity(new Intent(NewFriendActivity.this, SearchActivity.class)));
+        textView.setOnClickListener(v -> startActivity(new Intent(NewFriendActivity.this, GlobalSearchActivity.class)));
     }
 
     /**

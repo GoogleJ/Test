@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.walletpage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.GetOverOrderResponse;
+import com.zxjk.duoduo.ui.ImgActivity;
 
 import java.text.SimpleDateFormat;
 
@@ -26,12 +28,7 @@ public class ExchangeOrderSuccessActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exchange_order_detail);
 
-        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        findViewById(R.id.iv_back).setOnClickListener(v -> finish());
 
         tv2 = findViewById(R.id.tv2);
         tv3 = findViewById(R.id.tv3);
@@ -60,5 +57,11 @@ public class ExchangeOrderSuccessActivity extends AppCompatActivity {
         tv8.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Long.parseLong(data.getCloseTime())));
     }
 
+    public void showQR(View view) {
+        GetOverOrderResponse data = (GetOverOrderResponse) getIntent().getSerializableExtra("data");
+        Intent intent = new Intent(this, ImgActivity.class);
+        intent.putExtra("url", data.getPicture());
+        startActivity(intent);
+    }
 
 }

@@ -77,7 +77,7 @@ public class TransferActivity extends BaseActivity implements SelectPopupWindow.
 
         boolean fromScan = getIntent().getBooleanExtra("fromScan", false);
         if (fromScan) {
-            if (getIntent().getStringExtra("money").equals("0.00")) {
+            if (TextUtils.isEmpty(getIntent().getStringExtra("money"))) {
                 m_transfer_money_text.setHint("0.00");
                 m_transfer_money_text.setEnabled(true);
                 m_transfer_money_text.setSelection(m_transfer_money_text.getText().length());

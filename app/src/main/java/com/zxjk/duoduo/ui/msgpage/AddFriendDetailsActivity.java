@@ -89,6 +89,10 @@ public class AddFriendDetailsActivity extends BaseActivity implements View.OnCli
     }
 
     protected void initUI() {
+        boolean fromwaiting = getIntent().getBooleanExtra("fromwaiting", false);
+        if (fromwaiting) {
+            addContact.setText(R.string.tongguoyanzheng);
+        }
         titleBar.getLeftImageView().setOnClickListener(v -> finish());
     }
 

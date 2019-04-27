@@ -478,14 +478,18 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
     }
 
     public void detail(View view) {
+        List<String> pathSegments = getIntent().getData().getPathSegments();
+        String conversationType = pathSegments.get(pathSegments.size() - 1);
+
         Intent intent = new Intent(ConversationActivity.this, ChatInformationActivity.class);
         intent.putExtra("bean", targetUserInfo);
-        if (targetUserInfo == null) {
+
+        if (conversationType.equals("private")) {
+            startActivity(intent);
+        } else {
             Intent intent1 = new Intent(this, GroupChatInformationActivity.class);
             intent1.putExtra("id", groupResponse.getGroupInfo().getId());
             startActivityForResult(intent1, 1);
-        } else {
-            startActivity(intent);
         }
     }
 

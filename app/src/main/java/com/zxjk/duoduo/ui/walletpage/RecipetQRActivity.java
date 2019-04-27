@@ -99,7 +99,7 @@ public class RecipetQRActivity extends BaseActivity {
     private void initUri() {
         uri = new BaseUri("action1");
         Action1 action1 = new Action1();
-        action1.money = "0.00";
+        action1.money = "";
         uri.data = action1;
         uri2Code = new Gson().toJson(uri);
     }
@@ -128,7 +128,7 @@ public class RecipetQRActivity extends BaseActivity {
         } else {
             tvMoney.setText("");
             Action1 action1 = new Action1();
-            action1.money = "0.00";
+            action1.money = "";
             uri.data = action1;
             uri2Code = new Gson().toJson(uri);
             getCodeBitmap();

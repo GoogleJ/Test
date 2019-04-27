@@ -1,6 +1,7 @@
 package com.zxjk.duoduo.ui.walletpage;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -15,6 +16,7 @@ import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.GetOverOrderResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
+import com.zxjk.duoduo.ui.ImgActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.dialog.SelectPopupWindow;
 import com.zxjk.duoduo.utils.CommonUtils;
@@ -72,7 +74,6 @@ public class OverOrderActivity extends BaseActivity {
         tv7.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Long.parseLong(data.getCreateTime())));
     }
 
-
     private void inoutPsw() {
         selectPopupWindow = new SelectPopupWindow(OverOrderActivity.this, (psw, complete) -> {
             if (complete) {
@@ -90,6 +91,12 @@ public class OverOrderActivity extends BaseActivity {
 
             }
         });
+    }
+
+    public void showQR(View view) {
+        Intent intent = new Intent(this, ImgActivity.class);
+        intent.putExtra("url", data.getPicture());
+        startActivity(intent);
     }
 
     //拒绝审核
@@ -115,7 +122,6 @@ public class OverOrderActivity extends BaseActivity {
         getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
         int winHeight = getWindow().getDecorView().getHeight();
         selectPopupWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, winHeight - rect.bottom);
-
     }
 
     public void back(View view) {

@@ -26,11 +26,8 @@ import com.zxjk.duoduo.ui.msgpage.adapter.GlobalSearchAdapter;
 import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.CommonUtils;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.functions.Consumer;
 
 /**
  * @author Administrator
@@ -63,6 +60,7 @@ public class GlobalSearchActivity extends BaseActivity {
         TextView app_prompt_text = emptyView.findViewById(R.id.app_prompt_text);
         app_type.setImageResource(R.drawable.icon_no_search);
         app_prompt_text.setText(getString(R.string.no_search));
+        app_prompt_text.setVisibility(View.GONE);
 
         getFriendListById();
         initData();
@@ -74,12 +72,10 @@ public class GlobalSearchActivity extends BaseActivity {
             //搜索按键action
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 if (!TextUtils.isEmpty(searchEdit.getText().toString())) {
-
                     searchCustomerInfo(searchEdit.getText().toString());
                 } else {
                     ToastUtils.showShort(getString(R.string.input_search_edit));
                 }
-
                 return true;
             }
             return false;
@@ -123,22 +119,29 @@ public class GlobalSearchActivity extends BaseActivity {
 
     //模糊搜索好友
     public void searchCustomerInfo(String data) {
+        if (TextUtils.isEmpty(data)) {
+            ToastUtils.showShort(R.string.input_empty);
+            return;
+        }
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .searchCustomerInfo(data)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(list -> {
-                    for (int i = 0; i < list.size(); i++) {
-                        if (!list.get(i).getId().equals(Constant.userId)) {
-                            mAdapter.addData(list.get(i));
-                        } else {
-                            if (list.size() >= 0) {
-                                list.remove(i);
-                            }
+                    if (list.size() == 0) {
+                        ToastUtils.showShort(R.string.no_search);
+                    }
+                    FriendInfoResponse friendInfoResponse = new FriendInfoResponse();
+                    for (FriendInfoResponse f : list) {
+                        if (f.getId().equals(Constant.userId)) {
+                            friendInfoResponse = f;
                         }
                     }
-
+                    if (!TextUtils.isEmpty(friendInfoResponse.getId())) {
+                        list.remove(friendInfoResponse);
+                    }
+                    mAdapter.setNewData(list);
                 }, this::handleApiError);
     }
 
@@ -152,12 +155,9 @@ public class GlobalSearchActivity extends BaseActivity {
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(new Consumer<List<FriendInfoResponse>>() {
-                    @Override
-                    public void accept(List<FriendInfoResponse> friendInfoResponses) throws Exception {
-                        for (int i = 0; i < friendInfoResponses.size(); i++) {
-                            friendInfoResponse = friendInfoResponses.get(i);
-                        }
+                .subscribe(friendInfoResponses -> {
+                    for (int i = 0; i < friendInfoResponses.size(); i++) {
+                        friendInfoResponse = friendInfoResponses.get(i);
                     }
                 }, this::handleApiError);
     }

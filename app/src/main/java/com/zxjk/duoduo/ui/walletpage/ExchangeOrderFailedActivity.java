@@ -24,12 +24,7 @@ public class ExchangeOrderFailedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exchange_order_failed);
-        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        findViewById(R.id.iv_back).setOnClickListener(v -> finish());
 
         tvConfirmSaleOrderId = findViewById(R.id.tvConfirmSaleOrderId);
         tvConfirmSaleCoinType = findViewById(R.id.tvConfirmSaleCoinType);

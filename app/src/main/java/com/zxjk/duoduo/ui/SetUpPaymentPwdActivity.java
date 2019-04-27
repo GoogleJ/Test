@@ -47,7 +47,6 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
     TitleBar titleBar;
     TextView commmitBtn;
 
-
     LinearLayout rootView;
     ScrollView scrollView;
     TextView m_set_payment_pwd_label;
@@ -187,27 +186,24 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
 
     private void connect(String token) {
         if (getApplicationInfo().packageName.equals(Application.getCurProcessName(getApplicationContext()))) {
-            CommonUtils.initDialog(this).show();
             RongIM.connect(token, new RongIMClient.ConnectCallback() {
 
                 @Override
                 public void onTokenIncorrect() {
-                    CommonUtils.destoryDialog();
                 }
 
                 @Override
                 public void onSuccess(String userid) {
-
-                    CommonUtils.destoryDialog();
                     UserInfo userInfo = new UserInfo(userid, Constant.currentUser.getNick(), Uri.parse(Constant.currentUser.getHeadPortrait()));
                     RongIM.getInstance().setCurrentUserInfo(userInfo);
-                    startActivity(new Intent(SetUpPaymentPwdActivity.this, HomeActivity.class));
                     finish();
+                    Intent intent = new Intent(SetUpPaymentPwdActivity.this, HomeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                 }
 
                 @Override
                 public void onError(RongIMClient.ErrorCode errorCode) {
-                    CommonUtils.destoryDialog();
                 }
             });
         }

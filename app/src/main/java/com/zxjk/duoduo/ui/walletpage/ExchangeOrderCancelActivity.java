@@ -2,7 +2,6 @@ package com.zxjk.duoduo.ui.walletpage;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,13 +23,7 @@ public class ExchangeOrderCancelActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exchange_order_cancel);
 
-        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-
-            }
-        });
+        findViewById(R.id.iv_back).setOnClickListener(v -> finish());
 
         tvConfirmSaleOrderId = findViewById(R.id.tvConfirmSaleOrderId);
         tvConfirmSaleCoinType = findViewById(R.id.tvConfirmSaleCoinType);

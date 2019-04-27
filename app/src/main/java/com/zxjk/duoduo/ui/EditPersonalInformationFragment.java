@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
@@ -31,7 +33,6 @@ import com.zxjk.duoduo.utils.TakePicUtil;
 import java.io.File;
 import java.util.Collections;
 
-import androidx.annotation.Nullable;
 import butterknife.OnClick;
 
 public class EditPersonalInformationFragment extends BaseActivity implements View.OnClickListener, TakePopWindow.OnItemClickListener {

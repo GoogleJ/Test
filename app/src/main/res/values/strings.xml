@@ -784,6 +784,9 @@
     <string name="fuzhi_duoduo_id">复制多多号</string>
     <string name="finishinfo">请先完善信息</string>
     <string name="shensu_success">申诉成功</string>
+    <string name="input_maxbuy">最大购买数量</string>
+    <string name="tongguoyanzheng">通过验证</string>
+    <string name="shoukuanma">收款码</string>
     <string name="duoduo_acount">多多号:</string>
     <string name="yiwanshan">已完善</string>
 

@@ -24,6 +24,7 @@ import com.zxjk.duoduo.network.ReleasePurchase;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
+import com.zxjk.duoduo.ui.ImgActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.TakePopWindow;
 import com.zxjk.duoduo.ui.widget.dialog.ConfirmDialog;
@@ -182,6 +183,12 @@ public class ConfirmBuyActivity extends BaseActivity implements TakePopWindow.On
             });
         }
         dialogCancel.show();
+    }
+
+    public void showQR(View view) {
+        Intent intent = new Intent(this, ImgActivity.class);
+        intent.putExtra("url", data.getReceiptPicture());
+        startActivity(intent);
     }
 
     public void copyNick(View view) {
