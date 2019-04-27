@@ -38,13 +38,13 @@ public class WaitForJudgeActivity extends BaseActivity {
         setContentView(R.layout.activity_wait_for_judge);
 
         tvWaitForJudgeCountDown = findViewById(R.id.tvWaitForJudgeCountDown);
-        Observable.interval(1, TimeUnit.SECONDS)
+        Observable.interval(0,1, TimeUnit.SECONDS)
                 .take(600)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(l -> {
-                    String second = String.valueOf(60 - l % 60).equals("60") ? "00" : String.valueOf(60 - l % 60);
-                    String minute = String.valueOf(600 / (600 - l));
-                    tvWaitForJudgeCountDown.setText(minute + ":" + second);
+                    long minute = (600 - l) / 60;
+                    long second = 60 - l % 60;
+                    tvWaitForJudgeCountDown.setText(minute + ":" + (second == 60 ? "00" : ((second < 10 ? ("0" + second) : second))));
                 }, t -> {
                 });
 

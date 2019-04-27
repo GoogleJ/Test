@@ -48,11 +48,11 @@ public class BillingMessageActivity extends BaseActivity implements View.OnClick
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_billing_message);
+        intent = new Intent(this, ReceiptTypeActivity.class);
+
         initView();
 
         getPayInfo();
-
-        intent = new Intent(this, ReceiptTypeActivity.class);
     }
 
     private void initView() {
@@ -99,7 +99,6 @@ public class BillingMessageActivity extends BaseActivity implements View.OnClick
                 isTag = "3";
                 break;
             default:
-                break;
         }
     }
 

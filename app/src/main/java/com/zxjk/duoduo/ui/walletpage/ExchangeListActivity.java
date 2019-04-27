@@ -50,7 +50,7 @@ public class ExchangeListActivity extends BaseActivity {
             Intent intent = new Intent();
             if (g.getStatus().equals("3")) {
                 //交易中
-                if (g.getBuyNick().equals(Constant.currentUser.getNick())) {
+                if (g.getBuyId().equals(Constant.userId)) {
                     //买方
                     if (g.getIsBuyPay().equals("1")) {
                         //确认支付

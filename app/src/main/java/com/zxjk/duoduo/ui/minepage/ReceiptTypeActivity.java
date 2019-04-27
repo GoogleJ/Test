@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.minepage;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -73,7 +74,6 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
         receiptTypeTitle.getLeftImageView().setOnClickListener(v -> finish());
         nickName.setOnClickListener(this);
         realName.setOnClickListener(this);
-        accountIdCard.setOnClickListener(this);
         commitBtn.setOnClickListener(this);
     }
 
@@ -126,6 +126,27 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
             receiptTypeRealName.setText(Constant.currentUser.getRealname());
             receiptTypeGo.setVisibility(View.GONE);
         }
+
+        if (types.equals(wechat) || types.equals(alipay)) {
+            getPermisson(accountIdCard, result -> {
+                if (result) {
+                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                    selectPicPopWindow.showAtLocation(findViewById(android.R.id.content),
+                            Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                }
+            }, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        } else {
+            accountIdCard.setOnClickListener(v -> {
+                dialog = new PaymentTypeDialog(ReceiptTypeActivity.this);
+                dialog.setOnClickListener(editContent -> {
+                    receiptTypePayment.setText(editContent);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                    dialog.dismiss();
+                });
+                dialog.show(getString(R.string.open_bank), getString(R.string.please_upload_selector_open_bank), "4");
+            });
+        }
     }
 
     @Override
@@ -170,27 +191,6 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
                         dialog.dismiss();
                     });
                     dialog.show(getString(R.string.bankcard), getString(R.string.input_bank_number), bank);
-                }
-                break;
-            case R.id.account_id_card:
-                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                if (wechat.equals(types)) {
-                    selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
-                            Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-                    return;
-                } else if (alipay.equals(types)) {
-                    selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
-                            Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-                    return;
-                } else {
-                    dialog = new PaymentTypeDialog(ReceiptTypeActivity.this);
-                    dialog.setOnClickListener(editContent -> {
-                        receiptTypePayment.setText(editContent);
-                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-                        dialog.dismiss();
-                    });
-                    dialog.show(getString(R.string.open_bank), getString(R.string.please_upload_selector_open_bank), "4");
                 }
                 break;
             case R.id.commit_btn:
@@ -238,6 +238,7 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
                 OssUtils.uploadFile(file.getAbsolutePath(), url -> {
                     this.url = url;
                     receiptTypePayment.setText(R.string.uploaded);
+                    ToastUtils.showShort(R.string.uploaded);
                 });
             });
         }

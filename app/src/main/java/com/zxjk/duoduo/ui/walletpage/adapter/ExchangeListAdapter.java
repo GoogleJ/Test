@@ -23,6 +23,7 @@ public class ExchangeListAdapter extends BaseQuickAdapter<GetOverOrderResponse, 
         super(R.layout.item_exchangelist);
     }
 
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
 
     @Override
     protected void convert(BaseViewHolder helper, GetOverOrderResponse item) {
@@ -40,9 +41,7 @@ public class ExchangeListAdapter extends BaseQuickAdapter<GetOverOrderResponse, 
         exchange_list_number.setText(item.getNumber());
         exchange_list_type.setTextColor(Color.parseColor("#000000"));
 
-        if (item.getBuyNick().
-
-                equals(Constant.currentUser.getNick())) {
+        if (item.getBuyId().equals(Constant.userId)) {
             //买方
             exchange_list_icon.setImageResource(R.drawable.icon_buy);
 
@@ -67,31 +66,28 @@ public class ExchangeListAdapter extends BaseQuickAdapter<GetOverOrderResponse, 
             }
         }
 
-        if (item.getStatus().
-
-                equals("3")) {
+        if (item.getStatus().equals("3")) {
             //交易中
-            String timeLeft = new SimpleDateFormat("HH:mm:ss").format(System.currentTimeMillis() - Long.parseLong(item.getCreateTime()));
-            exchange_list_time.setText(timeLeft);
+            long l = 15 * 1000 * 60 - System.currentTimeMillis() + Long.parseLong(item.getCreateTime());
+            if (l > 0) {
+                String timeLeft = simpleDateFormat.format(l);
+                exchange_list_time.setText(timeLeft);
+            } else {
+                exchange_list_time.setText("");
+            }
         } else {
             exchange_list_time.setText("");
         }
 
-        if (item.getStatus().
-
-                equals("2")) {
+        if (item.getStatus().equals("2")) {
             exchange_list_type.setText(R.string.tradeFailed);
         }
 
-        if (item.getStatus().
-
-                equals("0")) {
+        if (item.getStatus().equals("0")) {
             exchange_list_type.setText(R.string.tradeDone1);
         }
 
-        if (item.getStatus().
-
-                equals("1")) {
+        if (item.getStatus().equals("1")) {
             exchange_list_type.setText(R.string.tradeCancel);
         }
     }

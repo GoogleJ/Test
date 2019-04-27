@@ -92,7 +92,7 @@ public class ConfirmBuyActivity extends BaseActivity implements TakePopWindow.On
         flagConfirmBuy = findViewById(R.id.flagConfirmBuy);
         tvConfirmBuyCountDown = findViewById(R.id.tvConfirmBuyCountDown);
 
-        Observable.interval(1, TimeUnit.SECONDS)
+        Observable.interval(0, 1, TimeUnit.SECONDS)
                 .take(900)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(l -> {
@@ -140,7 +140,7 @@ public class ConfirmBuyActivity extends BaseActivity implements TakePopWindow.On
         if (dialogConfirm == null) {
             dialogConfirm = new ConfirmDialog(this, getString(R.string.payment_confirmation), getString(R.string.please_confirm_that_you_have_paid_the_seller), callback -> {
                 ServiceFactory.getInstance().getBaseService(Api.class)
-                        .updateBuyPayState("id", pictureUrl)
+                        .updateBuyPayState(data.getBothOrderId(), pictureUrl)
                         .compose(RxSchedulers.normalTrans())
                         .compose(bindToLifecycle())
                         .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))

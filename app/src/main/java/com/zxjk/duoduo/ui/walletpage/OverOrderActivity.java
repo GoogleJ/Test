@@ -3,7 +3,6 @@ package com.zxjk.duoduo.ui.walletpage;
 import android.annotation.SuppressLint;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,9 +18,11 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.dialog.SelectPopupWindow;
 import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.utils.MD5Utils;
 
 import java.text.SimpleDateFormat;
 
+@SuppressLint("CheckResult")
 public class OverOrderActivity extends BaseActivity {
     private TextView tv1;
     private TextView tv2;
@@ -71,13 +72,22 @@ public class OverOrderActivity extends BaseActivity {
         tv7.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Long.parseLong(data.getCreateTime())));
     }
 
-    private String paypass = "";
 
     private void inoutPsw() {
         selectPopupWindow = new SelectPopupWindow(OverOrderActivity.this, (psw, complete) -> {
             if (complete) {
-                paypass = psw;
                 selectPopupWindow.dismiss();
+                ServiceFactory.getInstance().getBaseService(Api.class)
+                        .overOrder(data.getBuyId(), data.getBuyOrderId()
+                                , data.getSellOrderId(), data.getBothOrderId(), MD5Utils.getMD5(psw))
+                        .compose(bindToLifecycle())
+                        .compose(RxSchedulers.normalTrans())
+                        .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                        .subscribe(s -> {
+                            ToastUtils.showShort(R.string.judgefinish);
+                            finish();
+                        }, this::handleApiError);
+
             }
         });
     }
@@ -100,27 +110,12 @@ public class OverOrderActivity extends BaseActivity {
     //通过审核
     @SuppressLint("CheckResult")
     public void overOrder(View view) {
-        if (TextUtils.isEmpty(paypass)) {
-            KeyboardUtils.hideSoftInput(OverOrderActivity.this);
-            Rect rect = new Rect();
-            getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
-            int winHeight = getWindow().getDecorView().getHeight();
-            selectPopupWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, winHeight - rect.bottom);
-            return;
-        }
-        ServiceFactory.getInstance().getBaseService(Api.class)
-                .overOrder(data.getBuyId(), data.getBuyOrderId()
-                        , data.getSellOrderId(), data.getBothOrderId(), paypass)
-                .compose(bindToLifecycle())
-                .compose(RxSchedulers.normalTrans())
-                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                .subscribe(s -> {
-                    ToastUtils.showShort(R.string.judgefinish);
-                    finish();
-                }, t -> {
-                    handleApiError(t);
-                    paypass = "";
-                });
+        KeyboardUtils.hideSoftInput(OverOrderActivity.this);
+        Rect rect = new Rect();
+        getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+        int winHeight = getWindow().getDecorView().getHeight();
+        selectPopupWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, winHeight - rect.bottom);
+
     }
 
     public void back(View view) {

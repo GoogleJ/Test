@@ -107,8 +107,11 @@ public class ConfirmSaleActivity extends BaseActivity {
 
     // 我的订单
     public void showOrders(View view) {
-
         finish();
         startActivity(new Intent(this, ExchangeListActivity.class));
+    }
+
+    public void back(View view) {
+        finish();
     }
 }

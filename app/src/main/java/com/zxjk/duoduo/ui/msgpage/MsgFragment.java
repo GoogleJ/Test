@@ -67,6 +67,10 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
                     .setViewOnclickListener(MsgFragment.this::getChildView)
                     .setOutsideTouchable(true)
                     .create();
+            getPermisson(popupWindow.getContentView().findViewById(R.id.scan), result -> {
+                if (result) startActivity(new Intent(getActivity(), QrCodeActivity.class));
+                popupWindow.dismiss();
+            }, Manifest.permission.CAMERA);
             popupWindow.showAsDropDown(titleBar.getRightImageView());
         });
     }
@@ -77,12 +81,6 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
             case R.layout.pop_msg_top:
                 view.findViewById(R.id.send_group_chat).setOnClickListener(this);
                 view.findViewById(R.id.invite_friends).setOnClickListener(this);
-
-                getPermisson(view.findViewById(R.id.scan), result -> {
-                    if (result) startActivity(new Intent(getActivity(), QrCodeActivity.class));
-                    popupWindow.dismiss();
-                }, Manifest.permission.CAMERA);
-
                 view.findViewById(R.id.collection_and_payment).setOnClickListener(this);
                 break;
         }

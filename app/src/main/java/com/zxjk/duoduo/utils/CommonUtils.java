@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.zxjk.duoduo.R;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -140,4 +141,19 @@ public class CommonUtils {
             return null;
         }
     }
+
+    /**
+     * double乘法
+     *
+     * @param value1
+     * @param value2
+     * @return
+     */
+    public static double mul(double value1, double value2) {
+        BigDecimal b1 = new BigDecimal(String.valueOf(value1));
+        BigDecimal b2 = new BigDecimal(String.valueOf(value2));
+        return b1.multiply(b2).doubleValue();
+    }
+
+
 }

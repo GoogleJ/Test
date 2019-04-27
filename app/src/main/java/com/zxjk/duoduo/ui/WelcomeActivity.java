@@ -3,6 +3,8 @@ package com.zxjk.duoduo.ui;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 
@@ -42,6 +44,9 @@ public class WelcomeActivity extends BaseActivity {
             return;
         }
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);  //无title
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);  //全屏
         setContentView(R.layout.activity_welcome);
         Constant.isVerifyVerision = SPUtils.getInstance().getBoolean("isVerifyVerision", true);
         if (Constant.isVerifyVerision) {

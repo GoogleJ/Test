@@ -31,6 +31,7 @@ import com.zxjk.duoduo.ui.widget.dialog.SelectPopupWindow;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,10 +74,11 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
 
     private boolean buyOrSale = true;
 
-    private int count;
-    private float totalPrice;
-    private float rate;
+    private String totalPrice;
 
+    DecimalFormat decimalFormat = new DecimalFormat("0.00");
+
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,8 +91,8 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                 .compose(RxSchedulers.normalTrans())
                 .flatMap((Function<GetNumbeOfTransactionResponse, ObservableSource<List<PayInfoResponse>>>) s -> {
                     runOnUiThread(() -> {
-                        rate = Float.parseFloat(s.getHkPrice());
-                        tvExchangePrice.setText(rate + " CNY=1HK");
+
+                        tvExchangePrice.setText(s.getHkPrice() + " CNY=1HK");
                     });
                     return ServiceFactory.getInstance().getBaseService(Api.class).getPayInfo().compose(RxSchedulers.normalTrans());
                 })
@@ -148,12 +150,12 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() == 0) {
-                    return;
+                if (!s.toString().equals("")) {
+                    totalPrice = decimalFormat.format(CommonUtils.mul(Double.parseDouble(tvExchangePrice.getText().toString().split(" ")[0]), Double.parseDouble(s.toString())));
+                } else {
+                    totalPrice = "0";
                 }
-                count = Integer.parseInt(s.toString());
-                totalPrice = count * rate;
-                tvExchangeTotal.setText(String.valueOf(totalPrice));
+                tvExchangeTotal.setText(totalPrice);
             }
         });
         etMinMoney.addTextChangedListener(new TextWatcher() {
@@ -206,7 +208,7 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
     }
 
     public void submit(View view) {
-        if (count == 0) {
+        if (TextUtils.isEmpty(etExchangeChooseCount.getText().toString())) {
             ToastUtils.showShort(R.string.select_count_tips);
             return;
         }
@@ -223,13 +225,13 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
         if (buyOrSale) {
             api.isConfine().compose(bindToLifecycle())
                     .compose(RxSchedulers.normalTrans())
-                    .flatMap((Function<String, ObservableSource<ReleaseSaleResponse>>) s -> api.releaseSale(String.valueOf(count), String.valueOf(totalPrice),
+                    .flatMap((Function<String, ObservableSource<ReleaseSaleResponse>>) s -> api.releaseSale(etExchangeChooseCount.getText().toString(), totalPrice,
                             "1", buyType).compose(RxSchedulers.normalTrans()))
                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                     .subscribe(s -> {
                         Intent intent = new Intent(this, ConfirmBuyActivity.class);
                         intent.putExtra("data", s);
-                        intent.putExtra("rate", tvExchangePrice.getText().toString());
+                        intent.putExtra("rate", tvExchangePrice.getText().toString().split(" ")[0]);
                         intent.putExtra("buytype", buyType);
                         startActivity(intent);
                     }, this::handleApiError);
@@ -264,7 +266,6 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         buyType = "";
         paytypes.clear();
-        count = 0;
         cbExchangePayType1.setChecked(false);
         cbExchangePayType2.setChecked(false);
         cbExchangePayType3.setChecked(false);
@@ -358,7 +359,7 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
     public void onPopWindowClickListener(String psw, boolean complete) {
         if (complete) {
             ServiceFactory.getInstance().getBaseService(Api.class)
-                    .releasePurchase(String.valueOf(count), String.valueOf(totalPrice),
+                    .releasePurchase(etExchangeChooseCount.getText().toString(), String.valueOf(totalPrice),
                             "1", MD5Utils.getMD5(psw), getPayTypes(), etMinMoney.getText().toString().trim(), etMaxMoney.getText().toString().trim())
                     .compose(bindToLifecycle())
                     .compose(RxSchedulers.normalTrans())
