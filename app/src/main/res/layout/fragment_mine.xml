@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@android:color/white"
     android:orientation="vertical"
     tools:ignore="all">
 
@@ -20,119 +20,121 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F8F8F8"
         android:overScrollMode="never"
         android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#F8F8F8"
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardMineInfo"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="15dp"
                 android:background="@color/white"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="5dp">
 
-                <RelativeLayout
+                <LinearLayout
+                    android:id="@+id/llMineNickParent"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginEnd="15dp">
+                    android:layout_margin="20dp"
+                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:id="@+id/llMineNickParent"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
                         <TextView
                             android:id="@+id/tvMineNick"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:text="@string/user_name"
-                            android:textColor="@color/tvMineNick"
-                            android:textSize="20sp" />
+                            android:textColor="#393939"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
 
                         <ImageView
                             android:id="@+id/ivMineQRcode"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
+                            android:layout_alignTop="@id/tvMineNick"
+                            android:layout_alignBottom="@id/tvMineNick"
+                            android:layout_marginStart="10dp"
+
+                            android:layout_toEndOf="@id/tvMineNick"
                             app:srcCompat="@drawable/ic_mine_code2" />
 
-                    </LinearLayout>
+                        <TextView
+                            android:id="@+id/tvMineDuNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@id/flMineHeadImgParent"
+                            android:text="@string/business_card_duoduo_id"
+                            android:textColor="@color/textcolor3"
+                            android:textSize="15sp" />
+
+                        <FrameLayout
+                            android:id="@+id/flMineHeadImgParent"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_alignTop="@id/tvMineNick"
+                            android:layout_alignParentEnd="true"
+                            android:clipChildren="false">
+
+                            <ImageView
+                                android:id="@+id/ivMineHeadImg"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@color/default_placeholder" />
+
+                            <ImageView
+                                android:id="@+id/ivMineAuthSign"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="end|bottom"
+                                android:src="@drawable/ic_mine_authenticate"
+                                android:visibility="invisible" />
+
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/tv_signature"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tvMineDuNum"
+                            android:layout_marginTop="15dp"
+                            android:text="@string/personalized_signature"
+                            android:textColor="@color/textcolor3"
+                            android:textSize="15sp" />
 
 
-                    <FrameLayout
-                        android:id="@+id/flMineHeadImgParent"
-                        android:layout_width="72dp"
-                        android:layout_height="72dp"
-                        android:layout_alignTop="@id/llMineNickParent"
-                        android:layout_alignParentEnd="true"
-                        android:clipChildren="false">
+                        <TextView
+                            android:id="@+id/tvMineSign"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@id/tv_signature"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginStart="5dp"
+                            android:layout_toStartOf="@+id/flMineHeadImgParent"
+                            android:layout_toEndOf="@id/tv_signature"
+                            android:ellipsize="end"
+                            android:lines="2"
+                            android:text="@string/tvMineSign"
+                            android:textColor="@color/textcolor3"
+                            android:textSize="15sp" />
 
-                        <ImageView
-                            android:id="@+id/ivMineHeadImg"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_margin="2dp"
-                            android:scaleType="centerCrop"
-                            app:srcCompat="@color/default_placeholder" />
-
-                        <ImageView
-                            android:id="@+id/ivMineAuthSign"
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
-                            android:layout_gravity="end|bottom"
-                            android:src="@drawable/ic_mine_authenticate"
-                            android:visibility="invisible" />
-
-                    </FrameLayout>
+                    </RelativeLayout>
 
 
-                    <TextView
-                        android:id="@+id/tvMineDuNum"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@id/flMineHeadImgParent"
-                        android:text="@string/business_card_duoduo_id"
-                        android:textColor="@color/textcolor3"
-                        android:textSize="15sp" />
+                </LinearLayout>
 
-
-                    <TextView
-                        android:id="@+id/tv_signature"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/tvMineDuNum"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/personalized_signature"
-                        android:textColor="@color/textcolor3"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/tvMineSign"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignTop="@id/tv_signature"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_toEndOf="@id/tv_signature"
-                        android:ellipsize="end"
-                        android:lines="2"
-                        android:text="@string/tvMineSign"
-                        android:textColor="@color/textcolor3"
-                        android:textSize="15sp" />
-
-
-                </RelativeLayout>
 
             </androidx.cardview.widget.CardView>
 
@@ -140,6 +142,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:background="@color/default_placeholder" />
+
 
             <LinearLayout
                 android:id="@+id/llMineBalanceLeft"
