@@ -8,20 +8,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.GetRedPackageRecordResponse;
 import com.zxjk.duoduo.ui.msgpage.PeopleUnaccalimedActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import static com.blankj.utilcode.util.ActivityUtils.startActivity;
 
 public class RedPackageRecoderAdapter extends RecyclerView.Adapter<RedPackageRecoderAdapter.ViewHolder> {
+
+    DecimalFormat df = new DecimalFormat("0.00");
 
     private Context context;
     private List<GetRedPackageRecordResponse.RedpackageListBean> data;
@@ -76,7 +79,7 @@ public class RedPackageRecoderAdapter extends RecyclerView.Adapter<RedPackageRec
         void bindData(GetRedPackageRecordResponse.RedpackageListBean bean) {
             tvRedPackageNick.setText(bean.getNick());
             tvRedPackageTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Long.parseLong(bean.getCreateTime())));
-            tvRedPackageMoney.setText(String.valueOf(bean.getMoney()) + "HK");
+            tvRedPackageMoney.setText(df.format(bean.getMoney()) + "HK");
             if (TextUtils.isEmpty(bean.getTYPE())) {
                 tvRedPackageNick.setCompoundDrawablesRelative(null, null, null, null);
                 tvRedPackageNick.setCompoundDrawablePadding(CommonUtils.dip2px(context, 0));

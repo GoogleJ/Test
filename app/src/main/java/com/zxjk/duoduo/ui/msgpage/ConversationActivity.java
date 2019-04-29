@@ -133,6 +133,10 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                                                     .compose(RxSchedulers.normalTrans())
                                                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this)))
                                                     .subscribe(response -> {
+                                                        if (response.getCount() == 0) {
+                                                            ToastUtils.showShort(R.string.noxiazhu);
+                                                            return;
+                                                        }
                                                         Intent intent = new Intent(ConversationActivity.this, GroupRedPacketActivity.class);
                                                         intent.putExtra("isGame", "0");
                                                         intent.putExtra("groupId", groupResponse.getGroupInfo().getId());
@@ -584,9 +588,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                                                             .compose(RxSchedulers.normalTrans())
                                                             .compose(RxSchedulers.ioObserver())
                                                             .compose(bindToLifecycle())
-                                                            .subscribe(s -> {
-                                                                ToastUtils.showShort(R.string.xiazhuchenggong);
-                                                            }, ConversationActivity.this::handleApiError);
+                                                            .subscribe(s -> ToastUtils.showShort(R.string.xiazhuchenggong), ConversationActivity.this::handleApiError);
                                                 });
 
                                             }
@@ -595,7 +597,6 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                                         .setOutCancel(false)
                                         .show(getSupportFragmentManager());
                             });
-
 
                             gamePopupWindow.show(getGroupGameParameterResponse);
                         }, ConversationActivity.this::handleApiError));

@@ -5,6 +5,8 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.Gson;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.network.Api;
@@ -16,7 +18,6 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 
 import java.util.concurrent.TimeUnit;
 
-import androidx.annotation.Nullable;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.functions.Function;
@@ -34,6 +35,10 @@ public class RegisterBlockWalletService extends Service {
     @SuppressLint("CheckResult")
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if (Constant.currentUser == null) {
+            stopSelf();
+            return super.onStartCommand(intent, flags, startId);
+        }
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .createWallet(Constant.currentUser.getDuoduoId())
                 .compose(RxSchedulers.normalTrans())

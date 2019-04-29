@@ -14,8 +14,8 @@ android {
         applicationId "com.zxjk.duoduo"
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         ndk {
@@ -27,7 +27,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            debuggable true
+            debuggable false
             signingConfig signingConfigs.release
             zipAlignEnabled true
         }
@@ -139,9 +139,6 @@ dependencies {
 
     //微信分享
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
-
-    //群组头像
-    implementation 'com.jaeger.ninegridimageview:library:1.1.1'
 
     implementation 'com.github.SheHuan:NiceDialog:1.1.9'
 }

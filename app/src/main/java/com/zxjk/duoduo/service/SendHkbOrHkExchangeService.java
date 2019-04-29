@@ -4,9 +4,13 @@ import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+
+import androidx.annotation.Nullable;
+
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import androidx.annotation.Nullable;
+
 import io.reactivex.schedulers.Schedulers;
 
 public class SendHkbOrHkExchangeService extends Service {
@@ -20,6 +24,10 @@ public class SendHkbOrHkExchangeService extends Service {
     @SuppressLint("CheckResult")
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if (Constant.currentUser == null) {
+            stopSelf();
+            return super.onStartCommand(intent, flags, startId);
+        }
         String arg1 = intent.getStringExtra("arg1");
         String arg2 = intent.getStringExtra("arg2");
         String arg3 = intent.getStringExtra("arg3");

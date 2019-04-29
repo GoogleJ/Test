@@ -56,20 +56,4 @@ public class PhoneInfo {
         this.number = number;
 
     }
-
-    public static void main(String[] args) {
-        PhoneInfo phoneInfo1 = new PhoneInfo("jin", "asd");
-        PhoneInfo phoneInfo2 = new PhoneInfo("jin", "asd");
-        PhoneInfo phoneInfo3 = new PhoneInfo("jin1", "asd");
-        PhoneInfo phoneInfo4 = new PhoneInfo("jin1", "asd1");
-
-        System.out.println(phoneInfo1.equals(phoneInfo2));
-        System.out.println(phoneInfo1.equals(phoneInfo3));
-        System.out.println(phoneInfo1.equals(phoneInfo4));
-
-
-        System.out.println(phoneInfo3.equals(phoneInfo4));
-        System.out.println(phoneInfo2.equals(phoneInfo3));
-    }
-
 }

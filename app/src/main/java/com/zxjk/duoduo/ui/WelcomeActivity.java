@@ -49,21 +49,19 @@ public class WelcomeActivity extends BaseActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);  //全屏
         setContentView(R.layout.activity_welcome);
         Constant.isVerifyVerision = SPUtils.getInstance().getBoolean("isVerifyVerision", true);
-        if (Constant.isVerifyVerision) {
-            ServiceFactory.getInstance().getBaseService(Api.class)
-                    .getAppVersion()
-                    .compose(bindToLifecycle())
-                    .compose(RxSchedulers.ioObserver())
-                    .subscribe(response -> {
-                        if (response.equals("0.0.1")) {
-                            Constant.isVerifyVerision = true;
-                        } else {
-                            Constant.isVerifyVerision = false;
-                            SPUtils.getInstance().put("isVerifyVerision", false);
-                        }
-                    }, t -> {
-                    });
-        }
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .getAppVersion()
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.ioObserver())
+                .subscribe(response -> {
+                    if (response.data.equals("0.0.1")) {
+                        Constant.isVerifyVerision = true;
+                    } else {
+                        Constant.isVerifyVerision = false;
+                        SPUtils.getInstance().put("isVerifyVerision", false);
+                    }
+                }, t -> {
+                });
         WindowUtils.hideBottomUIMenu(this);
         checkUserState();
     }

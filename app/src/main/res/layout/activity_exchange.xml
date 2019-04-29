@@ -246,7 +246,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/shape_stroke_conor"
                         android:gravity="center"
-                        android:hint="@string/input_minbuy"
+                        android:hint="@string/input_maxbuy"
                         android:imeOptions="actionDone"
                         android:inputType="number"
                         android:paddingStart="16dp"

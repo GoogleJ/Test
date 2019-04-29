@@ -70,8 +70,4 @@ public class VerifiedBean {
     public void setPictureHand(String pictureHand) {
         this.pictureHand = pictureHand;
     }
-
-
-
-
 }
