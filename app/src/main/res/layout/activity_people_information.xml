@@ -61,7 +61,6 @@
                             style="@style/textStyle4"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="25dp"
-                            android:text="@string/user_name"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -70,7 +69,6 @@
                             android:layout_width="12dp"
                             android:layout_height="20dp"
                             android:layout_marginStart="9dp"
-                            android:src="@drawable/icon_gender_woman"
                             app:layout_constraintBottom_toBottomOf="@+id/m_personal_information_user_name_text"
                             app:layout_constraintStart_toEndOf="@+id/m_personal_information_user_name_text"
                             app:layout_constraintTop_toTopOf="@+id/m_personal_information_user_name_text" />

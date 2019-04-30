@@ -35,7 +35,6 @@
                 android:layout_height="64dp"
                 android:layout_marginEnd="8dp"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/icon_header"
                 tools:ignore="RtlCompat" />
 
             <TextView
@@ -85,8 +84,7 @@
             android:id="@+id/m_my_qr_code_qr_code_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/icon_header" />
+            android:scaleType="fitXY" />
 
         <ImageView
             android:id="@+id/ivIcon"

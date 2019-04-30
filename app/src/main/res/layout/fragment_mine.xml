@@ -51,8 +51,7 @@
                             <TextView
                                 android:id="@+id/tv_nickName"
                                 style="@style/textStyle4"
-                                android:gravity="center"
-                                android:text="@string/user_name" />
+                                android:gravity="center" />
 
                             <ImageView
                                 android:id="@+id/iv_QRCode"
@@ -68,8 +67,7 @@
                                 android:id="@+id/tv_DuoDuoNumber"
                                 style="@style/textStyle1"
                                 android:layout_below="@id/tv_nickName"
-                                android:layout_marginTop="30dp"
-                                android:text="@string/business_card_duoduo_id" />
+                                android:layout_marginTop="30dp" />
 
                             <FrameLayout
                                 android:id="@+id/flMineHeadImgParent"
@@ -113,8 +111,7 @@
                                 android:layout_toStartOf="@+id/flMineHeadImgParent"
                                 android:layout_toEndOf="@id/tv_signature"
                                 android:ellipsize="end"
-                                android:lines="2"
-                                android:text="@string/tvMineSign" />
+                                android:lines="2" />
 
                         </RelativeLayout>
                     </LinearLayout>
