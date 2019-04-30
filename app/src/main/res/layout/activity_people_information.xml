@@ -17,15 +17,14 @@
         app:titleBarTextColor="@color/white"
         app:titleBarTitle="@string/m_information_title_bar" />
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="100dp">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -59,13 +58,10 @@
 
                         <TextView
                             android:id="@+id/m_personal_information_user_name_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/textStyle4"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="25dp"
                             android:text="@string/user_name"
-                            android:textColor="@color/black"
-                            android:textSize="22sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -81,22 +77,15 @@
 
                         <TextView
                             android:id="@+id/m_personal_information_dudu_id"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/textStyle1"
                             android:layout_marginTop="35dp"
-                            android:text="@string/business_card_duoduo_id"
-                            android:textColor="@color/m_personal_information_dudu_id"
-                            android:textSize="16sp"
                             app:layout_constraintStart_toStartOf="@+id/m_personal_information_user_name_text"
                             app:layout_constraintTop_toBottomOf="@+id/m_personal_information_user_name_text" />
 
                         <TextView
                             android:id="@+id/m_personal_information_address"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/textStyle1"
                             android:layout_marginTop="12dp"
-                            android:text="@string/area"
-                            android:textSize="16sp"
                             app:layout_constraintStart_toStartOf="@+id/m_personal_information_dudu_id"
                             app:layout_constraintTop_toBottomOf="@+id/m_personal_information_dudu_id" />
 
@@ -113,31 +102,25 @@
 
                 <TextView
                     android:id="@+id/m_people_information_phone_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/textStyle"
                     android:layout_marginStart="12dp"
                     android:text="@string/m_people_information_phone_label"
-                    android:textColor="@color/themecolor"
-                    android:textSize="17sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/m_people_information_phone_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/textStyle"
                     android:layout_marginStart="16dp"
-                    android:text="15129092372"
-                    android:textSize="17sp"
-
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/m_people_information_phone_label"
                     app:layout_constraintTop_toTopOf="parent" />
 
+
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
+                    android:layout_height="0.1dp"
                     android:layout_marginStart="12dp"
                     android:background="@color/divider"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -152,31 +135,25 @@
 
                 <TextView
                     android:id="@+id/m_people_information_email_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/textStyle"
                     android:layout_marginStart="12dp"
                     android:gravity="center"
                     android:text="@string/m_people_information_email_label"
-                    android:textColor="@color/themecolor"
-                    android:textSize="17sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/m_people_information_email_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/textStyle"
                     android:layout_marginStart="17dp"
-                    android:text="15129092372@163.com"
-                    android:textSize="17sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/m_people_information_email_label"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
+                    android:layout_height="0.1dp"
                     android:layout_marginStart="12dp"
                     android:background="@color/divider"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -191,30 +168,24 @@
 
                 <TextView
                     android:id="@+id/m_people_information_signature_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/textStyle"
                     android:layout_marginStart="12dp"
                     android:text="@string/m_people_information_signature_label"
-                    android:textColor="@color/themecolor"
-                    android:textSize="17sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/m_people_information_signature_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="21dp"
-                    android:text="@string/signature"
-                    android:textSize="17sp"
+                    style="@style/textStyle"
+                    android:layout_marginStart="20dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/m_people_information_signature_label"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
+                    android:layout_height="0.1dp"
                     android:layout_marginStart="12dp"
                     android:background="@color/divider"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -222,56 +193,54 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
-                android:gravity="center_vertical"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="60dp"
                 android:background="@color/white">
 
                 <TextView
                     android:id="@+id/m_people_information_wallet_address_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/textStyle"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="12dp"
-                    android:text="@string/m_people_information_wallet_address_label"
-                    android:textColor="@color/themecolor"
-                    android:textSize="17sp" />
+                    android:text="@string/m_people_information_wallet_address_label" />
 
                 <TextView
                     android:id="@+id/m_people_information_wallet_address_text"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
+                    style="@style/textStyle"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="20dp"
-                    android:layout_marginEnd="8dp"
-                    android:singleLine="true"
+                    android:layout_marginEnd="15dp"
+                    android:layout_toStartOf="@+id/m_people_information_copy_wallet_address"
+                    android:layout_toEndOf="@+id/m_people_information_wallet_address_label"
                     android:ellipsize="middle"
-                    android:text="afawdfgbadsigbafadsgaassdgsdagsdgaisghu" />
+                    android:singleLine="true" />
 
                 <ImageView
                     android:id="@+id/m_people_information_copy_wallet_address"
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:layout_marginEnd="16dp"
-                    android:padding="10dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="15dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/icon_copy_people_information"/>
+                    android:src="@drawable/ic_copy_gray" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/m_people_information_send_to_message"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/white"
+                android:background="@android:color/white"
                 android:gravity="center"
-                android:text="@string/m_people_information_send_to_message"
-                android:textColor="@color/themecolor"
-                android:textSize="19sp" />
+                android:text="@string/send_message"
+                android:textColor="#4B4D5B"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

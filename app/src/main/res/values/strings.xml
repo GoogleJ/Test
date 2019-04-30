@@ -789,5 +789,25 @@
     <string name="shoukuanma">收款码</string>
     <string name="duoduo_acount">多多号:</string>
     <string name="yiwanshan">已完善</string>
+    <string name="district">地区:</string>
+    <string name="send_message">发消息</string>
+    <string name="new_message">新消息通知</string>
+    <string name="intimacy">隐私</string>
+    <string name="real_name_authentication">实名认证</string>
+    <string name="collection_information">收款信息</string>
+    <string name="not_perfection">未完善</string>
+    <string name="not_verify_real_name">未认证</string>
+    <string name="feedback">意见反馈</string>
+    <string name="about_duo_duo">关于多多</string>
+    <string name="language_switch">语言切换</string>
+    <string name="language_settings">语言设置</string>
+    <string name="online_customer_service">在线客服</string>
+    <string name="logout">退出</string>
+    <string name="money">0.00</string>
+    <string name="hk">HK</string>
+    <string name="payment_settings">支付设置</string>
+    <string name="change_pay_password">修改支付密码</string>
+    <string name="find_pay_password">找回支付密码</string>
+    <string name="pay_setting">支付设置</string>
 
 </resources>

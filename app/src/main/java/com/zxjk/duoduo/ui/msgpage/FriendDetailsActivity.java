@@ -149,6 +149,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
         handData();
     }
 
+    @SuppressLint("SetTextI18n")
     private void handData() {
         if (intentType == 0) {
             if (friendInfoResponse.getId().equals(Constant.userId)) {
@@ -156,8 +157,8 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
             }
             GlideUtil.loadCornerImg(heardIcon, friendInfoResponse.getHeadPortrait(), 2);
             userNameText.setText(friendInfoResponse.getNick());
-            duoduoId.setText(friendInfoResponse.getDuoduoId());
-            areaText.setText(friendInfoResponse.getAddress());
+            duoduoId.setText(getString(R.string.duoduo_acount) + " " + friendInfoResponse.getDuoduoId());
+            areaText.setText(getString(R.string.district) + " " + friendInfoResponse.getAddress());
             phoneText.setText(friendInfoResponse.getMobile());
             emailText.setText(friendInfoResponse.getEmail());
             sinatureText.setText(friendInfoResponse.getSignature());
@@ -174,8 +175,8 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
             }
             GlideUtil.loadCornerImg(heardIcon, friendInfo.getHeadPortrait(), 2);
             userNameText.setText(friendInfo.getNick());
-            duoduoId.setText(friendInfo.getDuoduoId());
-            areaText.setText(friendInfo.getAddress());
+            duoduoId.setText(getString(R.string.duoduo_acount) + " " + friendInfo.getDuoduoId());
+            areaText.setText(getString(R.string.district) + " " + friendInfo.getAddress());
             phoneText.setText(friendInfo.getMobile());
             emailText.setText(friendInfo.getEmail());
             sinatureText.setText(friendInfo.getSignature());
@@ -192,8 +193,8 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
             }
             GlideUtil.loadCornerImg(heardIcon, contactResponse.getHeadPortrait(), 2);
             userNameText.setText(contactResponse.getNick());
-            duoduoId.setText(contactResponse.getDuoduoId());
-            areaText.setText(contactResponse.getAddress());
+            duoduoId.setText(getString(R.string.duoduo_acount) + " " + contactResponse.getDuoduoId());
+            areaText.setText(getString(R.string.district) + " " + contactResponse.getAddress());
             phoneText.setText(contactResponse.getMobile());
             emailText.setText(contactResponse.getEmail());
             sinatureText.setText(contactResponse.getSignature());
@@ -343,7 +344,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                             RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE
                                     , friendId, null);
                             RongIMClient.getInstance().cleanHistoryMessages(Conversation.ConversationType.PRIVATE,
-                                    friendId,0,false,null);
+                                    friendId, 0, false, null);
                         }
 
                         @Override

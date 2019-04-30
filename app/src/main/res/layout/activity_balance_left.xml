@@ -2,166 +2,118 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/m_contact_edit_back"
+    android:background="#F8F8F8"
     android:orientation="vertical">
+
+    <include layout="@layout/layout_title_back" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/themecolor">
+        android:layout_height="160dp"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="15dp"
+        android:background="@drawable/ic_balance_bac">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/textStyle"
+                android:text="@string/my_balance" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_balance"
+                    style="@style/textStyle4"
+                    android:text="@string/money"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/tv_currency"
+                    style="@style/textStyle"
+                    android:layout_marginStart="5dp"
+                    android:text="@string/hk"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_billingDetails"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@android:color/white">
+
+        <TextView
+            style="@style/textStyle"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:text="@string/billing_details" />
+
+        <ImageView style="@style/ImageEnter" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_PaymentSettings"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="0.1dp"
+        android:background="@android:color/white">
+
+        <TextView
+            style="@style/textStyle"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:text="@string/payment_settings" />
+
+        <ImageView style="@style/ImageEnter" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_realNameAuthentication"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/white">
+
+        <TextView
+            style="@style/textStyle"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:text="@string/real_name_authentication" />
+
+        <TextView
+            android:id="@+id/tv_authentication"
+            style="@style/textStyle1"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@+id/iv_authentication"
+            android:text="@string/not_verify_real_name" />
 
         <ImageView
+            android:id="@+id/iv_authentication"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:onClick="back"
-            android:paddingLeft="12dp"
-            android:paddingTop="8dp"
-            android:paddingRight="12dp"
-            android:paddingBottom="8dp"
-            android:src="@drawable/ico_back" />
+            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@+id/iv_enter"
+            android:src="@drawable/ic_mine_authenticate"
+            android:visibility="gone" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/balance"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
+        <ImageView
+            android:id="@+id/iv_enter"
+            style="@style/ImageEnter" />
     </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:layout_margin="16dp"
-        android:background="@drawable/ic_balance_bac"
-        android:gravity="center_vertical"
-        android:orientation="vertical"
-        android:paddingLeft="32dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/my_balance"
-            android:textColor="@color/themecolor"
-            android:textSize="16sp" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvBalanceleftBalance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="0"
-                android:textColor="@color/themecolor"
-                android:textSize="26sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvBalanceleftType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="HK"
-                android:textColor="@color/themecolor"
-                android:textSize="19sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:onClick="orderDetail"
-        android:paddingLeft="16dp"
-        android:paddingTop="18dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="18dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/billing_details"
-            android:textColor="@color/themecolor"
-            android:textSize="16sp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_mine_rightarrow" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:onClick="paySetting"
-        android:paddingLeft="16dp"
-        android:paddingTop="18dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="18dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/pay_setting_title"
-            android:textColor="@color/themecolor"
-            android:textSize="16sp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_mine_rightarrow" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/verified_layout"
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:paddingLeft="16dp"
-        android:paddingTop="18dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="18dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/verified"
-            android:textColor="@color/themecolor"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/tvBalanceleftAuthenticateFlag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="6dp"
-            android:text="@string/not_certified" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_mine_rightarrow" />
-
-    </LinearLayout>
 
 </LinearLayout>

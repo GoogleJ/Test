@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,39 +31,43 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     private ImageView ivMineHeadImg;
     private ImageView ivMineAuthSign;
-    private TextView tvMineNick;
-    private TextView tvMineDuNum;
+    private TextView tv_nickName;
     private TextView tvMineSign;
-    private ImageView ivMineQRcode;
 
     @SuppressLint("SetTextI18n")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_mine, container, false);
+        TextView tv_title = view.findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.my));
+        RelativeLayout rl_balance = view.findViewById(R.id.rl_balance);
+        RelativeLayout rl_blockWallet = view.findViewById(R.id.rl_blockWallet);
+        RelativeLayout rl_collectionCode = view.findViewById(R.id.rl_collectionCode);
+        RelativeLayout rl_setting = view.findViewById(R.id.rl_setting);
 
-        LinearLayout llMineSetting = view.findViewById(R.id.llMineSetting);
-        LinearLayout llMineBalanceLeft = view.findViewById(R.id.llMineBalanceLeft);
-        LinearLayout llMineBlockWallet = view.findViewById(R.id.llMineBlockWallet);
-        LinearLayout llMineRecipetCode = view.findViewById(R.id.llMineRecipetCode);
-        CardView cardMineInfo = view.findViewById(R.id.cardMineInfo);
+
+        CardView cv_Info = view.findViewById(R.id.cv_Info);
+        TextView tv_DuoDuoNumber = view.findViewById(R.id.tv_DuoDuoNumber);
         ivMineHeadImg = view.findViewById(R.id.ivMineHeadImg);
         ivMineAuthSign = view.findViewById(R.id.ivMineAuthSign);
-        tvMineNick = view.findViewById(R.id.tvMineNick);
-        tvMineDuNum = view.findViewById(R.id.tvMineDuNum);
+        tv_nickName = view.findViewById(R.id.tv_nickName);
         tvMineSign = view.findViewById(R.id.tvMineSign);
-        ivMineQRcode = view.findViewById(R.id.ivMineQRcode);
-        tvMineDuNum.setText(getString(R.string.duoduo_acount) + Constant.currentUser.getDuoduoId());
+        ImageView iv_QRCode = view.findViewById(R.id.iv_QRCode);
+        tv_DuoDuoNumber.setText(getString(R.string.duoduo_acount) + Constant.currentUser.getDuoduoId());
 
-        llMineSetting.setOnClickListener(this);
-        llMineBalanceLeft.setOnClickListener(this);
+        rl_balance.setOnClickListener(this);
+        rl_blockWallet.setOnClickListener(this);
+        rl_collectionCode.setOnClickListener(this);
+        rl_setting.setOnClickListener(this);
+        cv_Info.setOnClickListener(this);
+        iv_QRCode.setOnClickListener(this);
+
         if (Constant.isVerifyVerision) {
-            llMineBlockWallet.setVisibility(View.GONE);
+            rl_blockWallet.setVisibility(View.GONE);
+        } else {
+            rl_blockWallet.setVisibility(View.VISIBLE);
         }
-        llMineBlockWallet.setOnClickListener(this);
-        llMineRecipetCode.setOnClickListener(this);
-        cardMineInfo.setOnClickListener(this);
-        ivMineQRcode.setOnClickListener(this);
         return view;
     }
 
@@ -71,14 +75,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        tvMineNick.setText(Constant.currentUser.getNick());
+        tv_nickName.setText(Constant.currentUser.getNick());
         if (TextUtils.isEmpty(Constant.currentUser.getSignature())) {
             tvMineSign.setText(R.string.none);
         } else {
             tvMineSign.setText(Constant.currentUser.getSignature());
         }
         GlideUtil.loadCornerImg(ivMineHeadImg, Constant.currentUser.getHeadPortrait(), 3);
-
         String isAuthentication = Constant.currentUser.getIsAuthentication();
         if (isAuthentication.equals("0")) {
             ivMineAuthSign.setVisibility(View.VISIBLE);
@@ -90,25 +93,32 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.llMineSetting:
-                startActivity(new Intent(getContext(), SettingActivity.class));
-                break;
-            case R.id.cardMineInfo:
-                startActivity(new Intent(getContext(), UserInfoActivity.class));
-                break;
-            case R.id.llMineBalanceLeft:
-                startActivity(new Intent(getContext(), BalanceLeftActivity.class));
-                break;
-            case R.id.ivMineQRcode:
+            //二维码
+            case R.id.iv_QRCode:
                 startActivity(new Intent(getContext(), MyQrCodeActivity.class));
                 break;
-            case R.id.llMineBlockWallet:
+            //个人信息
+            case R.id.cv_Info:
+                startActivity(new Intent(getContext(), UserInfoActivity.class));
+                break;
+            //余额
+            case R.id.rl_balance:
+                startActivity(new Intent(getContext(), BalanceLeftActivity.class));
+                break;
+            //区块链钱包
+            case R.id.rl_blockWallet:
                 startActivity(new Intent(getActivity(), BlockWalletActivity.class));
                 break;
-            case R.id.llMineRecipetCode:
+            //收款码
+            case R.id.rl_collectionCode:
                 startActivity(new Intent(getActivity(), RecipetQRActivity.class));
                 break;
+            //设置
+            case R.id.rl_setting:
+                startActivity(new Intent(getContext(), SettingActivity.class));
+                break;
             default:
+                break;
         }
     }
 }

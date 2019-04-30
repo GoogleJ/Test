@@ -487,7 +487,8 @@
             android:name=".ui.msgpage.GroupChatActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".ui.minepage.AboutActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

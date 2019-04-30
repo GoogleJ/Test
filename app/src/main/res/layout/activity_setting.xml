@@ -4,317 +4,257 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/themecolor">
+    <include layout="@layout/layout_title_back" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:onClick="back"
-            android:paddingLeft="12dp"
-            android:paddingTop="8dp"
-            android:paddingRight="12dp"
-            android:paddingBottom="8dp"
-            android:src="@drawable/ico_back" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/setting_title"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-    </RelativeLayout>
-
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="#F8F8F8"
             android:orientation="vertical">
 
-            <TextView
+            <RelativeLayout
+                android:id="@+id/rl_account_number"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/ic_mine_rightarrow"
-                android:onClick="jump2Account"
-                android:paddingLeft="10dp"
-                android:paddingTop="16dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="16dp"
-                android:text="@string/account_number"
-                android:textColor="@color/themecolor"
-                android:textSize="16sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/personal_information_1" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/ic_mine_rightarrow"
-                android:paddingLeft="10dp"
-                android:paddingTop="16dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="16dp"
-                android:text="@string/new_message_notificatino"
-                android:textColor="@color/themecolor"
-                android:textSize="16sp"
-                android:visibility="gone" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.1dp"
-                android:layout_marginStart="10dp"
-                android:background="#EEEEEE"
-                android:visibility="gone" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/ic_mine_rightarrow"
-                android:onClick="privacy"
-                android:paddingLeft="10dp"
-                android:paddingTop="16dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="16dp"
-                android:text="@string/m_privacy_title_bar"
-                android:textColor="@color/themecolor"
-                android:textSize="16sp"
-                android:visibility="gone" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="10dp"
-                android:background="#EEEEEE"
-                android:visibility="gone" />
-
-            <LinearLayout
-                android:id="@+id/verified"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:onClick="gotoVerivy"
-                android:paddingLeft="10dp"
-                android:paddingTop="16dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="16dp">
+                android:layout_height="60dp"
+                android:background="@android:color/white">
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/verified"
-                    android:textColor="@color/themecolor"
-                    android:textSize="16sp" />
+                    style="@style/textStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/account_number" />
+
+                <ImageView style="@style/ImageEnter" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_newMessage"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="0.1dp"
+                android:background="@android:color/white"
+                android:visibility="gone">
 
                 <TextView
-                    android:id="@+id/tvSettingAuthenticate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="2dp"
-                    android:gravity="center_vertical"
-                    android:text="@string/verified_successful" />
+                    style="@style/textStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/new_message" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_intimacy"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="0.1dp"
+                android:background="@android:color/white"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/textStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/intimacy" />
+
+                <ImageView style="@style/ImageEnter" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_realNameAuthentication"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white">
+
+                <TextView
+                    style="@style/textStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/real_name_authentication" />
+
+                <TextView
+                    android:id="@+id/tv_authentication"
+                    style="@style/textStyle1"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_toStartOf="@+id/iv_authentication"
+                    android:text="@string/not_verify_real_name" />
 
                 <ImageView
-                    android:id="@+id/ivSettingAuthen"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:id="@+id/iv_authentication"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_toStartOf="@+id/iv_enter"
                     android:src="@drawable/ic_mine_authenticate"
                     android:visibility="gone" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:src="@drawable/ic_mine_rightarrow" />
+                    android:id="@+id/iv_enter"
+                    style="@style/ImageEnter" />
+            </RelativeLayout>
 
-            </LinearLayout>
-
-            <include layout="@layout/layout_line" />
-
-            <LinearLayout
+            <RelativeLayout
+                android:id="@+id/rl_collectionInformation"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:onClick="billingMessage"
-                android:paddingLeft="10dp"
-                android:paddingTop="16dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="16dp">
+                android:layout_height="60dp"
+                android:layout_marginTop="0.1dp"
+                android:background="@android:color/white">
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/billing_message"
-                    android:textColor="@color/themecolor"
-                    android:textSize="16sp" />
+                    style="@style/textStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/collection_information" />
 
                 <TextView
-                    android:id="@+id/tvSettingPayment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/not_completed" />
+                    android:id="@+id/tv_perfection"
+                    style="@style/textStyle1"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_toStartOf="@+id/iv_enter1"
+                    android:text="@string/not_perfection" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:src="@drawable/ic_mine_rightarrow" />
+                    android:id="@+id/iv_enter1"
+                    style="@style/ImageEnter" />
+            </RelativeLayout>
 
-            </LinearLayout>
 
-            <View
+            <RelativeLayout
+                android:id="@+id/rl_helpCenter"
                 android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/personal_information_1" />
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white">
 
-            <TextView
+                <TextView
+                    style="@style/textStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/help_center" />
+
+                <ImageView style="@style/ImageEnter" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_feedback"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/ic_mine_rightarrow"
-                android:onClick="jump2Help"
-                android:paddingLeft="10dp"
-                android:paddingTop="16dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="16dp"
-                android:text="@string/help_center"
-                android:textColor="@color/themecolor"
-                android:textSize="16sp" />
+                android:layout_height="60dp"
+                android:layout_marginTop="0.1dp"
+                android:background="@android:color/white">
 
-            <include layout="@layout/layout_line" />
+                <TextView
+                    style="@style/textStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/feedback" />
 
-            <TextView
+                <ImageView style="@style/ImageEnter" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_aboutDuoDuo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/ic_mine_rightarrow"
-                android:onClick="feedback"
-                android:paddingLeft="10dp"
-                android:paddingTop="16dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="16dp"
-                android:text="@string/feedback_title"
-                android:textColor="@color/themecolor"
-                android:textSize="16sp" />
+                android:layout_height="60dp"
+                android:layout_marginTop="0.1dp"
+                android:background="@android:color/white">
 
-            <include layout="@layout/layout_line" />
+                <TextView
+                    style="@style/textStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/about_duo_duo" />
 
-            <TextView
+                <ImageView style="@style/ImageEnter" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_languageSwitch"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/ic_mine_rightarrow"
-                android:onClick="aboutDuoDuo"
-                android:paddingLeft="10dp"
-                android:paddingTop="16dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="16dp"
-                android:text="@string/about_title"
-                android:textColor="@color/themecolor"
-                android:textSize="16sp" />
-
-            <include layout="@layout/layout_line" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/ic_mine_rightarrow"
-                android:paddingLeft="10dp"
-                android:paddingTop="16dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="16dp"
-                android:text="@string/language_switching"
-                android:textColor="@color/themecolor"
-                android:textSize="16sp"
-                android:visibility="gone" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/ic_mine_rightarrow"
-                android:onClick="onlineService"
-                android:paddingLeft="10dp"
-                android:paddingTop="16dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="16dp"
-                android:text="@string/online_service"
-                android:textColor="@color/themecolor"
-                android:textSize="16sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/personal_information_1" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:onClick="accountSwitch"
-                android:paddingLeft="10dp"
-                android:paddingTop="16dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="16dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="0.1dp"
+                android:background="@android:color/white"
                 android:visibility="gone">
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/switch_account"
-                    android:textColor="@color/themecolor"
-                    android:textSize="16sp" />
+                    style="@style/textStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/language_switch" />
+
+                <ImageView style="@style/ImageEnter" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_onlineCustomerService"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="0.1dp"
+                android:background="@android:color/white">
 
                 <TextView
-                    android:id="@+id/tvSettingNick"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/user_name" />
+                    style="@style/textStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/online_customer_service" />
+
+                <ImageView style="@style/ImageEnter" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_switchAccount"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="0.1dp"
+                android:background="@android:color/white"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/textStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/switch_account" />
+
+                <TextView
+                    android:id="@+id/tv_nickName"
+                    style="@style/textStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_toStartOf="@+id/iv_enter2" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:src="@drawable/ic_mine_rightarrow" />
+                    android:id="@+id/iv_enter2"
+                    style="@style/ImageEnter" />
+            </RelativeLayout>
 
-            </LinearLayout>
 
-            <View
+            <RelativeLayout
+                android:id="@+id/rl_logout"
                 android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/personal_information_1" />
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="50dp"
+                android:background="@android:color/white">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:onClick="loginOut"
-                android:paddingTop="14dp"
-                android:paddingBottom="14dp"
-                android:text="@string/drop_out"
-                android:textColor="@color/themecolor"
-                android:textSize="18sp" />
+                <TextView
+                    style="@style/textStyle"
+                    android:layout_centerInParent="true"
+                    android:text="@string/logout" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@color/personal_information_1"
-                android:paddingBottom="16dp" />
+            </RelativeLayout>
+
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

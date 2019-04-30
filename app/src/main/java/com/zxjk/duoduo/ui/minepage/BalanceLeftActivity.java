@@ -3,8 +3,6 @@ package com.zxjk.duoduo.ui.minepage;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -19,21 +17,31 @@ import com.zxjk.duoduo.utils.CommonUtils;
 @SuppressLint("CheckResult")
 public class BalanceLeftActivity extends BaseActivity {
 
-    private TextView tvBalanceleftAuthenticateFlag; //是否认证tv
-    private TextView tvBalanceleftBalance; //余额
-    private TextView tvBalanceleftType; //币种
-    LinearLayout verifiedLayout;
+    private TextView tv_authentication; //是否认证tv
+    private TextView tv_balance; //余额
+    private TextView tv_currency; //币种
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_balance_left);
 
-        tvBalanceleftAuthenticateFlag = findViewById(R.id.tvBalanceleftAuthenticateFlag);
-        tvBalanceleftBalance = findViewById(R.id.tvBalanceleftBalance);
-        tvBalanceleftType = findViewById(R.id.tvBalanceleftType);
-        verifiedLayout = findViewById(R.id.verified_layout);
-        verifiedLayout.setOnClickListener(v -> {
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.balance));
+        tv_balance = findViewById(R.id.tv_balance);
+        tv_currency = findViewById(R.id.tv_currency);
+        tv_authentication = findViewById(R.id.tv_authentication);
+
+        //返回
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
+        //账单明细
+        findViewById(R.id.rl_billingDetails).setOnClickListener(v ->
+                startActivity(new Intent(BalanceLeftActivity.this, DetailListActivity.class)));
+        //支付设置
+        findViewById(R.id.rl_PaymentSettings).setOnClickListener(v ->
+                startActivity(new Intent(BalanceLeftActivity.this, PaySettingActivity.class)));
+        //实名认证
+        findViewById(R.id.rl_realNameAuthentication).setOnClickListener(v -> {
             if (Constant.currentUser.getIsAuthentication().equals("1")) {
                 startActivity(new Intent(BalanceLeftActivity.this, VerifiedActivity.class));
             }
@@ -47,28 +55,14 @@ public class BalanceLeftActivity extends BaseActivity {
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.normalTrans())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                .subscribe(b -> tvBalanceleftBalance.setText(b.getBalanceHk()), this::handleApiError);
+                .subscribe(b -> tv_balance.setText(b.getBalanceHk()), this::handleApiError);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        tvBalanceleftAuthenticateFlag.setText(CommonUtils.getAuthenticate(Constant.currentUser.getIsAuthentication()));
+        tv_authentication.setText(CommonUtils.getAuthenticate(Constant.currentUser.getIsAuthentication()));
     }
 
-    //订单详情
-    public void orderDetail(View view) {
-        startActivity(new Intent(this,DetailListActivity.class));
-    }
-
-    //支付设置
-    public void paySetting(View view) {
-        startActivity(new Intent(this, PaySettingActivity.class));
-    }
-
-
-    public void back(View view) {
-        finish();
-    }
 
 }
