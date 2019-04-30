@@ -22,7 +22,6 @@ import com.zxjk.duoduo.ui.widget.TitleBar;
 
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
-import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imlib.model.Conversation;
 import io.rong.message.CommandMessage;
 
