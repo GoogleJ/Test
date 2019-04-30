@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
 import com.zxjk.duoduo.ui.ImgActivity;
@@ -40,15 +41,6 @@ public class WaitForJudgeActivity extends BaseActivity {
         setContentView(R.layout.activity_wait_for_judge);
 
         tvWaitForJudgeCountDown = findViewById(R.id.tvWaitForJudgeCountDown);
-        Observable.interval(0, 1, TimeUnit.SECONDS)
-                .take(600)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(l -> {
-                    long minute = (600 - l) / 60;
-                    long second = 60 - l % 60;
-                    tvWaitForJudgeCountDown.setText(minute + ":" + (second == 60 ? "00" : ((second < 10 ? ("0" + second) : second))));
-                }, t -> {
-                });
 
         tvWaitForJudgeOrderId = findViewById(R.id.tvWaitForJudgeOrderId);
         tvWaitForJudgeMoney = findViewById(R.id.tvWaitForJudgeMoney);
@@ -82,6 +74,23 @@ public class WaitForJudgeActivity extends BaseActivity {
         tvWaitForJudgeTime.setText(format.format(Long.parseLong(data.getCreateTime())));
         tvWaitForJudgeReceiver.setText(data.getNick());
         tvWaitForJudgeReceiverAccount.setText(data.getReceiptNumber());
+
+        long l1 = (System.currentTimeMillis() - Long.parseLong(data.getPayTime())) / 1000;
+        long total = (900 - l1) <= 0 ? 0 : (900 - l1);
+        Observable.interval(0, 1, TimeUnit.SECONDS)
+                .take(total)
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(bindToLifecycle())
+                .subscribe(l -> {
+                    long minute = (total - l) / 60;
+                    long second = (total - l) % 60;
+                    tvWaitForJudgeCountDown.setText(minute + ":" + (second == 60 ? "00" : ((second < 10 ? ("0" + second) : second))));
+                    if (total == 0 || l == total - 1) {
+                        ToastUtils.showShort(R.string.timeup);
+                        finish();
+                    }
+                }, t -> {
+                });
     }
 
     public void showQR(View view) {

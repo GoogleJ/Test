@@ -148,8 +148,6 @@
             android:textSize="15sp" />
 
         <EditText
-            android:paddingTop="3dp"
-            android:paddingBottom="3dp"
             android:id="@+id/etCount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -158,6 +156,8 @@
             android:hint="@string/inputZhuanChuCount"
             android:inputType="numberDecimal"
             android:lines="1"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
             android:singleLine="true"
             android:textSize="15sp" />
 
@@ -232,6 +232,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:maxHeight="8dp"
+            android:progressDrawable="@drawable/progress_blockwallet"
+            android:splitTrack="false"
             android:thumb="@drawable/ic_seek_thumb" />
 
         <TextView

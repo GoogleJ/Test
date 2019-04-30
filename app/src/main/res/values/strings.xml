@@ -789,6 +789,10 @@
     <string name="shoukuanma">收款码</string>
     <string name="duoduo_acount">多多号:</string>
     <string name="yiwanshan">已完善</string>
+    <string name="exchangetips">实际出售额以买入时的汇率进行计算</string>
+    <string name="timeup">时间已过，交易失败</string>
+    <string name="dingdanchexiao">HK退还</string>
+    <string name="chushou">HK出售</string>
     <string name="district">地区:</string>
     <string name="send_message">发消息</string>
     <string name="new_message">新消息通知</string>

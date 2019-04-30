@@ -91,6 +91,7 @@ public class ExchangeListActivity extends BaseActivity {
                         data.setNumber(g.getNumber());
                         data.setCreateTime(g.getCreateTime());
                         data.setNick(g.getSellNick());
+                        data.setPayTime(g.getPayTime());
 
                         intent.putExtra("buytype", g.getPayType());
                         intent.putExtra("data", data);

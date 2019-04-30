@@ -13,6 +13,10 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
@@ -26,9 +30,6 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.minepage.OnlineServiceActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
@@ -150,8 +151,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         if (requestCode == 200 && resultCode == Activity.RESULT_OK && data != null) {
             CountryEntity countryEntity = (CountryEntity) data.getSerializableExtra("data");
             login_country.setText(" +" + (countryEntity != null ? countryEntity.countryCode : "86"));
-        } else {
-
         }
     }
 

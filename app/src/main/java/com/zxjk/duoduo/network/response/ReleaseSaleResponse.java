@@ -37,6 +37,16 @@ public class ReleaseSaleResponse implements Serializable {
     private String receiptNumber;
     private String receiptPicture;
 
+    private String payTime;
+
+    public String getPayTime() {
+        return payTime;
+    }
+
+    public void setPayTime(String payTime) {
+        this.payTime = payTime;
+    }
+
     public String getBuyOrderId() {
         return buyOrderId;
     }

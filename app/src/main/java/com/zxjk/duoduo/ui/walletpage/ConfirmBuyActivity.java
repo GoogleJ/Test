@@ -93,17 +93,25 @@ public class ConfirmBuyActivity extends BaseActivity implements TakePopWindow.On
         flagConfirmBuy = findViewById(R.id.flagConfirmBuy);
         tvConfirmBuyCountDown = findViewById(R.id.tvConfirmBuyCountDown);
 
-        Observable.interval(0, 1, TimeUnit.SECONDS)
-                .take(900)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(l -> {
-                    long minute = (900 - l) / 60;
-                    long second = 60 - l % 60;
-                    tvConfirmBuyCountDown.setText(minute + ":" + (second == 60 ? "00" : ((second < 10 ? ("0" + second) : second))));
-                }, this::handleApiError);
-
         data = (ReleaseSaleResponse) getIntent().getSerializableExtra("data");
         String buytype = getIntent().getStringExtra("buytype");
+
+        long l1 = (System.currentTimeMillis() - Long.parseLong(data.getCreateTime())) / 1000;
+        long total = (900 - l1) <= 0 ? 0 : (900 - l1);
+        Observable.interval(0, 1, TimeUnit.SECONDS)
+                .take(total)
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(bindToLifecycle())
+                .subscribe(l -> {
+                    long minute = (total - l) / 60;
+                    long second = (total - l) % 60;
+                    tvConfirmBuyCountDown.setText(minute + ":" + (second == 60 ? "00" : ((second < 10 ? ("0" + second) : second))));
+                    if (total == 0 || l == total - 1) {
+                        ToastUtils.showShort(R.string.timeup);
+                        finish();
+                    }
+                }, t -> {
+                });
 
         Drawable drawable = getDrawable(R.drawable.ic_exchange_wechat);
         switch (buytype) {
@@ -147,6 +155,7 @@ public class ConfirmBuyActivity extends BaseActivity implements TakePopWindow.On
                         .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                         .subscribe(s -> {
                             Intent intent = new Intent(this, WaitForJudgeActivity.class);
+                            data.setPayTime(String.valueOf(System.currentTimeMillis()));
                             intent.putExtra("data", data);
                             intent.putExtra("buytype", getIntent().getStringExtra("buytype"));
                             intent.putExtra("rate", getIntent().getStringExtra("rate"));
@@ -161,26 +170,24 @@ public class ConfirmBuyActivity extends BaseActivity implements TakePopWindow.On
     //取消订单
     public void cancelOrder(View view) {
         if (dialogCancel == null) {
-            dialogCancel = new ConfirmDialog(this, "取消订单", "取消订单不会退款，一天内取消 3笔交易会限制买入功能。", callback -> {
-                ServiceFactory.getInstance().getBaseService(Api.class)
-                        .cancelled(data.getBuyOrderId(), data.getBothOrderId(), data.getSellOrderId())
-                        .compose(RxSchedulers.normalTrans())
-                        .compose(bindToLifecycle())
-                        .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                        .subscribe(s -> {
-                            ReleasePurchase result = new ReleasePurchase();
-                            result.setSellOrderId(data.getBothOrderId());
-                            result.setCurrency(data.getCurrency());
-                            result.setNumber(data.getNumber());
-                            result.setMoney(data.getMoney());
-                            result.setPayType(getIntent().getStringExtra("buytype"));
-                            Intent intent = new Intent(this, CancelOrderActivity.class);
-                            intent.putExtra("data", result);
-                            intent.putExtra("rate", getIntent().getStringExtra("rate"));
-                            startActivity(intent);
-                            finish();
-                        }, this::handleApiError);
-            });
+            dialogCancel = new ConfirmDialog(this, "取消订单", "取消订单不会退款，一天内取消 3笔交易会限制买入功能。", callback -> ServiceFactory.getInstance().getBaseService(Api.class)
+                    .cancelled(data.getBuyOrderId(), data.getBothOrderId(), data.getSellOrderId())
+                    .compose(RxSchedulers.normalTrans())
+                    .compose(bindToLifecycle())
+                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                    .subscribe(s -> {
+                        ReleasePurchase result = new ReleasePurchase();
+                        result.setSellOrderId(data.getBothOrderId());
+                        result.setCurrency(data.getCurrency());
+                        result.setNumber(data.getNumber());
+                        result.setMoney(data.getMoney());
+                        result.setPayType(getIntent().getStringExtra("buytype"));
+                        Intent intent = new Intent(this, CancelOrderActivity.class);
+                        intent.putExtra("data", result);
+                        intent.putExtra("rate", getIntent().getStringExtra("rate"));
+                        startActivity(intent);
+                        finish();
+                    }, this::handleApiError));
         }
         dialogCancel.show();
     }
@@ -238,9 +245,11 @@ public class ConfirmBuyActivity extends BaseActivity implements TakePopWindow.On
         }
 
         if (!TextUtils.isEmpty(filePath)) {
+            CommonUtils.initDialog(this).show();
             zipFile(Collections.singletonList(filePath), files -> {
                 File file = files.get(0);
                 OssUtils.uploadFile(file.getAbsolutePath(), url -> {
+                    CommonUtils.destoryDialog();
                     flagConfirmBuy.setText(R.string.upload_done);
                     ToastUtils.showShort(R.string.upload_done);
                     pictureUrl = url;

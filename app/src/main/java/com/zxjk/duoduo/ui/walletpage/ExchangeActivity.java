@@ -65,6 +65,7 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
     private TextView tvExchangePayInfo1;
     private TextView tvExchangePayInfo2;
     private TextView tvExchangePayInfo3;
+    private TextView tvTipsExchange;
 
     private List<String> paytypes = new ArrayList<>(3);
     private String buyType = "";
@@ -123,6 +124,7 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
         tvExchangePayInfo1 = findViewById(R.id.tvExchangePayInfo1);
         tvExchangePayInfo2 = findViewById(R.id.tvExchangePayInfo2);
         tvExchangePayInfo3 = findViewById(R.id.tvExchangePayInfo3);
+        tvTipsExchange = findViewById(R.id.tvTipsExchange);
         rlExchangeType1.setOnClickListener(this);
         rlExchangeType2.setOnClickListener(this);
         rlExchangeType3.setOnClickListener(this);
@@ -232,6 +234,7 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                     .subscribe(s -> {
                         Intent intent = new Intent(this, ConfirmBuyActivity.class);
                         intent.putExtra("data", s);
+                        s.setCreateTime(String.valueOf(System.currentTimeMillis()));
                         intent.putExtra("rate", tvExchangePrice.getText().toString().split(" ")[0]);
                         intent.putExtra("buytype", buyType);
                         startActivity(intent);
@@ -279,6 +282,7 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                 tvExchangePayType.setText(R.string.exchange1_sale4);
                 btnExchangeConfirm.setText(R.string.exchange1_sale5);
                 llChooseMinMax.setVisibility(View.VISIBLE);
+                tvTipsExchange.setVisibility(View.VISIBLE);
 
                 if (tvExchangePayInfo1.getText().toString().length() != 0) {
                     tvExchangePayInfo1.setVisibility(View.VISIBLE);
@@ -299,6 +303,7 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                 tvExchangePayType.setText(R.string.exchange1_buy4);
                 btnExchangeConfirm.setText(R.string.exchange1_buy5);
                 llChooseMinMax.setVisibility(View.GONE);
+                tvTipsExchange.setVisibility(View.GONE);
 
                 tvExchangePayInfo1.setVisibility(View.GONE);
                 tvExchangePayInfo2.setVisibility(View.GONE);

@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.DetailListResposne;
 import com.zxjk.duoduo.ui.minepage.DetailInfoActivity;
@@ -14,9 +17,6 @@ import com.zxjk.duoduo.ui.minepage.DetailInfoActivity;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.ViewHolder> {
 
@@ -76,6 +76,12 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.Vi
             } else if (bean.getSource() == 8 || bean.getSource() == 9 || bean.getSource() == -9) {
                 ivItemDetaillist.setImageResource(R.drawable.ic_detail_item_type3);
                 tvItemDetaillistName.setText(R.string.huazhuan);
+            } else if (bean.getSource() == 4) {
+                ivItemDetaillist.setImageResource(R.drawable.ic_detail_item_type4);
+                tvItemDetaillistName.setText(R.string.chushou);
+            } else if (bean.getSource() == 5) {
+                ivItemDetaillist.setImageResource(R.drawable.ic_detail_item_type6);
+                tvItemDetaillistName.setText(R.string.dingdanchexiao);
             } else {
                 ivItemDetaillist.setImageResource(R.drawable.ic_detail_item_type5);
                 tvItemDetaillistName.setText(R.string.others);

@@ -47,6 +47,5 @@ public class ExchangeOrderCancelActivity extends AppCompatActivity {
         } else {
             tvConfirmSalePayType.setText(R.string.bankcard);
         }
-
     }
 }

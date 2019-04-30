@@ -66,9 +66,14 @@ public class ExchangeListAdapter extends BaseQuickAdapter<GetOverOrderResponse, 
             }
         }
 
-        if (item.getStatus().equals("3")) {
+        if (item.getStatus().equals("3") && !item.getBuyNick().equals("")) {
             //交易中
-            long l = 15 * 1000 * 60 - System.currentTimeMillis() + Long.parseLong(item.getCreateTime());
+            long l;
+            if (item.getIsBuyPay().equals("0")) {
+                l = 15 * 1000 * 60 - System.currentTimeMillis() + Long.parseLong(item.getPayTime());
+            } else {
+                l = 15 * 1000 * 60 - System.currentTimeMillis() + Long.parseLong(item.getCreateTime());
+            }
             if (l > 0) {
                 String timeLeft = simpleDateFormat.format(l);
                 exchange_list_time.setText(timeLeft);

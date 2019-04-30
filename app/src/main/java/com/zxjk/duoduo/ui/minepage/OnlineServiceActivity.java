@@ -3,19 +3,16 @@ package com.zxjk.duoduo.ui.minepage;
 import android.annotation.SuppressLint;
 import android.net.http.SslError;
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
+import android.widget.TextView;
 import androidx.annotation.Nullable;
-
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * @author Administrator
@@ -24,21 +21,24 @@ import butterknife.OnClick;
 public class OnlineServiceActivity extends BaseActivity {
     WebView webView;
     String url;
+    TextView tvTitle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_online_service);
-        ButterKnife.bind(this);
         webView = findViewById(R.id.web_view);
+        tvTitle = findViewById(R.id.tvTitle);
         url = getIntent().getStringExtra("url");
+        if (url != null) {
+            tvTitle.setText(R.string.user_agreement);
+        }
         initSetting();
     }
 
     private void initSetting() {
         webView.loadUrl(url == null ? Constant.currentUser.getOnlineService() : url);
         WebSettings settings = webView.getSettings();
-        // 如果访问的页面中要与Javascript交互，则webview必须设置支持Javascript
         settings.setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -50,15 +50,12 @@ public class OnlineServiceActivity extends BaseActivity {
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-                //等待证书响应
                 handler.proceed();
             }
         });
     }
 
-    @OnClick(R.id.iv_back)
-    public void onViewClicked() {
+    public void back(View view) {
         finish();
-
     }
 }

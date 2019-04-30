@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/personal_information_1"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -79,15 +79,14 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-
             <View
                 android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/personal_information_1" />
+                android:layout_height="10dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
                 android:paddingTop="16dp"
@@ -128,6 +127,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
                 android:paddingTop="16dp"
@@ -162,6 +162,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
                 android:paddingLeft="10dp"
@@ -262,12 +263,12 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/personal_information_1" />
+                android:layout_height="10dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
                 android:paddingTop="16dp"
@@ -293,10 +294,21 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tvTipsExchange"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-8dp"
+                android:background="@color/white"
+                android:paddingStart="10dp"
+                android:paddingBottom="8dp"
+                android:text="@string/exchangetips"
+                android:textColor="@color/textcolor3"
+                android:visibility="gone" />
+
+            <TextView
                 android:id="@+id/tvExchangePayType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/personal_information_1"
                 android:paddingStart="10dp"
                 android:paddingTop="12dp"
                 android:paddingBottom="4dp"
@@ -308,6 +320,7 @@
                 android:id="@+id/rlExchangeType1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:paddingLeft="10dp"
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
@@ -364,6 +377,7 @@
                 android:id="@+id/rlExchangeType2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:paddingLeft="10dp"
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
@@ -420,6 +434,7 @@
                 android:id="@+id/rlExchangeType3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:paddingLeft="10dp"
                 android:paddingTop="16dp"
                 android:paddingRight="10dp"
@@ -467,9 +482,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@color/personal_information_1">
+                android:layout_height="match_parent">
 
                 <Button
                     android:id="@+id/btnExchangeConfirm"
