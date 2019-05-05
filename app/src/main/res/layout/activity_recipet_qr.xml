@@ -1,45 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#eeeeee"
-    android:orientation="vertical"
-    tools:context=".ui.walletpage.RecipetQRActivity">
+    android:background="#F8F8F8"
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/themecolor">
+    <include layout="@layout/layout_title_back" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:onClick="back"
-            android:paddingLeft="12dp"
-            android:paddingTop="8dp"
-            android:paddingRight="12dp"
-            android:paddingBottom="8dp"
-            android:src="@drawable/ico_back" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/receiptCode"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/ic_bac_recipet_money"
         android:gravity="center_horizontal"
         android:orientation="vertical">
@@ -47,8 +22,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="30dp"
             android:text="@string/recipettips"
             android:textColor="@color/textcolor2" />
 
@@ -56,7 +30,8 @@
             android:id="@+id/tvMoney"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:textColor="@color/themecolor"
             android:textSize="18sp" />
 
@@ -87,9 +62,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="8dp">
+            android:layout_margin="20dp">
 
             <TextView
                 android:id="@+id/tv_setMoney"
@@ -98,8 +71,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:onClick="setMoney"
-                android:paddingTop="12dp"
-                android:paddingBottom="12dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
                 android:text="@string/setmoney"
                 android:textColor="@color/themecolor"
                 android:textSize="15.5sp" />
@@ -107,8 +80,8 @@
             <View
                 android:layout_width="0.5dp"
                 android:layout_height="match_parent"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
                 android:background="@color/divider" />
 
             <TextView
@@ -117,8 +90,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:onClick="jump2Detail"
-                android:paddingTop="12dp"
-                android:paddingBottom="12dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
                 android:text="@string/recipetorders"
                 android:textColor="@color/themecolor"
                 android:textSize="15.5sp" />
@@ -130,8 +103,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:onClick="enterMyBalance"

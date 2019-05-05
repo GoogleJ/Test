@@ -62,7 +62,7 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
                     .setView(R.layout.pop_msg_top)
                     .setWidthAndHeight(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                     .setAnimationStyle(R.style.AnimDown)
-                    .setBackGroundLevel(0.5f)
+                    .setBackGroundLevel(1.0f)
                     .setViewOnclickListener(MsgFragment.this::getChildView)
                     .setOutsideTouchable(true)
                     .create();

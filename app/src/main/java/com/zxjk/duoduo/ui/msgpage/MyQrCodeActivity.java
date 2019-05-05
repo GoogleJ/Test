@@ -10,16 +10,16 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.gson.Gson;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.minepage.scanuri.BaseUri;
-import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.GlideUtil;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bingoogolapple.qrcode.zxing.QRCodeEncoder;
@@ -31,8 +31,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MyQrCodeActivity extends BaseActivity {
 
-    @BindView(R.id.m_qr_code_title_bar_me)
-    TitleBar titleBar;
+
     @BindView(R.id.m_my_qr_code_qr_code_icon)
     ImageView qrCode;
 
@@ -40,6 +39,8 @@ public class MyQrCodeActivity extends BaseActivity {
     private ImageView ivIcon;
     private TextView m_my_qr_code_user_name_text;
     private TextView m_my_qr_code_signature_label;
+    private TextView tv_title;
+
 
     private int imgSize;
     private BaseUri uri = new BaseUri("action2");
@@ -56,6 +57,9 @@ public class MyQrCodeActivity extends BaseActivity {
         setContentView(R.layout.activity_my_qr_code);
         ButterKnife.bind(this);
 
+
+        tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.qr_code));
         uri.data = Constant.userId;
         uri2Code = new Gson().toJson(uri);
 
@@ -66,7 +70,7 @@ public class MyQrCodeActivity extends BaseActivity {
 
         m_my_qr_code_user_name_text.setText(Constant.currentUser.getNick());
         m_my_qr_code_signature_label.setText(Constant.currentUser.getSignature());
-        titleBar.getLeftImageView().setOnClickListener(v -> finish());
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
 
         GlideUtil.loadCornerImg(m_my_qr_code_header_icon, Constant.currentUser.getHeadPortrait(), 2);
         GlideUtil.loadCornerImg(ivIcon, Constant.currentUser.getHeadPortrait(), 2);

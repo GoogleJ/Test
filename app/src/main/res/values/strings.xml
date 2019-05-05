@@ -15,7 +15,7 @@
 
     <string name="ok">确定</string>
     <string name="back">返回</string>
-    <string name="cancel">取 消</string>
+    <string name="cancel">取消</string>
     <string name="contact_search">搜索</string>
     <string name="contact_select">选择</string>
     <string name="search_hint">昵称/手机号</string>
@@ -813,5 +813,7 @@
     <string name="change_pay_password">修改支付密码</string>
     <string name="find_pay_password">找回支付密码</string>
     <string name="pay_setting">支付设置</string>
-
+    <string name="qr_code">我的二维码</string>
+    <string name="personal_details">个人信息</string>
+    <string name="lqxx">聊天信息</string>
 </resources>

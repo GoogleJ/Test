@@ -67,7 +67,7 @@
                                 android:id="@+id/tv_DuoDuoNumber"
                                 style="@style/textStyle1"
                                 android:layout_below="@id/tv_nickName"
-                                android:layout_marginTop="30dp" />
+                                android:layout_marginTop="35dp" />
 
                             <FrameLayout
                                 android:id="@+id/flMineHeadImgParent"

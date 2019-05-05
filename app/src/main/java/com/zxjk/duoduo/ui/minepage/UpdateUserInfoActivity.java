@@ -22,6 +22,7 @@ import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.utils.MMKVUtils;
 
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imlib.model.Group;
@@ -155,6 +156,7 @@ public class UpdateUserInfoActivity extends BaseActivity {
                             break;
                         default:
                     }
+                    MMKVUtils.getInstance().enCode("login", Constant.currentUser);
                     UpdateUserInfoActivity.this.finish();
                 }, this::handleApiError);
     }

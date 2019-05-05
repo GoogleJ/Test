@@ -32,6 +32,7 @@ public class WalletFragment extends BaseFragment {
     private TextView tvWalletPageTop4;
 
     private RecyclerView recyclerWalletPage;
+    private TextView tv_title;
 
     @Nullable
     @Override
@@ -42,6 +43,8 @@ public class WalletFragment extends BaseFragment {
         tvWalletPageTop2 = rootView.findViewById(R.id.tvWalletPageTop2);
         tvWalletPageTop3 = rootView.findViewById(R.id.tvWalletPageTop3);
         tvWalletPageTop4 = rootView.findViewById(R.id.tvWalletPageTop4);
+        tv_title = rootView.findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.duoduo_wallet));
         recyclerWalletPage = rootView.findViewById(R.id.recyclerWalletPage);
 
         recyclerWalletPage.setAdapter(new WalletPageAdapter(new ArrayList<>(5)));

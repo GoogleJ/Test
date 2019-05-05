@@ -18,7 +18,8 @@ public class Constant {
     public static final String OSS_URL = "https://zhongxingjike.oss-cn-hongkong.aliyuncs.com/upload/";
 //        public static final String BASE_URL = "https://192.168.0.110:8087/";
 //        public static final String BASE_URL = "https://192.168.0.109:8087/";
-    public static final String BASE_URL = "https://duoduoweb.zzgb.net.cn";
+//    public static final String BASE_URL = "https://duoduoweb.zzgb.net.cn";
+    public static final String BASE_URL = "https://192.168.0.110:8085/";
 
     public static boolean isVerifyVerision = false;
 

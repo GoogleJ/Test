@@ -8,11 +8,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.shehuan.nicedialog.BaseNiceDialog;
+import com.shehuan.nicedialog.NiceDialog;
+import com.shehuan.nicedialog.ViewConvertListener;
+import com.shehuan.nicedialog.ViewHolder;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -23,7 +28,6 @@ import com.zxjk.duoduo.ui.HomeActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.widget.CommonPopupWindow;
 import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendInformationDialog;
-import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 
@@ -39,11 +43,6 @@ import io.rong.message.CommandMessage;
 
 @SuppressLint("CheckResult")
 public class FriendDetailsActivity extends BaseActivity implements View.OnClickListener, CommonPopupWindow.ViewInterface {
-    /**
-     * 标题布局
-     */
-    @BindView(R.id.m_people_information_title_bar)
-    TitleBar titleBar;
     /**
      * 发送消息按钮
      */
@@ -115,13 +114,29 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
     FriendInfoResponse contactResponse;
     int intentType = 0;
 
+
+    private RelativeLayout rl_end;
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_people_information);
         ButterKnife.bind(this);
-        initUI();
 
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.personal_details));
+
+        findViewById(R.id.rl_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        rl_end = findViewById(R.id.rl_end);
+        rl_end.setVisibility(View.VISIBLE);
+        initUI();
         initFriendIntent();
 
     }
@@ -153,7 +168,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
     private void handData() {
         if (intentType == 0) {
             if (friendInfoResponse.getId().equals(Constant.userId)) {
-                titleBar.setRightImageVisibility(View.GONE);
+                rl_end.setVisibility(View.GONE);
             }
             GlideUtil.loadCornerImg(heardIcon, friendInfoResponse.getHeadPortrait(), 2);
             userNameText.setText(friendInfoResponse.getNick());
@@ -171,7 +186,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
             }
         } else if (intentType == 1) {
             if (friendInfo.getId().equals(Constant.userId)) {
-                titleBar.setRightImageVisibility(View.GONE);
+                rl_end.setVisibility(View.GONE);
             }
             GlideUtil.loadCornerImg(heardIcon, friendInfo.getHeadPortrait(), 2);
             userNameText.setText(friendInfo.getNick());
@@ -189,7 +204,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
             }
         } else {
             if (contactResponse.getId().equals(Constant.userId)) {
-                titleBar.setRightImageVisibility(View.GONE);
+                rl_end.setVisibility(View.GONE);
             }
             GlideUtil.loadCornerImg(heardIcon, contactResponse.getHeadPortrait(), 2);
             userNameText.setText(contactResponse.getNick());
@@ -209,9 +224,9 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
     }
 
     private void initUI() {
-        titleBar.getLeftImageView().setOnClickListener(v -> finish());
 
-        titleBar.getRightImageView().setOnClickListener(v -> {
+
+        rl_end.setOnClickListener(v -> {
             if (popupWindow != null && popupWindow.isShowing()) {
                 return;
             }
@@ -219,11 +234,11 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                     .setView(R.layout.popup_window_people_information)
                     .setWidthAndHeight(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                     .setAnimationStyle(R.style.AnimDown)
-                    .setBackGroundLevel(0.5f)
+                    .setBackGroundLevel(1.0f)
                     .setViewOnclickListener(FriendDetailsActivity.this::getChildView)
                     .setOutsideTouchable(true)
                     .create();
-            popupWindow.showAsDropDown(titleBar.getRightImageView());
+            popupWindow.showAsDropDown(rl_end);
         });
     }
 
@@ -283,26 +298,35 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                 }
                 break;
             case R.id.delete_friend:
-                dialog = new DeleteFriendInformationDialog(this);
-                dialog.setOnClickListener(() -> {
-                    if (intentType == 0) {
-                        FriendDetailsActivity.this.deleteFriend(friendInfoResponse.getId());
-                    } else if (intentType == 1) {
-                        FriendDetailsActivity.this.deleteFriend(friendInfo.getId());
-                    } else {
-                        FriendDetailsActivity.this.deleteFriend(contactResponse.getId());
+                popupWindow.dismiss();
+                NiceDialog.init().setLayoutId(R.layout.layout_general_dialog).setConvertListener(new ViewConvertListener() {
+                    @Override
+                    protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                        holder.setText(R.id.tv_title, "删除联系人");
+                        TextView textView = holder.getView(R.id.tv_content);
+                        if (intentType == 0) {
+                            textView.setText(String.format(getResources().getString(R.string.m_delete_friend_label), friendInfoResponse.getNick()));
+                        } else if (intentType == 1) {
+                            textView.setText(String.format(getResources().getString(R.string.m_delete_friend_label), friendInfo.getNick()));
+                        } else {
+                            textView.setText(String.format(getResources().getString(R.string.m_delete_friend_label), contactResponse.getNick()));
+                        }
+                        holder.setText(R.id.tv_cancel, "取消");
+                        holder.setText(R.id.tv_notarize, "删除");
+                        holder.setOnClickListener(R.id.tv_cancel, v1 -> dialog.dismiss());
+                        holder.setOnClickListener(R.id.tv_notarize, v12 -> {
+                            dialog.dismiss();
+                            if (intentType == 0) {
+                                FriendDetailsActivity.this.deleteFriend(friendInfoResponse.getId());
+                            } else if (intentType == 1) {
+                                FriendDetailsActivity.this.deleteFriend(friendInfo.getId());
+                            } else {
+                                FriendDetailsActivity.this.deleteFriend(contactResponse.getId());
+                            }
+                            FriendDetailsActivity.this.finish();
+                        });
                     }
-                    dialog.dismiss();
-                    FriendDetailsActivity.this.finish();
-                });
-
-                if (intentType == 0) {
-                    dialog.show(friendInfoResponse.getNick());
-                } else if (intentType == 1) {
-                    dialog.show(friendInfo.getNick());
-                } else {
-                    dialog.show(contactResponse.getNick());
-                }
+                }).setOutCancel(false).show(getSupportFragmentManager());
                 break;
 
             default:

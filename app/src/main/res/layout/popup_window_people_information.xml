@@ -6,12 +6,12 @@
     android:background="@drawable/icon_pop_friend_back"
     android:orientation="vertical">
 
+
     <LinearLayout
         android:id="@+id/update_rename"
         style="@style/msg_top_pop_style"
         android:paddingStart="20dp"
-        android:paddingTop="20dp"
-        android:visibility="gone">
+        android:paddingTop="20dp">
 
         <ImageView
             style="@style/msg_top_pop_img_style"
@@ -21,9 +21,13 @@
             style="@style/msg_top_pop_text_style"
             android:text="@string/update_rename" />
     </LinearLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@android:color/white" />
     <LinearLayout
-        android:paddingTop="20dp"
         android:id="@+id/recommend_to_friend"
         style="@style/msg_top_pop_style"
         android:paddingStart="20dp">
@@ -36,7 +40,12 @@
             style="@style/msg_top_pop_text_style"
             android:text="@string/recommend_to_friend" />
     </LinearLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@android:color/white" />
     <LinearLayout
         android:id="@+id/delete_friend"
         style="@style/msg_top_pop_style"

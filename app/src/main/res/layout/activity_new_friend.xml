@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/m_contact_edit_back"
+    android:background="#F8F8F8"
     android:orientation="vertical">
 
     <com.zxjk.duoduo.ui.widget.TitleBar
@@ -25,7 +25,7 @@
         <TextView
             android:id="@+id/m_contact_search_edit_1"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:layout_margin="12dp"
             android:background="@color/list_item_bg_press"
             android:drawableStart="@drawable/icon_search_view"

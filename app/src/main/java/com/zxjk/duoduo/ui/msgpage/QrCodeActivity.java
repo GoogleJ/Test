@@ -4,6 +4,9 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -16,12 +19,10 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.minepage.scanuri.Action1;
 import com.zxjk.duoduo.ui.minepage.scanuri.BaseUri;
-import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 import org.json.JSONObject;
 
-import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bingoogolapple.qrcode.core.QRCodeView;
@@ -34,8 +35,9 @@ import cn.bingoogolapple.qrcode.zxing.ZXingView;
 public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate {
     @BindView(R.id.m_qr_code_zxing_view)
     ZXingView zxingview;
-    @BindView(R.id.m_qr_code_title_bar)
-    TitleBar titleBar;
+
+
+    private TextView tv_title;
     /**
      * 关于二维码扫描的实现
      */
@@ -48,16 +50,9 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
 
     protected void initUI() {
         zxingview.setDelegate(this);
-        titleBar.getRightTitle().setOnClickListener(v -> {
-//            Intent photoPickerIntent = new BGAPhotoPickerActivity.IntentBuilder(QrCodeActivity.this)
-//                    .cameraFileDir(null)
-//                    .maxChooseCount(10)
-//                    .selectedPhotos(null)
-//                    .pauseOnScroll(false)
-//                    .build();
-//            startActivityForResult(photoPickerIntent, REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY);
-        });
-        titleBar.getLeftImageView().setOnClickListener(v -> finish());
+        tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.m_add_friend_scan_it_label_1));
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
     }
 
     @Override
@@ -68,7 +63,6 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
 
         initUI();
     }
-
 
 
     @Override

@@ -25,6 +25,7 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.LoginActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.utils.MMKVUtils;
 
 import io.rong.imkit.RongIM;
 
@@ -39,6 +40,7 @@ public class SettingActivity extends BaseActivity {
     private TextView tv_perfection;
     private ImageView iv_authentication;
     private TextView tv_authentication;
+    private ImageView iv_enter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,7 @@ public class SettingActivity extends BaseActivity {
         TextView tv_title = findViewById(R.id.tv_title);
         tv_title.setText("设置");
         RelativeLayout rl_back = findViewById(R.id.rl_back);
+        iv_enter = findViewById(R.id.iv_enter);
         tv_authentication = findViewById(R.id.tv_authentication);
         iv_authentication = findViewById(R.id.iv_authentication);
         TextView tv_nickName = findViewById(R.id.tv_nickName);
@@ -139,6 +142,7 @@ public class SettingActivity extends BaseActivity {
                             .compose(RxSchedulers.normalTrans())
                             .subscribe(s -> {
                                 RongIM.getInstance().disconnect();
+                                MMKVUtils.getInstance().enCode("isLogin", false);
                                 Constant.clear();
                                 ToastUtils.showShort(R.string.login_out);
                                 Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
@@ -162,21 +166,26 @@ public class SettingActivity extends BaseActivity {
                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                     .subscribe(s -> {
                         Constant.currentUser.setIsAuthentication(s);
+                        MMKVUtils.getInstance().enCode("login", Constant.currentUser);
                         switch (s) {
                             case "0":
                                 tv_authentication.setText("已认证");
+                                iv_enter.setVisibility(View.GONE);
                                 iv_authentication.setVisibility(View.VISIBLE);
                                 break;
                             case "2":
                                 tv_authentication.setText("认证审核中");
+                                iv_enter.setVisibility(View.VISIBLE);
                                 iv_authentication.setVisibility(View.GONE);
                                 break;
                             case "1":
                                 tv_authentication.setText("认证未通过");
+                                iv_enter.setVisibility(View.VISIBLE);
                                 iv_authentication.setVisibility(View.GONE);
                                 break;
                             default:
                                 tv_authentication.setText("未认证");
+                                iv_enter.setVisibility(View.VISIBLE);
                                 iv_authentication.setVisibility(View.GONE);
                                 break;
                         }

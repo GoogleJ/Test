@@ -29,6 +29,7 @@ import com.zxjk.duoduo.ui.widget.TakePopWindow;
 import com.zxjk.duoduo.ui.widget.dialog.ChooseSexDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
+import com.zxjk.duoduo.utils.MMKVUtils;
 import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
 
@@ -86,6 +87,7 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                     .subscribe(s -> {
                         Constant.currentUser.setSex(sex);
+                        MMKVUtils.getInstance().enCode("login", Constant.currentUser);
                         tvUserInfoSex.setText(CommonUtils.getSex(Constant.currentUser.getSex()));
                     }, this::handleApiError);
         });
@@ -121,6 +123,7 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                     .subscribe(s -> {
                         Constant.currentUser.setIsAuthentication(s);
+                        MMKVUtils.getInstance().enCode("login", Constant.currentUser);
                         if (s.equals("0")) {
                             tvUserInfoRealName.setText("已认证");
                         } else if (s.equals("2")) {
@@ -242,6 +245,7 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
                             .compose(RxSchedulers.normalTrans())
                             .subscribe(response -> {
                                 Constant.currentUser.setHeadPortrait(url);
+                                MMKVUtils.getInstance().enCode("login", Constant.currentUser);
                                 GlideUtil.loadCornerImg(ivUserInfoHead, url, 3);
                                 ToastUtils.showShort(R.string.update_head_portrail);
                             }, UserInfoActivity.this::handleApiError);

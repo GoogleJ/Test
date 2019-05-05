@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Application;
 import com.zxjk.duoduo.Constant;
@@ -26,6 +27,7 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.dialog.AccountFreezeDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.utils.MMKVUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -148,6 +150,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     Constant.userId = loginResponse.getId();
                     Constant.currentUser = loginResponse;
                     Constant.authentication = loginResponse.getIsAuthentication();
+
+                    MMKVUtils.getInstance().enCode("isLogin", true);
+                    MMKVUtils.getInstance().enCode("date1", TimeUtils.getNowMills());
+                    MMKVUtils.getInstance().enCode("login", loginResponse);
+                    MMKVUtils.getInstance().enCode("token", loginResponse.getToken());
+                    MMKVUtils.getInstance().enCode("userId", loginResponse.getId());
+
+
                     if (loginResponse.getIsDelete().equals(Constant.FLAG_IS_DELETE)) {
                         dialog = new AccountFreezeDialog(LoginActivity.this);
                         dialog.show();

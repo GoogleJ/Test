@@ -15,6 +15,7 @@ import com.zxjk.duoduo.network.response.BaseResponse;
 import com.zxjk.duoduo.network.response.CreateWalletResponse;
 import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
+import com.zxjk.duoduo.utils.MMKVUtils;
 
 import java.util.concurrent.TimeUnit;
 
@@ -52,6 +53,8 @@ public class RegisterBlockWalletService extends Service {
                 })
                 .subscribe(s -> {
                     Constant.currentUser.setWalletAddress(walletAddress);
+                    MMKVUtils.getInstance().enCode("login", Constant.currentUser);
+
                     stopSelf();
                 }, t -> Observable.timer(20, TimeUnit.SECONDS)
                         .subscribe(aLong -> startService(intent), throwable -> {

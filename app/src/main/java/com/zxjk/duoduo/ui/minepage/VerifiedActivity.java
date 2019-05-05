@@ -27,11 +27,11 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.TakePopWindow;
-import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.ui.widget.dialog.DocumentSelectionDialog;
 import com.zxjk.duoduo.utils.AesUtil;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
+import com.zxjk.duoduo.utils.MMKVUtils;
 import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
 
@@ -49,7 +49,7 @@ public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnIt
     /**
      * 提交
      */
-    TextView verifiedCommit;
+
     /**
      * 真实姓名
      */
@@ -81,7 +81,7 @@ public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnIt
     /**
      * 手持证件照编辑
      */
-    TitleBar titleBar;
+
 
     String url1;
     String url2;
@@ -96,10 +96,22 @@ public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnIt
     private int currentPictureFlag;
     private String otherIdCardType = "";
 
+    private TextView tv_title;
+    private TextView tv_end;
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verified);
+
+        tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.verified));
+        tv_end = findViewById(R.id.tv_end);
+        tv_end.setVisibility(View.VISIBLE);
+        tv_end.setText(getString(R.string.commit));
+
+
         initDialog();
         initView();
     }
@@ -138,15 +150,14 @@ public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnIt
 
     @SuppressLint("WrongViewCast")
     private void initView() {
-        titleBar = findViewById(R.id.title_bar);
-        titleBar.getLeftImageView().setOnClickListener(v -> {
+        findViewById(R.id.rl_back).setOnClickListener(v -> {
             CommonUtils.hideInputMethod(this);
             finish();
         });
         selectPicPopWindow = new TakePopWindow(this);
         selectPicPopWindow.setOnItemClickListener(this);
         cardType = findViewById(R.id.card_type);
-        verifiedCommit = findViewById(R.id.verified_commit);
+
         realName = findViewById(R.id.real_name);
         idCard = findViewById(R.id.id_card);
         frontPhotoOfTheDocument = findViewById(R.id.front_photo_of_the_document);
@@ -155,7 +166,7 @@ public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnIt
         reversePhotoOfTheDocumentEdit = findViewById(R.id.reverse_photo_of_the_document_edit);
         handHeldPassportPhoto = findViewById(R.id.hand_held_passport_photo);
         handHeldPassportPhotoEdit = findViewById(R.id.hand_held_passport_photo_edit);
-        verifiedCommit.setOnClickListener(v -> commit());
+        tv_end.setOnClickListener(v -> commit());
 
         getPermisson(frontPhotoOfTheDocument, result -> {
             if (result) {
@@ -289,6 +300,8 @@ public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnIt
                 .subscribe(s -> {
                     Constant.currentUser.setIsAuthentication("2");
                     Constant.currentUser.setRealname(realNames);
+                    MMKVUtils.getInstance().enCode("login", Constant.currentUser);
+
                     SPUtils.getInstance().put("realNames", realNames);
                     ToastUtils.showShort(R.string.verified_success);
                     finish();

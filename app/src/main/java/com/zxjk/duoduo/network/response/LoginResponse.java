@@ -1,8 +1,11 @@
 package com.zxjk.duoduo.network.response;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
-public class LoginResponse implements Serializable {
+public class LoginResponse implements Parcelable {
     /**
      * id : 4
      * duoduoId : 10000004
@@ -283,4 +286,82 @@ public class LoginResponse implements Serializable {
     public void setOnlineService(String onlineService) {
         this.onlineService = onlineService;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.duoduoId);
+        dest.writeString(this.nick);
+        dest.writeString(this.realname);
+        dest.writeString(this.mobile);
+        dest.writeString(this.password);
+        dest.writeString(this.address);
+        dest.writeString(this.email);
+        dest.writeString(this.headPortrait);
+        dest.writeString(this.sex);
+        dest.writeString(this.signature);
+        dest.writeString(this.walletAddress);
+        dest.writeString(this.idCard);
+        dest.writeString(this.isShowRealname);
+        dest.writeString(this.updateTime);
+        dest.writeString(this.createTime);
+        dest.writeString(this.isDelete);
+        dest.writeString(this.token);
+        dest.writeString(this.remark);
+        dest.writeString(this.rongToken);
+        dest.writeString(this.payPwd);
+        dest.writeString(this.isFirstLogin);
+        dest.writeString(this.renegeNumber);
+        dest.writeString(this.isConfine);
+        dest.writeString(this.status);
+        dest.writeString(this.isAuthentication);
+        dest.writeString(this.onlineService);
+    }
+
+    protected LoginResponse(Parcel in) {
+        this.id = in.readString();
+        this.duoduoId = in.readString();
+        this.nick = in.readString();
+        this.realname = in.readString();
+        this.mobile = in.readString();
+        this.password = in.readString();
+        this.address = in.readString();
+        this.email = in.readString();
+        this.headPortrait = in.readString();
+        this.sex = in.readString();
+        this.signature = in.readString();
+        this.walletAddress = in.readString();
+        this.idCard = in.readString();
+        this.isShowRealname = in.readString();
+        this.updateTime = in.readString();
+        this.createTime = in.readString();
+        this.isDelete = in.readString();
+        this.token = in.readString();
+        this.remark = in.readString();
+        this.rongToken = in.readString();
+        this.payPwd = in.readString();
+        this.isFirstLogin = in.readString();
+        this.renegeNumber = in.readString();
+        this.isConfine = in.readString();
+        this.status = in.readString();
+        this.isAuthentication = in.readString();
+        this.onlineService = in.readString();
+    }
+
+    public static final Parcelable.Creator<LoginResponse> CREATOR = new Parcelable.Creator<LoginResponse>() {
+        @Override
+        public LoginResponse createFromParcel(Parcel source) {
+            return new LoginResponse(source);
+        }
+
+        @Override
+        public LoginResponse[] newArray(int size) {
+            return new LoginResponse[size];
+        }
+    };
 }

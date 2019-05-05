@@ -17,6 +17,7 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.utils.MMKVUtils;
 
 @SuppressLint("CheckResult")
 public class ChangePhoneActivity extends BaseActivity implements View.OnClickListener {
@@ -91,6 +92,7 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
                     Constant.currentUser.setMobile(phoneReciveVerify);
+                    MMKVUtils.getInstance().enCode("login", Constant.currentUser);
                     ToastUtils.showShort(getString(R.string.successfully_modified));
                     finish();
                 }, this::handleApiError);

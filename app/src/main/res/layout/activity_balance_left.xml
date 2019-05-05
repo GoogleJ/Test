@@ -7,113 +7,127 @@
 
     <include layout="@layout/layout_title_back" />
 
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:layout_gravity="center_vertical"
-        android:layout_margin="15dp"
-        android:background="@drawable/ic_balance_bac">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/textStyle"
-                android:text="@string/my_balance" />
+            android:layout_height="160dp"
+            android:layout_margin="15dp"
+            android:background="@drawable/ic_balance_bac">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_balance"
-                    style="@style/textStyle4"
-                    android:text="@string/money"
-                    android:textSize="30sp" />
-
-                <TextView
-                    android:id="@+id/tv_currency"
                     style="@style/textStyle"
-                    android:layout_marginStart="5dp"
-                    android:text="@string/hk"
-                    android:textColor="@android:color/black" />
+                    android:text="@string/my_balance" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_balance"
+                        style="@style/textStyle4"
+                        android:text="@string/money"
+                        android:textSize="30sp" />
+
+                    <TextView
+                        android:id="@+id/tv_currency"
+                        style="@style/textStyle"
+                        android:layout_marginStart="5dp"
+                        android:text="@string/hk"
+                        android:textColor="@android:color/black" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </RelativeLayout>
+        </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/rl_billingDetails"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@android:color/white">
-
-        <TextView
-            style="@style/textStyle"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="15dp"
-            android:text="@string/billing_details" />
-
-        <ImageView style="@style/ImageEnter" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rl_PaymentSettings"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="0.1dp"
-        android:background="@android:color/white">
-
-        <TextView
-            style="@style/textStyle"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="15dp"
-            android:text="@string/payment_settings" />
-
-        <ImageView style="@style/ImageEnter" />
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/rl_realNameAuthentication"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginTop="10dp"
-        android:background="@android:color/white">
-
-        <TextView
-            style="@style/textStyle"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="15dp"
-            android:text="@string/real_name_authentication" />
-
-        <TextView
-            android:id="@+id/tv_authentication"
-            style="@style/textStyle1"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="10dp"
-            android:layout_toStartOf="@+id/iv_authentication"
-            android:text="@string/not_verify_real_name" />
-
-        <ImageView
-            android:id="@+id/iv_authentication"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="10dp"
-            android:layout_toStartOf="@+id/iv_enter"
-            android:src="@drawable/ic_mine_authenticate"
-            android:visibility="gone" />
+            android:layout_marginTop="145dp"
+            android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/iv_enter"
-            style="@style/ImageEnter" />
-    </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/rl_billingDetails"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+
+                android:background="@android:color/white">
+
+                <TextView
+                    style="@style/textStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/billing_details" />
+
+                <ImageView style="@style/ImageEnter" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_PaymentSettings"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="1dp"
+                android:background="@android:color/white">
+
+                <TextView
+                    style="@style/textStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/payment_settings" />
+
+                <ImageView style="@style/ImageEnter" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/rl_realNameAuthentication"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white">
+
+                <TextView
+                    style="@style/textStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/real_name_authentication" />
+
+                <TextView
+                    android:id="@+id/tv_authentication"
+                    style="@style/textStyle1"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_toStartOf="@+id/iv_authentication"
+                    android:text="@string/not_verify_real_name" />
+
+                <ImageView
+                    android:id="@+id/iv_authentication"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_toStartOf="@+id/iv_enter"
+                    android:src="@drawable/ic_mine_authenticate"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/iv_enter"
+                    style="@style/ImageEnter" />
+
+
+            </RelativeLayout>
+        </LinearLayout>
+    </FrameLayout>
 </LinearLayout>

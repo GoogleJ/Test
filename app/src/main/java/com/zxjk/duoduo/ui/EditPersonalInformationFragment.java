@@ -27,6 +27,7 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.TakePopWindow;
 import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.GlideUtil;
+import com.zxjk.duoduo.utils.MMKVUtils;
 import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
 
@@ -71,7 +72,7 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
         titleBar = findViewById(R.id.m_edit_information_title_bar);
         commitBtn = findViewById(R.id.m_edit_information_btn);
         imageSearchBtn = findViewById(R.id.m_edit_information_header_icon);
-        editNickName  = findViewById(R.id.m_edit_information_name_edit);
+        editNickName = findViewById(R.id.m_edit_information_name_edit);
         editArea = findViewById(R.id.m_edit_information_area_edit);
         selectPicPopWindow = new TakePopWindow(this);
         selectPicPopWindow.setOnItemClickListener(this);
@@ -81,7 +82,7 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
             selectPicPopWindow.showAtLocation(EditPersonalInformationFragment.this.findViewById(android.R.id.content),
                     Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-        }, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE);
+        }, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
 
         commitBtn.setOnClickListener(this);
     }
@@ -186,6 +187,9 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                     Constant.currentUser.setHeadPortrait(update.getHeadPortrait());
                     Constant.currentUser.setNick(update.getNick());
                     Constant.currentUser.setAddress(update.getAddress());
+                    MMKVUtils.getInstance().enCode("login", Constant.currentUser);
+
+
                     Intent intent = new Intent(EditPersonalInformationFragment.this, SetUpPaymentPwdActivity.class);
                     intent.putExtra("firstLogin", true);
                     startActivity(intent);
