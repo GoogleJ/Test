@@ -121,7 +121,11 @@ public class GameRecordAdapter extends RecyclerView.Adapter<GameRecordAdapter.Vi
             tvTime.setText(simpleDateFormat.format(Long.valueOf(bean.getTime())));
             if (bean.getType().equals("0")) {
                 //转进
-                tvHk.setText("+" + bean.getIntegral() + "HK");
+                if (bean.getIntegral().contains("-")) {
+                    tvHk.setText(bean.getIntegral() + "HK");
+                } else {
+                    tvHk.setText("+" + bean.getIntegral() + "HK");
+                }
                 tvHk.setTextColor(ContextCompat.getColor(tvHk.getContext(), R.color.red_eth_in));
             } else {
                 //转出

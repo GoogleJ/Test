@@ -156,7 +156,11 @@ public class GameRecordDetailAdapter extends RecyclerView.Adapter<GameRecordDeta
                 holder.tv5.setText("-" + bean.getScorePoints());
             } else {
                 holder.tv5.setTextColor(colorRed);
-                holder.tv5.setText("+" + bean.getScorePoints());
+                if (bean.getScorePoints().contains("-")) {
+                    holder.tv5.setText(bean.getScorePoints());
+                } else {
+                    holder.tv5.setText("+" + bean.getScorePoints());
+                }
             }
             holder.tv6.setText(bean.getPumpingRate());
             holder.tv7.setText(bean.getLastMoney());

@@ -29,7 +29,7 @@ public class RxException {
     public static class ParamsException extends Exception {
         private String msg;
 
-        ParamsException(String msg) {
+        public ParamsException(String msg) {
             super(msg);
             this.msg = msg;
         }

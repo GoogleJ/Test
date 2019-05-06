@@ -52,11 +52,15 @@ public class WelcomeActivity extends BaseActivity {
     @SuppressLint("CheckResult")
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        if (!isTaskRoot()) {
-            finish();
-            return;
-        }
         super.onCreate(savedInstanceState);
+        if (!isTaskRoot()) {
+            Intent intent = getIntent();
+            String action = intent.getAction();
+            if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && action != null && action.equals(Intent.ACTION_MAIN)) {
+                finish();
+                return;
+            }
+        }
         requestWindowFeature(Window.FEATURE_NO_TITLE);  //无title
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);  //全屏

@@ -6,6 +6,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -13,17 +17,13 @@ import com.zxjk.duoduo.network.response.AllGroupMembersResponse;
 import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.ui.grouppage.adapter.AllGroupMemebersAdapter;
+import com.zxjk.duoduo.ui.grouppage.adapter.AllGroupMemebersAdapter1;
 import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * @author Administrator
@@ -34,7 +34,7 @@ public class AllGroupMembersActivity extends BaseActivity implements TextWatcher
     EditText searchEdit;
     RecyclerView mRecyclerView;
 
-    AllGroupMemebersAdapter mAdapter;
+    AllGroupMemebersAdapter1 mAdapter;
 
     List<AllGroupMembersResponse> list = new ArrayList<>();
     @Override
@@ -52,7 +52,7 @@ public class AllGroupMembersActivity extends BaseActivity implements TextWatcher
         titleBar.getLeftImageView().setOnClickListener(v -> finish());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 5);
         mRecyclerView.setLayoutManager(gridLayoutManager);
-        mAdapter = new AllGroupMemebersAdapter();
+        mAdapter = new AllGroupMemebersAdapter1();
         GroupResponse groupResponse= (GroupResponse) getIntent().getSerializableExtra("allGroupMembers");
         getGroupMemByGroupId(groupResponse.getGroupInfo().getId());
 

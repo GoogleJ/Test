@@ -33,7 +33,7 @@ public class BasicResponseBodyConverter<T> implements Converter<ResponseBody, T>
             if (code == Constant.CODE_UNLOGIN) {
                 throw new IOException(msg, new RxException.DuplicateLoginExcepiton(msg));
             }
-            if (code != Constant.CODE_SUCCESS && TextUtils.isEmpty(data)) {
+            if (code != Constant.CODE_SUCCESS && TextUtils.isEmpty(data) && code != 2) {
                 throw new IOException(msg);
             }
         } catch (JSONException e) {

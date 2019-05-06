@@ -74,7 +74,6 @@ public class BaseActivity extends RxAppCompatActivity {
             return;
         }
 
-
         ToastUtils.showShort(RxException.getMessage(throwable));
     }
 
@@ -94,5 +93,4 @@ public class BaseActivity extends RxAppCompatActivity {
                     }
                 });
     }
-
 }

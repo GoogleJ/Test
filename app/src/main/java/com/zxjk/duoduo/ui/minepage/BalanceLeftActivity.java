@@ -42,11 +42,11 @@ public class BalanceLeftActivity extends BaseActivity {
                 startActivity(new Intent(BalanceLeftActivity.this, PaySettingActivity.class)));
         //实名认证
         findViewById(R.id.rl_realNameAuthentication).setOnClickListener(v -> {
-            if (Constant.currentUser.getIsAuthentication().equals("1")) {
-                startActivity(new Intent(BalanceLeftActivity.this, VerifiedActivity.class));
-            }
             if (Constant.currentUser.getIsAuthentication().equals("2")) {
                 ToastUtils.showShort(R.string.verifying_pleasewait);
+            } else if (!Constant.currentUser.getIsAuthentication().equals("0") &&
+                    !Constant.currentUser.getIsAuthentication().equals("1")) {
+                startActivity(new Intent(this, VerifiedActivity.class));
             }
         });
 

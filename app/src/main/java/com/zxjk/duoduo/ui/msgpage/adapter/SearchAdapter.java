@@ -3,7 +3,6 @@ package com.zxjk.duoduo.ui.msgpage.adapter;
 import android.content.Context;
 import android.widget.ImageView;
 
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zxjk.duoduo.R;
@@ -28,8 +27,7 @@ public class SearchAdapter extends BaseQuickAdapter<FriendInfoResponse, BaseView
                 .setText(R.id.m_item_search_dudu_id, item.getDuoduoId())
                 .addOnClickListener(R.id.m_item_search_layout);
         ImageView heardImage = helper.getView(R.id.m_item_search_icon);
-        GlideUtil.loadImg(heardImage, item.getHeadPortrait());
-
+        GlideUtil.loadCornerImg(heardImage, item.getHeadPortrait(), 2);
 
     }
 }

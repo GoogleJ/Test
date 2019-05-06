@@ -5,10 +5,6 @@
     android:background="#F2F3F3"
     android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp" />
-
     <LinearLayout
         android:id="@+id/ll_myAgency"
         android:layout_width="match_parent"

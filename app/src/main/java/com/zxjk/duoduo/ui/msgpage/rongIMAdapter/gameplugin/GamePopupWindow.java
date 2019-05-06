@@ -211,7 +211,10 @@ public class GamePopupWindow extends BasePopupWindow {
 
     private Disposable subscribe;
 
-    public void show(GetGroupGameParameterResponse data) {
+    public Disposable show(GetGroupGameParameterResponse data) {
+        this.data = data;
+        bindData();
+        this.showPopupWindow();
         subscribe = Observable.interval(0, 1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
                 .take(20)
                 .subscribe(l -> {
@@ -222,9 +225,7 @@ public class GamePopupWindow extends BasePopupWindow {
                     }
                 }, t -> {
                 });
-        this.data = data;
-        bindData();
-        this.showPopupWindow();
+        return subscribe;
     }
 
     @Override

@@ -33,8 +33,10 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.ChatInformationActivity;
 import com.zxjk.duoduo.ui.grouppage.GroupChatInformationActivity;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.PhotoSelectorPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketPlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TakePhotoPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameDownScorePlugin;
@@ -79,6 +81,7 @@ import io.rong.message.VoiceMessage;
 
 @SuppressLint("CheckResult")
 public class ConversationActivity extends BaseActivity implements RongIMClient.OnReceiveMessageListener {
+    private Disposable gameWindowDisposable;
     private final LifecycleProvider<Lifecycle.Event> provider = AndroidLifecycle.createLifecycleProvider(this);
 
     private TextView tvTitle;
@@ -206,8 +209,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
     private String resolvePlugin() {
         //获取聊天类型（单聊、群聊）
         List<String> pathSegments = getIntent().getData().getPathSegments();
-        String conversationType = pathSegments.get(pathSegments.size() - 1);
-        return conversationType;
+        return pathSegments.get(pathSegments.size() - 1);
     }
 
     private void handleBean(String conversationType) {
@@ -253,6 +255,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                                 iterator.remove();
                                 extension.removePlugin(next);
                             }
+                            extension.addPlugin(new PhotoSelectorPlugin());
                             extension.addPlugin(new RedPacketPlugin());
                             extension.addPlugin(new GameUpScorePlugin());
                             extension.addPlugin(new GameRecordPlugin());
@@ -366,6 +369,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                                     if (s.getRedPackageState().equals("2")) {
                                         if (message.getConversationType().equals(Conversation.ConversationType.PRIVATE)) {
                                             Intent intent1 = new Intent(context, PeopleUnaccalimedActivity.class);
+                                            intent1.putExtra("isGame", redPacketMessage.getIsGame());
                                             intent1.putExtra("id", redPacketMessage.getRedId());
                                             startActivity(intent1);
                                         } else {
@@ -391,6 +395,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                                                     .subscribe(s2 -> {
                                                         Intent intent1 = new Intent(context, PeopleUnaccalimedActivity.class);
                                                         intent1.putExtra("id", redPacketMessage.getRedId());
+                                                        intent1.putExtra("isGame", redPacketMessage.getIsGame());
                                                         startActivity(intent1);
                                                     }, ConversationActivity.this::handleApiError));
                                             dialog.show(message, RongUserInfoManager.getInstance().getUserInfo(message.getSenderUserId()));
@@ -544,8 +549,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                             GamePopupWindow gamePopupWindow = new GamePopupWindow(ConversationActivity.this);
                             gamePopupWindow.setGroupId(groupResponse.getGroupInfo().getId());
 
-                            gamePopupWindow.setOnCommit((data, time
-                            ) -> {
+                            gamePopupWindow.setOnCommit((data, time) -> {
                                 gamePopupWindow.dismiss();
                                 NiceDialog.init().setLayoutId(R.layout.layout_dialog_fragment)
                                         .setConvertListener(new ViewConvertListener() {
@@ -598,7 +602,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                                         .show(getSupportFragmentManager());
                             });
 
-                            gamePopupWindow.show(getGroupGameParameterResponse);
+                            gameWindowDisposable = gamePopupWindow.show(getGroupGameParameterResponse);
                         }, ConversationActivity.this::handleApiError));
         }
         return false;
@@ -625,5 +629,13 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
     protected void onDestroy() {
         onSendMessageListener = null;
         super.onDestroy();
+    }
+
+    @Override
+    protected void onStop() {
+        if (gameWindowDisposable != null && !gameWindowDisposable.isDisposed()) {
+            gameWindowDisposable.dispose();
+        }
+        super.onStop();
     }
 }

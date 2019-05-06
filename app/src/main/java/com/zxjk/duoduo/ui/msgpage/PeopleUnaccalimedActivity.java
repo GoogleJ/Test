@@ -35,6 +35,7 @@ public class PeopleUnaccalimedActivity extends BaseActivity {
     private RecyclerView recycler;
     private boolean isShow;
     private TextView tv_redEnvelope;
+    private String isGame;
 
     @SuppressLint({"CheckResult", "SetTextI18n"})
     @Override
@@ -62,7 +63,7 @@ public class PeopleUnaccalimedActivity extends BaseActivity {
         } else {
             tv_redEnvelope.setVisibility(View.VISIBLE);
         }
-        String isGame = getIntent().getStringExtra("isGame");
+        isGame = getIntent().getStringExtra("isGame");
         if (TextUtils.isEmpty(isGame)) {
             isGame = "1";
         }
@@ -93,10 +94,13 @@ public class PeopleUnaccalimedActivity extends BaseActivity {
                                             tv_redEnvelope.setText(response.getCustomerInfo().get(i).getMoney() + " HK");
                                         }
                                     }
-
                                     int number = response.getRedPackageInfo().getNumber();
                                     tips.setText(number + "个红包，共" + response.getRedPackageInfo().getMoney() + "HK");
-                                    adapter.setData(response.getCustomerInfo());
+                                    if (isGame.equals("0")) {
+
+                                    } else {
+                                        adapter.setData(response.getCustomerInfo());
+                                    }
                                 }, this::handleApiError);
                     } else {
                         //个人红包

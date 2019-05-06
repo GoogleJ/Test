@@ -77,6 +77,7 @@ public class GroupChatInformationActivity extends BaseActivity {
                     } else {
                         tvGroupManagement.setVisibility(View.GONE);
                     }
+
                     initView();
                 }, this::handleApiError);
     }
@@ -95,15 +96,21 @@ public class GroupChatInformationActivity extends BaseActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 5);
         groupChatRecyclerView.setLayoutManager(gridLayoutManager);
         mAdapter = new AllGroupMemebersAdapter();
+        groupChatRecyclerView.setAdapter(mAdapter);
+        if (group.getCustomers().size() <= 15) {
+            see_more_group_members.setClickable(false);
+            see_more_group_members.setVisibility(View.INVISIBLE);
+            mAdapter.setNewData(group.getCustomers());
+        } else {
+            mAdapter.setNewData(group.getCustomers().subList(0, 15));
+        }
 
         initFooterView();
-
-        getGroupMemByGroupId(group.getGroupInfo().getId());
 
         groupChatName.setText(group.getGroupInfo().getGroupNikeName());
         announcement.setText(group.getGroupInfo().getGroupNotice());
         announcement.setVisibility(View.VISIBLE);
-        groupChatRecyclerView.setAdapter(mAdapter);
+
         if (Constant.userId.equals(group.getGroupInfo().getGroupOwnerId())) {
             dissolutionGroup.setText(getString(R.string.dissolution_group));
         } else {
@@ -188,26 +195,6 @@ public class GroupChatInformationActivity extends BaseActivity {
             });
         }
         confirmDialog.show();
-    }
-
-    /**
-     * 查询群成员
-     *
-     * @param groupId
-     */
-    public void getGroupMemByGroupId(String groupId) {
-        ServiceFactory.getInstance().getBaseService(Api.class)
-                .getGroupMemByGroupId(groupId)
-                .compose(bindToLifecycle())
-                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                .compose(RxSchedulers.normalTrans())
-                .subscribe(allGroupMembersResponses -> {
-                    mAdapter.setNewData(allGroupMembersResponses);
-                    if (allGroupMembersResponses.size() <= 9) {
-                        see_more_group_members.setClickable(false);
-                        see_more_group_members.setVisibility(View.INVISIBLE);
-                    }
-                }, this::handleApiError);
     }
 
     /**

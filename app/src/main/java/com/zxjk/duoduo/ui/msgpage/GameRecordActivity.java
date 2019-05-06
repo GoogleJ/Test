@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.msgpage;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,8 +13,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.network.Api;
+import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.utils.CommonUtils;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -28,9 +34,12 @@ public class GameRecordActivity extends BaseActivity {
 
     private MagicIndicator indicator;
     private ViewPager pager;
-    private int[] mTitleDataList = new int[]{R.string.jifen, R.string.dailifanyong};
+    private int[] mTitleDataList1 = new int[]{R.string.jifen, R.string.dailifanyong};
+    private int[] mTitleDataList2 = new int[]{R.string.jifen, R.string.fanyongfafang};
+    private boolean isOwner = false;
     private String groupId;
 
+    @SuppressLint("CheckResult")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,14 +47,26 @@ public class GameRecordActivity extends BaseActivity {
 
         groupId = getIntent().getStringExtra("groupId");
 
-        indicator = findViewById(R.id.indicator);
-        pager = findViewById(R.id.pager);
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .getGroupByGroupId(groupId)
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                .compose(RxSchedulers.normalTrans())
+                .subscribe(response -> {
+                    String groupOwnerId = response.getGroupInfo().getGroupOwnerId();
+                    if (groupOwnerId.equals(Constant.userId)) {
+                        isOwner = true;
+                    }
 
-        initIndicator();
+                    indicator = findViewById(R.id.indicator);
+                    pager = findViewById(R.id.pager);
 
-        initPager();
+                    initIndicator();
 
-        ViewPagerHelper.bind(indicator, pager);
+                    initPager();
+
+                    ViewPagerHelper.bind(indicator, pager);
+                }, this::handleApiError);
     }
 
     private void initPager() {
@@ -58,6 +79,11 @@ public class GameRecordActivity extends BaseActivity {
                     fragment1.groupId = groupId;
                     return fragment1;
                 } else {
+                    if (isOwner) {
+                        GameRecordOwnerFragment fragment3 = new GameRecordOwnerFragment();
+                        fragment3.groupId = groupId;
+                        return fragment3;
+                    }
                     GameRecordDaiLiFragment fragment2 = new GameRecordDaiLiFragment();
                     fragment2.groupId = groupId;
                     return fragment2;
@@ -82,7 +108,7 @@ public class GameRecordActivity extends BaseActivity {
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
-                return mTitleDataList == null ? 0 : mTitleDataList.length;
+                return 2;
             }
 
             @Override
@@ -90,7 +116,7 @@ public class GameRecordActivity extends BaseActivity {
                 ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
                 colorTransitionPagerTitleView.setNormalColor(Color.GRAY);
                 colorTransitionPagerTitleView.setSelectedColor(ContextCompat.getColor(context, R.color.themecolor));
-                colorTransitionPagerTitleView.setText(mTitleDataList[index]);
+                colorTransitionPagerTitleView.setText(isOwner ? mTitleDataList2[index] : mTitleDataList1[index]);
                 colorTransitionPagerTitleView.setOnClickListener(view -> pager.setCurrentItem(index));
                 return colorTransitionPagerTitleView;
             }

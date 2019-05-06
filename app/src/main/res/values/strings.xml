@@ -816,4 +816,7 @@
     <string name="qr_code">我的二维码</string>
     <string name="personal_details">个人信息</string>
     <string name="lqxx">聊天信息</string>
+    <string name="fanyongfafang">返佣发放记录</string>
+    <string name="game_tips">未下注，无法查看</string>
+
 </resources>
