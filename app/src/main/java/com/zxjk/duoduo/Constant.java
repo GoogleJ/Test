@@ -16,11 +16,10 @@ import io.rong.imlib.model.Message;
 public class Constant {
     //阿里OSS上传地址
     public static final String OSS_URL = "https://zhongxingjike.oss-cn-hongkong.aliyuncs.com/upload/";
-    //        public static final String BASE_URL = "https://192.168.0.110:8087/";
-//        public static final String BASE_URL = "https://192.168.0.109:8087/";
+//        public static final String BASE_URL = "https://192.168.0.110:8087/";
+//        public static final String BASE_URL = "https://192.168.0.115:8085/";
 //    public static final String BASE_URL = "https://duoduoweb.zzgb.net.cn";
     public static final String BASE_URL = "https://192.168.0.109:8085/";
-
 
     public static boolean isVerifyVerision = false;
 
@@ -62,5 +61,8 @@ public class Constant {
     public static Message tempMsg;
     public static String changeGroupName = null;
     public static String ownerIdForGameChat = "";
+
+    //是否可以查看红包记录页，默认为0，可查看。 每开启一个游戏
+    public static volatile int canCheckRedRecord = 0;
 
 }

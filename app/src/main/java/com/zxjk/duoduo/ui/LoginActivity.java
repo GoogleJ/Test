@@ -151,13 +151,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     Constant.currentUser = loginResponse;
                     Constant.authentication = loginResponse.getIsAuthentication();
 
-                    MMKVUtils.getInstance().enCode("isLogin", true);
-                    MMKVUtils.getInstance().enCode("date1", TimeUtils.getNowMills());
-                    MMKVUtils.getInstance().enCode("login", loginResponse);
-                    MMKVUtils.getInstance().enCode("token", loginResponse.getToken());
-                    MMKVUtils.getInstance().enCode("userId", loginResponse.getId());
-
-
                     if (loginResponse.getIsDelete().equals(Constant.FLAG_IS_DELETE)) {
                         dialog = new AccountFreezeDialog(LoginActivity.this);
                         dialog.show();
@@ -183,6 +176,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                 @Override
                 public void onSuccess(String userid) {
+                    MMKVUtils.getInstance().enCode("isLogin", true);
+                    MMKVUtils.getInstance().enCode("date1", TimeUtils.getNowMills());
+                    MMKVUtils.getInstance().enCode("login", Constant.currentUser);
+                    MMKVUtils.getInstance().enCode("token", Constant.currentUser.getToken());
+                    MMKVUtils.getInstance().enCode("userId", Constant.currentUser.getId());
 
                     CommonUtils.destoryDialog();
                     UserInfo userInfo = new UserInfo(userid, Constant.currentUser.getNick(), Uri.parse(Constant.currentUser.getHeadPortrait()));

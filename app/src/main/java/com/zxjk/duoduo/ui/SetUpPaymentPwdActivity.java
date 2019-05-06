@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
+import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Application;
 import com.zxjk.duoduo.Constant;
@@ -30,6 +31,7 @@ import com.zxjk.duoduo.ui.widget.PayPsdInputView;
 import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
+import com.zxjk.duoduo.utils.MMKVUtils;
 
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
@@ -154,8 +156,8 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
                         ToastUtils.showShort(R.string.setsuccess);
                     } else {
                         ToastUtils.showShort(R.string.successfully_modified);
+                        finish();
                     }
-                    finish();
                 }, this::handleApiError);
     }
 
@@ -194,6 +196,12 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
 
                 @Override
                 public void onSuccess(String userid) {
+                    MMKVUtils.getInstance().enCode("isLogin", true);
+                    MMKVUtils.getInstance().enCode("date1", TimeUtils.getNowMills());
+                    MMKVUtils.getInstance().enCode("login", Constant.currentUser);
+                    MMKVUtils.getInstance().enCode("token", Constant.currentUser.getToken());
+                    MMKVUtils.getInstance().enCode("userId", Constant.currentUser.getId());
+
                     UserInfo userInfo = new UserInfo(userid, Constant.currentUser.getNick(), Uri.parse(Constant.currentUser.getHeadPortrait()));
                     RongIM.getInstance().setCurrentUserInfo(userInfo);
                     finish();

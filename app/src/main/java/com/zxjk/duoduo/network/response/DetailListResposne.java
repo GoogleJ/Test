@@ -41,6 +41,15 @@ public class DetailListResposne implements Serializable {
     private String updateBy;
     private String page;
     private String isDelete;
+    private String remarks;
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
 
     public String getSerialNumber() {
         return serialNumber;

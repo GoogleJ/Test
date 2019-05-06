@@ -211,15 +211,15 @@ public class GamePopupWindow extends BasePopupWindow {
 
     private Disposable subscribe;
 
-    public Disposable show(GetGroupGameParameterResponse data) {
+    public Disposable show(GetGroupGameParameterResponse data, long time) {
         this.data = data;
         bindData();
         this.showPopupWindow();
         subscribe = Observable.interval(0, 1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
-                .take(20)
+                .take(time)
                 .subscribe(l -> {
-                    tvGameCountDown.setText((20 - l) + "");
-                    if (l == 19) {
+                    tvGameCountDown.setText((time - l) + "");
+                    if (l == (time - 1)) {
                         ToastUtils.showShort(R.string.timeout_game);
                         dismiss();
                     }

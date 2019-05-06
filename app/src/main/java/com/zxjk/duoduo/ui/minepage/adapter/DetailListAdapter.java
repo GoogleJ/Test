@@ -40,6 +40,7 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.Vi
             Intent intent = new Intent(holder.itemView.getContext(), DetailInfoActivity.class);
             intent.putExtra("data", data.get(position));
             intent.putExtra("type", holder.tvItemDetaillistName.getText());
+            intent.putExtra("remarks", data.get(position).getRemarks());
             holder.itemView.getContext().startActivity(intent);
         });
     }

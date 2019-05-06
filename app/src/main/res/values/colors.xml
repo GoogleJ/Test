@@ -55,7 +55,7 @@
     <color name="m_edit_information_btn">#FFE6A5</color>
     //红包相关
     <color name="m_red_envelopes_unit_text">#666666</color>
-    <color name="m_people_red_envelopes_title_bar">#F9514E</color>
+    <color name="m_people_red_envelopes_title_bar">#FA9219</color>
 
     //关于嘟嘟页面相关
     <color name="about_version_number">#CCCCCC</color>

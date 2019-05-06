@@ -25,11 +25,6 @@ import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
 
-/**
- * 这里是欢迎首页
- *
- * @author Administrator
- */
 public class WelcomeActivity extends BaseActivity {
 
     @SuppressLint("CheckResult")
@@ -45,8 +40,6 @@ public class WelcomeActivity extends BaseActivity {
                         finish();
                     });
         }
-
-
     }
 
     @SuppressLint("CheckResult")

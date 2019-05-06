@@ -822,5 +822,7 @@
     <string name="input_wallet_address">请输入钱包地址</string>
     <string name="fanyongfafang">返佣发放记录</string>
     <string name="game_tips">未下注，无法查看</string>
+    <string name="unfinishgametips">当前有未完成的游戏对局，请完成后重试</string>
+    <string name="jiaoyisuo">交易所</string>
 
 </resources>

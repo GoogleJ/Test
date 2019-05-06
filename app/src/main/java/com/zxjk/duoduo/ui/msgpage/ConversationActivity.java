@@ -33,14 +33,14 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.ChatInformationActivity;
 import com.zxjk.duoduo.ui.grouppage.GroupChatInformationActivity;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.PhotoSelectorPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketPlugin;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TakePhotoPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameDownScorePlugin;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameDuobaoPlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameJiaoYiPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GamePopupWindow;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameRecordPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameRulesPlugin;
@@ -60,6 +60,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import io.rong.imkit.RongExtension;
@@ -90,6 +91,9 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
     private GroupResponse groupResponse;
     private RongIM.OnSendMessageListener onSendMessageListener;
     private RongExtension extension;
+
+    //游戏popwindow跳转计时器
+    private long timeLeft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -214,30 +218,47 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
 
     private void handleBean(String conversationType) {
         targetId = getIntent().getData().getQueryParameter("targetId");
-        targetUserInfo = RongUserInfoManager.getInstance().getUserInfo(targetId);
-        if (null == targetUserInfo && conversationType.equals("private")) {
-            // 私聊且未缓存
-            ServiceFactory.getInstance().getBaseService(Api.class)
-                    .getCustomerInfoById(targetId)
-                    .compose(RxSchedulers.normalTrans())
-                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                    .compose(provider.bindToLifecycle())
-                    .subscribe(loginResponse -> {
-                        targetUserInfo = new UserInfo(targetId, loginResponse.getNick(), Uri.parse(loginResponse.getHeadPortrait()));
-                        RongUserInfoManager.getInstance().setUserInfo(targetUserInfo);
-                        initView();
-                        if (targetId.equals(Constant.userId)) {
-                            List<IPluginModule> pluginModules = extension.getPluginModules();
-                            Iterator<IPluginModule> iterator = pluginModules.iterator();
-                            while (iterator.hasNext()) {
-                                IPluginModule next = iterator.next();
-                                if (next instanceof TransferPlugin || next instanceof RedPacketPlugin) {
-                                    iterator.remove();
-                                    extension.removePlugin(next);
+
+        if (conversationType.equals("private")) {
+            targetUserInfo = RongUserInfoManager.getInstance().getUserInfo(targetId);
+            if (null == targetUserInfo) {
+                // 私聊且未缓存
+                ServiceFactory.getInstance().getBaseService(Api.class)
+                        .getCustomerInfoById(targetId)
+                        .compose(RxSchedulers.normalTrans())
+                        .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                        .compose(provider.bindToLifecycle())
+                        .subscribe(loginResponse -> {
+                            targetUserInfo = new UserInfo(targetId, loginResponse.getNick(), Uri.parse(loginResponse.getHeadPortrait()));
+                            RongUserInfoManager.getInstance().setUserInfo(targetUserInfo);
+                            initView();
+                            if (targetId.equals(Constant.userId)) {
+                                List<IPluginModule> pluginModules = extension.getPluginModules();
+                                Iterator<IPluginModule> iterator = pluginModules.iterator();
+                                while (iterator.hasNext()) {
+                                    IPluginModule next = iterator.next();
+                                    if (next instanceof TransferPlugin || next instanceof RedPacketPlugin) {
+                                        iterator.remove();
+                                        extension.removePlugin(next);
+                                    }
                                 }
                             }
+                        }, ConversationActivity.this::handleApiError);
+            } else {
+                // 本地有缓存（私聊） 直接加载
+                initView();
+                if (targetId.equals(Constant.userId)) {
+                    List<IPluginModule> pluginModules = extension.getPluginModules();
+                    Iterator<IPluginModule> iterator = pluginModules.iterator();
+                    while (iterator.hasNext()) {
+                        IPluginModule next = iterator.next();
+                        if (next instanceof TransferPlugin || next instanceof RedPacketPlugin) {
+                            iterator.remove();
+                            extension.removePlugin(next);
                         }
-                    }, ConversationActivity.this::handleApiError);
+                    }
+                }
+            }
         } else if (conversationType.equals("group")) {
             // 群聊必须每次请求
             ServiceFactory.getInstance().getBaseService(Api.class)
@@ -265,38 +286,23 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                                 //只有群主才能开始下注
                                 extension.addPlugin(new GameStartPlugin());
                             }
+                            extension.addPlugin(new GameJiaoYiPlugin());
                             extension.addPlugin(new GameRulesPlugin());
                             Constant.ownerIdForGameChat = groupInfo.getGroupInfo().getGroupOwnerId();
                         } else {
                             //群组plugin
-                            IPluginModule temp = null;
-                            for (IPluginModule module : pluginModules) {
-                                if (module instanceof TransferPlugin) {
-                                    temp = module;
-                                    break;
+                            Iterator<IPluginModule> iterator = pluginModules.iterator();
+                            while (iterator.hasNext()) {
+                                IPluginModule next = iterator.next();
+                                if (next instanceof TransferPlugin || next instanceof BusinessCardPlugin) {
+                                    iterator.remove();
+                                    extension.removePlugin(next);
                                 }
-                            }
-                            if (null != temp) {
-                                extension.removePlugin(temp);
                             }
                         }
                         groupResponse = groupInfo;
                         initView();
                     }, ConversationActivity.this::handleApiError);
-        } else {
-            // 本地有缓存（私聊） 直接加载
-            initView();
-            if (targetId.equals(Constant.userId)) {
-                List<IPluginModule> pluginModules = extension.getPluginModules();
-                Iterator<IPluginModule> iterator = pluginModules.iterator();
-                while (iterator.hasNext()) {
-                    IPluginModule next = iterator.next();
-                    if (next instanceof TransferPlugin || next instanceof RedPacketPlugin) {
-                        iterator.remove();
-                        extension.removePlugin(next);
-                    }
-                }
-            }
         }
     }
 
@@ -354,23 +360,25 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                                     if (TextUtils.isEmpty(message.getExtra())) {
                                         Constant.tempMsg = message;
                                     }
-                                    if (s.getRedPackageState().equals("3")) {
-                                        //个人发的红包，直接进入详情页
-                                        Intent intent1 = new Intent(context, PeopleUnaccalimedActivity.class);
-                                        intent1.putExtra("id", redPacketMessage.getRedId());
-                                        startActivity(intent1);
-                                    }
                                     if (s.getRedPackageState().equals("1")) {
                                         //红包已过期
                                         ExpiredEnvelopesDialog dialog = new ExpiredEnvelopesDialog(ConversationActivity.this);
                                         dialog.show(RongUserInfoManager.getInstance().getUserInfo(message.getSenderUserId()),
                                                 true, redPacketMessage.getRedId());
                                     }
+                                    if (s.getRedPackageState().equals("3")) {
+                                        Intent intent1 = new Intent(context, PeopleUnaccalimedActivity.class);
+                                        intent1.putExtra("isGame", redPacketMessage.getIsGame());
+                                        intent1.putExtra("id", redPacketMessage.getRedId());
+                                        startActivity(intent1);
+                                    }
                                     if (s.getRedPackageState().equals("2")) {
                                         if (message.getConversationType().equals(Conversation.ConversationType.PRIVATE)) {
                                             Intent intent1 = new Intent(context, PeopleUnaccalimedActivity.class);
-                                            intent1.putExtra("isGame", redPacketMessage.getIsGame());
                                             intent1.putExtra("id", redPacketMessage.getRedId());
+                                            if (message.getSenderUserId().equals(Constant.userId)) {
+                                                intent1.putExtra("isShow", false);
+                                            }
                                             startActivity(intent1);
                                         } else {
                                             //手慢了，已被领完
@@ -384,6 +392,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                                         RedEvelopesDialog dialog = new RedEvelopesDialog(ConversationActivity.this);
                                         if (message.getConversationType().equals(Conversation.ConversationType.PRIVATE) && message.getSenderUserId().equals(Constant.userId)) {
                                             Intent intent1 = new Intent(context, PeopleUnaccalimedActivity.class);
+                                            intent1.putExtra("isShow", false);
                                             intent1.putExtra("id", redPacketMessage.getRedId());
                                             startActivity(intent1);
                                         } else if (message.getConversationType().equals(Conversation.ConversationType.GROUP)) {
@@ -396,6 +405,12 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                                                         Intent intent1 = new Intent(context, PeopleUnaccalimedActivity.class);
                                                         intent1.putExtra("id", redPacketMessage.getRedId());
                                                         intent1.putExtra("isGame", redPacketMessage.getIsGame());
+                                                        if (redPacketMessage.getIsGame().equals("0")) {
+                                                            //如果是游戏，20S内不允许查看红包记录页
+                                                            Constant.canCheckRedRecord += 1;
+                                                            Observable.timer(20, TimeUnit.SECONDS, Schedulers.io())
+                                                                    .subscribe(a -> Constant.canCheckRedRecord -= 1);
+                                                        }
                                                         startActivity(intent1);
                                                     }, ConversationActivity.this::handleApiError));
                                             dialog.show(message, RongUserInfoManager.getInstance().getUserInfo(message.getSenderUserId()));
@@ -571,6 +586,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                                                 Disposable subscribe = Observable.interval(0, 1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
                                                         .take(time)
                                                         .subscribe(l -> {
+                                                            timeLeft = time - l;
                                                             tvGameCountDown.setText((time - l) + "");
                                                             if (l == time - 1) {
                                                                 ToastUtils.showShort(R.string.timeout_game);
@@ -585,14 +601,21 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                                                 });
 
                                                 viewHolder.getView(R.id.tv_determine).setOnClickListener(v -> {
-                                                    baseNiceDialog.dismiss();
-                                                    subscribe.dispose();
                                                     ServiceFactory.getInstance().getBaseService(Api.class)
                                                             .groupGamebetting(data)
                                                             .compose(RxSchedulers.normalTrans())
                                                             .compose(RxSchedulers.ioObserver())
                                                             .compose(bindToLifecycle())
-                                                            .subscribe(s -> ToastUtils.showShort(R.string.xiazhuchenggong), ConversationActivity.this::handleApiError);
+                                                            .subscribe(s -> {
+                                                                subscribe.dispose();
+                                                                baseNiceDialog.dismiss();
+                                                                ToastUtils.showShort(R.string.xiazhuchenggong);
+                                                            }, t -> {
+                                                                subscribe.dispose();
+                                                                baseNiceDialog.dismiss();
+                                                                gameWindowDisposable = gamePopupWindow.show(getGroupGameParameterResponse, timeLeft);
+                                                                handleApiError(t);
+                                                            });
                                                 });
 
                                             }
@@ -602,7 +625,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                                         .show(getSupportFragmentManager());
                             });
 
-                            gameWindowDisposable = gamePopupWindow.show(getGroupGameParameterResponse);
+                            gameWindowDisposable = gamePopupWindow.show(getGroupGameParameterResponse, 20);
                         }, ConversationActivity.this::handleApiError));
         }
         return false;

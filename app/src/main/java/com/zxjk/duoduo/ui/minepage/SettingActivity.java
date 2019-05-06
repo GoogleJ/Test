@@ -150,7 +150,6 @@ public class SettingActivity extends BaseActivity {
                             }, SettingActivity.this::handleApiError);
                 });
 
-
             }
         }).setOutCancel(false).show(getSupportFragmentManager()));
 

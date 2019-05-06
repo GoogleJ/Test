@@ -27,7 +27,6 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.TakePopWindow;
 import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.GlideUtil;
-import com.zxjk.duoduo.utils.MMKVUtils;
 import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
 
@@ -187,8 +186,6 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                     Constant.currentUser.setHeadPortrait(update.getHeadPortrait());
                     Constant.currentUser.setNick(update.getNick());
                     Constant.currentUser.setAddress(update.getAddress());
-                    MMKVUtils.getInstance().enCode("login", Constant.currentUser);
-
 
                     Intent intent = new Intent(EditPersonalInformationFragment.this, SetUpPaymentPwdActivity.class);
                     intent.putExtra("firstLogin", true);

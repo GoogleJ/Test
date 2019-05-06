@@ -67,6 +67,9 @@ public class PeopleUnaccalimedActivity extends BaseActivity {
         if (TextUtils.isEmpty(isGame)) {
             isGame = "1";
         }
+        if (isGame.equals("0")) {
+            tips.setVisibility(View.GONE);
+        }
         boolean fromList = getIntent().getBooleanExtra("fromList", false);
         if (fromList) {
             tvRedFromList.setVisibility(View.GONE);
