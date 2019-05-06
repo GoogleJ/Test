@@ -3,13 +3,14 @@ package com.zxjk.duoduo.ui.minepage;
 import android.annotation.SuppressLint;
 import android.net.http.SslError;
 import android.os.Bundle;
-import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
+
 import androidx.annotation.Nullable;
+
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
@@ -21,18 +22,17 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 public class OnlineServiceActivity extends BaseActivity {
     WebView webView;
     String url;
-    TextView tvTitle;
+    TextView tv_title;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_online_service);
         webView = findViewById(R.id.web_view);
-        tvTitle = findViewById(R.id.tvTitle);
+        tv_title = findViewById(R.id.tv_title);
         url = getIntent().getStringExtra("url");
-        if (url != null) {
-            tvTitle.setText(R.string.user_agreement);
-        }
+        tv_title.setText(R.string.keFu);
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
         initSetting();
     }
 
@@ -55,7 +55,5 @@ public class OnlineServiceActivity extends BaseActivity {
         });
     }
 
-    public void back(View view) {
-        finish();
-    }
+
 }

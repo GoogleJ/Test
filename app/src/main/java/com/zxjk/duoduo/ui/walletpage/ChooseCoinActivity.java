@@ -1,55 +1,55 @@
 package com.zxjk.duoduo.ui.walletpage;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.zxjk.duoduo.Constant;
-import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.GetTransferEthResponse;
-import com.zxjk.duoduo.ui.minepage.VerifiedActivity;
-import com.zxjk.duoduo.ui.walletpage.adapter.ETHOrdersAdapter;
-import com.zxjk.duoduo.utils.CommonUtils;
+import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.zxjk.duoduo.R;
 
 public class ChooseCoinActivity extends AppCompatActivity {
 
-    private TextView tvChooseCoin;
+
+    private TextView tv_currency;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_coin);
+        initView();
+        initData();
 
-        tvChooseCoin = findViewById(R.id.tvChooseCoin);
 
+    }
+
+
+    private void initView() {
         String coin = getIntent().getStringExtra("coin");
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.currency_option));
+        ImageView iv_currency = findViewById(R.id.iv_currency);
+        tv_currency = findViewById(R.id.tv_currency);
 
-        if (tvChooseCoin.getText().equals(coin)) {
-            tvChooseCoin.setText("ETH");
-            Drawable drawable = getDrawable(R.drawable.ic_blockwallet_eth);
-            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(),
-                    drawable.getIntrinsicWidth());
-            tvChooseCoin.setCompoundDrawables(null, null, drawable, null);
+        if (tv_currency.getText().toString().equals(coin)) {
+            tv_currency.setText("ETH");
+            iv_currency.setImageResource(R.drawable.ic_blockwallet_eth);
         }
+
+
     }
 
-    public void enterETHOrders(View view) {
-        Intent intent = new Intent();
-        intent.putExtra("coin", tvChooseCoin.getText().toString());
-        setResult(2, intent);
-        finish();
+    private void initData() {
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
+        findViewById(R.id.rl_currency).setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra("coin", tv_currency.getText().toString());
+            setResult(2, intent);
+            finish();
+        });
+
     }
 
-    public void back(View view) {
-        finish();
-    }
+
 }

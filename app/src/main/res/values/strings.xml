@@ -739,7 +739,7 @@
     <string name="keFu">客服</string>
     <string name="set">设置</string>
     <string name="clear_money">清除金额</string>
-    <string name="set_money">请设置金额</string>
+    <string name="set_money">设置金额</string>
     <string name="please_set_money">请设置金额</string>
     <string name="duoduo_id">多多号:</string>
     <string name="personalized_signature">个性签名:</string>
@@ -816,6 +816,10 @@
     <string name="qr_code">我的二维码</string>
     <string name="personal_details">个人信息</string>
     <string name="lqxx">聊天信息</string>
+    <string name="please_money">请输入金额</string>
+    <string name="currency_option">币种选择</string>
+    <string name="collection_wallet">收款钱包</string>
+    <string name="input_wallet_address">请输入钱包地址</string>
     <string name="fanyongfafang">返佣发放记录</string>
     <string name="game_tips">未下注，无法查看</string>
 

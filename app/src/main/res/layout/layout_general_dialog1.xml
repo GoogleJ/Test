@@ -10,8 +10,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:background="@drawable/shape_bac_white_conor3"
+        android:layout_margin="50dp"
+        android:background="@drawable/shape_circular_bead"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -23,13 +23,13 @@
             android:layout_margin="50dp"
             android:gravity="center"
             android:text=""
-            android:textColor="#4B4D5B"
-            android:textSize="17sp" />
+            android:textColor="@color/pop_color1"
+            android:textSize="16sp" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.1dp"
-            android:background="#D2D2D2" />
+            android:background="@color/pop_color3" />
 
 
         <TextView
@@ -38,8 +38,8 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:textColor="@android:color/black"
-            android:textSize="18sp" />
+            android:textColor="@color/pop_color1"
+            android:textSize="16sp" />
 
     </LinearLayout>
 

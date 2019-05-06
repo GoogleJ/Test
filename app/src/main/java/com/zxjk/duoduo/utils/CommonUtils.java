@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -153,6 +154,18 @@ public class CommonUtils {
         BigDecimal b1 = new BigDecimal(String.valueOf(value1));
         BigDecimal b2 = new BigDecimal(String.valueOf(value2));
         return b1.multiply(b2).doubleValue();
+    }
+
+
+    public static String getVersionName(Context context) {
+        String name = "";
+        try {
+            name = context.getPackageManager().
+                    getPackageInfo(context.getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return name;
     }
 
 

@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -36,11 +36,34 @@ public class ChangePwdActivity extends BaseActivity {
         etChangePwdOrigin = findViewById(R.id.etChangePwdOrigin);
         etChangePwdNew = findViewById(R.id.etChangePwdNew);
         etChangePwdConfirm = findViewById(R.id.etChangePwdConfirm);
+
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.change_password));
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
     }
 
-    private String newPass;
 
-    public void submit(View view) {
+    private void doChangePwd(String oldPwd, String newPwd) {
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .updatePwd(oldPwd, newPwd, newPwd)
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ChangePwdActivity.this)))
+                .compose(RxSchedulers.normalTrans())
+                .subscribe(response -> {
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    ToastUtils.showShort(R.string.successfully_modified);
+                    finish();
+                }, this::handleApiError);
+    }
+
+
+    private boolean verifyPwd(String pwd) {
+        return !TextUtils.isEmpty(pwd) && (pwd.length() >= 6);
+    }
+
+    public void accomplish(View view) {
         String s = etChangePwdOrigin.getText().toString().trim();
         String s1 = etChangePwdNew.getText().toString().trim();
         String s2 = etChangePwdConfirm.getText().toString().trim();
@@ -64,30 +87,6 @@ public class ChangePwdActivity extends BaseActivity {
             ToastUtils.showShort(R.string.verify_pwd3);
             return;
         }
-        newPass = s1;
         doChangePwd(MD5Utils.getMD5(s), MD5Utils.getMD5(s1));
-    }
-
-    private void doChangePwd(String oldPwd, String newPwd) {
-        ServiceFactory.getInstance().getBaseService(Api.class)
-                .updatePwd(oldPwd, newPwd, newPwd)
-                .compose(bindToLifecycle())
-                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ChangePwdActivity.this)))
-                .compose(RxSchedulers.normalTrans())
-                .subscribe(response -> {
-                    Intent intent = new Intent(this, LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    ToastUtils.showShort(R.string.successfully_modified);
-                    finish();
-                }, this::handleApiError);
-    }
-
-    public void back(View view) {
-        finish();
-    }
-
-    private boolean verifyPwd(String pwd) {
-        return !TextUtils.isEmpty(pwd) && (pwd.length() >= 6);
     }
 }

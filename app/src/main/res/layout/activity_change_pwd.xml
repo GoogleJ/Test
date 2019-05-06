@@ -1,186 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
+    android:background="@color/background_color1"
+    android:orientation="vertical"
+    tools:ignore="all">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/themecolor">
+    <include layout="@layout/layout_title_back" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+    <RelativeLayout style="@style/RLayoutStyle">
+
+        <TextView
+            android:id="@+id/tv_oldPassWord"
+            style="@style/textStyle"
             android:layout_centerVertical="true"
-            android:onClick="back"
-            android:paddingLeft="12dp"
-            android:paddingTop="8dp"
-            android:paddingRight="12dp"
-            android:paddingBottom="8dp"
-            android:src="@drawable/ico_back" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/change_password"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:paddingTop="16dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="16dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
             android:text="@string/old_password"
-            android:textColor="@color/themecolor"
             android:textSize="16sp" />
 
         <EditText
             android:id="@+id/etChangePwdOrigin"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_toEndOf="@+id/tv_oldPassWord"
             android:background="@null"
-            android:gravity="end"
+            android:gravity="center|end"
             android:hint="@string/enter_old_password"
-            android:imeOptions="actionNext"
             android:inputType="textPassword"
             android:lines="1"
             android:maxLength="14"
-            android:src="@drawable/ic_mine_rightarrow"
-            android:textSize="15sp" />
+            android:textSize="16sp" />
+    </RelativeLayout>
 
-    </LinearLayout>
+    <include layout="@layout/layout_line" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginStart="10dp"
-        android:background="@color/m_add_friend_line" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:paddingTop="16dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="16dp">
+    <RelativeLayout style="@style/RLayoutStyle">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/tv_newPassWord"
+            style="@style/textStyle"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
             android:text="@string/new_password"
-            android:textColor="@color/themecolor"
             android:textSize="16sp" />
+
 
         <EditText
             android:id="@+id/etChangePwdNew"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_toEndOf="@+id/tv_newPassWord"
             android:background="@null"
-            android:gravity="end"
+            android:gravity="center|end"
             android:hint="@string/enter_new_password"
-            android:imeOptions="actionNext"
             android:inputType="textPassword"
             android:lines="1"
             android:maxLength="14"
-            android:src="@drawable/ic_mine_rightarrow"
-            android:textSize="15sp" />
+            android:textSize="16sp" />
+    </RelativeLayout>
 
-    </LinearLayout>
+    <include layout="@layout/layout_line" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginStart="10dp"
-        android:background="@color/m_add_friend_line" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingLeft="10dp"
-        android:paddingTop="16dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="16dp">
+    <RelativeLayout style="@style/RLayoutStyle">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/old_password"
-            android:textColor="@color/themecolor"
+            android:id="@+id/tv_newPassWord1"
+            style="@style/textStyle"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:text="@string/new_password"
             android:textSize="16sp" />
+
 
         <EditText
             android:id="@+id/etChangePwdConfirm"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_toEndOf="@+id/tv_newPassWord1"
             android:background="@null"
-            android:gravity="end"
+            android:gravity="center|end"
             android:hint="@string/fill_in_again_to_confirm"
-            android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:lines="1"
             android:maxLength="14"
-            android:src="@drawable/ic_mine_rightarrow"
-            android:textSize="15sp" />
+            android:textSize="16sp" />
+    </RelativeLayout>
 
-    </LinearLayout>
 
-    <LinearLayout
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="@string/forget_password_reminder"
+        android:textColor="@color/text_color2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:text="@string/enter_password_reminder"
+        android:textColor="@color/text_color2" />
+
+
+    <TextView
+        android:id="@+id/tv_accomplish"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/default_placeholder"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="@string/forget_password_reminder"
-            android:textColor="@color/textcolor3" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/enter_password_reminder"
-            android:textColor="@color/textcolor3" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="32dp"
-            android:background="@drawable/selector_login_btn_click_bg"
-            android:onClick="submit"
-            android:text="@string/carry_out"
-            android:textSize="17sp" />
-
-    </LinearLayout>
+        android:layout_height="50dp"
+        android:layout_margin="40dp"
+        android:background="@drawable/shape_circular_bead_btn"
+        android:gravity="center"
+        android:onClick="accomplish"
+        android:text="@string/accomplish"
+        android:textSize="16sp" />
 
 </LinearLayout>

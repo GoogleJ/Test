@@ -136,7 +136,7 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
                                 RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE
                                         , friendInfoResponse.getId(), null);
                                 RongIMClient.getInstance().cleanHistoryMessages(Conversation.ConversationType.PRIVATE,
-                                        friendInfoResponse.getId(),0,false,null);
+                                        friendInfoResponse.getId(), 0, false, null);
                             }
 
                             @Override
@@ -157,13 +157,16 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            //群聊
             case R.id.m_constacts_new_friend_group_chat_btn:
                 startActivity(new Intent(this, GroupChatActivity.class));
                 break;
+            //新的朋友
             case R.id.m_contact_add_friend_btn:
                 dotNewFriend.setVisibility(View.GONE);
                 startActivityForResult(new Intent(this, NewFriendActivity.class), 10);
                 break;
+                //
             case R.id.m_contact_new_friend_btn:
                 startActivity(new Intent(this, AddContactActivity.class));
                 break;

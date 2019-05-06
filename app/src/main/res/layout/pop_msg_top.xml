@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/icon_pop_background"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="all">
+
 
     <LinearLayout
         android:id="@+id/send_group_chat"
@@ -19,14 +22,16 @@
         <TextView
             style="@style/msg_top_pop_text_style"
             android:text="@string/send_group_chat" />
+
+
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.1dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:background="@android:color/white" />
+        android:layout_marginStart="70dp"
+        android:background="#1AFFFFFF" />
+
 
     <LinearLayout
         android:id="@+id/invite_friends"
@@ -45,9 +50,8 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.1dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:background="@android:color/white" />
+        android:layout_marginStart="70dp"
+        android:background="#1AFFFFFF" />
 
     <LinearLayout
         android:id="@+id/scan"
@@ -66,14 +70,14 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.1dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:background="@android:color/white" />
+        android:layout_marginStart="70dp"
+        android:background="#1AFFFFFF" />
 
     <LinearLayout
         android:id="@+id/collection_and_payment"
         style="@style/msg_top_pop_style"
-        android:paddingStart="20dp">
+        android:paddingStart="20dp"
+        android:paddingBottom="20dp">
 
         <ImageView
             style="@style/msg_top_pop_img_style"

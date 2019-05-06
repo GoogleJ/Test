@@ -1,44 +1,34 @@
 package com.zxjk.duoduo.ui.minepage;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.ui.widget.TitleBar;
+import com.zxjk.duoduo.utils.CommonUtils;
 
 /**
- * @author Administrator
+ * 关于多多
  */
+@SuppressLint("SetTextI18n")
 public class AboutActivity extends BaseActivity {
-    TitleBar titleBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        titleBar = findViewById(R.id.about_title);
-        initUI();
+        initView();
     }
 
-    private void initUI() {
-        titleBar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+    private void initView() {
+        TextView tv_title = findViewById(R.id.tv_title);
+        TextView tv_versionName = findViewById(R.id.tv_versionName);
+        tv_versionName.setText("V " + CommonUtils.getVersionName(this));
+        tv_title.setText(getString(R.string.about_duo_duo));
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
     }
 
-    /**
-     * 版本说明和版本号，现在没有版本，提示文字为此功能暂未实现
-     *
-     * @param view
-     */
-    public void aboutVersion(View view) {
-        ToastUtils.showShort(getString(R.string.under_development));
-    }
 }

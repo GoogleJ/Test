@@ -42,7 +42,6 @@ import io.reactivex.schedulers.Schedulers;
 public class RecipetQRActivity extends BaseActivity {
 
     private ImageView ivRecipetImg;
-    private ImageView ivCodeLogo;
     private TextView tvMoney, tv_setMoney;
 
     private BaseUri uri;
@@ -57,7 +56,7 @@ public class RecipetQRActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipet_qr);
         ivRecipetImg = findViewById(R.id.ivRecipetImg);
-        ivCodeLogo = findViewById(R.id.ivCodeLogo);
+        ImageView ivCodeLogo = findViewById(R.id.ivCodeLogo);
         tvMoney = findViewById(R.id.tvMoney);
         tv_setMoney = findViewById(R.id.tv_setMoney);
         TextView tv_title = findViewById(R.id.tv_title);
@@ -117,7 +116,7 @@ public class RecipetQRActivity extends BaseActivity {
             NiceDialog.init().setLayoutId(R.layout.layout_general_dialog3).setConvertListener(new ViewConvertListener() {
                 @Override
                 protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
-                    holder.setText(R.id.tv_title, getString(R.string.set_money));
+                    holder.setText(R.id.tv_title, getString(R.string.please_set_money));
                     EditText editText = holder.getView(R.id.et_content);
                     TextView tv_cancel = holder.getView(R.id.tv_cancel);
                     TextView tv_notarize = holder.getView(R.id.tv_notarize);

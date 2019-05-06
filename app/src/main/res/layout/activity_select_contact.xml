@@ -63,29 +63,26 @@
             android:id="@+id/recycler_view_select"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:layout_gravity="center_vertical"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent" />
 
 
         <EditText
             android:id="@+id/search_select_contact"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="12dp"
-            android:background="@color/background"
-            android:drawableStart="@drawable/ic_search_gray"
+            android:layout_height="45dp"
+            android:layout_margin="12dp"
+            android:background="@drawable/shape_circular_bead2"
+            android:drawableStart="@drawable/icon_search_view"
+            android:drawablePadding="4dp"
             android:hint="@string/contact_search"
             android:maxWidth="120dp"
             android:paddingStart="20dp"
+            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/recycler_view_select"
-            app:layout_constraintTop_toTopOf="parent"
-
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </LinearLayout>
 

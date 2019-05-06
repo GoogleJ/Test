@@ -42,21 +42,10 @@ import java.util.Collections;
 public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnItemClickListener {
     public static final int REQUEST_TAKE = 1;
     public static final int REQUEST_ALBUM = 2;
-    /**
-     * 证件类型
-     */
-    TextView cardType;
-    /**
-     * 提交
-     */
 
-    /**
-     * 真实姓名
-     */
-    EditText realName;
-    /**
-     * 开户账号
-     */
+    TextView tv_certificateType;
+    EditText et_realName;
+
     EditText idCard;
     /**
      * 证件正面照
@@ -123,8 +112,8 @@ public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnIt
             public void onSelectedIdCard(String idCard) {
                 //点击身份证的时候赋值
                 otherIdCardType = "1";
-                cardType.setTextColor(getColor(R.color.themecolor));
-                cardType.setText(idCard);
+                tv_certificateType.setTextColor(getColor(R.color.themecolor));
+                tv_certificateType.setText(idCard);
                 dialog.dismiss();
             }
 
@@ -132,8 +121,8 @@ public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnIt
             public void onSelectedPassport(String passport) {
                 //点击护照的时候给赋值
                 otherIdCardType = "2";
-                cardType.setTextColor(getColor(R.color.themecolor));
-                cardType.setText(passport);
+                tv_certificateType.setTextColor(getColor(R.color.themecolor));
+                tv_certificateType.setText(passport);
                 dialog.dismiss();
             }
 
@@ -141,8 +130,8 @@ public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnIt
             public void onSelectedOther(String other) {
                 //点击其他的时候给赋值
                 otherIdCardType = "3";
-                cardType.setTextColor(getColor(R.color.themecolor));
-                cardType.setText(other);
+                tv_certificateType.setTextColor(getColor(R.color.themecolor));
+                tv_certificateType.setText(other);
                 dialog.dismiss();
             }
         });
@@ -156,9 +145,9 @@ public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnIt
         });
         selectPicPopWindow = new TakePopWindow(this);
         selectPicPopWindow.setOnItemClickListener(this);
-        cardType = findViewById(R.id.card_type);
+        tv_certificateType = findViewById(R.id.tv_certificateType);
 
-        realName = findViewById(R.id.real_name);
+        et_realName = findViewById(R.id.real_name);
         idCard = findViewById(R.id.id_card);
         frontPhotoOfTheDocument = findViewById(R.id.front_photo_of_the_document);
         frontPhotoOfTheDocumentEdit = findViewById(R.id.front_photo_of_the_document_edit);
@@ -200,7 +189,7 @@ public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnIt
     }
 
     private void commit() {
-        realNames = realName.getText().toString().trim();
+        realNames = et_realName.getText().toString().trim();
         idCards = idCard.getText().toString().trim();
         if (TextUtils.isEmpty(realNames)) {
             ToastUtils.showShort(R.string.edit_real_name);
@@ -243,10 +232,6 @@ public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnIt
         certification(AesUtil.getInstance().encrypt(GsonUtils.toJson(bean)));
     }
 
-    @SuppressLint("NewApi")
-    public void pleaseSelectTheTypeOfDocument(View view) {
-        dialog.show();
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -322,5 +307,11 @@ public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnIt
             default:
                 break;
         }
+    }
+
+    //选择证件类型
+    @SuppressLint("NewApi")
+    public void certificateType(View view) {
+        dialog.show();
     }
 }

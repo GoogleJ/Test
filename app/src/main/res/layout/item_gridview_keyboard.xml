@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/rela_item"
-                android:background="@drawable/selector_item_bg">
+    android:id="@+id/rela_item"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/selector_item_bg">
 
     <LinearLayout
         android:id="@+id/ll_keys"
@@ -15,29 +15,29 @@
         <TextView
             android:id="@+id/tv_key"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginTop="5dp"
+            android:layout_height="56dp"
+            android:gravity="center"
             android:text="2"
-            android:textSize="22sp"
-            android:textStyle="bold"/>
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <!--<TextView-->
-            <!--android:text="ABC"-->
-            <!--android:id="@+id/tv_key_eng"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginBottom="5dp"-->
-            <!--android:textSize="12sp"-->
-            <!--android:textStyle="bold"/>-->
+        <!--android:text="ABC"-->
+        <!--android:id="@+id/tv_key_eng"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="5dp"-->
+        <!--android:textSize="12sp"-->
+        <!--android:textStyle="bold"/>-->
     </LinearLayout>
 
 
-        <ImageView
-            android:layout_centerInParent="true"
-            android:scaleType="centerInside"
-            android:id="@+id/iv_delete"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/huisa"/>
+    <ImageView
+        android:id="@+id/iv_delete"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/huisa" />
 
 </RelativeLayout>

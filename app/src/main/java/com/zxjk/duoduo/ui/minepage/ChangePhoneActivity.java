@@ -19,27 +19,26 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MMKVUtils;
 
-@SuppressLint("CheckResult")
+@SuppressLint({"CheckResult", "SetTextI18n"})
 public class ChangePhoneActivity extends BaseActivity implements View.OnClickListener {
 
-    private EditText etChangePhone;
-    private EditText etChangePhoneVerify;
-    private TextView tvChangePhoneGetVerify;
-    private TextView tvChangePhoneCountryCode;
-    private String phoneReciveVerify;
+    private EditText et_phone;
+    private EditText et_verificationCode;
+    private TextView tv_verificationCode;
+    private String verify;
 
     CountDownTimer timer = new CountDownTimer(60000, 1000) {
         @Override
         public void onTick(long millisUntilFinished) {
             long time = millisUntilFinished / 1000;
-            tvChangePhoneGetVerify.setText(time + getString(R.string.regain_after_seconds));
-            tvChangePhoneGetVerify.setClickable(false);
+            tv_verificationCode.setText(time + getString(R.string.regain_after_seconds));
+            tv_verificationCode.setClickable(false);
         }
 
         @Override
         public void onFinish() {
-            tvChangePhoneGetVerify.setText(getString(R.string.regain_verification_code));
-            tvChangePhoneGetVerify.setClickable(true);
+            tv_verificationCode.setText(getString(R.string.regain_verification_code));
+            tv_verificationCode.setClickable(true);
         }
     };
 
@@ -47,51 +46,25 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_phone);
-
-        etChangePhone = findViewById(R.id.etChangePhone);
-        etChangePhoneVerify = findViewById(R.id.etChangePhoneVerify);
-        tvChangePhoneGetVerify = findViewById(R.id.tvChangePhoneGetVerify);
-        tvChangePhoneCountryCode = findViewById(R.id.tvChangePhoneCountryCode);
-        tvChangePhoneGetVerify.setOnClickListener(this);
-
-        tvChangePhoneCountryCode.setText("+" + Constant.HEAD_LOCATION);
-    }
-
-    //完成
-    public void submit(View view) {
-        String phone = etChangePhone.getText().toString();
-        if (TextUtils.isEmpty(phone)) {
-            ToastUtils.showShort(getString(R.string.please_enter_phone_number));
-            return;
-        }
-
-        String verifyCode = etChangePhoneVerify.getText().toString();
-        if (TextUtils.isEmpty(verifyCode)) {
-            ToastUtils.showShort(getString(R.string.please_enter_verification_code));
-            return;
-        }
-
-        if (!RegexUtils.isMobileExact(phone)) {
-            ToastUtils.showShort(getString(R.string.please_enter_a_valid_phone_number));
-            return;
-        }
-
-        if (!phone.equals(phoneReciveVerify)) {
-            ToastUtils.showShort(getString(R.string.verification_code_error));
-            return;
-        }
-
-        doChangePhone(verifyCode);
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.change_phone_number));
+        et_phone = findViewById(R.id.et_phone);
+        et_verificationCode = findViewById(R.id.et_verificationCode);
+        tv_verificationCode = findViewById(R.id.tv_verificationCode);
+        TextView tv_countryCode = findViewById(R.id.tv_countryCode);
+        tv_verificationCode.setOnClickListener(this);
+        tv_countryCode.setText("+" + Constant.HEAD_LOCATION);
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
     }
 
     private void doChangePhone(String verifyCode) {
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .updateMobile(phoneReciveVerify, verifyCode)
+                .updateMobile(verify, verifyCode)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ChangePhoneActivity.this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
-                    Constant.currentUser.setMobile(phoneReciveVerify);
+                    Constant.currentUser.setMobile(verify);
                     MMKVUtils.getInstance().enCode("login", Constant.currentUser);
                     ToastUtils.showShort(getString(R.string.successfully_modified));
                     finish();
@@ -100,15 +73,15 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        String phone = etChangePhone.getText().toString().trim();
+        String phone = et_phone.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
             ToastUtils.showShort(getString(R.string.please_enter_phone_number));
             return;
         }
         if (RegexUtils.isMobileExact(phone)) {
-            phoneReciveVerify = phone;
+            verify = phone;
             getVerifyCode();
-            tvChangePhoneGetVerify.setClickable(false);
+            tv_verificationCode.setClickable(false);
             return;
         }
         ToastUtils.showShort(getString(R.string.please_enter_a_valid_phone_number));
@@ -117,7 +90,7 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
     private void getVerifyCode() {
         timer.start();
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .getCode(Constant.HEAD_LOCATION + "-" + phoneReciveVerify, "0")
+                .getCode(Constant.HEAD_LOCATION + "-" + verify, "0")
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ChangePhoneActivity.this)))
                 .compose(RxSchedulers.normalTrans())
@@ -128,8 +101,29 @@ public class ChangePhoneActivity extends BaseActivity implements View.OnClickLis
                 });
     }
 
-    public void back(View view) {
-        finish();
-        CommonUtils.hideInputMethod(this);
+    //完成点击事件
+    public void accomplish(View view) {
+        String phone = et_phone.getText().toString();
+        if (TextUtils.isEmpty(phone)) {
+            ToastUtils.showShort(getString(R.string.please_enter_phone_number));
+            return;
+        }
+
+        String verifyCode = et_verificationCode.getText().toString();
+        if (TextUtils.isEmpty(verifyCode)) {
+            ToastUtils.showShort(getString(R.string.please_enter_verification_code));
+            return;
+        }
+
+        if (!RegexUtils.isMobileExact(phone)) {
+            ToastUtils.showShort(getString(R.string.please_enter_a_valid_phone_number));
+            return;
+        }
+
+        if (!phone.equals(verify)) {
+            ToastUtils.showShort(getString(R.string.verification_code_error));
+            return;
+        }
+        doChangePhone(verifyCode);
     }
 }

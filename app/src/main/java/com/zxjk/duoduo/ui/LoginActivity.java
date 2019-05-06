@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -44,8 +43,7 @@ import static com.zxjk.duoduo.utils.MD5Utils.getMD5;
  * @author Administrator
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
-    @BindView(R.id.btn_login)
-    Button btn_login;
+
     @BindView(R.id.login_country)
     TextView login_country;
     @BindView(R.id.text_forget_password)
@@ -57,6 +55,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @BindView(R.id.edit_password)
     EditText edit_password;
     String EXTRA_DATA = "data";
+    @BindView(R.id.tv_login)
+    TextView tvLogin;
 
 
     public static void start(AppCompatActivity activity) {
@@ -84,7 +84,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             , R.id.text_forget_password
             , R.id.text_go_register
             , R.id.change_language
-            , R.id.btn_login
+            , R.id.tv_login
             , R.id.login_country_bottom})
     @Override
     public void onClick(View v) {
@@ -104,7 +104,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             case R.id.change_language:
                 startActivity(new Intent(LoginActivity.this, ChangeLanguageActivity.class));
                 break;
-            case R.id.btn_login:
+            case R.id.tv_login:
                 String mobile = edit_mobile.getText().toString().trim();
                 String password = edit_password.getText().toString().trim();
                 if (TextUtils.isEmpty(mobile) || TextUtils.isEmpty(password)) {
@@ -188,7 +188,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     UserInfo userInfo = new UserInfo(userid, Constant.currentUser.getNick(), Uri.parse(Constant.currentUser.getHeadPortrait()));
                     RongIM.getInstance().setCurrentUserInfo(userInfo);
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                    btn_login.setEnabled(false);
+                    tvLogin.setEnabled(false);
                     finish();
                 }
 

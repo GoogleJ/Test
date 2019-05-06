@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F8F8"
-    android:orientation="vertical">
+    android:background="@color/background_color"
+    android:orientation="vertical"
+    tools:ignore="all">
 
     <com.zxjk.duoduo.ui.widget.TitleBar
         android:id="@+id/m_group_chat_title_bar"
@@ -19,17 +20,14 @@
         android:id="@+id/m_group_chat_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/m_contact_title_bar">
+        android:background="@color/white">
 
         <EditText
             android:id="@+id/m_group_chat_edit_1"
-            style="?attr/checkedTextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_margin="12dp"
-            android:background="@color/list_item_bg_press"
+            android:background="@drawable/shape_circular_bead2"
             android:drawableStart="@drawable/icon_search_view"
             android:drawablePadding="4dp"
             android:hint="@string/enter_group_chat"
@@ -38,7 +36,7 @@
             android:paddingStart="25dp"
             android:paddingEnd="20dp"
             android:singleLine="true"
-            tools:ignore="HardcodedText" />
+            android:textSize="15sp" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

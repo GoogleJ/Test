@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_color"
     android:orientation="vertical">
 
     <include layout="@layout/layout_title_back" />
@@ -14,14 +15,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#F8F8F8"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/rl_account_number"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@android:color/white">
+                style="@style/RLayoutStyle">
 
                 <TextView
                     style="@style/textStyle"
@@ -33,12 +31,11 @@
 
             </RelativeLayout>
 
+            <include layout="@layout/layout_line10" />
+
             <RelativeLayout
                 android:id="@+id/rl_newMessage"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="0.1dp"
-                android:background="@android:color/white"
+                style="@style/RLayoutStyle"
                 android:visibility="gone">
 
                 <TextView
@@ -51,10 +48,7 @@
 
             <RelativeLayout
                 android:id="@+id/rl_intimacy"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="0.1dp"
-                android:background="@android:color/white"
+                style="@style/RLayoutStyle"
                 android:visibility="gone">
 
                 <TextView
@@ -68,10 +62,7 @@
 
             <RelativeLayout
                 android:id="@+id/rl_realNameAuthentication"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="10dp"
-                android:background="@android:color/white">
+                style="@style/RLayoutStyle">
 
                 <TextView
                     style="@style/textStyle"
@@ -102,12 +93,11 @@
                     style="@style/ImageEnter" />
             </RelativeLayout>
 
+            <include layout="@layout/layout_line" />
+
             <RelativeLayout
                 android:id="@+id/rl_collectionInformation"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="0.1dp"
-                android:background="@android:color/white">
+                style="@style/RLayoutStyle">
 
                 <TextView
                     style="@style/textStyle"
@@ -128,13 +118,11 @@
                     style="@style/ImageEnter" />
             </RelativeLayout>
 
+            <include layout="@layout/layout_line10" />
 
             <RelativeLayout
                 android:id="@+id/rl_helpCenter"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="10dp"
-                android:background="@android:color/white">
+                style="@style/RLayoutStyle">
 
                 <TextView
                     style="@style/textStyle"
@@ -145,12 +133,11 @@
                 <ImageView style="@style/ImageEnter" />
             </RelativeLayout>
 
+            <include layout="@layout/layout_line" />
+
             <RelativeLayout
                 android:id="@+id/rl_feedback"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="0.1dp"
-                android:background="@android:color/white">
+                style="@style/RLayoutStyle">
 
                 <TextView
                     style="@style/textStyle"
@@ -161,12 +148,11 @@
                 <ImageView style="@style/ImageEnter" />
             </RelativeLayout>
 
+            <include layout="@layout/layout_line" />
+
             <RelativeLayout
                 android:id="@+id/rl_aboutDuoDuo"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="0.1dp"
-                android:background="@android:color/white">
+                style="@style/RLayoutStyle">
 
                 <TextView
                     style="@style/textStyle"
@@ -179,10 +165,7 @@
 
             <RelativeLayout
                 android:id="@+id/rl_languageSwitch"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="0.1dp"
-                android:background="@android:color/white"
+                style="@style/RLayoutStyle"
                 android:visibility="gone">
 
                 <TextView
@@ -194,12 +177,11 @@
                 <ImageView style="@style/ImageEnter" />
             </RelativeLayout>
 
+            <include layout="@layout/layout_line" />
+
             <RelativeLayout
                 android:id="@+id/rl_onlineCustomerService"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="0.1dp"
-                android:background="@android:color/white">
+                style="@style/RLayoutStyle">
 
                 <TextView
                     style="@style/textStyle"
@@ -212,10 +194,7 @@
 
             <RelativeLayout
                 android:id="@+id/rl_switchAccount"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="0.1dp"
-                android:background="@android:color/white"
+                style="@style/RLayoutStyle"
                 android:visibility="gone">
 
                 <TextView
@@ -236,14 +215,11 @@
                     style="@style/ImageEnter" />
             </RelativeLayout>
 
+            <include layout="@layout/layout_line10" />
 
             <RelativeLayout
                 android:id="@+id/rl_logout"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="50dp"
-                android:background="@android:color/white">
+                style="@style/RLayoutStyle">
 
                 <TextView
                     style="@style/textStyle"

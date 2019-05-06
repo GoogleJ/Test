@@ -2,12 +2,12 @@ package com.zxjk.duoduo.ui.walletpage;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -38,9 +38,10 @@ public class ZhuanChuActivity extends BaseActivity implements SeekBar.OnSeekBarC
     private SeekBar seekZhuanchu;
     private TextView tvKuanggongPrice;
     private TextView tvGwei;
-    private TextView tvZhuanChuCoinType;
+    private TextView tv_currency;
     private EditText etWalletAddress;
     private EditText etCount;
+    private ImageView iv_currency;
 
     private SafeInputDialog safeInputDialog;
     private MoneyValueFilter moneyValueFilter;
@@ -49,6 +50,7 @@ public class ZhuanChuActivity extends BaseActivity implements SeekBar.OnSeekBarC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_zhuan_chu);
+        initView();
 
         safeInputDialog = new SafeInputDialog(this);
         safeInputDialog.setOnFinishListener(this);
@@ -58,33 +60,46 @@ public class ZhuanChuActivity extends BaseActivity implements SeekBar.OnSeekBarC
         moneyValueFilter.setDigits(2);
         etCount.setFilters(new InputFilter[]{moneyValueFilter});
         etWalletAddress = findViewById(R.id.etWalletAddress);
-        tvZhuanChuCoinType = findViewById(R.id.tvZhuanChuCoinType);
+        tv_currency = findViewById(R.id.tv_currency);
         tvKuanggongPrice = findViewById(R.id.tvKuanggongPrice);
         tvGwei = findViewById(R.id.tvGwei);
-
         seekZhuanchu.setMax(1000);
         seekZhuanchu.setOnSeekBarChangeListener(this);
         seekZhuanchu.setProgress(0);
+        initData();
     }
 
+    private void initView() {
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.zhuanchu));
+        iv_currency = findViewById(R.id.iv_currency);
+    }
+
+    private void initData() {
+        //返回
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
+        //选择币种
+        findViewById(R.id.rl_currency).setOnClickListener(v -> {
+            Intent intent = new Intent(ZhuanChuActivity.this, ChooseCoinActivity.class);
+            intent.putExtra("coin", tv_currency.getText().toString());
+            startActivityForResult(intent, 1);
+        });
+    }
+
+
     //选择联系人
-    public void selectContack(View view) {
+    public void addressList(View view) {
         Intent intent = new Intent(this, SelectContactActivity.class);
         intent.putExtra("fromZhuanChu", true);
         startActivityForResult(intent, 1);
     }
 
-    //选择币种
-    public void chooseCoinType(View view) {
-        Intent intent = new Intent(this, ChooseCoinActivity.class);
-        intent.putExtra("coin", tvZhuanChuCoinType.getText().toString());
-        startActivityForResult(intent, 1);
-    }
 
     private String walletAddress;
     private String count;
     private String gasPrice;
 
+    //提交
     public void submit(View view) {
         walletAddress = etWalletAddress.getText().toString().trim();
         if (TextUtils.isEmpty(walletAddress)) {
@@ -144,26 +159,20 @@ public class ZhuanChuActivity extends BaseActivity implements SeekBar.OnSeekBarC
 
         if (requestCode == 1 && resultCode == 2) {
             String coin = data.getStringExtra("coin");
-            tvZhuanChuCoinType.setText(coin);
-            Drawable drawable;
+            tv_currency.setText(coin);
             if (coin.equals("ETH")) {
                 moneyValueFilter.setDigits(4);
                 etCount.setFilters(new InputFilter[]{moneyValueFilter});
                 type = "0";
-                drawable = getDrawable(R.drawable.ic_blockwallet_eth);
+                iv_currency.setImageResource(R.drawable.ic_blockwallet_eth);
                 etCount.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
             } else {
                 moneyValueFilter.setDigits(2);
                 etCount.setFilters(new InputFilter[]{moneyValueFilter});
                 type = "1";
                 etCount.setFilters(new InputFilter[]{new InputFilter.LengthFilter(2)});
-                drawable = getDrawable(R.drawable.ic_exchange_coins);
+                iv_currency.setImageResource(R.drawable.ic_exchange_coins);
             }
-
-            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(),
-                    drawable.getIntrinsicWidth());
-
-            tvZhuanChuCoinType.setCompoundDrawables(null, null, drawable, null);
         }
 
         if (requestCode == 1 && resultCode == 3) {

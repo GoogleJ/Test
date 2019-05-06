@@ -1,101 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical"
-    tools:ignore="MissingConstraints">
+    tools:ignore="all">
 
-    <androidx.cardview.widget.CardView
 
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="50dp"
+        android:background="@drawable/shape_circular_bead">
 
-        android:layout_marginStart="38dp"
-        android:layout_marginEnd="38dp">
+        <TextView
+            android:id="@+id/type_of_certificate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/type_of_certificate"
+            android:textColor="@color/theme_color"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/id_card_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_below="@+id/type_of_certificate"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/selector_document_selection" />
 
-            <TextView
-                android:id="@+id/type_of_certificate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="30dp"
-                android:text="@string/type_of_certificate"
-                android:textColor="@color/themecolor"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/id_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/type_of_certificate"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:gravity="center"
+            android:layout_alignTop="@+id/id_card_icon"
+            android:layout_alignBottom="@+id/id_card_icon"
+            android:layout_toEndOf="@id/id_card_icon"
+            android:text="@string/id_card"
+            android:textColor="@color/theme_color"
+            android:textSize="16sp" />
 
-            <ImageView
-                android:id="@+id/id_card_icon"
-                android:layout_width="20dp"
+        <ImageView
+            android:id="@+id/passport_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_below="@+id/id_card_icon"
+            android:layout_margin="20dp"
+            android:src="@drawable/selector_document_selection" />
 
-                android:layout_height="20dp"
+        <TextView
+            android:id="@+id/passport_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/id_card"
+            android:layout_alignTop="@+id/passport_icon"
+            android:gravity="center"
+            android:layout_alignBottom="@+id/passport_icon"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/passport_icon"
+            android:text="@string/passport"
+            android:textColor="@color/theme_color"
+            android:textSize="16sp" />
 
-                android:layout_marginTop="28dp"
-                android:src="@drawable/selector_document_selection"
-                app:layout_constraintStart_toStartOf="@+id/type_of_certificate"
-                app:layout_constraintTop_toBottomOf="@+id/type_of_certificate" />
-            <TextView
-                android:id="@+id/id_card"
-                android:text="@string/id_card"
-                android:layout_marginStart="20dp"
-                android:textSize="17sp"
-                android:textColor="@color/themecolor"
-                app:layout_constraintBottom_toBottomOf="@+id/id_card_icon"
-                app:layout_constraintTop_toTopOf="@+id/id_card_icon"
-                app:layout_constraintStart_toEndOf="@+id/id_card_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <ImageView
-                android:id="@+id/passport_icon"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="29dp"
-                app:layout_constraintStart_toStartOf="@+id/id_card_icon"
-                app:layout_constraintTop_toBottomOf="@+id/id_card_icon"
-                android:src="@drawable/selector_document_selection"
-                />
-            <TextView
-                android:id="@+id/passport_text"
-                android:text="@string/passport"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="17sp"
-                android:textColor="@color/themecolor"
-                app:layout_constraintTop_toTopOf="@+id/passport_icon"
-                app:layout_constraintBottom_toBottomOf="@+id/passport_icon"
-                app:layout_constraintStart_toStartOf="@+id/id_card"
-                />
-            <ImageView
-                android:id="@+id/other_identity_card_icon"
-                android:layout_marginTop="29dp"
-                app:layout_constraintStart_toStartOf="@+id/passport_icon"
-                app:layout_constraintTop_toBottomOf="@+id/passport_icon"
-                android:src="@drawable/selector_document_selection"
-                android:layout_width="20dp"
-                android:layout_height="20dp" />
-            <TextView
-                android:id="@+id/other_id_card"
-                android:text="@string/other_identity_card"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="17sp"
-                android:textColor="@color/themecolor"
-                app:layout_constraintStart_toStartOf="@+id/id_card"
-                app:layout_constraintTop_toTopOf="@+id/other_identity_card_icon"
-                app:layout_constraintBottom_toBottomOf="@+id/other_identity_card_icon"
-                />
+        <ImageView
+            android:id="@+id/other_identity_card_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_below="@+id/passport_icon"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/selector_document_selection" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/other_id_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/passport_text"
+            android:layout_alignTop="@+id/other_identity_card_icon"
+            android:layout_alignBottom="@+id/other_identity_card_icon"
+            android:layout_toEndOf="@+id/other_identity_card_icon"
+            android:gravity="center"
+            android:text="@string/other_identity_card"
+            android:textColor="@color/theme_color"
+            android:textSize="16sp" />
+    </RelativeLayout>
 
-
-    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

@@ -3,32 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F8F8"
+    android:background="@color/background_color"
     android:orientation="vertical"
     tools:context=".ui.minepage.HelpActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/themecolor">
+    <include layout="@layout/layout_title_back" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:onClick="back"
-            android:padding="12dp"
-            android:src="@drawable/ico_back" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/help_center"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

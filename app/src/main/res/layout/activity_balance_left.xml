@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F8F8"
+    android:background="@color/background_color"
     android:orientation="vertical">
 
     <include layout="@layout/layout_title_back" />
@@ -60,10 +60,7 @@
 
             <RelativeLayout
                 android:id="@+id/rl_billingDetails"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-
-                android:background="@android:color/white">
+                style="@style/RLayoutStyle">
 
                 <TextView
                     style="@style/textStyle"
@@ -74,12 +71,12 @@
                 <ImageView style="@style/ImageEnter" />
             </RelativeLayout>
 
+            <include layout="@layout/layout_line" />
+
             <RelativeLayout
                 android:id="@+id/rl_PaymentSettings"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="1dp"
-                android:background="@android:color/white">
+                style="@style/RLayoutStyle">
+
 
                 <TextView
                     style="@style/textStyle"
@@ -90,13 +87,11 @@
                 <ImageView style="@style/ImageEnter" />
             </RelativeLayout>
 
+            <include layout="@layout/layout_line10" />
 
             <RelativeLayout
                 android:id="@+id/rl_realNameAuthentication"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="10dp"
-                android:background="@android:color/white">
+                style="@style/RLayoutStyle">
 
                 <TextView
                     style="@style/textStyle"

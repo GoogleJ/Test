@@ -11,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
@@ -18,11 +21,7 @@ import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.CommonUtils;
-
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class RetrievePayPwdActivity extends BaseActivity implements View.OnClickListener {
     ImageView idCardImage;
@@ -35,7 +34,7 @@ public class RetrievePayPwdActivity extends BaseActivity implements View.OnClick
     EditText verifiedCodeEdit;
     TextView commitBtn;
     boolean isTrue = true;
-    TitleBar title;
+
 
     //短信验证
     String messagfeCode;
@@ -48,7 +47,14 @@ public class RetrievePayPwdActivity extends BaseActivity implements View.OnClick
     }
 
     private void initView() {
-        title = findViewById(R.id.title_bar);
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.find_pay_password));
+        findViewById(R.id.rl_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         idCardImage = findViewById(R.id.id_card_image);
         phoneCodeImage = findViewById(R.id.phone_code_image);
         idCardLayout = findViewById(R.id.id_card_layout);
@@ -61,7 +67,7 @@ public class RetrievePayPwdActivity extends BaseActivity implements View.OnClick
         commitBtn.setOnClickListener(this);
         textGetCode.setOnClickListener(this);
         phone.setText(Constant.currentUser.getMobile());
-        title.getLeftImageView().setOnClickListener(v -> finish());
+
     }
 
     @Override

@@ -27,7 +27,6 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.TakePopWindow;
-import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.ui.widget.dialog.PaymentTypeDialog;
 import com.zxjk.duoduo.utils.AesUtil;
 import com.zxjk.duoduo.utils.CommonUtils;
@@ -42,24 +41,25 @@ import static com.zxjk.duoduo.ui.EditPersonalInformationFragment.REQUEST_ALBUM;
 import static com.zxjk.duoduo.ui.EditPersonalInformationFragment.REQUEST_TAKE;
 
 /**
- * @author Administrator
+ * 完善信息
+ * 微信、支付宝、银行卡
  */
 @SuppressLint("CheckResult")
 public class ReceiptTypeActivity extends BaseActivity implements View.OnClickListener, TakePopWindow.OnItemClickListener {
-    TitleBar receiptTypeTitle;
     ConstraintLayout nickName, realName, accountIdCard;
     TextView receiptTypeName, receiptTypeCard, receiptTypePaymentName;
     TextView receiptTypeRealName, receiptTypeRealCardName, receiptTypePayment;
     ImageView receiptTypeGo, receiptTypeCardGo, receiptTypePaymentGo;
     TextView commitBtn;
     private TakePopWindow selectPicPopWindow;
-    //接受的类型
     String wechat = "1";
     String alipay = "2";
     String bank = "3";
     PaymentTypeDialog dialog;
     String types;
     private String url;
+
+    private TextView tv_title;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,16 +71,17 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initClick() {
-        receiptTypeTitle.getLeftImageView().setOnClickListener(v -> finish());
+
         nickName.setOnClickListener(this);
         realName.setOnClickListener(this);
         commitBtn.setOnClickListener(this);
     }
 
     private void initView() {
+        tv_title = findViewById(R.id.tv_title);
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
         selectPicPopWindow = new TakePopWindow(ReceiptTypeActivity.this);
         selectPicPopWindow.setOnItemClickListener(this);
-        receiptTypeTitle = findViewById(R.id.receipt_type_title);
         nickName = findViewById(R.id.nick_name);
         realName = findViewById(R.id.real_name);
         accountIdCard = findViewById(R.id.account_id_card);
@@ -101,7 +102,7 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
         types = intent.getStringExtra("type");
         if (wechat.equals(types)) {
             //微信信息，提交按钮已隐藏
-            receiptTypeTitle.setTitle(getString(R.string.wechat_info));
+            tv_title.setText(getString(R.string.wechat_info));
             receiptTypeName.setText(R.string.nick);
             receiptTypeCard.setText(R.string.receipt_type_real_name);
             receiptTypePaymentName.setText(R.string.collection_code);
@@ -110,7 +111,7 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
             receiptTypeCardGo.setVisibility(View.GONE);
         } else if (alipay.equals(types)) {
             //支付宝信息，提交按钮已隐藏
-            receiptTypeTitle.setTitle(getString(R.string.alipy_info));
+            tv_title.setText(getString(R.string.alipy_info));
             receiptTypeName.setText(R.string.account_id);
             receiptTypeCard.setText(R.string.receipt_type_real_name);
             receiptTypePaymentName.setText(R.string.collection_code);
@@ -119,7 +120,7 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
             receiptTypeCardGo.setVisibility(View.GONE);
         } else {
             //银行卡信息，提交按钮已隐藏
-            receiptTypeTitle.setTitle(getString(R.string.bank_info));
+            tv_title.setText(getString(R.string.bank_info));
             receiptTypeName.setText(R.string.account_name);
             receiptTypeCard.setText(R.string.bank_id_card);
             receiptTypePaymentName.setText(R.string.bank);
