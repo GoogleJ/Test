@@ -31,10 +31,9 @@ public class OverOrderActivity extends BaseActivity {
     private TextView tv3;
     private TextView tv4;
     private TextView tv5;
-    private TextView tv6;
     private TextView tv7;
     private ImageView iv;
-
+    private ImageView iv_wechat, iv_alipay, iv_bank;
     private GetOverOrderResponse data;
 
     private SelectPopupWindow selectPopupWindow;
@@ -48,12 +47,16 @@ public class OverOrderActivity extends BaseActivity {
 
         data = (GetOverOrderResponse) getIntent().getSerializableExtra("data");
 
+        iv_wechat = findViewById(R.id.iv_wechat);
+        iv_alipay = findViewById(R.id.iv_alipay);
+        iv_bank = findViewById(R.id.iv_bank);
+
         tv1 = findViewById(R.id.tv1);
         tv2 = findViewById(R.id.tv2);
         tv3 = findViewById(R.id.tv3);
         tv4 = findViewById(R.id.tv4);
         tv5 = findViewById(R.id.tv5);
-        tv6 = findViewById(R.id.tv6);
+
         tv7 = findViewById(R.id.tv7);
         iv = findViewById(R.id.iv);
 
@@ -64,11 +67,12 @@ public class OverOrderActivity extends BaseActivity {
         tv5.setText(data.getBothOrderId());
 
         if (data.getPayType().equals("1")) {
-            tv6.setText(R.string.wechat);
+
+            iv_wechat.setVisibility(View.VISIBLE);
         } else if (data.getPayType().equals("2")) {
-            tv6.setText(R.string.alipay);
+            iv_alipay.setVisibility(View.VISIBLE);
         } else {
-            tv6.setText(R.string.bankcard);
+            iv_bank.setVisibility(View.VISIBLE);
         }
 
         tv7.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Long.parseLong(data.getCreateTime())));

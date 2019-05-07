@@ -30,10 +30,11 @@ import com.zxjk.duoduo.utils.MMKVUtils;
 import io.rong.imkit.RongIM;
 
 /**
- * 这里是关于设置的activity
- *
- * @author Administrator
+ * author L
+ * create at 2019/5/7
+ * description:设置
  */
+
 @SuppressLint("CheckResult")
 public class SettingActivity extends BaseActivity {
 

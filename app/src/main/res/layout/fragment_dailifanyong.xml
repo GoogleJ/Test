@@ -44,7 +44,7 @@
                 android:paddingTop="1dp"
                 android:paddingEnd="6dp"
                 android:paddingBottom="1dp"
-                android:text="超级代理"
+                android:text="普通用户"
                 android:textColor="#F2C97A"
                 android:textSize="11sp" />
 
@@ -224,7 +224,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="10dp"/>
+        android:layout_height="10dp" />
 
     <LinearLayout
         android:id="@+id/ll_myGroup"

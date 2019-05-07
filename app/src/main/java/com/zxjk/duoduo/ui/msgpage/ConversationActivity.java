@@ -60,7 +60,6 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import io.rong.imkit.RongExtension;
@@ -80,6 +79,11 @@ import io.rong.imlib.typingmessage.TypingStatus;
 import io.rong.message.TextMessage;
 import io.rong.message.VoiceMessage;
 
+/**
+ * author L
+ * create at 2019/5/7
+ * description: 游戏下注
+ */
 @SuppressLint("CheckResult")
 public class ConversationActivity extends BaseActivity implements RongIMClient.OnReceiveMessageListener {
     private Disposable gameWindowDisposable;
@@ -563,7 +567,6 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                         .subscribe(getGroupGameParameterResponse -> {
                             GamePopupWindow gamePopupWindow = new GamePopupWindow(ConversationActivity.this);
                             gamePopupWindow.setGroupId(groupResponse.getGroupInfo().getId());
-
                             gamePopupWindow.setOnCommit((data, time) -> {
                                 gamePopupWindow.dismiss();
                                 NiceDialog.init().setLayoutId(R.layout.layout_dialog_fragment)
@@ -620,7 +623,6 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
 
                                             }
                                         })
-                                        .setDimAmount(0.3f)
                                         .setOutCancel(false)
                                         .show(getSupportFragmentManager());
                             });

@@ -1,50 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/list_item_bg_press"
+    android:background="@android:color/white"
     android:orientation="vertical"
-    tools:ignore="MissingConstraints">
+    tools:ignore="all">
 
-    <com.zxjk.duoduo.ui.widget.TitleBar
-        android:id="@+id/title_bar"
+    <include layout="@layout/layout_title_back" />
+
+    <EditText
+        android:id="@+id/search_edit"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:titleBarLeftImage="@drawable/ico_back"
-        app:titleBarTextColor="@color/white"
-        app:titleBarTitle="@string/choose_a_new_owner_title" />
+        android:layout_height="45dp"
+        android:layout_margin="12dp"
+        android:background="@drawable/shape_circular_bead2"
+        android:drawableStart="@drawable/icon_search_view"
+        android:drawablePadding="4dp"
+        android:hint="@string/m_contact_search_label"
+        android:imeOptions="actionSearch"
+        android:maxLines="1"
+        android:paddingStart="25dp"
+        android:paddingEnd="20dp"
+        android:singleLine="true"
+        android:textSize="15sp"
+        tools:ignore="RtlCompat" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/search"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/title_layout">
-
-        <EditText
-            android:id="@+id/search_edit"
-            style="?attr/checkedTextViewStyle"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="12dp"
-            android:background="@color/list_item_bg_press"
-            android:drawableStart="@drawable/icon_search_view"
-            android:drawablePadding="10dp"
-            android:hint="@string/m_contact_search_label"
-            android:imeOptions="actionSearch"
-            android:maxLines="1"
-            android:paddingStart="20dp"
-            android:singleLine="true"
-            android:textSize="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -57,7 +39,8 @@
         <com.zxjk.duoduo.ui.msgpage.widget.IndexView
             android:layout_width="13dp"
             android:layout_height="match_parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
 
 </LinearLayout>

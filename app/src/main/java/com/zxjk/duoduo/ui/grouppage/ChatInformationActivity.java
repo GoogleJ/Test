@@ -33,7 +33,7 @@ import io.rong.imlib.model.UserInfo;
 /**
  * author L
  * create at 2019/5/7
- * description:  聊天信息
+ * description:  个人聊天信息
  */
 @SuppressLint("CheckResult")
 public class ChatInformationActivity extends BaseActivity {

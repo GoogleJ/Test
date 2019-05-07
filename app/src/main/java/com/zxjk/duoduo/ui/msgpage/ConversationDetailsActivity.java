@@ -35,7 +35,9 @@ import io.rong.imlib.model.Message;
 import io.rong.message.CommandMessage;
 
 /**
- * @author Administrator
+ * author L
+ * create at 2019/5/7
+ * description: 个人信息 发送消息 语音通话
  */
 @SuppressLint("CheckResult")
 public class ConversationDetailsActivity extends BaseActivity implements View.OnClickListener, CommonPopupWindow.ViewInterface {
@@ -268,7 +270,7 @@ public class ConversationDetailsActivity extends BaseActivity implements View.On
                             RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE
                                     , friendId, null);
                             RongIMClient.getInstance().cleanHistoryMessages(Conversation.ConversationType.PRIVATE,
-                                    friendId,0,false,null);
+                                    friendId, 0, false, null);
                         }
 
                         @Override

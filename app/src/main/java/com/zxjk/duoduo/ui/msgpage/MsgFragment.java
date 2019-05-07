@@ -7,18 +7,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.ui.msgpage.widget.CommonPopupWindow;
 import com.zxjk.duoduo.ui.walletpage.RecipetQRActivity;
-import com.zxjk.duoduo.ui.widget.TitleBar;
 
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
@@ -31,13 +31,12 @@ import io.rong.message.CommandMessage;
  * description: 消息
  */
 public class MsgFragment extends BaseFragment implements View.OnClickListener, CommonPopupWindow.ViewInterface {
-    TitleBar titleBar;
 
     private static final String CONVERSATIONLIST_FRAGMENT_KEY = "conversationlist_fragment_key";
     private CusConversationListFragment mConversationListFragment = null;
     private CommonPopupWindow popupWindow;
 
-    View rootView;
+    private View rootView;
 
     @Nullable
     @Override
@@ -50,12 +49,13 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
     }
 
     private void initHear() {
-        titleBar = rootView.findViewById(R.id.title_bar);
-        if (!Constant.isVerifyVerision) {
-            titleBar.setLeftImageResource(R.drawable.ic_head_address_book);
-            titleBar.getLeftImageView().setOnClickListener(v -> startActivity(new Intent(getActivity(), ContactsNewFriendActivity.class)));
-        }
-        titleBar.getRightImageView().setOnClickListener(v -> {
+        TextView tv_title = rootView.findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.msg_title));
+        RelativeLayout rl_end = rootView.findViewById(R.id.rl_end);
+        rootView.findViewById(R.id.rl_left).setOnClickListener(v ->
+                startActivity(new Intent(getActivity(), ContactsNewFriendActivity.class)));
+
+        rl_end.setOnClickListener(v -> {
             if (popupWindow != null && popupWindow.isShowing()) {
                 return;
             }
@@ -71,8 +71,10 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
                 if (result) startActivity(new Intent(getActivity(), QrCodeActivity.class));
                 popupWindow.dismiss();
             }, Manifest.permission.CAMERA);
-            popupWindow.showAsDropDown(titleBar.getRightImageView());
+            popupWindow.showAsDropDown(rl_end);
         });
+
+
     }
 
     @Override

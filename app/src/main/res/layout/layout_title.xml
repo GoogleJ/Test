@@ -2,10 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="#4B4D5B">
+    android:background="@color/theme_color">
 
     <TextView
         android:id="@+id/tv_title"
-        style="@style/textStyle3"
-        android:layout_centerInParent="true" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
 </RelativeLayout>

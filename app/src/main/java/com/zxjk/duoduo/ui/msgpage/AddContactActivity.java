@@ -17,8 +17,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * @author Administrator
- * 添加联系人
+ * author L
+ * create at 2019/5/7
+ * description: 添加联系人
  */
 public class AddContactActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.m_add_friend_title_bar)
@@ -64,7 +65,6 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
             default:
         }
     }
-
 
 
     private void initUI() {

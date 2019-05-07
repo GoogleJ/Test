@@ -14,6 +14,11 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 
+/**
+ * author L
+ * create at 2019/5/7
+ * description: 余额
+ */
 @SuppressLint("CheckResult")
 public class BalanceLeftActivity extends BaseActivity {
 

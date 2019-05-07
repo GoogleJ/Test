@@ -91,12 +91,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
 
     private void initView(View rootview) {
         tv_title = rootview.findViewById(R.id.tv_title);
-        rootview.findViewById(R.id.rl_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
+        rootview.findViewById(R.id.rl_back).setOnClickListener(v -> getActivity().finish());
 
         layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);

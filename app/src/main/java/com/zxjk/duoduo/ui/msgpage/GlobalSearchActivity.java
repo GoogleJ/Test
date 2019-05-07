@@ -23,19 +23,18 @@ import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.GlobalSearchAdapter;
-import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * @author Administrator
+ * author L
+ * create at 2019/5/7
+ * description: 手机联系人
  */
 @SuppressLint("CheckResult")
 public class GlobalSearchActivity extends BaseActivity {
-    @BindView(R.id.m_search_title_bar)
-    TitleBar titleBar;
     @BindView(R.id.m_search_edit)
     EditText searchEdit;
     @BindView(R.id.recycler_view)
@@ -53,6 +52,10 @@ public class GlobalSearchActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_global_search);
         ButterKnife.bind(this);
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.m_contact_search_label));
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
+
         emptyView = getLayoutInflater().inflate(R.layout.view_app_null_type, null);
         emptyView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
@@ -83,10 +86,7 @@ public class GlobalSearchActivity extends BaseActivity {
     }
 
     private void initUI() {
-        titleBar.getLeftImageView().setOnClickListener(v -> {
-            CommonUtils.hideInputMethod(this);
-            finish();
-        });
+
         LinearLayoutManager manager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(manager);
         mAdapter = new GlobalSearchAdapter(this);

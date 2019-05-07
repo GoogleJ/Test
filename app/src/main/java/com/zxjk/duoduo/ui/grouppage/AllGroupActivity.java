@@ -28,6 +28,11 @@ import com.zxjk.duoduo.utils.CommonUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * author L
+ * create at 2019/5/7
+ * description: 一起游戏
+ */
 @SuppressLint("SetTextI18n")
 public class AllGroupActivity extends BaseActivity {
 
@@ -75,9 +80,11 @@ public class AllGroupActivity extends BaseActivity {
 
                             @Override
                             protected void convertView(ViewHolder viewHolder, BaseNiceDialog baseNiceDialog) {
+                                TextView tv_title = viewHolder.getView(R.id.tv_title);
                                 TextView tv_content = viewHolder.getView(R.id.tv_content);
                                 TextView tv_notarize = viewHolder.getView(R.id.tv_notarize);
-                                tv_content.setText(getString(R.string.hint_duoduo_id) + " " + groupListBean.getDuoduoId());
+                                tv_title.setText(getString(R.string.hint_duoduo_id));
+                                tv_content.setText(getString(R.string.hint_duoduo_id2) + " " + groupListBean.getDuoduoId());
                                 tv_notarize.setText(getString(R.string.fuzhi_duoduo_id));
                                 viewHolder.getView(R.id.tv_notarize).setOnClickListener(v -> {
                                     ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);

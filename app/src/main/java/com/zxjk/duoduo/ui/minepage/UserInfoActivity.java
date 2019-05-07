@@ -37,8 +37,9 @@ import java.io.File;
 import java.util.Collections;
 
 /**
- * @author Administrator
- * 个人资料页面
+ * author L
+ * create at 2019/5/7
+ * description: 个人资料
  */
 @SuppressLint("CheckResult")
 public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnItemClickListener {

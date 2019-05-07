@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -33,7 +34,7 @@ public class WaitForJudgeActivity extends BaseActivity {
     private TextView tvWaitForJudgeTime;
     private TextView tvWaitForJudgeReceiver;
     private TextView tvWaitForJudgeReceiverAccount;
-    private TextView tvWaitForJudgePayType;
+    private ImageView iv_wechat, iv_alipay, iv_bank;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,18 +50,22 @@ public class WaitForJudgeActivity extends BaseActivity {
         tvWaitForJudgeTime = findViewById(R.id.tvWaitForJudgeTime);
         tvWaitForJudgeReceiver = findViewById(R.id.tvWaitForJudgeReceiver);
         tvWaitForJudgeReceiverAccount = findViewById(R.id.tvWaitForJudgeReceiverAccount);
-        tvWaitForJudgePayType = findViewById(R.id.tvWaitForJudgePayType);
+
+        iv_wechat = findViewById(R.id.iv_wechat);
+        iv_alipay = findViewById(R.id.iv_alipay);
+        iv_bank = findViewById(R.id.iv_bank);
+
 
         String buytype = getIntent().getStringExtra("buytype");
         switch (buytype) {
             case "1":
-                tvWaitForJudgePayType.setText(R.string.wechatPay);
+                iv_wechat.setVisibility(View.VISIBLE);
                 break;
             case "2":
-                tvWaitForJudgePayType.setText(R.string.alipay);
+                iv_alipay.setVisibility(View.VISIBLE);
                 break;
             case "3":
-                tvWaitForJudgePayType.setText(R.string.bankcard);
+                iv_bank.setVisibility(View.VISIBLE);
                 break;
             default:
         }

@@ -22,7 +22,9 @@ import com.zxjk.duoduo.ui.walletpage.adapter.WalletPageAdapter;
 import java.util.ArrayList;
 
 /**
- * 钱包模块
+ * author L
+ * create at 2019/5/7
+ * description: 钱包
  */
 public class WalletFragment extends BaseFragment {
 

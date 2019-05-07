@@ -28,7 +28,11 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-
+/**
+ * author L
+ * create at 2019/5/7
+ * description:我的二维码
+ */
 public class MyQrCodeActivity extends BaseActivity {
 
 

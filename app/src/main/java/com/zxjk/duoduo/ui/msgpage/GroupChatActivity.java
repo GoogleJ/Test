@@ -22,7 +22,6 @@ import com.zxjk.duoduo.network.response.GroupChatResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.GroupChatAdapter;
-import com.zxjk.duoduo.ui.widget.TitleBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +32,12 @@ import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
 
 /**
- * @author Administrator
- * 群聊
+ * author L
+ * create at 2019/5/7
+ * description: 群聊
  */
 public class GroupChatActivity extends BaseActivity implements TextWatcher {
 
-    @BindView(R.id.m_group_chat_title_bar)
-    TitleBar mGroupChatTitleBar;
     @BindView(R.id.m_group_chat_edit_1)
     EditText mGroupChatEdit1;
     @BindView(R.id.m_group_chat_edit)
@@ -59,6 +57,11 @@ public class GroupChatActivity extends BaseActivity implements TextWatcher {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_chat);
         ButterKnife.bind(this);
+
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.m_group_chat));
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
+
         emptyView = getLayoutInflater().inflate(R.layout.view_app_null_type, null);
         emptyView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
@@ -66,8 +69,7 @@ public class GroupChatActivity extends BaseActivity implements TextWatcher {
         TextView app_prompt_text = emptyView.findViewById(R.id.app_prompt_text);
         app_prompt_text.setText(getString(R.string.no_qunzu));
         //关闭当前活动
-        mGroupChatTitleBar.getLeftImageView().setOnClickListener(v ->
-                finish());
+
         LinearLayoutManager manage = new LinearLayoutManager(this);
         mGroupChatRecyclerView.setLayoutManager(manage);
         groupChatAdapter = new GroupChatAdapter();

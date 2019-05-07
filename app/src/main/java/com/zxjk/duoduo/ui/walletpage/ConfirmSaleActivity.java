@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zxjk.duoduo.R;
@@ -25,7 +26,7 @@ public class ConfirmSaleActivity extends BaseActivity {
     private TextView tvConfirmSalePriceReference;
     private TextView tvConfirmSaleCount;
     private TextView tvConfirmSaleTotalPrice;
-    private TextView tvConfirmSalePayType;
+    private ImageView iv_wechat, iv_alipay, iv_bank;
 
     private ConfirmDialog dialog;
     private String rate;
@@ -43,7 +44,9 @@ public class ConfirmSaleActivity extends BaseActivity {
         tvConfirmSalePriceReference = findViewById(R.id.tvConfirmSalePriceReference);
         tvConfirmSaleCount = findViewById(R.id.tvConfirmSaleCount);
         tvConfirmSaleTotalPrice = findViewById(R.id.tvConfirmSaleTotalPrice);
-        tvConfirmSalePayType = findViewById(R.id.tvConfirmSalePayType);
+        iv_wechat = findViewById(R.id.iv_wechat);
+        iv_alipay = findViewById(R.id.iv_alipay);
+        iv_bank = findViewById(R.id.iv_bank);
 
         tvConfirmSaleOrderId.setText(data.getSellOrderId());
         tvConfirmSaleCoinType.setText(data.getCurrency().equals("1") ? "HK" : "Other");
@@ -56,31 +59,32 @@ public class ConfirmSaleActivity extends BaseActivity {
             for (String str : split) {
                 switch (str) {
                     case "1":
-                        sb.append("微信" + ",");
+                        iv_wechat.setVisibility(View.VISIBLE);
                         break;
                     case "2":
-                        sb.append("支付宝" + ",");
+                        iv_alipay.setVisibility(View.VISIBLE);
+
                         break;
                     case "3":
-                        sb.append("银行卡" + ",");
+                        iv_bank.setVisibility(View.VISIBLE);
                         break;
                 }
             }
-            sb.deleteCharAt(sb.length() - 1);
+
         } else {
             switch (data.getPayType()) {
                 case "1":
-                    sb.append("微信" + ",");
+                    iv_wechat.setVisibility(View.VISIBLE);
                     break;
                 case "2":
-                    sb.append("支付宝" + ",");
+                    iv_alipay.setVisibility(View.VISIBLE);
                     break;
                 case "3":
-                    sb.append("银行卡" + ",");
+                    iv_bank.setVisibility(View.VISIBLE);
                     break;
             }
         }
-        tvConfirmSalePayType.setText(sb.toString());
+
     }
 
     //取消订单

@@ -2,6 +2,8 @@ package com.zxjk.duoduo.ui.walletpage;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +18,7 @@ public class ExchangeOrderCancelActivity extends AppCompatActivity {
     private TextView tvConfirmSalePriceReference;
     private TextView tvConfirmSaleCount;
     private TextView tvConfirmSaleTotalPrice;
-    private TextView tvConfirmSalePayType;
+    private ImageView iv_wechat, iv_alipay, iv_bank;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +32,9 @@ public class ExchangeOrderCancelActivity extends AppCompatActivity {
         tvConfirmSalePriceReference = findViewById(R.id.tvConfirmSalePriceReference);
         tvConfirmSaleCount = findViewById(R.id.tvConfirmSaleCount);
         tvConfirmSaleTotalPrice = findViewById(R.id.tvConfirmSaleTotalPrice);
-        tvConfirmSalePayType = findViewById(R.id.tvConfirmSalePayType);
+        iv_wechat = findViewById(R.id.iv_wechat);
+        iv_alipay = findViewById(R.id.iv_alipay);
+        iv_bank = findViewById(R.id.iv_bank);
 
         GetOverOrderResponse data = (GetOverOrderResponse) getIntent().getSerializableExtra("data");
         tvConfirmSaleOrderId.setText(TextUtils.isEmpty(data.getBothOrderId()) ? (TextUtils.isEmpty(data.getSellOrderId()) ?
@@ -41,11 +45,12 @@ public class ExchangeOrderCancelActivity extends AppCompatActivity {
         tvConfirmSaleTotalPrice.setText(data.getMoney());
 
         if (data.getPayType().equals("1")) {
-            tvConfirmSalePayType.setText(R.string.wechat);
+
+            iv_wechat.setVisibility(View.VISIBLE);
         } else if (data.getPayType().equals("2")) {
-            tvConfirmSalePayType.setText(R.string.alipay);
+            iv_alipay.setVisibility(View.VISIBLE);
         } else {
-            tvConfirmSalePayType.setText(R.string.bankcard);
+            iv_bank.setVisibility(View.VISIBLE);
         }
     }
 }

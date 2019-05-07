@@ -23,7 +23,9 @@ import com.zxjk.duoduo.utils.GlideUtil;
 import java.text.DecimalFormat;
 
 /**
- * 区块链钱包
+ * author L
+ * create at 2019/5/7
+ * description: 区块链钱包
  */
 @SuppressLint("CheckResult")
 public class BlockWalletActivity extends BaseActivity {

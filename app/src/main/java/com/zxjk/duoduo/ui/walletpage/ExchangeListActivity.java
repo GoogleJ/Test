@@ -25,6 +25,11 @@ import com.zxjk.duoduo.utils.CommonUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * author L
+ * create at 2019/5/7
+ * description: 多多交易所 交易记录
+ */
 @SuppressLint("CheckResult")
 public class ExchangeListActivity extends BaseActivity {
 

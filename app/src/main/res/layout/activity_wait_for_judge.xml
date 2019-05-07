@@ -190,11 +190,33 @@
             android:text="@string/collection_and_payment1"
             android:textColor="@color/textcolor3" />
 
-        <TextView
-            android:id="@+id/tvWaitForJudgePayType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/themecolor" />
+        <ImageView
+            android:id="@+id/iv_wechat"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="5dp"
+            android:src="@drawable/ic_exchange_wechat"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_alipay"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="5dp"
+            android:src="@drawable/ic_exchange_alipay"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_bank"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="5dp"
+            android:src="@drawable/ic_exchange_bankpay"
+            android:visibility="gone" />
+
 
     </LinearLayout>
 
@@ -243,9 +265,9 @@
     </LinearLayout>
 
     <LinearLayout
-        android:onClick="showQR"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="showQR"
         android:paddingStart="16dp"
         android:paddingTop="20dp"
         android:paddingEnd="16dp">

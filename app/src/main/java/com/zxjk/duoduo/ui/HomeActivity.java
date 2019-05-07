@@ -85,11 +85,9 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                     // 背景样式
                     .setBackgroundStyle(BACKGROUND_STYLE_RIPPLE)
                     // 背景颜色
-                    .setBarBackgroundColor("#2FA8E1")
-                    // 未选中状态颜色
-                    .setInActiveColor("#929292")
-                    // 选中状态颜色
-                    .setActiveColor("#ffffff")
+                    .setBarBackgroundColor("#ffffff")
+                    .setActiveColor("#08C1BC")
+                    .setInActiveColor("#000000")
                     // 添加Item
                     .addItem(new BottomNavigationItem(R.drawable.tab_message_icon_nl, "消息").setInactiveIconResource(R.drawable.tab_message_icon_hl).setBadgeItem(badgeItem))
                     .addItem(new BottomNavigationItem(R.drawable.tab_wallet_icon_nl, "联系人").setInactiveIconResource(R.drawable.tab_wallet_icon_hl))
@@ -104,14 +102,13 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                     .setBackgroundStyle(BACKGROUND_STYLE_STATIC)
                     // 背景颜色
                     .setBarBackgroundColor("#ffffff")
-                    // 选中状态颜色
-                    .setActiveColor("#4B4D5B")
-                    .setInActiveColor("#BEC4CF")
+                    .setActiveColor("#08C1BC")
+                    .setInActiveColor("#000000")
                     // 添加Item
-                    .addItem(new BottomNavigationItem(R.drawable.tab_message_icon_hl, "消息").setBadgeItem(badgeItem))
-                    .addItem(new BottomNavigationItem(R.drawable.tab_qun_icon_hl, "社群"))
-                    .addItem(new BottomNavigationItem(R.drawable.tab_wallet_icon_hl, "钱包"))
-                    .addItem(new BottomNavigationItem(R.drawable.tab_setting_icon_hl, "我的"))
+                    .addItem(new BottomNavigationItem(R.drawable.tab_message_icon_nl, "消息").setInactiveIconResource(R.drawable.tab_message_icon_hl).setBadgeItem(badgeItem))
+                    .addItem(new BottomNavigationItem(R.drawable.tab_qun_icon_nl, "社群").setInactiveIconResource(R.drawable.tab_qun_icon_hl))
+                    .addItem(new BottomNavigationItem(R.drawable.tab_wallet_icon_nl, "钱包").setInactiveIconResource(R.drawable.tab_wallet_icon_hl))
+                    .addItem(new BottomNavigationItem(R.drawable.tab_setting_icon_nl, "我的").setInactiveIconResource(R.drawable.tab_setting_icon_hl))
                     //设置默认选中位置
                     .setFirstSelectedPosition(0)
                     // 提交初始化（完成配置）

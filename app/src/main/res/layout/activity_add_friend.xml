@@ -72,7 +72,7 @@
             android:layout_height="50dp"
             android:layout_marginStart="12dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/icon_wechat"
+            app:srcCompat="@drawable/ic_wechat1"
             tools:ignore="MissingConstraints" />
 
         <TextView
@@ -121,7 +121,7 @@
             android:layout_height="50dp"
             android:layout_marginStart="12dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/icon_contact"
+            app:srcCompat="@drawable/ic_phone"
             tools:ignore="MissingConstraints" />
 
         <TextView
@@ -176,9 +176,9 @@
             android:id="@+id/m_add_friend_scan_it_icon"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="12dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/icon_scan_it"
+            app:srcCompat="@drawable/ic_scan1"
             tools:ignore="MissingConstraints" />
 
         <TextView

@@ -38,6 +38,11 @@ import java.util.List;
 import io.reactivex.ObservableSource;
 import io.reactivex.functions.Function;
 
+/**
+ * author L
+ * create at 2019/5/7
+ * description: 多多交易所
+ */
 @SuppressLint("CheckResult")
 public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener, SelectPopupWindow.OnPopWindowClickListener {
 

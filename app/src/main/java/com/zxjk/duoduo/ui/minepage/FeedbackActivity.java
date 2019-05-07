@@ -13,7 +13,9 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 
 /**
- * 意见反馈
+ * author L
+ * create at 2019/5/7
+ * description:意见反馈
  */
 public class FeedbackActivity extends BaseActivity {
     EditText feedbackEdit;
@@ -27,13 +29,13 @@ public class FeedbackActivity extends BaseActivity {
 
     private void initView() {
         TextView tv_title = findViewById(R.id.tv_title);
-        TextView tv_end = findViewById(R.id.tv_end);
+        TextView tv_commit = findViewById(R.id.tv_commit);
         feedbackEdit = findViewById(R.id.feedback_edit);
-        tv_end.setVisibility(View.VISIBLE);
-        tv_end.setText(getString(R.string.commit));
+        tv_commit.setVisibility(View.VISIBLE);
+        tv_commit.setText(getString(R.string.commit));
         tv_title.setText(getString(R.string.feedback_title));
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());
-        tv_end.setOnClickListener(v -> {
+        tv_commit.setOnClickListener(v -> {
             if (feedbackEdit.getText().toString().isEmpty()) {
                 ToastUtils.showShort(getString(R.string.please_enter_feedback_comments));
             } else {

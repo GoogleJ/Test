@@ -779,7 +779,7 @@
     <string name="zonge">总额:</string>
     <string name="hasjoined">已接受</string>
     <string name="noxiazhu">本局没有人下注</string>
-    <string name="hint_duoduo_id">好友/群主邀请才能进入该游戏群\n\n群主多多号: </string>
+    <string name="hint_duoduo_id">好友/群主邀请才能进入该游戏群 </string>
     <string name="fuzhi_duoduo_id">复制多多号</string>
     <string name="finishinfo">请先完善信息</string>
     <string name="shensu_success">申诉成功</string>
@@ -830,5 +830,7 @@
     <string name="email">邮箱</string>
     <string name="mailbox">邮箱</string>
     <string name="personalized">个人签名</string>
+    <string name="group_invitation">群聊邀请</string>
+    <string name="hint_duoduo_id2">群主多多号:</string>
 
 </resources>

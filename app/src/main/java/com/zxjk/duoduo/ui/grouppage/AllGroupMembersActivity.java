@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -18,7 +19,6 @@ import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.adapter.AllGroupMemebersAdapter1;
-import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.util.ArrayList;
@@ -30,18 +30,20 @@ import java.util.Locale;
  */
 @SuppressLint("CheckResult")
 public class AllGroupMembersActivity extends BaseActivity implements TextWatcher {
-    TitleBar titleBar;
     EditText searchEdit;
     RecyclerView mRecyclerView;
 
     AllGroupMemebersAdapter1 mAdapter;
 
     List<AllGroupMembersResponse> list = new ArrayList<>();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_group_members);
-        titleBar = findViewById(R.id.title_bar);
+        TextView tv_title = findViewById(R.id.tv_title);
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
+        tv_title.setText(getString(R.string.all_group_members_title));
         searchEdit = findViewById(R.id.search_edit);
         mRecyclerView = findViewById(R.id.recycler_view);
         searchEdit.addTextChangedListener(this);
@@ -49,11 +51,10 @@ public class AllGroupMembersActivity extends BaseActivity implements TextWatcher
     }
 
     private void initView() {
-        titleBar.getLeftImageView().setOnClickListener(v -> finish());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 5);
         mRecyclerView.setLayoutManager(gridLayoutManager);
         mAdapter = new AllGroupMemebersAdapter1();
-        GroupResponse groupResponse= (GroupResponse) getIntent().getSerializableExtra("allGroupMembers");
+        GroupResponse groupResponse = (GroupResponse) getIntent().getSerializableExtra("allGroupMembers");
         getGroupMemByGroupId(groupResponse.getGroupInfo().getId());
 
         mRecyclerView.setAdapter(mAdapter);
@@ -66,8 +67,8 @@ public class AllGroupMembersActivity extends BaseActivity implements TextWatcher
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(allGroupMembersResponses -> {
-                     list.addAll(allGroupMembersResponses);
-                     mAdapter.setNewData(list);
+                    list.addAll(allGroupMembersResponses);
+                    mAdapter.setNewData(list);
                 }, this::handleApiError);
     }
 

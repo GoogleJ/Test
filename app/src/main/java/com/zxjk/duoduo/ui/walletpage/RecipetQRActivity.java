@@ -37,7 +37,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * 收款码
+ * author L
+ * create at 2019/5/7
+ * description: 收款码
  */
 public class RecipetQRActivity extends BaseActivity {
 

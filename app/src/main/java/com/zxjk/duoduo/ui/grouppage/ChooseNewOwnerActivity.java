@@ -3,12 +3,17 @@ package com.zxjk.duoduo.ui.grouppage;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.shehuan.nicedialog.BaseNiceDialog;
+import com.shehuan.nicedialog.NiceDialog;
+import com.shehuan.nicedialog.ViewConvertListener;
+import com.shehuan.nicedialog.ViewHolder;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -16,20 +21,18 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.adapter.ChooseNewOwnerAdapter;
 import com.zxjk.duoduo.ui.msgpage.ConversationActivity;
-import com.zxjk.duoduo.ui.widget.TitleBar;
-import com.zxjk.duoduo.ui.widget.dialog.BaseAddTitleDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 /**
- * @author Administrator
+ * author L
+ * create at 2019/5/7
+ * description:选择新群主
  */
 @SuppressLint("CheckResult")
 public class ChooseNewOwnerActivity extends BaseActivity {
-    TitleBar titleBar;
     RecyclerView mRecyclerView;
     ChooseNewOwnerAdapter mAdapter;
 
-    BaseAddTitleDialog dialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,8 +40,9 @@ public class ChooseNewOwnerActivity extends BaseActivity {
         setContentView(R.layout.activity_choose_new_owner);
         String groupId = getIntent().getStringExtra("groupId");
 
-        titleBar = findViewById(R.id.title_bar);
-        titleBar.setLeftBack(this);
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.choose_a_new_owner_title));
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
         mRecyclerView = findViewById(R.id.recycler_view);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(RecyclerView.VERTICAL);
@@ -47,12 +51,26 @@ public class ChooseNewOwnerActivity extends BaseActivity {
         getGroupMemByGroupId(groupId);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            dialog = new BaseAddTitleDialog(ChooseNewOwnerActivity.this);
-            dialog.setOnClickListener(() -> {
-              updateGroupOwner(groupId, mAdapter.getData().get(position).getId());
-              dialog.dismiss();
-            });
-            dialog.show(getString(R.string.determine_select_group));
+
+            NiceDialog.init().setLayoutId(R.layout.layout_general_dialog4).setConvertListener(new ViewConvertListener() {
+                @Override
+                protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                    holder.setText(R.id.tv_content, "确定选择为新群主吗?");
+                    holder.setText(R.id.tv_cancel, "取消");
+                    holder.setText(R.id.tv_notarize, "确定");
+                    holder.setOnClickListener(R.id.tv_cancel, v -> {
+                        dialog.dismiss();
+
+                    });
+                    holder.setOnClickListener(R.id.tv_notarize, v -> {
+                        updateGroupOwner(groupId, mAdapter.getData().get(position).getId());
+                        dialog.dismiss();
+                    });
+
+                }
+            }).setOutCancel(false).show(getSupportFragmentManager());
+
+
         });
     }
 
@@ -90,7 +108,7 @@ public class ChooseNewOwnerActivity extends BaseActivity {
                     Intent intent = new Intent(ChooseNewOwnerActivity.this, ConversationActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
-                },this::handleApiError);
+                }, this::handleApiError);
 
     }
 }

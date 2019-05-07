@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/divider"
     android:orientation="vertical"
-    tools:ignore="RtlCompat,MissingConstraints">
+    tools:ignore="all">
 
     <com.zxjk.duoduo.ui.widget.TitleBar
         android:id="@+id/m_people_information_title_bar"
@@ -259,8 +259,8 @@
                     android:id="@+id/m_people_information_copy_wallet_address"
                     android:layout_width="38dp"
                     android:layout_height="38dp"
-                    android:layout_marginEnd="20dp"
                     android:layout_marginTop="30dp"
+                    android:layout_marginEnd="20dp"
                     android:padding="10dp"
                     android:scaleType="fitXY"
                     android:src="@drawable/icon_copy_people_information"

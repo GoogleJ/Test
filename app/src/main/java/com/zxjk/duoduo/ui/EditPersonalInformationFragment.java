@@ -25,7 +25,6 @@ import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.TakePopWindow;
-import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
@@ -35,14 +34,16 @@ import java.util.Collections;
 
 import butterknife.OnClick;
 
+/**
+ * author L
+ * create at 2019/5/7
+ * description: 编辑个人信息
+ */
 public class EditPersonalInformationFragment extends BaseActivity implements View.OnClickListener, TakePopWindow.OnItemClickListener {
 
     public static final int REQUEST_TAKE = 1;
     public static final int REQUEST_ALBUM = 2;
-    /**
-     * 这是关于标题栏的控件
-     */
-    TitleBar titleBar;
+
     /**
      * 这是关于点击完成按钮的控件
      */
@@ -64,11 +65,12 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
     private LoginResponse update;
 
     private void initData() {
-        titleBar.getLeftImageView().setOnClickListener(v -> finish());
     }
 
     private void initView() {
-        titleBar = findViewById(R.id.m_edit_information_title_bar);
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.m_edit_information_title_bar));
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
         commitBtn = findViewById(R.id.m_edit_information_btn);
         imageSearchBtn = findViewById(R.id.m_edit_information_header_icon);
         editNickName = findViewById(R.id.m_edit_information_name_edit);

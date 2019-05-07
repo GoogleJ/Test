@@ -2,12 +2,13 @@ package com.zxjk.duoduo.ui.walletpage;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.GetOverOrderResponse;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class WaitForPayOverActivity extends AppCompatActivity {
 
@@ -16,7 +17,7 @@ public class WaitForPayOverActivity extends AppCompatActivity {
     private TextView tvConfirmSalePriceReference;
     private TextView tvConfirmSaleCount;
     private TextView tvConfirmSaleTotalPrice;
-    private TextView tvConfirmSalePayType;
+    private ImageView iv_wechat, iv_alipay, iv_bank;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +29,9 @@ public class WaitForPayOverActivity extends AppCompatActivity {
         tvConfirmSalePriceReference = findViewById(R.id.tvConfirmSalePriceReference);
         tvConfirmSaleCount = findViewById(R.id.tvConfirmSaleCount);
         tvConfirmSaleTotalPrice = findViewById(R.id.tvConfirmSaleTotalPrice);
-        tvConfirmSalePayType = findViewById(R.id.tvConfirmSalePayType);
+        iv_wechat = findViewById(R.id.iv_wechat);
+        iv_alipay = findViewById(R.id.iv_alipay);
+        iv_bank = findViewById(R.id.iv_bank);
 
         GetOverOrderResponse data = (GetOverOrderResponse) getIntent().getSerializableExtra("data");
         tvConfirmSaleOrderId.setText(data.getBothOrderId());
@@ -43,13 +46,13 @@ public class WaitForPayOverActivity extends AppCompatActivity {
             for (String str : split) {
                 switch (str) {
                     case "1":
-                        sb.append("微信" + ",");
+                        iv_wechat.setVisibility(View.VISIBLE);
                         break;
                     case "2":
-                        sb.append("支付宝" + ",");
+                        iv_alipay.setVisibility(View.VISIBLE);
                         break;
                     case "3":
-                        sb.append("银行卡" + ",");
+                        iv_bank.setVisibility(View.VISIBLE);
                         break;
                 }
             }
@@ -57,17 +60,17 @@ public class WaitForPayOverActivity extends AppCompatActivity {
         } else {
             switch (data.getPayType()) {
                 case "1":
-                    sb.append("微信" + ",");
+                    iv_wechat.setVisibility(View.VISIBLE);
                     break;
                 case "2":
-                    sb.append("支付宝" + ",");
+                    iv_alipay.setVisibility(View.VISIBLE);
                     break;
                 case "3":
-                    sb.append("银行卡" + ",");
+                    iv_bank.setVisibility(View.VISIBLE);
                     break;
             }
         }
-        tvConfirmSalePayType.setText(sb.toString());
+
     }
 
     public void back(View view) {

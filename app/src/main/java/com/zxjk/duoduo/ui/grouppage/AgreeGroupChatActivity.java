@@ -16,7 +16,6 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.HomeActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.util.Arrays;
@@ -33,7 +32,6 @@ public class AgreeGroupChatActivity extends BaseActivity {
     TextView tvGroupName;
     TextView pleaseJoinGroup;
     TextView joinGroupBtn;
-    TitleBar titleBar;
 
     private String groupName;
 
@@ -41,14 +39,14 @@ public class AgreeGroupChatActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agree_group_chat);
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.group_invitation));
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
+
         groupHeader = findViewById(R.id.group_headers);
         tvGroupName = findViewById(R.id.group_chat_name);
         pleaseJoinGroup = findViewById(R.id.invite_to_group_chat);
         joinGroupBtn = findViewById(R.id.join_a_group_chat);
-        titleBar = findViewById(R.id.title_bar);
-
-        titleBar.getLeftImageView().setOnClickListener(v -> finish());
-
         String inviterId = getIntent().getStringExtra("inviterId");
         String groupId = getIntent().getStringExtra("groupId");
         groupName = getIntent().getStringExtra("groupName");

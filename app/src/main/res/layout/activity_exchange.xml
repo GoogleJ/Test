@@ -5,10 +5,12 @@
     android:background="@color/personal_information_1"
     android:orientation="vertical">
 
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/themecolor">
+        android:layout_height="50dp"
+        android:background="@color/theme_color">
+
 
         <ImageView
             android:layout_width="wrap_content"
@@ -196,7 +198,7 @@
                         android:inputType="number"
                         android:padding="4dp"
                         android:textColor="@color/textcolor1"
-                        android:textSize="15sp" />
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 
@@ -210,6 +212,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
                         android:text="@string/xianliang_xuantian"
                         android:textColor="@color/themecolor" />
 
@@ -217,7 +220,7 @@
                         android:id="@+id/etMinMoney"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
+                        android:layout_marginStart="15dp"
                         android:layout_weight="1"
                         android:background="@drawable/shape_stroke_conor"
                         android:gravity="center"
@@ -228,8 +231,8 @@
                         android:paddingTop="5dp"
                         android:paddingEnd="16dp"
                         android:paddingBottom="5dp"
-                        android:textColor="@color/themecolor"
-                        android:textSize="15sp" />
+                        android:textColor="@color/theme_color"
+                        android:textSize="14sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -244,19 +247,17 @@
                         android:id="@+id/etMaxMoney"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="20dp"
+                        android:layout_marginEnd="15dp"
                         android:layout_weight="1"
                         android:background="@drawable/shape_stroke_conor"
                         android:gravity="center"
                         android:hint="@string/input_maxbuy"
                         android:imeOptions="actionDone"
                         android:inputType="number"
-                        android:paddingStart="16dp"
                         android:paddingTop="5dp"
-                        android:paddingEnd="16dp"
                         android:paddingBottom="5dp"
-                        android:textColor="@color/themecolor"
-                        android:textSize="15sp" />
+                        android:textColor="@color/theme_color"
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 

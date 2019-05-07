@@ -178,11 +178,32 @@
             android:text="@string/salePayType"
             android:textColor="@color/textcolor3" />
 
-        <TextView
-            android:id="@+id/tvConfirmSalePayType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/themecolor" />
+        <ImageView
+            android:id="@+id/iv_wechat"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="5dp"
+            android:src="@drawable/ic_exchange_wechat"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_alipay"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="5dp"
+            android:src="@drawable/ic_exchange_alipay"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_bank"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="5dp"
+            android:src="@drawable/ic_exchange_bankpay"
+            android:visibility="gone" />
 
     </LinearLayout>
 
@@ -199,7 +220,6 @@
         android:textSize="16sp" />
 
     <Button
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -208,6 +228,7 @@
         android:onClick="cancelOrder"
         android:text="@string/cancel_order"
         android:textColor="@color/m_my_qr_code_label"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:visibility="gone" />
 
 </LinearLayout>
