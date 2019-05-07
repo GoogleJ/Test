@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,7 +20,6 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.PhoneContactAdapter;
 import com.zxjk.duoduo.ui.msgpage.utils.GetPhoneNumberFromMobileUtils;
-import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.util.ArrayList;
@@ -27,11 +27,11 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * @author Administrator
- * 联系人
+ * author L
+ * create at 2019/5/7
+ * description: 手机联系人
  */
 public class PhoneContactActivity extends BaseActivity implements TextWatcher {
-    TitleBar titleBar;
     RecyclerView mRecyclerView;
     List<PhoneInfo> list = new ArrayList<PhoneInfo>();
     EditText searchEdit;
@@ -43,9 +43,11 @@ public class PhoneContactActivity extends BaseActivity implements TextWatcher {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_contact);
-        titleBar = findViewById(R.id.title_bar);
+        TextView tv_title = findViewById(R.id.tv_title);
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
+        tv_title.setText(getString(R.string.m_add_friend_contact_label_1));
         mRecyclerView = findViewById(R.id.phone_contact_recycler_view);
-        titleBar.getLeftImageView().setOnClickListener(v -> finish());
+
         getPhoneNumberFromMobile = new GetPhoneNumberFromMobileUtils();
         searchEdit = findViewById(R.id.search_edit);
         searchEdit.addTextChangedListener(this);
@@ -104,6 +106,9 @@ public class PhoneContactActivity extends BaseActivity implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
+        if (mAdapter == null) {
+            return;
+        }
         String groupname = s.toString();
         if (groupname != null || groupname.length() > 0) {
             List<PhoneInfo> groupnamelist = search(groupname); //查找对应的群组数据
@@ -111,7 +116,6 @@ public class PhoneContactActivity extends BaseActivity implements TextWatcher {
         } else {
             mAdapter.setNewData(list);
         }
-        mAdapter.notifyDataSetChanged();
 
 
     }
