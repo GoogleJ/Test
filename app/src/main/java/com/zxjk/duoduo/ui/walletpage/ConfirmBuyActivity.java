@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -62,6 +63,10 @@ public class ConfirmBuyActivity extends BaseActivity implements TakePopWindow.On
     private TextView flagConfirmBuy; //支付凭证是否已上传？
     private TextView tvConfirmBuyCountDown; //倒计时
 
+    private LinearLayout llConfirmBuyBank;
+    private LinearLayout llConfirmBuyQR;
+    private TextView tvConfirmBuyReceiverBank;
+
     private ConfirmDialog dialogConfirm;
     private ConfirmDialog dialogCancel;
 
@@ -92,6 +97,9 @@ public class ConfirmBuyActivity extends BaseActivity implements TakePopWindow.On
         tvConfirmBuyOrderTime = findViewById(R.id.tvConfirmBuyOrderTime);
         flagConfirmBuy = findViewById(R.id.flagConfirmBuy);
         tvConfirmBuyCountDown = findViewById(R.id.tvConfirmBuyCountDown);
+        llConfirmBuyBank = findViewById(R.id.llConfirmBuyBank);
+        llConfirmBuyQR = findViewById(R.id.llConfirmBuyQR);
+        tvConfirmBuyReceiverBank = findViewById(R.id.tvConfirmBuyReceiverBank);
 
         data = (ReleaseSaleResponse) getIntent().getSerializableExtra("data");
         String buytype = getIntent().getStringExtra("buytype");
@@ -126,6 +134,9 @@ public class ConfirmBuyActivity extends BaseActivity implements TakePopWindow.On
             case "3":
                 tvConfirmBuyPayType.setText(R.string.bankcard);
                 drawable = getDrawable(R.drawable.ic_exchange_bankpay);
+                llConfirmBuyQR.setVisibility(View.GONE);
+                llConfirmBuyBank.setVisibility(View.VISIBLE);
+                tvConfirmBuyReceiverBank.setText(data.getOpenBank());
                 break;
             default:
         }
@@ -137,7 +148,7 @@ public class ConfirmBuyActivity extends BaseActivity implements TakePopWindow.On
         tvConfirmBuyReceiverCount.setText(data.getNumber());
         tvConfirmBuyReceiverSinglePrice.setText(getIntent().getStringExtra("rate"));
         tvConfirmBuyOrderTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Long.parseLong(data.getCreateTime())));
-        tvConfirmBuyMoney.setText(data.getMoney());
+        tvConfirmBuyMoney.setText(data.getMoney() + "CNY");
     }
 
     //我已完成支付
@@ -147,22 +158,20 @@ public class ConfirmBuyActivity extends BaseActivity implements TakePopWindow.On
             return;
         }
         if (dialogConfirm == null) {
-            dialogConfirm = new ConfirmDialog(this, getString(R.string.payment_confirmation), getString(R.string.please_confirm_that_you_have_paid_the_seller), callback -> {
-                ServiceFactory.getInstance().getBaseService(Api.class)
-                        .updateBuyPayState(data.getBothOrderId(), pictureUrl)
-                        .compose(RxSchedulers.normalTrans())
-                        .compose(bindToLifecycle())
-                        .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                        .subscribe(s -> {
-                            Intent intent = new Intent(this, WaitForJudgeActivity.class);
-                            data.setPayTime(String.valueOf(System.currentTimeMillis()));
-                            intent.putExtra("data", data);
-                            intent.putExtra("buytype", getIntent().getStringExtra("buytype"));
-                            intent.putExtra("rate", getIntent().getStringExtra("rate"));
-                            startActivity(intent);
-                            finish();
-                        }, this::handleApiError);
-            });
+            dialogConfirm = new ConfirmDialog(this, getString(R.string.payment_confirmation), getString(R.string.please_confirm_that_you_have_paid_the_seller), callback -> ServiceFactory.getInstance().getBaseService(Api.class)
+                    .updateBuyPayState(data.getBothOrderId(), pictureUrl)
+                    .compose(RxSchedulers.normalTrans())
+                    .compose(bindToLifecycle())
+                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                    .subscribe(s -> {
+                        Intent intent = new Intent(this, WaitForJudgeActivity.class);
+                        data.setPayTime(String.valueOf(System.currentTimeMillis()));
+                        intent.putExtra("data", data);
+                        intent.putExtra("buytype", getIntent().getStringExtra("buytype"));
+                        intent.putExtra("rate", getIntent().getStringExtra("rate"));
+                        startActivity(intent);
+                        finish();
+                    }, this::handleApiError));
         }
         dialogConfirm.show();
     }
@@ -193,6 +202,9 @@ public class ConfirmBuyActivity extends BaseActivity implements TakePopWindow.On
     }
 
     public void showQR(View view) {
+        if (llConfirmBuyBank.getVisibility() == View.VISIBLE) {
+            return;
+        }
         Intent intent = new Intent(this, ImgActivity.class);
         intent.putExtra("url", data.getReceiptPicture());
         startActivity(intent);

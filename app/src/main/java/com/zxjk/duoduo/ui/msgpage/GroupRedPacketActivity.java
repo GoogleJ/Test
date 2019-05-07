@@ -33,7 +33,10 @@ import com.zxjk.duoduo.utils.MD5Utils;
 import com.zxjk.duoduo.utils.MoneyValueFilter;
 
 import java.text.NumberFormat;
+import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
@@ -74,6 +77,14 @@ public class GroupRedPacketActivity extends BaseActivity implements SelectPopupW
         isGame = getIntent().getStringExtra("isGame");
         if (TextUtils.isEmpty(isGame)) {
             isGame = "1";
+        }
+        if (isGame.equals("0")) {
+            Observable.timer(30, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+                    .compose(bindToLifecycle())
+                    .subscribe(s -> {
+                        ToastUtils.showShort(R.string.game_timeup);
+                        finish();
+                    });
         }
 
         nf = NumberFormat.getNumberInstance();
@@ -286,12 +297,6 @@ public class GroupRedPacketActivity extends BaseActivity implements SelectPopupW
 
                                 @Override
                                 public void onSuccess(Message message) {
-                                    if (isGame.equals("0")) {
-                                        Intent intent = new Intent();
-                                        intent.putExtra("redId", redPacketMessage.getRedId());
-                                        intent.putExtra("groupId", group.getGroupInfo().getId());
-                                        setResult(2, intent);
-                                    }
                                     finish();
                                 }
 

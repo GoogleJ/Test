@@ -73,7 +73,6 @@ public class BaseActivity extends RxAppCompatActivity {
             reLoginDialog.show();
             return;
         }
-
         ToastUtils.showShort(RxException.getMessage(throwable));
     }
 

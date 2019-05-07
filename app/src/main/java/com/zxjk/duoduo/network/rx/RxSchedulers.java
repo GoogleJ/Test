@@ -44,6 +44,8 @@ public class RxSchedulers {
                 return Observable.just(response.data);
             } else if (response.code == CODE_UNLOGIN) {
                 return Observable.error(new RxException.DuplicateLoginExcepiton("重复登录"));
+            } else if (response.code == 502) {
+                return Observable.error(new RxException.DuplicateLoginExcepiton(response.msg, 502));
             }
             return Observable.error(new RxException.ParamsException(response.msg));
         });

@@ -15,6 +15,7 @@
         android:gravity="center"
         android:orientation="vertical">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -81,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
-            android:background="@android:color/white">
+            android:background="@drawable/shape_bac_white_conor1">
 
             <ImageView
                 android:id="@+id/m_my_qr_code_qr_code_icon"
@@ -104,14 +105,12 @@
                 android:layout_below="@+id/m_my_qr_code_qr_code_icon"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
-                android:background="@drawable/shape_bac_white_conor1"
                 android:gravity="center"
                 android:text="@string/m_my_qr_code_label"
                 android:textColor="#bbbbbb" />
 
-
         </RelativeLayout>
 
-
     </LinearLayout>
+
 </LinearLayout>

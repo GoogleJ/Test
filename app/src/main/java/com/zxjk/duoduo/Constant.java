@@ -10,17 +10,18 @@ import com.zxjk.duoduo.network.response.LoginResponse;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import io.rong.imlib.model.Message;
 
 public class Constant {
     //阿里OSS上传地址
     public static final String OSS_URL = "https://zhongxingjike.oss-cn-hongkong.aliyuncs.com/upload/";
-    //    public static final String BASE_URL = "https://192.168.0.110:8087/";
-//    public static final String BASE_URL = "https://192.168.0.115:8085/";
+//        public static final String BASE_URL = "https://192.168.0.110:8087/";
+//        public static final String BASE_URL = "https://192.168.0.115:8085/";
 //    public static final String BASE_URL = "https://duoduoweb.zzgb.net.cn";
-    public static final String BASE_URL = "https://192.168.0.109:8086/";
-
+//    public static final String BASE_URL = "https://192.168.0.109:8085/";
+    public static final String BASE_URL = "https://47.75.115.118:8086/";
 
     public static boolean isVerifyVerision = false;
 
@@ -64,6 +65,6 @@ public class Constant {
     public static String ownerIdForGameChat = "";
 
     //是否可以查看红包记录页，默认为0，可查看。 每开启一个游戏
-    public static volatile int canCheckRedRecord = 0;
+    public static AtomicInteger canCheckRedRecord = new AtomicInteger(0);
 
 }

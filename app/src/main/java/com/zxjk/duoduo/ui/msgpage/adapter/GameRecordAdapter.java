@@ -87,26 +87,29 @@ public class GameRecordAdapter extends RecyclerView.Adapter<GameRecordAdapter.Vi
         }
 
         void bindData(GetIntegralDetailsResponse bean) {
-            if (bean.getTitle().contains("上分") || bean.getSettlementCardType().contains("上分")) {
+            if (bean.getTitle().equals("上分")) {
                 iv.setImageResource(R.drawable.ic_game_record_list10);
             }
-            if (bean.getTitle().contains("下分") || bean.getSettlementCardType().contains("下分")) {
+            if (bean.getTitle().equals("下分")) {
                 iv.setImageResource(R.drawable.ic_game_record_list7);
             }
-            if (bean.getTitle().contains("牛") || bean.getSettlementCardType().contains("牛")) {
+            if (bean.getTitle().equals("牛牛")) {
                 iv.setImageResource(R.drawable.ic_game_record_list3);
             }
-            if (bean.getTitle().contains("百家乐") || bean.getSettlementCardType().contains("百家乐")) {
+            if (bean.getTitle().equals("百家乐")) {
                 iv.setImageResource(R.drawable.ic_game_record_list1);
             }
-            if (bean.getTitle().contains("大小单双合") || bean.getSettlementCardType().contains("大小单双合")) {
+            if (bean.getTitle().equals("大小单双合")) {
                 iv.setImageResource(R.drawable.ic_game_record_list6);
             }
-            if (bean.getTitle().contains("流局") || bean.getSettlementCardType().contains("流局")) {
+            if (bean.getTitle().equals("流局")) {
                 iv.setImageResource(R.drawable.ic_game_record_list4);
             }
             if (bean.getTitle().equals("提现")) {
                 iv.setImageResource(R.drawable.ic_game_record_list11);
+            }
+            if (bean.getTitle().contains("期")) {
+                iv.setImageResource(R.drawable.ic_game_record_list5);
             }
 
             if (TextUtils.isEmpty(bean.getSettlementCardType())) {

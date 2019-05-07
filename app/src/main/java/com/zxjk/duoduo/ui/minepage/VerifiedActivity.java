@@ -76,7 +76,6 @@ public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnIt
      * 手持证件照编辑
      */
 
-
     String url1;
     String url2;
     String url3;
@@ -102,7 +101,6 @@ public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnIt
         tv_commit = findViewById(R.id.tv_commit);
         tv_commit.setVisibility(View.VISIBLE);
         tv_commit.setText(getString(R.string.commit));
-
 
         initDialog();
         initView();
@@ -150,7 +148,7 @@ public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnIt
         selectPicPopWindow.setOnItemClickListener(this);
         tv_certificateType = findViewById(R.id.tv_certificateType);
 
-        et_realName = findViewById(R.id.real_name);
+        et_realName = findViewById(R.id.et_realName);
         idCard = findViewById(R.id.id_card);
         frontPhotoOfTheDocument = findViewById(R.id.front_photo_of_the_document);
         frontPhotoOfTheDocumentEdit = findViewById(R.id.front_photo_of_the_document_edit);

@@ -4,18 +4,22 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
-import android.os.Looper;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.network.Api;
+import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.rx.RxException;
+import com.zxjk.duoduo.network.rx.RxSchedulers;
+import com.zxjk.duoduo.ui.msgpage.ConversationActivity;
+import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.rong.imkit.RongExtension;
 import io.rong.imkit.RongIM;
@@ -47,38 +51,45 @@ public class GameStartPlugin implements IPluginModule {
             return;
         }
         finish = false;
+        //开始下注
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .beforeBet(rongExtension.getTargetId())
+                .compose(RxSchedulers.normalTrans())
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(fragment.getActivity())))
+                .subscribe(s -> Observable.interval(0, 1, TimeUnit.SECONDS)
+                        .take(4)
+                        .subscribe(aLong -> {
+                            if (aLong == 3) {
+                                textContent = "开始下注";
+                            } else {
+                                textContent = "开始下注了!!!倒计时" + (3 - aLong);
+                            }
+                            TextMessage myTextMessage = TextMessage.obtain(textContent);
+                            if (aLong == 3) {
+                                myTextMessage.setExtra("start");
+                                finish = true;
+                            }
+                            Message myMessage = Message.obtain(rongExtension.getTargetId(), Conversation.ConversationType.GROUP, myTextMessage);
+                            RongIM.getInstance().sendMessage(myMessage, null, null, new IRongCallback.ISendMessageCallback() {
+                                @Override
+                                public void onAttached(Message message) {
 
-        Observable.interval(0, 1, TimeUnit.SECONDS)
-                .take(4)
-                .subscribe(aLong -> {
-                    if (aLong == 3) {
-                        textContent = "开始下注";
-                    } else {
-                        textContent = "开始下注了!!!倒计时" + (3 - aLong);
-                    }
-                    TextMessage myTextMessage = TextMessage.obtain(textContent);
-                    if (aLong == 3) {
-                        myTextMessage.setExtra("pass");
-                        finish = true;
-                    }
-                    Message myMessage = Message.obtain(rongExtension.getTargetId(), Conversation.ConversationType.GROUP, myTextMessage);
-                    RongIM.getInstance().sendMessage(myMessage, null, null, new IRongCallback.ISendMessageCallback() {
-                        @Override
-                        public void onAttached(Message message) {
+                                }
 
-                        }
+                                @Override
+                                public void onSuccess(Message message) {
 
-                        @Override
-                        public void onSuccess(Message message) {
+                                }
 
-                        }
+                                @Override
+                                public void onError(Message message, RongIMClient.ErrorCode errorCode) {
 
-                        @Override
-                        public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-
-                        }
-                    });
-                }, throwable -> finish = true);
+                                }
+                            });
+                        }, t -> finish = true), throwable -> {
+                    ToastUtils.showShort(RxException.getMessage(throwable));
+                    finish = true;
+                });
     }
 
     @Override

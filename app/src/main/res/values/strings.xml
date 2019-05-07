@@ -823,6 +823,9 @@
     <string name="game_tips">未下注，无法查看</string>
     <string name="unfinishgametips">当前有未完成的游戏对局，请完成后重试</string>
     <string name="jiaoyisuo">交易所</string>
+    <string name="game_timeup">发包时间已过，本局游戏失败</string>
+    <string name="change">更改</string>
+    <string name="receiverBank">收款银行</string>
     <string name="address_list">通讯录</string>
     <string name="new_friend">新的朋友</string>
     <string name="real_name">真实姓名:</string>
@@ -832,5 +835,9 @@
     <string name="personalized">个人签名</string>
     <string name="group_invitation">群聊邀请</string>
     <string name="hint_duoduo_id2">群主多多号:</string>
+    <string name="group_qr">群二维码</string>
+    <string name="m_my_qr_code_label1">扫一扫二维码，加入群聊</string>
+    <string name="savetophone">保存到手机</string>
+    <string name="sharecode">分享二维码</string>
 
 </resources>

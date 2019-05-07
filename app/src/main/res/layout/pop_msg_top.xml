@@ -8,12 +8,12 @@
     android:orientation="vertical"
     tools:ignore="all">
 
-
     <LinearLayout
         android:id="@+id/send_group_chat"
         style="@style/msg_top_pop_style"
         android:paddingStart="20dp"
-        android:paddingTop="20dp">
+        android:paddingTop="20dp"
+        android:paddingEnd="24dp">
 
         <ImageView
             style="@style/msg_top_pop_img_style"
@@ -22,7 +22,6 @@
         <TextView
             style="@style/msg_top_pop_text_style"
             android:text="@string/send_group_chat" />
-
 
     </LinearLayout>
 
@@ -36,7 +35,8 @@
     <LinearLayout
         android:id="@+id/invite_friends"
         style="@style/msg_top_pop_style"
-        android:paddingStart="20dp">
+        android:paddingStart="20dp"
+        android:paddingEnd="24dp">
 
         <ImageView
             style="@style/msg_top_pop_img_style"
@@ -56,7 +56,8 @@
     <LinearLayout
         android:id="@+id/scan"
         style="@style/msg_top_pop_style"
-        android:paddingStart="20dp">
+        android:paddingStart="20dp"
+        android:paddingEnd="24dp">
 
         <ImageView
             style="@style/msg_top_pop_img_style"
@@ -77,6 +78,7 @@
         android:id="@+id/collection_and_payment"
         style="@style/msg_top_pop_style"
         android:paddingStart="20dp"
+        android:paddingEnd="32dp"
         android:paddingBottom="20dp">
 
         <ImageView

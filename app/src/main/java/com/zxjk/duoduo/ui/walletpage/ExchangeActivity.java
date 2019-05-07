@@ -96,10 +96,8 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.normalTrans())
                 .flatMap((Function<GetNumbeOfTransactionResponse, ObservableSource<List<PayInfoResponse>>>) s -> {
-                    runOnUiThread(() -> {
+                    runOnUiThread(() -> tvExchangePrice.setText(s.getHkPrice() + " CNY=1HK"));
 
-                        tvExchangePrice.setText(s.getHkPrice() + " CNY=1HK");
-                    });
                     return ServiceFactory.getInstance().getBaseService(Api.class)
                             .getPayInfo().compose(RxSchedulers.normalTrans());
                 })
@@ -238,6 +236,9 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                     .subscribe(s -> {
                         Intent intent = new Intent(this, ConfirmBuyActivity.class);
+                        if (buyType.equals(PAYTYPE_WECHAT)) {
+                            s.setReceiptNumber(s.getWechatNick());
+                        }
                         intent.putExtra("data", s);
                         s.setCreateTime(String.valueOf(System.currentTimeMillis()));
                         intent.putExtra("rate", tvExchangePrice.getText().toString().split(" ")[0]);

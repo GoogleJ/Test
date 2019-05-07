@@ -44,7 +44,7 @@ public class GameRecordPopupWindow extends BasePopupWindow {
         }
         if (type == 3) {
             iv.setImageResource(R.drawable.ic_liuju_big);
-            tv1.setText("流局金额：" + bean.getIntegral() + "HK");
+            tv1.setText("流局原因：" + bean.getRemark());
             tv2.setText("流局时间：" + sf.format(Long.parseLong(bean.getTime())));
             tv3.setText("剩余积分：" + bean.getRemainingIntegral() + "HK");
         }

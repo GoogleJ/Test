@@ -62,12 +62,13 @@ public class ExchangeListActivity extends BaseActivity {
                         intent = new Intent(this, ConfirmBuyActivity.class);
                         ReleaseSaleResponse data = new ReleaseSaleResponse();
                         data.setNick(g.getSellNick());
+                        data.setCurrency(g.getCurrency());
                         if (g.getPayType().equals("1")) {
                             data.setReceiptNumber(g.getWechatNick());
                         } else if (g.getPayType().equals("2")) {
                             data.setReceiptNumber(g.getZhifubaoNumber());
                         } else {
-                            data.setReceiptNumber(g.getOpenBank());
+                            data.setReceiptNumber(g.getPayNumber());
                         }
                         data.setBothOrderId(g.getBothOrderId());
                         data.setNumber(g.getNumber());
@@ -76,6 +77,7 @@ public class ExchangeListActivity extends BaseActivity {
                         data.setBothOrderId(g.getBothOrderId());
                         data.setSellOrderId(g.getSellOrderId());
                         data.setBuyOrderId(g.getBuyOrderId());
+                        data.setOpenBank(g.getOpenBank());
 
                         intent.putExtra("data", data);
                         intent.putExtra("buytype", g.getPayType());
@@ -84,12 +86,13 @@ public class ExchangeListActivity extends BaseActivity {
                         //等待审核
                         intent = new Intent(this, WaitForJudgeActivity.class);
                         ReleaseSaleResponse data = new ReleaseSaleResponse();
+                        data.setCurrency(g.getCurrency());
                         if (g.getPayType().equals("1")) {
                             data.setReceiptNumber(g.getWechatNick());
                         } else if (g.getPayType().equals("2")) {
                             data.setReceiptNumber(g.getZhifubaoNumber());
                         } else {
-                            data.setReceiptNumber(g.getOpenBank());
+                            data.setReceiptNumber(g.getPayNumber());
                         }
                         data.setBothOrderId(g.getBothOrderId());
                         data.setMoney(g.getMoney());
@@ -103,20 +106,6 @@ public class ExchangeListActivity extends BaseActivity {
                         intent.putExtra("rate", rate);
                     }
                 } else {
-                    //卖方
-                    if (g.getBuyNick().equals("")) {
-                        //挂单中
-                        intent = new Intent(this, ConfirmSaleActivity.class);
-                        ReleasePurchase data = new ReleasePurchase();
-                        data.setPayPwd(g.getSellPayType());
-                        data.setMoney(g.getMoney());
-                        data.setNumber(g.getNumber());
-                        data.setCurrency(g.getCurrency());
-                        data.setSellOrderId(g.getSellOrderId());
-
-                        intent.putExtra("data", data);
-                        intent.putExtra("rate", rate);
-                    }
                     if (g.getIsBuyPay().equals("1")) {
                         //对方正在支付中
                         intent = new Intent(this, WaitForPayOverActivity.class);
@@ -128,6 +117,21 @@ public class ExchangeListActivity extends BaseActivity {
                         intent.putExtra("data", g);
                         intent.putExtra("rate", rate);
                     }
+                }
+            } else if (g.getStatus().equals("4")) {
+                //卖方
+                if (g.getBuyNick().equals("")) {
+                    //挂单中
+                    intent = new Intent(this, ConfirmSaleActivity.class);
+                    ReleasePurchase data = new ReleasePurchase();
+                    data.setPayPwd(g.getSellPayType());
+                    data.setMoney(g.getMoney());
+                    data.setNumber(g.getNumber());
+                    data.setCurrency(g.getCurrency());
+                    data.setSellOrderId(g.getSellOrderId());
+
+                    intent.putExtra("data", data);
+                    intent.putExtra("rate", rate);
                 }
             } else {
                 //交易完成（1取消、2失败、0完成）

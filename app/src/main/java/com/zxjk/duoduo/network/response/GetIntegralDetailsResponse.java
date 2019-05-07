@@ -17,6 +17,15 @@ public class GetIntegralDetailsResponse {
     private String type;
     private String settlementCardType;
     private String redPackageId;
+    private String remark;
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
     public String getRedPackageId() {
         return redPackageId;

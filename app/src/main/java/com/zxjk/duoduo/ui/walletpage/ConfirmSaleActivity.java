@@ -88,7 +88,6 @@ public class ConfirmSaleActivity extends BaseActivity {
     }
 
     //取消订单
-
     public void cancelOrder(View view) {
         if (dialog == null) {
             dialog = new ConfirmDialog(this, "取消订单", "您确定要取消正在挂卖的订单么？", callback -> ServiceFactory.getInstance().getBaseService(Api.class)
@@ -107,12 +106,6 @@ public class ConfirmSaleActivity extends BaseActivity {
             dialog.setNegText(R.string.dontcancel_temp);
         }
         dialog.show();
-    }
-
-    // 我的订单
-    public void showOrders(View view) {
-        finish();
-        startActivity(new Intent(this, ExchangeListActivity.class));
     }
 
     public void back(View view) {

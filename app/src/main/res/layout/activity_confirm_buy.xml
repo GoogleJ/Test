@@ -148,6 +148,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llConfirmBuyQR"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -172,6 +173,34 @@
                     android:drawableEnd="@drawable/icon_qr_code"
                     android:drawablePadding="4dp"
                     android:gravity="center"
+                    android:textColor="@color/themecolor" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llConfirmBuyBank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:onClick="showQR"
+                android:paddingStart="16dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="10dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/receiverBank"
+                    android:textColor="@color/textcolor3"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tvConfirmBuyReceiverBank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:textColor="@color/themecolor" />
 
             </LinearLayout>

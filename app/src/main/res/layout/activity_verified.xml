@@ -59,12 +59,12 @@
 
             <include layout="@layout/layout_line" />
 
-
             <EditText
                 android:id="@+id/id_card"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:background="@color/white"
+                android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 android:hint="@string/id_number"
                 android:paddingStart="15dp"
                 android:singleLine="true"

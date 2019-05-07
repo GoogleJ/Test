@@ -42,15 +42,26 @@ public class RxException {
 
     public static class DuplicateLoginExcepiton extends Exception {
         private String msg;
+        private int code;
 
         public DuplicateLoginExcepiton(String msg) {
             super(msg);
             this.msg = msg;
         }
 
+        public DuplicateLoginExcepiton(String msg,int code) {
+            super(msg);
+            this.msg = msg;
+            this.code = code;
+        }
+
         @Override
         public String getMessage() {
             return msg;
+        }
+
+        public int getCode() {
+            return code;
         }
     }
 

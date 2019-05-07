@@ -36,8 +36,26 @@ public class ReleaseSaleResponse implements Serializable {
     private String nick;
     private String receiptNumber;
     private String receiptPicture;
+    private String wechatNick;
 
     private String payTime;
+    private String openBank;
+
+    public String getWechatNick() {
+        return wechatNick;
+    }
+
+    public void setWechatNick(String wechatNick) {
+        this.wechatNick = wechatNick;
+    }
+
+    public String getOpenBank() {
+        return openBank;
+    }
+
+    public void setOpenBank(String openBank) {
+        this.openBank = openBank;
+    }
 
     public String getPayTime() {
         return payTime;

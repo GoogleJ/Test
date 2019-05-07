@@ -55,11 +55,9 @@ public class ExchangeListAdapter extends BaseQuickAdapter<GetOverOrderResponse, 
         } else {
             //卖方
             exchange_list_icon.setImageResource(R.drawable.icon_sell);
-
-            if (item.getBuyNick().equals("")) {
+            if (item.getStatus().equals("4")) {
                 exchange_list_type.setText(R.string.guadan);
-            }
-            if (item.getIsBuyPay().equals("1")) {
+            } else if (item.getIsBuyPay().equals("1")) {
                 exchange_list_type.setText(R.string.wait_for_others_to_pay);
             } else if (item.getIsDelete().equals("0")) {
                 exchange_list_type.setText(R.string.sale_waitforjudge);

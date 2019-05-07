@@ -37,7 +37,7 @@ public class RedPackageListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_red_package_list);
 
-        if (Constant.canCheckRedRecord != 0) {
+        if (Constant.canCheckRedRecord.get() != 0) {
             ToastUtils.showShort(R.string.unfinishgametips);
             return;
         }
