@@ -94,7 +94,7 @@ public class SearchActivity extends BaseActivity {
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(manager);
-        mAdapter = new SearchAdapter();
+        mAdapter = new SearchAdapter(this);
         mAdapter.setEmptyView(emptyView);
         mRecyclerView.setAdapter(mAdapter);
         getFriendListInfoById();

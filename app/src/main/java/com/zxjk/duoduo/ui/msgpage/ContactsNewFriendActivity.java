@@ -24,7 +24,6 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.BaseContactAdapter;
 import com.zxjk.duoduo.ui.msgpage.widget.IndexView;
 import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendInformationDialog;
-import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
@@ -49,13 +48,13 @@ import io.rong.imlib.model.Message;
 import io.rong.message.CommandMessage;
 
 /**
- * @author Administrator
- * 通讯录
+ * author L
+ * create at 2019/5/7
+ * description: 通讯录
  */
 @SuppressLint("CheckResult")
 public class ContactsNewFriendActivity extends BaseActivity implements View.OnClickListener {
-    @BindView(R.id.m_constacts_new_friend_title_bar)
-    TitleBar titleBar;
+
     @BindView(R.id.m_contact_add_friend_icon)
     ImageView addFriendImage;
     @BindView(R.id.m_contact_recycler_view)
@@ -66,6 +65,7 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
     TextView constactsDialog;
     @BindView(R.id.dotNewFriend)
     View dotNewFriend;
+
     private BaseContactAdapter mAdapter;
 
     private LinearLayoutManager layoutManager;
@@ -84,6 +84,9 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
     }
 
     private void initView() {
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.address_list));
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
         layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new BaseContactAdapter();
@@ -102,8 +105,7 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
         });
 
         mRecyclerView.setAdapter(mAdapter);
-        titleBar.setLeftImageResource(R.drawable.ico_back);
-        titleBar.getLeftImageView().setOnClickListener(v -> this.finish());
+
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             FriendInfoResponse friendInfoResponse = mAdapter.getData().get(position);
             Intent intent = new Intent(this, FriendDetailsActivity.class);
@@ -166,7 +168,7 @@ public class ContactsNewFriendActivity extends BaseActivity implements View.OnCl
                 dotNewFriend.setVisibility(View.GONE);
                 startActivityForResult(new Intent(this, NewFriendActivity.class), 10);
                 break;
-                //
+            //
             case R.id.m_contact_new_friend_btn:
                 startActivity(new Intent(this, AddContactActivity.class));
                 break;

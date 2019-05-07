@@ -30,6 +30,11 @@ import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 
+/**
+ * author L
+ * create at 2019/5/7
+ * description:  聊天信息
+ */
 @SuppressLint("CheckResult")
 public class ChatInformationActivity extends BaseActivity {
 
@@ -48,7 +53,7 @@ public class ChatInformationActivity extends BaseActivity {
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());
 
         userInfo = getIntent().getParcelableExtra("bean");
-        GlideUtil.loadCornerImg(iv_head, userInfo.getPortraitUri().toString(), 2);
+        GlideUtil.loadCornerImg(iv_head, userInfo.getPortraitUri().toString(), 3);
         tv_name.setText(userInfo.getName());
 
         ServiceFactory.getInstance().getBaseService(Api.class)

@@ -56,7 +56,7 @@ public class RedPackageAdapter extends RecyclerView.Adapter<RedPackageAdapter.Vi
         }
 
         void bindData(GetGroupRedPackageInfoResponse.CustomerInfoBean bean) {
-            GlideUtil.loadCornerImg(ivHead, bean.getHeadPortrait(), 2);
+            GlideUtil.loadCornerImg(ivHead, bean.getHeadPortrait(), 3);
             tvNick.setText(bean.getNick());
             tvTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Long.parseLong(bean.getCreateTime())));
             tvMoney.setText(String.valueOf(bean.getMoney()) + "HK");

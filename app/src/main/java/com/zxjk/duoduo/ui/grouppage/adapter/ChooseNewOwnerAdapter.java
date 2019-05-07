@@ -22,7 +22,7 @@ public class ChooseNewOwnerAdapter extends BaseQuickAdapter<AllGroupMembersRespo
         helper.setText(R.id.user_name,item.getNick())
         .addOnClickListener(R.id.item_choose);
         ImageView headerImage=helper.getView(R.id.headers);
-        GlideUtil.loadCornerImg(headerImage,item.getHeadPortrait(),2);
+        GlideUtil.loadCornerImg(headerImage,item.getHeadPortrait(),3);
 
 
     }

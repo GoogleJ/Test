@@ -32,7 +32,7 @@ public class CreateGroupTopAdapter extends RecyclerView.Adapter<CreateGroupTopAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        GlideUtil.loadCornerImg((holder.item_header), data.get(position).getHeadPortrait(), 2);
+        GlideUtil.loadCornerImg((holder.item_header), data.get(position).getHeadPortrait(), 3);
     }
 
     @Override

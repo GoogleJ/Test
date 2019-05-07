@@ -63,7 +63,7 @@ public class ExpiredEnvelopesDialog extends Dialog {
     }
 
     public void show(UserInfo userInfo, boolean isExpired, String redId) {
-        GlideUtil.loadCornerImg(m_transfer_envelopes_heard, userInfo.getPortraitUri().toString(), 2);
+        GlideUtil.loadCornerImg(m_transfer_envelopes_heard, userInfo.getPortraitUri().toString(), 3);
         m_red_envelopes_user.setText(userInfo.getName() + context.getString(R.string.dehongbao));
 
         if (!isExpired) {

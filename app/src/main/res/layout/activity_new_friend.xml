@@ -1,26 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F8F8"
-    android:orientation="vertical">
+    android:background="@color/background_color"
+    android:orientation="vertical"
+    tools:ignore="all">
 
-    <com.zxjk.duoduo.ui.widget.TitleBar
-        android:id="@+id/m_fragment_new_friend_title_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        app:titleBarLeftImage="@drawable/ico_back"
-        app:titleBarTextColor="@color/white"
-        app:titleBarTitle="@string/m_fragment_new_friend_title_bar" />
+    <include layout="@layout/layout_title_back" />
+
 
     <LinearLayout
         android:id="@+id/m_contact_search_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/m_contact_title_bar">
+        android:background="@color/white">
 
         <TextView
             android:id="@+id/m_contact_search_edit_1"
@@ -39,9 +33,11 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="28dp"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:paddingStart="12dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
         android:text="@string/m_fragment_new_friend_title_bar" />
 
     <androidx.recyclerview.widget.RecyclerView

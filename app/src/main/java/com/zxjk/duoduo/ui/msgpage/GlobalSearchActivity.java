@@ -89,7 +89,7 @@ public class GlobalSearchActivity extends BaseActivity {
         });
         LinearLayoutManager manager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(manager);
-        mAdapter = new GlobalSearchAdapter();
+        mAdapter = new GlobalSearchAdapter(this);
         mAdapter.setEmptyView(emptyView);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {

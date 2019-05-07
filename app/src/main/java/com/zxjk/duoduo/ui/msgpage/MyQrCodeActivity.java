@@ -72,8 +72,8 @@ public class MyQrCodeActivity extends BaseActivity {
         m_my_qr_code_signature_label.setText(Constant.currentUser.getSignature());
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());
 
-        GlideUtil.loadCornerImg(m_my_qr_code_header_icon, Constant.currentUser.getHeadPortrait(), 2);
-        GlideUtil.loadCornerImg(ivIcon, Constant.currentUser.getHeadPortrait(), 2);
+        GlideUtil.loadCornerImg(m_my_qr_code_header_icon, Constant.currentUser.getHeadPortrait(), 3);
+        GlideUtil.loadCornerImg(ivIcon, Constant.currentUser.getHeadPortrait(), 3);
 
         qrCode.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override

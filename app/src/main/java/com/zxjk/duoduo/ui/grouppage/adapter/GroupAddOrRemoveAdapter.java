@@ -17,7 +17,7 @@ public class GroupAddOrRemoveAdapter extends BaseQuickAdapter<AllGroupMembersRes
     protected void convert(BaseViewHolder helper, AllGroupMembersResponse item) {
         helper.setText(R.id.user_name,item.getNick()).addOnClickListener(R.id.add_del_group_layout);
         ImageView heardImage=helper.getView(R.id.remove_headers);
-        GlideUtil.loadCornerImg(heardImage,item.getHeadPortrait(),2);
+        GlideUtil.loadCornerImg(heardImage,item.getHeadPortrait(),3);
 
 
     }

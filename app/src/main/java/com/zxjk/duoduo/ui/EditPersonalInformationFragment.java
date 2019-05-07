@@ -153,7 +153,7 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                 OssUtils.uploadFile(file.getAbsolutePath(), url -> {
                     LoginResponse update = new LoginResponse(Constant.userId);
                     update.setHeadPortrait(url);
-                    GlideUtil.loadCornerImg(imageSearchBtn, url, 2);
+                    GlideUtil.loadCornerImg(imageSearchBtn, url, 3);
                     this.url = url;
                 });
             });
@@ -182,7 +182,7 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(response -> {
-                    GlideUtil.loadCornerImg(imageSearchBtn, url, 2);
+                    GlideUtil.loadCornerImg(imageSearchBtn, url, 3);
                     Constant.currentUser.setHeadPortrait(update.getHeadPortrait());
                     Constant.currentUser.setNick(update.getNick());
                     Constant.currentUser.setAddress(update.getAddress());

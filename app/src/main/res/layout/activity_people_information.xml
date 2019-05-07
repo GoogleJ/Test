@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F8F8"
+    android:background="@color/background_color"
     android:orientation="vertical"
-    tools:ignore="RtlCompat,MissingConstraints">
+    tools:ignore="all">
 
     <include layout="@layout/layout_title_back" />
 
@@ -23,200 +23,170 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white">
+                android:background="@android:color/white">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="19dp"
-                    android:layout_marginEnd="12dp"
-                    android:layout_marginBottom="19dp"
-                    app:cardBackgroundColor="@color/white">
+                    android:layout_margin="12dp"
+                    app:cardBackgroundColor="@android:color/white">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:id="@+id/m_personal_information_icon"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:layout_marginTop="25dp"
-                            android:layout_marginEnd="20dp"
-                            android:layout_marginBottom="65dp"
-                            android:src="@drawable/tab_user_selected"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginBottom="15dp">
 
                         <TextView
-                            android:id="@+id/m_personal_information_user_name_text"
+                            android:id="@+id/tv_nickname"
                             style="@style/textStyle4"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="25dp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            android:text="" />
 
                         <ImageView
-                            android:id="@+id/m_personal_information_gender_icon"
+                            android:id="@+id/iv_gender"
                             android:layout_width="12dp"
                             android:layout_height="20dp"
-                            android:layout_marginStart="9dp"
-                            app:layout_constraintBottom_toBottomOf="@+id/m_personal_information_user_name_text"
-                            app:layout_constraintStart_toEndOf="@+id/m_personal_information_user_name_text"
-                            app:layout_constraintTop_toTopOf="@+id/m_personal_information_user_name_text" />
+                            android:layout_alignTop="@+id/tv_nickname"
+                            android:layout_alignBottom="@+id/tv_nickname"
+                            android:layout_marginStart="10dp"
+                            android:layout_toEndOf="@+id/tv_nickname" />
+
+                        <FrameLayout
+                            android:id="@+id/fl"
+                            android:layout_width="72dp"
+                            android:layout_height="72dp"
+                            android:layout_alignParentEnd="true">
+
+                            <ImageView
+                                android:id="@+id/iv_headPortrait"
+                                android:layout_width="70dp"
+                                android:layout_height="70dp"
+                                android:src="@drawable/icon_commit_header" />
+                        </FrameLayout>
 
                         <TextView
-                            android:id="@+id/m_personal_information_dudu_id"
+                            android:id="@+id/tv_DuoDuoNumber"
                             style="@style/textStyle1"
-                            android:layout_marginTop="35dp"
-                            app:layout_constraintStart_toStartOf="@+id/m_personal_information_user_name_text"
-                            app:layout_constraintTop_toBottomOf="@+id/m_personal_information_user_name_text" />
+                            android:layout_alignBottom="@+id/fl"
+                            android:text="" />
 
                         <TextView
-                            android:id="@+id/m_personal_information_address"
+                            android:id="@+id/tv_realName"
                             style="@style/textStyle1"
-                            android:layout_marginTop="12dp"
-                            app:layout_constraintStart_toStartOf="@+id/m_personal_information_dudu_id"
-                            app:layout_constraintTop_toBottomOf="@+id/m_personal_information_dudu_id" />
+                            android:layout_below="@+id/tv_DuoDuoNumber"
+                            android:layout_marginTop="10dp"
+                            android:text="" />
 
                         <TextView
-                            android:id="@+id/tv_name"
+                            android:id="@+id/tv_district"
                             style="@style/textStyle1"
-                            android:layout_marginTop="12dp"
-                            app:layout_constraintStart_toStartOf="@+id/m_personal_information_address"
-                            app:layout_constraintTop_toBottomOf="@+id/m_personal_information_address" />
+                            android:layout_below="@+id/tv_realName"
+                            android:layout_marginTop="10dp"
+                            android:text="" />
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    </RelativeLayout>
                 </androidx.cardview.widget.CardView>
-
             </LinearLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/white">
-
-                <TextView
-                    android:id="@+id/m_people_information_phone_label"
-                    style="@style/textStyle"
-                    android:layout_marginStart="12dp"
-                    android:text="@string/m_people_information_phone_label"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/m_people_information_phone_text"
-                    style="@style/textStyle"
-                    android:layout_marginStart="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/m_people_information_phone_label"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.1dp"
-                    android:layout_marginStart="12dp"
-                    android:background="@color/divider"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/m_people_information_phone_label" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@color/white">
-
-                <TextView
-                    android:id="@+id/m_people_information_email_label"
-                    style="@style/textStyle"
-                    android:layout_marginStart="12dp"
-                    android:gravity="center"
-                    android:text="@string/m_people_information_email_label"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/m_people_information_email_text"
-                    style="@style/textStyle"
-                    android:layout_marginStart="17dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/m_people_information_email_label"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.1dp"
-                    android:layout_marginStart="12dp"
-                    android:background="@color/divider"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/m_people_information_email_label" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@color/white">
-
-                <TextView
-                    android:id="@+id/m_people_information_signature_label"
-                    style="@style/textStyle"
-                    android:layout_marginStart="12dp"
-                    android:text="@string/m_people_information_signature_label"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/m_people_information_signature_text"
-                    style="@style/textStyle"
-                    android:layout_marginStart="20dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/m_people_information_signature_label"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.1dp"
-                    android:layout_marginStart="12dp"
-                    android:background="@color/divider"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/m_people_information_signature_label" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <include layout="@layout/layout_line10" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@color/white">
+                android:layout_height="56dp"
+                android:background="@android:color/white">
 
                 <TextView
-                    android:id="@+id/m_people_information_wallet_address_label"
+                    android:id="@+id/tv_mobile_phone"
+                    style="@style/textStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/mobile_phone" />
+
+                <TextView
+                    android:id="@+id/tv_phoneNumber"
+                    style="@style/textStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_toEndOf="@id/tv_mobile_phone"
+                    android:text="" />
+            </RelativeLayout>
+
+            <include layout="@layout/layout_line" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@android:color/white">
+
+                <TextView
+                    android:id="@+id/tv_mailbox"
+                    style="@style/textStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/mailbox" />
+
+                <TextView
+                    android:id="@+id/tv_email"
+                    style="@style/textStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_toEndOf="@id/tv_mailbox"
+                    android:text="" />
+            </RelativeLayout>
+
+            <include layout="@layout/layout_line" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@android:color/white">
+
+                <TextView
+                    android:id="@+id/tv_personalizedSignature"
+                    style="@style/textStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/personalized" />
+
+                <TextView
+                    android:id="@+id/tv_signature"
+                    style="@style/textStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_toEndOf="@+id/tv_personalizedSignature" />
+
+            </RelativeLayout>
+
+            <include layout="@layout/layout_line" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@android:color/white">
+
+                <TextView
+                    android:id="@+id/tv_wallet_address"
                     style="@style/textStyle"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="12dp"
                     android:text="@string/m_people_information_wallet_address_label" />
 
                 <TextView
-                    android:id="@+id/m_people_information_wallet_address_text"
+                    android:id="@+id/tv_walletAddress"
                     style="@style/textStyle"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="15dp"
-                    android:layout_toStartOf="@+id/m_people_information_copy_wallet_address"
-                    android:layout_toEndOf="@+id/m_people_information_wallet_address_label"
+                    android:layout_toStartOf="@+id/iv_duplication"
+                    android:layout_toEndOf="@+id/tv_wallet_address"
                     android:ellipsize="middle"
                     android:singleLine="true" />
 
                 <ImageView
-                    android:id="@+id/m_people_information_copy_wallet_address"
+                    android:id="@+id/iv_duplication"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_alignParentEnd="true"
@@ -227,15 +197,16 @@
 
             </RelativeLayout>
 
+            <include layout="@layout/layout_line10" />
+
             <TextView
-                android:id="@+id/m_people_information_send_to_message"
+                android:id="@+id/tv_sendMessage"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="56dp"
                 android:background="@android:color/white"
                 android:gravity="center"
                 android:text="@string/send_message"
-                android:textColor="#4B4D5B"
+                android:textColor="@color/theme_color"
                 android:textSize="18sp" />
 
         </LinearLayout>

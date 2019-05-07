@@ -3,65 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.grouppage.AllGroupActivity">
+    android:background="@android:color/white"
+    android:orientation="vertical">
 
-    <RelativeLayout
+    <include layout="@layout/layout_title_back" />
+
+    <EditText
+        android:id="@+id/etSearch"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/themecolor">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:onClick="back"
-            android:padding="12dp"
-            android:src="@drawable/ico_back" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/game_together"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:padding="12dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bac_grey_conor"
-            android:gravity="center_vertical"
-            android:paddingStart="12dp">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_search_view" />
-
-            <EditText
-                android:id="@+id/etSearch"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:hint="@string/input_group_name"
-                android:imeOptions="actionDone"
-                android:inputType="text"
-                android:padding="12dp"
-                android:textColor="@color/textcolor1"
-                android:textSize="15sp" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+        android:layout_height="45dp"
+        android:layout_margin="12dp"
+        android:background="@drawable/shape_circular_bead2"
+        android:drawableStart="@drawable/icon_search_view"
+        android:drawablePadding="4dp"
+        android:hint="@string/input_group_name"
+        android:imeOptions="actionSearch"
+        android:maxLines="1"
+        android:paddingStart="25dp"
+        android:paddingEnd="20dp"
+        android:singleLine="true"
+        android:textSize="15sp"
+        tools:ignore="RtlCompat" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"

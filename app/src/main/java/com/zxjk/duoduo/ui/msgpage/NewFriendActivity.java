@@ -23,7 +23,6 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.NewFriendAdapter;
 import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendInformationDialog;
-import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.util.ArrayList;
@@ -37,8 +36,7 @@ import butterknife.ButterKnife;
  */
 @SuppressLint("CheckResult")
 public class NewFriendActivity extends BaseActivity {
-    @BindView(R.id.m_fragment_new_friend_title_bar)
-    TitleBar titleBar;
+
     @BindView(R.id.m_contact_search_edit_1)
     TextView textView;
     @BindView(R.id.m_fragment_new_friend_recycler_view)
@@ -61,7 +59,9 @@ public class NewFriendActivity extends BaseActivity {
     @RequiresApi(api = Build.VERSION_CODES.M)
     @SuppressLint("WrongConstant")
     protected void initUI() {
-        titleBar.getLeftImageView().setOnClickListener(v -> finish());
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.new_friend));
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);

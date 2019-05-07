@@ -41,80 +41,42 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.message.CommandMessage;
 
+/**
+ * author L
+ * create at 2019/5/7
+ * description: 个人信息
+ */
 @SuppressLint("CheckResult")
 public class FriendDetailsActivity extends BaseActivity implements View.OnClickListener, CommonPopupWindow.ViewInterface {
-    /**
-     * 发送消息按钮
-     */
-    @BindView(R.id.m_people_information_send_to_message)
-    TextView sendMsgBtn;
 
-    /**
-     * 头像
-     */
-    @BindView(R.id.m_personal_information_icon)
-    ImageView heardIcon;
-    /**
-     * 用户名
-     */
-    @BindView(R.id.m_personal_information_user_name_text)
-    TextView userNameText;
-    /**
-     * 性别图标
-     */
-    @BindView(R.id.m_personal_information_gender_icon)
-    ImageView genderIcon;
-    /**
-     * 多多账号
-     */
-    @BindView(R.id.m_personal_information_dudu_id)
-    TextView duoduoId;
-    /**
-     * 地区
-     */
-    @BindView(R.id.m_personal_information_address)
-    TextView areaText;
-    /**
-     * 电话
-     */
-    @BindView(R.id.m_people_information_phone_text)
-    TextView phoneText;
-    /**
-     * 邮箱地址
-     */
-    @BindView(R.id.m_people_information_email_text)
-    TextView emailText;
-    /**
-     * 个性签名
-     */
-    @BindView(R.id.m_people_information_signature_text)
-    TextView sinatureText;
-    /**
-     * 钱包地址
-     */
-    @BindView(R.id.m_people_information_wallet_address_text)
-    TextView walletAddressText;
-    /**
-     * copy按钮
-     */
-    @BindView(R.id.m_people_information_copy_wallet_address)
-    ImageView copyBtn;
+    @BindView(R.id.tv_nickname)
+    TextView tvNickname;
+    @BindView(R.id.tv_realName)
+    TextView tvRealName;
+    @BindView(R.id.tv_DuoDuoNumber)
+    TextView tvDuoDuoNumber;
+    @BindView(R.id.iv_gender)
+    ImageView ivGender;
+    @BindView(R.id.iv_headPortrait)
+    ImageView ivHeadPortrait;
+    @BindView(R.id.tv_district)
+    TextView tvDistrict;
+    @BindView(R.id.tv_phoneNumber)
+    TextView tvPhoneNumber;
+    @BindView(R.id.tv_email)
+    TextView tvEmail;
+    @BindView(R.id.tv_signature)
+    TextView tvSignature;
+    @BindView(R.id.tv_walletAddress)
+    TextView tvWalletAddress;
 
-
-    /**
-     * 0是男1是女
-     */
     String sex = "0";
-
     private CommonPopupWindow popupWindow;
-
     DeleteFriendInformationDialog dialog;
     FriendInfoResponse friendInfoResponse;
     FriendInfoResponse friendInfo;
     FriendInfoResponse contactResponse;
     int intentType = 0;
-
-
     private RelativeLayout rl_end;
 
 
@@ -126,14 +88,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
 
         TextView tv_title = findViewById(R.id.tv_title);
         tv_title.setText(getString(R.string.personal_details));
-
-        findViewById(R.id.rl_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
         rl_end = findViewById(R.id.rl_end);
         rl_end.setVisibility(View.VISIBLE);
         initUI();
@@ -170,62 +125,63 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
             if (friendInfoResponse.getId().equals(Constant.userId)) {
                 rl_end.setVisibility(View.GONE);
             }
-            GlideUtil.loadCornerImg(heardIcon, friendInfoResponse.getHeadPortrait(), 2);
-            userNameText.setText(friendInfoResponse.getNick());
-            duoduoId.setText(getString(R.string.duoduo_acount) + " " + friendInfoResponse.getDuoduoId());
-            areaText.setText(getString(R.string.district) + " " + friendInfoResponse.getAddress());
-            phoneText.setText(friendInfoResponse.getMobile());
-            emailText.setText(friendInfoResponse.getEmail());
-            sinatureText.setText(friendInfoResponse.getSignature());
-            walletAddressText.setText(friendInfoResponse.getWalletAddress());
+            GlideUtil.loadCornerImg(ivHeadPortrait, friendInfoResponse.getHeadPortrait(), 3);
+            tvNickname.setText(friendInfoResponse.getNick());
+            tvDuoDuoNumber.setText(getString(R.string.duoduo_acount) + " " + friendInfoResponse.getDuoduoId());
+            tvRealName.setText(getString(R.string.real_name) + " " + friendInfoResponse.getRealname());
+            tvDistrict.setText(getString(R.string.district) + " " + friendInfoResponse.getAddress());
+            tvPhoneNumber.setText(friendInfoResponse.getMobile());
+            tvEmail.setText(friendInfoResponse.getEmail());
+            tvSignature.setText(friendInfoResponse.getSignature());
+            tvWalletAddress.setText(friendInfoResponse.getWalletAddress());
             if (sex.equals(friendInfoResponse.getSex())) {
                 //男
-                genderIcon.setImageDrawable(getDrawable(R.drawable.icon_gender_man));
+                ivGender.setImageDrawable(getDrawable(R.drawable.icon_gender_man));
             } else {
-                genderIcon.setImageDrawable(getDrawable(R.drawable.icon_gender_woman));
+                ivGender.setImageDrawable(getDrawable(R.drawable.icon_gender_woman));
             }
         } else if (intentType == 1) {
             if (friendInfo.getId().equals(Constant.userId)) {
                 rl_end.setVisibility(View.GONE);
             }
-            GlideUtil.loadCornerImg(heardIcon, friendInfo.getHeadPortrait(), 2);
-            userNameText.setText(friendInfo.getNick());
-            duoduoId.setText(getString(R.string.duoduo_acount) + " " + friendInfo.getDuoduoId());
-            areaText.setText(getString(R.string.district) + " " + friendInfo.getAddress());
-            phoneText.setText(friendInfo.getMobile());
-            emailText.setText(friendInfo.getEmail());
-            sinatureText.setText(friendInfo.getSignature());
-            walletAddressText.setText(friendInfo.getWalletAddress());
+            GlideUtil.loadCornerImg(ivHeadPortrait, friendInfo.getHeadPortrait(), 3);
+            tvNickname.setText(friendInfo.getNick());
+            tvDuoDuoNumber.setText(getString(R.string.duoduo_acount) + " " + friendInfo.getDuoduoId());
+            tvRealName.setText(getString(R.string.real_name) + " " + friendInfo.getRealname());
+            tvDistrict.setText(getString(R.string.district) + " " + friendInfo.getAddress());
+            tvPhoneNumber.setText(friendInfo.getMobile());
+            tvEmail.setText(friendInfo.getEmail());
+            tvSignature.setText(friendInfo.getSignature());
+            tvWalletAddress.setText(friendInfo.getWalletAddress());
             if (sex.equals(friendInfo.getSex())) {
                 //男
-                genderIcon.setImageDrawable(getDrawable(R.drawable.icon_gender_man));
+                ivGender.setImageDrawable(getDrawable(R.drawable.icon_gender_man));
             } else {
-                genderIcon.setImageDrawable(getDrawable(R.drawable.icon_gender_woman));
+                ivGender.setImageDrawable(getDrawable(R.drawable.icon_gender_woman));
             }
         } else {
             if (contactResponse.getId().equals(Constant.userId)) {
                 rl_end.setVisibility(View.GONE);
             }
-            GlideUtil.loadCornerImg(heardIcon, contactResponse.getHeadPortrait(), 2);
-            userNameText.setText(contactResponse.getNick());
-            duoduoId.setText(getString(R.string.duoduo_acount) + " " + contactResponse.getDuoduoId());
-            areaText.setText(getString(R.string.district) + " " + contactResponse.getAddress());
-            phoneText.setText(contactResponse.getMobile());
-            emailText.setText(contactResponse.getEmail());
-            sinatureText.setText(contactResponse.getSignature());
-            walletAddressText.setText(contactResponse.getWalletAddress());
+            GlideUtil.loadCornerImg(ivHeadPortrait, contactResponse.getHeadPortrait(), 3);
+            tvNickname.setText(contactResponse.getNick());
+            tvDuoDuoNumber.setText(getString(R.string.duoduo_acount) + " " + contactResponse.getDuoduoId());
+            tvRealName.setText(getString(R.string.real_name) + " " + contactResponse.getRealname());
+            tvDistrict.setText(getString(R.string.district) + " " + contactResponse.getAddress());
+            tvPhoneNumber.setText(contactResponse.getMobile());
+            tvEmail.setText(contactResponse.getEmail());
+            tvSignature.setText(contactResponse.getSignature());
+            tvWalletAddress.setText(contactResponse.getWalletAddress());
             if (sex.equals(contactResponse.getSex())) {
                 //男
-                genderIcon.setImageDrawable(getDrawable(R.drawable.icon_gender_man));
+                ivGender.setImageDrawable(getDrawable(R.drawable.icon_gender_man));
             } else {
-                genderIcon.setImageDrawable(getDrawable(R.drawable.icon_gender_woman));
+                ivGender.setImageDrawable(getDrawable(R.drawable.icon_gender_woman));
             }
         }
     }
 
     private void initUI() {
-
-
         rl_end.setOnClickListener(v -> {
             if (popupWindow != null && popupWindow.isShowing()) {
                 return;
@@ -242,17 +198,17 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
         });
     }
 
-    @OnClick({R.id.m_people_information_send_to_message, R.id.m_people_information_copy_wallet_address})
+    @OnClick({R.id.tv_sendMessage, R.id.iv_duplication})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.m_people_information_copy_wallet_address:
+            case R.id.iv_duplication:
                 ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                cm.setText(walletAddressText.getText().toString());
+                cm.setText(tvWalletAddress.getText().toString());
                 ToastUtils.showShort(getString(R.string.duplicated_to_clipboard));
                 break;
 
-            case R.id.m_people_information_send_to_message:
+            case R.id.tv_sendMessage:
                 Intent intent = new Intent(this, HomeActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

@@ -17,7 +17,7 @@ public class AddGroupTopAdapter extends BaseQuickAdapter<FriendInfoResponse, Bas
     protected void convert(BaseViewHolder helper, FriendInfoResponse item) {
         ImageView heardImage = helper.getView(R.id.item_header);
         helper.addOnClickListener(R.id.item_header);
-        GlideUtil.loadCornerImg(heardImage, item.getHeadPortrait(), 2);
+        GlideUtil.loadCornerImg(heardImage, item.getHeadPortrait(), 3);
 
     }
 }

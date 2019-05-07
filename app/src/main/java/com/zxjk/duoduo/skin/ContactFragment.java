@@ -32,7 +32,6 @@ import com.zxjk.duoduo.ui.msgpage.SearchActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.BaseContactAdapter;
 import com.zxjk.duoduo.ui.msgpage.widget.IndexView;
 import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendInformationDialog;
-import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
@@ -57,8 +56,7 @@ import io.rong.imlib.model.Message;
 import io.rong.message.CommandMessage;
 
 public class ContactFragment extends Fragment implements View.OnClickListener {
-    @BindView(R.id.m_constacts_new_friend_title_bar)
-    TitleBar titleBar;
+
     @BindView(R.id.m_contact_add_friend_icon)
     ImageView addFriendImage;
     @BindView(R.id.m_contact_recycler_view)
@@ -70,6 +68,8 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.dotNewFriend)
     View dotNewFriend;
     private BaseContactAdapter mAdapter;
+
+    private TextView tv_title;
 
     private LinearLayoutManager layoutManager;
     List<FriendInfoResponse> list = new ArrayList<>();
@@ -83,13 +83,21 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
         View rootview = LayoutInflater.from(getContext()).inflate(R.layout.activity_constacts_new_friend, container, false);
         ButterKnife.bind(this, rootview);
         deleteDialog = new DeleteFriendInformationDialog(getActivity());
-        initView();
+        initView(rootview);
         getMyfriendsWaiting();
 
         return rootview;
     }
 
-    private void initView() {
+    private void initView(View rootview) {
+        tv_title = rootview.findViewById(R.id.tv_title);
+        rootview.findViewById(R.id.rl_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+
         layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new BaseContactAdapter();
@@ -139,7 +147,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
                                 RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE
                                         , friendInfoResponse.getId(), null);
                                 RongIMClient.getInstance().cleanHistoryMessages(Conversation.ConversationType.PRIVATE,
-                                        friendInfoResponse.getId(),0,false,null);
+                                        friendInfoResponse.getId(), 0, false, null);
                             }
 
                             @Override

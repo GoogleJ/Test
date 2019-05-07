@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -41,6 +40,9 @@ public class AllGroupActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_group);
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.game_together));
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
 
         etSearch = findViewById(R.id.etSearch);
         recycler = findViewById(R.id.recycler);
@@ -94,8 +96,5 @@ public class AllGroupActivity extends BaseActivity {
 
     }
 
-    public void back(View view) {
-        CommonUtils.hideInputMethod(this);
-        finish();
-    }
+
 }

@@ -80,7 +80,7 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
         }
 
         private void bindData(GroupResponse.CustomersBean bean) {
-            GlideUtil.loadCornerImg(remove_headers, bean.getHeadPortrait(), 2);
+            GlideUtil.loadCornerImg(remove_headers, bean.getHeadPortrait(), 3);
             user_name.setText(bean.getNick());
             selected_delete.setChecked(bean.isChecked());
             tvLetter.setText(bean.getFirstLetter());

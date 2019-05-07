@@ -41,6 +41,6 @@ public class BaseContactAdapter extends BaseQuickAdapter<FriendInfoResponse, Bas
             view.setVisibility(View.VISIBLE);
         }
 
-        GlideUtil.loadCornerImg(heardImage, item.getHeadPortrait(), 2);
+        GlideUtil.loadCornerImg(heardImage, item.getHeadPortrait(), 3);
     }
 }

@@ -66,7 +66,7 @@ public class RecipetQRActivity extends BaseActivity {
 
         initUri();
 
-        GlideUtil.loadCornerImg(ivCodeLogo, Constant.currentUser.getHeadPortrait(), 2);
+        GlideUtil.loadCornerImg(ivCodeLogo, Constant.currentUser.getHeadPortrait(), 3);
 
         initImgSize();
 

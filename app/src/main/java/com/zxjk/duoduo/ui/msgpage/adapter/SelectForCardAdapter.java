@@ -21,7 +21,7 @@ public class SelectForCardAdapter extends BaseQuickAdapter<FriendInfoResponse, B
     protected void convert(BaseViewHolder helper, FriendInfoResponse item) {
         helper.setText(R.id.user_name, item.getNick()).addOnClickListener(R.id.select_for_card_item);
         ImageView heardImage = helper.getView(R.id.remove_headers);
-        GlideUtil.loadCornerImg(heardImage, item.getHeadPortrait(), 2);
+        GlideUtil.loadCornerImg(heardImage, item.getHeadPortrait(), 3);
 
     }
 }

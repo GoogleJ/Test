@@ -38,6 +38,11 @@ import com.zxjk.duoduo.utils.TakePicUtil;
 import java.io.File;
 import java.util.Collections;
 
+/**
+ * author L
+ * create at 2019/5/7
+ * description: 实名认证
+ */
 @SuppressLint("CheckResult")
 public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnItemClickListener {
     public static final int REQUEST_TAKE = 1;
@@ -80,13 +85,11 @@ public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnIt
     String realNames;
     String idCards;
 
+    TextView tv_commit;
     private TakePopWindow selectPicPopWindow;
 
     private int currentPictureFlag;
     private String otherIdCardType = "";
-
-    private TextView tv_title;
-    private TextView tv_end;
 
 
     @Override
@@ -94,11 +97,11 @@ public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verified);
 
-        tv_title = findViewById(R.id.tv_title);
+        TextView tv_title = findViewById(R.id.tv_title);
         tv_title.setText(getString(R.string.verified));
-        tv_end = findViewById(R.id.tv_end);
-        tv_end.setVisibility(View.VISIBLE);
-        tv_end.setText(getString(R.string.commit));
+        tv_commit = findViewById(R.id.tv_commit);
+        tv_commit.setVisibility(View.VISIBLE);
+        tv_commit.setText(getString(R.string.commit));
 
 
         initDialog();
@@ -155,7 +158,7 @@ public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnIt
         reversePhotoOfTheDocumentEdit = findViewById(R.id.reverse_photo_of_the_document_edit);
         handHeldPassportPhoto = findViewById(R.id.hand_held_passport_photo);
         handHeldPassportPhotoEdit = findViewById(R.id.hand_held_passport_photo_edit);
-        tv_end.setOnClickListener(v -> commit());
+        tv_commit.setOnClickListener(v -> commit());
 
         getPermisson(frontPhotoOfTheDocument, result -> {
             if (result) {

@@ -82,7 +82,7 @@ public class ConversationForAddActivity extends BaseActivity implements View.OnC
                     duduId.setText(friendInfoResponse.getDuoduoId());
                     address.setText(friendInfoResponse.getAddress());
                     signtureText.setText(friendInfoResponse.getSignature());
-                    GlideUtil.loadCornerImg(heardImage, friendInfoResponse.getHeadPortrait(), 2);
+                    GlideUtil.loadCornerImg(heardImage, friendInfoResponse.getHeadPortrait(), 3);
                     if ("0".equals(friendInfoResponse.getSex())) {
                         genderImage.setImageDrawable(getDrawable(R.drawable.icon_gender_man));
                     } else {
