@@ -17,6 +17,7 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.ui.grouppage.AgreeGroupChatActivity;
 import com.zxjk.duoduo.ui.minepage.scanuri.Action1;
 import com.zxjk.duoduo.ui.minepage.scanuri.BaseUri;
 import com.zxjk.duoduo.utils.CommonUtils;
@@ -114,6 +115,15 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
                 } else {
                     handleFriendList(userId);
                 }
+            } else if (action.equals("action3")) {
+                BaseUri<GroupQRActivity.GroupQRData> uri = new Gson().fromJson(result, new TypeToken<BaseUri<GroupQRActivity.GroupQRData>>() {
+                }.getType());
+                Intent intent = new Intent(this, AgreeGroupChatActivity.class);
+                intent.putExtra("inviterId", uri.data.inviterId);
+                intent.putExtra("groupId", uri.data.groupId);
+                intent.putExtra("groupName", uri.data.groupName);
+                startActivity(intent);
+                finish();
             }
         } catch (Exception e) {
             e.printStackTrace();

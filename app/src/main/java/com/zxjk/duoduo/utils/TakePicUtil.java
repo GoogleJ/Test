@@ -11,13 +11,12 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.FragmentActivity;
+
 import com.zxjk.duoduo.BuildConfig;
 
 import java.io.File;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.FileProvider;
-import androidx.fragment.app.FragmentActivity;
 
 public class TakePicUtil {
     public static Uri imageUri = null;
@@ -43,7 +42,7 @@ public class TakePicUtil {
         activity.startActivityForResult(photoPickerIntent, requestCode);
     }
 
-    private static Uri getUriForFile(Context context, File file) {
+    public static Uri getUriForFile(Context context, File file) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             return FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".FileProvider", file);
         }

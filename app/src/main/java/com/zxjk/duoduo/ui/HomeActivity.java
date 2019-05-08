@@ -121,10 +121,14 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
             if (messageCount == 0) {
                 badgeItem.hide();
             } else {
-                badgeItem.setText(String.valueOf(messageCount));
+                if (messageCount > 100) {
+                    badgeItem.setText("...");
+                } else {
+                    badgeItem.setText(String.valueOf(messageCount));
+                }
                 badgeItem.show(true);
             }
-        }, Conversation.ConversationType.PRIVATE);
+        }, Conversation.ConversationType.PRIVATE, Conversation.ConversationType.GROUP);
     }
 
     private boolean canFinish = false;

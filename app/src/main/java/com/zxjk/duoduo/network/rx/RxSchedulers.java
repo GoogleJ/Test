@@ -9,7 +9,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
@@ -32,7 +32,13 @@ public class RxSchedulers {
                 .doOnNext(t -> {
                     if (d != null) CommonUtils.destoryDialog();
                 })
-                .doOnError((Consumer<Throwable>) t -> {
+                .doOnError(t -> {
+                    if (d != null) CommonUtils.destoryDialog();
+                })
+                .doOnDispose(() -> {
+                    if (d != null) CommonUtils.destoryDialog();
+                })
+                .doOnComplete((Action) () -> {
                     if (d != null) CommonUtils.destoryDialog();
                 });
     }

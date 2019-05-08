@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -74,20 +73,17 @@ public class SearchActivity extends BaseActivity {
     }
 
     private void initData() {
-        searchEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                //搜索按键action
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    if (!TextUtils.isEmpty(searchEdit.getText().toString())) {
-                        searchFriendInfo(searchEdit.getText().toString());
-                    } else {
-                        ToastUtils.showShort(getString(R.string.input_search_edit));
-                    }
-                    return true;
+        searchEdit.setOnEditorActionListener((v, actionId, event) -> {
+            //搜索按键action
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                if (!TextUtils.isEmpty(searchEdit.getText().toString())) {
+                    searchFriendInfo(searchEdit.getText().toString());
+                } else {
+                    ToastUtils.showShort(getString(R.string.input_search_edit));
                 }
-                return false;
+                return true;
             }
+            return false;
         });
 
     }

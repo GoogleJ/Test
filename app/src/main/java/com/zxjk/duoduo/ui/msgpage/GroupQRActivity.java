@@ -2,6 +2,7 @@ package com.zxjk.duoduo.ui.msgpage;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.othershe.combinebitmap.CombineBitmap;
 import com.othershe.combinebitmap.layout.WechatLayoutManager;
@@ -23,7 +25,9 @@ import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.minepage.scanuri.BaseUri;
 import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.utils.SaveImageUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,6 +36,8 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 
 public class GroupQRActivity extends BaseActivity {
 
@@ -51,10 +57,13 @@ public class GroupQRActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_qr);
 
-        uri.data = Constant.userId;
-        uri2Code = new Gson().toJson(uri);
-
         GroupResponse data = (GroupResponse) getIntent().getSerializableExtra("data");
+
+        uri.data = new GroupQRData();
+        ((GroupQRData) uri.data).groupId = data.getGroupInfo().getId();
+        ((GroupQRData) uri.data).inviterId = Constant.userId;
+        ((GroupQRData) uri.data).groupName = data.getGroupInfo().getGroupNikeName();
+        uri2Code = new Gson().toJson(uri);
 
         llQR = findViewById(R.id.llQR);
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());
@@ -93,9 +102,19 @@ public class GroupQRActivity extends BaseActivity {
             if (bitmap == null) {
                 return;
             }
+            llQR.buildDrawingCache();
 
+            SaveImageUtil.get().savePic(llQR.getDrawingCache(), success -> {
+                if (success) {
+                    ToastUtils.showShort(R.string.savesucceed);
+                    return;
+                }
+                ToastUtils.showShort(R.string.savefailed);
+            });
         }, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
     }
+
+    private String[] split;
 
     private void loadHead(GroupResponse data) {
         String s = "";
@@ -108,7 +127,7 @@ public class GroupQRActivity extends BaseActivity {
             }
         }
 
-        String[] split = s.split(",");
+        split = s.split(",");
         if (split.length > 9) {
             List<String> strings = Arrays.asList(split);
             List<String> strings1 = strings.subList(0, 9);
@@ -141,11 +160,26 @@ public class GroupQRActivity extends BaseActivity {
 
     //分享二维码
     public void share(View view) {
+        RongIMClient.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
+            @Override
+            public void onSuccess(List<Conversation> conversations) {
+                llQR.buildDrawingCache();
+                Constant.shareGroupQR = llQR.getDrawingCache();
+                Intent intent = new Intent(GroupQRActivity.this, ShareGroupQRActivity.class);
+                intent.putParcelableArrayListExtra("data", (ArrayList<Conversation>) conversations);
+                startActivity(intent);
+            }
 
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+
+            }
+        });
     }
 
     class GroupQRData {
-        String inviterId;
         String groupId;
+        String inviterId;
+        String groupName;
     }
 }

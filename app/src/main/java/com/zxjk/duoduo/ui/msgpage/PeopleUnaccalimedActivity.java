@@ -126,7 +126,7 @@ public class PeopleUnaccalimedActivity extends BaseActivity {
                                     if (response.getRedPachageInfo().getStatus().equals("1")) {
                                         bean.setHeadPortrait(response.getReceiveInfo().getHeadPortrait());
                                         bean.setNick(response.getReceiveInfo().getUsernick());
-                                        bean.setMoney(Double.parseDouble(response.getRedPachageInfo().getMoney()));
+                                        bean.setMoney(response.getRedPachageInfo().getMoney());
                                         bean.setCreateTime(response.getReceiveInfo().getTime());
                                         ArrayList<GetGroupRedPackageInfoResponse.CustomerInfoBean> objects = new ArrayList<>(1);
                                         objects.add(bean);

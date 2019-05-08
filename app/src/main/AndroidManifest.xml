@@ -49,6 +49,8 @@
             android:value="640" />
 
         <activity android:name=".ui.msgpage.GroupQRActivity" />
+        <activity android:name=".ui.msgpage.ShareGroupQRActivity"></activity>
+        <activity android:name=".ui.msgpage.GroupQRActivity" />
         <activity
             android:name=".ui.ImgActivity"
             android:launchMode="singleTask"

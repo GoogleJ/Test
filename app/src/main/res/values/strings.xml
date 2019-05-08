@@ -843,5 +843,11 @@
     <string name="head_portrait">头像</string>
     <string name="chat_message">聊天信息</string>
     <string name="jilu">记录</string>
+    <string name="savefailed">保存失败,请稍后重试</string>
+    <string name="savesucceed">已保存,请在相册中查看</string>
+    <string name="createnewchat">创建新聊天</string>
+    <string name="chat_recent">最近聊天</string>
+    <string name="fasongdao">发送到</string>
+    <string name="share_success">分享成功</string>
 
 </resources>

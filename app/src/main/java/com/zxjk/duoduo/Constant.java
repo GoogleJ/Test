@@ -1,5 +1,6 @@
 package com.zxjk.duoduo;
 
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 
 import com.blankj.utilcode.util.DeviceUtils;
@@ -18,10 +19,10 @@ public class Constant {
     //阿里OSS上传地址
     public static final String OSS_URL = "https://zhongxingjike.oss-cn-hongkong.aliyuncs.com/upload/";
 //        public static final String BASE_URL = "https://192.168.0.110:8087/";
-//        public static final String BASE_URL = "https://192.168.0.115:8085/";
+        public static final String BASE_URL = "https://192.168.0.115:8085/";
 //    public static final String BASE_URL = "https://duoduoweb.zzgb.net.cn";
 //    public static final String BASE_URL = "https://192.168.0.109:8085/";
-    public static final String BASE_URL = "https://47.75.115.118:8086/";
+//    public static final String BASE_URL = "https://47.75.115.118:8086/";
 
     public static boolean isVerifyVerision = false;
 
@@ -52,6 +53,7 @@ public class Constant {
         tempMsg = null;
         changeGroupName = null;
         ownerIdForGameChat = null;
+        shareGroupQR = null;
     }
 
     /**
@@ -66,5 +68,8 @@ public class Constant {
 
     //是否可以查看红包记录页，默认为0，可查看。 每开启一个游戏
     public static AtomicInteger canCheckRedRecord = new AtomicInteger(0);
+
+    //分享群二维码
+    public static Bitmap shareGroupQR;
 
 }

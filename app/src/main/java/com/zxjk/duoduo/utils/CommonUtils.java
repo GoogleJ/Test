@@ -52,7 +52,7 @@ public class CommonUtils {
 
     public static void destoryDialog() {
         if (dialog != null) {
-            dialog.cancel();
+            dialog.dismiss();
             dialog = null;
         }
     }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ import com.shehuan.nicedialog.ViewConvertListener;
 import com.shehuan.nicedialog.ViewHolder;
 import com.trello.lifecycle2.android.lifecycle.AndroidLifecycle;
 import com.trello.rxlifecycle3.LifecycleProvider;
+import com.trello.rxlifecycle3.android.ActivityEvent;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -68,6 +70,7 @@ import io.rong.imkit.widget.adapter.MessageListAdapter;
 import io.rong.imlib.MessageTag;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Group;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
@@ -119,11 +122,11 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                     if (!TextUtils.isEmpty(((TextMessage) message.getContent()).getExtra()) &&
                             ((TextMessage) message.getContent()).getExtra().equals("start")
                             && ((TextMessage) content).getContent().equals("开始下注")) {
-                        //发送完"开始下注" 计时20S
+                        //发送完"开始下注" 计时23S
                         runOnUiThread(() -> Observable.timer(23, TimeUnit.SECONDS, Schedulers.io())
                                 .flatMap(aLong -> ServiceFactory.getInstance().getBaseService(Api.class)
                                         .getBetConutBygroupId(groupResponse.getGroupInfo().getId()))
-                                .compose(bindToLifecycle())
+                                .compose(bindUntilEvent(ActivityEvent.DESTROY))
                                 .compose(RxSchedulers.normalTrans())
                                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this, "请耐心等待群员下注")))
                                 .subscribe(response -> {
@@ -532,8 +535,10 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
         } else if (message.getContent() instanceof TextMessage) {
             //收到 "开始下注" 消息 并且不是群主（群主无法参与）
             if (!TextUtils.isEmpty(((TextMessage) message.getContent()).getExtra())
+                    && message.getTargetId().equals(targetId)
+                    && message.getSenderUserId().equals(groupResponse.getGroupInfo().getGroupOwnerId())
                     && ((TextMessage) message.getContent()).getExtra().equals("start")
-                    && !Constant.userId.equals(groupResponse.getGroupInfo().getGroupOwnerId()))
+                    && !Constant.userId.equals(groupResponse.getGroupInfo().getGroupOwnerId())) {
                 runOnUiThread(() -> ServiceFactory.getInstance().getBaseService(Api.class)
                         .getGroupGameParameter(groupResponse.getGroupInfo().getId())
                         .compose(bindToLifecycle())
@@ -620,6 +625,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
 
                             gameWindowDisposable = gamePopupWindow.show(getGroupGameParameterResponse, 20);
                         }, ConversationActivity.this::handleApiError));
+            }
         }
         return false;
     }

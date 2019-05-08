@@ -74,7 +74,6 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
             popupWindow.showAsDropDown(rl_end);
         });
 
-
     }
 
     @Override
@@ -126,7 +125,6 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
 
         switchFragment(mConversationListFragment, R.id.conversationlist);
     }
-
 
     private CusConversationListFragment createConversationList() {
         CusConversationListFragment listFragment = new CusConversationListFragment();

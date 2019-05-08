@@ -110,7 +110,7 @@ public class GetGroupRedPackageInfoResponse {
          */
 
         private String nick;
-        private double money;
+        private String money;
         private String createTime;
         private int customerId;
         private String headPortrait;
@@ -123,11 +123,11 @@ public class GetGroupRedPackageInfoResponse {
             this.nick = nick;
         }
 
-        public double getMoney() {
+        public String getMoney() {
             return money;
         }
 
-        public void setMoney(double money) {
+        public void setMoney(String money) {
             this.money = money;
         }
 
