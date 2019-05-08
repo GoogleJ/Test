@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -64,7 +65,6 @@ import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imkit.plugin.IPluginModule;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imkit.widget.adapter.MessageListAdapter;
-import io.rong.imlib.IRongCallback;
 import io.rong.imlib.MessageTag;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -75,6 +75,11 @@ import io.rong.imlib.typingmessage.TypingStatus;
 import io.rong.message.TextMessage;
 import io.rong.message.VoiceMessage;
 
+/**
+ * author L
+ * create at 2019/5/8
+ * description:  聊天页面 群组讨论聊天页面
+ */
 @SuppressLint("CheckResult")
 public class ConversationActivity extends BaseActivity implements RongIMClient.OnReceiveMessageListener {
     private Disposable gameWindowDisposable;
@@ -86,7 +91,6 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
     private GroupResponse groupResponse;
     private RongIM.OnSendMessageListener onSendMessageListener;
     private RongExtension extension;
-
     //游戏popwindow跳转计时器
     private long timeLeft;
 
@@ -97,6 +101,11 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
         String conversationType = resolvePlugin();
 
         setContentView(R.layout.activity_conversation);
+
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
+        RelativeLayout rl_end = findViewById(R.id.rl_end);
+        rl_end.setVisibility(View.VISIBLE);
+        rl_end.setOnClickListener(v -> detail());
 
         extension = findViewById(io.rong.imkit.R.id.rc_extension);
 
@@ -469,11 +478,8 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
     private ConversationFragment fragment;
     private MessageListAdapter messageAdapter;
 
-    public void back(View view) {
-        finish();
-    }
 
-    public void detail(View view) {
+    public void detail() {
         List<String> pathSegments = getIntent().getData().getPathSegments();
         String conversationType = pathSegments.get(pathSegments.size() - 1);
 
@@ -490,7 +496,8 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
     }
 
     private void initView() {
-        tvTitle = findViewById(R.id.tvTitle);
+        tvTitle = findViewById(R.id.tv_title);
+
         tvTitle.setText(targetUserInfo == null ? (groupResponse.getGroupInfo().getGroupNikeName() + "(" + groupResponse.getCustomers().size() + ")") : targetUserInfo.getName());
         registerOnTitleChange();
     }

@@ -34,6 +34,7 @@ import io.rong.message.ImageMessage;
 import io.rong.message.RichContentMessage;
 import io.rong.message.TextMessage;
 import io.rong.message.VoiceMessage;
+import me.jessyan.autosize.AutoSizeConfig;
 
 public class Application extends android.app.Application {
 
@@ -51,6 +52,11 @@ public class Application extends android.app.Application {
     @Override
     public void onCreate() {
         super.onCreate();
+//        AutoSizeConfig.getInstance().getUnitsManager()
+//                .setSupportDP(true)
+//                .setSupportSP(true);
+//        AutoSizeConfig.getInstance().setCustomFragment(true);
+
         MMKV.initialize(this);
         //微信分享
         regToWx();

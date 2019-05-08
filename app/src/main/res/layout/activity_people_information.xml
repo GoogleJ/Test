@@ -41,8 +41,11 @@
 
                         <TextView
                             android:id="@+id/tv_nickname"
-                            style="@style/textStyle4"
-                            android:text="" />
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/textColor39"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
 
                         <ImageView
                             android:id="@+id/iv_gender"
@@ -68,23 +71,32 @@
 
                         <TextView
                             android:id="@+id/tv_DuoDuoNumber"
-                            style="@style/textStyle1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/fl"
-                            android:text="" />
+                            android:text=""
+                            android:textColor="@color/textColor9"
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/tv_realName"
-                            style="@style/textStyle1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_below="@+id/tv_DuoDuoNumber"
                             android:layout_marginTop="10dp"
-                            android:text="" />
+                            android:text=""
+                            android:textColor="@color/textColor9"
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/tv_district"
-                            style="@style/textStyle1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_below="@+id/tv_realName"
                             android:layout_marginTop="10dp"
-                            android:text="" />
+                            android:text=""
+                            android:textColor="@color/textColor9"
+                            android:textSize="16sp" />
 
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
@@ -92,98 +104,110 @@
 
             <include layout="@layout/layout_line10" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:background="@android:color/white">
+            <RelativeLayout style="@style/RLayoutStyle">
 
                 <TextView
                     android:id="@+id/tv_mobile_phone"
-                    style="@style/textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="12dp"
-                    android:text="@string/mobile_phone" />
+                    android:text="@string/mobile_phone"
+                    android:textColor="@color/theme_color"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tv_phoneNumber"
-                    style="@style/textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="16dp"
                     android:layout_toEndOf="@id/tv_mobile_phone"
-                    android:text="" />
+                    android:text=""
+                    android:textColor="@color/textColor9"
+                    android:textSize="16sp" />
             </RelativeLayout>
 
             <include layout="@layout/layout_line" />
 
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:background="@android:color/white">
+            <RelativeLayout style="@style/RLayoutStyle">
 
                 <TextView
                     android:id="@+id/tv_mailbox"
-                    style="@style/textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="12dp"
-                    android:text="@string/mailbox" />
+                    android:text="@string/mailbox"
+                    android:textColor="@color/theme_color"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tv_email"
-                    style="@style/textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="16dp"
                     android:layout_toEndOf="@id/tv_mailbox"
-                    android:text="" />
+                    android:text=""
+                    android:textColor="@color/textColor9"
+                    android:textSize="16sp" />
             </RelativeLayout>
 
             <include layout="@layout/layout_line" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:background="@android:color/white">
+            <RelativeLayout style="@style/RLayoutStyle">
 
                 <TextView
                     android:id="@+id/tv_personalizedSignature"
-                    style="@style/textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="12dp"
-                    android:text="@string/personalized" />
+                    android:text="@string/personalized"
+                    android:textColor="@color/theme_color"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tv_signature"
-                    style="@style/textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="16dp"
-                    android:layout_toEndOf="@+id/tv_personalizedSignature" />
+                    android:layout_toEndOf="@+id/tv_personalizedSignature"
+                    android:textColor="@color/textColor9"
+                    android:textSize="16sp" />
 
             </RelativeLayout>
 
             <include layout="@layout/layout_line" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:background="@android:color/white">
+            <RelativeLayout style="@style/RLayoutStyle">
 
                 <TextView
                     android:id="@+id/tv_wallet_address"
-                    style="@style/textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="12dp"
-                    android:text="@string/m_people_information_wallet_address_label" />
+                    android:text="@string/m_people_information_wallet_address_label"
+                    android:textColor="@color/theme_color"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tv_walletAddress"
-                    style="@style/textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="15dp"
                     android:layout_toStartOf="@+id/iv_duplication"
                     android:layout_toEndOf="@+id/tv_wallet_address"
                     android:ellipsize="middle"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textColor="@color/textColor9"
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/iv_duplication"
@@ -202,12 +226,12 @@
             <TextView
                 android:id="@+id/tv_sendMessage"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="50dp"
                 android:background="@android:color/white"
                 android:gravity="center"
                 android:text="@string/send_message"
                 android:textColor="@color/theme_color"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 

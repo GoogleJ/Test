@@ -11,7 +11,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background_color"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -20,24 +19,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:background="@drawable/shape_bac_white_conor"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="12dp">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/m_my_qr_code_header_icon"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_margin="15dp"
                     android:scaleType="centerCrop"
                     tools:ignore="RtlCompat" />
 
@@ -48,8 +43,8 @@
                     android:layout_alignTop="@id/m_my_qr_code_header_icon"
                     android:layout_marginTop="5dp"
                     android:layout_toEndOf="@id/m_my_qr_code_header_icon"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
+                    android:textColor="@color/text_color3"
+                    android:textSize="16sp"
                     tools:ignore="RtlCompat" />
 
                 <TextView
@@ -58,11 +53,13 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/m_my_qr_code_user_name_text"
                     android:layout_alignBottom="@id/m_my_qr_code_header_icon"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="15dp"
                     android:layout_toEndOf="@id/m_my_qr_code_header_icon"
                     android:ellipsize="end"
                     android:gravity="bottom"
-                    android:lines="1" />
+                    android:lines="1"
+                    android:textColor="@color/text_color2"
+                    android:textSize="14sp" />
 
             </RelativeLayout>
 
@@ -71,26 +68,24 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="-1dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginBottom="-1dp"
             android:background="@drawable/ic_myqr_divider" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:background="@drawable/shape_bac_white_conor1">
 
             <ImageView
                 android:id="@+id/m_my_qr_code_qr_code_icon"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
+                android:layout_height="260dp"
+                android:layout_margin="30dp"
                 android:scaleType="fitXY" />
 
             <ImageView
@@ -103,11 +98,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/m_my_qr_code_qr_code_icon"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:gravity="center"
                 android:text="@string/m_my_qr_code_label"
-                android:textColor="#bbbbbb" />
+                android:textColor="@color/text_color2" />
 
         </RelativeLayout>
 

@@ -8,20 +8,17 @@
     android:orientation="vertical"
     tools:ignore="all">
 
-
     <include layout="@layout/layout_title" />
-
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:overScrollMode="never"
         android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#F8F8F8"
             android:orientation="vertical">
 
             <LinearLayout
@@ -42,7 +39,10 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="20dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="14dp"
                         android:orientation="vertical">
 
                         <RelativeLayout
@@ -60,20 +60,21 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignTop="@id/tv_nickName"
                                 android:layout_alignBottom="@id/tv_nickName"
-                                android:layout_marginStart="10dp"
+                                android:layout_marginStart="7dp"
                                 android:layout_toEndOf="@id/tv_nickName"
                                 app:srcCompat="@drawable/icon_qr_code" />
 
                             <TextView
                                 android:id="@+id/tv_DuoDuoNumber"
-                                style="@style/textStyle1"
+                                style="@style/textStyle16"
                                 android:layout_below="@id/tv_nickName"
-                                android:layout_marginTop="35dp" />
+                                android:layout_marginTop="38dp"
+                                android:text="多多号" />
 
                             <FrameLayout
                                 android:id="@+id/flMineHeadImgParent"
-                                android:layout_width="72dp"
-                                android:layout_height="72dp"
+                                android:layout_width="77dp"
+                                android:layout_height="76dp"
                                 android:layout_alignTop="@id/tv_nickName"
                                 android:layout_alignParentEnd="true"
                                 android:clipChildren="false">
@@ -87,8 +88,8 @@
 
                                 <ImageView
                                     android:id="@+id/ivMineAuthSign"
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
+                                    android:layout_width="21dp"
+                                    android:layout_height="21dp"
                                     android:layout_gravity="end|bottom"
                                     android:src="@drawable/ic_mine_authenticate"
                                     android:visibility="invisible" />
@@ -97,22 +98,23 @@
 
                             <TextView
                                 android:id="@+id/tv_signature"
-                                style="@style/textStyle1"
+                                style="@style/textStyle16"
                                 android:layout_below="@+id/tv_DuoDuoNumber"
-                                android:layout_marginTop="15dp"
+                                android:layout_marginTop="12dp"
                                 android:text="@string/personalized_signature" />
 
 
                             <TextView
                                 android:id="@+id/tvMineSign"
-                                style="@style/textStyle1"
+                                style="@style/textStyle16"
                                 android:layout_alignTop="@id/tv_signature"
                                 android:layout_alignParentBottom="true"
                                 android:layout_marginStart="5dp"
                                 android:layout_toStartOf="@+id/flMineHeadImgParent"
                                 android:layout_toEndOf="@id/tv_signature"
                                 android:ellipsize="end"
-                                android:lines="2" />
+                                android:lines="2"
+                                android:text="" />
 
                         </RelativeLayout>
                     </LinearLayout>
@@ -135,6 +137,8 @@
                     android:text="@string/balance" />
 
                 <ImageView style="@style/ImageEnter" />
+
+
             </RelativeLayout>
 
             <include layout="@layout/layout_line" />

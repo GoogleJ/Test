@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical">
 
-    <com.zxjk.duoduo.ui.widget.TitleBar
-        android:id="@+id/m_fragment_search_title_bar"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:titleBarLeftImage="@drawable/ico_back"
-        app:titleBarTextColor="@color/white"
-        app:titleBarTitle="@string/m_contact_search_label" />
+    <include layout="@layout/layout_title_back" />
 
 
     <EditText

@@ -11,17 +11,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="50dp"
+        android:layout_margin="40dp"
         android:background="@drawable/shape_circular_bead">
 
         <TextView
             android:id="@+id/type_of_certificate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_margin="30dp"
             android:text="@string/type_of_certificate"
             android:textColor="@color/theme_color"
             android:textSize="20sp"
@@ -32,7 +29,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_below="@+id/type_of_certificate"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="30dp"
             android:src="@drawable/selector_document_selection" />
 
         <TextView
@@ -40,12 +37,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/type_of_certificate"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:gravity="center"
             android:layout_alignTop="@+id/id_card_icon"
             android:layout_alignBottom="@+id/id_card_icon"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
             android:layout_toEndOf="@id/id_card_icon"
+            android:gravity="center"
             android:text="@string/id_card"
             android:textColor="@color/theme_color"
             android:textSize="16sp" />
@@ -55,7 +52,10 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_below="@+id/id_card_icon"
-            android:layout_margin="20dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
             android:src="@drawable/selector_document_selection" />
 
         <TextView
@@ -64,10 +64,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/id_card"
             android:layout_alignTop="@+id/passport_icon"
-            android:gravity="center"
             android:layout_alignBottom="@+id/passport_icon"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/passport_icon"
+            android:gravity="center"
             android:text="@string/passport"
             android:textColor="@color/theme_color"
             android:textSize="16sp" />
@@ -77,7 +77,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_below="@+id/passport_icon"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="30dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="30dp"
             android:src="@drawable/selector_document_selection" />

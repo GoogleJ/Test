@@ -101,5 +101,11 @@
     <color name="btn_color">#E5C175</color>
     <color name="text_color4">#393939</color>
 
+    <color name="textColor3">#333333</color>
+    <color name="textColor6">#666666</color>
+    <color name="textColor9">#999999</color>
+    <color name="textColor39">#393939</color>
+    <color name="colorE">#EEEEEE</color>
+
 
 </resources>

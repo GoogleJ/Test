@@ -3,468 +3,307 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_color"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <include layout="@layout/layout_title_back" />
+
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/themecolor">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:onClick="back"
-            android:padding="12dp"
-            app:srcCompat="@drawable/ico_back" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/userinfo"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-    </RelativeLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@android:color/white"
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/rl_headPortrait"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp">
+                android:layout_height="70dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/textStyle"
                     android:layout_centerVertical="true"
-                    android:text="@string/avatar"
-                    android:textColor="@color/themecolor"
-                    android:textSize="16sp" />
+                    android:layout_marginStart="15dp"
+                    android:text="@string/head_portrait" />
 
                 <ImageView
-                    android:id="@+id/ivUserInfoRightArrow1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
+                    android:id="@+id/iv_headPortrait"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
-                    app:srcCompat="@drawable/ic_mine_rightarrow" />
-
-                <ImageView
-                    android:id="@+id/ivUserInfoHead"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@id/ivUserInfoRightArrow1"
+                    android:layout_marginEnd="10dp"
+                    android:layout_toStartOf="@id/iv_enter"
                     android:scaleType="centerCrop"
-                    android:src="@color/ivUserInfoHead" />
+                    android:src="@drawable/icon_commit_header" />
+
+                <ImageView
+                    android:id="@+id/iv_enter"
+                    style="@style/ImageEnter" />
 
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="10dp"
-                android:background="@color/exchange_line" />
+                android:layout_height="1dp"
+                android:layout_marginStart="15dp"
+                android:background="@color/background_color" />
+
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="changeNick"
-                android:paddingLeft="10dp"
-                android:paddingTop="16dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="16dp">
+                style="@style/RLayoutStyle"
+                android:onClick="changeNick">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/textStyle"
                     android:layout_centerVertical="true"
-                    android:text="@string/nick"
-                    android:textColor="@color/themecolor"
-                    android:textSize="16sp" />
+                    android:layout_marginStart="15dp"
+                    android:text="@string/nick" />
+
+                <TextView
+                    android:id="@+id/tv_nickname"
+                    style="@style/textStyle14"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_toStartOf="@id/iv_enter1" />
 
                 <ImageView
-                    android:id="@+id/ivUserInfoRightArrow2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
-                    app:srcCompat="@drawable/ic_mine_rightarrow" />
+                    android:id="@+id/iv_enter1"
+                    style="@style/ImageEnter" />
 
-                <TextView
-                    android:id="@+id/tvUserInfoNick"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@id/ivUserInfoRightArrow2"
-                    android:textColor="@color/textcolor3" />
 
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="10dp"
-                android:background="@color/exchange_line" />
+                android:layout_height="1dp"
+                android:layout_marginStart="15dp"
+                android:background="@color/background_color" />
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="changeSex"
-                android:paddingLeft="10dp"
-                android:paddingTop="16dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="16dp">
+                style="@style/RLayoutStyle"
+                android:onClick="changeSex">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/textStyle"
                     android:layout_centerVertical="true"
-                    android:text="@string/gender"
-                    android:textColor="@color/themecolor"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:id="@+id/ivUserInfoRightArrow3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
-                    app:srcCompat="@drawable/ic_mine_rightarrow" />
+                    android:layout_marginStart="15dp"
+                    android:text="@string/gender" />
 
                 <TextView
                     android:id="@+id/tvUserInfoSex"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/textStyle14"
                     android:layout_centerVertical="true"
-                    android:layout_toStartOf="@id/ivUserInfoRightArrow3"
-                    android:textColor="@color/textcolor3" />
+                    android:layout_marginEnd="10dp"
+                    android:layout_toStartOf="@id/iv_enter2" />
+
+                <ImageView
+                    android:id="@+id/iv_enter2"
+                    style="@style/ImageEnter" />
+
 
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:background="@color/personal_information_line" />
+                android:background="@color/background_color" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingTop="16dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="16dp">
+            <RelativeLayout style="@style/RLayoutStyle">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/textStyle"
                     android:layout_centerVertical="true"
-                    android:text="@string/m_add_my_way_duoduo_id"
-                    android:textColor="@color/themecolor"
-                    android:textSize="16sp" />
+                    android:layout_marginStart="15dp"
+                    android:text="@string/m_add_my_way_duoduo_id" />
 
-                <ImageView
-                    android:id="@+id/ivUserInfoRightArrow4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <TextView
+                    android:id="@+id/tv_DuoDuoNumber"
+                    style="@style/textStyle14"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
-                    android:visibility="invisible"
-                    app:srcCompat="@drawable/ic_mine_rightarrow" />
+                    android:layout_marginEnd="12dp" />
 
-                <TextView
-                    android:id="@+id/tvUserInfoDUDUNum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@id/ivUserInfoRightArrow4"
-                    android:textColor="@color/textcolor3" />
 
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="10dp"
-                android:background="@color/exchange_line" />
+                android:layout_height="1dp"
+                android:layout_marginStart="15dp"
+                android:background="@color/background_color" />
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="myQRCode"
-                android:paddingLeft="10dp"
-                android:paddingTop="16dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="16dp">
+                style="@style/RLayoutStyle"
+                android:onClick="QRCode">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/textStyle"
                     android:layout_centerVertical="true"
-                    android:text="@string/my_qr_code"
-                    android:textColor="@color/themecolor"
-                    android:textSize="16sp" />
+                    android:layout_marginStart="15dp"
+                    android:text="@string/my_qr_code" />
 
                 <ImageView
-                    android:id="@+id/ivUserInfoRightArrow5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
-                    android:visibility="invisible"
-                    app:srcCompat="@drawable/ic_mine_rightarrow" />
+                    android:layout_marginEnd="12dp"
+                    app:srcCompat="@drawable/icon_qr_code" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@id/ivUserInfoRightArrow5"
-                    app:srcCompat="@drawable/ic_mine_code2" />
 
             </RelativeLayout>
+
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:background="@color/personal_information_line" />
+                android:background="@color/background_color" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingTop="16dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="16dp">
+            <RelativeLayout style="@style/RLayoutStyle">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/textStyle"
                     android:layout_centerVertical="true"
-                    android:text="@string/name"
-                    android:textColor="@color/themecolor"
-                    android:textSize="16sp" />
+                    android:layout_marginStart="15dp"
+                    android:text="@string/name" />
 
-                <ImageView
-                    android:id="@+id/ivUserInfoRightArrow6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <TextView
+                    android:id="@+id/tv_realName"
+                    style="@style/textStyle14"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
-                    android:visibility="invisible"
-                    app:srcCompat="@drawable/ic_mine_rightarrow" />
+                    android:layout_marginEnd="12dp" />
 
-                <TextView
-                    android:id="@+id/tvUserInfoRealName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@id/ivUserInfoRightArrow6"
-                    android:text="@string/unauthenticate"
-                    android:textColor="@color/textcolor3" />
 
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="10dp"
-                android:background="@color/exchange_line" />
+                android:layout_height="1dp"
+                android:layout_marginStart="15dp"
+                android:background="@color/background_color" />
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="changeMobile"
-                android:paddingLeft="10dp"
-                android:paddingTop="16dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="16dp">
+                style="@style/RLayoutStyle"
+                android:onClick="changeMobile">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/textStyle"
                     android:layout_centerVertical="true"
-                    android:text="@string/phone_number_label"
-                    android:textColor="@color/themecolor"
-                    android:textSize="16sp" />
+                    android:layout_marginStart="15dp"
+                    android:text="@string/phone_number_label" />
+
+                <TextView
+                    android:id="@+id/tv_phoneNumber"
+                    style="@style/textStyle14"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_toStartOf="@id/iv_enter6"
+                    android:text="" />
 
                 <ImageView
-                    android:id="@+id/ivUserInfoRightArrow7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
-                    app:srcCompat="@drawable/ic_mine_rightarrow" />
+                    android:id="@+id/iv_enter6"
+                    style="@style/ImageEnter" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="15dp"
+                android:background="@color/background_color" />
+
+            <RelativeLayout
+                style="@style/RLayoutStyle"
+                android:onClick="changeSign">
 
                 <TextView
-                    android:id="@+id/tvUserInfoPhone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/textStyle"
                     android:layout_centerVertical="true"
-                    android:layout_toStartOf="@id/ivUserInfoRightArrow7"
-                    android:textColor="@color/textcolor3" />
+                    android:layout_marginStart="15dp"
+                    android:text="@string/sign" />
+
+                <TextView
+                    android:id="@+id/tv_personalizedSignature"
+                    style="@style/textStyle14"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_toStartOf="@id/iv_enter7"
+                    android:text="" />
+
+                <ImageView
+                    android:id="@+id/iv_enter7"
+                    style="@style/ImageEnter" />
+
 
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="10dp"
-                android:background="@color/exchange_line" />
+                android:layout_height="1dp"
+                android:layout_marginStart="15dp"
+                android:background="@color/background_color" />
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="changeSign"
-                android:paddingLeft="10dp"
-                android:paddingTop="16dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="16dp">
+                style="@style/RLayoutStyle"
+                android:onClick="changeEmail">
 
                 <TextView
-                    android:id="@+id/tvUserInfoSignHead"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/textStyle"
                     android:layout_centerVertical="true"
-                    android:text="@string/sign"
-                    android:textColor="@color/themecolor"
-                    android:textSize="16sp" />
+                    android:layout_marginStart="15dp"
+                    android:text="@string/email" />
+
+                <TextView
+                    android:id="@+id/tv_email"
+                    style="@style/textStyle14"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_toStartOf="@id/iv_enter8"
+                    android:text="" />
 
                 <ImageView
-                    android:id="@+id/ivUserInfoRightArrow8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
-                    app:srcCompat="@drawable/ic_mine_rightarrow" />
+                    android:id="@+id/iv_enter8"
+                    style="@style/ImageEnter" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="15dp"
+                android:background="@color/background_color" />
+
+            <RelativeLayout
+                android:id="@+id/rl_walletAddress"
+                style="@style/RLayoutStyle">
 
                 <TextView
-                    android:id="@+id/tvUserInfoSign"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_wallet"
+                    style="@style/textStyle"
                     android:layout_centerVertical="true"
-                    android:layout_toStartOf="@id/ivUserInfoRightArrow8"
-                    android:layout_toEndOf="@id/tvUserInfoSignHead"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/wallet_address" />
+
+                <TextView
+                    android:id="@+id/tv_walletAddress"
+                    style="@style/textStyle14"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_toEndOf="@id/tv_wallet"
                     android:ellipsize="end"
-                    android:gravity="end"
-                    android:maxLines="1"
-                    android:text="@string/none"
-                    android:textColor="@color/textcolor3" />
+                    android:singleLine="true"
+                    android:text="" />
 
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="10dp"
-                android:background="@color/exchange_line" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="changeEmail"
-                android:paddingLeft="10dp"
-                android:paddingTop="16dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="16dp">
-
-                <TextView
-                    android:id="@+id/tvUserInfoEmailHead"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="@string/email"
-                    android:textColor="@color/themecolor"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:id="@+id/ivUserInfoRightArrow9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
-                    app:srcCompat="@drawable/ic_mine_rightarrow" />
-
-                <TextView
-                    android:id="@+id/tvUserInfoEmail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toStartOf="@id/ivUserInfoRightArrow9"
-                    android:layout_toEndOf="@id/tvUserInfoEmailHead"
-                    android:ellipsize="end"
-                    android:gravity="end"
-                    android:maxLines="1"
-                    android:text="@string/unsetting"
-                    android:textColor="@color/textcolor3" />
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/personal_information_line" />
-
-            <RelativeLayout
-                android:id="@+id/rlWalletAddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingTop="16dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="16dp">
-
-                <TextView
-                    android:id="@+id/tvUserInfoWalletHead"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="@string/wallet_address"
-                    android:textColor="@color/themecolor"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tvUserInfoWallet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="12dp"
-                    android:layout_toEndOf="@id/tvUserInfoWalletHead"
-                    android:ellipsize="end"
-                    android:gravity="end"
-                    android:maxLines="1"
-                    android:textColor="@color/textcolor3" />
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@color/personal_information_line" />
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>
 

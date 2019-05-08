@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -13,7 +14,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.suke.widget.SwitchButton;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -28,21 +28,21 @@ import com.zxjk.duoduo.ui.minepage.UpdateUserInfoActivity;
 import com.zxjk.duoduo.ui.msgpage.ConversationActivity;
 import com.zxjk.duoduo.ui.msgpage.CreateGroupActivity;
 import com.zxjk.duoduo.ui.msgpage.GroupQRActivity;
-import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.ui.widget.dialog.ConfirmDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 /**
- * @author Administrator
+ * author L
+ * create at 2019/5/8
+ * description: 群聊天信息  讨论组
  */
 @SuppressLint("CheckResult")
 public class GroupChatInformationActivity extends BaseActivity {
-    TitleBar titleBar;
+
     TextView groupChatName;
     TextView see_more_group_members;
     RecyclerView groupChatRecyclerView;
-    SwitchButton topChatSwitch;
-    SwitchButton messageAvoidanceSwitch;
+
     //群公告
     TextView announcement;
     //解散群
@@ -51,16 +51,19 @@ public class GroupChatInformationActivity extends BaseActivity {
     AllGroupMemebersAdapter mAdapter;
 
     Intent intent;
-
+    TextView tv_title;
     private GroupResponse group;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_chat_information);
+        tv_title = findViewById(R.id.tv_title);
+
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
         see_more_group_members = findViewById(R.id.see_more_group_members);
 
-        TextView tvGroupManagement = findViewById(R.id.tvGroupManagement);
+        RelativeLayout rl_groupManage = findViewById(R.id.rl_groupManage);
 
         String id = getIntent().getStringExtra("id");
         ServiceFactory.getInstance().getBaseService(Api.class)
@@ -71,27 +74,24 @@ public class GroupChatInformationActivity extends BaseActivity {
                 .subscribe(groupResponse -> {
                     group = groupResponse;
                     if (groupResponse.getGroupInfo().getGroupOwnerId().equals(Constant.userId)) {
-                        tvGroupManagement.setVisibility(View.VISIBLE);
+                        rl_groupManage.setVisibility(View.VISIBLE);
                         if (Constant.isVerifyVerision) {
-                            tvGroupManagement.setVisibility(View.GONE);
+                            rl_groupManage.setVisibility(View.GONE);
                         }
                     } else {
-                        tvGroupManagement.setVisibility(View.GONE);
+                        rl_groupManage.setVisibility(View.GONE);
                     }
 
                     initView();
                 }, this::handleApiError);
     }
 
+    @SuppressLint("SetTextI18n")
     private void initView() {
-        titleBar = findViewById(R.id.title_bar);
-        titleBar.setTitle(titleBar.getTitleView().getText().toString().trim()
-                + "(" + group.getCustomers().size() + ")");
+        tv_title.setText(getString(R.string.chat_message) + "(" + group.getCustomers().size() + ")");
         groupChatName = findViewById(R.id.group_chat_name);
         groupChatRecyclerView = findViewById(R.id.group_chat_recycler_view);
-        topChatSwitch = findViewById(R.id.top_chat_switch);
-        messageAvoidanceSwitch = findViewById(R.id.message_avoidance_switch);
-        titleBar.getLeftImageView().setOnClickListener(v -> finish());
+
         announcement = findViewById(R.id.announcement);
         dissolutionGroup = findViewById(R.id.dissolution_group);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 5);
@@ -99,10 +99,10 @@ public class GroupChatInformationActivity extends BaseActivity {
         mAdapter = new AllGroupMemebersAdapter();
         groupChatRecyclerView.setAdapter(mAdapter);
         if (group.getCustomers().size() <= 15) {
-            see_more_group_members.setClickable(false);
-            see_more_group_members.setVisibility(View.INVISIBLE);
+            see_more_group_members.setVisibility(View.GONE);
             mAdapter.setNewData(group.getCustomers());
         } else {
+            see_more_group_members.setVisibility(View.VISIBLE);
             mAdapter.setNewData(group.getCustomers().subList(0, 15));
         }
 
@@ -238,7 +238,7 @@ public class GroupChatInformationActivity extends BaseActivity {
                 }, this::handleApiError);
     }
 
-    public void changeGroupName(View view) {
+    public void groupChat(View view) {
         Intent intent = new Intent(this, UpdateUserInfoActivity.class);
         intent.putExtra("type", 4);
         intent.putExtra("data", group);

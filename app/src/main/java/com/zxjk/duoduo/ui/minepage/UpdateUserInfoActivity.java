@@ -31,14 +31,15 @@ import static android.text.InputType.TYPE_CLASS_TEXT;
 import static android.text.InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS;
 
 /**
- * @author Administrator
+ * author L
+ * create at 2019/5/8
+ * description: 昵称、个性签名、邮箱、修改群名称
  */
 @SuppressLint("CheckResult")
 public class UpdateUserInfoActivity extends BaseActivity {
 
     private EditText etChangeSign;
     private TextView tvChangeSign;
-    private TextView tvUpdateInfoTitle;
 
     private static final int TYPE_SIGN = 1;
     private static final int TYPE_NICK = 2;
@@ -46,14 +47,19 @@ public class UpdateUserInfoActivity extends BaseActivity {
     private static final int TYPE_GROUP_TITLE = 4;
     private int type;
 
+    private TextView tv_title;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_user_info);
 
+        initView();
+
+
         etChangeSign = findViewById(R.id.etChangeSign);
         tvChangeSign = findViewById(R.id.tvChangeSign);
-        tvUpdateInfoTitle = findViewById(R.id.tvUpdateInfoTitle);
+
 
         etChangeSign.addTextChangedListener(new TextWatcher() {
             @Override
@@ -76,23 +82,35 @@ public class UpdateUserInfoActivity extends BaseActivity {
         Intent intent = getIntent();
         type = intent.getIntExtra("type", 0);
         if (type == TYPE_SIGN) {
-            tvUpdateInfoTitle.setText(R.string.sign);
+            tv_title.setText(R.string.sign);
             etChangeSign.setHint(R.string.hint_sign);
         } else if (type == TYPE_NICK) {
-            tvUpdateInfoTitle.setText(R.string.nick);
+            tv_title.setText(R.string.nick);
             etChangeSign.setHint(R.string.hint_nick);
         } else if (type == TYPE_EMAIL) {
-            tvUpdateInfoTitle.setText(R.string.email);
+            tv_title.setText(R.string.email);
             etChangeSign.setHint(R.string.hint_email);
             etChangeSign.setInputType(TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         } else if (type == TYPE_GROUP_TITLE) {
-            tvUpdateInfoTitle.setText(R.string.changegroupname);
+            tv_title.setText(R.string.changegroupname);
             etChangeSign.setHint(R.string.hint_groupname);
         }
+
+
     }
 
-    //提交
-    public void submit(View view) {
+    private void initView() {
+        tv_title = findViewById(R.id.tv_title);
+        TextView tv_commit = findViewById(R.id.tv_commit);
+        tv_commit.setVisibility(View.VISIBLE);
+        tv_commit.setText(getString(R.string.save));
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
+        tv_commit.setOnClickListener(v -> submit());
+
+    }
+
+    //保存
+    public void submit() {
         String sign = etChangeSign.getText().toString().trim();
         if (sign.length() == 0) {
             ToastUtils.showShort(R.string.input_empty);
@@ -161,10 +179,5 @@ public class UpdateUserInfoActivity extends BaseActivity {
                 }, this::handleApiError);
     }
 
-    public void back(View view) {
-        finish();
-        CommonUtils.hideInputMethod(this);
-
-    }
 
 }

@@ -3,8 +3,8 @@ package com.zxjk.duoduo.ui.walletpage;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -24,6 +24,11 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTit
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
 
+/**
+ * author L
+ * create at 2019/5/8
+ * description: 交易所记录
+ */
 public class BlockWalletOrdersActivity extends BaseActivity {
 
     private MagicIndicator magic_indicator;
@@ -34,6 +39,9 @@ public class BlockWalletOrdersActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_block_wallet_orders);
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.orders));
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
 
         magic_indicator = findViewById(R.id.magic_indicator);
         pagerBlockOrders = findViewById(R.id.pagerBlockOrders);
@@ -98,7 +106,4 @@ public class BlockWalletOrdersActivity extends BaseActivity {
         ViewPagerHelper.bind(magic_indicator, pagerBlockOrders);
     }
 
-    public void back(View view) {
-        finish();
-    }
 }

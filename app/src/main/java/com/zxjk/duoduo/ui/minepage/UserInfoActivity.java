@@ -44,16 +44,17 @@ import java.util.Collections;
 @SuppressLint("CheckResult")
 public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnItemClickListener {
 
-    private RelativeLayout rlWalletAddress;
-    private ImageView ivUserInfoHead;
-    private TextView tvUserInfoNick;
     private TextView tvUserInfoSex;
-    private TextView tvUserInfoDUDUNum;
-    private TextView tvUserInfoRealName;
-    private TextView tvUserInfoPhone;
-    private TextView tvUserInfoSign;
-    private TextView tvUserInfoEmail;
-    private TextView tvUserInfoWallet;
+    private TextView tv_DuoDuoNumber;
+    private TextView tv_realName;
+    private TextView tv_phoneNumber;
+    private TextView tv_personalizedSignature;
+    private TextView tv_email;
+    private TextView tv_walletAddress;
+
+
+    private ImageView iv_headPortrait;
+    private TextView tv_nickname;
 
     private TakePopWindow selectPicPopWindow;
     private static final int REQUEST_TAKE = 1;
@@ -69,6 +70,9 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.userinfo));
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
 
         selectPicPopWindow = new TakePopWindow(this);
         selectPicPopWindow.setOnItemClickListener(this);
@@ -96,16 +100,16 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
 
     @SuppressLint("SetTextI18n")
     private void bindData() {
-        GlideUtil.loadCornerImg(ivUserInfoHead, Constant.currentUser.getHeadPortrait(), 3);
+        GlideUtil.loadCornerImg(iv_headPortrait, Constant.currentUser.getHeadPortrait(), 5);
         String mobile = Constant.currentUser.getMobile();
-        tvUserInfoNick.setText(Constant.currentUser.getNick());
+        tv_nickname.setText(Constant.currentUser.getNick());
         tvUserInfoSex.setText(CommonUtils.getSex(Constant.currentUser.getSex()));
-        tvUserInfoDUDUNum.setText(Constant.currentUser.getDuoduoId());
-        tvUserInfoRealName.setText(TextUtils.isEmpty(Constant.currentUser.getRealname()) ? "暂未认证" : Constant.currentUser.getRealname());
-        tvUserInfoPhone.setText(mobile.substring(0, 3) + "****" + mobile.substring(7, 11));
-        tvUserInfoSign.setText(TextUtils.isEmpty(Constant.currentUser.getSignature()) ? "暂无" : Constant.currentUser.getSignature());
-        tvUserInfoEmail.setText(TextUtils.isEmpty(Constant.currentUser.getEmail()) ? "暂无" : Constant.currentUser.getEmail());
-        tvUserInfoWallet.setText(Constant.currentUser.getWalletAddress());
+        tv_DuoDuoNumber.setText(Constant.currentUser.getDuoduoId());
+        tv_realName.setText(TextUtils.isEmpty(Constant.currentUser.getRealname()) ? "暂未认证" : Constant.currentUser.getRealname());
+        tv_phoneNumber.setText(mobile.substring(0, 3) + "****" + mobile.substring(7, 11));
+        tv_personalizedSignature.setText(TextUtils.isEmpty(Constant.currentUser.getSignature()) ? "暂无" : Constant.currentUser.getSignature());
+        tv_email.setText(TextUtils.isEmpty(Constant.currentUser.getEmail()) ? "暂无" : Constant.currentUser.getEmail());
+        tv_walletAddress.setText(Constant.currentUser.getWalletAddress());
     }
 
     @Override
@@ -125,35 +129,41 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
                     .subscribe(s -> {
                         Constant.currentUser.setIsAuthentication(s);
                         MMKVUtils.getInstance().enCode("login", Constant.currentUser);
-                        if (s.equals("0")) {
-                            tvUserInfoRealName.setText("已认证");
-                        } else if (s.equals("2")) {
-                            tvUserInfoRealName.setText("认证审核中");
-                        } else if (s.equals("1")) {
-                            tvUserInfoRealName.setText("认证未通过");
-                        } else {
-                            tvUserInfoRealName.setText("未认证");
+                        switch (s) {
+                            case "0":
+                                tv_realName.setText("已认证");
+                                break;
+                            case "2":
+                                tv_realName.setText("认证审核中");
+                                break;
+                            case "1":
+                                tv_realName.setText("认证未通过");
+                                break;
+                            default:
+                                tv_realName.setText("未认证");
+                                break;
                         }
                     }, this::handleApiError);
         }
     }
 
     private void findViews() {
-        rlWalletAddress = findViewById(R.id.rlWalletAddress);
+        RelativeLayout rl_walletAddress = findViewById(R.id.rl_walletAddress);
         if (Constant.isVerifyVerision) {
-            rlWalletAddress.setVisibility(View.GONE);
+            rl_walletAddress.setVisibility(View.GONE);
         }
-        ivUserInfoHead = findViewById(R.id.ivUserInfoHead);
-        tvUserInfoNick = findViewById(R.id.tvUserInfoNick);
+        iv_headPortrait = findViewById(R.id.iv_headPortrait);
+        RelativeLayout rl_headPortrait = findViewById(R.id.rl_headPortrait);
+        tv_nickname = findViewById(R.id.tv_nickname);
         tvUserInfoSex = findViewById(R.id.tvUserInfoSex);
-        tvUserInfoDUDUNum = findViewById(R.id.tvUserInfoDUDUNum);
-        tvUserInfoRealName = findViewById(R.id.tvUserInfoRealName);
-        tvUserInfoPhone = findViewById(R.id.tvUserInfoPhone);
-        tvUserInfoSign = findViewById(R.id.tvUserInfoSign);
-        tvUserInfoEmail = findViewById(R.id.tvUserInfoEmail);
-        tvUserInfoWallet = findViewById(R.id.tvUserInfoWallet);
+        tv_DuoDuoNumber = findViewById(R.id.tv_DuoDuoNumber);
+        tv_realName = findViewById(R.id.tv_realName);
+        tv_phoneNumber = findViewById(R.id.tv_phoneNumber);
+        tv_personalizedSignature = findViewById(R.id.tv_personalizedSignature);
+        tv_email = findViewById(R.id.tv_email);
+        tv_walletAddress = findViewById(R.id.tv_walletAddress);
 
-        getPermisson(ivUserInfoHead, result -> {
+        getPermisson(rl_headPortrait, result -> {
             if (result) {
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
                 selectPicPopWindow.showAtLocation(findViewById(android.R.id.content),
@@ -180,7 +190,7 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
     }
 
     //我的二维码
-    public void myQRCode(View view) {
+    public void QRCode(View view) {
         startActivity(new Intent(this, MyQrCodeActivity.class));
     }
 
@@ -198,9 +208,6 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
         startActivity(intent);
     }
 
-    public void back(View view) {
-        finish();
-    }
 
     @Override
     public void setOnItemClick(View v) {
@@ -247,7 +254,7 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
                             .subscribe(response -> {
                                 Constant.currentUser.setHeadPortrait(url);
                                 MMKVUtils.getInstance().enCode("login", Constant.currentUser);
-                                GlideUtil.loadCornerImg(ivUserInfoHead, url, 3);
+                                GlideUtil.loadCornerImg(iv_headPortrait, url, 5);
                                 ToastUtils.showShort(R.string.update_head_portrail);
                             }, UserInfoActivity.this::handleApiError);
                 });

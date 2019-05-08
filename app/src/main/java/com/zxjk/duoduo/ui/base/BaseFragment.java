@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.jakewharton.rxbinding3.view.RxView;
@@ -18,17 +20,18 @@ import com.zxjk.duoduo.ui.widget.dialog.ReLoginDialog;
 import java.io.File;
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import me.jessyan.autosize.internal.CustomAdapt;
 import top.zibin.luban.Luban;
 
 /**
  * @author Administrator
  */
 @SuppressLint("CheckResult")
-public class BaseFragment extends RxFragment {
+public class BaseFragment extends RxFragment  {
+
 
     public View rootView;
 
@@ -89,6 +92,8 @@ public class BaseFragment extends RxFragment {
 
         ToastUtils.showShort(RxException.getMessage(throwable));
     }
+
+
 
     public interface OnZipFileFinish {
         void onFinish(List<File> result);

@@ -29,6 +29,11 @@ import com.zxjk.duoduo.utils.MoneyValueFilter;
 
 import java.text.DecimalFormat;
 
+/**
+ * author L
+ * create at 2019/5/8
+ * description: 划转
+ */
 public class HuaZhuanActivity extends BaseActivity implements SafeInputDialog.OnFinishListener {
 
     private String type = "3"; //币种类型，2：HK->HKB，3：HKB->HK
@@ -64,7 +69,9 @@ public class HuaZhuanActivity extends BaseActivity implements SafeInputDialog.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hua_zhuan);
-
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.huazhuan));
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
         dialog = new SafeInputDialog(this);
         dialog.setOnFinishListener(this);
 
@@ -225,9 +232,6 @@ public class HuaZhuanActivity extends BaseActivity implements SafeInputDialog.On
         finish();
     }
 
-    public void back(View view) {
-        finish();
-    }
 
     @SuppressLint("CheckResult")
     @Override

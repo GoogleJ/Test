@@ -1,41 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <com.zxjk.duoduo.ui.widget.TitleBar
-        android:id="@+id/title_bar"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    tools:ignore="all">
+
+    <include layout="@layout/layout_title_back" />
+
+
+    <EditText
+        android:id="@+id/search_select_contact"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:titleBarTextColor="@color/white"
-        app:titleBarLeftImage="@drawable/ico_back"
-        app:titleBarTitle="@string/select_contacts"
-        />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="horizontal">
-        <EditText
-            android:id="@+id/search_select_contact"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="12dp"
-            android:background="@color/background"
-            android:drawableStart="@drawable/ic_search_gray"
-            android:hint="@string/contact_search"
-            android:maxWidth="120dp"
-            android:paddingStart="20dp"
-            />
-    </LinearLayout>
+        android:layout_height="45dp"
+        android:layout_margin="12dp"
+        android:background="@drawable/shape_circular_bead2"
+        android:drawableStart="@drawable/icon_search_view"
+        android:drawablePadding="4dp"
+        android:hint="@string/m_contact_search_label"
+        android:imeOptions="actionSearch"
+        android:maxLines="1"
+        android:paddingStart="25dp"
+        android:paddingEnd="20dp"
+        android:singleLine="true"
+        android:textSize="15sp" />
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/card_recycler_view"
-        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="@color/white" />
 
 </LinearLayout>

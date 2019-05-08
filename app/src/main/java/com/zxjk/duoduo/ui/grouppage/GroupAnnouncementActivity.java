@@ -7,8 +7,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -20,51 +21,42 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 
-import androidx.annotation.Nullable;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imlib.model.Group;
 
 /**
- * @author Administrator
+ * author L
+ * create at 2019/5/8
+ * description: 群公告
  */
 @SuppressLint("CheckResult")
 public class GroupAnnouncementActivity extends BaseActivity {
 
-    ImageView titleLeftImage;
-    TextView titleRight;
     EditText announcementEdit;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_announcement);
-        titleLeftImage = findViewById(R.id.title_left_image);
-        titleRight = findViewById(R.id.title_right);
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.group_announcement));
+        TextView tv_commit = findViewById(R.id.tv_commit);
+        tv_commit.setVisibility(View.VISIBLE);
+        tv_commit.setText(getString(R.string.ok));
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
+        tv_commit.setOnClickListener(v -> {
+            GroupResponse.GroupInfoBean request = new GroupResponse.GroupInfoBean();
+            if (!TextUtils.isEmpty(announcementEdit.getText().toString())) {
+                request.setId(getIntent().getStringExtra("groupId"));
+                request.setGroupNotice(announcementEdit.getText().toString());
+                updateGroupInfo(GsonUtils.toJson(request));
+            } else {
+                ToastUtils.showShort(getString(R.string.please_input_announcement));
+            }
+        });
         announcementEdit = findViewById(R.id.announcement_edit);
     }
 
-    /**
-     * 点击返回的事件
-     *
-     * @param view
-     */
-    public void titleLeftImage(View view) {
-        finish();
-    }
-
-    /**
-     * 处理完成事件
-     */
-    public void titleRight(View view) {
-        GroupResponse.GroupInfoBean request = new GroupResponse.GroupInfoBean();
-        if (!TextUtils.isEmpty(announcementEdit.getText().toString())) {
-            request.setId(getIntent().getStringExtra("groupId"));
-            request.setGroupNotice(announcementEdit.getText().toString());
-            updateGroupInfo(GsonUtils.toJson(request));
-        } else {
-            ToastUtils.showShort(getString(R.string.please_input_announcement));
-        }
-    }
 
     public void updateGroupInfo(String groupInfo) {
         ServiceFactory.getInstance().getBaseService(Api.class)

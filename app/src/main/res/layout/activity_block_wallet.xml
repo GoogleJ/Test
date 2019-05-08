@@ -10,35 +10,47 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/themecolor">
+        android:layout_height="50dp"
+        android:background="@color/theme_color">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:onClick="back"
-            android:padding="12dp"
-            app:srcCompat="@drawable/ico_back" />
+        <RelativeLayout
+            android:id="@+id/rl_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:onClick="back">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ico_back" />
+        </RelativeLayout>
+
 
         <TextView
+            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/blockWallet"
-            android:textColor="@color/white"
+            android:textColor="@android:color/white"
             android:textSize="18sp" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <RelativeLayout
+            android:id="@+id/rl_end"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:onClick="jump2List"
-            android:padding="12dp"
-            android:src="@drawable/ic_exchange_list" />
+            android:onClick="jump2List">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_exchange_list" />
+        </RelativeLayout>
     </RelativeLayout>
+
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -146,11 +158,11 @@
         </LinearLayout>
 
         <View
-            android:background="@color/line"
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp" />
+            android:layout_marginBottom="12dp"
+            android:background="@color/line" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -184,11 +196,11 @@
         android:background="@color/personal_information_1" />
 
     <LinearLayout
-        android:onClick="enterETHOrders"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:gravity="center_vertical"
+        android:onClick="enterETHOrders"
         android:padding="12dp">
 
         <TextView
@@ -203,9 +215,9 @@
             android:textSize="17sp" />
 
         <LinearLayout
-            android:gravity="end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="end"
             android:orientation="vertical">
 
             <TextView

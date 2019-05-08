@@ -38,9 +38,9 @@ import io.rong.imlib.model.UserInfo;
 import static com.zxjk.duoduo.utils.MD5Utils.getMD5;
 
 /**
- * 此处是登录界面及操作
- *
- * @author Administrator
+ * author L
+ * create at 2019/5/8
+ * description: 登录
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 

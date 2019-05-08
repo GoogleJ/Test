@@ -319,7 +319,7 @@
     <string name="dissolution_group">解散群</string>
     <string name="all_group_members_title">全部群成员</string>
     <string name="group_announcement_edit">请编辑群公告</string>
-    <string name="announcement">港币兑换开始啦，大家抓紧时间哟，机不可失时不再来，更有大优惠等你来！</string>
+    <string name="announcement">港币兑换开始啦，大家抓紧时间哟</string>
     <string name="remove_group_chat">移除群聊</string>
     <string name="remove_btn">删除</string>
     <string name="add_group_verification">加群验证</string>
@@ -832,12 +832,15 @@
     <string name="mobile_phone">手机</string>
     <string name="email">邮箱</string>
     <string name="mailbox">邮箱</string>
-    <string name="personalized">个人签名</string>
+    <string name="personalized">个性签名</string>
     <string name="group_invitation">群聊邀请</string>
     <string name="hint_duoduo_id2">群主多多号:</string>
     <string name="group_qr">群二维码</string>
     <string name="m_my_qr_code_label1">扫一扫二维码，加入群聊</string>
     <string name="savetophone">保存到手机</string>
     <string name="sharecode">分享二维码</string>
+    <!---->
+    <string name="head_portrait">头像</string>
+    <string name="chat_message">聊天信息</string>
 
 </resources>

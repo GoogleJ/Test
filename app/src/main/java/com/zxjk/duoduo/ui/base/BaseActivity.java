@@ -20,11 +20,14 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import me.jessyan.autosize.internal.CustomAdapt;
 import top.zibin.luban.Luban;
 
 @SuppressLint({"CheckResult", "Registered"})
-public class BaseActivity extends RxAppCompatActivity {
+public class BaseActivity extends RxAppCompatActivity  {
     public RxPermissions rxPermissions = new RxPermissions(this);
+
+
 
     public interface PermissionResult {
         void onResult(boolean granted);

@@ -54,12 +54,11 @@
                 <ImageView style="@style/ImageEnter" />
             </RelativeLayout>
 
+            <include layout="@layout/layout_line10" />
+
             <RelativeLayout
                 android:id="@+id/rl_add"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:background="@android:color/white">
+                style="@style/RLayoutStyle">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -67,17 +66,17 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="15dp"
                     android:text="添加新成员"
-                    android:textSize="15sp" />
+                    android:textColor="@color/theme_color"
+                    android:textSize="16sp" />
 
                 <ImageView style="@style/ImageEnter" />
             </RelativeLayout>
 
+            <include layout="@layout/layout_line" />
+
             <RelativeLayout
                 android:id="@+id/rl_qk"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:background="@android:color/white">
+                style="@style/RLayoutStyle">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -85,17 +84,17 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="15dp"
                     android:text="清空聊天记录"
-                    android:textSize="15sp" />
+                    android:textColor="@color/theme_color"
+                    android:textSize="16sp" />
 
                 <ImageView style="@style/ImageEnter" />
             </RelativeLayout>
 
+            <include layout="@layout/layout_line" />
+
             <RelativeLayout
                 android:id="@+id/rl_juBao"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:background="@android:color/white">
+                style="@style/RLayoutStyle">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -103,7 +102,8 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="15dp"
                     android:text="举报"
-                    android:textSize="15sp" />
+                    android:textColor="@color/theme_color"
+                    android:textSize="16sp" />
 
                 <ImageView style="@style/ImageEnter" />
             </RelativeLayout>

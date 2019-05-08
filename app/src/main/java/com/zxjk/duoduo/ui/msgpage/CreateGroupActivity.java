@@ -39,13 +39,17 @@ import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 
+/**
+ * author L
+ * create at 2019/5/8
+ * description: 群添加成员   添加联系人
+ */
 @SuppressLint("CheckResult")
 public class CreateGroupActivity extends BaseActivity {
 
     private List<String> selectedIds = new ArrayList<>();
 
-    private TextView tvCreateGroupConfirm;
-    private TextView tvUpdateInfoTitle;
+
     private RecyclerView recycler1;
     private RecyclerView recycler2;
     private CreateGroupTopAdapter adapter1; //建群适配器（顶部）
@@ -73,10 +77,19 @@ public class CreateGroupActivity extends BaseActivity {
     //temp
     List<GroupResponse.CustomersBean> c = new ArrayList<>();
 
+    private TextView tv_commit;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
+        tv_commit = findViewById(R.id.tv_commit);
+        tv_commit.setVisibility(View.VISIBLE);
+        tv_commit.setText(getString(R.string.ok));
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.select_contacts));
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
 
         GroupResponse group = (GroupResponse) getIntent().getSerializableExtra("members");
         if (group != null) {
@@ -86,9 +99,8 @@ public class CreateGroupActivity extends BaseActivity {
 
         eventType = getIntent().getIntExtra("eventType", -1);
 
-        tvCreateGroupConfirm = findViewById(R.id.tvCreateGroupConfirm);
-        tvUpdateInfoTitle = findViewById(R.id.tvUpdateInfoTitle);
-        confirmText = tvCreateGroupConfirm.getText();
+
+        confirmText = tv_commit.getText();
         recycler1 = findViewById(R.id.recycler1);
         recycler2 = findViewById(R.id.recycler2);
         tv_hit_letter = findViewById(R.id.tv_hit_letter);
@@ -106,9 +118,11 @@ public class CreateGroupActivity extends BaseActivity {
         }
 
         if (eventType == EVENT_DELETEMEMBER) {
-            tvUpdateInfoTitle.setText(R.string.remove_from_group);
+            tv_title.setText(R.string.remove_from_group);
             handleDeleteMember();
         }
+
+        tv_commit.setOnClickListener(v -> confirm());
     }
 
     //删除成员逻辑
@@ -135,7 +149,7 @@ public class CreateGroupActivity extends BaseActivity {
                 data3.add(item);
                 adapter3.notifyItemInserted(data2.size() - 1);
             }
-            tvCreateGroupConfirm.setText(confirmText + "(" + data3.size() + ")");
+            tv_commit.setText(confirmText + "(" + data3.size() + ")");
         });
     }
 
@@ -162,7 +176,7 @@ public class CreateGroupActivity extends BaseActivity {
                 data1.add(item);
                 adapter1.notifyItemInserted(data.size() - 1);
             }
-            tvCreateGroupConfirm.setText(confirmText + "(" + data1.size() + ")");
+            tv_commit.setText(confirmText + "(" + data1.size() + ")");
         });
         adapter2.setData1(data2);
         initData();
@@ -190,7 +204,7 @@ public class CreateGroupActivity extends BaseActivity {
                 data1.add(item);
                 adapter1.notifyItemInserted(data.size() - 1);
             }
-            tvCreateGroupConfirm.setText(confirmText + "(" + data1.size() + ")");
+            tv_commit.setText(confirmText + "(" + data1.size() + ")");
         });
 
         initData();
@@ -247,11 +261,8 @@ public class CreateGroupActivity extends BaseActivity {
         return -1;
     }
 
-    public void back(View view) {
-        finish();
-    }
 
-    public void confirm(View view) {
+    public void confirm() {
         if (eventType == EVENT_CREATEGROUP) {
             //创建群
             if (data1.size() < 2) {

@@ -23,9 +23,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/background_color"
-                android:padding="12dp"
+                android:paddingStart="15dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:text="@string/verified_prompt"
-                android:textColor="@color/text_color3"
+                android:textColor="@color/textColor3"
                 android:textSize="14sp" />
 
             <RelativeLayout
@@ -49,7 +51,7 @@
             <EditText
                 android:id="@+id/et_realName"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="50dp"
                 android:background="@android:color/white"
                 android:hint="@string/bank_real_name"
                 android:paddingStart="15dp"
@@ -62,7 +64,7 @@
             <EditText
                 android:id="@+id/id_card"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="50dp"
                 android:background="@color/white"
                 android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 android:hint="@string/id_number"
@@ -75,25 +77,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/background_color"
-                android:padding="12dp"
+                android:paddingStart="15dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:text="@string/verified_prompt_1"
-                android:textColor="@color/text_color3"
+                android:textColor="@color/textColor3"
                 android:textSize="14sp" />
 
-            <RelativeLayout
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <RelativeLayout
                     android:id="@+id/rl_front"
-                    android:layout_width="160dp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="15dp">
+                    android:layout_margin="15dp"
+                    android:layout_weight="1"
+                    android:gravity="center">
 
                     <ImageView
                         android:id="@+id/front_photo_of_the_document"
-                        android:layout_width="160dp"
-                        android:layout_height="100dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="99dp"
                         android:background="@drawable/shape_circular_bead1"
                         android:scaleType="center"
                         android:src="@drawable/icon_add_a_photo_of_the_id" />
@@ -105,6 +113,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
                         android:text="@string/front_photo_of_the_document"
+                        android:textColor="@color/textColor6"
                         android:textSize="14sp" />
 
                     <ImageView
@@ -119,17 +128,18 @@
 
                 <RelativeLayout
                     android:id="@+id/rl_contrary"
-                    android:layout_width="160dp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
                     android:layout_marginTop="15dp"
                     android:layout_marginEnd="15dp"
-                    android:layout_marginBottom="15dp">
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="1"
+                    android:gravity="center">
 
                     <ImageView
                         android:id="@+id/reverse_photo_of_the_document"
-                        android:layout_width="160dp"
-                        android:layout_height="100dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="99dp"
                         android:background="@drawable/shape_circular_bead1"
                         android:scaleType="center"
                         android:src="@drawable/icon_add_a_photo_of_the_id" />
@@ -141,6 +151,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
                         android:text="@string/reverse_photo_of_the_document"
+                        android:textColor="@color/textColor6"
                         android:textSize="14sp" />
 
                     <ImageView
@@ -151,20 +162,25 @@
                         android:src="@drawable/icon_image_edit"
                         android:visibility="gone" />
                 </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <RelativeLayout
                     android:id="@+id/rl_passportPhoto"
-                    android:layout_width="160dp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/rl_front"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginBottom="15dp">
+                    android:layout_margin="15dp"
+                    android:layout_weight="1"
+                    android:gravity="center">
 
                     <ImageView
                         android:id="@+id/hand_held_passport_photo"
-                        android:layout_width="160dp"
-                        android:layout_height="100dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="99dp"
                         android:background="@drawable/shape_circular_bead1"
                         android:scaleType="center"
                         android:src="@drawable/icon_hand_held_passport_photo" />
@@ -177,6 +193,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
                         android:text="@string/hand_held_passport_photo"
+                        android:textColor="@color/textColor6"
                         android:textSize="14sp" />
 
                     <ImageView
@@ -189,7 +206,16 @@
 
                 </RelativeLayout>
 
-            </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="1"
+                    android:gravity="center" />
+
+            </LinearLayout>
 
 
         </LinearLayout>
