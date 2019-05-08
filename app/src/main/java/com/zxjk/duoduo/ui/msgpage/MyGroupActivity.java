@@ -14,11 +14,16 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.MyGroupAdapter;
 
+import me.jessyan.autosize.internal.CancelAdapt;
+
 /**
- * 我的团队
+ *author L
+ *create at 2019/5/8
+ *description: 我的团队
+ *
  */
 @SuppressLint("CheckResult")
-public class MyGroupActivity extends BaseActivity {
+public class MyGroupActivity extends BaseActivity implements CancelAdapt {
 
     private String groupId;
     private MyGroupAdapter myGroupAdapter;

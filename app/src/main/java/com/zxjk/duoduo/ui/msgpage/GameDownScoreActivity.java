@@ -8,7 +8,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -17,14 +16,15 @@ import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.ui.minepage.BillingMessageActivity;
-import com.zxjk.duoduo.ui.minepage.RetrievePayPwdActivity;
 import com.zxjk.duoduo.ui.widget.dialog.SelectPopupWindow;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
 
-import io.reactivex.functions.Consumer;
-
+/**
+ * author L
+ * create at 2019/5/8
+ * description: 下分
+ */
 @SuppressLint("CheckResult")
 public class GameDownScoreActivity extends BaseActivity {
 
@@ -40,6 +40,18 @@ public class GameDownScoreActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_down_score);
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.downscore));
+        TextView tv_end = findViewById(R.id.tv_end);
+        tv_end.setVisibility(View.VISIBLE);
+        tv_end.setText(getString(R.string.jilu));
+
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
+        //记录
+        tv_end.setOnClickListener(v -> {
+
+        });
+
 
         et = findViewById(R.id.et);
         tv = findViewById(R.id.tv);
@@ -88,14 +100,5 @@ public class GameDownScoreActivity extends BaseActivity {
         selectPopupWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, winHeight - rect.bottom);
     }
 
-    //记录
-    public void record(View view) {
-
-    }
-
-    //返回
-    public void back(View view) {
-        finish();
-    }
 
 }

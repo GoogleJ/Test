@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -17,9 +19,16 @@ import com.zxjk.duoduo.network.response.GetRebateByIdResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.utils.CommonUtils;
+
 import java.text.DecimalFormat;
+
 import static com.zxjk.duoduo.Constant.CODE_SUCCESS;
 
+/**
+ * author L
+ * create at 2019/5/8
+ * description:
+ */
 public class GameRecordDaiLiFragment extends BaseFragment {
 
     public String groupId;

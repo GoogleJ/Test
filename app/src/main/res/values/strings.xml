@@ -842,5 +842,6 @@
     <!---->
     <string name="head_portrait">头像</string>
     <string name="chat_message">聊天信息</string>
+    <string name="jilu">记录</string>
 
 </resources>

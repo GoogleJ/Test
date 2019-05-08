@@ -4,8 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -30,8 +30,15 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTit
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
 
+import me.jessyan.autosize.internal.CancelAdapt;
+
+/**
+ * author L
+ * create at 2019/5/8
+ * description: 游戏详情
+ */
 @SuppressLint("CheckResult")
-public class GameRecordDetailActivity extends BaseActivity {
+public class GameRecordDetailActivity extends BaseActivity implements CancelAdapt {
 
     private GetBetInfoDetailsResponse response;
     private MagicIndicator indicator;
@@ -43,6 +50,9 @@ public class GameRecordDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_record_detail);
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.gamedetail));
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
 
         indicator = findViewById(R.id.indicator);
         pager = findViewById(R.id.pager);
@@ -123,7 +133,5 @@ public class GameRecordDetailActivity extends BaseActivity {
         indicator.setNavigator(commonNavigator);
     }
 
-    public void back(View view) {
-        finish();
-    }
+
 }

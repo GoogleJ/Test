@@ -24,8 +24,11 @@ import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.utils.MD5Utils;
 
-import io.reactivex.functions.Consumer;
-
+/**
+ * author L
+ * create at 2019/5/8
+ * description: 上分
+ */
 public class GameUpScoreActivity extends BaseActivity {
 
     private ImageView ivHead;
@@ -40,7 +43,17 @@ public class GameUpScoreActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_up_score);
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.upscore));
+        TextView tv_end = findViewById(R.id.tv_end);
+        tv_end.setVisibility(View.VISIBLE);
+        tv_end.setText(getString(R.string.jilu));
 
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
+        //记录
+        tv_end.setOnClickListener(v -> {
+
+        });
         groupId = getIntent().getStringExtra("groupId");
 
         ivHead = findViewById(R.id.ivHead);
@@ -67,14 +80,6 @@ public class GameUpScoreActivity extends BaseActivity {
         });
     }
 
-    public void back(View view) {
-        finish();
-    }
-
-    //记录
-    public void record(View view) {
-
-    }
 
     //确认上分
     public void commit(View view) {
