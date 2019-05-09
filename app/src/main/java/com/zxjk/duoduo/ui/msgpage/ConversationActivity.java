@@ -96,6 +96,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
     private RongExtension extension;
     //游戏popwindow跳转计时器
     private long timeLeft;
+    private GamePopupWindow gamePopupWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +127,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                         runOnUiThread(() -> Observable.timer(23, TimeUnit.SECONDS, Schedulers.io())
                                 .flatMap(aLong -> ServiceFactory.getInstance().getBaseService(Api.class)
                                         .getBetConutBygroupId(groupResponse.getGroupInfo().getId()))
-                                .compose(bindUntilEvent(ActivityEvent.DESTROY))
+                                .compose(bindUntilEvent(ActivityEvent.STOP))
                                 .compose(RxSchedulers.normalTrans())
                                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this, "请耐心等待群员下注")))
                                 .subscribe(response -> {
@@ -545,7 +546,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                         .compose(RxSchedulers.normalTrans())
                         .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this)))
                         .subscribe(getGroupGameParameterResponse -> {
-                            GamePopupWindow gamePopupWindow = new GamePopupWindow(ConversationActivity.this);
+                            gamePopupWindow = new GamePopupWindow(ConversationActivity.this);
                             gamePopupWindow.setGroupId(groupResponse.getGroupInfo().getId());
 
                             gamePopupWindow.setOnCommit((data, time) -> {
@@ -592,28 +593,53 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                                                 viewHolder.getView(R.id.tv_determine).setOnClickListener(v -> {
                                                     ServiceFactory.getInstance().getBaseService(Api.class)
                                                             .groupGamebetting(data)
-                                                            .compose(RxSchedulers.normalTrans())
                                                             .compose(RxSchedulers.ioObserver())
+                                                            .compose(RxSchedulers.normalTrans())
                                                             .compose(bindToLifecycle())
                                                             .subscribe(s -> {
                                                                 subscribe.dispose();
                                                                 baseNiceDialog.dismiss();
                                                                 ToastUtils.showShort(R.string.xiazhuchenggong);
                                                             }, t -> {
-                                                                subscribe.dispose();
-                                                                baseNiceDialog.dismiss();
-                                                                if (t instanceof RxException.DuplicateLoginExcepiton &&
-                                                                        ((RxException.DuplicateLoginExcepiton) t).getCode() == 502) {
+                                                                if (t instanceof RxException.ParamsException &&
+                                                                        ((RxException.ParamsException) t).getCode() == 502) {
+                                                                    //超时
                                                                     ToastUtils.showShort(t.getMessage());
+                                                                    subscribe.dispose();
+                                                                    baseNiceDialog.dismiss();
                                                                     return;
                                                                 }
-
-                                                                if (timeLeft - 1 > 0) {
-                                                                    gameWindowDisposable = gamePopupWindow.show(getGroupGameParameterResponse, timeLeft - 1);
-                                                                    handleApiError(t);
-                                                                } else {
-                                                                    ToastUtils.showShort(R.string.timeout_game);
+                                                                if (t instanceof RxException.ParamsException &&
+                                                                        ((RxException.ParamsException) t).getCode() == 503) {
+                                                                    //1:1
+                                                                    if (timeLeft - 1 > 0) {
+                                                                        subscribe.dispose();
+                                                                        baseNiceDialog.dismiss();
+                                                                        //todo 弹出1:1对话框 否到下注 是调duoduo/group/game/groupGamebettingForOne接口
+                                                                        //message1转json传到1:1对话框里 用来调用groupGamebettingForOne接口
+                                                                        String message1 = t.getMessage();
+                                                                    } else {
+                                                                        subscribe.dispose();
+                                                                        baseNiceDialog.dismiss();
+                                                                        ToastUtils.showShort(R.string.timeout_game);
+                                                                    }
+                                                                    return;
                                                                 }
+                                                                if (t instanceof RxException.ParamsException &&
+                                                                        ((RxException.ParamsException) t).getCode() == 504) {
+                                                                    //积分不足
+                                                                    if (timeLeft - 1 > 0) {
+                                                                        subscribe.dispose();
+                                                                        baseNiceDialog.dismiss();
+                                                                        gameWindowDisposable = gamePopupWindow.show(getGroupGameParameterResponse, timeLeft - 1);
+                                                                    } else {
+                                                                        subscribe.dispose();
+                                                                        baseNiceDialog.dismiss();
+                                                                        ToastUtils.showShort(R.string.timeout_game);
+                                                                    }
+                                                                    return;
+                                                                }
+                                                                handleApiError(t);
                                                             });
                                                 });
                                             }
@@ -639,7 +665,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
     @Override
     protected void onStop() {
         if (gameWindowDisposable != null && !gameWindowDisposable.isDisposed()) {
-            gameWindowDisposable.dispose();
+            gamePopupWindow.dismiss();
         }
         super.onStop();
     }

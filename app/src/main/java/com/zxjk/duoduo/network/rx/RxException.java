@@ -28,15 +28,26 @@ public class RxException {
 
     public static class ParamsException extends Exception {
         private String msg;
+        private int code;
 
         public ParamsException(String msg) {
             super(msg);
             this.msg = msg;
         }
 
+        public ParamsException(String msg,int code) {
+            super(msg);
+            this.msg = msg;
+            this.code = code;
+        }
+
         @Override
         public String getMessage() {
             return msg;
+        }
+
+        public int getCode() {
+            return code;
         }
     }
 

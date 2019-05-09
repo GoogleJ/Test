@@ -37,13 +37,17 @@ public class ShareGroupQRActivity extends BaseActivity {
     private EditText search_edit;
     private RecyclerView recycler;
     private ShareGroupQRAdapter adapter;
+    private ArrayList<Conversation> data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share_group_qr);
 
-        ArrayList<Conversation> data = getIntent().getParcelableArrayListExtra("data");
+        data = getIntent().getParcelableArrayListExtra("data");
+        if (data == null) {
+            data = new ArrayList<>();
+        }
         Iterator<Conversation> iterator = data.iterator();
         while (iterator.hasNext()) {
             Conversation next = iterator.next();
