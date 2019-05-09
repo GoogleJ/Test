@@ -12,6 +12,16 @@ public class GetGroupGameParameterResponse {
 
     private String maxBet;
     private String minBet;
+    private String balanceHK;
+
+    public String getBalanceHK() {
+        return balanceHK;
+    }
+
+    public void setBalanceHK(String balanceHK) {
+        this.balanceHK = balanceHK;
+    }
+
     private List<ParentListBean> parentList;
 
     public String getMaxBet() {

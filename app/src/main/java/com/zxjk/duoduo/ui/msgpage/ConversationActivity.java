@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -53,6 +52,7 @@ import com.zxjk.duoduo.utils.CommonUtils;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -70,7 +70,6 @@ import io.rong.imkit.widget.adapter.MessageListAdapter;
 import io.rong.imlib.MessageTag;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.Group;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
@@ -96,6 +95,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
     private RongExtension extension;
     //游戏popwindow跳转计时器
     private long timeLeft;
+    private long timeLeft1;
     private GamePopupWindow gamePopupWindow;
 
     @Override
@@ -539,7 +539,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                     && message.getTargetId().equals(targetId)
                     && message.getSenderUserId().equals(groupResponse.getGroupInfo().getGroupOwnerId())
                     && ((TextMessage) message.getContent()).getExtra().equals("start")
-                    && !Constant.userId.equals(groupResponse.getGroupInfo().getGroupOwnerId())) {
+                    && !Constant.userId.equals(groupResponse.getGroupInfo().getGroupOwnerId()))
                 runOnUiThread(() -> ServiceFactory.getInstance().getBaseService(Api.class)
                         .getGroupGameParameter(groupResponse.getGroupInfo().getId())
                         .compose(bindToLifecycle())
@@ -548,110 +548,179 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                         .subscribe(getGroupGameParameterResponse -> {
                             gamePopupWindow = new GamePopupWindow(ConversationActivity.this);
                             gamePopupWindow.setGroupId(groupResponse.getGroupInfo().getId());
-
                             gamePopupWindow.setOnCommit((data, time) -> {
-                                gamePopupWindow.dismiss();
-                                NiceDialog.init().setLayoutId(R.layout.layout_dialog_fragment)
-                                        .setConvertListener(new ViewConvertListener() {
+                                Double maxMoney;
+                                GroupGamebettingRequeust requeust1 = GsonUtils.fromJson(data, GroupGamebettingRequeust.class);
+
+
+                                if (requeust1.getPlayName().equals("牛牛")) {
+
+                                    //牛牛的最大赔率
+                                    maxMoney = CommonUtils.mul(Double.parseDouble(requeust1.getBetMoneny()), Double.parseDouble("16"));
+                                } else {
+                                    //其他类型的最大赔率
+                                    maxMoney = CommonUtils.mul(Double.parseDouble(requeust1.getBetMoneny()), Double.parseDouble(requeust1.getMultiple()));
+
+                                }
+
+                                String balanceHK = getGroupGameParameterResponse.getBalanceHK();
+                                //下注金额
+                                BigDecimal data1 = new BigDecimal(requeust1.getBetMoneny());
+                                //剩余金额
+                                BigDecimal data2 = new BigDecimal(balanceHK);
+                                //最大赔率金额
+                                BigDecimal data3 = new BigDecimal(maxMoney);
+                                //下注金额 <= 剩余金额
+                                if (data1.compareTo(data2) <= 0) {
+                                    //最大赔率<= 剩余金额
+                                    if (data3.compareTo(data2) <= 0) {
+                                        gamePopupWindow.dismiss();
+                                        //确认下注
+                                        NiceDialog.init().setLayoutId(R.layout.layout_dialog_fragment)
+                                                .setConvertListener(new ViewConvertListener() {
+                                                    @Override
+                                                    protected void convertView(ViewHolder viewHolder, BaseNiceDialog baseNiceDialog) {
+                                                        TextView tv_type = viewHolder.getView(R.id.tv_type);
+                                                        TextView tv_bet = viewHolder.getView(R.id.tv_bet);
+                                                        TextView tv_theOdds = viewHolder.getView(R.id.tv_theOdds);
+                                                        TextView tvGameCountDown = viewHolder.getView(R.id.tvGameCountDown);
+                                                        GroupGamebettingRequeust requeust = GsonUtils.fromJson(data, GroupGamebettingRequeust.class);
+                                                        tv_type.setText(requeust.getPlayName());
+                                                        tv_bet.setText(requeust.getBetMoneny());
+                                                        if (requeust.getPlayName().equals("牛牛")) {
+                                                            tv_theOdds.setVisibility(View.GONE);
+                                                        } else {
+                                                            tv_theOdds.setVisibility(View.VISIBLE);
+                                                            tv_theOdds.setText(requeust.getBetCardType());
+                                                        }
+                                                        Disposable subscribe = Observable.interval(0, 1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+                                                                .take(time)
+                                                                .subscribe(l -> {
+                                                                    timeLeft = time - l;
+                                                                    tvGameCountDown.setText((time - l) + "");
+                                                                    if (l == time - 1) {
+                                                                        ToastUtils.showShort(R.string.timeout_game);
+                                                                        baseNiceDialog.dismiss();
+                                                                    }
+                                                                }, t -> {
+                                                                });
+
+                                                        viewHolder.getView(R.id.tv_cancel).setOnClickListener(v -> {
+                                                            baseNiceDialog.dismiss();
+                                                            subscribe.dispose();
+                                                            if (timeLeft - 1 > 0) {
+                                                                gameWindowDisposable = gamePopupWindow.show(getGroupGameParameterResponse, timeLeft - 1);
+                                                            } else {
+                                                                ToastUtils.showShort(R.string.timeout_game);
+                                                            }
+                                                        });
+
+                                                        viewHolder.getView(R.id.tv_determine).setOnClickListener(v -> {
+
+
+                                                            ServiceFactory.getInstance().getBaseService(Api.class)
+                                                                    .groupGamebetting(data)
+                                                                    .compose(RxSchedulers.ioObserver())
+                                                                    .compose(RxSchedulers.normalTrans())
+                                                                    .compose(bindToLifecycle())
+                                                                    .subscribe(s -> {
+
+                                                                        subscribe.dispose();
+                                                                        baseNiceDialog.dismiss();
+                                                                        ToastUtils.showShort(R.string.xiazhuchenggong);
+                                                                    }, t -> {
+                                                                        if (t instanceof RxException.ParamsException &&
+                                                                                ((RxException.ParamsException) t).getCode() == 502) {
+                                                                            //超时
+                                                                            ToastUtils.showShort(t.getMessage());
+                                                                            subscribe.dispose();
+                                                                            baseNiceDialog.dismiss();
+                                                                            return;
+                                                                        }
+//
+                                                                        handleApiError(t);
+                                                                    });
+                                                        });
+                                                    }
+                                                })
+                                                .setDimAmount(0.3f)
+                                                .setOutCancel(false)
+                                                .show(getSupportFragmentManager());
+                                    } else {
+                                        gamePopupWindow.dismiss();
+                                        //1:1
+                                        GroupGamebettingRequeust gr = new GroupGamebettingRequeust();
+                                        if (requeust1.getPlayName().equals("牛牛")) {
+                                            gr.setBetCardType("");
+                                        } else {
+                                            gr.setBetCardType(requeust1.getBetCardType());
+                                        }
+                                        gr.setGroupId(requeust1.getGroupId());
+                                        gr.setMultiple("1");
+                                        gr.setPlayId(requeust1.getPlayId());
+                                        gr.setBetMoneny(requeust1.getBetMoneny());
+                                        gr.setCustomerId(requeust1.getCustomerId());
+                                        gr.setPlayName(requeust1.getPlayName());
+                                        String dataJson = GsonUtils.toJson(gr);
+                                        NiceDialog.init().setLayoutId(R.layout.layout_general_dialog5).setConvertListener(new ViewConvertListener() {
                                             @Override
-                                            protected void convertView(ViewHolder viewHolder, BaseNiceDialog baseNiceDialog) {
-                                                TextView tv_type = viewHolder.getView(R.id.tv_type);
-                                                TextView tv_bet = viewHolder.getView(R.id.tv_bet);
-                                                TextView tv_theOdds = viewHolder.getView(R.id.tv_theOdds);
-                                                TextView tvGameCountDown = viewHolder.getView(R.id.tvGameCountDown);
-                                                GroupGamebettingRequeust requeust = GsonUtils.fromJson(data, GroupGamebettingRequeust.class);
-                                                tv_type.setText(requeust.getPlayName());
-                                                tv_bet.setText(requeust.getBetMoneny());
-                                                if (requeust.getPlayName().equals("牛牛")) {
-                                                    tv_theOdds.setVisibility(View.GONE);
-                                                } else {
-                                                    tv_theOdds.setVisibility(View.VISIBLE);
-                                                    tv_theOdds.setText(requeust.getBetCardType());
-                                                }
-                                                Disposable subscribe = Observable.interval(0, 1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+                                            protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                                                TextView tvGameCountDown = holder.getView(R.id.tvGameCountDown);
+                                                Disposable dd = Observable.interval(0, 1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
                                                         .take(time)
                                                         .subscribe(l -> {
                                                             timeLeft = time - l;
                                                             tvGameCountDown.setText((time - l) + "");
                                                             if (l == time - 1) {
                                                                 ToastUtils.showShort(R.string.timeout_game);
-                                                                baseNiceDialog.dismiss();
+                                                                dialog.dismiss();
                                                             }
                                                         }, t -> {
                                                         });
-
-                                                viewHolder.getView(R.id.tv_cancel).setOnClickListener(v -> {
-                                                    baseNiceDialog.dismiss();
-                                                    subscribe.dispose();
+                                                //否
+                                                holder.setOnClickListener(R.id.tv_cancel, v13 -> {
+                                                    dd.dispose();
+                                                    dialog.dismiss();
                                                     if (timeLeft - 1 > 0) {
                                                         gameWindowDisposable = gamePopupWindow.show(getGroupGameParameterResponse, timeLeft - 1);
                                                     } else {
                                                         ToastUtils.showShort(R.string.timeout_game);
                                                     }
                                                 });
+                                                //是
 
-                                                viewHolder.getView(R.id.tv_determine).setOnClickListener(v -> {
+                                                holder.setOnClickListener(R.id.tv_notarize, v12 -> {
                                                     ServiceFactory.getInstance().getBaseService(Api.class)
-                                                            .groupGamebetting(data)
+                                                            .groupGamebetting(dataJson)
                                                             .compose(RxSchedulers.ioObserver())
                                                             .compose(RxSchedulers.normalTrans())
                                                             .compose(bindToLifecycle())
                                                             .subscribe(s -> {
-                                                                subscribe.dispose();
-                                                                baseNiceDialog.dismiss();
-                                                                ToastUtils.showShort(R.string.xiazhuchenggong);
-                                                            }, t -> {
-                                                                if (t instanceof RxException.ParamsException &&
-                                                                        ((RxException.ParamsException) t).getCode() == 502) {
-                                                                    //超时
-                                                                    ToastUtils.showShort(t.getMessage());
-                                                                    subscribe.dispose();
-                                                                    baseNiceDialog.dismiss();
-                                                                    return;
-                                                                }
-                                                                if (t instanceof RxException.ParamsException &&
-                                                                        ((RxException.ParamsException) t).getCode() == 503) {
-                                                                    //1:1
-                                                                    if (timeLeft - 1 > 0) {
-                                                                        subscribe.dispose();
-                                                                        baseNiceDialog.dismiss();
-                                                                        //todo 弹出1:1对话框 否到下注 是调duoduo/group/game/groupGamebettingForOne接口
-                                                                        //message1转json传到1:1对话框里 用来调用groupGamebettingForOne接口
-                                                                        String message1 = t.getMessage();
-                                                                    } else {
-                                                                        subscribe.dispose();
-                                                                        baseNiceDialog.dismiss();
-                                                                        ToastUtils.showShort(R.string.timeout_game);
-                                                                    }
-                                                                    return;
-                                                                }
-                                                                if (t instanceof RxException.ParamsException &&
-                                                                        ((RxException.ParamsException) t).getCode() == 504) {
-                                                                    //积分不足
-                                                                    if (timeLeft - 1 > 0) {
-                                                                        subscribe.dispose();
-                                                                        baseNiceDialog.dismiss();
-                                                                        gameWindowDisposable = gamePopupWindow.show(getGroupGameParameterResponse, timeLeft - 1);
-                                                                    } else {
-                                                                        subscribe.dispose();
-                                                                        baseNiceDialog.dismiss();
-                                                                        ToastUtils.showShort(R.string.timeout_game);
-                                                                    }
-                                                                    return;
-                                                                }
-                                                                handleApiError(t);
-                                                            });
+                                                                dd.dispose();
+                                                                dialog.dismiss();
+                                                                ToastUtils.showShort(getString(R.string.xiazhuchenggong));
+                                                            }, ConversationActivity.this::handleApiError);
+                                                });
+                                                //关闭
+                                                holder.setOnClickListener(R.id.iv_close, v1 -> {
+                                                    dd.dispose();
+                                                    dialog.dismiss();
                                                 });
                                             }
-                                        })
-                                        .setDimAmount(0.3f)
-                                        .setOutCancel(false)
-                                        .show(getSupportFragmentManager());
+                                        }).setDimAmount(0.3f)
+                                                .setOutCancel(false)
+                                                .show(getSupportFragmentManager());
+
+
+                                    }
+                                } else {
+                                    //积分不足
+                                    ToastUtils.showShort(getString(R.string.jifen_buzhu) + balanceHK);
+                                }
                             });
 
                             gameWindowDisposable = gamePopupWindow.show(getGroupGameParameterResponse, 20);
                         }, ConversationActivity.this::handleApiError));
-            }
         }
         return false;
     }

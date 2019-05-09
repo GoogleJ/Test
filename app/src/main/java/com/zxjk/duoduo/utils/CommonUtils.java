@@ -14,9 +14,13 @@ import android.util.DisplayMetrics;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -167,6 +171,21 @@ public class CommonUtils {
         }
         return name;
     }
-
+    /**
+     * 金额
+     * 元 =====》 保留两位小数
+     *
+     * @param string 判断的string
+     * @return 空:"0.00" 不为空:string
+     */
+    public static String getTwoDecimals(@Nullable String string) {
+        if (string != null && !TextUtils.isEmpty(string) && !string.equalsIgnoreCase("null")
+                && !("").equals(string)) {
+            Double d = Double.parseDouble(string);
+            DecimalFormat decimalFormat = new DecimalFormat("0.00");
+            return decimalFormat.format(d);
+        }
+        return Constant.BALANCE;
+    }
 
 }
