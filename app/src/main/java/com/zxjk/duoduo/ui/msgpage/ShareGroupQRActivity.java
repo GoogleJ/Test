@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.msgpage;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,19 +11,26 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.ShareGroupQRAdapter;
+import com.zxjk.duoduo.utils.CommonUtils;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+
 import io.rong.imkit.RongIM;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imlib.RongIMClient;
@@ -103,6 +111,7 @@ public class ShareGroupQRActivity extends BaseActivity {
         recycler.setLayoutManager(new LinearLayoutManager(this));
 
         adapter.setOnItemChildClickListener((adapter, view, position) -> {
+            CommonUtils.initDialog(this).show();
             saveBitmapFile(Constant.shareGroupQR);
             Uri uri = Uri.fromFile(new File(getExternalCacheDir(), "1.jpg"));
             ImageMessage obtain = ImageMessage.obtain(uri, uri, false);
@@ -116,11 +125,12 @@ public class ShareGroupQRActivity extends BaseActivity {
 
                 @Override
                 public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-
+                    CommonUtils.destoryDialog();
                 }
 
                 @Override
                 public void onSuccess(Message message) {
+                    CommonUtils.destoryDialog();
                     ToastUtils.showShort(R.string.share_success);
                     finish();
                 }
@@ -130,7 +140,6 @@ public class ShareGroupQRActivity extends BaseActivity {
 
                 }
             });
-            finish();
         });
     }
 
@@ -146,7 +155,9 @@ public class ShareGroupQRActivity extends BaseActivity {
 
     //创建新聊天
     public void createNewChat(View view) {
-
+        Intent intent = new Intent(this, SelectContactForCardActivity.class);
+        intent.putExtra("fromShare", true);
+        startActivity(intent);
     }
 
     public void saveBitmapFile(Bitmap bitmap) {
@@ -159,6 +170,36 @@ public class ShareGroupQRActivity extends BaseActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private List<Conversation> search(String str) {
+        List<Conversation> filterList = new ArrayList<>();// 过滤后的list
+        if (str.matches("^([0-9]|[/+]).*")) {// 正则表达式 匹配以数字或者加号开头的字符串(包括了带空格及-分割的号码)
+            String simpleStr = str.replaceAll("\\-|\\s", "");
+            for (Conversation contact : data) {
+                if (contact.getConversationTitle() != null) {
+                    if (contact.getConversationTitle().contains(simpleStr) || contact.getConversationTitle().contains(str)) {
+                        if (!filterList.contains(contact)) {
+                            filterList.add(contact);
+                        }
+                    }
+                }
+            }
+        } else {
+            for (Conversation contact : data) {
+                if (contact.getConversationTitle() != null) {
+                    //姓名全匹配,姓名首字母简拼匹配,姓名全字母匹配
+                    boolean isNameContains = contact.getConversationTitle().toLowerCase(Locale.CHINESE)
+                            .contains(str.toLowerCase(Locale.CHINESE));
+                    if (isNameContains) {
+                        if (!filterList.contains(contact)) {
+                            filterList.add(contact);
+                        }
+                    }
+                }
+            }
+        }
+        return filterList;
     }
 
 }

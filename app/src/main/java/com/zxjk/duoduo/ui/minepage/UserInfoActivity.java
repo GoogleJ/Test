@@ -208,7 +208,6 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
         startActivity(intent);
     }
 
-
     @Override
     public void setOnItemClick(View v) {
         selectPicPopWindow.dismiss();

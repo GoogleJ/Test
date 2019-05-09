@@ -1,9 +1,11 @@
 package com.zxjk.duoduo.ui.msgpage;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -21,6 +23,7 @@ import com.zxjk.duoduo.ui.grouppage.AgreeGroupChatActivity;
 import com.zxjk.duoduo.ui.minepage.scanuri.Action1;
 import com.zxjk.duoduo.ui.minepage.scanuri.BaseUri;
 import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.utils.TakePicUtil;
 
 import org.json.JSONObject;
 
@@ -36,24 +39,20 @@ import cn.bingoogolapple.qrcode.zxing.ZXingView;
 public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate {
     @BindView(R.id.m_qr_code_zxing_view)
     ZXingView zxingview;
-
+    @BindView(R.id.tv_end)
+    TextView tv_end;
 
     private TextView tv_title;
-    /**
-     * 关于二维码扫描的实现
-     */
-    final int ACTION_LADY_PICKER_FLAG = 0X106;
-    /**
-     * 关于二维码的实现
-     */
-    final int REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY = 666;
-
 
     protected void initUI() {
         zxingview.setDelegate(this);
         tv_title = findViewById(R.id.tv_title);
         tv_title.setText(getString(R.string.m_add_friend_scan_it_label_1));
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());
+        tv_end.setVisibility(View.VISIBLE);
+        tv_end.setText(R.string.album);
+        getPermisson(tv_end, granted -> TakePicUtil.albumPhoto(QrCodeActivity.this, 1),
+                Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
     @Override
@@ -65,10 +64,8 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
         initUI();
     }
 
-
     @Override
     public void onScanQRCodeSuccess(String result) {
-
         try {
             JSONObject jsonObject = new JSONObject(result);
             Object schem = jsonObject.opt("schem");
@@ -204,23 +201,12 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
         super.onDestroy();
     }
 
-
-    private void readSystemAlbum() {
-        Intent intent = new Intent("android.intent.action.GET_CONTENT");
-        intent.setType("image/*");
-        startActivityForResult(intent, ACTION_LADY_PICKER_FLAG);
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         zxingview.startSpotAndShowRect(); // 显示扫描框，并开始识别
-
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY) {
-//            final String picturePath = BGAPhotoPickerActivity.getSelectedPhotos(data).get(0);
-            // 本来就用到 QRCodeView 时可直接调 QRCodeView 的方法，走通用的回调
-//            zxingview.syncDecodeQRCode(picturePath);
+        if (resultCode == Activity.RESULT_OK && requestCode == 1) {
+            zxingview.decodeQRCode(TakePicUtil.getPath(this, data.getData()));
         }
     }
-
 }

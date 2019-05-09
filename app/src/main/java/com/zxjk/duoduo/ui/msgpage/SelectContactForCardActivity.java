@@ -1,6 +1,8 @@
 package com.zxjk.duoduo.ui.msgpage;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.shehuan.nicedialog.BaseNiceDialog;
 import com.shehuan.nicedialog.NiceDialog;
 import com.shehuan.nicedialog.ViewConvertListener;
@@ -26,6 +29,10 @@ import com.zxjk.duoduo.ui.msgpage.adapter.SelectForCardAdapter;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardMessage;
 import com.zxjk.duoduo.utils.CommonUtils;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -36,6 +43,7 @@ import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
+import io.rong.message.ImageMessage;
 
 
 /**
@@ -83,6 +91,39 @@ public class SelectContactForCardActivity extends BaseActivity implements TextWa
         getFriendListById();
 
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            boolean fromShare = getIntent().getBooleanExtra("fromShare", false);
+            if (fromShare) {
+                CommonUtils.initDialog(this).show();
+                saveBitmapFile(Constant.shareGroupQR);
+                Uri uri = Uri.fromFile(new File(getExternalCacheDir(), "1.jpg"));
+                ImageMessage obtain = ImageMessage.obtain(uri, uri, false);
+                Message obtain1 = Message.obtain(list.get(position).getId(), Conversation.ConversationType.PRIVATE, obtain);
+
+                RongIM.getInstance().sendImageMessage(obtain1, null, null, new RongIMClient.SendImageMessageCallback() {
+                    @Override
+                    public void onAttached(Message message) {
+
+                    }
+
+                    @Override
+                    public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+                        CommonUtils.destoryDialog();
+                    }
+
+                    @Override
+                    public void onSuccess(Message message) {
+                        CommonUtils.destoryDialog();
+                        ToastUtils.showShort(R.string.share_success);
+                        finish();
+                    }
+
+                    @Override
+                    public void onProgress(Message message, int i) {
+
+                    }
+                });
+                return;
+            }
             int privateOrGroupType = getIntent().getIntExtra("intentType", 0);
             if (privateOrGroupType == 0) {
                 if (intentType == 0) {
@@ -107,7 +148,6 @@ public class SelectContactForCardActivity extends BaseActivity implements TextWa
     private void initView() {
         TextView tv_title = findViewById(R.id.tv_title);
         tv_title.setText(getString(R.string.select_contacts));
-
         searchEdit = findViewById(R.id.search_select_contact);
         mRecyclerView = findViewById(R.id.card_recycler_view);
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());
@@ -116,7 +156,6 @@ public class SelectContactForCardActivity extends BaseActivity implements TextWa
     /**
      * 获取好友列表
      */
-
     private void getFriendListById() {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .getFriendListById()
@@ -141,44 +180,40 @@ public class SelectContactForCardActivity extends BaseActivity implements TextWa
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(response -> {
-                    NiceDialog.init().setLayoutId(R.layout.layout_general_dialog4).setConvertListener(new ViewConvertListener() {
-                        @Override
-                        protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
-                            holder.setText(R.id.tv_content, getString(R.string.share_business_card));
-                            holder.setText(R.id.tv_cancel, getString(R.string.cancel));
-                            holder.setText(R.id.tv_notarize, getString(R.string.ok));
-                            holder.setOnClickListener(R.id.tv_cancel, v -> {
-                                dialog.dismiss();
+                .subscribe(response -> NiceDialog.init().setLayoutId(R.layout.layout_general_dialog4).setConvertListener(new ViewConvertListener() {
+                    @Override
+                    protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                        holder.setText(R.id.tv_content, getString(R.string.share_business_card));
+                        holder.setText(R.id.tv_cancel, getString(R.string.cancel));
+                        holder.setText(R.id.tv_notarize, getString(R.string.ok));
+                        holder.setOnClickListener(R.id.tv_cancel, v -> dialog.dismiss());
+                        holder.setOnClickListener(R.id.tv_notarize, v -> {
+                            dialog.dismiss();
+                            BusinessCardMessage message = new BusinessCardMessage();
+                            message.setDuoduo(response.getDuoduoId());
+                            message.setIcon(response.getHeadPortrait());
+                            message.setUserId(response.getId());
+                            message.setName(response.getNick());
+                            Message message1 = Message.obtain(mAdapter.getData().get(position).getId(), Conversation.ConversationType.PRIVATE, message);
+                            RongIM.getInstance().sendMessage(message1, null, null, new IRongCallback.ISendMessageCallback() {
+                                @Override
+                                public void onAttached(Message message) {
+                                }
+
+                                @Override
+                                public void onSuccess(Message message) {
+                                    RongIM.getInstance().startPrivateChat(SelectContactForCardActivity.this, mAdapter.getData().get(position).getId(), mAdapter.getData().get(position).getNick());
+                                    dialog.dismiss();
+                                }
+
+                                @Override
+                                public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+                                }
                             });
-                            holder.setOnClickListener(R.id.tv_notarize, v -> {
-                                dialog.dismiss();
-                                BusinessCardMessage message = new BusinessCardMessage();
-                                message.setDuoduo(response.getDuoduoId());
-                                message.setIcon(response.getHeadPortrait());
-                                message.setUserId(response.getId());
-                                message.setName(response.getNick());
-                                Message message1 = Message.obtain(mAdapter.getData().get(position).getId(), Conversation.ConversationType.PRIVATE, message);
-                                RongIM.getInstance().sendMessage(message1, null, null, new IRongCallback.ISendMessageCallback() {
-                                    @Override
-                                    public void onAttached(Message message) {
-                                    }
+                        });
 
-                                    @Override
-                                    public void onSuccess(Message message) {
-                                        RongIM.getInstance().startPrivateChat(SelectContactForCardActivity.this, mAdapter.getData().get(position).getId(), mAdapter.getData().get(position).getNick());
-                                        dialog.dismiss();
-                                    }
-
-                                    @Override
-                                    public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-                                    }
-                                });
-                            });
-
-                        }
-                    }).setOutCancel(false).show(getSupportFragmentManager());
-                }, this::handleApiError);
+                    }
+                }).setOutCancel(false).show(getSupportFragmentManager()), this::handleApiError);
     }
 
     /**
@@ -192,45 +227,39 @@ public class SelectContactForCardActivity extends BaseActivity implements TextWa
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(friendInfoResponse -> {
+                .subscribe(friendInfoResponse -> NiceDialog.init().setLayoutId(R.layout.layout_general_dialog4).setConvertListener(new ViewConvertListener() {
+                    @Override
+                    protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                        holder.setText(R.id.tv_content, getString(R.string.share_business_card));
+                        holder.setText(R.id.tv_cancel, getString(R.string.cancel));
+                        holder.setText(R.id.tv_notarize, getString(R.string.ok));
+                        holder.setOnClickListener(R.id.tv_cancel, v -> dialog.dismiss());
+                        holder.setOnClickListener(R.id.tv_notarize, v -> {
+                            dialog.dismiss();
+                            BusinessCardMessage message = new BusinessCardMessage();
+                            message.setDuoduo(friendInfoResponse.getDuoduoId());
+                            message.setIcon(friendInfoResponse.getHeadPortrait());
+                            message.setUserId(friendInfoResponse.getId());
+                            message.setName(friendInfoResponse.getNick());
+                            Message message1 = Message.obtain(Constant.groupChatResponse.getId(), Conversation.ConversationType.GROUP, message);
+                            RongIM.getInstance().sendMessage(message1, null, null, new IRongCallback.ISendMessageCallback() {
+                                @Override
+                                public void onAttached(Message message) {
+                                }
 
-                    NiceDialog.init().setLayoutId(R.layout.layout_general_dialog4).setConvertListener(new ViewConvertListener() {
-                        @Override
-                        protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
-                            holder.setText(R.id.tv_content, getString(R.string.share_business_card));
-                            holder.setText(R.id.tv_cancel, getString(R.string.cancel));
-                            holder.setText(R.id.tv_notarize, getString(R.string.ok));
-                            holder.setOnClickListener(R.id.tv_cancel, v -> {
-                                dialog.dismiss();
+                                @Override
+                                public void onSuccess(Message message) {
+                                    RongIM.getInstance().startGroupChat(SelectContactForCardActivity.this, Constant.groupChatResponse.getId(), Constant.groupChatResponse.getGroupNikeName());
+                                    dialog.dismiss();
+                                }
+
+                                @Override
+                                public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+                                }
                             });
-                            holder.setOnClickListener(R.id.tv_notarize, v -> {
-                                dialog.dismiss();
-                                BusinessCardMessage message = new BusinessCardMessage();
-                                message.setDuoduo(friendInfoResponse.getDuoduoId());
-                                message.setIcon(friendInfoResponse.getHeadPortrait());
-                                message.setUserId(friendInfoResponse.getId());
-                                message.setName(friendInfoResponse.getNick());
-                                Message message1 = Message.obtain(Constant.groupChatResponse.getId(), Conversation.ConversationType.GROUP, message);
-                                RongIM.getInstance().sendMessage(message1, null, null, new IRongCallback.ISendMessageCallback() {
-                                    @Override
-                                    public void onAttached(Message message) {
-                                    }
-
-                                    @Override
-                                    public void onSuccess(Message message) {
-                                        RongIM.getInstance().startGroupChat(SelectContactForCardActivity.this, Constant.groupChatResponse.getId(), Constant.groupChatResponse.getGroupNikeName());
-                                        dialog.dismiss();
-                                    }
-
-                                    @Override
-                                    public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-                                    }
-                                });
-                            });
-
-                        }
-                    }).setOutCancel(false).show(getSupportFragmentManager());
-                }, this::handleApiError);
+                        });
+                    }
+                }).setOutCancel(false).show(getSupportFragmentManager()), this::handleApiError);
     }
 
     @Override
@@ -246,13 +275,8 @@ public class SelectContactForCardActivity extends BaseActivity implements TextWa
     @Override
     public void afterTextChanged(Editable s) {
         String groupname = s.toString();
-        if (groupname != null || groupname.length() > 0) {
-            List<FriendInfoResponse> groupnamelist = search(groupname); //查找对应的群组数据
-            mAdapter.setNewData(groupnamelist);
-        } else {
-            mAdapter.setNewData(list);
-        }
-        mAdapter.notifyDataSetChanged();
+        List<FriendInfoResponse> groupnamelist = search(groupname); //查找对应的群组数据
+        mAdapter.setNewData(groupnamelist);
     }
 
     /**
@@ -299,5 +323,17 @@ public class SelectContactForCardActivity extends BaseActivity implements TextWa
             }
         }
         return filterList;
+    }
+
+    public void saveBitmapFile(Bitmap bitmap) {
+        File file = new File(getExternalCacheDir(), "1.jpg");//将要保存图片的路径
+        try {
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            bos.flush();
+            bos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

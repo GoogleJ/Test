@@ -7,11 +7,13 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -41,7 +43,18 @@ public class CommonUtils {
     }
 
     public static Dialog initDialog(Context context, String loadText) {
-        dialog = new Dialog(context);
+        dialog = new Dialog(context) {
+            @Override
+            public void onWindowFocusChanged(boolean hasFocus) {
+                super.onWindowFocusChanged(hasFocus);
+                if (hasFocus) {
+                    ImageView iv = dialog.findViewById(R.id.iv);
+                    iv.setImageResource(R.drawable.anim_gameloading);
+                    AnimationDrawable animationDrawable = (AnimationDrawable) iv.getDrawable();
+                    animationDrawable.start();
+                }
+            }
+        };
         dialog.setContentView(R.layout.dialog_loading);
         dialog.setCanceledOnTouchOutside(true);
         dialog.setCancelable(true);
