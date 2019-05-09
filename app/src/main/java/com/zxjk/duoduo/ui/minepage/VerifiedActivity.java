@@ -6,9 +6,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +17,10 @@ import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.shehuan.nicedialog.BaseNiceDialog;
+import com.shehuan.nicedialog.NiceDialog;
+import com.shehuan.nicedialog.ViewConvertListener;
+import com.shehuan.nicedialog.ViewHolder;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.VerifiedBean;
@@ -26,7 +28,6 @@ import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.ui.widget.TakePopWindow;
 import com.zxjk.duoduo.ui.widget.dialog.DocumentSelectionDialog;
 import com.zxjk.duoduo.utils.AesUtil;
 import com.zxjk.duoduo.utils.CommonUtils;
@@ -44,7 +45,7 @@ import java.util.Collections;
  * description: 实名认证
  */
 @SuppressLint("CheckResult")
-public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnItemClickListener {
+public class VerifiedActivity extends BaseActivity {
     public static final int REQUEST_TAKE = 1;
     public static final int REQUEST_ALBUM = 2;
 
@@ -85,7 +86,6 @@ public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnIt
     String idCards;
 
     TextView tv_commit;
-    private TakePopWindow selectPicPopWindow;
 
     private int currentPictureFlag;
     private String otherIdCardType = "";
@@ -144,10 +144,8 @@ public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnIt
             CommonUtils.hideInputMethod(this);
             finish();
         });
-        selectPicPopWindow = new TakePopWindow(this);
-        selectPicPopWindow.setOnItemClickListener(this);
-        tv_certificateType = findViewById(R.id.tv_certificateType);
 
+        tv_certificateType = findViewById(R.id.tv_certificateType);
         et_realName = findViewById(R.id.et_realName);
         idCard = findViewById(R.id.id_card);
         frontPhotoOfTheDocument = findViewById(R.id.front_photo_of_the_document);
@@ -161,30 +159,23 @@ public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnIt
         getPermisson(frontPhotoOfTheDocument, result -> {
             if (result) {
                 currentPictureFlag = 1;
-                KeyboardUtils.hideSoftInput(this);
-                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
-                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                dialogType();
+
             }
         }, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
 
         getPermisson(reversePhotoOfTheDocument, result -> {
             if (result) {
                 currentPictureFlag = 2;
-                KeyboardUtils.hideSoftInput(this);
-                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
-                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                dialogType();
             }
         }, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
 
         getPermisson(handHeldPassportPhoto, result -> {
             if (result) {
                 currentPictureFlag = 3;
-                KeyboardUtils.hideSoftInput(this);
-                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                selectPicPopWindow.showAtLocation(this.findViewById(android.R.id.content),
-                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                dialogType();
+
             }
         }, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
     }
@@ -294,21 +285,32 @@ public class VerifiedActivity extends BaseActivity implements TakePopWindow.OnIt
                 }, this::handleApiError);
     }
 
-    @Override
-    public void setOnItemClick(View v) {
-        selectPicPopWindow.dismiss();
 
-        switch (v.getId()) {
-            case R.id.tvCamera:
-                TakePicUtil.takePicture(this, REQUEST_TAKE);
-                break;
-            case R.id.tvPhoto:
-                TakePicUtil.albumPhoto(this, REQUEST_ALBUM);
-                break;
-            default:
-                break;
-        }
+    public void dialogType() {
+        NiceDialog.init().setLayoutId(R.layout.layout_general_dialog6).setConvertListener(new ViewConvertListener() {
+            @Override
+            protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                KeyboardUtils.hideSoftInput(VerifiedActivity.this);
+                //拍照
+                holder.setOnClickListener(R.id.tv_photograph, v -> {
+                    dialog.dismiss();
+                    TakePicUtil.takePicture(VerifiedActivity.this, REQUEST_TAKE);
+                });
+                //相册选择
+                holder.setOnClickListener(R.id.tv_photo_select, v -> {
+                    dialog.dismiss();
+                    TakePicUtil.albumPhoto(VerifiedActivity.this, REQUEST_ALBUM);
+                });
+                //取消
+                holder.setOnClickListener(R.id.tv_cancel, v -> dialog.dismiss());
+
+            }
+        }).setShowBottom(true)
+                .setOutCancel(true)
+                .setDimAmount(0.5f)
+                .show(getSupportFragmentManager());
     }
+
 
     //选择证件类型
     @SuppressLint("NewApi")
