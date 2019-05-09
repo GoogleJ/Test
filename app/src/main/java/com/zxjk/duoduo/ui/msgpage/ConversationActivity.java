@@ -95,7 +95,6 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
     private RongExtension extension;
     //游戏popwindow跳转计时器
     private long timeLeft;
-    private long timeLeft1;
     private GamePopupWindow gamePopupWindow;
 
     @Override
@@ -643,7 +642,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                                                         });
                                                     }
                                                 })
-                                                .setDimAmount(0.3f)
+                                                .setDimAmount(0.5f)
                                                 .setOutCancel(false)
                                                 .show(getSupportFragmentManager());
                                     } else {
@@ -707,7 +706,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                                                     dialog.dismiss();
                                                 });
                                             }
-                                        }).setDimAmount(0.3f)
+                                        }).setDimAmount(0.5f)
                                                 .setOutCancel(false)
                                                 .show(getSupportFragmentManager());
 

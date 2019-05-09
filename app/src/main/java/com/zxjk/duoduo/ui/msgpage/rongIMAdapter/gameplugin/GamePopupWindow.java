@@ -247,12 +247,15 @@ public class GamePopupWindow extends BasePopupWindow {
             if (parentListBean.getPlayName().equals("牛牛")) {
                 niuniuID = parentListBean.getPlayId();
                 rbGame1.setClickable(true);
+                rbGame1.setAlpha(1f);
             } else if (parentListBean.getPlayName().equals("大小单双合")) {
                 daxiaoID = parentListBean.getPlayId();
                 rbGame2.setClickable(true);
+                rbGame2.setAlpha(1f);
             } else if (parentListBean.getPlayName().equals("百家乐")) {
                 baijialeID = parentListBean.getPlayId();
                 rbGame3.setClickable(true);
+                rbGame3.setAlpha(1f);
             }
         }
 
