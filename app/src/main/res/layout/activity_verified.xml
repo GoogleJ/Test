@@ -101,7 +101,7 @@
                     <ImageView
                         android:id="@+id/front_photo_of_the_document"
                         android:layout_width="match_parent"
-                        android:layout_height="99dp"
+                        android:layout_height="103dp"
                         android:background="@drawable/shape_circular_bead1"
                         android:scaleType="center"
                         android:src="@drawable/icon_add_a_photo_of_the_id" />
@@ -139,7 +139,7 @@
                     <ImageView
                         android:id="@+id/reverse_photo_of_the_document"
                         android:layout_width="match_parent"
-                        android:layout_height="99dp"
+                        android:layout_height="103dp"
                         android:background="@drawable/shape_circular_bead1"
                         android:scaleType="center"
                         android:src="@drawable/icon_add_a_photo_of_the_id" />
@@ -180,7 +180,7 @@
                     <ImageView
                         android:id="@+id/hand_held_passport_photo"
                         android:layout_width="match_parent"
-                        android:layout_height="99dp"
+                        android:layout_height="103dp"
                         android:background="@drawable/shape_circular_bead1"
                         android:scaleType="center"
                         android:src="@drawable/icon_hand_held_passport_photo" />

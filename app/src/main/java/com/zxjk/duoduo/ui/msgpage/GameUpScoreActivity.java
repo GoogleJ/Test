@@ -34,7 +34,6 @@ public class GameUpScoreActivity extends BaseActivity {
     private ImageView ivHead;
     private TextView tvName;
     private EditText et;
-
     private String groupId;
     private SelectPopupWindow selectPopupWindow;
 

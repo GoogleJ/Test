@@ -43,6 +43,11 @@ import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 
+/**
+ * author L
+ * create at 2019/5/9
+ * description: 发红包
+ */
 @SuppressLint("CheckResult")
 public class GroupRedPacketActivity extends BaseActivity implements SelectPopupWindow.OnPopWindowClickListener {
     // 红包类型：1.拼手气红包  2.普通红包
@@ -72,6 +77,19 @@ public class GroupRedPacketActivity extends BaseActivity implements SelectPopupW
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_red_packet);
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.m_red_envelopes_title_text));
+        TextView tv_end = findViewById(R.id.tv_end);
+        tv_end.setVisibility(View.VISIBLE);
+        tv_end.setText(getString(R.string.redrecord));
+        tv_end.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                jump2List();
+            }
+        });
+
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
 
         String groupId = getIntent().getStringExtra("groupId");
         isGame = getIntent().getStringExtra("isGame");
@@ -246,13 +264,10 @@ public class GroupRedPacketActivity extends BaseActivity implements SelectPopupW
     }
 
     //跳转红包记录
-    public void jump2List(View view) {
+    public void jump2List() {
         startActivity(new Intent(this, RedPackageListActivity.class));
     }
 
-    public void back(View view) {
-        finish();
-    }
 
     @Override
     public void onPopWindowClickListener(String psw, boolean complete) {

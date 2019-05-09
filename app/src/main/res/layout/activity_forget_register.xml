@@ -7,14 +7,14 @@
 
     <ImageView
         android:id="@+id/login_logo"
-        android:layout_width="217dp"
-        android:layout_height="130dp"
-        android:layout_marginTop="100dp"
-        app:srcCompat="@drawable/login_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
         app:layout_constraintBottom_toTopOf="@id/login_bottom"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/login_logo" />
 
     <LinearLayout
         android:id="@+id/login_bottom"
@@ -76,7 +76,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
 
-                        android:maxLines="11"
                         android:layout_weight="1"
                         android:background="@null"
                         android:cursorVisible="true"
@@ -84,6 +83,7 @@
                         android:hint="@string/please_enter_phone_number"
                         android:inputType="number"
                         android:maxLength="11"
+                        android:maxLines="11"
                         android:textCursorDrawable="@null"
                         android:textSize="16sp" />
 
@@ -105,8 +105,8 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
             android:layout_marginTop="20dp"
+            android:layout_marginRight="50dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -150,10 +150,10 @@
                         android:background="@color/text_click_normal" />
 
                     <TextView
-                        android:gravity="center"
                         android:id="@+id/mobile_code"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:gravity="center"
                         android:text="@string/text_get_code"
                         android:textSize="16sp" />
 
@@ -174,8 +174,8 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
             android:layout_marginTop="20dp"
+            android:layout_marginRight="50dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -219,8 +219,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="50dp">
 
             <CheckBox
                 android:id="@+id/text_user_agreement"
@@ -238,20 +238,24 @@
                 android:layout_gravity="right"
                 android:text="@string/go_login"
                 android:textColor="@drawable/selector_text_click_bg"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
         </FrameLayout>
 
-        <Button
-            android:id="@+id/btn_commit"
+        <TextView
+            android:id="@+id/tv_commit"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/selector_login_btn_click_bg"
+            android:layout_height="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/shape_circular_bead_btn"
+            android:gravity="center"
             android:text="@string/commit"
+            android:textColor="@color/theme_color"
             android:textSize="16sp" />
+
 
     </LinearLayout>
 

@@ -39,6 +39,11 @@ import io.reactivex.schedulers.Schedulers;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 
+/**
+ * author L
+ * create at 2019/5/9
+ * description: 群二维码
+ */
 public class GroupQRActivity extends BaseActivity {
 
     private LinearLayout llQR;

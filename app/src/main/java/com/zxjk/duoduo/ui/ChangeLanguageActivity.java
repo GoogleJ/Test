@@ -15,11 +15,11 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 这个是语言选择的activity
+ *author L
+ *create at 2019/5/9
+ *description: 语言设置选择
  *
- * @author Administrator
  */
-@SuppressWarnings("ALL")
 public class ChangeLanguageActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.checkbox_zh_cn)
     ImageView checkBoxZhCn;

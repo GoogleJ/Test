@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -37,10 +36,14 @@ import butterknife.OnClick;
 
 import static com.zxjk.duoduo.utils.MD5Utils.getMD5;
 
+/**
+ * author L
+ * create at 2019/5/9
+ * description: 注冊
+ */
 @SuppressLint("CheckResult")
 public class RegisterActivity extends BaseActivity implements View.OnClickListener {
-    @BindView(R.id.btn_register)
-    Button btn_register;
+
     @BindView(R.id.login_country)
     TextView login_country;
     @BindView(R.id.register_code)
@@ -60,6 +63,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     @BindView(R.id.edit_password)
     EditText edit_password;
+    @BindView(R.id.tv_register)
+    TextView tvRegister;
 
     public static void start(AppCompatActivity activity) {
         Intent intent = new Intent(activity, RegisterActivity.class);
@@ -84,7 +89,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @OnClick({R.id.login_country
             , R.id.register_code
             , R.id.text_go_login
-            , R.id.btn_register
+            , R.id.tv_register
             , R.id.login_country_bottom})
     @Override
     public void onClick(View v) {
@@ -108,7 +113,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             case R.id.text_go_login:
                 finish();
                 break;
-            case R.id.btn_register:
+            case R.id.tv_register:
                 mobile = edit_mobile.getText().toString().trim();
                 password = edit_password.getText().toString().trim();
                 String code = edit_register_code.getText().toString().trim();
@@ -170,7 +175,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     Constant.userId = loginResponse.getId();
                     startService(new Intent(this, RegisterBlockWalletService.class));
                     finish();
-                    btn_register.setEnabled(false);
+                    tvRegister.setEnabled(false);
                 }, this::handleApiError);
     }
 

@@ -7,10 +7,12 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -22,23 +24,20 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.zxjk.duoduo.utils.MD5Utils.getMD5;
-
 /**
- * @author Administrator
- * 忘记密码
+ *author L
+ *create at 2019/5/9
+ *description: 忘记密码
+ *
  */
 @SuppressLint("CheckResult")
 public class ForgetRegisterActivity extends BaseActivity implements View.OnClickListener {
 
-    @BindView(R.id.btn_commit)
-    Button btn_commit;
 
     @BindView(R.id.login_country)
     TextView login_country;
@@ -78,11 +77,11 @@ public class ForgetRegisterActivity extends BaseActivity implements View.OnClick
 
     }
 
-    @OnClick({R.id.btn_commit, R.id.text_user_agreement, R.id.text_go_login, R.id.mobile_code, R.id.login_country})
+    @OnClick({R.id.tv_commit, R.id.text_user_agreement, R.id.text_go_login, R.id.mobile_code, R.id.login_country})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_commit:
+            case R.id.tv_commit:
                 mobile = edit_mobile.getText().toString();
                 password = edit_password.getText().toString();
                 code = edit_mobile_code.getText().toString();

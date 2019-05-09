@@ -25,13 +25,18 @@ import com.zxjk.duoduo.utils.GlideUtil;
 
 import java.util.ArrayList;
 
+/**
+ * author L
+ * create at 2019/5/9
+ * description: 红包详情 状态
+ */
 public class PeopleUnaccalimedActivity extends BaseActivity {
 
     private TextView title;
+    private TextView tv_end;
     private ImageView head;
     private TextView name;
     private TextView tips;
-    private TextView tvRedFromList;
     private RecyclerView recycler;
     private boolean isShow;
     private TextView tv_redEnvelope;
@@ -44,7 +49,10 @@ public class PeopleUnaccalimedActivity extends BaseActivity {
         setContentView(R.layout.activity_people_unaccalimed);
 
         title = findViewById(R.id.title);
-        tvRedFromList = findViewById(R.id.tvRedFromList);
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
+        tv_end = findViewById(R.id.tv_end);
+        tv_end.setOnClickListener(v ->
+                startActivity(new Intent(PeopleUnaccalimedActivity.this, RedPackageListActivity.class)));
         head = findViewById(R.id.head);
         name = findViewById(R.id.name);
         tips = findViewById(R.id.tips);
@@ -72,7 +80,7 @@ public class PeopleUnaccalimedActivity extends BaseActivity {
         }
         boolean fromList = getIntent().getBooleanExtra("fromList", false);
         if (fromList) {
-            tvRedFromList.setVisibility(View.GONE);
+            tv_end.setVisibility(View.GONE);
         }
 
         ServiceFactory.getInstance().getBaseService(Api.class)
@@ -137,12 +145,5 @@ public class PeopleUnaccalimedActivity extends BaseActivity {
                 }, this::handleApiError);
     }
 
-    // 红包记录
-    public void showRecord(View view) {
-        startActivity(new Intent(this, RedPackageListActivity.class));
-    }
 
-    public void back(View view) {
-        finish();
-    }
 }

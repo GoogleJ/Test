@@ -1,58 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
-    tools:context=".ui.msgpage.GameUpScoreConfirmActivity">
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/themecolor">
+    <include layout="@layout/layout_title_back" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:onClick="back"
-            android:padding="12dp"
-            android:src="@drawable/ico_back" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/upscore"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-    </RelativeLayout>
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="70dp"
         android:src="@drawable/icon_transfer_successful" />
 
     <TextView
         android:id="@+id/tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/upscore1"
-        android:textColor="@color/themecolor"
-        android:textSize="17sp" />
+        android:layout_marginTop="20dp"
+        android:textColor="@color/theme_color"
+        android:textSize="18sp" />
 
-    <Button
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="80dp"
-        android:background="@drawable/selector_login_btn_click_bg"
+        android:layout_height="50dp"
+        android:layout_margin="80dp"
+        android:background="@drawable/shape_circular_bead_btn"
+        android:gravity="center"
         android:onClick="commit"
-        android:text="@string/done1" />
+        android:text="@string/done1"
+        android:textColor="@color/theme_color"
+        android:textSize="16sp" />
 
 </LinearLayout>

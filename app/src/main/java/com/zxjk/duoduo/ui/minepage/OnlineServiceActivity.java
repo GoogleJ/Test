@@ -16,7 +16,9 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 
 /**
- * @author Administrator
+ * author L
+ * create at 2019/5/9
+ * description: 客服
  */
 @SuppressLint("JavascriptInterface")
 public class OnlineServiceActivity extends BaseActivity {

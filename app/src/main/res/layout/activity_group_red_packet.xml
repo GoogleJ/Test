@@ -7,39 +7,8 @@
     android:orientation="vertical"
     tools:context=".ui.msgpage.GroupRedPacketActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/themecolor">
+    <include layout="@layout/layout_title_back" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:onClick="back"
-            android:padding="12dp"
-            android:src="@drawable/ico_back" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/m_red_envelopes_title_text"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:onClick="jump2List"
-            android:padding="12dp"
-            android:text="@string/redrecord"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
-
-    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
