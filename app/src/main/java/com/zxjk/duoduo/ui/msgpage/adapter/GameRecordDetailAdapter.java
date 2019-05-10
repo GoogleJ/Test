@@ -151,7 +151,7 @@ public class GameRecordDetailAdapter extends RecyclerView.Adapter<GameRecordDeta
             holder.tv2.setText(bean.getBetCardType() + bean.getBetMoney());
             holder.tv3.setText(bean.getPoints());
             holder.tv4.setText(bean.getSettlementCardType());
-            if (bean.getStatus().equals("1")) {
+            if (bean.getStatus().equals("1") || bean.getStatus().equals("9")) {
                 holder.tv5.setTextColor(colorTheme);
                 holder.tv5.setText("-" + bean.getScorePoints());
             } else {

@@ -140,6 +140,9 @@ dependencies {
     //微信分享
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 
+    //banner for create gamegroup
+    implementation 'com.github.pinguo-zhouwei:MZBannerView:v2.0.2'
+
     implementation 'com.github.SheHuan:NiceDialog:1.1.9'
     implementation 'com.tencent:mmkv:1.0.19'
     implementation 'me.jessyan:autosize:1.1.2'

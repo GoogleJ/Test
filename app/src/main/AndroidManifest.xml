@@ -48,10 +48,28 @@
         <meta-data
             android:name="design_height_in_dp"
             android:value="667" />
+        <activity
+            android:name=".ui.msgpage.CreateGameGroupActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <activity android:name=".ui.msgpage.GroupQRActivity" />
-        <activity android:name=".ui.msgpage.ShareGroupQRActivity" />
-        <activity android:name=".ui.msgpage.GroupQRActivity" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.msgpage.GroupQRActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.msgpage.ShareGroupQRActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.msgpage.GroupQRActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.ImgActivity"
             android:launchMode="singleTask"
@@ -375,11 +393,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Theme_Splash"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.msgpage.ModifyNotesActivity"

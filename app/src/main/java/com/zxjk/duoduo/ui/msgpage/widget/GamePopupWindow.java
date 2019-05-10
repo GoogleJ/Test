@@ -1,4 +1,4 @@
-package com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin;
+package com.zxjk.duoduo.ui.msgpage.widget;
 
 import android.content.Context;
 import android.text.Editable;
@@ -21,6 +21,7 @@ import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.GetGroupGameParameterResponse;
 import com.zxjk.duoduo.ui.msgpage.GroupGamebettingRequeust;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameAdapter;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -56,7 +57,6 @@ public class GamePopupWindow extends BasePopupWindow {
     }
 
     public interface OnCommit {
-
         void onCommit(String data, long parseLong);
     }
 

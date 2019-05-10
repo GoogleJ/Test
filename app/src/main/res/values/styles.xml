@@ -226,5 +226,8 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
+    <style name="CommonSwitch" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorAccent">#49A2FE</item>
+    </style>
 
 </resources>

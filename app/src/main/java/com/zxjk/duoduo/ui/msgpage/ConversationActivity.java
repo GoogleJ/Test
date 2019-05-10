@@ -41,7 +41,7 @@ import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameDownScorePlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameJiaoYiPlugin;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GamePopupWindow;
+import com.zxjk.duoduo.ui.msgpage.widget.GamePopupWindow;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameRecordPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameRulesPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameStartPlugin;

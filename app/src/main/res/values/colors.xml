@@ -107,5 +107,7 @@
     <color name="textColor39">#393939</color>
     <color name="colorE">#EEEEEE</color>
     <color name="colorD">#DDDDDD</color>
-
+    <color name="createGameGroup1">#C4C8D1</color>
+    <color name="createGameGroup2">#CEAF81</color>
+    <color name="createGameGroup3">#363638</color>
 </resources>
