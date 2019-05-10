@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@android:color/white"
     android:orientation="vertical"
-    tools:ignore="RtlCompat">
+    tools:ignore="all">
 
-    <com.zxjk.duoduo.ui.widget.TitleBar
-        android:id="@+id/m_add_friend_title_bar"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/login_bg"
-        app:titleBarLeftImage="@drawable/ico_back"
-        app:titleBarTextColor="@color/white"
-        app:titleBarTitle="@string/add_friend_title_bar" />
+    <include layout="@layout/layout_title_back" />
+
 
     <TextView
-        android:id="@+id/m_add_friend_search_edit"
+        android:id="@+id/tv_search"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_margin="12dp"
@@ -31,188 +24,150 @@
         android:paddingEnd="20dp"
         android:textSize="15sp" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/m_my_qr_code_btn"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tv_qr_code"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
+        android:layout_gravity="end"
+        android:layout_margin="12dp"
+        android:drawableEnd="@drawable/icon_qr_code"
+        android:drawablePadding="5dp"
+        android:text="@string/m_add_friend_label_qr_code"
+        android:textSize="16sp" />
 
-        <TextView
-
-            android:id="@+id/m_add_friend_label_qr_code"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="38dp"
-            android:text="@string/m_add_friend_label_qr_code"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:ignore="MissingConstraints" />
+    <RelativeLayout
+        android:id="@+id/rl_weChatFriend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_marginStart="7dp"
-            app:layout_constraintBottom_toBottomOf="@+id/m_add_friend_label_qr_code"
-            app:layout_constraintStart_toEndOf="@+id/m_add_friend_label_qr_code"
-            app:layout_constraintTop_toTopOf="@+id/m_add_friend_label_qr_code"
-            app:srcCompat="@drawable/icon_qr_code" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/m_add_friend_wechat_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingBottom="4dp">
-
-        <ImageView
-            android:id="@+id/m_add_friend_wechat_icon"
+            android:id="@+id/iv_weChatFriend"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="12dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_wechat1"
-            tools:ignore="MissingConstraints" />
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="6dp"
+            android:src="@drawable/ic_wechat1" />
 
         <TextView
-            android:id="@+id/m_add_friend_wechat_label_1"
+            android:id="@+id/tv_weChatFriend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="7dp"
-            android:text="@string/m_add_friend_wechat_label_1"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            app:layout_constraintStart_toEndOf="@+id/m_add_friend_wechat_icon"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_alignTop="@id/iv_weChatFriend"
+            android:layout_marginTop="3dp"
+            android:layout_toEndOf="@id/iv_weChatFriend"
+            android:text="@string/wechat_friend"
+            android:textColor="@color/textColor3"
+            android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/m_add_friend_wechat_label_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="9dp"
-            android:text="@string/m_add_friend_wechat_label_2"
-            android:textColor="@color/m_add_friend_wechat_label_2"
-            android:textSize="13dp"
-            app:layout_constraintBottom_toBottomOf="@+id/m_add_friend_wechat_icon"
-            app:layout_constraintStart_toStartOf="@+id/m_add_friend_wechat_label_1" />
+            android:layout_alignBottom="@id/iv_weChatFriend"
+            android:layout_marginBottom="3dp"
+            android:layout_toEndOf="@id/iv_weChatFriend"
+            android:text="@string/add_wechat_friend"
+            android:textColor="@color/textColor9"
+            android:textSize="14sp" />
 
         <View
             android:layout_width="wrap_content"
-            android:layout_height="0.5dp"
-            android:layout_marginTop="11dp"
-            android:background="@color/m_add_friend_line"
-            app:layout_constraintStart_toStartOf="@+id/m_add_friend_wechat_label_2"
-            app:layout_constraintTop_toBottomOf="@+id/m_add_friend_wechat_label_2" />
+            android:layout_height="0.1dp"
+            android:layout_below="@id/iv_weChatFriend"
+            android:layout_alignStart="@id/tv_weChatFriend"
+            android:background="@color/m_add_friend_line" />
+    </RelativeLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/m_add_friend_contact_btn"
+    <RelativeLayout
+        android:id="@+id/rl_phoneFriend"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp">
+        android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/m_add_friend_contact_icon"
+            android:id="@+id/iv_phoneFriend"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="12dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_phone"
-            tools:ignore="MissingConstraints" />
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="6dp"
+            android:src="@drawable/ic_phone" />
 
         <TextView
-            android:id="@+id/m_add_friend_contact_label_1"
+            android:id="@+id/tv_phoneFriend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="7dp"
-            android:text="@string/m_add_friend_contact_label_1"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            app:layout_constraintStart_toEndOf="@+id/m_add_friend_contact_icon"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_alignTop="@id/iv_phoneFriend"
+            android:layout_marginTop="3dp"
+            android:layout_toEndOf="@id/iv_phoneFriend"
+            android:text="@string/phone_friend"
+            android:textColor="@color/textColor3"
+            android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/m_add_friend_contact_label_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/m_add_friend_contact_label_2"
-            android:textColor="@color/m_add_friend_wechat_label_2"
-            android:textSize="12dp"
-            app:layout_constraintBottom_toBottomOf="@+id/m_add_friend_contact_icon"
-            app:layout_constraintStart_toStartOf="@+id/m_add_friend_contact_label_1" />
+            android:layout_alignBottom="@id/iv_phoneFriend"
+            android:layout_marginBottom="3dp"
+            android:layout_toEndOf="@id/iv_phoneFriend"
+            android:text="@string/add_phone_friend"
+            android:textColor="@color/textColor9"
+            android:textSize="14sp" />
 
-        <ImageView
-            android:layout_width="8dp"
-            android:layout_height="15dp"
-            android:layout_marginEnd="13dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/icon_go" />
+        <ImageView style="@style/ImageEnter" />
 
         <View
             android:layout_width="wrap_content"
-            android:layout_height="0.5dp"
-            android:layout_marginTop="11dp"
-            android:background="@color/m_add_friend_line"
-            app:layout_constraintStart_toStartOf="@+id/m_add_friend_contact_label_2"
-            app:layout_constraintTop_toBottomOf="@+id/m_add_friend_contact_label_2" />
+            android:layout_height="0.1dp"
+            android:layout_below="@id/iv_phoneFriend"
+            android:layout_alignStart="@id/tv_phoneFriend"
+            android:background="@color/m_add_friend_line" />
+    </RelativeLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/m_add_friend_scan_it_btn"
+    <RelativeLayout
+        android:id="@+id/rl_scan"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp">
+        android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/m_add_friend_scan_it_icon"
+            android:id="@+id/iv_scan"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="12dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_scan1"
-            tools:ignore="MissingConstraints" />
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="6dp"
+            android:src="@drawable/ic_scan1" />
 
         <TextView
-            android:id="@+id/m_add_friend_scan_it_label_1"
+            android:id="@+id/tv_scan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="7dp"
-            android:text="@string/m_add_friend_scan_it_label_1"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            app:layout_constraintStart_toEndOf="@+id/m_add_friend_scan_it_icon"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_alignTop="@id/iv_scan"
+            android:layout_marginTop="3dp"
+            android:layout_toEndOf="@id/iv_scan"
+            android:text="@string/scan"
+            android:textColor="@color/textColor3"
+            android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/m_add_friend_scan_it_label_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/m_add_friend_scan_it_label_2"
-            android:textColor="@color/m_add_friend_wechat_label_2"
-            android:textSize="12dp"
-            app:layout_constraintBottom_toBottomOf="@+id/m_add_friend_scan_it_icon"
-            app:layout_constraintStart_toStartOf="@+id/m_add_friend_scan_it_label_1" />
+            android:layout_alignBottom="@id/iv_scan"
+            android:layout_marginBottom="3dp"
+            android:layout_toEndOf="@id/iv_scan"
+            android:text="@string/scan_code"
+            android:textColor="@color/textColor9"
+            android:textSize="14sp" />
 
         <View
             android:layout_width="wrap_content"
-            android:layout_height="0.5dp"
-            android:layout_marginTop="11dp"
-            android:background="@color/m_add_friend_line"
-            app:layout_constraintStart_toStartOf="@+id/m_add_friend_scan_it_label_2"
-            app:layout_constraintTop_toBottomOf="@+id/m_add_friend_scan_it_label_2" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="0.1dp"
+            android:layout_below="@id/iv_scan"
+            android:layout_alignStart="@id/tv_scan"
+            android:background="@color/m_add_friend_line" />
+    </RelativeLayout>
 
 
 </LinearLayout>

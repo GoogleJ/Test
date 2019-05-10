@@ -4,13 +4,18 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.shehuan.nicedialog.BaseNiceDialog;
+import com.shehuan.nicedialog.NiceDialog;
+import com.shehuan.nicedialog.ViewConvertListener;
+import com.shehuan.nicedialog.ViewHolder;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.ui.widget.SharePopWindow;
-import com.zxjk.duoduo.ui.widget.TitleBar;
+import com.zxjk.duoduo.utils.WeChatShareUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,53 +26,71 @@ import butterknife.OnClick;
  * create at 2019/5/7
  * description: 添加联系人
  */
-public class AddContactActivity extends BaseActivity implements View.OnClickListener {
-    @BindView(R.id.m_add_friend_title_bar)
-    TitleBar titleBar;
-
-    View m_add_friend_contact_btn;
+public class AddContactActivity extends BaseActivity {
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.rl_phoneFriend)
+    RelativeLayout rlPhoneFriend;
+    @BindView(R.id.rl_scan)
+    RelativeLayout rlScan;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_friend);
-
         ButterKnife.bind(this);
-        initUI();
+        initView();
+    }
 
-        m_add_friend_contact_btn = findViewById(R.id.m_add_friend_contact_btn);
-        getPermisson(m_add_friend_contact_btn, result -> {
+    private void initView() {
+        tvTitle.setText(getString(R.string.add_contacts));
+        //通讯录好友
+        getPermisson(rlPhoneFriend, result -> {
             if (result) startActivity(new Intent(this, PhoneContactActivity.class));
         }, Manifest.permission.READ_CONTACTS);
-
-        getPermisson(findViewById(R.id.m_add_friend_scan_it_btn), result -> {
+        //扫一扫
+        getPermisson(rlScan, result -> {
             if (result) startActivity(new Intent(this, QrCodeActivity.class));
         }, Manifest.permission.CAMERA);
     }
 
-    @OnClick({R.id.m_add_friend_wechat_btn
-            , R.id.m_my_qr_code_btn
-            , R.id.m_add_friend_search_edit
-            , R.id.m_add_friend_scan_it_btn})
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.m_add_friend_wechat_btn:
-                new SharePopWindow(this)
-                        .showPopupWindow();
+
+    @OnClick({R.id.rl_back, R.id.tv_qr_code, R.id.tv_search, R.id.rl_weChatFriend})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            //返回
+            case R.id.rl_back:
+                finish();
                 break;
-            case R.id.m_my_qr_code_btn:
-                MyQrCodeActivity.start(this);
+            //我的二维码
+            case R.id.tv_qr_code:
+                startActivity(new Intent(this, MyQrCodeActivity.class));
                 break;
-            case R.id.m_add_friend_search_edit:
+            //搜索
+            case R.id.tv_search:
                 startActivity(new Intent(this, GlobalSearchActivity.class));
                 break;
-            default:
+            //微信好友
+            case R.id.rl_weChatFriend:
+                NiceDialog.init().setLayoutId(R.layout.layout_general_dialog7).setConvertListener(new ViewConvertListener() {
+                    @Override
+                    protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                        holder.setOnClickListener(R.id.rl_weChat, v -> {
+                            dialog.dismiss();
+                            WeChatShareUtil.shareImg(AddContactActivity.this, 0);
+                        });
+                        holder.setOnClickListener(R.id.rl_circleFriends, v -> {
+                            dialog.dismiss();
+                            WeChatShareUtil.shareImg(AddContactActivity.this, 1);
+                        });
+
+                    }
+                }).setShowBottom(true)
+                        .setDimAmount(0.5f)
+                        .show(getSupportFragmentManager());
+
+                break;
+
         }
-    }
-
-
-    private void initUI() {
-        titleBar.getLeftImageView().setOnClickListener(v -> finish());
     }
 }

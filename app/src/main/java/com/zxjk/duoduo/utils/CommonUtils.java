@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 
 import java.math.BigDecimal;
@@ -184,6 +183,7 @@ public class CommonUtils {
         }
         return name;
     }
+
     /**
      * 金额
      * 元 =====》 保留两位小数
@@ -198,7 +198,7 @@ public class CommonUtils {
             DecimalFormat decimalFormat = new DecimalFormat("0.00");
             return decimalFormat.format(d);
         }
-        return Constant.BALANCE;
+        return "0.00";
     }
 
 }

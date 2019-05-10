@@ -9,9 +9,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,6 +17,10 @@ import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.shehuan.nicedialog.BaseNiceDialog;
+import com.shehuan.nicedialog.NiceDialog;
+import com.shehuan.nicedialog.ViewConvertListener;
+import com.shehuan.nicedialog.ViewHolder;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ReleasePurchase;
@@ -27,7 +29,7 @@ import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.ImgActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.ui.widget.TakePopWindow;
+import com.zxjk.duoduo.ui.widget.dialog.BottomDialog;
 import com.zxjk.duoduo.ui.widget.dialog.ConfirmDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.OssUtils;
@@ -42,7 +44,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 @SuppressLint("CheckResult")
-public class ConfirmBuyActivity extends BaseActivity implements TakePopWindow.OnItemClickListener {
+public class ConfirmBuyActivity extends BaseActivity {
 
     private String pictureUrl = ""; //支付凭证
 
@@ -70,7 +72,6 @@ public class ConfirmBuyActivity extends BaseActivity implements TakePopWindow.On
     private ConfirmDialog dialogConfirm;
     private ConfirmDialog dialogCancel;
 
-    private TakePopWindow selectPicPopWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,14 +79,10 @@ public class ConfirmBuyActivity extends BaseActivity implements TakePopWindow.On
         setContentView(R.layout.activity_confirm_buy);
 
         getPermisson(findViewById(R.id.llUploadSign), granted -> {
-            KeyboardUtils.hideSoftInput(ConfirmBuyActivity.this);
-            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-            selectPicPopWindow.showAtLocation(ConfirmBuyActivity.this.findViewById(android.R.id.content),
-                    Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+            BottomDialog.dialogType(this, REQUEST_TAKE, REQUEST_ALBUM);
         }, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
-        selectPicPopWindow = new TakePopWindow(this);
-        selectPicPopWindow.setOnItemClickListener(this);
+
         tvConfirmBuyPayType = findViewById(R.id.tvConfirmBuyPayType);
         tvConfirmBuyMoney = findViewById(R.id.tvConfirmBuyMoney);
         tvConfirmBuyReceiver = findViewById(R.id.tvConfirmBuyReceiver);
@@ -226,18 +223,7 @@ public class ConfirmBuyActivity extends BaseActivity implements TakePopWindow.On
         finish();
     }
 
-    @Override
-    public void setOnItemClick(View v) {
-        selectPicPopWindow.dismiss();
-        switch (v.getId()) {
-            case R.id.tvCamera:
-                TakePicUtil.takePicture(this, REQUEST_TAKE);
-                break;
-            case R.id.tvPhoto:
-                TakePicUtil.albumPhoto(this, REQUEST_ALBUM);
-                break;
-        }
-    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

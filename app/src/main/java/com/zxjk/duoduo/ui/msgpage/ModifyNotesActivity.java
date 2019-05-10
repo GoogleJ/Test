@@ -4,6 +4,9 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
@@ -13,13 +16,16 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 
-import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
+/**
+ * author L
+ * create at 2019/5/10
+ * description: 备注
+ */
 @SuppressLint("CheckResult")
-public class ModifyNotesActivity extends BaseActivity implements View.OnClickListener {
+public class ModifyNotesActivity extends BaseActivity {
     @BindView(R.id.m_modify_notes_edit)
     EditText modifyNotesEdit;
 
@@ -28,21 +34,15 @@ public class ModifyNotesActivity extends BaseActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_notes);
         ButterKnife.bind(this);
-
-    }
-
-    @OnClick({R.id.m_add_btn_cancel, R.id.m_title_bar_right})
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.m_add_btn_cancel:
-                finish();
-                break;
-            case R.id.m_title_bar_right:
-                updateRemark(getIntent().getStringExtra("friendId"), modifyNotesEdit.getText().toString());
-                break;
-                default:
-        }
+        TextView tv_title = findViewById(R.id.tv_title);
+        TextView tv_commit = findViewById(R.id.tv_commit);
+        tv_title.setText(getString(R.string.note));
+        tv_commit.setVisibility(View.VISIBLE);
+        tv_commit.setText(getString(R.string.queding));
+        tv_commit.setOnClickListener(v -> {
+            updateRemark(getIntent().getStringExtra("friendId"), modifyNotesEdit.getText().toString());
+        });
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
     }
 
     public void updateRemark(String friendId, String remark) {

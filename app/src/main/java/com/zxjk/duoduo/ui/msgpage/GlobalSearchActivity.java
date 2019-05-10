@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
 /**
  * author L
  * create at 2019/5/7
- * description:
+ * description:搜索
  */
 @SuppressLint("CheckResult")
 public class GlobalSearchActivity extends BaseActivity {

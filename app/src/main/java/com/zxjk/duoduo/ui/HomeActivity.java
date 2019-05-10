@@ -151,7 +151,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
     private void initFriendList() {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .getFriendListById()
-                .compose(bindToLifecycle())
+                .compose(bindUntilEvent(ActivityEvent.DESTROY))
                 .compose(RxSchedulers.ioObserver())
                 .subscribe(friendInfoResponses -> Constant.friendsList = friendInfoResponses.data, t -> initFriendList());
     }

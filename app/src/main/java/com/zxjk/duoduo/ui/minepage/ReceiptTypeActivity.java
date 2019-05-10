@@ -7,9 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,7 +24,7 @@ import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.ui.widget.TakePopWindow;
+import com.zxjk.duoduo.ui.widget.dialog.BottomDialog;
 import com.zxjk.duoduo.ui.widget.dialog.PaymentTypeDialog;
 import com.zxjk.duoduo.utils.AesUtil;
 import com.zxjk.duoduo.utils.CommonUtils;
@@ -45,13 +43,12 @@ import static com.zxjk.duoduo.ui.EditPersonalInformationFragment.REQUEST_TAKE;
  * 微信、支付宝、银行卡
  */
 @SuppressLint("CheckResult")
-public class ReceiptTypeActivity extends BaseActivity implements View.OnClickListener, TakePopWindow.OnItemClickListener {
+public class ReceiptTypeActivity extends BaseActivity implements View.OnClickListener {
     ConstraintLayout nickName, realName, accountIdCard;
     TextView receiptTypeName, receiptTypeCard, receiptTypePaymentName;
     TextView receiptTypeRealName, receiptTypeRealCardName, receiptTypePayment;
     ImageView receiptTypeGo, receiptTypeCardGo, receiptTypePaymentGo;
     TextView commitBtn;
-    private TakePopWindow selectPicPopWindow;
     String wechat = "1";
     String alipay = "2";
     String bank = "3";
@@ -80,8 +77,6 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
     private void initView() {
         tv_title = findViewById(R.id.tv_title);
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());
-        selectPicPopWindow = new TakePopWindow(ReceiptTypeActivity.this);
-        selectPicPopWindow.setOnItemClickListener(this);
         nickName = findViewById(R.id.nick_name);
         realName = findViewById(R.id.real_name);
         accountIdCard = findViewById(R.id.account_id_card);
@@ -131,9 +126,9 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
         if (types.equals(wechat) || types.equals(alipay)) {
             getPermisson(accountIdCard, result -> {
                 if (result) {
-                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                    selectPicPopWindow.showAtLocation(findViewById(android.R.id.content),
-                            Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                    BottomDialog.dialogType(this, REQUEST_TAKE, REQUEST_ALBUM);
+
+
                 }
             }, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         } else {
@@ -298,16 +293,4 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
                 }, this::handleApiError);
     }
 
-    @Override
-    public void setOnItemClick(View v) {
-        selectPicPopWindow.dismiss();
-        switch (v.getId()) {
-            case R.id.tvCamera:
-                TakePicUtil.takePicture(this, REQUEST_TAKE);
-                break;
-            case R.id.tvPhoto:
-                TakePicUtil.albumPhoto(this, REQUEST_ALBUM);
-                break;
-        }
-    }
 }

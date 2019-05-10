@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.zxjk.duoduo.R;
 
 public class TakePopWindow extends PopupWindow implements View.OnClickListener {

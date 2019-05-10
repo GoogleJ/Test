@@ -1,65 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/icon_pop_friend_back"
+    android:background="@drawable/ic_msg_popwindow_bg"
     android:orientation="vertical">
 
-
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/update_rename"
-        style="@style/msg_top_pop_style"
-        android:paddingStart="20dp"
-        android:paddingTop="20dp">
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
 
         <ImageView
-            style="@style/msg_top_pop_img_style"
-            app:srcCompat="@drawable/icon_update_rename" />
+            android:id="@+id/iv_modify_remark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:src="@drawable/ic_modify_remark" />
 
         <TextView
-            style="@style/msg_top_pop_text_style"
-            android:text="@string/update_rename" />
-    </LinearLayout>
+            android:id="@+id/tv_modify_remark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:layout_toEndOf="@+id/iv_modify_remark"
+            android:text="@string/update_rename"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:layout_marginStart="70dp"
-        android:background="#1AFFFFFF" />
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0.1dp"
+            android:layout_alignStart="@+id/tv_modify_remark"
+            android:layout_alignParentBottom="true"
+            android:background="#1AFFFFFF" />
 
-    <LinearLayout
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/recommend_to_friend"
-        style="@style/msg_top_pop_style"
-        android:paddingStart="20dp">
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
 
         <ImageView
-            style="@style/msg_top_pop_img_style"
-            app:srcCompat="@drawable/icon_recommend_to_friend" />
+            android:id="@+id/iv_recommended"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:src="@drawable/ic_recommended" />
 
         <TextView
-            style="@style/msg_top_pop_text_style"
-            android:text="@string/recommend_to_friend" />
-    </LinearLayout>
+            android:id="@+id/tv_recommended"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:layout_toEndOf="@+id/iv_recommended"
+            android:text="@string/recommend_to_friend"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:layout_marginStart="70dp"
-        android:background="#1AFFFFFF" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:layout_alignStart="@+id/tv_recommended"
+            android:layout_alignParentBottom="true"
+            android:background="#1AFFFFFF" />
 
-    <LinearLayout
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/delete_friend"
-        style="@style/msg_top_pop_style"
-        android:paddingStart="20dp">
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
 
         <ImageView
-            style="@style/msg_top_pop_img_style"
-            app:srcCompat="@drawable/icon_delete_friend" />
+            android:id="@+id/iv_remove_buddy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:src="@drawable/ic_remove_buddy" />
 
         <TextView
-            style="@style/msg_top_pop_text_style"
-            android:text="@string/m_delete_popup" />
-    </LinearLayout>
+            android:id="@+id/tv_scan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:layout_toEndOf="@+id/iv_remove_buddy"
+            android:text="@string/m_delete_popup"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+
+
+    </RelativeLayout>
 
 </LinearLayout>

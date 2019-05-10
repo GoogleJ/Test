@@ -91,14 +91,17 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.send_group_chat:
+                popupWindow.dismiss();
                 Intent intent = new Intent(getActivity(), CreateGroupActivity.class);
                 intent.putExtra("eventType", 1);
                 startActivity(intent);
                 break;
             case R.id.invite_friends:
+                popupWindow.dismiss();
                 startActivity(new Intent(getActivity(), AddContactActivity.class));
                 break;
             case R.id.collection_and_payment:
+                popupWindow.dismiss();
                 startActivity(new Intent(getActivity(), RecipetQRActivity.class));
                 break;
             default:

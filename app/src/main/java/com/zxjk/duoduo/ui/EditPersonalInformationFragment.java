@@ -6,9 +6,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,7 +22,7 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.ui.widget.TakePopWindow;
+import com.zxjk.duoduo.ui.widget.dialog.BottomDialog;
 import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
@@ -39,7 +37,7 @@ import butterknife.OnClick;
  * create at 2019/5/7
  * description: 编辑个人信息
  */
-public class EditPersonalInformationFragment extends BaseActivity implements View.OnClickListener, TakePopWindow.OnItemClickListener {
+public class EditPersonalInformationFragment extends BaseActivity implements View.OnClickListener {
 
     public static final int REQUEST_TAKE = 1;
     public static final int REQUEST_ALBUM = 2;
@@ -61,7 +59,6 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
      */
     EditText editArea;
     private String url;
-    private TakePopWindow selectPicPopWindow;
     private LoginResponse update;
 
     private void initData() {
@@ -75,14 +72,12 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
         imageSearchBtn = findViewById(R.id.m_edit_information_header_icon);
         editNickName = findViewById(R.id.m_edit_information_name_edit);
         editArea = findViewById(R.id.m_edit_information_area_edit);
-        selectPicPopWindow = new TakePopWindow(this);
-        selectPicPopWindow.setOnItemClickListener(this);
+
 
         imageSearchBtn.setOnClickListener(this);
         getPermisson(imageSearchBtn, granted -> {
-            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-            selectPicPopWindow.showAtLocation(EditPersonalInformationFragment.this.findViewById(android.R.id.content),
-                    Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+            BottomDialog.dialogType(this, REQUEST_TAKE, REQUEST_ALBUM);
+
         }, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
 
         commitBtn.setOnClickListener(this);
@@ -163,18 +158,6 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
 
     }
 
-    @Override
-    public void setOnItemClick(View v) {
-        selectPicPopWindow.dismiss();
-        switch (v.getId()) {
-            case R.id.tvCamera:
-                TakePicUtil.takePicture(this, REQUEST_TAKE);
-                break;
-            case R.id.tvPhoto:
-                TakePicUtil.albumPhoto(this, REQUEST_ALBUM);
-                break;
-        }
-    }
 
     @SuppressLint("CheckResult")
     public void updateCustomerInfo(String customerInfo) {

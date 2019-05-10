@@ -317,180 +317,217 @@
                 android:id="@+id/tvExchangePayType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="10dp"
-                android:paddingTop="12dp"
-                android:paddingBottom="4dp"
+                android:paddingStart="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:text="@string/paytype"
-                android:textColor="@color/textcolor3"
-                android:textSize="13sp" />
+                android:textColor="@color/textColor9"
+                android:textSize="14sp" />
 
             <RelativeLayout
-                android:id="@+id/rlExchangeType1"
+                android:id="@+id/rl_weChat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:padding="15dp">
+                android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/ivExchangePaytype1"
+                    android:id="@+id/iv_weChat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
                     android:src="@drawable/ic_exchange_wechat" />
 
+
                 <TextView
-                    android:id="@+id/tvExchangePayType1"
+                    android:id="@+id/tv_weChat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_toEndOf="@id/ivExchangePaytype1"
+                    android:layout_alignTop="@+id/iv_weChat"
+                    android:layout_alignBottom="@+id/iv_weChat"
+                    android:layout_toEndOf="@+id/iv_weChat"
                     android:text="@string/wechat"
-                    android:textColor="@color/themecolor"
+                    android:textColor="@color/theme_color"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/tvExchangePayInfo1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tvExchangePayType1"
-                    android:layout_alignStart="@id/tvExchangePayType1"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/textcolor3"
-                    android:visibility="gone" />
-
                 <CheckBox
-                    android:id="@+id/cbExchangePayType1"
+                    android:id="@+id/checkbox_weChat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/iv_weChat"
+                    android:layout_alignBottom="@+id/iv_weChat"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="15dp"
                     android:background="@drawable/selector_exchange_radio"
                     android:button="@null"
                     android:clickable="false" />
 
+
+                <TextView
+                    android:id="@+id/tv_weChatInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_weChat"
+                    android:layout_alignStart="@id/tv_weChat"
+                    android:paddingTop="5dp"
+                    android:text="@string/not_perfect"
+                    android:textColor="@color/textColor9"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.1dp"
+                    android:layout_below="@+id/tv_weChatInfo"
+                    android:layout_alignStart="@id/tv_weChat"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/background_color1" />
+
+
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:background="@color/exchange_line" />
-
             <RelativeLayout
-                android:id="@+id/rlExchangeType2"
+                android:id="@+id/rl_aliPay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:padding="15dp">
+                android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/ivExchangePaytype2"
+                    android:id="@+id/iv_aliPay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
                     android:src="@drawable/ic_exchange_alipay" />
 
+
                 <TextView
-                    android:id="@+id/tvExchangePayType2"
+                    android:id="@+id/tv_aliPay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:layout_toEndOf="@id/ivExchangePaytype2"
+                    android:layout_alignTop="@+id/iv_aliPay"
+                    android:layout_alignBottom="@+id/iv_aliPay"
+                    android:layout_toEndOf="@+id/iv_aliPay"
                     android:text="@string/alipay"
-                    android:textColor="@color/themecolor"
+                    android:textColor="@color/theme_color"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/tvExchangePayInfo2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tvExchangePayType2"
-                    android:layout_alignStart="@id/tvExchangePayType2"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/textcolor3"
-                    android:visibility="gone" />
-
                 <CheckBox
-                    android:id="@+id/cbExchangePayType2"
+                    android:id="@+id/checkbox_aliPay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/iv_aliPay"
+                    android:layout_alignBottom="@+id/iv_aliPay"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="15dp"
                     android:background="@drawable/selector_exchange_radio"
                     android:button="@null"
                     android:clickable="false" />
 
+
+                <TextView
+                    android:id="@+id/tv_aliPayInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_aliPay"
+                    android:layout_alignStart="@id/tv_aliPay"
+                    android:paddingTop="5dp"
+                    android:text="@string/not_perfect"
+                    android:textColor="@color/textColor9"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.1dp"
+                    android:layout_below="@+id/tv_aliPayInfo"
+                    android:layout_alignStart="@id/tv_aliPay"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/background_color1" />
+
+
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:background="@color/exchange_line" />
-
             <RelativeLayout
-                android:id="@+id/rlExchangeType3"
+                android:id="@+id/rl_bank"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:padding="15dp">
+                android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/ivExchangePaytype3"
+                    android:id="@+id/iv_bank"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="15dp"
                     android:src="@drawable/ic_exchange_bankpay" />
 
+
                 <TextView
-                    android:id="@+id/tvExchangePayType3"
+                    android:id="@+id/tv_bank"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:layout_toEndOf="@id/ivExchangePaytype3"
+                    android:layout_alignTop="@+id/iv_bank"
+                    android:layout_alignBottom="@+id/iv_bank"
+                    android:layout_toEndOf="@+id/iv_bank"
                     android:text="@string/bankcard"
-                    android:textColor="@color/themecolor"
+                    android:textColor="@color/theme_color"
                     android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/tvExchangePayInfo3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tvExchangePayType3"
-                    android:layout_alignStart="@id/tvExchangePayType3"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/textcolor3"
-                    android:visibility="gone" />
-
                 <CheckBox
-                    android:id="@+id/cbExchangePayType3"
+                    android:id="@+id/checkbox_bank"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/iv_bank"
+                    android:layout_alignBottom="@+id/iv_bank"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="15dp"
                     android:background="@drawable/selector_exchange_radio"
                     android:button="@null"
                     android:clickable="false" />
 
+
+                <TextView
+                    android:id="@+id/tv_bankInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_bank"
+                    android:layout_alignStart="@id/tv_bank"
+                    android:paddingTop="5dp"
+                    android:text="@string/not_perfect"
+                    android:textColor="@color/textColor9"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.1dp"
+                    android:layout_below="@+id/tv_bankInfo"
+                    android:layout_alignStart="@id/tv_bank"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/background_color1" />
+
+
             </RelativeLayout>
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tv_confirm"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="50dp"
+                android:layout_margin="40dp"
+                android:background="@drawable/shape_circular_bead_btn"
+                android:gravity="center"
+                android:onClick="submit"
+                android:textColor="@color/theme_color"
+                android:textSize="16sp" />
 
-                <Button
-                    android:id="@+id/btnExchangeConfirm"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginEnd="32dp"
-                    android:layout_marginBottom="50dp"
-                    android:background="@drawable/selector_login_btn_click_bg"
-                    android:onClick="submit"
-                    android:text="@string/carry_out"
-                    android:textSize="17sp" />
 
-            </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

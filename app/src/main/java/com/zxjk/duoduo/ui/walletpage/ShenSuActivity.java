@@ -6,11 +6,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -22,6 +20,10 @@ import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.shehuan.nicedialog.BaseNiceDialog;
+import com.shehuan.nicedialog.NiceDialog;
+import com.shehuan.nicedialog.ViewConvertListener;
+import com.shehuan.nicedialog.ViewHolder;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -30,7 +32,7 @@ import com.zxjk.duoduo.network.response.GetOverOrderResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.walletpage.model.ShenSuRequest;
-import com.zxjk.duoduo.ui.widget.TakePopWindow;
+import com.zxjk.duoduo.ui.widget.dialog.BottomDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
@@ -38,7 +40,7 @@ import com.zxjk.duoduo.utils.TakePicUtil;
 import java.io.File;
 import java.util.Collections;
 
-public class ShenSuActivity extends BaseActivity implements TakePopWindow.OnItemClickListener {
+public class ShenSuActivity extends BaseActivity {
 
     private EditText et;
 
@@ -64,7 +66,7 @@ public class ShenSuActivity extends BaseActivity implements TakePopWindow.OnItem
 
     private ImageView ivadd1, ivadd2, ivadd3;
 
-    private TakePopWindow selectPicPopWindow;
+
     private static final int REQUEST_TAKE = 1;
     private static final int REQUEST_ALBUM = 2;
 
@@ -72,9 +74,6 @@ public class ShenSuActivity extends BaseActivity implements TakePopWindow.OnItem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shen_su);
-
-        selectPicPopWindow = new TakePopWindow(this);
-        selectPicPopWindow.setOnItemClickListener(this);
 
         ivadd1 = findViewById(R.id.iv_add1);
         ivadd2 = findViewById(R.id.iv_add2);
@@ -102,30 +101,21 @@ public class ShenSuActivity extends BaseActivity implements TakePopWindow.OnItem
         getPermisson(fl1, result -> {
             if (result) {
                 currentImg = 1;
-                KeyboardUtils.hideSoftInput(ShenSuActivity.this);
-                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                selectPicPopWindow.showAtLocation(findViewById(android.R.id.content),
-                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                BottomDialog.dialogType(this, REQUEST_TAKE, REQUEST_ALBUM);
             }
         }, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
         getPermisson(fl2, result -> {
             if (result) {
                 currentImg = 2;
-                KeyboardUtils.hideSoftInput(ShenSuActivity.this);
-                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                selectPicPopWindow.showAtLocation(findViewById(android.R.id.content),
-                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                BottomDialog.dialogType(this, REQUEST_TAKE, REQUEST_ALBUM);
             }
         }, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
         getPermisson(fl3, result -> {
             if (result) {
                 currentImg = 3;
-                KeyboardUtils.hideSoftInput(ShenSuActivity.this);
-                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                selectPicPopWindow.showAtLocation(findViewById(android.R.id.content),
-                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                BottomDialog.dialogType(this, REQUEST_TAKE, REQUEST_ALBUM);
             }
         }, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
@@ -193,18 +183,7 @@ public class ShenSuActivity extends BaseActivity implements TakePopWindow.OnItem
         finish();
     }
 
-    @Override
-    public void setOnItemClick(View v) {
-        selectPicPopWindow.dismiss();
-        switch (v.getId()) {
-            case R.id.tvCamera:
-                TakePicUtil.takePicture(this, REQUEST_TAKE);
-                break;
-            case R.id.tvPhoto:
-                TakePicUtil.albumPhoto(this, REQUEST_ALBUM);
-                break;
-        }
-    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

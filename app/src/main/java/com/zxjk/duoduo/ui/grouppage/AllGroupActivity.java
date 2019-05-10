@@ -94,7 +94,7 @@ public class AllGroupActivity extends BaseActivity {
 
                                 });
                             }
-                        }).setDimAmount(0.3f)
+                        }).setDimAmount(0.5f)
                                 .setOutCancel(true)
                                 .show(getSupportFragmentManager());
                     });

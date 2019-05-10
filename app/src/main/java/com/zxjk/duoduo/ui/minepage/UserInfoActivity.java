@@ -6,9 +6,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,7 +14,12 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.GsonUtils;
+import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.shehuan.nicedialog.BaseNiceDialog;
+import com.shehuan.nicedialog.NiceDialog;
+import com.shehuan.nicedialog.ViewConvertListener;
+import com.shehuan.nicedialog.ViewHolder;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -25,7 +28,7 @@ import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.MyQrCodeActivity;
-import com.zxjk.duoduo.ui.widget.TakePopWindow;
+import com.zxjk.duoduo.ui.widget.dialog.BottomDialog;
 import com.zxjk.duoduo.ui.widget.dialog.ChooseSexDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
@@ -42,7 +45,7 @@ import java.util.Collections;
  * description: 个人资料
  */
 @SuppressLint("CheckResult")
-public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnItemClickListener {
+public class UserInfoActivity extends BaseActivity {
 
     private TextView tvUserInfoSex;
     private TextView tv_DuoDuoNumber;
@@ -56,7 +59,7 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
     private ImageView iv_headPortrait;
     private TextView tv_nickname;
 
-    private TakePopWindow selectPicPopWindow;
+
     private static final int REQUEST_TAKE = 1;
     private static final int REQUEST_ALBUM = 2;
     String type = "type";
@@ -74,8 +77,6 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
         tv_title.setText(getString(R.string.userinfo));
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());
 
-        selectPicPopWindow = new TakePopWindow(this);
-        selectPicPopWindow.setOnItemClickListener(this);
 
         findViews();
 
@@ -165,9 +166,7 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
 
         getPermisson(rl_headPortrait, result -> {
             if (result) {
-                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-                selectPicPopWindow.showAtLocation(findViewById(android.R.id.content),
-                        Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                BottomDialog.dialogType(this, REQUEST_TAKE, REQUEST_ALBUM);
             }
         }, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
@@ -208,18 +207,7 @@ public class UserInfoActivity extends BaseActivity implements TakePopWindow.OnIt
         startActivity(intent);
     }
 
-    @Override
-    public void setOnItemClick(View v) {
-        selectPicPopWindow.dismiss();
-        switch (v.getId()) {
-            case R.id.tvCamera:
-                TakePicUtil.takePicture(this, REQUEST_TAKE);
-                break;
-            case R.id.tvPhoto:
-                TakePicUtil.albumPhoto(this, REQUEST_ALBUM);
-                break;
-        }
-    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

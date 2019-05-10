@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -55,21 +54,21 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
     private TextView tvExchangeLine3;
     private TextView tvExchangeLine4;
     private TextView tvExchangePayType;
-    private Button btnExchangeConfirm;
+    private TextView tv_confirm;
     private EditText etExchangeChooseCount;
     private EditText etMinMoney;
     private EditText etMaxMoney;
 
-    private RelativeLayout rlExchangeType1;
-    private RelativeLayout rlExchangeType2;
-    private RelativeLayout rlExchangeType3;
+    private RelativeLayout rl_weChat;
+    private RelativeLayout rl_aliPay;
+    private RelativeLayout rl_bank;
     private LinearLayout llChooseMinMax;
-    private CheckBox cbExchangePayType1;
-    private CheckBox cbExchangePayType2;
-    private CheckBox cbExchangePayType3;
-    private TextView tvExchangePayInfo1;
-    private TextView tvExchangePayInfo2;
-    private TextView tvExchangePayInfo3;
+    private CheckBox checkbox_weChat;
+    private CheckBox checkbox_aliPay;
+    private CheckBox checkbox_bank;
+    private TextView tv_weChatInfo;
+    private TextView tv_aliPayInfo;
+    private TextView tv_bankInfo;
     private TextView tvTipsExchange;
 
     private List<String> paytypes = new ArrayList<>(3);
@@ -105,11 +104,11 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                 .subscribe(listBaseResponse -> {
                     for (PayInfoResponse res : listBaseResponse) {
                         if (res.getPayType().equals(PAYTYPE_WECHAT)) {
-                            tvExchangePayInfo1.setText(res.getWechatNick());
+                            tv_weChatInfo.setText(res.getWechatNick());
                         } else if (res.getPayType().equals(PAYTYPE_ALI)) {
-                            tvExchangePayInfo2.setText(res.getZhifubaoNumber());
+                            tv_aliPayInfo.setText(res.getZhifubaoNumber());
                         } else {
-                            tvExchangePayInfo3.setText(res.getOpenBank());
+                            tv_bankInfo.setText(res.getOpenBank());
                         }
                     }
                 }, this::handleApiError);
@@ -118,19 +117,19 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
     private void initViews() {
         selectPopupWindow = new SelectPopupWindow(this, this);
         llChooseMinMax = findViewById(R.id.llChooseMinMax);
-        rlExchangeType1 = findViewById(R.id.rlExchangeType1);
-        rlExchangeType2 = findViewById(R.id.rlExchangeType2);
-        rlExchangeType3 = findViewById(R.id.rlExchangeType3);
-        cbExchangePayType1 = findViewById(R.id.cbExchangePayType1);
-        cbExchangePayType2 = findViewById(R.id.cbExchangePayType2);
-        cbExchangePayType3 = findViewById(R.id.cbExchangePayType3);
-        tvExchangePayInfo1 = findViewById(R.id.tvExchangePayInfo1);
-        tvExchangePayInfo2 = findViewById(R.id.tvExchangePayInfo2);
-        tvExchangePayInfo3 = findViewById(R.id.tvExchangePayInfo3);
+        rl_weChat = findViewById(R.id.rl_weChat);
+        rl_aliPay = findViewById(R.id.rl_aliPay);
+        rl_bank = findViewById(R.id.rl_bank);
+        checkbox_weChat = findViewById(R.id.checkbox_weChat);
+        checkbox_aliPay = findViewById(R.id.checkbox_aliPay);
+        checkbox_bank = findViewById(R.id.checkbox_bank);
+        tv_weChatInfo = findViewById(R.id.tv_weChatInfo);
+        tv_aliPayInfo = findViewById(R.id.tv_aliPayInfo);
+        tv_bankInfo = findViewById(R.id.tv_bankInfo);
         tvTipsExchange = findViewById(R.id.tvTipsExchange);
-        rlExchangeType1.setOnClickListener(this);
-        rlExchangeType2.setOnClickListener(this);
-        rlExchangeType3.setOnClickListener(this);
+        rl_weChat.setOnClickListener(this);
+        rl_aliPay.setOnClickListener(this);
+        rl_bank.setOnClickListener(this);
 
         tvExchangePrice = findViewById(R.id.tvExchangePrice);
         tvExchangeTotal = findViewById(R.id.tvExchangeTotal);
@@ -139,7 +138,7 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
         tvExchangeLine3 = findViewById(R.id.tvExchangeLine3);
         tvExchangeLine4 = findViewById(R.id.tvExchangeLine4);
         tvExchangePayType = findViewById(R.id.tvExchangePayType);
-        btnExchangeConfirm = findViewById(R.id.btnExchangeConfirm);
+        tv_confirm = findViewById(R.id.tv_confirm);
         etExchangeChooseCount = findViewById(R.id.etExchangeChooseCount);
         etMinMoney = findViewById(R.id.etMinMoney);
         etMaxMoney = findViewById(R.id.etMaxMoney);
@@ -276,9 +275,9 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         buyType = "";
         paytypes.clear();
-        cbExchangePayType1.setChecked(false);
-        cbExchangePayType2.setChecked(false);
-        cbExchangePayType3.setChecked(false);
+        checkbox_weChat.setChecked(false);
+        checkbox_aliPay.setChecked(false);
+        checkbox_bank.setChecked(false);
         switch (checkedId) {
             case R.id.rb2:
                 buyOrSale = false;
@@ -286,20 +285,14 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                 tvExchangeLine3.setText(R.string.exchange1_sale2);
                 tvExchangeLine4.setText(R.string.exchange1_sale3);
                 tvExchangePayType.setText(R.string.exchange1_sale4);
-                btnExchangeConfirm.setText(R.string.exchange1_sale5);
+                tv_confirm.setText(R.string.exchange1_sale5);
                 llChooseMinMax.setVisibility(View.VISIBLE);
                 tvTipsExchange.setVisibility(View.VISIBLE);
 
-                if (tvExchangePayInfo1.getText().toString().length() != 0) {
-                    tvExchangePayInfo1.setVisibility(View.VISIBLE);
-                }
-                if (tvExchangePayInfo2.getText().toString().length() != 0) {
-                    tvExchangePayInfo2.setVisibility(View.VISIBLE);
-                }
+                tv_weChatInfo.setVisibility(View.VISIBLE);
+                tv_aliPayInfo.setVisibility(View.VISIBLE);
+                tv_bankInfo.setVisibility(View.VISIBLE);
 
-                if (tvExchangePayInfo3.getText().toString().length() != 0) {
-                    tvExchangePayInfo3.setVisibility(View.VISIBLE);
-                }
                 break;
             case R.id.rb1:
                 buyOrSale = true;
@@ -307,13 +300,13 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                 tvExchangeLine3.setText(R.string.exchange1_buy2);
                 tvExchangeLine4.setText(R.string.exchange1_buy3);
                 tvExchangePayType.setText(R.string.exchange1_buy4);
-                btnExchangeConfirm.setText(R.string.exchange1_buy5);
+                tv_confirm.setText(R.string.exchange1_buy5);
                 llChooseMinMax.setVisibility(View.GONE);
                 tvTipsExchange.setVisibility(View.GONE);
 
-                tvExchangePayInfo1.setVisibility(View.GONE);
-                tvExchangePayInfo2.setVisibility(View.GONE);
-                tvExchangePayInfo3.setVisibility(View.GONE);
+                tv_weChatInfo.setVisibility(View.GONE);
+                tv_aliPayInfo.setVisibility(View.GONE);
+                tv_bankInfo.setVisibility(View.GONE);
                 break;
         }
     }
@@ -321,46 +314,45 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
     @Override
     public void onClick(View v) {
         if (buyOrSale) {
-            cbExchangePayType1.setChecked(false);
-            cbExchangePayType2.setChecked(false);
-            cbExchangePayType3.setChecked(false);
-            buyType = v.getId() == R.id.rlExchangeType1 ? PAYTYPE_WECHAT : (v.getId() == R.id.rlExchangeType2 ? PAYTYPE_ALI : PAYTYPE_BANK);
-
-            if (v.getId() == R.id.rlExchangeType1) {
-                cbExchangePayType1.setChecked(true);
-            } else if (v.getId() == R.id.rlExchangeType2) {
-                cbExchangePayType2.setChecked(true);
+            checkbox_weChat.setChecked(false);
+            checkbox_aliPay.setChecked(false);
+            checkbox_bank.setChecked(false);
+            buyType = v.getId() == R.id.rl_weChat ? PAYTYPE_WECHAT : (v.getId() == R.id.rl_aliPay ? PAYTYPE_ALI : PAYTYPE_BANK);
+            if (v.getId() == R.id.rl_weChat) {
+                checkbox_weChat.setChecked(true);
+            } else if (v.getId() == R.id.rl_aliPay) {
+                checkbox_aliPay.setChecked(true);
             } else {
-                cbExchangePayType3.setChecked(true);
+                checkbox_bank.setChecked(true);
             }
             return;
         }
         switch (v.getId()) {
-            case R.id.rlExchangeType1:
+            case R.id.rl_weChat:
                 if (paytypes.contains(PAYTYPE_WECHAT)) {
                     paytypes.remove(PAYTYPE_WECHAT);
-                    cbExchangePayType1.setChecked(false);
-                } else if (tvExchangePayInfo1.getText().toString().length() != 0) {
+                    checkbox_weChat.setChecked(false);
+                } else if (!tv_weChatInfo.getText().toString().equals(getString(R.string.not_perfect))) {
                     paytypes.add(PAYTYPE_WECHAT);
-                    cbExchangePayType1.setChecked(true);
+                    checkbox_weChat.setChecked(true);
                 }
                 break;
-            case R.id.rlExchangeType2:
+            case R.id.rl_aliPay:
                 if (paytypes.contains(PAYTYPE_ALI)) {
                     paytypes.remove(PAYTYPE_ALI);
-                    cbExchangePayType2.setChecked(false);
-                } else if (tvExchangePayInfo2.getText().toString().length() != 0) {
+                    checkbox_aliPay.setChecked(false);
+                } else if (!tv_aliPayInfo.getText().toString().equals(getString(R.string.not_perfect))) {
                     paytypes.add(PAYTYPE_ALI);
-                    cbExchangePayType2.setChecked(true);
+                    checkbox_aliPay.setChecked(true);
                 }
                 break;
-            case R.id.rlExchangeType3:
+            case R.id.rl_bank:
                 if (paytypes.contains(PAYTYPE_BANK)) {
                     paytypes.remove(PAYTYPE_BANK);
-                    cbExchangePayType3.setChecked(false);
-                } else if (tvExchangePayInfo3.getText().toString().length() != 0) {
+                    checkbox_bank.setChecked(false);
+                } else if (!tv_bankInfo.getText().toString().equals(getString(R.string.not_perfect))) {
                     paytypes.add(PAYTYPE_BANK);
-                    cbExchangePayType3.setChecked(true);
+                    checkbox_bank.setChecked(true);
                 }
                 break;
             default:

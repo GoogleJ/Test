@@ -68,7 +68,7 @@ public class ChooseNewOwnerActivity extends BaseActivity {
                     });
 
                 }
-            }).setOutCancel(false).show(getSupportFragmentManager());
+            }).setDimAmount(0.5f).setOutCancel(false).show(getSupportFragmentManager());
 
 
         });

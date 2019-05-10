@@ -221,6 +221,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                 }
                 break;
             case R.id.update_rename:
+                popupWindow.dismiss();
                 Intent intent1 = new Intent(FriendDetailsActivity.this, ModifyNotesActivity.class);
                 String id;
                 if (intentType == 0) {
@@ -234,6 +235,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                 startActivity(intent1);
                 break;
             case R.id.recommend_to_friend:
+                popupWindow.dismiss();
                 Intent intentCard = new Intent(FriendDetailsActivity.this, SelectContactForCardActivity.class);
                 if (intentType == 0) {
                     intentCard.putExtra("userType", 1);
@@ -282,7 +284,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                             FriendDetailsActivity.this.finish();
                         });
                     }
-                }).setOutCancel(false).show(getSupportFragmentManager());
+                }).setDimAmount(0.5f).setOutCancel(false).show(getSupportFragmentManager());
                 break;
 
             default:

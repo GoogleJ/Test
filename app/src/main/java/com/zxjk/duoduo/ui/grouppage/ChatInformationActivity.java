@@ -119,7 +119,7 @@ public class ChatInformationActivity extends BaseActivity {
                         });
 
                     }
-                }).setOutCancel(false).show(getSupportFragmentManager());
+                }).setDimAmount(0.5f).setOutCancel(false).show(getSupportFragmentManager());
             }
         });
         findViewById(R.id.rl_juBao).setOnClickListener(new View.OnClickListener() {

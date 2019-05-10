@@ -213,7 +213,7 @@ public class SelectContactForCardActivity extends BaseActivity implements TextWa
                         });
 
                     }
-                }).setOutCancel(false).show(getSupportFragmentManager()), this::handleApiError);
+                }).setDimAmount(0.5f).setOutCancel(false).show(getSupportFragmentManager()), this::handleApiError);
     }
 
     /**
@@ -259,7 +259,7 @@ public class SelectContactForCardActivity extends BaseActivity implements TextWa
                             });
                         });
                     }
-                }).setOutCancel(false).show(getSupportFragmentManager()), this::handleApiError);
+                }).setDimAmount(0.5f).setOutCancel(false).show(getSupportFragmentManager()), this::handleApiError);
     }
 
     @Override

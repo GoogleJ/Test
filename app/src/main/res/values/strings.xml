@@ -567,7 +567,7 @@
     <string name="sell_out">出售</string>
     <string name="purchase_currency">购买币种</string>
     <string name="current_reference_price">当前参考价格</string>
-    <string name="remark_name">备注名</string>
+    <string name="remark_name">填写备注名称</string>
     <string name="sweep_reminder">将条码放入框内，即可自动扫描</string>
     <string name="signature_title">个性签名</string>
     <string name="avatar">头像</string>
@@ -856,5 +856,19 @@
     <string name="jifen_buzhu">当前积分不足,剩余积分:</string>
     <string name="photograph">拍照</string>
     <string name="photo_select">从相册选择</string>
+    <string name="waiting_audit">等到审核</string>
+    <string name="waiting_audit_prompt">提示:系统已经帮您通知了对方账户,若对方还未及时处理可以拨打电话与对方沟通.</string>
+    <string name="add_buddy">加好友</string>
+    <string name="contact_him">联系他</string>
+    <string name="verifying_application">你需要发送验证申请,等待对方通过</string>
+    <string name="wechat_friend">微信好友</string>
+    <string name="add_wechat_friend">添加微信中的联系人</string>
+    <string name="add_phone_friend">添加通讯录中的联系人</string>
+    <string name="phone_friend">手机联系人</string>
+    <string name="scan_code">扫一扫二维码名片</string>
+    <string name="add_friend">添加联系人</string>
+    <string name="add_contacts">添加联系人</string>
+    <string name="not_perfect">收款信息未完善</string>
+
 
 </resources>

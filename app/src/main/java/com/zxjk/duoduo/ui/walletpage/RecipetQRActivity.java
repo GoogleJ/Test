@@ -143,7 +143,7 @@ public class RecipetQRActivity extends BaseActivity {
                     });
 
                 }
-            }).setOutCancel(false).show(getSupportFragmentManager());
+            }).setDimAmount(0.5f).setOutCancel(false).show(getSupportFragmentManager());
         } else {
             tvMoney.setText("");
             Action1 action1 = new Action1();
