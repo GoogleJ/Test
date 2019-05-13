@@ -358,7 +358,7 @@
     <string name="collection_and_payment1">收款方式</string>
     <string name="onprocing">进行中</string>
     <string name="done">已完成</string>
-    <string name="blockWallet">区块链钱包</string>
+    <string name="blockWallet">数字钱包</string>
     <string name="huazhuan">划转</string>
     <string name="zhuanchu">转出</string>
     <string name="pay_pwd">支付密码</string>
@@ -571,7 +571,7 @@
     <string name="duoduo_wallet">多多钱包</string>
     <string name="tvWalletPageTop1">扫一扫</string>
     <string name="tvwalletPageTop2">收款码</string>
-    <string name="tvWalletPageTop3">区块链钱包</string>
+    <string name="tvWalletPageTop3">数字钱包</string>
     <string name="hong_kong_dollar_balance">港币余额</string>
     <string name="exchange_list_type">待对方审核</string>
     <string name="tvState">付款中</string>
@@ -874,4 +874,5 @@
     <string name="login_again">登录已过期，请重新登录</string>
     <string name="select_contact">选择联系人</string>
     <string name="developing">多多正在全力开发中，尽情期待!</string>
+    <string name="hkb">HKB</string>
 </resources>

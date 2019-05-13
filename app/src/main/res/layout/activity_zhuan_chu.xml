@@ -27,7 +27,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
             android:layout_toStartOf="@+id/tv_currency"
-            android:src="@drawable/ic_exchange_coins" />
+            android:src="@drawable/ic_hkb" />
 
 
         <TextView

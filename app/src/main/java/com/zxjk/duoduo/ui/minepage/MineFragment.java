@@ -106,7 +106,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             case R.id.rl_balance:
                 startActivity(new Intent(getContext(), BalanceLeftActivity.class));
                 break;
-            //区块链钱包
+            //数字钱包
             case R.id.rl_blockWallet:
                 startActivity(new Intent(getActivity(), BlockWalletActivity.class));
                 break;

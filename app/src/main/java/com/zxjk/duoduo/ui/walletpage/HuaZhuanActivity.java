@@ -93,9 +93,14 @@ public class HuaZhuanActivity extends BaseActivity implements SafeInputDialog.On
         seekHuaZhuan.setMax(1000);
         llHuaZhuanType2 = findViewById(R.id.llHuaZhuanType2);
         tvHuaZhuanPoundage = findViewById(R.id.tvHuaZhuanPoundage);
+        if (Constant.walletResponse != null) {
+            tvHuaZhuanBlock.setText(Constant.walletResponse.getBalanceHkb() + "HKB");
+            tvHuaZhuanBlockWallet.setText(Constant.walletResponse.getBalanceHk() + "HK");
+        } else {
+            tvHuaZhuanBlock.setText("0.00" + "HKB");
+            tvHuaZhuanBlockWallet.setText("0.00" + "HK");
+        }
 
-        tvHuaZhuanBlock.setText(Constant.walletResponse.getBalanceHkb() + "HKB");
-        tvHuaZhuanBlockWallet.setText(Constant.walletResponse.getBalanceHk() + "HK");
 
         seekHuaZhuan.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override

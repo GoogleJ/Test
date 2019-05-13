@@ -34,7 +34,7 @@ public class ChooseCoinActivity extends AppCompatActivity {
 
         if (tv_currency.getText().toString().equals(coin)) {
             tv_currency.setText("ETH");
-            iv_currency.setImageResource(R.drawable.ic_blockwallet_eth);
+            iv_currency.setImageResource(R.drawable.ic_eth);
         }
 
 

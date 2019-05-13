@@ -164,14 +164,14 @@ public class ZhuanChuActivity extends BaseActivity implements SeekBar.OnSeekBarC
                 moneyValueFilter.setDigits(4);
                 etCount.setFilters(new InputFilter[]{moneyValueFilter});
                 type = "0";
-                iv_currency.setImageResource(R.drawable.ic_blockwallet_eth);
+                iv_currency.setImageResource(R.drawable.ic_eth);
                 etCount.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
             } else {
                 moneyValueFilter.setDigits(2);
                 etCount.setFilters(new InputFilter[]{moneyValueFilter});
                 type = "1";
                 etCount.setFilters(new InputFilter[]{new InputFilter.LengthFilter(2)});
-                iv_currency.setImageResource(R.drawable.ic_exchange_coins);
+                iv_currency.setImageResource(R.drawable.ic_hkb);
             }
         }
 

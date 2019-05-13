@@ -113,7 +113,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_exchange_coins" />
+                    android:src="@drawable/ic_hkb" />
 
                 <TextView
                     android:id="@+id/tvExchangeCoinType"

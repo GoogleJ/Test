@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -22,15 +23,26 @@ import com.zxjk.duoduo.utils.GlideUtil;
 
 import java.text.DecimalFormat;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
 
 /**
  * author L
  * create at 2019/5/7
- * description: 区块链钱包
+ * description: 数字钱包
  */
 @SuppressLint("CheckResult")
 public class BlockWalletActivity extends BaseActivity {
+
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.iv_end)
+    ImageView ivEnd;
+    @BindView(R.id.rl_end)
+    RelativeLayout rlEnd;
+
 
     private ImageView ivBlockWalletHeadImg;
     private TextView tvBlockWalletAddress;
@@ -46,6 +58,11 @@ public class BlockWalletActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_block_wallet);
+        ButterKnife.bind(this);
+        tvTitle.setText(getString(R.string.blockWallet));
+        rlEnd.setVisibility(View.VISIBLE);
+        ivEnd.setImageResource(R.drawable.ic_exchange_list);
+
 
         ivBlockWalletHeadImg = findViewById(R.id.ivBlockWalletHeadImg);
         tvBlockWalletAddress = findViewById(R.id.tvBlockWalletAddress);
@@ -99,17 +116,24 @@ public class BlockWalletActivity extends BaseActivity {
         startActivity(new Intent(this, HuaZhuanActivity.class));
     }
 
-    public void back(View view) {
-        finish();
-    }
-
-    public void jump2List(View view) {
-        startActivity(new Intent(this, BlockWalletOrdersActivity.class));
-    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Constant.walletResponse = new CreateWalletResponse();
+    }
+
+    @OnClick({R.id.rl_back, R.id.rl_end})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            //返回
+            case R.id.rl_back:
+                finish();
+                break;
+            //记录
+            case R.id.rl_end:
+                startActivity(new Intent(this, BlockWalletOrdersActivity.class));
+                break;
+        }
     }
 }
