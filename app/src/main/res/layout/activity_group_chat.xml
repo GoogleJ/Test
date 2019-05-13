@@ -18,19 +18,8 @@
 
         <EditText
             android:id="@+id/m_group_chat_edit_1"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_margin="12dp"
-            android:background="@drawable/shape_circular_bead2"
-            android:drawableStart="@drawable/icon_search_view"
-            android:drawablePadding="4dp"
-            android:hint="@string/enter_group_chat"
-            android:imeOptions="actionSearch"
-            android:maxLines="1"
-            android:paddingStart="25dp"
-            android:paddingEnd="20dp"
-            android:singleLine="true"
-            android:textSize="15sp" />
+            style="@style/SearchStyle"
+            android:hint="@string/enter_group_chat" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

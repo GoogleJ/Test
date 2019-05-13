@@ -68,7 +68,7 @@ public class ConversationForAddActivity extends BaseActivity {
                     tvDuoDuoNumber.setText(getString(R.string.duoduo_acount) + " " + friendInfoResponse.getDuoduoId());
                     tvDistrict.setText(getString(R.string.district) + " " + friendInfoResponse.getAddress());
                     tvSignature.setText(friendInfoResponse.getSignature());
-                    GlideUtil.loadCornerImg(ivHeadPortrait, friendInfoResponse.getHeadPortrait(), 3);
+                    GlideUtil.loadCornerImg(ivHeadPortrait, friendInfoResponse.getHeadPortrait(), 5);
                     if ("0".equals(friendInfoResponse.getSex())) {
                         ivGender.setImageDrawable(getDrawable(R.drawable.icon_gender_man));
                     } else {

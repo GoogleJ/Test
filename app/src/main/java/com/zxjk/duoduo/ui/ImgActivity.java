@@ -19,7 +19,7 @@ public class ImgActivity extends BaseActivity {
 
         iv = findViewById(R.id.iv);
 
-        GlideUtil.loadCornerImg(iv, getIntent().getStringExtra("url"), 3);
+        GlideUtil.loadCornerImg(iv, getIntent().getStringExtra("url"), 5);
     }
 
     public void back(View view) {

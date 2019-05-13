@@ -12,17 +12,9 @@
 
     <TextView
         android:id="@+id/tv_search"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_margin="12dp"
-        android:background="@drawable/shape_circular_bead2"
-        android:drawableStart="@drawable/icon_search_view"
-        android:drawablePadding="4dp"
+        style="@style/SearchStyle"
         android:gravity="center_vertical"
-        android:hint="@string/m_add_friend_search_edit"
-        android:paddingStart="25dp"
-        android:paddingEnd="20dp"
-        android:textSize="15sp" />
+        android:hint="@string/m_add_friend_search_edit" />
 
     <TextView
         android:id="@+id/tv_qr_code"

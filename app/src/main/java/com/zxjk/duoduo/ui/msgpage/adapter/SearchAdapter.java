@@ -27,7 +27,7 @@ public class SearchAdapter extends BaseQuickAdapter<FriendInfoResponse, BaseView
                 .setText(R.id.m_item_search_dudu_id, context.getString(R.string.duoduo_id) + " " + item.getDuoduoId())
                 .addOnClickListener(R.id.m_item_search_layout);
         ImageView heardImage = helper.getView(R.id.m_item_search_icon);
-        GlideUtil.loadCornerImg(heardImage, item.getHeadPortrait(), 3);
+        GlideUtil.loadCornerImg(heardImage, item.getHeadPortrait(), 5);
 
     }
 }

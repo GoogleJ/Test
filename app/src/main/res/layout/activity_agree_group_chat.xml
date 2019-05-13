@@ -13,7 +13,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="50dp"
         android:src="@drawable/icon_header" />
 
     <TextView
@@ -29,28 +29,25 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.1dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
-        android:background="@color/background_color2" />
+        android:layout_marginEnd="20dp"
+        android:background="@color/colorE" />
 
     <TextView
         android:id="@+id/invite_to_group_chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:text="@string/invite_to_group_chat"
         android:textColor="@color/text_color3"
         android:textSize="18sp" />
 
     <TextView
         android:id="@+id/join_a_group_chat"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="70dp"
-        android:background="@drawable/shape_circular_bead_btn"
-        android:gravity="center"
-        android:text="@string/join_a_group_chat"
-        android:textColor="@color/theme_color"
-        android:textSize="16sp" />
+        style="@style/BtnStyle"
+        android:layout_margin="80dp"
+        android:text="@string/join_a_group_chat" />
 
 </LinearLayout>

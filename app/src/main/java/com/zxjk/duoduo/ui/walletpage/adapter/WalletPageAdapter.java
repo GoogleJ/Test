@@ -26,7 +26,8 @@ public class WalletPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private static final int VIEW_TYPE_TOP = 1;
     private static final int VIEW_TYPE_NEWS = 2;
 
-    public WalletPageAdapter(ArrayList<WalletPageData> data) {
+    public WalletPageAdapter(ArrayList<WalletPageData> data, Context context) {
+        this.context = context;
         this.data = data;
     }
 
@@ -71,9 +72,9 @@ public class WalletPageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             tvWalletPageExchange2 = itemView.findViewById(R.id.tvWalletPageExchange2);
             ll_1 = itemView.findViewById(R.id.ll_1);
             ll_2 = itemView.findViewById(R.id.ll_2);
-            ll_1.setOnClickListener(v -> ToastUtils.showShort("暂未开放"));
-            ll_2.setOnClickListener(v -> ToastUtils.showShort("暂未开放"));
-            tvWalletPageExchange1.setOnClickListener(v -> ToastUtils.showShort("暂未开放"));
+            ll_1.setOnClickListener(v -> ToastUtils.showShort(context.getString(R.string.developing)));
+            ll_2.setOnClickListener(v -> ToastUtils.showShort("多多正在全力开发中，尽情期待!"));
+            tvWalletPageExchange1.setOnClickListener(v -> ToastUtils.showShort("多多正在全力开发中，尽情期待!"));
             tvWalletPageExchange2.setOnClickListener(v -> context.startActivity(new Intent(context, ExchangeActivity.class)));
         }
     }

@@ -21,7 +21,7 @@ public class AllGroupMemebersAdapter extends BaseQuickAdapter<GroupResponse.Cust
         helper.setText(R.id.nick_name, item.getNick());
         ImageView heardImage = helper.getView(R.id.header_image);
         TextView nick_owner = helper.getView(R.id.nick_owner);
-        GlideUtil.loadCornerImg(heardImage, item.getHeadPortrait(), 3);
+        GlideUtil.loadCornerImg(heardImage, item.getHeadPortrait(), 5);
 
         if (helper.getAdapterPosition() == 0) {
             nick_owner.setVisibility(View.VISIBLE);

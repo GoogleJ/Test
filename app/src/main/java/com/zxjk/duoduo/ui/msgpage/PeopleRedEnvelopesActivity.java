@@ -47,7 +47,7 @@ public class PeopleRedEnvelopesActivity extends BaseActivity {
         RedPacketMessage redPacketMessage = (RedPacketMessage) message.getContent();
         UserInfo sender = RongUserInfoManager.getInstance().getUserInfo(message.getSenderUserId());
         m_people_red_envelopes_user_name_text.setText(sender.getName() + "的红包");
-        GlideUtil.loadCornerImg(m_people_red_envelopes_header, sender.getPortraitUri().toString(), 3);
+        GlideUtil.loadCornerImg(m_people_red_envelopes_header, sender.getPortraitUri().toString(), 5);
 
         if (fromGroup) {
             ServiceFactory.getInstance().getBaseService(Api.class)

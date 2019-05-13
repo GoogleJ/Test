@@ -31,7 +31,7 @@ public class AccountActivity extends BaseActivity {
         tv_phone.setText(Constant.currentUser.getMobile());
         //返回
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());
-        //更换手机号
+        //更换手机号1
         findViewById(R.id.rl_changePhoneNumber).setOnClickListener(v ->
                 startActivity(new Intent(AccountActivity.this, ChangePhoneActivity.class)));
         //修改密码

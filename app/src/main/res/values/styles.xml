@@ -221,6 +221,24 @@
         <item name="android:background">@android:color/white</item>
 
     </style>
+    <!--搜索栏的样式-->
+    <style name="SearchStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_margin">12dp</item>
+        <item name="android:background">@drawable/shape_circular_bead2</item>
+        <item name="android:drawableStart">@drawable/icon_search_view</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:inputType">text</item>
+        <item name="android:hint">@string/search</item>
+        <item name="android:imeOptions">actionSearch</item>
+    </style>
 
     <style name="CommentStyle" parent="@android:style/Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -228,6 +246,27 @@
 
     <style name="CommonSwitch" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorAccent">#49A2FE</item>
+    </style>
+    <!--启动页样式-->
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@drawable/splash</item>
+    </style>
+    <!--按钮样式-->
+    <style name="BtnStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_marginStart">40dp</item>
+        <item name="android:layout_marginTop">40dp</item>
+        <item name="android:layout_marginEnd">40dp</item>
+        <item name="android:layout_marginBottom">40dp</item>
+        <item name="android:background">@drawable/shape_circular_bead_btn</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/theme_color</item>
+
     </style>
 
 </resources>

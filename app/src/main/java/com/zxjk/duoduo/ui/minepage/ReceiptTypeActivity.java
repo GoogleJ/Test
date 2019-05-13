@@ -10,10 +10,10 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -44,7 +44,7 @@ import static com.zxjk.duoduo.ui.EditPersonalInformationFragment.REQUEST_TAKE;
  */
 @SuppressLint("CheckResult")
 public class ReceiptTypeActivity extends BaseActivity implements View.OnClickListener {
-    ConstraintLayout nickName, realName, accountIdCard;
+    RelativeLayout nickName, realName, accountIdCard;
     TextView receiptTypeName, receiptTypeCard, receiptTypePaymentName;
     TextView receiptTypeRealName, receiptTypeRealCardName, receiptTypePayment;
     ImageView receiptTypeGo, receiptTypeCardGo, receiptTypePaymentGo;

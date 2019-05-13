@@ -58,7 +58,7 @@ public class BusinessCardProvider extends IContainerItemProvider.MessageProvider
 
         holder.userName.setText(businessCardMessage.getName());
         holder.duoduoId.setText(businessCardMessage.getDuoduo());
-        GlideUtil.loadCornerImg(holder.heardImage, businessCardMessage.getIcon(), 3);
+        GlideUtil.loadCornerImg(holder.heardImage, businessCardMessage.getIcon(), 5);
     }
 
     @Override

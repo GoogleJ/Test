@@ -46,5 +46,5 @@
         android:layout_height="0.1dp"
         android:layout_below="@id/group_chat_iamge"
         android:layout_alignStart="@+id/group_name"
-        android:background="@color/background_color2" />
+        android:background="@color/colorE" />
 </RelativeLayout>

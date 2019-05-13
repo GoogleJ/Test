@@ -24,14 +24,9 @@
 
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+        style="@style/BtnStyle"
         android:layout_margin="80dp"
-        android:background="@drawable/shape_circular_bead_btn"
-        android:gravity="center"
         android:onClick="commit"
-        android:text="@string/done1"
-        android:textColor="@color/theme_color"
-        android:textSize="16sp" />
+        android:text="@string/done1" />
 
 </LinearLayout>

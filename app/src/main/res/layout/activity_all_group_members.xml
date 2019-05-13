@@ -4,28 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:ignore="RtlCompat">
+    tools:ignore="all">
 
     <include layout="@layout/layout_title_back" />
 
 
     <EditText
         android:id="@+id/search_edit"
-        style="?attr/checkedTextViewStyle"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="13dp"
-        android:background="@color/white"
-        android:drawableStart="@drawable/icon_search_view"
-        android:drawablePadding="10dp"
-        android:hint="@string/m_contact_search_label"
-        android:imeOptions="actionSearch"
-        android:maxLines="1"
-        android:paddingStart="20dp"
-        android:singleLine="true"
-        android:textSize="16dp" />
+        style="@style/SearchStyle" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"

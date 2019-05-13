@@ -72,7 +72,7 @@ public class RedEvelopesDialog extends Dialog implements View.OnClickListener {
 
     public void show(Message message, UserInfo userInfo) {
         this.message = message;
-        GlideUtil.loadCornerImg(m_transfer_envelopes_heard, userInfo.getPortraitUri().toString(), 3);
+        GlideUtil.loadCornerImg(m_transfer_envelopes_heard, userInfo.getPortraitUri().toString(), 5);
         m_red_envelopes_user.setText(userInfo.getName() + "的红包");
         RedPacketMessage m = (RedPacketMessage) message.getContent();
 

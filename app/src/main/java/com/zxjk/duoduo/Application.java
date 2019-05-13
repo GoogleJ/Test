@@ -52,10 +52,10 @@ public class Application extends android.app.Application {
     @Override
     public void onCreate() {
         super.onCreate();
-//        AutoSizeConfig.getInstance().getUnitsManager()
-//                .setSupportDP(true)
-//                .setSupportSP(true);
-//        AutoSizeConfig.getInstance().setCustomFragment(true);
+        AutoSizeConfig.getInstance().getUnitsManager()
+                .setSupportDP(true)
+                .setSupportSP(true);
+        AutoSizeConfig.getInstance().setCustomFragment(true);
 
         MMKV.initialize(this);
         //微信分享

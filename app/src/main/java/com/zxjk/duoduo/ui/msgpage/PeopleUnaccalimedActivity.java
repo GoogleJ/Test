@@ -90,7 +90,7 @@ public class PeopleUnaccalimedActivity extends BaseActivity {
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(getRedPackageStatusResponse -> {
                     title.setText(getRedPackageStatusResponse.getMessage());
-                    GlideUtil.loadCornerImg(head, getRedPackageStatusResponse.getHeadPortrait(), 3);
+                    GlideUtil.loadCornerImg(head, getRedPackageStatusResponse.getHeadPortrait(), 5);
                     name.setText(getRedPackageStatusResponse.getUsernick() + getString(R.string.red_envelope));
                     if (getRedPackageStatusResponse.getRedPackageType() == 1) {
                         //群组红包

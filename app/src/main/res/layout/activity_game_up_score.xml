@@ -64,15 +64,9 @@
         android:background="@color/colorD" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="80dp"
-        android:background="@drawable/shape_circular_bead_btn"
-        android:gravity="center"
+        style="@style/BtnStyle"
         android:onClick="commit"
-        android:text="@string/upscorecommit"
-        android:textColor="@color/theme_color"
-        android:textSize="16sp" />
+        android:text="@string/upscorecommit" />
 
 
 </LinearLayout>

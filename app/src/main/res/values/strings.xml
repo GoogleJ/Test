@@ -12,7 +12,6 @@
     <string name="go_login"><![CDATA[去登录>]]></string>
     <string name="register">注册</string>
     <string name="edit_mobile_tip">请输入正确的手机号</string>
-
     <string name="ok">确定</string>
     <string name="back">返回</string>
     <string name="cancel">取消</string>
@@ -31,17 +30,13 @@
     <string name="scan">扫一扫</string>
     <string name="collection_and_payment">收款</string>
     <string name="select_contacts">选择联系人</string>
-
     <string name="main_customer">意见反馈</string>
-
     <string name="de_actionbar_system">"系统消息"</string>
     <string name="de_actionbar_sub_defult">"聊天"</string>
     <string name="change_language">切换语言</string>
     <string name="zh_cn">简体中文</string>
     <string name="zh_tw">繁体中文</string>
     <string name="en_us">English</string>
-
-
     <!--actionbar title ===================================未翻译-->
     <string name="de_actionbar_myacc">"个人账号"</string>
     <string name="de_actionbar_sub_group">"群组"</string>
@@ -51,14 +46,12 @@
     <string name="de_actionbar_set_public">"公众号"</string>
     <string name="permission_banned">为了您的体验，请您授权所需的的权限</string>
     <string name="setting">去授权</string>
-
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_friend_title_bar">添加联系人</string>
     <string name="m_add_friend_search_edit">输入手机号/多多号</string>
     <string name="m_add_friend_label_qr_code">我的二维码名片</string>
     <string name="m_add_friend_wechat_label_1">微信好友</string>
     <string name="m_add_friend_wechat_label_2">添加微信中的联系人</string>
-
     <string name="m_add_friend_contact_label_1">手机联系人</string>
     <string name="m_add_friend_contact_label_2">添加通讯录中的联系人</string>
     <string name="m_add_friend_scan_it_label_1">扫一扫</string>
@@ -114,7 +107,6 @@
     <string name="m_cancel_btn">取消</string>
     <string name="m_modify_notes_title_bar">备注</string>
     <string name="m_modify_notes_right_title_bar">确定</string>
-
     <string name="m_group_chat">群聊</string>
     <string name="enter_group_chat">输入群名</string>
     <string name="sign">个性签名</string>
@@ -151,7 +143,6 @@
     <string name="select_buytype_tips">请选择支付方式</string>
     <string name="select_saletype_tips">请选择至少一种收款方式</string>
     <string name="choosecount">请输入数量</string>
-
     //红包相关
     <string name="m_red_envelopes_title_text">发红包</string>
     <string name="m_red_envelopes_title_right_text">红包记录</string>
@@ -307,7 +298,6 @@
     <string name="unUpload">未上传</string>
     <string name="buy_complete">我已完成支付</string>
     <string name="buyIn15MinuteLimit">请在15分钟内完成支付</string>
-
     //群组相关
     <string name="chat_information_title">聊天信息</string>
     <string name="group_chat_name">牛牛金花群</string>
@@ -348,7 +338,6 @@
     <string name="small_amount_of_confidentiality">小额免密</string>
     <string name="prompt_fingerprint_payment">开启后，可以通过验证指纹快速完成付款</string>
     <string name="fingerprint_payment">指纹支付</string>
-
     <string name="identity_verified">身份认证</string>
     <string name="input_pay_pwd">请输入支付密码</string>
     <string name="authentication">身份验证</string>
@@ -882,6 +871,7 @@
     <string name="add_friend">添加联系人</string>
     <string name="add_contacts">添加联系人</string>
     <string name="not_perfect">收款信息未完善</string>
-
-
+    <string name="login_again">登录已过期，请重新登录</string>
+    <string name="select_contact">选择联系人</string>
+    <string name="developing">多多正在全力开发中，尽情期待!</string>
 </resources>

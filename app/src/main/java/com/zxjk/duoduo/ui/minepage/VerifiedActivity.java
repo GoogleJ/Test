@@ -245,19 +245,19 @@ public class VerifiedActivity extends BaseActivity {
                     if (currentPictureFlag == 1) {
                         url1 = url;
                         frontPhotoOfTheDocumentEdit.setVisibility(View.VISIBLE);
-                        GlideUtil.loadCornerImg(frontPhotoOfTheDocument, url, 3);
+                        GlideUtil.loadCornerImg(frontPhotoOfTheDocument, url, 5);
                         return;
                     }
                     if (currentPictureFlag == 2) {
                         url2 = url;
                         reversePhotoOfTheDocumentEdit.setVisibility(View.VISIBLE);
-                        GlideUtil.loadCornerImg(reversePhotoOfTheDocument, url, 3);
+                        GlideUtil.loadCornerImg(reversePhotoOfTheDocument, url, 5);
                         return;
                     }
                     if (currentPictureFlag == 3) {
                         url3 = url;
                         handHeldPassportPhotoEdit.setVisibility(View.VISIBLE);
-                        GlideUtil.loadCornerImg(handHeldPassportPhoto, url, 3);
+                        GlideUtil.loadCornerImg(handHeldPassportPhoto, url, 5);
                     }
                 });
             });

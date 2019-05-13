@@ -28,7 +28,9 @@ import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 
 /**
- * @author Administrator
+ * author L
+ * create at 2019/5/13
+ * description: 群聊邀请
  */
 public class AgreeGroupChatActivity extends BaseActivity {
     ImageView groupHeader;

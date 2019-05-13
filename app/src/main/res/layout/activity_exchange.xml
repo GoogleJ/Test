@@ -518,14 +518,8 @@
 
             <TextView
                 android:id="@+id/tv_confirm"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_margin="40dp"
-                android:background="@drawable/shape_circular_bead_btn"
-                android:gravity="center"
-                android:onClick="submit"
-                android:textColor="@color/theme_color"
-                android:textSize="16sp" />
+                style="@style/BtnStyle"
+                android:onClick="submit" />
 
 
         </LinearLayout>

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -27,19 +26,18 @@ import com.zxjk.duoduo.utils.CommonUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
- * @author Administrator
+ * author L
+ * create at 2019/5/13
+ * description: 选择联系人
  */
 @SuppressLint("CheckResult")
-public class SelectContactActivity extends BaseActivity implements View.OnClickListener {
-    /**
-     * 确定按钮
-     */
-    TextView titleRight;
-    /**
-     * 返回按钮
-     */
-    ImageView titleBarLeftIamge;
+public class SelectContactActivity extends BaseActivity {
+
     /**
      * 选中后在上方展示的RecyclerView
      */
@@ -56,6 +54,10 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
     EditText searchEdit;
     SelectContactAdapter mAdapter;
     AddGroupTopAdapter topAdapter;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.tv_commit)
+    TextView tvCommit;
 
     private boolean fromZhuanChu;
 
@@ -66,6 +68,8 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_contact);
+        ButterKnife.bind(this);
+        tvTitle.setText(getString(R.string.select_contact));
 
         fromZhuanChu = getIntent().getBooleanExtra("fromZhuanChu", false);
         initView();
@@ -74,8 +78,8 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
     List<FriendInfoResponse> list = new ArrayList<>();
 
     private void initView() {
-        titleBarLeftIamge = findViewById(R.id.title_left_image);
-        titleRight = findViewById(R.id.title_right);
+        tvCommit.setVisibility(View.VISIBLE);
+        tvCommit.setText(getString(R.string.commit));
         selectRecycler = findViewById(R.id.recycler_view_select);
         recyclerView = findViewById(R.id.all_members_recycler_view);
         searchEdit = findViewById(R.id.search_select_contact);
@@ -84,8 +88,7 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
         mAdapter = new SelectContactAdapter();
         getFriendListById();
         recyclerView.setAdapter(mAdapter);
-        titleBarLeftIamge.setOnClickListener(this);
-        titleRight.setOnClickListener(this);
+
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             if (fromZhuanChu) {
                 String walletAddress = list.get(position).getWalletAddress();
@@ -122,31 +125,6 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
         });
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.title_left_image:
-                finish();
-                break;
-            case R.id.title_right:
-                int types = 0;
-                int type = getIntent().getIntExtra("addGroupType", types);
-                StringBuffer sb = new StringBuffer();
-                for (int i = 0; i < lists.size(); i++) {
-                    sb.append(lists.get(i).getId());
-                    sb.append(",");
-                }
-                if (type == 0) {
-                    makeGroup(Constant.userId, Constant.userId + "," + sb.substring(0, sb.length() - 1));
-                } else {
-                    enterGroup(getIntent().getStringExtra("groupId"), Constant.userId, sb.substring(0, sb.length() - 1));
-                }
-                break;
-            default:
-                break;
-        }
-
-    }
 
     /**
      * 获取好友列表
@@ -195,5 +173,29 @@ public class SelectContactActivity extends BaseActivity implements View.OnClickL
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> ToastUtils.showShort(getString(R.string.add_group_chat)), this::handleApiError);
 
+    }
+
+    @OnClick({R.id.rl_back, R.id.tv_commit})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.rl_back:
+                finish();
+                break;
+            case R.id.tv_commit:
+                int types = 0;
+                int type = getIntent().getIntExtra("addGroupType", types);
+                StringBuffer sb = new StringBuffer();
+                for (int i = 0; i < lists.size(); i++) {
+                    sb.append(lists.get(i).getId());
+                    sb.append(",");
+                }
+                if (type == 0) {
+                    makeGroup(Constant.userId, Constant.userId + "," + sb.substring(0, sb.length() - 1));
+                } else {
+                    enterGroup(getIntent().getStringExtra("groupId"), Constant.userId, sb.substring(0, sb.length() - 1));
+                }
+
+                break;
+        }
     }
 }

@@ -19,10 +19,10 @@ public class ChooseNewOwnerAdapter extends BaseQuickAdapter<AllGroupMembersRespo
 
     @Override
     protected void convert(BaseViewHolder helper, AllGroupMembersResponse item) {
-        helper.setText(R.id.user_name,item.getNick())
-        .addOnClickListener(R.id.item_choose);
-        ImageView headerImage=helper.getView(R.id.headers);
-        GlideUtil.loadCornerImg(headerImage,item.getHeadPortrait(),3);
+        helper.setText(R.id.user_name, item.getNick())
+                .addOnClickListener(R.id.item_choose);
+        ImageView headerImage = helper.getView(R.id.headers);
+        GlideUtil.loadCornerImg(headerImage, item.getHeadPortrait(), 5);
 
 
     }

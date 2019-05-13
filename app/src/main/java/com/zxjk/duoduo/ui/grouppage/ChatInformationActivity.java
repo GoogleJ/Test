@@ -53,7 +53,7 @@ public class ChatInformationActivity extends BaseActivity {
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());
 
         userInfo = getIntent().getParcelableExtra("bean");
-        GlideUtil.loadCornerImg(iv_head, userInfo.getPortraitUri().toString(), 3);
+        GlideUtil.loadCornerImg(iv_head, userInfo.getPortraitUri().toString(), 5);
         tv_name.setText(userInfo.getName());
 
         ServiceFactory.getInstance().getBaseService(Api.class)

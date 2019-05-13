@@ -82,7 +82,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         } else {
             tvMineSign.setText(Constant.currentUser.getSignature());
         }
-        GlideUtil.loadCornerImg(ivMineHeadImg, Constant.currentUser.getHeadPortrait(), 3);
+        GlideUtil.loadCornerImg(ivMineHeadImg, Constant.currentUser.getHeadPortrait(), 5);
         String isAuthentication = Constant.currentUser.getIsAuthentication();
         if (isAuthentication.equals("0")) {
             ivMineAuthSign.setVisibility(View.VISIBLE);

@@ -61,8 +61,6 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
     private String url;
     private LoginResponse update;
 
-    private void initData() {
-    }
 
     private void initView() {
         TextView tv_title = findViewById(R.id.tv_title);
@@ -88,7 +86,7 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_personal_information);
         initView();
-        initData();
+
     }
 
     @OnClick({R.id.m_edit_information_btn, R.id.m_edit_information_header_icon})
@@ -150,7 +148,7 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                 OssUtils.uploadFile(file.getAbsolutePath(), url -> {
                     LoginResponse update = new LoginResponse(Constant.userId);
                     update.setHeadPortrait(url);
-                    GlideUtil.loadCornerImg(imageSearchBtn, url, 3);
+                    GlideUtil.loadCornerImg(imageSearchBtn, url, 5);
                     this.url = url;
                 });
             });
@@ -167,7 +165,7 @@ public class EditPersonalInformationFragment extends BaseActivity implements Vie
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(response -> {
-                    GlideUtil.loadCornerImg(imageSearchBtn, url, 3);
+                    GlideUtil.loadCornerImg(imageSearchBtn, url, 5);
                     Constant.currentUser.setHeadPortrait(update.getHeadPortrait());
                     Constant.currentUser.setNick(update.getNick());
                     Constant.currentUser.setAddress(update.getAddress());

@@ -125,7 +125,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
             if (friendInfoResponse.getId().equals(Constant.userId)) {
                 rl_end.setVisibility(View.GONE);
             }
-            GlideUtil.loadCornerImg(ivHeadPortrait, friendInfoResponse.getHeadPortrait(), 3);
+            GlideUtil.loadCornerImg(ivHeadPortrait, friendInfoResponse.getHeadPortrait(), 5);
             tvNickname.setText(friendInfoResponse.getNick());
             tvDuoDuoNumber.setText(getString(R.string.duoduo_acount) + " " + friendInfoResponse.getDuoduoId());
             tvRealName.setText(getString(R.string.real_name) + " " + friendInfoResponse.getRealname());
@@ -144,7 +144,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
             if (friendInfo.getId().equals(Constant.userId)) {
                 rl_end.setVisibility(View.GONE);
             }
-            GlideUtil.loadCornerImg(ivHeadPortrait, friendInfo.getHeadPortrait(), 3);
+            GlideUtil.loadCornerImg(ivHeadPortrait, friendInfo.getHeadPortrait(), 5);
             tvNickname.setText(friendInfo.getNick());
             tvDuoDuoNumber.setText(getString(R.string.duoduo_acount) + " " + friendInfo.getDuoduoId());
             tvRealName.setText(getString(R.string.real_name) + " " + friendInfo.getRealname());
@@ -163,7 +163,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
             if (contactResponse.getId().equals(Constant.userId)) {
                 rl_end.setVisibility(View.GONE);
             }
-            GlideUtil.loadCornerImg(ivHeadPortrait, contactResponse.getHeadPortrait(), 3);
+            GlideUtil.loadCornerImg(ivHeadPortrait, contactResponse.getHeadPortrait(), 5);
             tvNickname.setText(contactResponse.getNick());
             tvDuoDuoNumber.setText(getString(R.string.duoduo_acount) + " " + contactResponse.getDuoduoId());
             tvRealName.setText(getString(R.string.real_name) + " " + contactResponse.getRealname());

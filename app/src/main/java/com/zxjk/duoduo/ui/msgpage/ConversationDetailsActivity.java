@@ -231,7 +231,7 @@ public class ConversationDetailsActivity extends BaseActivity implements View.On
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(friendInfoResponse -> {
                     this.friendInfoResponse = new FriendInfoResponse(friendInfoResponse);
-                    GlideUtil.loadCornerImg(heardIcon, friendInfoResponse.getHeadPortrait(), 3);
+                    GlideUtil.loadCornerImg(heardIcon, friendInfoResponse.getHeadPortrait(), 5);
                     userNameText.setText(friendInfoResponse.getNick());
                     duoduoId.setText(friendInfoResponse.getDuoduoId());
                     areaText.setText(friendInfoResponse.getAddress());

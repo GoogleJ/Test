@@ -11,7 +11,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -28,35 +27,35 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.KeyboardPopupWindow;
 import com.zxjk.duoduo.ui.widget.PayPsdInputView;
-import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
 import com.zxjk.duoduo.utils.MMKVUtils;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
 
 /**
- * @author Administrator
+ * author L
+ * create at 2019/5/13
+ * description: 设置支付密码
  */
 @SuppressLint("CheckResult")
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class SetUpPaymentPwdActivity extends BaseActivity {
-
     PayPsdInputView payPsdInputView;
-    TitleBar titleBar;
     TextView commmitBtn;
-
     LinearLayout rootView;
-    ScrollView scrollView;
     TextView m_set_payment_pwd_label;
-
     String oldPwd = "";
     String newPwd;
     String newPwdTwo;
     boolean firstLogin;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     private boolean isUiCreated = false;
     KeyboardPopupWindow popupWindow;
 
@@ -76,13 +75,10 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
 
     private void initUI() {
         m_set_payment_pwd_label = findViewById(R.id.m_set_payment_pwd_label);
-        rootView = (LinearLayout) findViewById(R.id.root_view);
-        scrollView = (ScrollView) findViewById(R.id.sv_main);
-        titleBar = findViewById(R.id.m_set_payment_pwd_title_bar);
+        rootView = findViewById(R.id.root_view);
         payPsdInputView = findViewById(R.id.m_set_payment_pwd_edit);
         commmitBtn = findViewById(R.id.m_edit_information_btn);
-        titleBar.getLeftImageView().setOnClickListener(v -> finish());
-        titleBar.getTitleView().setText(firstLogin ? R.string.set_pay_pwd : R.string.update_pay_pwd);
+        tvTitle.setText(firstLogin ? R.string.set_pay_pwd : R.string.update_pay_pwd);
 
         payPsdInputView.setComparePassword(new PayPsdInputView.onPasswordListener() {
 
@@ -215,5 +211,10 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
                 }
             });
         }
+    }
+
+    @OnClick(R.id.rl_back)
+    public void onViewClicked() {
+        finish();
     }
 }

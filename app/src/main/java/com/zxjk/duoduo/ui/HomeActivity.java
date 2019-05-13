@@ -71,7 +71,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
         badgeItem.setHideOnSelect(false)
                 .setBackgroundColorResource(R.color.colorAccent)
                 .setBorderWidth(0);
-//设置Item选中颜色方法
+        //设置Item选中颜色方法
         m_bottom_bar.setActiveColor(R.color.colorAccent)
                 //设置Item未选中颜色方法
                 .setInActiveColor(R.color.colorPrimary)

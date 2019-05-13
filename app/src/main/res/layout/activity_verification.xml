@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_color2"
+    android:background="@color/colorE"
     android:orientation="vertical"
     tools:ignore="RtlCompat">
 
@@ -58,14 +58,8 @@
 
     <TextView
         android:id="@+id/m_verification_send_btn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="40dp"
-        android:background="@drawable/shape_circular_bead_btn"
-        android:gravity="center"
-        android:text="@string/m_verification_send_btn"
-        android:textColor="@color/theme_color"
-        android:textSize="16sp" />
+        style="@style/BtnStyle"
+        android:text="@string/m_verification_send_btn" />
 
 
 </LinearLayout>

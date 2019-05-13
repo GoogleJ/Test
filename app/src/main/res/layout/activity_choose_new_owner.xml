@@ -11,20 +11,7 @@
 
     <EditText
         android:id="@+id/search_edit"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_margin="12dp"
-        android:background="@drawable/shape_circular_bead2"
-        android:drawableStart="@drawable/icon_search_view"
-        android:drawablePadding="4dp"
-        android:hint="@string/m_contact_search_label"
-        android:imeOptions="actionSearch"
-        android:maxLines="1"
-        android:paddingStart="25dp"
-        android:paddingEnd="20dp"
-        android:singleLine="true"
-        android:textSize="15sp"
-        tools:ignore="RtlCompat" />
+        style="@style/SearchStyle" />
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -7,6 +7,10 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zxjk.duoduo.R;
@@ -22,13 +26,12 @@ import com.zxjk.duoduo.utils.CommonUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import io.reactivex.functions.Consumer;
 
 /**
- * @author Administrator
+ * author L
+ * create at 2019/5/13
+ * description:移除群聊
  */
 @SuppressLint("CheckResult")
 public class RemoveGroupChatActivity extends BaseActivity {
@@ -41,8 +44,9 @@ public class RemoveGroupChatActivity extends BaseActivity {
 
     AddOrDelAdapter topAdapter;
     GroupAddOrRemoveAdapter mAdapter;
-    List<AllGroupMembersResponse> lists=new ArrayList<>();
-    List<AllGroupMembersResponse> list=new ArrayList<>();
+    List<AllGroupMembersResponse> lists = new ArrayList<>();
+    List<AllGroupMembersResponse> list = new ArrayList<>();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +55,7 @@ public class RemoveGroupChatActivity extends BaseActivity {
         titleBar = findViewById(R.id.titleBar);
         titleRight = findViewById(R.id.titleRight);
         mRecyclerView = findViewById(R.id.recycler_view);
-        selectRecyclerView=findViewById(R.id.recycler_view_select);
+        selectRecyclerView = findViewById(R.id.recycler_view_select);
 
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -64,16 +68,16 @@ public class RemoveGroupChatActivity extends BaseActivity {
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             CheckBox checkBox = view.findViewById(R.id.selected_delete);
             selectRecyclerView.setVisibility(View.VISIBLE);
-            LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
             linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
             selectRecyclerView.setLayoutManager(linearLayoutManager);
-            topAdapter=new AddOrDelAdapter();
+            topAdapter = new AddOrDelAdapter();
 
-            AllGroupMembersResponse response=null;
+            AllGroupMembersResponse response = null;
             for (AllGroupMembersResponse friendInfoResponse : list) {
 
                 if (list.get(position).getId().equals(friendInfoResponse.getId())) {
-                    response=new AllGroupMembersResponse();
+                    response = new AllGroupMembersResponse();
 
                     response.setId(friendInfoResponse.getId());
                     response.setHeadPortrait(friendInfoResponse.getHeadPortrait());
@@ -87,11 +91,11 @@ public class RemoveGroupChatActivity extends BaseActivity {
             topAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
                 @Override
                 public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                    if (topAdapter.getData().size()>=0){
+                    if (topAdapter.getData().size() >= 0) {
                         topAdapter.getData().remove(position);
                         topAdapter.notifyDataSetChanged();
                         mAdapter.notifyDataSetChanged();
-                    }else{
+                    } else {
                         return;
                     }
                 }
@@ -118,13 +122,13 @@ public class RemoveGroupChatActivity extends BaseActivity {
 
 
         //移除群组
-        StringBuffer sb=new StringBuffer();
-        for (int i=0;i<lists.size();i++){
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < lists.size(); i++) {
             sb.append(lists.get(i).getId());
             sb.append(",");
         }
-            titleBar.setText(getString(R.string.remove_group_chat));
-            moveOutGroup(getIntent().getStringExtra("groupId"),sb.substring(0,sb.length()-1));
+        titleBar.setText(getString(R.string.remove_group_chat));
+        moveOutGroup(getIntent().getStringExtra("groupId"), sb.substring(0, sb.length() - 1));
 
     }
 

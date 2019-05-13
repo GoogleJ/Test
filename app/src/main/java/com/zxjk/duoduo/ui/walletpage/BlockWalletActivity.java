@@ -22,6 +22,8 @@ import com.zxjk.duoduo.utils.GlideUtil;
 
 import java.text.DecimalFormat;
 
+import io.reactivex.functions.Consumer;
+
 /**
  * author L
  * create at 2019/5/7
@@ -52,7 +54,7 @@ public class BlockWalletActivity extends BaseActivity {
         tvBlockWalletETH1 = findViewById(R.id.tvBlockWalletETH1);
         tvBlockWalletETH2 = findViewById(R.id.tvBlockWalletETH2);
 
-        GlideUtil.loadCornerImg(ivBlockWalletHeadImg, Constant.currentUser.getHeadPortrait(), 3);
+        GlideUtil.loadCornerImg(ivBlockWalletHeadImg, Constant.currentUser.getHeadPortrait(), 5);
         tvBlockWalletAddress.setText(Constant.currentUser.getWalletAddress());
         tvBlockWalletAddress.setOnClickListener(v -> {
             ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
@@ -73,7 +75,13 @@ public class BlockWalletActivity extends BaseActivity {
                     tvBlockWalletETH2.setText(ETHmoney2);
                     tvBlockWalletBalance.setText(response.getBalanceHkb());
                     Constant.walletResponse = response;
-                }, this::handleApiError);
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        handleApiError(throwable);
+                        finish();
+                    }
+                });
     }
 
     public void enterETHOrders(View view) {

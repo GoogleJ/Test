@@ -49,7 +49,7 @@ public class WalletFragment extends BaseFragment {
         tv_title.setText(getString(R.string.duoduo_wallet));
         recyclerWalletPage = rootView.findViewById(R.id.recyclerWalletPage);
 
-        recyclerWalletPage.setAdapter(new WalletPageAdapter(new ArrayList<>(5)));
+        recyclerWalletPage.setAdapter(new WalletPageAdapter(new ArrayList<>(5), getActivity()));
         recyclerWalletPage.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
         getPermisson(tvWalletPageTop1, result -> {

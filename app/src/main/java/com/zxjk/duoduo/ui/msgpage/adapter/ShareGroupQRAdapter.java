@@ -58,7 +58,7 @@ public class ShareGroupQRAdapter extends BaseQuickAdapter<Conversation, BaseView
                     .build();
         } else {
             //单聊
-            GlideUtil.loadCornerImg(iv, item.getPortraitUrl(), 3);
+            GlideUtil.loadCornerImg(iv, item.getPortraitUrl(), 5);
         }
     }
 }

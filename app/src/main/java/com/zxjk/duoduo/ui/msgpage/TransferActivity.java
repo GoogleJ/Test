@@ -111,11 +111,11 @@ public class TransferActivity extends BaseActivity implements SelectPopupWindow.
                     .compose(RxSchedulers.normalTrans())
                     .subscribe(response -> {
                         targetUser = new UserInfo(response.getId(), response.getNick(), Uri.parse(response.getHeadPortrait()));
-                        GlideUtil.loadCornerImg(m_transfer_heard_icon, response.getHeadPortrait(), 3);
+                        GlideUtil.loadCornerImg(m_transfer_heard_icon, response.getHeadPortrait(), 5);
                         m_transfer_nick_name.setText(response.getNick());
                     }, this::handleApiError);
         } else {
-            GlideUtil.loadCornerImg(m_transfer_heard_icon, targetUser.getPortraitUri().toString(), 3);
+            GlideUtil.loadCornerImg(m_transfer_heard_icon, targetUser.getPortraitUri().toString(), 5);
             m_transfer_nick_name.setText(targetUser.getName());
         }
     }

@@ -59,7 +59,7 @@ public class GameUpScoreActivity extends BaseActivity {
         tvName = findViewById(R.id.tvName);
         et = findViewById(R.id.et);
 
-        GlideUtil.loadCornerImg(ivHead, Constant.currentUser.getHeadPortrait(), 3);
+        GlideUtil.loadCornerImg(ivHead, Constant.currentUser.getHeadPortrait(), 5);
         tvName.setText(Constant.currentUser.getNick());
 
         selectPopupWindow = new SelectPopupWindow(this, (psw, complete) -> {

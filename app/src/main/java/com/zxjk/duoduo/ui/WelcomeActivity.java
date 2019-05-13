@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.TimeUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Application;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
@@ -25,6 +26,11 @@ import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
 
+/**
+ * author L
+ * create at 2019/5/13
+ * description: 启动页
+ */
 public class WelcomeActivity extends BaseActivity {
 
     @SuppressLint("CheckResult")
@@ -102,6 +108,12 @@ public class WelcomeActivity extends BaseActivity {
 
                     @Override
                     public void onError(RongIMClient.ErrorCode errorCode) {
+                        MMKVUtils.getInstance().enCode("isLogin", false);
+                        Constant.clear();
+                        ToastUtils.showShort(getString(R.string.login_again));
+                        Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
 
                     }
                 });
