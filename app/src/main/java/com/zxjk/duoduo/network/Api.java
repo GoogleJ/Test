@@ -10,6 +10,7 @@ import com.zxjk.duoduo.network.response.GetBalanceHkResponse;
 import com.zxjk.duoduo.network.response.GetBetConutBygroupIdResponse;
 import com.zxjk.duoduo.network.response.GetBetInfoDetailsResponse;
 import com.zxjk.duoduo.network.response.GetExtractRecordResponse;
+import com.zxjk.duoduo.network.response.GetGameClassResponse;
 import com.zxjk.duoduo.network.response.GetGroupGameParameterResponse;
 import com.zxjk.duoduo.network.response.GetGroupRedPackageInfoResponse;
 import com.zxjk.duoduo.network.response.GetIntegralDetailsResponse;
@@ -27,6 +28,7 @@ import com.zxjk.duoduo.network.response.GetTransferEthResponse;
 import com.zxjk.duoduo.network.response.GroupChatResponse;
 import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.response.LoginResponse;
+import com.zxjk.duoduo.network.response.MakeGameGroupResponse;
 import com.zxjk.duoduo.network.response.PayInfoResponse;
 import com.zxjk.duoduo.network.response.PersonalRedPackageInfoResponse;
 import com.zxjk.duoduo.network.response.ReceiveGroupRedPackageResponse;
@@ -551,5 +553,13 @@ public interface Api {
                                                                             @Field("page") int page,
                                                                             @Field("offset") int offset);
 
+    @POST("duoduo/group/game/getGameClass")
+    Observable<BaseResponse<GetGameClassResponse>> getGameClass();
+
+    @POST("duoduo/group/makeGameGroup")
+    @FormUrlEncoded
+    Observable<BaseResponse<MakeGameGroupResponse>> makeGameGroup(@Field("gameType") String gameType, @Field("playId") String playId, @Field("pumpingRate") String pumpingRate,
+                                                    @Field("payPwd") String payPwd, @Field("proportionOfFees") String proportionOfFees, @Field("typeName") String typeName,
+                                                    @Field("commission") String commission, @Field("duobaoMultiple") String duobaoMultiple);
 
 }

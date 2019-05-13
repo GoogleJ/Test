@@ -871,6 +871,9 @@
     <string name="add_friend">添加联系人</string>
     <string name="add_contacts">添加联系人</string>
     <string name="not_perfect">收款信息未完善</string>
+    <string name="huiyuan">会员</string>
+    <string name="unselect">当前有未设置的选项,请检查</string>
+    <string name="select_game_type1">请至少选择一种游戏</string>
     <string name="login_again">登录已过期，请重新登录</string>
     <string name="select_contact">选择联系人</string>
     <string name="developing">多多正在全力开发中，尽情期待!</string>

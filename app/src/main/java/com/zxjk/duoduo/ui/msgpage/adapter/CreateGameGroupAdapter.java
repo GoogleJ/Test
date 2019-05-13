@@ -16,34 +16,47 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.blankj.utilcode.util.GsonUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZViewHolder;
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.network.response.GetGameClassResponse;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private ArrayList<Bean> data = new ArrayList<>();
+    private String gameType = "1";
+    private String playId = "";
+    private String pumpingRate = "0.01";
+    private String proportionOfFees;
+    private String typeName;
+    private String commission;
+
+    private GetGameClassResponse response;
+    private ArrayList<GetGameClassResponse.CommissionConfigBean> data = new ArrayList<>();
     private Context context;
     private boolean showFanYong = false;
 
-    public ArrayList<Bean> getData() {
-        return data;
+    private OnCreateGameGroupClick onCreateGameGroupClick;
+
+    public void setOnCreateGameGroupClick(OnCreateGameGroupClick onCreateGameGroupClick) {
+        this.onCreateGameGroupClick = onCreateGameGroupClick;
     }
 
-    {
-        Bean bean = new Bean();
-        bean.setLevel("会员级");
-        bean.setTotalAchievement("10万");
-        bean.setPercent("每万返佣50");
-        data.add(bean);
-        data.add(bean);
-        data.add(bean);
-        data.add(bean);
-        data.add(bean);
+    public interface OnCreateGameGroupClick {
+        void click(String gameType, String playId, String pumpingRate, String proportionOfFees, String typeName, String commission);
+    }
+
+    public CreateGameGroupAdapter(GetGameClassResponse response) {
+        this.response = response;
+        data.addAll(response.getCommissionConfig());
+        proportionOfFees = response.getGroupClass().get(0).getGuaranteeFee();
+        typeName = response.getGroupClass().get(0).getTypeName();
     }
 
     @NonNull
@@ -85,6 +98,11 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
     }
 
+
+    CheckBox cbGame1;
+    CheckBox cbGame2;
+    CheckBox cbGame3;
+
     //上部分布局
     class ViewHolder1 extends RecyclerView.ViewHolder {
         ViewHolder1(@NonNull View itemView) {
@@ -94,15 +112,16 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             banner.setPages(Arrays.asList(R.drawable.ic_create_gamegroup_banner1
                     , R.drawable.ic_create_gamegroup_banner2
                     , R.drawable.ic_create_gamegroup_banner3), BannerViewHolder::new);
+
             banner.setCanLoop(false);
             banner.setIndicatorVisible(false);
 
             ImageView ivGameModes = itemView.findViewById(R.id.ivGameModes);
             ImageView ivChouShui = itemView.findViewById(R.id.ivChouShui);
 
-            CheckBox cbGame1 = itemView.findViewById(R.id.cbGame1);
-            CheckBox cbGame2 = itemView.findViewById(R.id.cbGame2);
-            CheckBox cbGame3 = itemView.findViewById(R.id.cbGame3);
+            cbGame1 = itemView.findViewById(R.id.cbGame1);
+            cbGame2 = itemView.findViewById(R.id.cbGame2);
+            cbGame3 = itemView.findViewById(R.id.cbGame3);
 
             SeekBar seekbar = itemView.findViewById(R.id.seekbar);
             TextView tvChoushui = itemView.findViewById(R.id.tvChoushui);
@@ -131,6 +150,7 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 @Override
                 public void onPageSelected(int position) {
                     int realposition = position % 3;
+                    playId = "";
 
                     cbGame1.setChecked(false);
                     cbGame2.setChecked(false);
@@ -142,6 +162,10 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     }
 
                     if (realposition == 0) {
+                        gameType = "1";
+                        proportionOfFees = response.getGroupClass().get(0).getGuaranteeFee();
+                        typeName = response.getGroupClass().get(0).getTypeName();
+
                         showFanYong = false;
                         ivGameModes.setImageResource(R.drawable.ic_create_gamegroup_youxi);
                         ivChouShui.setImageResource(R.drawable.ic_create_gamegroup_choushui);
@@ -153,6 +177,10 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         cbGame3.setBackgroundResource(R.drawable.selector_create_gamegroup1);
                         llCommit.setBackgroundResource(R.drawable.shape_bac_create_gamegroup_commit1);
                     } else if (realposition == 1) {
+                        gameType = "2";
+                        proportionOfFees = response.getGroupClass().get(1).getGuaranteeFee();
+                        typeName = response.getGroupClass().get(1).getTypeName();
+
                         showFanYong = false;
                         ivGameModes.setImageResource(R.drawable.ic_create_gamegroup_youxi1);
                         ivChouShui.setImageResource(R.drawable.ic_create_gamegroup_choushui1);
@@ -164,6 +192,10 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         cbGame3.setBackgroundResource(R.drawable.selector_create_gamegroup2);
                         llCommit.setBackgroundResource(R.drawable.shape_bac_create_gamegroup_commit2);
                     } else {
+                        gameType = "3";
+                        proportionOfFees = response.getGroupClass().get(2).getGuaranteeFee();
+                        typeName = response.getGroupClass().get(2).getTypeName();
+
                         ivGameModes.setImageResource(R.drawable.ic_create_gamegroup_youxi2);
                         ivChouShui.setImageResource(R.drawable.ic_create_gamegroup_choushui2);
                         llFanyong1.setVisibility(View.VISIBLE);
@@ -187,11 +219,14 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 }
             });
 
-            seekbar.setMax(40);
+//            seekbar.setMax(40);
+            seekbar.setMax(4);
             seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    tvChoushui.setText((progress) / 10f + 1 + "%");
+//                    tvChoushui.setText((progress) / 10f + 1 + "%");
+                    tvChoushui.setText(progress + 1 + "%");
+                    pumpingRate = "0.0" + (progress + 1);
                 }
 
                 @Override
@@ -208,20 +243,42 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     class BannerViewHolder implements MZViewHolder<Integer> {
-        private ImageView mImageView;
+        private View iv;
+        private TextView tvBannerTitle1;
+        private TextView tvBannerTitle2;
+        private TextView tvBannerTitle3;
+        private TextView tvBannerTitle4;
+        private TextView tvBannerTitle5;
+        private TextView tvBannerMoney;
 
         @Override
         public View createView(Context context) {
             // 返回页面布局
             View inflate = LayoutInflater.from(context).inflate(R.layout.item_create_gamegroup_banner, null);
-            mImageView = new ImageView(context);
-            mImageView = inflate.findViewById(R.id.iv);
+            iv = inflate.findViewById(R.id.iv);
+
+            tvBannerTitle1 = inflate.findViewById(R.id.tvBannerTitle1);
+            tvBannerTitle2 = inflate.findViewById(R.id.tvBannerTitle2);
+            tvBannerTitle3 = inflate.findViewById(R.id.tvBannerTitle3);
+            tvBannerTitle4 = inflate.findViewById(R.id.tvBannerTitle4);
+            tvBannerTitle5 = inflate.findViewById(R.id.tvBannerTitle5);
+            tvBannerMoney = inflate.findViewById(R.id.tvBannerMoney);
+
             return inflate;
         }
 
         @Override
         public void onBind(Context context, int position, Integer data) {
-            mImageView.setImageResource(data);
+            int realPosition = position % 3;
+            iv.setBackgroundResource(data);
+            GetGameClassResponse.GroupClassBean groupClassBean = response.getGroupClass().get(realPosition);
+
+            tvBannerTitle1.setText(groupClassBean.getTypeName());
+            tvBannerTitle2.setText(groupClassBean.getEnglishName());
+            tvBannerTitle3.setText("●  人数范围：" + groupClassBean.getNumberLimit() + "人");
+            tvBannerTitle4.setText("●  下注范围：" + groupClassBean.getMinimumBetAmount() + "-" + groupClassBean.getMaximumBetAmount());
+            tvBannerTitle5.setText("●  下分手续费：" + (int) (Float.parseFloat(groupClassBean.getProportionOfFees()) * 100) + "%");
+            tvBannerMoney.setText(groupClassBean.getGuaranteeFee() + "HK");
         }
     }
 
@@ -235,6 +292,76 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             super(itemView);
             llAddFanYong = itemView.findViewById(R.id.llAddFanYong);
             llCommit = itemView.findViewById(R.id.llCommit);
+
+            llAddFanYong.setOnClickListener(v -> {
+
+            });
+            llCommit.setOnClickListener(v -> {
+                //创建游戏群
+                if (!cbGame1.isChecked() && !cbGame2.isChecked() && !cbGame3.isChecked()) {
+                    ToastUtils.showShort(R.string.select_game_type1);
+                    return;
+                }
+
+                if (gameType.equals("1")) {
+                    commission = "";
+                    if (cbGame1.isChecked()) {
+                        playId += "9,";
+                    }
+                    if (cbGame2.isChecked()) {
+                        playId += "25,";
+                    }
+                    if (cbGame3.isChecked()) {
+                        playId += "16,";
+                    }
+                } else if (gameType.equals("2")) {
+                    commission = "";
+                    if (cbGame1.isChecked()) {
+                        playId += "91,";
+                    }
+                    if (cbGame2.isChecked()) {
+                        playId += "107,";
+                    }
+                    if (cbGame3.isChecked()) {
+                        playId += "98,";
+                    }
+                } else if (gameType.equals("3")) {
+                    if (cbGame1.isChecked()) {
+                        playId += "255,";
+                    }
+                    if (cbGame2.isChecked()) {
+                        playId += "271,";
+                    }
+                    if (cbGame3.isChecked()) {
+                        playId += "262,";
+                    }
+                    if (!showFanYong) {
+                        commission = "";
+                    } else {
+                        List<GetGameClassResponse.CommissionConfigBean> temp = new ArrayList<>(response.getCommissionConfig().size());
+
+                        for (int i = 0; i < data.size(); i++) {
+                            GetGameClassResponse.CommissionConfigBean t = response.getCommissionConfig().get(i);
+                            GetGameClassResponse.CommissionConfigBean commissionConfigBean = new GetGameClassResponse.CommissionConfigBean();
+                            commissionConfigBean.setMax(t.getMax());
+                            commissionConfigBean.setMin(t.getMin());
+                            commissionConfigBean.setGrade(t.getGrade());
+                            commissionConfigBean.setCommission(t.getCommission());
+                            commissionConfigBean.setRemarks("");
+                            temp.add(commissionConfigBean);
+                        }
+
+                        commission = GsonUtils.toJson(temp, false);
+                    }
+                }
+
+                playId = playId.substring(0, playId.length() - 1);
+
+                if (onCreateGameGroupClick != null) {
+                    onCreateGameGroupClick.click(gameType, playId, pumpingRate, proportionOfFees, typeName, commission);
+                    playId = "";
+                }
+            });
         }
     }
 
@@ -266,45 +393,18 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             });
         }
 
-        private void bindData(Bean bean) {
-            tv1.setText(bean.getLevel());
-            tv2.setText(bean.getTotalAchievement());
-            tv3.setText(bean.getPercent());
+        private void bindData(GetGameClassResponse.CommissionConfigBean bean) {
+            tv1.setText(bean.getGrade());
+            String max = bean.getMax();
+            if (Integer.parseInt(bean.getMax()) >= 10000) {
+                max = (Integer.parseInt(bean.getMax()) / 10000) + "万";
+            }
+            tv2.setText(max);
+            tv3.setText("每万返佣" + Float.parseFloat(bean.getCommission()) * 10000);
             if (height == 0) {
                 height = CommonUtils.dip2px(context, 40);
             }
             ll.getLayoutParams().height = (showFanYong ? height : 0);
         }
     }
-
-    class Bean {
-        private String level;
-        private String totalAchievement;
-        private String percent;
-
-        public String getLevel() {
-            return level;
-        }
-
-        public void setLevel(String level) {
-            this.level = level;
-        }
-
-        public String getTotalAchievement() {
-            return totalAchievement;
-        }
-
-        public void setTotalAchievement(String totalAchievement) {
-            this.totalAchievement = totalAchievement;
-        }
-
-        public String getPercent() {
-            return percent;
-        }
-
-        public void setPercent(String percent) {
-            this.percent = percent;
-        }
-    }
-
 }

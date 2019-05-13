@@ -9,7 +9,7 @@
     <com.zhouwei.mzbanner.MZBannerView
         android:id="@+id/banner"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="168dp"
         app:canLoop="true"
         app:middle_page_cover="true"
         app:open_mz_mode="true" />

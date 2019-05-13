@@ -22,11 +22,13 @@
         app:SpinKit_Color="@color/themecolor" />
 
     <ImageView
-        android:src="@drawable/game_loading_0_00000"
         android:id="@+id/iv"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_gravity="center" />
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="24dp"
+        android:src="@drawable/loading" />
 
     <TextView
         android:id="@+id/tv_dialog_content"

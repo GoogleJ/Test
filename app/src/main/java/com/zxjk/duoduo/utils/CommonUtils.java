@@ -7,7 +7,6 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -18,6 +17,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
 import com.zxjk.duoduo.R;
 
 import java.math.BigDecimal;
@@ -48,9 +48,7 @@ public class CommonUtils {
                 super.onWindowFocusChanged(hasFocus);
                 if (hasFocus) {
                     ImageView iv = dialog.findViewById(R.id.iv);
-                    iv.setImageResource(R.drawable.anim_gameloading);
-                    AnimationDrawable animationDrawable = (AnimationDrawable) iv.getDrawable();
-                    animationDrawable.start();
+                    Glide.with(context).asGif().load(R.drawable.loading).into(iv);
                 }
             }
         };

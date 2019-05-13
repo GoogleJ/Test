@@ -50,16 +50,9 @@
             android:value="667" />
 
         <activity
-            android:name=".ui.WelcomeActivity"
+            android:name=".ui.msgpage.CreateGameGroupActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.msgpage.GroupQRActivity"
             android:launchMode="singleTask"
@@ -386,12 +379,16 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.msgpage.CreateGameGroupActivity"
+            android:name=".ui.WelcomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Theme_Splash"
             android:windowSoftInputMode="adjustUnspecified|stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.msgpage.ModifyNotesActivity"

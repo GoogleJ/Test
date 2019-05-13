@@ -46,7 +46,6 @@ public class AgentBenefitActivity extends BaseActivity {
         recyclerView.setAdapter(agentBenefitAdapter);
     }
 
-
     private void initData() {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .getRebateInfoByGroupId(groupId)
