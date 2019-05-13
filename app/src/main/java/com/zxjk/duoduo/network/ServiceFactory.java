@@ -1,8 +1,12 @@
 package com.zxjk.duoduo.network;
 
 import android.text.TextUtils;
+
+import com.zxjk.duoduo.BuildConfig;
 import com.zxjk.duoduo.Constant;
+
 import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -22,7 +26,11 @@ public class ServiceFactory {
     private void initRetrofit() {
         //Log拦截器
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        if (BuildConfig.enableLog) {
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        } else {
+            interceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
+        }
         //构造client对象
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(interceptor).connectTimeout(10, TimeUnit.SECONDS)

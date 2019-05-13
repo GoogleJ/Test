@@ -19,6 +19,7 @@ import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.HomeActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.ui.grouppage.AllGroupActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.CreateGroupAdapter;
 import com.zxjk.duoduo.ui.msgpage.adapter.CreateGroupTopAdapter;
 import com.zxjk.duoduo.ui.msgpage.adapter.GroupMemberAdapter;
@@ -372,9 +373,13 @@ public class CreateGroupActivity extends BaseActivity {
         switch (view.getId()) {
             //我的游戏群
             case R.id.rl_myGameGroup:
+                startActivity(new Intent(this, AllGroupActivity.class));
+                finish();
                 break;
             //新建游戏群
             case R.id.rl_newGameGroup:
+                startActivity(new Intent(this, CreateGameGroupActivity.class));
+                finish();
                 break;
         }
     }

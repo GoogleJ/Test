@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".ui.msgpage.CreateGameGroupActivity">
 
     <include layout="@layout/layout_title_back" />
@@ -12,7 +13,6 @@
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:overScrollMode="never" />
 
 </LinearLayout>

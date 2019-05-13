@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.TextureView;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -545,6 +546,10 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                         .compose(RxSchedulers.normalTrans())
                         .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this)))
                         .subscribe(getGroupGameParameterResponse -> {
+                            if (TextUtils.isEmpty(getGroupGameParameterResponse.getBalanceHK())) {
+                                ToastUtils.showShort(R.string.noscore);
+                                return;
+                            }
                             gamePopupWindow = new GamePopupWindow(ConversationActivity.this);
                             gamePopupWindow.setGroupId(groupResponse.getGroupInfo().getId());
                             gamePopupWindow.setOnCommit((data, time) -> {

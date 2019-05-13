@@ -880,4 +880,6 @@
     <string name="hkb">HKB</string>
     <string name="new_game_group">新建游戏群</string>
     <string name="my_game_group">我的游戏群</string>
+    <string name="create_game_group_success">创建成功</string>
+    <string name="noscore">暂未在本群上分，无法游戏</string>
 </resources>

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -81,6 +82,7 @@ public class CreateGameGroupActivity extends BaseActivity implements SelectPopup
                     .compose(RxSchedulers.normalTrans())
                     .compose(RxSchedulers.ioObserver())
                     .subscribe(response -> {
+                        ToastUtils.showShort(R.string.create_game_group_success);
                         Intent intent = new Intent(this, HomeActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);

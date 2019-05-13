@@ -25,11 +25,14 @@ import com.zxjk.duoduo.ui.HomeActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.adapter.AllGroupMemebersAdapter;
 import com.zxjk.duoduo.ui.minepage.UpdateUserInfoActivity;
-import com.zxjk.duoduo.ui.msgpage.ConversationActivity;
 import com.zxjk.duoduo.ui.msgpage.CreateGroupActivity;
 import com.zxjk.duoduo.ui.msgpage.GroupQRActivity;
 import com.zxjk.duoduo.ui.widget.dialog.ConfirmDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
+
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 
 /**
  * author L
@@ -187,13 +190,9 @@ public class GroupChatInformationActivity extends BaseActivity {
     public void dissolutionGroup(View view) {
         ConfirmDialog confirmDialog;
         if (Constant.userId.equals(group.getGroupInfo().getGroupOwnerId())) {
-            confirmDialog = new ConfirmDialog(this, "提示", "确定要解散群组么", v -> {
-                disBandGroup(group.getGroupInfo().getId(), Constant.userId);
-            });
+            confirmDialog = new ConfirmDialog(this, "提示", "确定要解散群组么", v -> disBandGroup(group.getGroupInfo().getId(), Constant.userId));
         } else {
-            confirmDialog = new ConfirmDialog(this, "提示", "确定要退出该群么", v -> {
-                exitGroup(group.getGroupInfo().getId(), Constant.userId);
-            });
+            confirmDialog = new ConfirmDialog(this, "提示", "确定要退出该群么", v -> exitGroup(group.getGroupInfo().getId(), Constant.userId));
         }
         confirmDialog.show();
     }
@@ -210,12 +209,21 @@ public class GroupChatInformationActivity extends BaseActivity {
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(s -> {
-                    Intent intent = new Intent(this, HomeActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    ToastUtils.showShort(getString(R.string.you_have_disbanded_the_group));
-                }, this::handleApiError);
+                .subscribe(s -> RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, groupId
+                        , new RongIMClient.ResultCallback<Boolean>() {
+                            @Override
+                            public void onSuccess(Boolean aBoolean) {
+                                Intent intent = new Intent(GroupChatInformationActivity.this, HomeActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                ToastUtils.showShort(getString(R.string.you_have_disbanded_the_group));
+                            }
+
+                            @Override
+                            public void onError(RongIMClient.ErrorCode errorCode) {
+
+                            }
+                        }), this::handleApiError);
     }
 
     /**
@@ -230,12 +238,21 @@ public class GroupChatInformationActivity extends BaseActivity {
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(s -> {
-                    Intent intent = new Intent(this, ConversationActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    ToastUtils.showShort(getString(R.string.you_have_left_the_group_chat));
-                }, this::handleApiError);
+                .subscribe(s -> RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, groupId,
+                        new RongIMClient.ResultCallback<Boolean>() {
+                            @Override
+                            public void onSuccess(Boolean aBoolean) {
+                                Intent intent = new Intent(GroupChatInformationActivity.this, HomeActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                ToastUtils.showShort(getString(R.string.you_have_left_the_group_chat));
+                            }
+
+                            @Override
+                            public void onError(RongIMClient.ErrorCode errorCode) {
+
+                            }
+                        }), this::handleApiError);
     }
 
     public void groupChat(View view) {
