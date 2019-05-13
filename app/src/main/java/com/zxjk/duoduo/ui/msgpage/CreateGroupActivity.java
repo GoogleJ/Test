@@ -33,6 +33,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
@@ -84,6 +86,7 @@ public class CreateGroupActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
+        ButterKnife.bind(this);
         tv_commit = findViewById(R.id.tv_commit);
         tv_commit.setVisibility(View.VISIBLE);
         tv_commit.setText(getString(R.string.ok));
@@ -362,5 +365,17 @@ public class CreateGroupActivity extends BaseActivity {
                     startActivity(intent);
                     RongIM.getInstance().startGroupChat(this, s.getId(), s.getGroupNikeName());
                 }, this::handleApiError);
+    }
+
+    @OnClick({R.id.rl_myGameGroup, R.id.rl_newGameGroup})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            //我的游戏群
+            case R.id.rl_myGameGroup:
+                break;
+            //新建游戏群
+            case R.id.rl_newGameGroup:
+                break;
+        }
     }
 }

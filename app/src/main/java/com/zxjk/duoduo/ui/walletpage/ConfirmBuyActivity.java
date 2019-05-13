@@ -15,12 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.shehuan.nicedialog.BaseNiceDialog;
-import com.shehuan.nicedialog.NiceDialog;
-import com.shehuan.nicedialog.ViewConvertListener;
-import com.shehuan.nicedialog.ViewHolder;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ReleasePurchase;
@@ -40,12 +35,17 @@ import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 @SuppressLint("CheckResult")
 public class ConfirmBuyActivity extends BaseActivity {
 
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     private String pictureUrl = ""; //支付凭证
 
     private static final int REQUEST_TAKE = 1;
@@ -77,6 +77,9 @@ public class ConfirmBuyActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_buy);
+        ButterKnife.bind(this);
+        tvTitle.setText(getString(R.string.buy));
+
 
         getPermisson(findViewById(R.id.llUploadSign), granted -> {
             BottomDialog.dialogType(this, REQUEST_TAKE, REQUEST_ALBUM);
@@ -224,7 +227,6 @@ public class ConfirmBuyActivity extends BaseActivity {
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -254,5 +256,10 @@ public class ConfirmBuyActivity extends BaseActivity {
                 });
             });
         }
+    }
+
+    @OnClick(R.id.rl_back)
+    public void onViewClicked() {
+        finish();
     }
 }

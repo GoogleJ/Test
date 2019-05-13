@@ -25,6 +25,50 @@
 
     </LinearLayout>
 
+
+    <RelativeLayout
+        android:id="@+id/rl_myGameGroup"
+        style="@style/RLayoutStyle">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:drawableStart="@drawable/ic_game_group1"
+            android:drawablePadding="10dp"
+            android:text="@string/my_game_group"
+            android:textColor="@color/theme_color"
+            android:textSize="16sp" />
+
+        <ImageView style="@style/ImageEnter" />
+
+
+    </RelativeLayout>
+
+    <include layout="@layout/layout_line" />
+
+    <RelativeLayout
+        android:id="@+id/rl_newGameGroup"
+        style="@style/RLayoutStyle">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:drawableStart="@drawable/ic_new_game_group"
+            android:drawablePadding="10dp"
+            android:text="@string/new_game_group"
+            android:textColor="@color/theme_color"
+            android:textSize="16sp" />
+
+        <ImageView style="@style/ImageEnter" />
+    </RelativeLayout>
+
+    <include layout="@layout/layout_line" />
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
