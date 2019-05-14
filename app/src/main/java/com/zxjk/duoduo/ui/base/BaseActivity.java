@@ -13,6 +13,7 @@ import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.network.rx.RxException;
 import com.zxjk.duoduo.ui.LoginActivity;
 import com.zxjk.duoduo.ui.widget.dialog.ReLoginDialog;
+import com.zxjk.duoduo.utils.MMKVUtils;
 
 import java.io.File;
 import java.util.List;
@@ -20,7 +21,6 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import me.jessyan.autosize.internal.CustomAdapt;
 import top.zibin.luban.Luban;
 
 @SuppressLint({"CheckResult", "Registered"})
@@ -69,6 +69,7 @@ public class BaseActivity extends RxAppCompatActivity  {
             ReLoginDialog reLoginDialog = new ReLoginDialog(this);
             reLoginDialog.setOnClickListener(() -> {
                 Constant.clear();
+                MMKVUtils.getInstance().enCode("isLogin", false);
                 Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

@@ -118,6 +118,7 @@
         android:imeOptions="actionDone"
         android:inputType="text"
         android:paddingStart="15dp"
+        android:paddingEnd="15dp"
         android:textColor="@color/black" />
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -19,6 +19,7 @@ import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.skin.SkinReportActivity;
@@ -26,7 +27,9 @@ import com.zxjk.duoduo.ui.HomeActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.adapter.AllGroupMemebersAdapter;
 import com.zxjk.duoduo.ui.minepage.UpdateUserInfoActivity;
+import com.zxjk.duoduo.ui.msgpage.AddFriendDetailsActivity;
 import com.zxjk.duoduo.ui.msgpage.CreateGroupActivity;
+import com.zxjk.duoduo.ui.msgpage.FriendDetailsActivity;
 import com.zxjk.duoduo.ui.msgpage.GroupQRActivity;
 import com.zxjk.duoduo.ui.widget.dialog.ConfirmDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
@@ -109,6 +112,22 @@ public class GroupChatInformationActivity extends BaseActivity {
             see_more_group_members.setVisibility(View.VISIBLE);
             mAdapter.setNewData(group.getCustomers().subList(0, 15));
         }
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            if (Constant.friendsList == null) {
+                ServiceFactory.getInstance().getBaseService(Api.class)
+                        .getFriendListById()
+                        .compose(bindToLifecycle())
+                        .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(GroupChatInformationActivity.this)))
+                        .compose(RxSchedulers.normalTrans())
+                        .subscribe(friendInfoResponses -> {
+                            Constant.friendsList = friendInfoResponses;
+                            GroupResponse.CustomersBean customersBean = group.getCustomers().get(position);
+                            handleFriendList(customersBean.getId());
+                        }, GroupChatInformationActivity.this::handleApiError);
+            } else {
+                handleFriendList(group.getCustomers().get(position).getId());
+            }
+        });
 
         initFooterView();
 
@@ -296,4 +315,30 @@ public class GroupChatInformationActivity extends BaseActivity {
         intent.putExtra("data", group);
         startActivity(intent);
     }
+
+    private void handleFriendList(String userId) {
+        if (userId.equals(Constant.userId)) {
+            //扫到了自己
+            Intent intent = new Intent(this, FriendDetailsActivity.class);
+            intent.putExtra("friendId", userId);
+            startActivity(intent);
+            return;
+        }
+        for (FriendInfoResponse f : Constant.friendsList) {
+            if (f.getId().equals(userId)) {
+                //自己的好友，进入详情页（可聊天）
+                Intent intent = new Intent(this, FriendDetailsActivity.class);
+                intent.putExtra("searchFriendDetails", f);
+                startActivity(intent);
+                return;
+            }
+        }
+
+        //陌生人，进入加好友页面
+        Intent intent = new Intent(this, AddFriendDetailsActivity.class);
+        intent.putExtra("newFriendId", userId);
+        startActivity(intent);
+        finish();
+    }
+
 }

@@ -45,19 +45,22 @@ public class CusConversationListAdapter extends ConversationListAdapter {
 
         if (data.getConversationType() != Conversation.ConversationType.GROUP) {
             ImageView imageView = v.findViewById(R.id.rc_mask);
+            ImageView game_mask = v.findViewById(R.id.game_mask);
             imageView.setVisibility(View.GONE);
+            game_mask.setVisibility(View.GONE);
             ConversationListAdapter.ViewHolder holder = (ConversationListAdapter.ViewHolder) v.getTag();
             holder.leftImageView.setVisibility(View.VISIBLE);
             return;
         }
 
         ImageView imageView = v.findViewById(R.id.rc_mask);
+        ImageView game_mask = v.findViewById(R.id.game_mask);
         imageView.setVisibility(View.VISIBLE);
         ConversationListAdapter.ViewHolder holder = (ConversationListAdapter.ViewHolder) v.getTag();
         holder.leftImageView.setVisibility(View.GONE);
 
         Group groupInfo = RongUserInfoManager.getInstance().getGroupInfo(data.getConversationTargetId());
-
+        groupInfo = null;
         if (groupInfo != null && !TextUtils.isEmpty(groupInfo.getPortraitUri().toString())) {
             String s = groupInfo.getPortraitUri().toString();
             String[] split = s.split(",");
@@ -83,6 +86,11 @@ public class CusConversationListAdapter extends ConversationListAdapter {
                     .compose(RxSchedulers.normalTrans())
                     .compose(RxSchedulers.ioObserver())
                     .subscribe(response -> {
+                        if (TextUtils.isEmpty(response.getMaxNumber())) {
+                            game_mask.setVisibility(View.GONE);
+                        } else {
+                            game_mask.setVisibility(View.VISIBLE);
+                        }
                         String s = "";
 
                         StringBuilder stringBuilder = new StringBuilder();
@@ -94,8 +102,10 @@ public class CusConversationListAdapter extends ConversationListAdapter {
                             }
                         }
 
-                        Group group = new Group(response.getGroupInfo().getId(), response.getGroupInfo().getGroupNikeName(), Uri.parse(s));
-                        RongUserInfoManager.getInstance().setGroupInfo(group);
+                        if (null == RongUserInfoManager.getInstance().getGroupInfo(response.getGroupInfo().getId())) {
+                            Group group = new Group(response.getGroupInfo().getId(), response.getGroupInfo().getGroupNikeName(), Uri.parse(s));
+                            RongUserInfoManager.getInstance().setGroupInfo(group);
+                        }
 
                         String[] split = s.split(",");
                         if (split.length > 9) {
