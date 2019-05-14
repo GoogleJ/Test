@@ -147,7 +147,7 @@ public class WaitForJudgeActivity extends BaseActivity {
         getPermisson(rlContactHim, result -> {
             if (result) {
                 Intent intent3 = new Intent(Intent.ACTION_DIAL);
-                Uri data = Uri.parse("tel:" + "10086");
+                Uri data = Uri.parse("tel:" + response.getMobile());
                 intent3.setData(data);
                 startActivity(intent3);
             }
@@ -178,7 +178,7 @@ public class WaitForJudgeActivity extends BaseActivity {
                     RongIM.getInstance().startPrivateChat(this, friendId, friendNickName);
                 } else {
                     Intent intent1 = new Intent(this, VerificationActivity.class);
-                    intent1.putExtra("addFriend", response.getCustomerId());
+                    intent1.putExtra("addFriend", String.valueOf(response.getCustomerId()));
                     intent1.putExtra("intentType", 1);
                     startActivity(intent1);
                 }

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -80,7 +79,8 @@ public class ExchangeListActivity extends BaseActivity {
                         data.setSellOrderId(g.getSellOrderId());
                         data.setBuyOrderId(g.getBuyOrderId());
                         data.setOpenBank(g.getOpenBank());
-
+                        data.setMobile(g.getMobile());
+                        data.setReceiptPicture(g.getPayPicture());
                         intent.putExtra("data", data);
                         intent.putExtra("buytype", g.getPayType());
                         intent.putExtra("rate", rate);
@@ -102,7 +102,8 @@ public class ExchangeListActivity extends BaseActivity {
                         data.setCreateTime(g.getCreateTime());
                         data.setNick(g.getSellNick());
                         data.setPayTime(g.getPayTime());
-
+                        data.setMobile(g.getMobile());
+                        data.setReceiptPicture(g.getPayPicture());
                         intent.putExtra("buytype", g.getPayType());
                         intent.putExtra("data", data);
                         intent.putExtra("rate", rate);
@@ -126,7 +127,7 @@ public class ExchangeListActivity extends BaseActivity {
                     //挂单中
                     intent = new Intent(this, ConfirmSaleActivity.class);
                     ReleasePurchase data = new ReleasePurchase();
-                    data.setPayPwd(g.getSellPayType());
+                    data.setPayType(g.getSellPayType());
                     data.setMoney(g.getMoney());
                     data.setNumber(g.getNumber());
                     data.setCurrency(g.getCurrency());

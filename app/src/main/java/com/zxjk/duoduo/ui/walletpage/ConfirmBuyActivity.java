@@ -41,6 +41,11 @@ import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
+/**
+ * author L
+ * create at 2019/5/14
+ * description:购买   确认是否完成支付 取消订单
+ */
 @SuppressLint("CheckResult")
 public class ConfirmBuyActivity extends BaseActivity {
 

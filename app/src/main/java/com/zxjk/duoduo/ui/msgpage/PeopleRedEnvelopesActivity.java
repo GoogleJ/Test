@@ -28,6 +28,7 @@ public class PeopleRedEnvelopesActivity extends BaseActivity {
     ImageView m_people_red_envelopes_header;
     TextView m_people_red_envelopes_user_name_text;
     TextView m_people_red_envelopes_money_text;
+    TextView m_people_red_envelopes_signature_text;
 
     @SuppressLint("CheckResult")
     @Override
@@ -35,9 +36,9 @@ public class PeopleRedEnvelopesActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_people_red_envelopes);
 
-        boolean fromGroup = getIntent().getBooleanExtra("fromGroup", false);
 
         titleLeftImage = findViewById(R.id.m_people_red_envelopes_title_bar);
+        m_people_red_envelopes_signature_text = findViewById(R.id.m_people_red_envelopes_signature_text);
         m_people_red_envelopes_header = findViewById(R.id.m_people_red_envelopes_header);
         m_people_red_envelopes_user_name_text = findViewById(R.id.m_people_red_envelopes_user_name_text);
         m_people_red_envelopes_money_text = findViewById(R.id.m_people_red_envelopes_money_text);
@@ -48,27 +49,13 @@ public class PeopleRedEnvelopesActivity extends BaseActivity {
         UserInfo sender = RongUserInfoManager.getInstance().getUserInfo(message.getSenderUserId());
         m_people_red_envelopes_user_name_text.setText(sender.getName() + "的红包");
         GlideUtil.loadCornerImg(m_people_red_envelopes_header, sender.getPortraitUri().toString(), 5);
+        m_people_red_envelopes_signature_text.setText(redPacketMessage.getRemark());
 
-        if (fromGroup) {
-            ServiceFactory.getInstance().getBaseService(Api.class)
-                    .getGroupRedPackageInfo(redPacketMessage.getRedId())
-                    .compose(bindToLifecycle())
-                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                    .compose(RxSchedulers.normalTrans())
-                    .subscribe(response -> {
-                        for (GetGroupRedPackageInfoResponse.CustomerInfoBean bean : response.getCustomerInfo()) {
-                            if (String.valueOf(bean.getCustomerId()).equals(Constant.userId)) {
-                                m_people_red_envelopes_money_text.setText(String.valueOf(bean.getMoney()));
-                            }
-                        }
-                    }, this::handleApiError);
-        } else {
-            ServiceFactory.getInstance().getBaseService(Api.class)
-                    .personalRedPackageInfo(redPacketMessage.getRedId(), Integer.parseInt(Constant.userId))
-                    .compose(bindToLifecycle())
-                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                    .compose(RxSchedulers.normalTrans())
-                    .subscribe(response -> m_people_red_envelopes_money_text.setText(response.getRedPachageInfo().getMoney()), this::handleApiError);
-        }
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .personalRedPackageInfo(redPacketMessage.getRedId(), Integer.parseInt(Constant.userId))
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                .compose(RxSchedulers.normalTrans())
+                .subscribe(response -> m_people_red_envelopes_money_text.setText(response.getRedPachageInfo().getMoney()), this::handleApiError);
     }
 }

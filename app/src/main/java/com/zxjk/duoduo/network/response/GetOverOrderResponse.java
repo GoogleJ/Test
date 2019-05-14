@@ -61,6 +61,15 @@ public class GetOverOrderResponse implements Serializable {
     private String payPicture;
     private String wechatNick;
     private String zhifubaoNumber;
+    private String mobile;
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 
     public String getId() {
         return id;

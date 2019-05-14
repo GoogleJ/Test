@@ -45,7 +45,7 @@ public class GameUpScoreActivity extends BaseActivity {
         TextView tv_title = findViewById(R.id.tv_title);
         tv_title.setText(getString(R.string.upscore));
         TextView tv_end = findViewById(R.id.tv_end);
-        tv_end.setVisibility(View.VISIBLE);
+        tv_end.setVisibility(View.GONE);
         tv_end.setText(getString(R.string.jilu));
 
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());

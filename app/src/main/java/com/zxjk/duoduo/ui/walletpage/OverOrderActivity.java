@@ -11,6 +11,10 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.shehuan.nicedialog.BaseNiceDialog;
+import com.shehuan.nicedialog.NiceDialog;
+import com.shehuan.nicedialog.ViewConvertListener;
+import com.shehuan.nicedialog.ViewHolder;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -106,26 +110,58 @@ public class OverOrderActivity extends BaseActivity {
     //拒绝审核
     @SuppressLint("CheckResult")
     public void rejectOrder(View view) {
-        ServiceFactory.getInstance().getBaseService(Api.class)
-                .rejectAudit(data.getBuyOrderId()
-                        , data.getBothOrderId(), data.getSellOrderId())
-                .compose(bindToLifecycle())
-                .compose(RxSchedulers.normalTrans())
-                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                .subscribe(s -> {
-                    ToastUtils.showShort(R.string.rejectfinish);
-                    finish();
-                }, this::handleApiError);
+        NiceDialog.init().setLayoutId(R.layout.layout_general_dialog).setConvertListener(new ViewConvertListener() {
+            @Override
+            protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                holder.setText(R.id.tv_title, "拒绝审核");
+                holder.setText(R.id.tv_content, "拒绝审核会导致订单失败，恶意点击，将直接冻结账户。");
+                holder.setText(R.id.tv_cancel, "返回");
+                holder.setText(R.id.tv_notarize, "确认拒绝");
+                holder.setOnClickListener(R.id.tv_cancel, v1 -> dialog.dismiss());
+                holder.setOnClickListener(R.id.tv_notarize, v -> {
+                    dialog.dismiss();
+                    ServiceFactory.getInstance().getBaseService(Api.class)
+                            .rejectAudit(data.getBuyOrderId()
+                                    , data.getBothOrderId(), data.getSellOrderId())
+                            .compose(bindToLifecycle())
+                            .compose(RxSchedulers.normalTrans())
+                            .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(OverOrderActivity.this)))
+                            .subscribe(s -> {
+                                ToastUtils.showShort(R.string.rejectfinish);
+                                finish();
+                            }, OverOrderActivity.this::handleApiError);
+                });
+
+            }
+        }).setDimAmount(0.5f).setOutCancel(false).show(getSupportFragmentManager());
+
+
     }
 
     //通过审核
     @SuppressLint("CheckResult")
     public void overOrder(View view) {
-        KeyboardUtils.hideSoftInput(OverOrderActivity.this);
-        Rect rect = new Rect();
-        getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
-        int winHeight = getWindow().getDecorView().getHeight();
-        selectPopupWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, winHeight - rect.bottom);
+        NiceDialog.init().setLayoutId(R.layout.layout_general_dialog).setConvertListener(new ViewConvertListener() {
+            @Override
+            protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                holder.setText(R.id.tv_title, "通过审核");
+                holder.setText(R.id.tv_content, "请务必确认收到款项，并核对收款无误。");
+                holder.setText(R.id.tv_cancel, "取消");
+                holder.setText(R.id.tv_notarize, "确认");
+                holder.setOnClickListener(R.id.tv_cancel, v1 -> dialog.dismiss());
+                holder.setOnClickListener(R.id.tv_notarize, v -> {
+                    dialog.dismiss();
+                    KeyboardUtils.hideSoftInput(OverOrderActivity.this);
+                    Rect rect = new Rect();
+                    getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+                    int winHeight = getWindow().getDecorView().getHeight();
+                    selectPopupWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, winHeight - rect.bottom);
+                });
+
+            }
+        }).setDimAmount(0.5f).setOutCancel(false).show(getSupportFragmentManager());
+
+
     }
 
     public void back(View view) {

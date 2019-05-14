@@ -142,6 +142,7 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
         etExchangeChooseCount = findViewById(R.id.etExchangeChooseCount);
         etMinMoney = findViewById(R.id.etMinMoney);
         etMaxMoney = findViewById(R.id.etMaxMoney);
+        etMaxMoney.setEnabled(false);
         etExchangeChooseCount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -161,6 +162,8 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                     totalPrice = "0";
                 }
                 tvExchangeTotal.setText(totalPrice);
+                etMaxMoney.setText(s.toString());
+
             }
         });
         etMinMoney.addTextChangedListener(new TextWatcher() {
@@ -185,28 +188,28 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                 }
             }
         });
-        etMaxMoney.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.toString().length() == 0) {
-                    return;
-                }
-                if (!TextUtils.isEmpty(etExchangeChooseCount.getText().toString().trim()) &&
-                        Integer.parseInt(s.toString()) > Integer.parseInt(etExchangeChooseCount.getText().toString().trim())) {
-                    ToastUtils.showShort(R.string.input_outrate);
-                }
-            }
-        });
+//        etMaxMoney.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                if (s.toString().length() == 0) {
+//                    return;
+//                }
+//                if (!TextUtils.isEmpty(etExchangeChooseCount.getText().toString().trim()) &&
+//                        Integer.parseInt(s.toString()) > Integer.parseInt(etExchangeChooseCount.getText().toString().trim())) {
+//                    ToastUtils.showShort(R.string.input_outrate);
+//                }
+//            }
+//        });
 
         rgExchangeTop.setOnCheckedChangeListener(this);
         rgExchangeTop.check(R.id.rb1);
@@ -214,9 +217,15 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
 
     public void submit(View view) {
         if (TextUtils.isEmpty(etExchangeChooseCount.getText().toString())) {
-            ToastUtils.showShort(R.string.select_count_tips);
+            ToastUtils.showShort(getString(R.string.input_max_number));
             return;
         }
+
+        if (Integer.parseInt(etExchangeChooseCount.getText().toString()) < 50) {
+            ToastUtils.showShort(getString(R.string.number_max));
+            return;
+        }
+
         if (TextUtils.isEmpty(buyType) && buyOrSale) {
             ToastUtils.showShort(R.string.select_buytype_tips);
             return;
@@ -234,6 +243,7 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                             "1", buyType).compose(RxSchedulers.normalTrans()))
                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                     .subscribe(s -> {
+                        //购买
                         Intent intent = new Intent(this, ConfirmBuyActivity.class);
                         if (buyType.equals(PAYTYPE_WECHAT)) {
                             s.setReceiptNumber(s.getWechatNick());

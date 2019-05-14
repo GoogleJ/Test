@@ -858,7 +858,7 @@
     <string name="create_gamegroup_commit">确认建群</string>
     <string name="delete">删除</string>
     <string name="modify">修改</string>
-    <string name="waiting_audit">等到审核</string>
+    <string name="waiting_audit">等待审核</string>
     <string name="waiting_audit_prompt">提示:系统已经帮您通知了对方账户,若对方还未及时处理可以拨打电话与对方沟通.</string>
     <string name="add_buddy">加好友</string>
     <string name="contact_him">联系他</string>
@@ -882,4 +882,8 @@
     <string name="my_game_group">我的游戏群</string>
     <string name="create_game_group_success">创建成功</string>
     <string name="noscore">暂未在本群上分，无法游戏</string>
+    <string name="group_max_number">群成员已达上限,无法继续邀请</string>
+    <string name="number_max">数量不能小于50</string>
+    <string name="input_max_number">请输入数量并且不能小于50</string>
+    <string name="no_update_nick">暂无权限修改群昵称</string>
 </resources>

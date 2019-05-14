@@ -45,7 +45,7 @@ import io.rong.imlib.model.Message;
 /**
  * author L
  * create at 2019/5/8
- * description: 群添加成员   添加联系人
+ * description: 群添加成员  添加联系人 我的游戏群 新建游戏群
  */
 @SuppressLint("CheckResult")
 public class CreateGroupActivity extends BaseActivity {

@@ -3,6 +3,7 @@ package com.zxjk.duoduo.ui.grouppage;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -141,6 +142,12 @@ public class GroupChatInformationActivity extends BaseActivity {
         }
 
         addMembers.setOnClickListener(v -> {
+            if (!TextUtils.isEmpty(group.getMaxNumber())) {
+                if (group.getCustomers().size() >= Integer.parseInt(group.getMaxNumber())) {
+                    ToastUtils.showShort(getString(R.string.group_max_number));
+                    return;
+                }
+            }
             intent = new Intent(GroupChatInformationActivity.this, CreateGroupActivity.class);
             intent.putExtra("eventType", 2);
             intent.putExtra("members", group);
@@ -256,10 +263,15 @@ public class GroupChatInformationActivity extends BaseActivity {
     }
 
     public void groupChat(View view) {
-        Intent intent = new Intent(this, UpdateUserInfoActivity.class);
-        intent.putExtra("type", 4);
-        intent.putExtra("data", group);
-        startActivityForResult(intent, 1);
+        if (group.getGroupInfo().getGroupOwnerId().equals(Constant.currentUser.getId())) {
+            Intent intent = new Intent(this, UpdateUserInfoActivity.class);
+            intent.putExtra("type", 4);
+            intent.putExtra("data", group);
+            startActivityForResult(intent, 1);
+        } else {
+            ToastUtils.showShort(getString(R.string.no_update_nick));
+        }
+
     }
 
     @Override

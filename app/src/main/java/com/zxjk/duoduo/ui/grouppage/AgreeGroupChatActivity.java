@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.othershe.combinebitmap.CombineBitmap;
 import com.othershe.combinebitmap.layout.WechatLayoutManager;
 import com.zxjk.duoduo.Constant;
@@ -39,6 +40,9 @@ public class AgreeGroupChatActivity extends BaseActivity {
     TextView joinGroupBtn;
 
     private String groupName;
+
+    //是否游戏群
+    private boolean isGroup;
 
     @SuppressLint("CheckResult")
     @Override
@@ -72,6 +76,13 @@ public class AgreeGroupChatActivity extends BaseActivity {
                     .compose(RxSchedulers.normalTrans())
                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                     .subscribe(response -> {
+                        if (!TextUtils.isEmpty(response.getMaxNumber())) {
+                            if (response.getCustomers().size() >= Integer.parseInt(response.getMaxNumber())) {
+                                isGroup = true;
+                            }
+
+                        }
+
                         String s = "";
                         StringBuilder stringBuilder = new StringBuilder();
                         for (int i = 0; i < response.getCustomers().size(); i++) {
@@ -121,9 +132,15 @@ public class AgreeGroupChatActivity extends BaseActivity {
                     .setImageView(groupHeader) // 直接设置要显示图片的ImageView
                     .build();
             tvGroupName.setText(groupName + "(" + headUrls.split(",").length + "人)");
-        }
+            joinGroupBtn.setOnClickListener(v -> {
+                if (isGroup) {
+                    ToastUtils.showShort(getString(R.string.group_max_number));
+                    return;
+                }
+                enterGroup(groupId, inviterId, Constant.userId);
+            });
 
-        joinGroupBtn.setOnClickListener(v -> enterGroup(groupId, inviterId, Constant.userId));
+        }
     }
 
     @SuppressLint("CheckResult")

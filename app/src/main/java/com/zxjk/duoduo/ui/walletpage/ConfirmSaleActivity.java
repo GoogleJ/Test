@@ -53,7 +53,7 @@ public class ConfirmSaleActivity extends BaseActivity {
         tvConfirmSalePriceReference.setText(rate);
         tvConfirmSaleCount.setText(data.getNumber());
         tvConfirmSaleTotalPrice.setText(data.getMoney());
-        StringBuilder sb = new StringBuilder();
+
         if (data.getPayType().contains(",")) {
             String[] split = data.getPayType().split(",");
             for (String str : split) {
@@ -63,14 +63,12 @@ public class ConfirmSaleActivity extends BaseActivity {
                         break;
                     case "2":
                         iv_alipay.setVisibility(View.VISIBLE);
-
                         break;
                     case "3":
                         iv_bank.setVisibility(View.VISIBLE);
                         break;
                 }
             }
-
         } else {
             switch (data.getPayType()) {
                 case "1":
@@ -108,7 +106,13 @@ public class ConfirmSaleActivity extends BaseActivity {
         dialog.show();
     }
 
+
     public void back(View view) {
+        finish();
+    }
+
+    public void showOrders(View view) {
+        startActivity(new Intent(this, ExchangeListActivity.class));
         finish();
     }
 }

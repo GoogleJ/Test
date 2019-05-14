@@ -37,9 +37,17 @@ public class ReleaseSaleResponse implements Serializable {
     private String receiptNumber;
     private String receiptPicture;
     private String wechatNick;
-
     private String payTime;
     private String openBank;
+    private String mobile;
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 
     public String getWechatNick() {
         return wechatNick;
