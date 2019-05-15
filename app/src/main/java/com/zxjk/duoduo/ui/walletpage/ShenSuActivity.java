@@ -16,14 +16,9 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 
-import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.shehuan.nicedialog.BaseNiceDialog;
-import com.shehuan.nicedialog.NiceDialog;
-import com.shehuan.nicedialog.ViewConvertListener;
-import com.shehuan.nicedialog.ViewHolder;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -142,6 +137,10 @@ public class ShenSuActivity extends BaseActivity {
             ToastUtils.showShort(R.string.input_reason);
             return;
         }
+        if (TextUtils.isEmpty(url1)) {
+            ToastUtils.showShort(R.string.upload_picture);
+            return;
+        }
 
         GetOverOrderResponse data = (GetOverOrderResponse) getIntent().getSerializableExtra("data");
 
@@ -182,8 +181,6 @@ public class ShenSuActivity extends BaseActivity {
     public void back(View view) {
         finish();
     }
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

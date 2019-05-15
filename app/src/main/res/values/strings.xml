@@ -890,4 +890,5 @@
     <string name="input_ticheng">请输入提成比例</string>
     <string name="input_incorrect">输入有误，请重新输入</string>
     <string name="xiazhu_cancel">由于您中途退出，游戏发起失败</string>
+    <string name="upload_picture">申诉至少需要上传一张证明</string>
 </resources>
