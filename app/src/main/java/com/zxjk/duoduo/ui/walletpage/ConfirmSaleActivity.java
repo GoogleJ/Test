@@ -7,13 +7,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.shehuan.nicedialog.BaseNiceDialog;
+import com.shehuan.nicedialog.NiceDialog;
+import com.shehuan.nicedialog.ViewConvertListener;
+import com.shehuan.nicedialog.ViewHolder;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ReleasePurchase;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.ui.widget.dialog.ConfirmDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 @SuppressLint("CheckResult")
@@ -28,7 +31,6 @@ public class ConfirmSaleActivity extends BaseActivity {
     private TextView tvConfirmSaleTotalPrice;
     private ImageView iv_wechat, iv_alipay, iv_bank;
 
-    private ConfirmDialog dialog;
     private String rate;
 
     @Override
@@ -87,25 +89,36 @@ public class ConfirmSaleActivity extends BaseActivity {
 
     //取消订单
     public void cancelOrder(View view) {
-        if (dialog == null) {
-            dialog = new ConfirmDialog(this, "取消订单", "您确定要取消正在挂卖的订单么？", callback -> ServiceFactory.getInstance().getBaseService(Api.class)
-                    .closeSellOrder(data.getSellOrderId())
-                    .compose(bindToLifecycle())
-                    .compose(RxSchedulers.normalTrans())
-                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                    .subscribe(response -> {
-                        finish();
-                        Intent intent = new Intent(this, CancelOrderActivity.class);
-                        intent.putExtra("data", data);
-                        intent.putExtra("rate", rate);
-                        startActivity(intent);
-                    }, this::handleApiError));
-            dialog.setPoText(R.string.cancel_now);
-            dialog.setNegText(R.string.dontcancel_temp);
-        }
-        dialog.show();
-    }
+        NiceDialog.init().setLayoutId(R.layout.layout_general_dialog).setConvertListener(new ViewConvertListener() {
+            @Override
+            protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                holder.setText(R.id.tv_title, "取消订单");
+                holder.setText(R.id.tv_content, "您确定要取消正在挂卖的订单吗？");
+                holder.setText(R.id.tv_cancel, "立即取消");
+                holder.setText(R.id.tv_notarize, "暂不取消");
+                holder.setOnClickListener(R.id.tv_cancel, v -> dialog.dismiss());
+                holder.setOnClickListener(R.id.tv_notarize, v -> {
+                    dialog.dismiss();
+                    ServiceFactory.getInstance().getBaseService(Api.class)
+                            .closeSellOrder(data.getSellOrderId())
+                            .compose(bindToLifecycle())
+                            .compose(RxSchedulers.normalTrans())
+                            .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConfirmSaleActivity.this)))
+                            .subscribe(response -> {
+                                finish();
+                                Intent intent = new Intent(ConfirmSaleActivity.this, CancelOrderActivity.class);
+                                intent.putExtra("data", data);
+                                intent.putExtra("rate", rate);
+                                startActivity(intent);
+                            }, ConfirmSaleActivity.this::handleApiError);
 
+
+                });
+
+            }
+        }).setDimAmount(0.5f).setOutCancel(false).show(getSupportFragmentManager());
+
+    }
 
     public void back(View view) {
         finish();

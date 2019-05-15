@@ -16,6 +16,10 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.shehuan.nicedialog.BaseNiceDialog;
+import com.shehuan.nicedialog.NiceDialog;
+import com.shehuan.nicedialog.ViewConvertListener;
+import com.shehuan.nicedialog.ViewHolder;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ReleasePurchase;
@@ -75,7 +79,6 @@ public class ConfirmBuyActivity extends BaseActivity {
     private TextView tvConfirmBuyReceiverBank;
 
     private ConfirmDialog dialogConfirm;
-    private ConfirmDialog dialogCancel;
 
 
     @Override
@@ -162,48 +165,76 @@ public class ConfirmBuyActivity extends BaseActivity {
             ToastUtils.showShort(getString(R.string.please_upload_a_payment_voucher));
             return;
         }
-        if (dialogConfirm == null) {
-            dialogConfirm = new ConfirmDialog(this, getString(R.string.payment_confirmation), getString(R.string.please_confirm_that_you_have_paid_the_seller), callback -> ServiceFactory.getInstance().getBaseService(Api.class)
-                    .updateBuyPayState(data.getBothOrderId(), pictureUrl)
-                    .compose(RxSchedulers.normalTrans())
-                    .compose(bindToLifecycle())
-                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                    .subscribe(s -> {
-                        Intent intent = new Intent(this, WaitForJudgeActivity.class);
-                        data.setPayTime(String.valueOf(System.currentTimeMillis()));
-                        intent.putExtra("data", data);
-                        intent.putExtra("buytype", getIntent().getStringExtra("buytype"));
-                        intent.putExtra("rate", getIntent().getStringExtra("rate"));
-                        startActivity(intent);
-                        finish();
-                    }, this::handleApiError));
-        }
-        dialogConfirm.show();
+        NiceDialog.init().setLayoutId(R.layout.layout_general_dialog).setConvertListener(new ViewConvertListener() {
+            @Override
+            protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                holder.setText(R.id.tv_title, getString(R.string.payment_confirmation));
+                holder.setText(R.id.tv_content, getString(R.string.please_confirm_that_you_have_paid_the_seller));
+                holder.setText(R.id.tv_cancel, "取消");
+                holder.setText(R.id.tv_notarize, "确认");
+                holder.setOnClickListener(R.id.tv_cancel, v -> dialog.dismiss());
+                holder.setOnClickListener(R.id.tv_notarize, v -> {
+                    dialog.dismiss();
+                    ServiceFactory.getInstance().getBaseService(Api.class)
+                            .updateBuyPayState(data.getBothOrderId(), pictureUrl)
+                            .compose(RxSchedulers.normalTrans())
+                            .compose(bindToLifecycle())
+                            .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConfirmBuyActivity.this)))
+                            .subscribe(s -> {
+                                Intent intent = new Intent(ConfirmBuyActivity.this, WaitForJudgeActivity.class);
+                                data.setPayTime(String.valueOf(System.currentTimeMillis()));
+                                intent.putExtra("data", data);
+                                intent.putExtra("buytype", getIntent().getStringExtra("buytype"));
+                                intent.putExtra("rate", getIntent().getStringExtra("rate"));
+                                startActivity(intent);
+                                finish();
+                            }, ConfirmBuyActivity.this::handleApiError);
+
+
+                });
+
+            }
+        }).setDimAmount(0.5f).setOutCancel(false).show(getSupportFragmentManager());
+
+
     }
 
     //取消订单
     public void cancelOrder(View view) {
-        if (dialogCancel == null) {
-            dialogCancel = new ConfirmDialog(this, "取消订单", "取消订单不会退款，一天内取消 3笔交易会限制买入功能。", callback -> ServiceFactory.getInstance().getBaseService(Api.class)
-                    .cancelled(data.getBuyOrderId(), data.getBothOrderId(), data.getSellOrderId())
-                    .compose(RxSchedulers.normalTrans())
-                    .compose(bindToLifecycle())
-                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                    .subscribe(s -> {
-                        ReleasePurchase result = new ReleasePurchase();
-                        result.setSellOrderId(data.getBothOrderId());
-                        result.setCurrency(data.getCurrency());
-                        result.setNumber(data.getNumber());
-                        result.setMoney(data.getMoney());
-                        result.setPayType(getIntent().getStringExtra("buytype"));
-                        Intent intent = new Intent(this, CancelOrderActivity.class);
-                        intent.putExtra("data", result);
-                        intent.putExtra("rate", getIntent().getStringExtra("rate"));
-                        startActivity(intent);
-                        finish();
-                    }, this::handleApiError));
-        }
-        dialogCancel.show();
+        NiceDialog.init().setLayoutId(R.layout.layout_general_dialog).setConvertListener(new ViewConvertListener() {
+            @Override
+            protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                holder.setText(R.id.tv_title, "取消订单");
+                holder.setText(R.id.tv_content, "取消订单不会退款，一天内取消 3笔交易会限制买入功能。？");
+                holder.setText(R.id.tv_cancel, "取消");
+                holder.setText(R.id.tv_notarize, "确认");
+                holder.setOnClickListener(R.id.tv_cancel, v -> dialog.dismiss());
+                holder.setOnClickListener(R.id.tv_notarize, v -> {
+                    dialog.dismiss();
+                    ServiceFactory.getInstance().getBaseService(Api.class)
+                            .cancelled(data.getBuyOrderId(), data.getBothOrderId(), data.getSellOrderId())
+                            .compose(RxSchedulers.normalTrans())
+                            .compose(bindToLifecycle())
+                            .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConfirmBuyActivity.this)))
+                            .subscribe(s -> {
+                                ReleasePurchase result = new ReleasePurchase();
+                                result.setSellOrderId(data.getBothOrderId());
+                                result.setCurrency(data.getCurrency());
+                                result.setNumber(data.getNumber());
+                                result.setMoney(data.getMoney());
+                                result.setPayType(getIntent().getStringExtra("buytype"));
+                                Intent intent = new Intent(ConfirmBuyActivity.this, CancelOrderActivity.class);
+                                intent.putExtra("data", result);
+                                intent.putExtra("rate", getIntent().getStringExtra("rate"));
+                                startActivity(intent);
+                                finish();
+                            }, ConfirmBuyActivity.this::handleApiError);
+
+
+                });
+
+            }
+        }).setDimAmount(0.5f).setOutCancel(false).show(getSupportFragmentManager());
     }
 
     public void showQR(View view) {

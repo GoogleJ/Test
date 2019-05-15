@@ -3,6 +3,7 @@ package com.zxjk.duoduo.ui.walletpage;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.RadioGroup;
 
@@ -22,6 +23,7 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.walletpage.adapter.ExchangeListAdapter;
 import com.zxjk.duoduo.utils.CommonUtils;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +52,7 @@ public class ExchangeListActivity extends BaseActivity {
 
         String rate = getIntent().getStringExtra("rate");
 
-        mAdapter = new ExchangeListAdapter();
+        mAdapter = new ExchangeListAdapter(rate);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             GetOverOrderResponse g = (GetOverOrderResponse) adapter.getData().get(position);
             Intent intent = new Intent();
@@ -123,12 +125,20 @@ public class ExchangeListActivity extends BaseActivity {
                     }
                 }
             } else if (g.getStatus().equals("5")) {
+                String money = "";
+                if (!TextUtils.isEmpty(mAdapter.getItem(position).getMoney())) {
+                    money = mAdapter.getItem(position).getMoney();
+                } else {
+                    String r = rate.split(" ")[0];
+                    money = new DecimalFormat("0.00").format(CommonUtils.mul(Double.parseDouble(r), Double.parseDouble(mAdapter.getItem(position).getNumber())));
+                }
                 //挂单中
                 intent = new Intent(this, ConfirmSaleActivity.class);
                 ReleasePurchase data = new ReleasePurchase();
-                data.setPayType(g.getSellPayType());
-                data.setMoney(g.getMoney());
+                data.setPayType(g.getPayType());
+                data.setMoney(money);
                 data.setNumber(g.getNumber());
+
                 data.setCurrency(g.getCurrency());
                 data.setSellOrderId(g.getSellOrderId());
 
@@ -192,7 +202,7 @@ public class ExchangeListActivity extends BaseActivity {
                             if (r.getStatus().equals("3") || r.getStatus().equals("5")) {
                                 temp.add(r);
                             }
-                        } else if (flag == 2 && !r.getStatus().equals("3")) {
+                        } else if (flag == 2 && !r.getStatus().equals("3") && !r.getStatus().equals("5")) {
                             temp.add(r);
                         }
                     }

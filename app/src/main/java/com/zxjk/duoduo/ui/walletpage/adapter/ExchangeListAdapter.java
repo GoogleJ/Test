@@ -1,6 +1,7 @@
 package com.zxjk.duoduo.ui.walletpage.adapter;
 
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,6 +12,7 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.GetOverOrderResponse;
 import com.zxjk.duoduo.utils.CommonUtils;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
 
@@ -18,9 +20,11 @@ import java.text.SimpleDateFormat;
  * @author Administrator
  */
 public class ExchangeListAdapter extends BaseQuickAdapter<GetOverOrderResponse, BaseViewHolder> {
+    private String rate;
 
-    public ExchangeListAdapter() {
+    public ExchangeListAdapter(String rate) {
         super(R.layout.item_exchangelist);
+        this.rate = rate;
     }
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
@@ -37,7 +41,13 @@ public class ExchangeListAdapter extends BaseQuickAdapter<GetOverOrderResponse, 
 
         exchange_list_date.setText(CommonUtils.timeStamp2Date(item.getCreateTime()));
         exchange_list_currency.setText("HK");
-        exchange_list_money.setText(item.getMoney() + " CNY");
+        if (!TextUtils.isEmpty(item.getMoney())) {
+            exchange_list_money.setText(item.getMoney() + " CNY");
+        } else {
+            rate = rate.split(" ")[0];
+            exchange_list_money.setText(new DecimalFormat("0.00").format(CommonUtils.mul(Double.parseDouble(rate), Double.parseDouble(item.getNumber()))) + " CNY");
+        }
+
         exchange_list_number.setText(item.getNumber());
         exchange_list_type.setTextColor(Color.parseColor("#000000"));
 
