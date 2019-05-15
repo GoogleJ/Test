@@ -41,8 +41,8 @@
                 android:id="@+id/game_mask"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:layout_gravity="end"
-                android:layout_marginTop="2dp"
+                android:layout_gravity="end|bottom"
+                android:layout_marginBottom="2dp"
                 android:src="@drawable/ic_conversationlist_gameflag"
                 android:visibility="gone" />
 

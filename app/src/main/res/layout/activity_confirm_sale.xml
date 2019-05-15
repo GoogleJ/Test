@@ -228,7 +228,6 @@
         android:onClick="cancelOrder"
         android:text="@string/cancel_order"
         android:textColor="@color/m_my_qr_code_label"
-        android:textSize="16sp"
-        android:visibility="gone" />
+        android:textSize="16sp" />
 
 </LinearLayout>

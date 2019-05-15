@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.blankj.utilcode.util.DeviceUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -66,17 +67,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     AccountFreezeDialog dialog;
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        if (TextUtils.isEmpty(Constant.phoneUuid)) {
+            Constant.phoneUuid =
+                    TextUtils.isEmpty(DeviceUtils.getMacAddress()) ? DeviceUtils.getAndroidID() : DeviceUtils.getMacAddress();
+        }
+
         ButterKnife.bind(this);
         edit_mobile.setText(SPUtils.getInstance().getString("mobile"));
-
-
-//        login("18202987805", "123456");
-
     }
 
 
@@ -192,6 +193,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                 @Override
                 public void onError(RongIMClient.ErrorCode errorCode) {
+                    ToastUtils.showShort(R.string.connect_failed);
                     CommonUtils.destoryDialog();
                 }
             });

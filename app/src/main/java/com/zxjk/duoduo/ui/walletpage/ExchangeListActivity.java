@@ -104,6 +104,7 @@ public class ExchangeListActivity extends BaseActivity {
                         data.setPayTime(g.getPayTime());
                         data.setMobile(g.getMobile());
                         data.setReceiptPicture(g.getPayPicture());
+                        data.setCustomerId(Integer.parseInt(g.getSellId()));
                         intent.putExtra("buytype", g.getPayType());
                         intent.putExtra("data", data);
                         intent.putExtra("rate", rate);
@@ -121,21 +122,18 @@ public class ExchangeListActivity extends BaseActivity {
                         intent.putExtra("rate", rate);
                     }
                 }
-            } else if (g.getStatus().equals("4")) {
-                //卖方
-                if (g.getBuyNick().equals("")) {
-                    //挂单中
-                    intent = new Intent(this, ConfirmSaleActivity.class);
-                    ReleasePurchase data = new ReleasePurchase();
-                    data.setPayType(g.getSellPayType());
-                    data.setMoney(g.getMoney());
-                    data.setNumber(g.getNumber());
-                    data.setCurrency(g.getCurrency());
-                    data.setSellOrderId(g.getSellOrderId());
+            } else if (g.getStatus().equals("5")) {
+                //挂单中
+                intent = new Intent(this, ConfirmSaleActivity.class);
+                ReleasePurchase data = new ReleasePurchase();
+                data.setPayType(g.getSellPayType());
+                data.setMoney(g.getMoney());
+                data.setNumber(g.getNumber());
+                data.setCurrency(g.getCurrency());
+                data.setSellOrderId(g.getSellOrderId());
 
-                    intent.putExtra("data", data);
-                    intent.putExtra("rate", rate);
-                }
+                intent.putExtra("data", data);
+                intent.putExtra("rate", rate);
             } else {
                 //交易完成（1取消、2失败、0完成）
                 if (g.getStatus().equals("0")) {
@@ -191,8 +189,10 @@ public class ExchangeListActivity extends BaseActivity {
                     }
                     List<GetOverOrderResponse> temp = new ArrayList<>();
                     for (GetOverOrderResponse r : getOverOrderResponses) {
-                        if (flag == 1 && r.getStatus().equals("3")) {
-                            temp.add(r);
+                        if (flag == 1) {
+                            if (r.getStatus().equals("3") || r.getStatus().equals("5")) {
+                                temp.add(r);
+                            }
                         } else if (flag == 2 && !r.getStatus().equals("3")) {
                             temp.add(r);
                         }

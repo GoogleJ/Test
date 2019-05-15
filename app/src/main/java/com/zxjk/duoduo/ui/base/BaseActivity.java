@@ -21,13 +21,12 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import io.rong.imkit.RongIM;
 import top.zibin.luban.Luban;
 
 @SuppressLint({"CheckResult", "Registered"})
-public class BaseActivity extends RxAppCompatActivity  {
+public class BaseActivity extends RxAppCompatActivity {
     public RxPermissions rxPermissions = new RxPermissions(this);
-
-
 
     public interface PermissionResult {
         void onResult(boolean granted);
@@ -66,12 +65,14 @@ public class BaseActivity extends RxAppCompatActivity  {
         if (throwable.getCause() instanceof RxException.DuplicateLoginExcepiton ||
                 throwable instanceof RxException.DuplicateLoginExcepiton) {
             // 重复登录，挤掉线
+            RongIM.getInstance().disconnect();
+            Constant.clear();
+            MMKVUtils.getInstance().enCode("isLogin", false);
+
             ReLoginDialog reLoginDialog = new ReLoginDialog(this);
             reLoginDialog.setOnClickListener(() -> {
-                Constant.clear();
-                MMKVUtils.getInstance().enCode("isLogin", false);
                 Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             });
             reLoginDialog.show();

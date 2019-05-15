@@ -158,7 +158,6 @@
                 style="@style/RLayoutStyle"
                 android:onClick="enterETHOrders">
 
-
                 <TextView
                     android:id="@+id/tv_eth"
                     android:layout_width="wrap_content"
@@ -172,29 +171,29 @@
                     android:textColor="@color/theme_color"
                     android:textSize="16sp" />
 
-
-                <TextView
-                    android:id="@+id/tvBlockWalletETH1"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@id/tv_eth"
                     android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginEnd="15dp"
-                    android:text=""
-                    android:textColor="@color/theme_color"
-                    android:textSize="16sp" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tvBlockWalletETH2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@id/tv_eth"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="15dp"
-                    android:text=""
-                    android:textColor="@color/colorC"
-                    android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/tvBlockWalletETH1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/theme_color"
+                        android:textSize="16sp" />
 
+                    <TextView
+                        android:id="@+id/tvBlockWalletETH2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorC"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
 
             </RelativeLayout>
 

@@ -106,7 +106,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                     .setInActiveColor("#000000")
                     // 添加Item
                     .addItem(new BottomNavigationItem(R.drawable.tab_message_icon_nl, "消息").setInactiveIconResource(R.drawable.tab_message_icon_hl).setBadgeItem(badgeItem))
-                    .addItem(new BottomNavigationItem(R.drawable.tab_qun_icon_nl, "社群").setInactiveIconResource(R.drawable.tab_qun_icon_hl))
+                    .addItem(new BottomNavigationItem(R.drawable.tab_qun_icon_nl, "通讯录").setInactiveIconResource(R.drawable.tab_qun_icon_hl))
                     .addItem(new BottomNavigationItem(R.drawable.tab_wallet_icon_nl, "钱包").setInactiveIconResource(R.drawable.tab_wallet_icon_hl))
                     .addItem(new BottomNavigationItem(R.drawable.tab_setting_icon_nl, "我的").setInactiveIconResource(R.drawable.tab_setting_icon_hl))
                     //设置默认选中位置
@@ -143,6 +143,9 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                     .compose(bindUntilEvent(ActivityEvent.DESTROY))
                     .subscribe(aLong -> canFinish = false);
             return;
+        } else {
+            RongIM.getInstance().disconnect();
+            Constant.clear();
         }
         super.onBackPressed();
     }
@@ -176,11 +179,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                 switchFragment(msgFragment);
                 break;
             case 1:
-                if (Constant.isVerifyVerision) {
-                    switchFragment(contactFragment);
-                    break;
-                }
-                switchFragment(communityFragment);
+                switchFragment(contactFragment);
                 break;
             case 2:
                 if (Constant.isVerifyVerision) {

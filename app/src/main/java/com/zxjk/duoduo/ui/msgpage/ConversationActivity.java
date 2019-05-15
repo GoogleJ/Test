@@ -200,7 +200,6 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
 
     private void handleBean(String conversationType) {
         targetId = getIntent().getData().getQueryParameter("targetId");
-
         if (conversationType.equals("private")) {
             targetUserInfo = RongUserInfoManager.getInstance().getUserInfo(targetId);
             if (null == targetUserInfo) {
@@ -482,7 +481,6 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
     private ConversationFragment fragment;
     private MessageListAdapter messageAdapter;
 
-
     public void detail() {
         List<String> pathSegments = getIntent().getData().getPathSegments();
         String conversationType = pathSegments.get(pathSegments.size() - 1);
@@ -556,15 +554,12 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                                 Double maxMoney;
                                 GroupGamebettingRequeust requeust1 = GsonUtils.fromJson(data, GroupGamebettingRequeust.class);
 
-
                                 if (requeust1.getPlayName().equals("牛牛")) {
-
                                     //牛牛的最大赔率
                                     maxMoney = CommonUtils.mul(Double.parseDouble(requeust1.getBetMoneny()), Double.parseDouble("16"));
                                 } else {
                                     //其他类型的最大赔率
                                     maxMoney = CommonUtils.mul(Double.parseDouble(requeust1.getBetMoneny()), Double.parseDouble(requeust1.getMultiple()));
-
                                 }
 
                                 String balanceHK = getGroupGameParameterResponse.getBalanceHK();
@@ -599,6 +594,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                                                         }
                                                         Disposable subscribe = Observable.interval(0, 1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
                                                                 .take(time)
+                                                                .compose(bindUntilEvent(ActivityEvent.STOP))
                                                                 .subscribe(l -> {
                                                                     timeLeft = time - l;
                                                                     tvGameCountDown.setText((time - l) + "");
@@ -619,32 +615,27 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                                                             }
                                                         });
 
-                                                        viewHolder.getView(R.id.tv_determine).setOnClickListener(v -> {
-
-
-                                                            ServiceFactory.getInstance().getBaseService(Api.class)
-                                                                    .groupGamebetting(data)
-                                                                    .compose(RxSchedulers.ioObserver())
-                                                                    .compose(RxSchedulers.normalTrans())
-                                                                    .compose(bindToLifecycle())
-                                                                    .subscribe(s -> {
-
-                                                                        subscribe.dispose();
-                                                                        baseNiceDialog.dismiss();
-                                                                        ToastUtils.showShort(R.string.xiazhuchenggong);
-                                                                    }, t -> {
-                                                                        if (t instanceof RxException.ParamsException &&
-                                                                                ((RxException.ParamsException) t).getCode() == 502) {
-                                                                            //超时
-                                                                            ToastUtils.showShort(t.getMessage());
+                                                        viewHolder.getView(R.id.tv_determine).setOnClickListener(v ->
+                                                                ServiceFactory.getInstance().getBaseService(Api.class)
+                                                                        .groupGamebetting(data)
+                                                                        .compose(RxSchedulers.ioObserver())
+                                                                        .compose(RxSchedulers.normalTrans())
+                                                                        .compose(bindToLifecycle())
+                                                                        .subscribe(s -> {
                                                                             subscribe.dispose();
                                                                             baseNiceDialog.dismiss();
-                                                                            return;
-                                                                        }
-//
-                                                                        handleApiError(t);
-                                                                    });
-                                                        });
+                                                                            ToastUtils.showShort(R.string.xiazhuchenggong);
+                                                                        }, t -> {
+                                                                            if (t instanceof RxException.ParamsException &&
+                                                                                    ((RxException.ParamsException) t).getCode() == 502) {
+                                                                                //超时
+                                                                                ToastUtils.showShort(t.getMessage());
+                                                                                subscribe.dispose();
+                                                                                baseNiceDialog.dismiss();
+                                                                                return;
+                                                                            }
+                                                                            handleApiError(t);
+                                                                        }));
                                                     }
                                                 })
                                                 .setDimAmount(0.5f)
@@ -672,6 +663,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                                                 TextView tvGameCountDown = holder.getView(R.id.tvGameCountDown);
                                                 Disposable dd = Observable.interval(0, 1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
                                                         .take(time)
+                                                        .compose(bindUntilEvent(ActivityEvent.STOP))
                                                         .subscribe(l -> {
                                                             timeLeft = time - l;
                                                             tvGameCountDown.setText((time - l) + "");
@@ -692,19 +684,16 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                                                     }
                                                 });
                                                 //是
-
-                                                holder.setOnClickListener(R.id.tv_notarize, v12 -> {
-                                                    ServiceFactory.getInstance().getBaseService(Api.class)
-                                                            .groupGamebetting(dataJson)
-                                                            .compose(RxSchedulers.ioObserver())
-                                                            .compose(RxSchedulers.normalTrans())
-                                                            .compose(bindToLifecycle())
-                                                            .subscribe(s -> {
-                                                                dd.dispose();
-                                                                dialog.dismiss();
-                                                                ToastUtils.showShort(getString(R.string.xiazhuchenggong));
-                                                            }, ConversationActivity.this::handleApiError);
-                                                });
+                                                holder.setOnClickListener(R.id.tv_notarize, v12 -> ServiceFactory.getInstance().getBaseService(Api.class)
+                                                        .groupGamebetting(dataJson)
+                                                        .compose(RxSchedulers.ioObserver())
+                                                        .compose(RxSchedulers.normalTrans())
+                                                        .compose(bindToLifecycle())
+                                                        .subscribe(s -> {
+                                                            dd.dispose();
+                                                            dialog.dismiss();
+                                                            ToastUtils.showShort(getString(R.string.xiazhuchenggong));
+                                                        }, ConversationActivity.this::handleApiError));
                                                 //关闭
                                                 holder.setOnClickListener(R.id.iv_close, v1 -> {
                                                     dd.dispose();
@@ -714,8 +703,6 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                                         }).setDimAmount(0.5f)
                                                 .setOutCancel(false)
                                                 .show(getSupportFragmentManager());
-
-
                                     }
                                 } else {
                                     //积分不足

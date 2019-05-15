@@ -14,12 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.GsonUtils;
-import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.shehuan.nicedialog.BaseNiceDialog;
-import com.shehuan.nicedialog.NiceDialog;
-import com.shehuan.nicedialog.ViewConvertListener;
-import com.shehuan.nicedialog.ViewHolder;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -76,7 +71,6 @@ public class UserInfoActivity extends BaseActivity {
         TextView tv_title = findViewById(R.id.tv_title);
         tv_title.setText(getString(R.string.userinfo));
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());
-
 
         findViews();
 

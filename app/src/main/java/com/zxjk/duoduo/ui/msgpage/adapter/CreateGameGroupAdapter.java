@@ -2,10 +2,12 @@ package com.zxjk.duoduo.ui.msgpage.adapter;
 
 import android.content.Context;
 import android.os.Build;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -18,10 +20,16 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.shehuan.nicedialog.BaseNiceDialog;
+import com.shehuan.nicedialog.NiceDialog;
+import com.shehuan.nicedialog.ViewConvertListener;
+import com.shehuan.nicedialog.ViewHolder;
 import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZViewHolder;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.GetGameClassResponse;
+import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.ui.msgpage.widget.ChooseFanYongPopWindow;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.util.ArrayList;
@@ -29,7 +37,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
+    private BaseActivity activity;
     private String gameType = "1";
     private String playId = "";
     private String pumpingRate = "0.01";
@@ -52,11 +60,12 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         void click(String gameType, String playId, String pumpingRate, String proportionOfFees, String typeName, String commission);
     }
 
-    public CreateGameGroupAdapter(GetGameClassResponse response) {
+    public CreateGameGroupAdapter(GetGameClassResponse response, BaseActivity activity) {
         this.response = response;
         data.addAll(response.getCommissionConfig());
         proportionOfFees = response.getGroupClass().get(0).getGuaranteeFee();
         typeName = response.getGroupClass().get(0).getTypeName();
+        this.activity = activity;
     }
 
     @NonNull
@@ -285,6 +294,7 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     //确认建群按钮和添加返佣按钮
     private LinearLayout llAddFanYong;
     private LinearLayout llCommit;
+    private ChooseFanYongPopWindow chooseFanYongPopWindow;
 
     class ViewHolder2 extends RecyclerView.ViewHolder {
 
@@ -294,8 +304,31 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             llCommit = itemView.findViewById(R.id.llCommit);
 
             llAddFanYong.setOnClickListener(v -> {
+                List<GetGameClassResponse.CommissionConfigBean> temp = new ArrayList<>();
+                temp.addAll(response.getCommissionConfig());
+                l:
+                for (int i = 0; i < response.getCommissionConfig().size(); i++) {
+                    for (int j = 0; j < data.size(); j++) {
+                        if (data.get(j).getGrade().equals(response.getCommissionConfig().get(i).getGrade())) {
+                            temp.remove(response.getCommissionConfig().get(i));
+                            continue l;
+                        }
+                    }
+                }
+                chooseFanYongPopWindow = new ChooseFanYongPopWindow(v.getContext(), temp);
+                chooseFanYongPopWindow.setOnClickListener(bean -> {
+                    for (int i = 0; i < response.getCommissionConfig().size(); i++) {
+                        if (bean.getGrade().equals(response.getCommissionConfig().get(i).getGrade())) {
+                            data.add(i, bean);
+                            notifyItemInserted(i + 1);
+                            break;
+                        }
+                    }
+                });
 
+                chooseFanYongPopWindow.showPopupWindow();
             });
+
             llCommit.setOnClickListener(v -> {
                 //创建游戏群
                 if (!cbGame1.isChecked() && !cbGame2.isChecked() && !cbGame3.isChecked()) {
@@ -389,7 +422,32 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 notifyItemRemoved(getAdapterPosition());
             });
             tvModify.setOnClickListener(v -> {
-
+                NiceDialog.init().setLayoutId(R.layout.layout_general_dialog3).setConvertListener(new ViewConvertListener() {
+                    @Override
+                    protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                        holder.setText(R.id.tv_title, "提成比例");
+                        holder.setText(R.id.tv_cancel, "取消");
+                        holder.setText(R.id.tv_notarize, "确定");
+                        EditText editText = holder.getView(R.id.et_content);
+                        editText.setHint(R.string.input_ticheng);
+                        holder.setOnClickListener(R.id.tv_cancel, v1 -> dialog.dismiss());
+                        holder.setOnClickListener(R.id.tv_notarize, v -> {
+                            String trim = editText.getText().toString().trim();
+                            if (TextUtils.isEmpty(trim)) {
+                                ToastUtils.showShort(R.string.input_ticheng);
+                                return;
+                            }
+                            dialog.dismiss();
+                            try {
+                                Float.parseFloat(trim);
+                                data.get(getAdapterPosition() - 1).setCommission(trim);
+                                notifyItemChanged(getAdapterPosition());
+                            } catch (Exception e) {
+                                ToastUtils.showShort(R.string.input_incorrect);
+                            }
+                        });
+                    }
+                }).setDimAmount(0.5f).setOutCancel(false).show(activity.getSupportFragmentManager());
             });
         }
 

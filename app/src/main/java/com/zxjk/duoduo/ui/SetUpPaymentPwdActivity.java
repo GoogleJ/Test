@@ -208,6 +208,7 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
 
                 @Override
                 public void onError(RongIMClient.ErrorCode errorCode) {
+                    ToastUtils.showShort(R.string.connect_failed);
                 }
             });
         }

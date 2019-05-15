@@ -4,11 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 
+import com.blankj.utilcode.util.DeviceUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Application;
@@ -52,6 +54,9 @@ public class WelcomeActivity extends BaseActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (TextUtils.isEmpty(Constant.phoneUuid)) {
+            Constant.phoneUuid = TextUtils.isEmpty(DeviceUtils.getMacAddress()) ? DeviceUtils.getAndroidID() : DeviceUtils.getMacAddress();
+        }
         if (!isTaskRoot()) {
             Intent intent = getIntent();
             String action = intent.getAction();

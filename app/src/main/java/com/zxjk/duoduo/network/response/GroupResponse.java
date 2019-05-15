@@ -17,23 +17,6 @@ public class GroupResponse implements Serializable {
     private GroupInfoBean groupInfo;
     private String maxNumber;
     private List<CustomersBean> customers;
-    private String maxNumber;
-
-    public String getMaxNumber() {
-        return maxNumber;
-    }
-
-    public void setMaxNumber(String maxNumber) {
-        this.maxNumber = maxNumber;
-    }
-
-    public String getMaxNumber() {
-        return maxNumber;
-    }
-
-    public void setMaxNumber(String maxNumber) {
-        this.maxNumber = maxNumber;
-    }
 
     public String getMaxNumber() {
         return maxNumber;

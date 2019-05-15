@@ -53,7 +53,7 @@ public class CreateGameGroupActivity extends BaseActivity implements SelectPopup
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(bindToLifecycle())
                 .subscribe(response -> {
-                    adapter = new CreateGameGroupAdapter(response);
+                    adapter = new CreateGameGroupAdapter(response, CreateGameGroupActivity.this);
                     recycler.setAdapter(adapter);
                     adapter.setOnCreateGameGroupClick((gameType, playId, pumpingRate, proportionOfFees, typeName, commission) -> {
                         this.gameType = gameType;
