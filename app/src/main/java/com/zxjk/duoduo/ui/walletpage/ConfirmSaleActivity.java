@@ -96,8 +96,8 @@ public class ConfirmSaleActivity extends BaseActivity {
                 holder.setText(R.id.tv_content, "您确定要取消正在挂卖的订单吗？");
                 holder.setText(R.id.tv_cancel, "立即取消");
                 holder.setText(R.id.tv_notarize, "暂不取消");
-                holder.setOnClickListener(R.id.tv_cancel, v -> dialog.dismiss());
-                holder.setOnClickListener(R.id.tv_notarize, v -> {
+                holder.setOnClickListener(R.id.tv_notarize, v -> dialog.dismiss());
+                holder.setOnClickListener(R.id.tv_cancel, v -> {
                     dialog.dismiss();
                     ServiceFactory.getInstance().getBaseService(Api.class)
                             .closeSellOrder(data.getSellOrderId())
@@ -125,7 +125,9 @@ public class ConfirmSaleActivity extends BaseActivity {
     }
 
     public void showOrders(View view) {
-        startActivity(new Intent(this, ExchangeListActivity.class));
+        Intent intent = new Intent(this, ExchangeListActivity.class);
+        intent.putExtra("rate", rate);
+        startActivity(intent);
         finish();
     }
 }

@@ -125,7 +125,7 @@ public class ExchangeListActivity extends BaseActivity {
                     }
                 }
             } else if (g.getStatus().equals("5")) {
-                String money = "";
+                String money;
                 if (!TextUtils.isEmpty(mAdapter.getItem(position).getMoney())) {
                     money = mAdapter.getItem(position).getMoney();
                 } else {
@@ -143,6 +143,11 @@ public class ExchangeListActivity extends BaseActivity {
                 data.setSellOrderId(g.getSellOrderId());
 
                 intent.putExtra("data", data);
+                intent.putExtra("rate", rate);
+            } else if (g.getStatus().equals("4")) {
+                //todo 申诉
+                intent = new Intent(this, ExchangeOrderFailedActivity.class);
+                intent.putExtra("data", g);
                 intent.putExtra("rate", rate);
             } else {
                 //交易完成（1取消、2失败、0完成）

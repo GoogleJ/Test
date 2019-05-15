@@ -81,7 +81,6 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootview = LayoutInflater.from(getContext()).inflate(R.layout.activity_constacts_new_friend, container, false);
-        rootview.findViewById(R.id.rl_back).setVisibility(View.GONE);
         ButterKnife.bind(this, rootview);
         deleteDialog = new DeleteFriendInformationDialog(getActivity());
         initView(rootview);
@@ -92,7 +91,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
 
     private void initView(View rootview) {
         tv_title = rootview.findViewById(R.id.tv_title);
-        rootview.findViewById(R.id.rl_back).setOnClickListener(v -> getActivity().finish());
+        tv_title.setText(getString(R.string.phone_tunxun));
 
         layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);

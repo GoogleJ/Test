@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -25,7 +27,6 @@ import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
 
-import androidx.annotation.Nullable;
 import butterknife.ButterKnife;
 
 /**
@@ -131,7 +132,7 @@ public class SettingPayPwdActivity extends BaseActivity {
     @SuppressLint("CheckResult")
     public void settingPayPwd(String number, String securityCode, String newPwd, String newPwdTwo) {
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .fandPayPwd(number, securityCode, newPwd, newPwdTwo)
+                .fandPayPwd(number, securityCode, MD5Utils.getMD5(newPwd), MD5Utils.getMD5(newPwdTwo))
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())

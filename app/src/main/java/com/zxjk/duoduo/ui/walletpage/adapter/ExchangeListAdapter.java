@@ -65,11 +65,9 @@ public class ExchangeListAdapter extends BaseQuickAdapter<GetOverOrderResponse, 
         } else {
             //卖方
             exchange_list_icon.setImageResource(R.drawable.icon_sell);
-            if (item.getStatus().equals("5")) {
-                exchange_list_type.setText(R.string.guadan);
-            } else if (item.getIsBuyPay().equals("1")) {
+              if (item.getIsBuyPay().equals("1")) {
                 exchange_list_type.setText(R.string.wait_for_others_to_pay);
-            } else if (item.getIsDelete().equals("0")) {
+            } else if (item.getIsBuyPay().equals("0")) {
                 exchange_list_type.setText(R.string.sale_waitforjudge);
             }
         }
@@ -102,6 +100,14 @@ public class ExchangeListAdapter extends BaseQuickAdapter<GetOverOrderResponse, 
 
         if (item.getStatus().equals("1")) {
             exchange_list_type.setText(R.string.tradeCancel);
+        }
+
+        else if (item.getStatus().equals("4")) {
+            exchange_list_type.setText(R.string.shenhe_success);
+        }
+
+        if (item.getStatus().equals("5")) {
+            exchange_list_type.setText(R.string.guadan);
         }
     }
 
