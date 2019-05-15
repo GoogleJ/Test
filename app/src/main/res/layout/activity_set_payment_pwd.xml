@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:psd="http://schemas.android.com/tools"
     android:id="@+id/root_view"
     android:layout_width="match_parent"
@@ -9,13 +8,6 @@
 
     <include layout="@layout/layout_title_back" />
 
-    <com.zxjk.duoduo.ui.widget.TitleBar
-        android:id="@+id/m_set_payment_pwd_title_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        app:titleBarLeftImage="@drawable/ico_back"
-        app:titleBarTextColor="@color/white"
-        app:titleBarTitle="@string/update_pay_pwd" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/sv_main"
@@ -37,7 +29,7 @@
                 android:layout_marginTop="98dp"
                 android:text="@string/please_input_paypass"
                 android:textColor="@color/m_verification_send_btn"
-                android:textSize="19dp" />
+                android:textSize="18sp" />
 
             <com.zxjk.duoduo.ui.widget.PayPsdInputView
                 android:id="@+id/m_set_payment_pwd_edit"

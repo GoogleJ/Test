@@ -103,7 +103,6 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
             receiptTypePaymentName.setText(R.string.collection_code);
             receiptTypeRealCardName.setText(Constant.currentUser.getRealname());
             receiptTypePayment.setText(R.string.not_uploaded);
-            receiptTypeCardGo.setVisibility(View.GONE);
         } else if (alipay.equals(types)) {
             //支付宝信息，提交按钮已隐藏
             tv_title.setText(getString(R.string.alipy_info));
@@ -112,7 +111,6 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
             receiptTypePaymentName.setText(R.string.collection_code);
             receiptTypeRealCardName.setText(Constant.currentUser.getRealname());
             receiptTypePayment.setText(R.string.not_uploaded);
-            receiptTypeCardGo.setVisibility(View.GONE);
         } else {
             //银行卡信息，提交按钮已隐藏
             tv_title.setText(getString(R.string.bank_info));
@@ -120,7 +118,6 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
             receiptTypeCard.setText(R.string.bank_id_card);
             receiptTypePaymentName.setText(R.string.bank);
             receiptTypeRealName.setText(Constant.currentUser.getRealname());
-            receiptTypeGo.setVisibility(View.GONE);
         }
 
         if (types.equals(wechat) || types.equals(alipay)) {

@@ -35,6 +35,14 @@ public class GroupResponse implements Serializable {
         this.maxNumber = maxNumber;
     }
 
+    public String getMaxNumber() {
+        return maxNumber;
+    }
+
+    public void setMaxNumber(String maxNumber) {
+        this.maxNumber = maxNumber;
+    }
+
     public GroupInfoBean getGroupInfo() {
         return groupInfo;
     }
