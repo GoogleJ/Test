@@ -271,7 +271,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                                 extension.addPlugin(new GameStartPlugin());
                             }
                             extension.addPlugin(new GameJiaoYiPlugin());
-                            extension.addPlugin(new GameRulesPlugin());
+//                            extension.addPlugin(new GameRulesPlugin());
                             Constant.ownerIdForGameChat = groupInfo.getGroupInfo().getGroupOwnerId();
                         } else {
                             //群组plugin

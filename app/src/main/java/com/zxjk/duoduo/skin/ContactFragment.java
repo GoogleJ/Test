@@ -81,6 +81,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootview = LayoutInflater.from(getContext()).inflate(R.layout.activity_constacts_new_friend, container, false);
+        rootview.findViewById(R.id.rl_back).setVisibility(View.GONE);
         ButterKnife.bind(this, rootview);
         deleteDialog = new DeleteFriendInformationDialog(getActivity());
         initView(rootview);

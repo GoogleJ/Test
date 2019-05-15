@@ -422,6 +422,7 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 notifyItemRemoved(getAdapterPosition());
             });
             tvModify.setOnClickListener(v -> {
+                int adapterPosition = getAdapterPosition();
                 NiceDialog.init().setLayoutId(R.layout.layout_general_dialog3).setConvertListener(new ViewConvertListener() {
                     @Override
                     protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
@@ -429,7 +430,7 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         holder.setText(R.id.tv_cancel, "取消");
                         holder.setText(R.id.tv_notarize, "确定");
                         EditText editText = holder.getView(R.id.et_content);
-                        editText.setHint(R.string.input_ticheng);
+                        editText.setHint(data.get(adapterPosition - 1).getCommission());
                         holder.setOnClickListener(R.id.tv_cancel, v1 -> dialog.dismiss());
                         holder.setOnClickListener(R.id.tv_notarize, v -> {
                             String trim = editText.getText().toString().trim();
@@ -437,14 +438,15 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                                 ToastUtils.showShort(R.string.input_ticheng);
                                 return;
                             }
-                            dialog.dismiss();
                             try {
                                 Float.parseFloat(trim);
-                                data.get(getAdapterPosition() - 1).setCommission(trim);
-                                notifyItemChanged(getAdapterPosition());
+                                data.get(adapterPosition - 1).setCommission(trim);
+                                notifyItemChanged(adapterPosition);
                             } catch (Exception e) {
+                                e.printStackTrace();
                                 ToastUtils.showShort(R.string.input_incorrect);
                             }
+                            dialog.dismiss();
                         });
                     }
                 }).setDimAmount(0.5f).setOutCancel(false).show(activity.getSupportFragmentManager());

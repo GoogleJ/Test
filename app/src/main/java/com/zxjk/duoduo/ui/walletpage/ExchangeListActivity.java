@@ -155,7 +155,6 @@ public class ExchangeListActivity extends BaseActivity {
             startActivity(intent);
         });
 
-
         rgExchangeTop = findViewById(R.id.rgExchangeTop);
         refreshLayout = findViewById(R.id.refreshLayout);
         recyclerExchangeMyOrder = findViewById(R.id.recyclerExchangeMyOrder);

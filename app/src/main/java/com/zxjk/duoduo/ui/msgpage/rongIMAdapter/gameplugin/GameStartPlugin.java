@@ -7,20 +7,24 @@ import android.graphics.drawable.Drawable;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.trello.lifecycle2.android.lifecycle.AndroidLifecycle;
+import com.trello.rxlifecycle3.LifecycleProvider;
+import com.trello.rxlifecycle3.android.ActivityEvent;
+import com.trello.rxlifecycle3.android.FragmentEvent;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxException;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
-import com.zxjk.duoduo.ui.msgpage.ConversationActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
-import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Action;
 import io.rong.imkit.RongExtension;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.plugin.IPluginModule;
@@ -33,6 +37,8 @@ import io.rong.message.TextMessage;
 public class GameStartPlugin implements IPluginModule {
     private volatile boolean finish = true;
     private String textContent;
+
+    private LifecycleProvider<Lifecycle.Event> provider;
 
     @Override
     public Drawable obtainDrawable(Context context) {
@@ -47,6 +53,9 @@ public class GameStartPlugin implements IPluginModule {
     @SuppressLint("CheckResult")
     @Override
     public void onClick(Fragment fragment, RongExtension rongExtension) {
+        if (provider == null) {
+            provider = AndroidLifecycle.createLifecycleProvider(fragment);
+        }
         if (!finish) {
             return;
         }
@@ -58,6 +67,8 @@ public class GameStartPlugin implements IPluginModule {
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(fragment.getActivity())))
                 .subscribe(s -> Observable.interval(0, 1, TimeUnit.SECONDS)
                         .take(4)
+                        .compose(provider.bindUntilEvent(Lifecycle.Event.ON_STOP))
+                        .doOnComplete(() -> ToastUtils.showShort(R.string.xiazhu_cancel))
                         .subscribe(aLong -> {
                             if (aLong == 3) {
                                 textContent = "开始下注";
