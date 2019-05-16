@@ -75,12 +75,21 @@ public class WelcomeActivity extends BaseActivity {
 //                .compose(bindToLifecycle())
 //                .compose(RxSchedulers.ioObserver())
 //                .subscribe(response -> {
-//                    if (response.data.equals("0.0.1")) {
-//                        Constant.isVerifyVerision = true;
-//                    } else {
-//                        Constant.isVerifyVerision = false;
-//                        SPUtils.getInstance().put("isVerifyVerision", false);
+//                    if (response.code != Constant.CODE_SUCCESS) {
+//                        return;
 //                    }
+//                    GetAppVersionResponse data = response.data;
+//                    int appVersionCode = AppUtils.getAppVersionCode();
+//                    String appVersionName = AppUtils.getAppVersionName();
+//                    Log.e("appVersionCode", appVersionCode + "");
+//                    Log.e("appVersionName", appVersionName);
+//
+////                    if (data.getVersion().equals("0.0.1")) {
+////                        Constant.isVerifyVerision = true;
+////                    } else {
+////                        Constant.isVerifyVerision = false;
+////                        SPUtils.getInstance().put("isVerifyVerision", false);
+////                    }
 //                }, t -> {
 //                });
         WindowUtils.hideBottomUIMenu(this);
@@ -119,15 +128,13 @@ public class WelcomeActivity extends BaseActivity {
                         Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
-
                     }
                 });
             }
-
         } else {
+            ToastUtils.showShort(getString(R.string.login_again));
             MMKVUtils.getInstance().enCode("isLogin", false);
             startActivity(new Intent(this, LoginActivity.class));
         }
-
     }
 }

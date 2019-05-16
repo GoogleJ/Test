@@ -24,8 +24,10 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MMKVUtils;
 
+import io.rong.imkit.RongIM;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imlib.model.Group;
+import io.rong.imlib.model.UserInfo;
 
 import static android.text.InputType.TYPE_CLASS_TEXT;
 import static android.text.InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS;
@@ -168,6 +170,8 @@ public class UpdateUserInfoActivity extends BaseActivity {
                             break;
                         case TYPE_NICK:
                             Constant.currentUser.setNick(sign);
+                            UserInfo userInfo = new UserInfo(Constant.userId, Constant.currentUser.getNick(), Uri.parse(Constant.currentUser.getHeadPortrait()));
+                            RongIM.getInstance().setCurrentUserInfo(userInfo);
                             break;
                         case TYPE_SIGN:
                             Constant.currentUser.setSignature(sign);

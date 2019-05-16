@@ -20,10 +20,6 @@ public class GlideUtil {
     private static final int LOAD_CORNER = 2;
     private static final int LOAD_SOURCE = 3;
 
-    public static void loadImg(ImageView iv, String url) {
-        loadImage(iv, url, 0, 0, null);
-    }
-
     public static void loadNormalImg(ImageView iv, String url) {
         loadImage(iv, url, 0, 0, null);
     }

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -33,6 +34,9 @@ import com.zxjk.duoduo.utils.TakePicUtil;
 
 import java.io.File;
 import java.util.Collections;
+
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.UserInfo;
 
 /**
  * author L
@@ -236,6 +240,8 @@ public class UserInfoActivity extends BaseActivity {
                                 Constant.currentUser.setHeadPortrait(url);
                                 MMKVUtils.getInstance().enCode("login", Constant.currentUser);
                                 GlideUtil.loadCornerImg(iv_headPortrait, url, 5);
+                                UserInfo userInfo = new UserInfo(Constant.userId, Constant.currentUser.getNick(), Uri.parse(Constant.currentUser.getHeadPortrait()));
+                                RongIM.getInstance().setCurrentUserInfo(userInfo);
                                 ToastUtils.showShort(R.string.update_head_portrail);
                             }, UserInfoActivity.this::handleApiError);
                 });

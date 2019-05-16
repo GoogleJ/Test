@@ -19,6 +19,7 @@ import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxException;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
+import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.util.concurrent.TimeUnit;
@@ -38,8 +39,6 @@ public class GameStartPlugin implements IPluginModule {
     private volatile boolean finish = true;
     private String textContent;
 
-    private LifecycleProvider<Lifecycle.Event> provider;
-
     @Override
     public Drawable obtainDrawable(Context context) {
         return ContextCompat.getDrawable(context, R.drawable.ic_plugin_game_start);
@@ -53,9 +52,6 @@ public class GameStartPlugin implements IPluginModule {
     @SuppressLint("CheckResult")
     @Override
     public void onClick(Fragment fragment, RongExtension rongExtension) {
-        if (provider == null) {
-            provider = AndroidLifecycle.createLifecycleProvider(fragment);
-        }
         if (!finish) {
             return;
         }
@@ -65,10 +61,14 @@ public class GameStartPlugin implements IPluginModule {
                 .beforeBet(rongExtension.getTargetId())
                 .compose(RxSchedulers.normalTrans())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(fragment.getActivity())))
+                .compose(((BaseActivity) fragment.getActivity()).bindUntilEvent(ActivityEvent.DESTROY))
                 .subscribe(s -> Observable.interval(0, 1, TimeUnit.SECONDS)
                         .take(4)
-                        .compose(provider.bindUntilEvent(Lifecycle.Event.ON_STOP))
-                        .doOnComplete(() -> ToastUtils.showShort(R.string.xiazhu_cancel))
+                        .doOnDispose(() -> {
+                            finish = true;
+                            ToastUtils.showShort(R.string.xiazhu_cancel);
+                        })
+                        .compose(((BaseActivity) fragment.getActivity()).bindUntilEvent(ActivityEvent.STOP))
                         .subscribe(aLong -> {
                             if (aLong == 3) {
                                 textContent = "开始下注";

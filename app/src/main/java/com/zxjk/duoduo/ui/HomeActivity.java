@@ -1,8 +1,13 @@
 package com.zxjk.duoduo.ui;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -10,12 +15,21 @@ import androidx.fragment.app.FragmentTransaction;
 import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.blankj.utilcode.util.Utils;
+import com.shehuan.nicedialog.BaseNiceDialog;
+import com.shehuan.nicedialog.NiceDialog;
+import com.shehuan.nicedialog.ViewConvertListener;
+import com.shehuan.nicedialog.ViewHolder;
 import com.trello.rxlifecycle3.android.ActivityEvent;
+import com.zxjk.duoduo.BuildConfig;
 import com.zxjk.duoduo.Constant;
+import com.zxjk.duoduo.DuoDuoFileProvider;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.GetAppVersionResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.skin.ContactFragment;
 import com.zxjk.duoduo.ui.base.BaseActivity;
@@ -24,6 +38,7 @@ import com.zxjk.duoduo.ui.minepage.MineFragment;
 import com.zxjk.duoduo.ui.msgpage.MsgFragment;
 import com.zxjk.duoduo.ui.walletpage.WalletFragment;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -59,6 +74,13 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        File file = new File(Utils.getApp().getCacheDir(), AppUtils.getAppVersionName() + ".apk");
+        if (file.exists()) {
+            file.delete();
+        }
+
+        getVersion();
 
         initFriendList();
 
@@ -129,6 +151,97 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                 badgeItem.show(true);
             }
         }, Conversation.ConversationType.PRIVATE, Conversation.ConversationType.GROUP);
+    }
+
+    private long max1;
+
+    //获取版本
+    @SuppressLint("CheckResult")
+    private void getVersion() {
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .getAppVersion()
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.ioObserver())
+                .subscribe(response -> {
+                    if (response.code != Constant.CODE_SUCCESS) {
+                        return;
+                    }
+                    GetAppVersionResponse data = response.data;
+                    String appVersionName = AppUtils.getAppVersionName();
+
+                    if (!appVersionName.equals(data.getVersion())) {
+                        NiceDialog.init().setLayoutId(R.layout.dialog_update).setConvertListener(new ViewConvertListener() {
+                            @Override
+                            protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                                holder.getView(R.id.ivClose).setVisibility(data.getIsEnforcement().equals("0") ? View.VISIBLE : View.GONE);
+                                TextView tvUpdate = holder.getView(R.id.tvUpdate);
+                                tvUpdate.setOnClickListener(v -> {
+                                    //后台下载APK并更新
+                                    ServiceFactory.downFile(data.getVersion(), data.getUpdateAddress(), new ServiceFactory.DownloadListener() {
+                                        @Override
+                                        public void onStart(long max) {
+                                            runOnUiThread(() -> tvUpdate.setClickable(false));
+                                            max1 = max;
+                                            ToastUtils.showShort(R.string.update_start);
+                                        }
+
+                                        @Override
+                                        public void onProgress(long progress) {
+                                            runOnUiThread(() -> tvUpdate.setText((int) ((float) progress / max1 * 100) + "%"));
+                                        }
+
+                                        @Override
+                                        public void onSuccess() {
+                                            runOnUiThread(() -> {
+                                                tvUpdate.setClickable(true);
+                                                tvUpdate.setText(R.string.dianjianzhuang);
+                                                tvUpdate.setOnClickListener(v1 -> {
+                                                    File file = new File(Utils.getApp().getCacheDir(), data.getVersion() + ".apk");// 设置路径
+                                                    Intent intent = installIntent(file.getPath());
+                                                    if (intent != null) {
+                                                        startActivity(intent);
+                                                    }
+                                                });
+                                                tvUpdate.performClick();
+                                            });
+                                        }
+
+                                        @Override
+                                        public void onFailure() {
+                                            runOnUiThread(() -> {
+                                                tvUpdate.setClickable(true);
+                                                tvUpdate.setText(R.string.dianjichongshi);
+                                            });
+                                            ToastUtils.showShort(R.string.update_failure);
+                                        }
+                                    });
+                                });
+                                holder.setOnClickListener(R.id.ivClose, v -> dialog.dismiss());
+                                holder.setText(R.id.tv, data.getUpdateContent());
+                            }
+                        }).setDimAmount(0.5f).setOutCancel(data.getIsEnforcement().equals("0")).show(getSupportFragmentManager());
+                    }
+                }, t -> {
+                });
+    }
+
+    private Intent installIntent(String path) {
+        try {
+            File file = new File(path);
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.setDataAndType(DuoDuoFileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".FileProvider", file),
+                        "application/vnd.android.package-archive");
+            } else {
+                intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+            }
+            return intent;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private boolean canFinish = false;

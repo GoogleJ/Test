@@ -88,7 +88,7 @@ public class AddFriendDetailsActivity extends BaseActivity {
             tvDuoDuoNumber.setText(getString(R.string.duoduo_acount) + " " + newFriend.getDuoduoId());
             tvDistrict.setText(getString(R.string.district) + " " + newFriend.getAddress());
             tvSignature.setText(newFriend.getSignature());
-            GlideUtil.loadImg(ivHeadPortrait, newFriend.getHeadPortrait());
+            GlideUtil.loadCornerImg(ivHeadPortrait, newFriend.getHeadPortrait(), 5);
             String sex = "0";
             if (sex.equals(newFriend.getSex())) {
                 ivGender.setImageDrawable(getDrawable(R.drawable.icon_gender_man));

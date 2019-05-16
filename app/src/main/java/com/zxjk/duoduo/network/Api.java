@@ -6,6 +6,7 @@ import com.zxjk.duoduo.network.response.CreateWalletResponse;
 import com.zxjk.duoduo.network.response.DetailListResposne;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.response.GetAllPlayGroupResponse;
+import com.zxjk.duoduo.network.response.GetAppVersionResponse;
 import com.zxjk.duoduo.network.response.GetBalanceHkResponse;
 import com.zxjk.duoduo.network.response.GetBetConutBygroupIdResponse;
 import com.zxjk.duoduo.network.response.GetBetInfoDetailsResponse;
@@ -546,7 +547,7 @@ public interface Api {
     Observable<BaseResponse<String>> getWithdrawalAmount(@Field("groupId") String groupId, @Field("groupOwnerId") String groupOwnerId, @Field("num") String num, @Field("payPwd") String payPwd);
 
     @POST("duoduo/customer/getAppVersion")
-    Observable<BaseResponse<String>> getAppVersion();
+    Observable<BaseResponse<GetAppVersionResponse>> getAppVersion();
 
     @POST("duoduo/playRebate/getRebatePayRecord")
     @FormUrlEncoded

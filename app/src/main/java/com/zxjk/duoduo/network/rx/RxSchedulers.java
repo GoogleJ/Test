@@ -29,13 +29,13 @@ public class RxSchedulers {
                 .doOnSubscribe(disposable -> {
                     if (d != null) d.show();
                 })
+                .doOnDispose(() -> {
+                    if (d != null) CommonUtils.destoryDialog();
+                })
                 .doOnNext(t -> {
                     if (d != null) CommonUtils.destoryDialog();
                 })
                 .doOnError(t -> {
-                    if (d != null) CommonUtils.destoryDialog();
-                })
-                .doOnDispose(() -> {
                     if (d != null) CommonUtils.destoryDialog();
                 })
                 .doOnComplete((Action) () -> {

@@ -32,6 +32,7 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.widget.ChooseFanYongPopWindow;
 import com.zxjk.duoduo.utils.CommonUtils;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -317,13 +318,8 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 }
                 chooseFanYongPopWindow = new ChooseFanYongPopWindow(v.getContext(), temp);
                 chooseFanYongPopWindow.setOnClickListener(bean -> {
-                    for (int i = 0; i < response.getCommissionConfig().size(); i++) {
-                        if (bean.getGrade().equals(response.getCommissionConfig().get(i).getGrade())) {
-                            data.add(i, bean);
-                            notifyItemInserted(i + 1);
-                            break;
-                        }
-                    }
+                    data.add(bean);
+                    notifyItemInserted(data.size());
                 });
 
                 chooseFanYongPopWindow.showPopupWindow();
@@ -371,20 +367,7 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     if (!showFanYong) {
                         commission = "";
                     } else {
-                        List<GetGameClassResponse.CommissionConfigBean> temp = new ArrayList<>(response.getCommissionConfig().size());
-
-                        for (int i = 0; i < data.size(); i++) {
-                            GetGameClassResponse.CommissionConfigBean t = response.getCommissionConfig().get(i);
-                            GetGameClassResponse.CommissionConfigBean commissionConfigBean = new GetGameClassResponse.CommissionConfigBean();
-                            commissionConfigBean.setMax(t.getMax());
-                            commissionConfigBean.setMin(t.getMin());
-                            commissionConfigBean.setGrade(t.getGrade());
-                            commissionConfigBean.setCommission(t.getCommission());
-                            commissionConfigBean.setRemarks("");
-                            temp.add(commissionConfigBean);
-                        }
-
-                        commission = GsonUtils.toJson(temp, false);
+                        commission = GsonUtils.toJson(data, false);
                     }
                 }
 
@@ -430,7 +413,8 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         holder.setText(R.id.tv_cancel, "取消");
                         holder.setText(R.id.tv_notarize, "确定");
                         EditText editText = holder.getView(R.id.et_content);
-                        editText.setHint(data.get(adapterPosition - 1).getCommission());
+                        DecimalFormat df = new DecimalFormat("0.0000");
+                        editText.setHint(df.format(Float.parseFloat(data.get(adapterPosition - 1).getCommission())));
                         holder.setOnClickListener(R.id.tv_cancel, v1 -> dialog.dismiss());
                         holder.setOnClickListener(R.id.tv_notarize, v -> {
                             String trim = editText.getText().toString().trim();
@@ -467,4 +451,5 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             ll.getLayoutParams().height = (showFanYong ? height : 0);
         }
     }
+
 }
