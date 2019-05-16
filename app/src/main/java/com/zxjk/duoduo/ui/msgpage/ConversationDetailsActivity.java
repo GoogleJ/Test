@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -20,7 +21,6 @@ import com.zxjk.duoduo.ui.HomeActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.widget.CommonPopupWindow;
 import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendInformationDialog;
-import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 
@@ -41,11 +41,7 @@ import io.rong.message.CommandMessage;
  */
 @SuppressLint("CheckResult")
 public class ConversationDetailsActivity extends BaseActivity implements View.OnClickListener, CommonPopupWindow.ViewInterface {
-    /**
-     * 标题布局
-     */
-    @BindView(R.id.m_people_information_title_bar)
-    TitleBar titleBar;
+
     /**
      * 发送消息按钮
      */
@@ -106,6 +102,11 @@ public class ConversationDetailsActivity extends BaseActivity implements View.On
      */
     @BindView(R.id.m_people_information_copy_wallet_address)
     ImageView copyBtn;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.rl_end)
+    RelativeLayout rlEnd;
+
     private CommonPopupWindow popupWindow;
 
     DeleteFriendInformationDialog dialog;
@@ -141,24 +142,13 @@ public class ConversationDetailsActivity extends BaseActivity implements View.On
     }
 
     private void initUI() {
-        titleBar.getLeftImageView().setOnClickListener(v -> finish());
-        titleBar.getRightImageView().setOnClickListener(v -> {
-            if (popupWindow != null && popupWindow.isShowing()) {
-                return;
-            }
-            popupWindow = new CommonPopupWindow.Builder(ConversationDetailsActivity.this)
-                    .setView(R.layout.popup_window_people_information)
-                    .setWidthAndHeight(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                    .setAnimationStyle(R.style.AnimDown)
-                    .setBackGroundLevel(0.5f)
-                    .setViewOnclickListener(ConversationDetailsActivity.this::getChildView)
-                    .setOutsideTouchable(true)
-                    .create();
-            popupWindow.showAsDropDown(titleBar.getRightImageView());
-        });
+        tvTitle.setText(getString(R.string.m_information_title_bar));
+        rlEnd.setVisibility(View.VISIBLE);
+
+
     }
 
-    @OnClick({R.id.m_people_information_send_to_message, R.id.m_people_information_voice_calls})
+    @OnClick({R.id.m_people_information_send_to_message, R.id.m_people_information_voice_calls, R.id.rl_back, R.id.rl_end})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -203,6 +193,25 @@ public class ConversationDetailsActivity extends BaseActivity implements View.On
                     dialog.dismiss();
                 });
                 dialog.show(friendInfoResponse.getNick());
+
+                break;
+            case R.id.rl_back:
+                finish();
+                break;
+            case R.id.rl_end:
+
+                if (popupWindow != null && popupWindow.isShowing()) {
+                    return;
+                }
+                popupWindow = new CommonPopupWindow.Builder(ConversationDetailsActivity.this)
+                        .setView(R.layout.popup_window_people_information)
+                        .setWidthAndHeight(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                        .setAnimationStyle(R.style.AnimDown)
+                        .setBackGroundLevel(0.5f)
+                        .setViewOnclickListener(ConversationDetailsActivity.this::getChildView)
+                        .setOutsideTouchable(true)
+                        .create();
+                popupWindow.showAsDropDown(rlEnd);
 
                 break;
             default:
@@ -292,4 +301,6 @@ public class ConversationDetailsActivity extends BaseActivity implements View.On
         super.onDestroy();
         finish();
     }
+
+
 }

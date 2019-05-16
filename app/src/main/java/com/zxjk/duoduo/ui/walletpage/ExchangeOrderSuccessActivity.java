@@ -14,8 +14,14 @@ import com.zxjk.duoduo.ui.ImgActivity;
 
 import java.text.SimpleDateFormat;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class ExchangeOrderSuccessActivity extends AppCompatActivity {
 
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     private TextView tv2;
     private TextView tv3;
     private TextView tv4;
@@ -23,13 +29,13 @@ public class ExchangeOrderSuccessActivity extends AppCompatActivity {
     private TextView tv7;
     private TextView tv8;
     private ImageView iv_wechat, iv_alipay, iv_bank;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exchange_order_detail);
-
-        findViewById(R.id.iv_back).setOnClickListener(v -> finish());
-
+        ButterKnife.bind(this);
+        tvTitle.setText(getString(R.string.order));
         tv2 = findViewById(R.id.tv2);
         tv3 = findViewById(R.id.tv3);
         tv4 = findViewById(R.id.tv4);
@@ -65,4 +71,8 @@ public class ExchangeOrderSuccessActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @OnClick(R.id.rl_back)
+    public void onClick() {
+        finish();
+    }
 }

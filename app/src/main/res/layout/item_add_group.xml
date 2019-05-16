@@ -17,7 +17,7 @@
         android:paddingTop="2dp"
         android:paddingBottom="2dp"
         android:text="A"
-        android:textColor="@color/textColor9"
+        android:textColor="@color/color9"
         android:textSize="14sp"
         android:visibility="gone" />
 

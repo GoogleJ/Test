@@ -143,6 +143,7 @@ public class CreateGroupActivity extends BaseActivity {
         adapter4.setData(data2);
         adapter3.setData(data3);
         adapter4.setOnClickListener((item, check, position) -> {
+
             int realPosition = data3.indexOf(item);
             if (data3.contains(item)) {
                 selectedIds.remove(item.getId());
@@ -164,23 +165,37 @@ public class CreateGroupActivity extends BaseActivity {
         adapter1 = new CreateGroupTopAdapter();
         recycler1.setAdapter(adapter1);
 
-        adapter2 = new CreateGroupAdapter();
+        adapter2 = new CreateGroupAdapter(true);
         recycler2.setLayoutManager(new LinearLayoutManager(this));
         recycler2.setAdapter(adapter2);
         recycler2.setItemAnimator(null);
 
         adapter2.setOnClickListener((item, check, position) -> {
+
             int realPosition = data1.indexOf(item);
             if (data1.contains(item)) {
+                item.setChecked(!item.isChecked());
+                adapter2.notifyItemChanged(position);
                 selectedIds.remove(item.getId());
                 data1.remove(item);
                 adapter1.notifyItemRemoved(realPosition);
+
+                tv_commit.setText(confirmText + "(" + data1.size() + ")");
+                adapter2.notifyDataSetChanged();
             } else {
-                selectedIds.add(item.getId());
-                data1.add(item);
-                adapter1.notifyItemInserted(data.size() - 1);
+                if (adapter1.getItemCount() < 5) {
+                    item.setChecked(!item.isChecked());
+                    adapter2.notifyItemChanged(position);
+                    selectedIds.add(item.getId());
+                    data1.add(item);
+                    adapter1.notifyItemInserted(data.size() - 1);
+                    tv_commit.setText(confirmText + "(" + data1.size() + ")");
+                    adapter2.notifyDataSetChanged();
+                } else {
+                    ToastUtils.showShort("群聊邀请每次最多可邀请五名好友");
+                }
             }
-            tv_commit.setText(confirmText + "(" + data1.size() + ")");
+
         });
         adapter2.setData1(data2);
         initData();

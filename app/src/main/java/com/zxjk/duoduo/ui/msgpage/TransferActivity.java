@@ -26,13 +26,15 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.HomeActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferMessage;
-import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.ui.widget.dialog.SelectPopupWindow;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.utils.MD5Utils;
 import com.zxjk.duoduo.utils.MoneyValueFilter;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.reactivex.ObservableSource;
 import io.reactivex.functions.Function;
 import io.rong.imkit.RongIM;
@@ -44,7 +46,6 @@ import io.rong.imlib.model.UserInfo;
 
 public class TransferActivity extends BaseActivity implements SelectPopupWindow.OnPopWindowClickListener {
 
-    TitleBar titleBar;
     TextView commitBtn;
     TextView m_transfer_nick_name;
     EditText etTransferInfo;
@@ -53,20 +54,17 @@ public class TransferActivity extends BaseActivity implements SelectPopupWindow.
 
     SelectPopupWindow selectPopupWindow;
     UserInfo targetUser;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
 
     @SuppressLint({"CheckResult", "SetTextI18n"})
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer);
-
+        ButterKnife.bind(this);
+        tvTitle.setText(getString(R.string.m_transfer_title_bar));
         selectPopupWindow = new SelectPopupWindow(this, this);
-
-        titleBar = findViewById(R.id.m_transfer_title_bar);
-        titleBar.getLeftImageView().setOnClickListener(v -> {
-            CommonUtils.hideInputMethod(this);
-            finish();
-        });
         etTransferInfo = findViewById(R.id.etTransferInfo);
         m_transfer_money_text = findViewById(R.id.m_transfer_money_text);
         m_transfer_heard_icon = findViewById(R.id.m_transfer_heard_icon);
@@ -183,5 +181,10 @@ public class TransferActivity extends BaseActivity implements SelectPopupWindow.
                         });
                     }, this::handleApiError);
         }
+    }
+
+    @OnClick(R.id.rl_back)
+    public void onClick() {
+        finish();
     }
 }

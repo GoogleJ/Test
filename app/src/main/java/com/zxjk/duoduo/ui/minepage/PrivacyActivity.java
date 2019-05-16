@@ -3,35 +3,32 @@ package com.zxjk.duoduo.ui.minepage;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
+
+import androidx.annotation.Nullable;
 
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.ui.widget.TitleBar;
 
-import androidx.annotation.Nullable;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author Administrator
  */
 public class PrivacyActivity extends BaseActivity {
-    TitleBar titleBar;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_privacy);
-        titleBar = findViewById(R.id.m_privacy_title_bar);
-        initView();
+        ButterKnife.bind(this);
+        tvTitle.setText(getString(R.string.m_privacy_title_bar));
     }
 
-    private void initView() {
-        titleBar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-    }
 
     /**
      * 添加我的方式页面的跳转
@@ -41,4 +38,8 @@ public class PrivacyActivity extends BaseActivity {
 
     }
 
+    @OnClick(R.id.rl_back)
+    public void onClick() {
+        finish();
+    }
 }

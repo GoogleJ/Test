@@ -7,25 +7,37 @@ import android.widget.TextView;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * @author Administrator
  */
 public class TransferSuccessActivity extends BaseActivity {
 
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer_success);
+        ButterKnife.bind(this);
+        tvTitle.setText(getString(R.string.m_successful_transfer_title_bar));
         TextView tvTransferSuccessFriend = findViewById(R.id.tvTransferSuccessFriend);
         TextView tvTransferSuccessMoney = findViewById(R.id.tvTransferSuccessMoney);
         tvTransferSuccessFriend.setText("待好友" + getIntent().getStringExtra("name") + "确认收款");
         tvTransferSuccessMoney.setText(getIntent().getStringExtra("money"));
     }
-    public void back(View view) {
+
+
+    public void submit(View view) {
         finish();
     }
 
-    public void submit(View view) {
+    @OnClick(R.id.rl_back)
+    public void onClick() {
         finish();
     }
 }

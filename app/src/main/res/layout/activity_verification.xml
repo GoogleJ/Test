@@ -21,7 +21,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="15dp"
             android:text="@string/verifying_application"
-            android:textColor="@color/textColor9"
+            android:textColor="@color/color9"
             android:textSize="14sp" />
 
     </RelativeLayout>

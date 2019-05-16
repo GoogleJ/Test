@@ -11,8 +11,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.GetOverOrderResponse;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class ExchangeOrderCancelActivity extends AppCompatActivity {
 
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     private TextView tvConfirmSaleOrderId;
     private TextView tvConfirmSaleCoinType;
     private TextView tvConfirmSalePriceReference;
@@ -24,8 +30,8 @@ public class ExchangeOrderCancelActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exchange_order_cancel);
-
-        findViewById(R.id.iv_back).setOnClickListener(v -> finish());
+        ButterKnife.bind(this);
+        tvTitle.setText(getString(R.string.order));
 
         tvConfirmSaleOrderId = findViewById(R.id.tvConfirmSaleOrderId);
         tvConfirmSaleCoinType = findViewById(R.id.tvConfirmSaleCoinType);
@@ -52,5 +58,10 @@ public class ExchangeOrderCancelActivity extends AppCompatActivity {
         } else {
             iv_bank.setVisibility(View.VISIBLE);
         }
+    }
+
+    @OnClick(R.id.rl_back)
+    public void onClick() {
+        finish();
     }
 }

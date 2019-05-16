@@ -6,29 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.walletpage.OverOrderActivity">
+    <include layout="@layout/layout_title_back"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/themecolor">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:onClick="back"
-            android:padding="12dp"
-            app:srcCompat="@drawable/ico_back" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/title_order"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-    </RelativeLayout>
+   \
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

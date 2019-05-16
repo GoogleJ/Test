@@ -86,17 +86,8 @@
 
     <TextView
         android:id="@+id/tv_confirmWithdrawal"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/selector_login_btn_click_bg"
-        android:gravity="center"
-        android:text="@string/confirm_withdrawal"
-        android:textColor="#4B4D5B"
-        android:textSize="19sp" />
+        style="@style/BtnStyle"
+        android:text="@string/confirm_withdrawal" />
 
 
 </LinearLayout>

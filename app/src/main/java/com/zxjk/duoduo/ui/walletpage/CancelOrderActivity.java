@@ -1,14 +1,20 @@
 package com.zxjk.duoduo.ui.walletpage;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
+
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.ReleasePurchase;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class CancelOrderActivity extends BaseActivity {
 
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     private ReleasePurchase data;
 
     private TextView tvConfirmSaleOrderId;
@@ -22,6 +28,8 @@ public class CancelOrderActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cancel_order);
+        ButterKnife.bind(this);
+        tvTitle.setText(getString(R.string.sale_cancel));
 
         data = (ReleasePurchase) getIntent().getSerializableExtra("data");
         String rate = getIntent().getStringExtra("rate");
@@ -72,7 +80,9 @@ public class CancelOrderActivity extends BaseActivity {
         tvConfirmSalePayType.setText(sb.toString());
     }
 
-    public void back(View view) {
+
+    @OnClick(R.id.rl_back)
+    public void onClick() {
         finish();
     }
 }

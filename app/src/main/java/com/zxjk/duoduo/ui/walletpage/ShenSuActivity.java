@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
@@ -35,8 +36,14 @@ import com.zxjk.duoduo.utils.TakePicUtil;
 import java.io.File;
 import java.util.Collections;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class ShenSuActivity extends BaseActivity {
 
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     private EditText et;
 
     private LinearLayout llContainer;
@@ -69,7 +76,8 @@ public class ShenSuActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shen_su);
-
+        ButterKnife.bind(this);
+        tvTitle.setText(getString(R.string.shensu));
         ivadd1 = findViewById(R.id.iv_add1);
         ivadd2 = findViewById(R.id.iv_add2);
         ivadd3 = findViewById(R.id.iv_add3);
@@ -178,9 +186,6 @@ public class ShenSuActivity extends BaseActivity {
                 }, this::handleApiError);
     }
 
-    public void back(View view) {
-        finish();
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -225,5 +230,10 @@ public class ShenSuActivity extends BaseActivity {
                 });
             });
         }
+    }
+
+    @OnClick(R.id.rl_back)
+    public void onClick() {
+        finish();
     }
 }

@@ -4,9 +4,9 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="business_card_duoduo_id">#B5B5B5</color>
-    <color name="colorPrimary">#4B4D5B</color>
-    <color name="colorPrimaryDark">#4B4D5B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#08C1BC</color>
+    <color name="colorPrimaryDark">#08C1BC</color>
+    <color name="colorAccent">#08C1BC</color>
     <color name="login_bg">#4B4D5B</color>
     <color name="text_click_normal">#636466</color>
     <color name="text_click_pressed">#1B1A1A</color>
@@ -104,10 +104,25 @@
     <color name="textColor6">#666666</color>
     <color name="textColor9">#999999</color>
     <color name="textColor39">#393939</color>
+    <!--颜色值EEEEEE-->
     <color name="colorE">#EEEEEE</color>
     <color name="colorD">#DDDDDD</color>
     <color name="colorC">#CCCCCC</color>
     <color name="createGameGroup1">#C4C8D1</color>
     <color name="createGameGroup2">#CEAF81</color>
     <color name="createGameGroup3">#363638</color>
+    <!--新的主题色-->
+    <color name="colorTheme">#08C1BC</color>
+    <!--取消按钮文字的颜色-->
+    <color name="colorB">#BBBBBB</color>
+    <!--白色-->
+    <color name="colorWhite">#FFFFFF</color>
+    <!--颜色值333333-->
+    <color name="color3">#333333</color>
+    <!--颜色值666666-->
+    <color name="color6">#666666</color>
+    <!--颜色值999999-->
+    <color name="color9">#999999</color>
+    <!--颜色值393939-->
+    <color name="color39">#393939</color>
 </resources>

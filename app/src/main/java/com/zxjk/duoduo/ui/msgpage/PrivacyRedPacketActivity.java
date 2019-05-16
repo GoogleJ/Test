@@ -38,6 +38,11 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
 
+/**
+ * author L
+ * create at 2019/5/9
+ * description: 个人发红包
+ */
 public class PrivacyRedPacketActivity extends BaseActivity implements SelectPopupWindow.OnPopWindowClickListener {
 
     TextView sendMessageBtn;
@@ -49,11 +54,23 @@ public class PrivacyRedPacketActivity extends BaseActivity implements SelectPopu
     String money;
     UserInfo userInfo;
 
+    public PrivacyRedPacketActivity() {
+    }
+
     @SuppressLint("CheckResult")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_red_envelopes);
+
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.send_red));
+        TextView tv_end = findViewById(R.id.tv_end);
+        tv_end.setVisibility(View.VISIBLE);
+        tv_end.setText(getString(R.string.m_red_envelopes_title_right_text));
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
+        tv_end.setOnClickListener(v ->
+                startActivity(new Intent(PrivacyRedPacketActivity.this, RedPackageListActivity.class)));
 
         selectPopupWindow = new SelectPopupWindow(this, this);
 
@@ -152,13 +169,5 @@ public class PrivacyRedPacketActivity extends BaseActivity implements SelectPopu
                         }
                     });
                 }, this::handleApiError);
-    }
-
-    public void back(View view) {
-        finish();
-    }
-
-    public void showRecord(View view) {
-        startActivity(new Intent(this, RedPackageListActivity.class));
     }
 }

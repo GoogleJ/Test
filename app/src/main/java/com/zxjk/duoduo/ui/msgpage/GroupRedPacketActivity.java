@@ -46,7 +46,7 @@ import io.rong.imlib.model.Message;
 /**
  * author L
  * create at 2019/5/9
- * description: 发红包
+ * description: 群组发红包
  */
 @SuppressLint("CheckResult")
 public class GroupRedPacketActivity extends BaseActivity implements SelectPopupWindow.OnPopWindowClickListener {

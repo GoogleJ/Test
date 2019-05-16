@@ -19,9 +19,15 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 @SuppressLint("CheckResult")
 public class ConfirmSaleActivity extends BaseActivity {
 
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     private ReleasePurchase data;
 
     private TextView tvConfirmSaleOrderId;
@@ -37,6 +43,8 @@ public class ConfirmSaleActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_sale);
+        ButterKnife.bind(this);
+        tvTitle.setText(getString(R.string.order_success));
 
         data = (ReleasePurchase) getIntent().getSerializableExtra("data");
         rate = getIntent().getStringExtra("rate");
@@ -94,10 +102,10 @@ public class ConfirmSaleActivity extends BaseActivity {
             protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
                 holder.setText(R.id.tv_title, "取消订单");
                 holder.setText(R.id.tv_content, "您确定要取消正在挂卖的订单吗？");
-                holder.setText(R.id.tv_cancel, "立即取消");
-                holder.setText(R.id.tv_notarize, "暂不取消");
-                holder.setOnClickListener(R.id.tv_notarize, v -> dialog.dismiss());
-                holder.setOnClickListener(R.id.tv_cancel, v -> {
+                holder.setText(R.id.tv_cancel, "暂不取消");
+                holder.setText(R.id.tv_notarize, "立即取消");
+                holder.setOnClickListener(R.id.tv_cancel, v -> dialog.dismiss());
+                holder.setOnClickListener(R.id.tv_notarize, v -> {
                     dialog.dismiss();
                     ServiceFactory.getInstance().getBaseService(Api.class)
                             .closeSellOrder(data.getSellOrderId())
@@ -120,14 +128,16 @@ public class ConfirmSaleActivity extends BaseActivity {
 
     }
 
-    public void back(View view) {
-        finish();
-    }
 
     public void showOrders(View view) {
         Intent intent = new Intent(this, ExchangeListActivity.class);
         intent.putExtra("rate", rate);
         startActivity(intent);
+        finish();
+    }
+
+    @OnClick(R.id.rl_back)
+    public void onClick() {
         finish();
     }
 }

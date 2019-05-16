@@ -28,8 +28,14 @@ import com.zxjk.duoduo.utils.MD5Utils;
 
 import java.text.SimpleDateFormat;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 @SuppressLint("CheckResult")
 public class OverOrderActivity extends BaseActivity {
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     private TextView tv1;
     private TextView tv2;
     private TextView tv3;
@@ -46,9 +52,9 @@ public class OverOrderActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_over_order);
-
+        ButterKnife.bind(this);
+        tvTitle.setText(getString(R.string.order));
         inoutPsw();
-
         data = (GetOverOrderResponse) getIntent().getSerializableExtra("data");
 
         iv_wechat = findViewById(R.id.iv_wechat);
@@ -164,7 +170,9 @@ public class OverOrderActivity extends BaseActivity {
 
     }
 
-    public void back(View view) {
+
+    @OnClick(R.id.rl_back)
+    public void onClick() {
         finish();
     }
 }

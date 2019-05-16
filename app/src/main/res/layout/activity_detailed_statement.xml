@@ -24,15 +24,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textColor="@android:color/black"
-                android:textSize="27sp" />
+                android:textColor="@color/theme_color"
+                android:textSize="20sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="上周直推收益"
-                android:textColor="@color/textcolor3"
-                android:textSize="15sp" />
+                android:layout_marginTop="5dp"
+                android:text="上局直推业绩"
+                android:textColor="@color/color9"
+                android:textSize="14sp" />
 
 
         </LinearLayout>
@@ -54,15 +55,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textColor="@android:color/black"
-                android:textSize="27sp" />
+                android:textColor="@color/theme_color"
+                android:textSize="20sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="上周团队总收益"
-                android:textColor="@color/textcolor3"
-                android:textSize="15sp" />
+                android:layout_marginTop="5dp"
+                android:text="上局团队总业绩"
+                android:textColor="@color/color9"
+                android:textSize="14sp" />
 
         </LinearLayout>
     </LinearLayout>

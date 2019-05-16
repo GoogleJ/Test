@@ -9,7 +9,13 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.PhoneInfo;
 
 /**
- * @author Administrator
+ * *********************
+ * Administrator
+ * *********************
+ * 2019/5/16
+ * *********************
+ * 手机联系人
+ * *********************
  */
 public class PhoneContactAdapter extends BaseQuickAdapter<PhoneInfo, BaseViewHolder> {
     private Context context;
@@ -24,17 +30,13 @@ public class PhoneContactAdapter extends BaseQuickAdapter<PhoneInfo, BaseViewHol
         View view = helper.getView(R.id.apply_to_add);
         if (!item.isAdd()) {
             helper.setText(R.id.apply_to_add, "邀请")
-                    .setTextColor(R.id.apply_to_add, context.getColor(R.color.themecolor));
-            view.setBackgroundResource(R.drawable.shape_bac_pressed);
+                    .setTextColor(R.id.apply_to_add, context.getColor(R.color.colorWhite));
+            view.setBackgroundResource(R.drawable.shape_theme);
         } else {
             helper.setText(R.id.apply_to_add, "已添加")
-                    .setTextColor(R.id.apply_to_add, context.getColor(R.color.textcolor2));
+                    .setTextColor(R.id.apply_to_add, context.getColor(R.color.color6));
             view.setBackground(null);
         }
-
-        helper.setText(R.id.user_name, item.getName())
-                .addOnClickListener(R.id.apply_to_add);
-
-
+        helper.setText(R.id.user_name, item.getName()).addOnClickListener(R.id.apply_to_add);
     }
 }

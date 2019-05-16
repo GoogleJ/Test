@@ -33,6 +33,15 @@ public class GetRebateByIdResponse {
     private String rebateRate;
     private String rebateAmount;
     private String rebateTotalAmount;
+    private String teamTotalPer;
+
+    public String getTeamTotalPer() {
+        return teamTotalPer;
+    }
+
+    public void setTeamTotalPer(String teamTotalPer) {
+        this.teamTotalPer = teamTotalPer;
+    }
 
     public String getId() {
         return id;

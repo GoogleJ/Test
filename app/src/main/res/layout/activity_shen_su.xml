@@ -7,28 +7,8 @@
     android:orientation="vertical"
     tools:context=".ui.walletpage.ShenSuActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/themecolor">
+    <include layout="@layout/layout_title_back" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:onClick="back"
-            android:padding="12dp"
-            android:src="@drawable/ico_back" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/shensu"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-    </RelativeLayout>
 
     <EditText
         android:id="@+id/et"
@@ -171,16 +151,10 @@
 
     </LinearLayout>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="12dp"
-        android:background="@drawable/selector_login_btn_click_bg"
+    <TextView
+        style="@style/BtnStyle"
         android:onClick="commit"
-        android:text="@string/commit"
-        android:textColor="@color/themecolor"
-        android:textSize="16sp" />
+        android:text="@string/commit" />
+
 
 </LinearLayout>

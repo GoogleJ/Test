@@ -328,33 +328,25 @@
 
             </LinearLayout>
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="40dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/selector_login_btn_click_bg"
+            <TextView
+                style="@style/BtnStyle"
                 android:onClick="confirm"
-                android:text="@string/buy_complete"
-                android:textSize="16sp" />
+                android:text="@string/buy_complete" />
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp"
-                android:background="@drawable/shape_bac_cancel"
+            <TextView
+                style="@style/BtnStyle"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:background="@drawable/shape_theme_gray"
                 android:onClick="cancelOrder"
                 android:text="@string/cancel_order"
-                android:textColor="@color/m_my_qr_code_label"
-                android:textSize="16sp" />
+                android:textColor="@color/colorB" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_margin="20dp"
                 android:gravity="center_horizontal">
 
                 <TextView

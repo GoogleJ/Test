@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <com.zxjk.duoduo.ui.widget.TitleBar
-        android:id="@+id/title_bar"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:titleBarTextColor="@color/white"
-        app:titleBarLeftImage="@drawable/ico_back"
-        app:titleBarTitle="@string/select_group"
-        />
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title_back" />
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="horizontal">
+
         <EditText
             android:id="@+id/search_select_contact"
             android:layout_width="match_parent"
@@ -29,13 +25,13 @@
             android:drawableStart="@drawable/ic_search_gray"
             android:hint="@string/contact_search"
             android:maxWidth="120dp"
-            android:paddingStart="20dp"
-            />
+            android:paddingStart="20dp" />
     </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/card_recycler_view"
-        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="@color/white" />
 
 </LinearLayout>

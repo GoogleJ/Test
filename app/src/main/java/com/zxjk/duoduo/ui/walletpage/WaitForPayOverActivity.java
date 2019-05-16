@@ -10,8 +10,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.GetOverOrderResponse;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class WaitForPayOverActivity extends AppCompatActivity {
 
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     private TextView tvConfirmSaleOrderId;
     private TextView tvConfirmSaleCoinType;
     private TextView tvConfirmSalePriceReference;
@@ -23,7 +29,8 @@ public class WaitForPayOverActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wait_for_pay_over);
-
+        ButterKnife.bind(this);
+        tvTitle.setText(getString(R.string.order));
         tvConfirmSaleOrderId = findViewById(R.id.tvConfirmSaleOrderId);
         tvConfirmSaleCoinType = findViewById(R.id.tvConfirmSaleCoinType);
         tvConfirmSalePriceReference = findViewById(R.id.tvConfirmSalePriceReference);
@@ -73,7 +80,9 @@ public class WaitForPayOverActivity extends AppCompatActivity {
 
     }
 
-    public void back(View view) {
+
+    @OnClick(R.id.rl_back)
+    public void onClick() {
         finish();
     }
 }

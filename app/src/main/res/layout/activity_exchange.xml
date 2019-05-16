@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/theme_color">
+        android:background="@color/colorTheme">
 
         <RelativeLayout
             android:id="@+id/rl_back"
@@ -321,7 +321,7 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:text="@string/paytype"
-                android:textColor="@color/textColor9"
+                android:textColor="@color/color9"
                 android:textSize="14sp" />
 
             <RelativeLayout
@@ -373,7 +373,7 @@
                     android:layout_alignStart="@id/tv_weChat"
                     android:paddingTop="5dp"
                     android:text="@string/not_perfect"
-                    android:textColor="@color/textColor9"
+                    android:textColor="@color/color9"
                     android:textSize="14sp"
                     android:visibility="gone" />
 
@@ -437,7 +437,7 @@
                     android:layout_alignStart="@id/tv_aliPay"
                     android:paddingTop="5dp"
                     android:text="@string/not_perfect"
-                    android:textColor="@color/textColor9"
+                    android:textColor="@color/color9"
                     android:textSize="14sp"
                     android:visibility="gone" />
 
@@ -501,7 +501,7 @@
                     android:layout_alignStart="@id/tv_bank"
                     android:paddingTop="5dp"
                     android:text="@string/not_perfect"
-                    android:textColor="@color/textColor9"
+                    android:textColor="@color/color9"
                     android:textSize="14sp"
                     android:visibility="gone" />
 

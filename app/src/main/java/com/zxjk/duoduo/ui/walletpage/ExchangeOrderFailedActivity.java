@@ -12,8 +12,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.GetOverOrderResponse;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class ExchangeOrderFailedActivity extends AppCompatActivity {
 
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.tv_end)
+    TextView tvEnd;
     private TextView tvConfirmSaleOrderId;
     private TextView tvConfirmSaleCoinType;
     private TextView tvConfirmSalePriceReference;
@@ -25,7 +33,11 @@ public class ExchangeOrderFailedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exchange_order_failed);
-        findViewById(R.id.iv_back).setOnClickListener(v -> finish());
+        ButterKnife.bind(this);
+        tvTitle.setText(getString(R.string.order));
+        tvEnd.setVisibility(View.VISIBLE);
+        tvEnd.setText(getString(R.string.shensu));
+
 
         tvConfirmSaleOrderId = findViewById(R.id.tvConfirmSaleOrderId);
         tvConfirmSaleCoinType = findViewById(R.id.tvConfirmSaleCoinType);
@@ -54,9 +66,17 @@ public class ExchangeOrderFailedActivity extends AppCompatActivity {
     }
 
 
-    public void shensu(View view) {
-        Intent intent = new Intent(this, ShenSuActivity.class);
-        intent.putExtra("data", getIntent().getSerializableExtra("data"));
-        startActivity(intent);
+    @OnClick({R.id.rl_back, R.id.tv_end})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.rl_back:
+                finish();
+                break;
+            case R.id.tv_end:
+                Intent intent = new Intent(this, ShenSuActivity.class);
+                intent.putExtra("data", getIntent().getSerializableExtra("data"));
+                startActivity(intent);
+                break;
+        }
     }
 }

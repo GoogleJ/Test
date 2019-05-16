@@ -8,14 +8,8 @@
     android:orientation="vertical"
     tools:ignore="all">
 
-    <com.zxjk.duoduo.ui.widget.TitleBar
-        android:id="@+id/m_people_information_title_bar"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:titleBarLeftImage="@drawable/ico_back"
-        app:titleBarRightImage="@drawable/icon_right_title"
-        app:titleBarTextColor="@color/white"
-        app:titleBarTitle="@string/m_information_title_bar" />
+    <include layout="@layout/layout_title_back" />
+
 
     <ScrollView
 

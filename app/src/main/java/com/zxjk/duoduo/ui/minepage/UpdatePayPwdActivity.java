@@ -10,8 +10,10 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
@@ -19,13 +21,11 @@ import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.utils.CommonUtils;
-import com.zxjk.duoduo.utils.MD5Utils;
 import com.zxjk.duoduo.ui.widget.KeyboardPopupWindow;
 import com.zxjk.duoduo.ui.widget.PayPsdInputView;
-import com.zxjk.duoduo.ui.widget.TitleBar;
+import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.utils.MD5Utils;
 
-import androidx.annotation.Nullable;
 import butterknife.ButterKnife;
 
 
@@ -35,12 +35,10 @@ import butterknife.ButterKnife;
 public class UpdatePayPwdActivity extends BaseActivity {
 
     PayPsdInputView payPsdInputView;
-    TitleBar titleBar;
+
     TextView commmitBtn;
-
-
     LinearLayout rootView;
-    ScrollView scrollView;
+    NestedScrollView scrollView;
     TextView m_set_payment_pwd_label;
 
     String oldPwd = "";
@@ -49,6 +47,7 @@ public class UpdatePayPwdActivity extends BaseActivity {
 
     KeyboardPopupWindow popupWindow;
     private boolean isUiCreated = false;
+    private TextView tv_title;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,13 +60,14 @@ public class UpdatePayPwdActivity extends BaseActivity {
     }
 
     private void initUI() {
+        tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.set_pay_password));
         m_set_payment_pwd_label = findViewById(R.id.m_set_payment_pwd_label);
-        rootView = (LinearLayout) findViewById(R.id.root_view);
-        scrollView = (ScrollView) findViewById(R.id.sv_main);
-        titleBar = findViewById(R.id.m_set_payment_pwd_title_bar);
+        rootView = findViewById(R.id.root_view);
+        scrollView = findViewById(R.id.sv_main);
         payPsdInputView = findViewById(R.id.m_set_payment_pwd_edit);
         commmitBtn = findViewById(R.id.m_edit_information_btn);
-        titleBar.getLeftImageView().setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.rl_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

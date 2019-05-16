@@ -8,53 +8,7 @@
     android:orientation="vertical"
     tools:ignore="RtlCompat,MissingConstraints">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/login_bg">
-
-        <ImageView
-            android:id="@+id/m_red_envelopes_title_left_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:onClick="back"
-            android:padding="12dp"
-            android:src="@drawable/ico_back"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/m_red_envelopes_title_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/m_red_envelopes_title_text"
-            android:textColor="@color/white"
-            android:textSize="19sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/m_red_envelopes_title_right_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="showRecord"
-            android:padding="12dp"
-            android:text="@string/m_red_envelopes_title_right_text"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-
-            />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <include layout="@layout/layout_title_back" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -152,15 +106,7 @@
 
     <TextView
         android:id="@+id/m_red_envelopes_commit_btn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="27dp"
-        android:layout_marginEnd="50dp"
-        android:background="@drawable/shape_bac_normal"
-        android:gravity="center"
-        android:text="@string/m_red_envelopes_commit_btn"
-        android:textColor="@color/login_bg"
-        android:textSize="19sp" />
+        style="@style/BtnStyle"
+        android:text="@string/m_red_envelopes_commit_btn" />
 
 </LinearLayout>

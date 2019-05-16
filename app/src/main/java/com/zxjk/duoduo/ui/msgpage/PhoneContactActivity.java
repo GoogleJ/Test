@@ -27,9 +27,13 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * author L
- * create at 2019/5/7
- * description: 手机联系人
+ * *********************
+ * Administrator
+ * *********************
+ * 2019/5/16
+ * *********************
+ * 手机联系人
+ * *********************
  */
 public class PhoneContactActivity extends BaseActivity implements TextWatcher {
     RecyclerView mRecyclerView;

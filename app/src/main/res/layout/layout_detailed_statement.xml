@@ -23,7 +23,7 @@
             android:layout_marginStart="12dp"
             android:layout_toEndOf="@id/iv_head"
             android:text="@string/nick"
-            android:textColor="@color/textcolor1"
+            android:textColor="@color/theme_color"
             android:textSize="16sp" />
 
         <TextView
@@ -34,7 +34,7 @@
             android:layout_marginStart="12dp"
             android:layout_toEndOf="@id/iv_head"
             android:text="2019-04-25"
-            android:textColor="@color/textcolor1"
+            android:textColor="@color/color9"
             android:textSize="13sp" />
 
         <TextView

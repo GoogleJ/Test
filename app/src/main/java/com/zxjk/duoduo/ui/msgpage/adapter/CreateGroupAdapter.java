@@ -7,6 +7,10 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.response.GroupResponse;
@@ -15,10 +19,6 @@ import com.zxjk.duoduo.utils.GlideUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
-
 public class CreateGroupAdapter extends RecyclerView.Adapter<CreateGroupAdapter.ViewHolder> {
     //好友列表
     private List<FriendInfoResponse> data = new ArrayList<>();
@@ -26,6 +26,15 @@ public class CreateGroupAdapter extends RecyclerView.Adapter<CreateGroupAdapter.
     private List<GroupResponse.CustomersBean> data1 = new ArrayList<>();
 
     private OnClickListener onClickListener;
+    //是否添加成员
+    private boolean isAdd;
+
+    public CreateGroupAdapter() {
+    }
+
+    public CreateGroupAdapter(boolean isAdd) {
+        this.isAdd = isAdd;
+    }
 
     public void setData1(List<GroupResponse.CustomersBean> data1) {
         this.data1 = data1;
@@ -77,8 +86,10 @@ public class CreateGroupAdapter extends RecyclerView.Adapter<CreateGroupAdapter.
             if (!bean.isCanCheck()) {
                 return;
             }
-            bean.setChecked(!bean.isChecked());
-            notifyItemChanged(position);
+            if (!isAdd) {
+                bean.setChecked(!bean.isChecked());
+                notifyItemChanged(position);
+            }
             if (null != onClickListener) onClickListener.onclick(bean, bean.isChecked(), position);
         });
 

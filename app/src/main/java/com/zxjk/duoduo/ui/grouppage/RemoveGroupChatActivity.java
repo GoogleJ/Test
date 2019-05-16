@@ -26,6 +26,9 @@ import com.zxjk.duoduo.utils.CommonUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -35,9 +38,6 @@ import io.reactivex.functions.Consumer;
  */
 @SuppressLint("CheckResult")
 public class RemoveGroupChatActivity extends BaseActivity {
-    ImageView titleLeftImage;
-    TextView titleBar;
-    TextView titleRight;
     RecyclerView mRecyclerView;
     RecyclerView selectRecyclerView;
 
@@ -46,14 +46,19 @@ public class RemoveGroupChatActivity extends BaseActivity {
     GroupAddOrRemoveAdapter mAdapter;
     List<AllGroupMembersResponse> lists = new ArrayList<>();
     List<AllGroupMembersResponse> list = new ArrayList<>();
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.tv_commit)
+    TextView tvCommit;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remove_group_chat);
-        titleLeftImage = findViewById(R.id.titleLeftImage);
-        titleBar = findViewById(R.id.titleBar);
-        titleRight = findViewById(R.id.titleRight);
+        ButterKnife.bind(this);
+        tvTitle.setText(getString(R.string.remove_group_chat));
+        tvCommit.setVisibility(View.VISIBLE);
+        tvCommit.setText(getString(R.string.remove_btn));
         mRecyclerView = findViewById(R.id.recycler_view);
         selectRecyclerView = findViewById(R.id.recycler_view_select);
 
@@ -105,32 +110,6 @@ public class RemoveGroupChatActivity extends BaseActivity {
 
     }
 
-    /**
-     * 返回上一层
-     *
-     * @param view
-     */
-    public void titleLeftImageClick(View view) {
-        finish();
-    }
-
-    /**
-     * titleRight
-     * 处理点击请求接口的事件
-     */
-    public void titleRightClick(View view) {
-
-
-        //移除群组
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < lists.size(); i++) {
-            sb.append(lists.get(i).getId());
-            sb.append(",");
-        }
-        titleBar.setText(getString(R.string.remove_group_chat));
-        moveOutGroup(getIntent().getStringExtra("groupId"), sb.substring(0, sb.length() - 1));
-
-    }
 
     /**
      * 移除群组
@@ -173,4 +152,21 @@ public class RemoveGroupChatActivity extends BaseActivity {
     }
 
 
+    @OnClick({R.id.rl_back, R.id.tv_commit})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.rl_back:
+                finish();
+                break;
+            case R.id.tv_commit:
+                //移除群组
+                StringBuffer sb = new StringBuffer();
+                for (int i = 0; i < lists.size(); i++) {
+                    sb.append(lists.get(i).getId());
+                    sb.append(",");
+                }
+                moveOutGroup(getIntent().getStringExtra("groupId"), sb.substring(0, sb.length() - 1));
+                break;
+        }
+    }
 }

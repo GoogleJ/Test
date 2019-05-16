@@ -16,11 +16,13 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferMessage;
-import com.zxjk.duoduo.ui.widget.TitleBar;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.text.SimpleDateFormat;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
@@ -29,7 +31,7 @@ import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
 
 public class TransferInfoActivity extends BaseActivity {
-    TitleBar titleBar;
+
     TextView commitBtn;
     TextView m_transfer_info_money_text;
     TextView m_transfer_info_caveat_text;
@@ -37,19 +39,23 @@ public class TransferInfoActivity extends BaseActivity {
     TextView tvZhuanZhangTime;
     TextView tvShouKuanTime;
     ImageView m_transfer_info_icon;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
 
     @SuppressLint("CheckResult")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer_info);
+        ButterKnife.bind(this);
+        tvTitle.setText(getString(R.string.m_successful_transfer_title_bar));
 
         Intent intent = getIntent();
         UserInfo targetUserInfo = intent.getParcelableExtra("targetUserInfo");
         Message message = intent.getParcelableExtra("msg");
         TransferMessage transferMessage = (TransferMessage) message.getContent();
 
-        titleBar = findViewById(R.id.m_transfer_info_title_bar);
+
         commitBtn = findViewById(R.id.m_transfer_info_commit_btn);
         m_transfer_info_money_text = findViewById(R.id.m_transfer_info_money_text);
         m_transfer_info_caveat_text = findViewById(R.id.m_transfer_info_caveat_text);
@@ -59,7 +65,7 @@ public class TransferInfoActivity extends BaseActivity {
         m_transfer_info_icon = findViewById(R.id.m_transfer_info_icon);
 
         m_transfer_info_money_text.setText(transferMessage.getMoney());
-        titleBar.getLeftImageView().setOnClickListener(v -> finish());
+
 
         commitBtn.setOnClickListener(v -> ServiceFactory.getInstance().getBaseService(Api.class)
                 .collect(transferMessage.getTransferId())
@@ -128,5 +134,10 @@ public class TransferInfoActivity extends BaseActivity {
                         tvShouKuanTime.setText("退还时间：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Long.parseLong(transferResponse.getCloseTime())));
                     }
                 }, this::handleApiError);
+    }
+
+    @OnClick(R.id.rl_back)
+    public void onClick() {
+        finish();
     }
 }

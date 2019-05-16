@@ -710,7 +710,7 @@
     <string name="zongyeji">总业绩</string>
     <string name="zongshouyi">总收益</string>
     <string name="myshouyi">我的收益</string>
-    <string name="shangzhoushouyi">上周收益</string>
+    <string name="shangzhoushouyi">上局收益</string>
     <string name="mycrew">我的团队</string>
     <string name="allmembers">团队总人数</string>
     <string name="zhituirenshu">直推人数</string>
@@ -893,4 +893,8 @@
     <string name="phone_tunxun">通讯录</string>
     <string name="shenhe_success">已申诉</string>
     <string name="upload_picture">申诉至少需要上传一张证明</string>
+    <string name="set_pay_password">设置支付密码</string>
+    <string name="send_red">发红包</string>
+    <string name="order">订单</string>
+    <string name="order_success">下单成功</string>
 </resources>

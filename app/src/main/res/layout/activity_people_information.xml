@@ -43,7 +43,7 @@
                             android:id="@+id/tv_nickname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/textColor39"
+                            android:textColor="@color/color39"
                             android:textSize="22sp"
                             android:textStyle="bold" />
 
@@ -75,7 +75,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/fl"
                             android:text=""
-                            android:textColor="@color/textColor9"
+                            android:textColor="@color/color9"
                             android:textSize="16sp" />
 
                         <TextView
@@ -85,7 +85,7 @@
                             android:layout_below="@+id/tv_DuoDuoNumber"
                             android:layout_marginTop="10dp"
                             android:text=""
-                            android:textColor="@color/textColor9"
+                            android:textColor="@color/color9"
                             android:textSize="16sp" />
 
                         <TextView
@@ -95,7 +95,7 @@
                             android:layout_below="@+id/tv_realName"
                             android:layout_marginTop="10dp"
                             android:text=""
-                            android:textColor="@color/textColor9"
+                            android:textColor="@color/color9"
                             android:textSize="16sp" />
 
                     </RelativeLayout>
@@ -124,7 +124,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_toEndOf="@id/tv_mobile_phone"
                     android:text=""
-                    android:textColor="@color/textColor9"
+                    android:textColor="@color/color9"
                     android:textSize="16sp" />
             </RelativeLayout>
 
@@ -151,7 +151,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_toEndOf="@id/tv_mailbox"
                     android:text=""
-                    android:textColor="@color/textColor9"
+                    android:textColor="@color/color9"
                     android:textSize="16sp" />
             </RelativeLayout>
 
@@ -176,7 +176,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="16dp"
                     android:layout_toEndOf="@+id/tv_personalizedSignature"
-                    android:textColor="@color/textColor9"
+                    android:textColor="@color/color9"
                     android:textSize="16sp" />
 
             </RelativeLayout>
@@ -206,7 +206,7 @@
                     android:layout_toEndOf="@+id/tv_wallet_address"
                     android:ellipsize="middle"
                     android:singleLine="true"
-                    android:textColor="@color/textColor9"
+                    android:textColor="@color/color9"
                     android:textSize="16sp" />
 
                 <ImageView

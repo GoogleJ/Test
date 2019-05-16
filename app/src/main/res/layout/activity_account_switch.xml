@@ -1,47 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:background="@color/list_item_bg_press"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <com.zxjk.duoduo.ui.widget.TitleBar
-        android:id="@+id/account_switch_title"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:titleBarLeftImage="@drawable/ico_back"
-        app:titleBarTitle="@string/account_switch_title"
-        app:titleBarTextColor="@color/white"
-        />
+    android:layout_height="match_parent"
+    android:background="@color/list_item_bg_press"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_title_back" />
+
+
     <include
         android:id="@+id/account_list_item"
-        layout="@layout/item_account_switch"
-        />
+        layout="@layout/item_account_switch" />
+
     <androidx.recyclerview.widget.RecyclerView
-        android:visibility="gone"
         android:id="@+id/account_list"
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="20dp"
-        />
-    <TextView
-        android:onClick="changeAccountLogin"
-        android:id="@+id/change_account_login"
-        android:paddingTop="22dp"
-        android:paddingBottom="22dp"
-        android:paddingStart="12dp"
+        android:layout_marginTop="10dp"
         android:background="@color/white"
+        android:paddingBottom="20dp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/change_account_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:drawableEnd="@drawable/icon_go"
+        android:onClick="changeAccountLogin"
+        android:paddingStart="12dp"
+        android:paddingTop="22dp"
         android:paddingEnd="13dp"
+        android:paddingBottom="22dp"
         android:text="@string/change_account_login"
         android:textColor="@color/themecolor"
-        android:textSize="17sp"
-        android:drawableEnd="@drawable/icon_go"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
+        android:textSize="17sp" />
 
 
 </LinearLayout>

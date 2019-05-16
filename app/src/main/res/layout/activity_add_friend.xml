@@ -60,7 +60,7 @@
             android:layout_marginBottom="3dp"
             android:layout_toEndOf="@id/iv_weChatFriend"
             android:text="@string/add_wechat_friend"
-            android:textColor="@color/textColor9"
+            android:textColor="@color/color9"
             android:textSize="14sp" />
 
         <View
@@ -104,7 +104,7 @@
             android:layout_marginBottom="3dp"
             android:layout_toEndOf="@id/iv_phoneFriend"
             android:text="@string/add_phone_friend"
-            android:textColor="@color/textColor9"
+            android:textColor="@color/color9"
             android:textSize="14sp" />
 
         <ImageView style="@style/ImageEnter" />
@@ -150,7 +150,7 @@
             android:layout_marginBottom="3dp"
             android:layout_toEndOf="@id/iv_scan"
             android:text="@string/scan_code"
-            android:textColor="@color/textColor9"
+            android:textColor="@color/color9"
             android:textSize="14sp" />
 
         <View
