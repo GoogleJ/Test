@@ -111,6 +111,13 @@ public class AgreeGroupChatActivity extends BaseActivity {
                                 .setImageView(groupHeader) // 直接设置要显示图片的ImageView
                                 .build();
                         tvGroupName.setText(groupName + "(" + response.getCustomers().size() + "人)");
+                        joinGroupBtn.setOnClickListener(v -> {
+                            if (isGroup) {
+                                ToastUtils.showShort(getString(R.string.group_max_number));
+                                return;
+                            }
+                            enterGroup(groupId, inviterId, Constant.userId);
+                        });
                     }, this::handleApiError);
         } else {
             String[] split = headUrls.split(",");
@@ -139,7 +146,6 @@ public class AgreeGroupChatActivity extends BaseActivity {
                 }
                 enterGroup(groupId, inviterId, Constant.userId);
             });
-
         }
     }
 

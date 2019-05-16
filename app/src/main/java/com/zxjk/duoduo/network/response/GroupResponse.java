@@ -70,6 +70,15 @@ public class GroupResponse implements Serializable {
         private String isDelete;
         private String isInviteConfirm;
         private String headPortrait;
+        private String systemPumpingRate;
+
+        public String getSystemPumpingRate() {
+            return systemPumpingRate;
+        }
+
+        public void setSystemPumpingRate(String systemPumpingRate) {
+            this.systemPumpingRate = systemPumpingRate;
+        }
 
         public String getId() {
             return id;

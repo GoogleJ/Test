@@ -305,26 +305,19 @@
 
     </LinearLayout>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="40dp"
-        android:background="@drawable/selector_login_btn_click_bg"
+    <TextView
+        style="@style/BtnStyle"
+        android:layout_marginBottom="20dp"
         android:onClick="submit"
-        android:text="@string/huazhuancommit"
-        android:textSize="17sp" />
+        android:text="@string/huazhuancommit" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="40dp"
-        android:background="@drawable/shape_bac_cancel"
+    <TextView
+        style="@style/BtnStyle"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:background="@drawable/shape_theme_gray"
         android:onClick="cancel"
         android:text="@string/cancel"
-        android:textSize="17sp" />
+        android:textColor="@color/color9" />
 
 </LinearLayout>

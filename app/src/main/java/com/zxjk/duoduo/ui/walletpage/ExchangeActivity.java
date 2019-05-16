@@ -220,10 +220,16 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
             ToastUtils.showShort(getString(R.string.input_max_number));
             return;
         }
-
-        if (Integer.parseInt(etExchangeChooseCount.getText().toString()) < 50) {
-            ToastUtils.showShort(getString(R.string.number_max));
-            return;
+        if (!buyOrSale) {
+            if (Integer.parseInt(etExchangeChooseCount.getText().toString()) < 50) {
+                ToastUtils.showShort(getString(R.string.number_max));
+                return;
+            }
+        } else {
+            if (Integer.parseInt(etExchangeChooseCount.getText().toString()) <= 0) {
+                ToastUtils.showShort(getString(R.string.zero));
+                return;
+            }
         }
 
         if (TextUtils.isEmpty(buyType) && buyOrSale) {

@@ -36,6 +36,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bingoogolapple.qrcode.zxing.ZXingView;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
@@ -389,12 +390,10 @@ public class CreateGroupActivity extends BaseActivity {
             //我的游戏群
             case R.id.rl_myGameGroup:
                 startActivity(new Intent(this, AllGroupActivity.class));
-                finish();
                 break;
             //新建游戏群
             case R.id.rl_newGameGroup:
                 startActivity(new Intent(this, CreateGameGroupActivity.class));
-                finish();
                 break;
         }
     }

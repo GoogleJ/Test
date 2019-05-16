@@ -30,9 +30,13 @@ import com.zxjk.duoduo.utils.MoneyValueFilter;
 import java.text.DecimalFormat;
 
 /**
- * author L
- * create at 2019/5/8
- * description: 划转
+ * *********************
+ * Administrator
+ * *********************
+ * 2019/5/17
+ * *********************
+ * 划转
+ * *********************
  */
 public class HuaZhuanActivity extends BaseActivity implements SafeInputDialog.OnFinishListener {
 

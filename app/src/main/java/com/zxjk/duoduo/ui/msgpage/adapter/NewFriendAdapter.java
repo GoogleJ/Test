@@ -32,11 +32,11 @@ public class NewFriendAdapter extends BaseQuickAdapter<FriendInfoResponse, BaseV
         if ("2".equals(item.getStatus())) {
             typeBtn.setText(mContext.getString(R.string.m_item_contact_type_text));
             typeBtn.setBackground(null);
-            typeBtn.setTextColor(ContextCompat.getColor(typeBtn.getContext(), R.color.textcolor3));
+            typeBtn.setTextColor(ContextCompat.getColor(typeBtn.getContext(), R.color.color9));
         } else if ("0".equals(item.getStatus())) {
             typeBtn.setText(R.string.add);
-            typeBtn.setBackgroundResource(R.drawable.selector_bac_normal);
-            typeBtn.setTextColor(ContextCompat.getColor(typeBtn.getContext(), R.color.textcolor1));
+            typeBtn.setBackgroundResource(R.drawable.shape_circular_bead_btn);
+            typeBtn.setTextColor(ContextCompat.getColor(typeBtn.getContext(), R.color.white));
         }
     }
 }

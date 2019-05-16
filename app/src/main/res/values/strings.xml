@@ -903,4 +903,5 @@
     <string name="dianjichongshi">点击重试</string>
     <string name="lijigengxin">立即更新</string>
     <string name="update_start">开始下载</string>
+    <string name="zero">购买数量不能为零</string>
 </resources>

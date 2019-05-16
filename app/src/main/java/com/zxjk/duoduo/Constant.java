@@ -19,8 +19,8 @@ public class Constant {
     //阿里OSS上传地址
     public static final String OSS_URL = "https://zhongxingjike.oss-cn-hongkong.aliyuncs.com/upload/";
     //    public static final String BASE_URL = "https://192.168.0.114:8086/";
-    public static final String BASE_URL = "https://192.168.0.115:8085/";
-//    public static final String BASE_URL = "https://duoduoweb.zzgb.net.cn";
+//    public static final String BASE_URL = "https://192.168.0.115:8085/";
+    public static final String BASE_URL = "https://duoduoweb.zzgb.net.cn";
 //    public static final String BASE_URL = "https://192.168.0.109:8085/";
 //    public static final String BASE_URL = "https://47.75.115.118:8086/";
 

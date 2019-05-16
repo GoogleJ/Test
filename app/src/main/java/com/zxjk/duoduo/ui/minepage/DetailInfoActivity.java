@@ -2,7 +2,6 @@ package com.zxjk.duoduo.ui.minepage;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.TextView;
 
 import com.zxjk.duoduo.R;
@@ -11,8 +10,14 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 
 import java.text.SimpleDateFormat;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class DetailInfoActivity extends BaseActivity {
 
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     private TextView tvMoney;
     private TextView tvTradeType;
     private TextView tvTradeTime;
@@ -23,6 +28,8 @@ public class DetailInfoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_info);
+        ButterKnife.bind(this);
+        tvTitle.setText(getString(R.string.shouruxiangqing));
 
         tvMoney = findViewById(R.id.tvMoney);
         tvTradeType = findViewById(R.id.tvTradeType);
@@ -42,7 +49,9 @@ public class DetailInfoActivity extends BaseActivity {
         }
     }
 
-    public void back(View view) {
+
+    @OnClick(R.id.rl_back)
+    public void onClick() {
         finish();
     }
 }
