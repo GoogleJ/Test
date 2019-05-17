@@ -42,12 +42,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <meta-data
-            android:name="design_width_in_dp"
-            android:value="375" />
-        <meta-data
-            android:name="design_height_in_dp"
-            android:value="667" />
+
+        <activity
+            android:name=".ui.EnlargeImageActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/EnlargeTheme" />
+
+        <!--<meta-data-->
+        <!--android:name="design_width_in_dp"-->
+        <!--android:value="375" />-->
+        <!--<meta-data-->
+        <!--android:name="design_height_in_dp"-->
+        <!--android:value="667" />-->
 
         <activity
             android:name=".ui.msgpage.CreateGameGroupActivity"

@@ -9,12 +9,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityOptionsCompat;
 
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
+import com.zxjk.duoduo.ui.EnlargeImageActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
@@ -49,6 +51,8 @@ public class AddFriendDetailsActivity extends BaseActivity {
     @BindView(R.id.tv_addAddressBook)
     TextView tvAddAddressBook;
 
+    private String imageUrl;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +80,9 @@ public class AddFriendDetailsActivity extends BaseActivity {
                         tvDuoDuoNumber.setText(getString(R.string.duoduo_acount) + " " + response.getDuoduoId());
                         tvDistrict.setText(getString(R.string.district) + " " + response.getAddress());
                         tvSignature.setText(TextUtils.isEmpty(response.getSignature()) ? getString(R.string.none) : response.getSignature());
+                        imageUrl = response.getHeadPortrait();
                         GlideUtil.loadCornerImg(ivHeadPortrait, response.getHeadPortrait(), 5);
+
                         if ("0".equals(response.getSex())) {
                             ivGender.setImageDrawable(getDrawable(R.drawable.icon_gender_man));
                         } else {
@@ -88,6 +94,7 @@ public class AddFriendDetailsActivity extends BaseActivity {
             tvDuoDuoNumber.setText(getString(R.string.duoduo_acount) + " " + newFriend.getDuoduoId());
             tvDistrict.setText(getString(R.string.district) + " " + newFriend.getAddress());
             tvSignature.setText(newFriend.getSignature());
+            imageUrl = newFriend.getHeadPortrait();
             GlideUtil.loadCornerImg(ivHeadPortrait, newFriend.getHeadPortrait(), 5);
             String sex = "0";
             if (sex.equals(newFriend.getSex())) {
@@ -99,7 +106,7 @@ public class AddFriendDetailsActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.rl_back, R.id.tv_addAddressBook})
+    @OnClick({R.id.rl_back, R.id.tv_addAddressBook, R.id.iv_headPortrait})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_back:
@@ -111,6 +118,14 @@ public class AddFriendDetailsActivity extends BaseActivity {
                         : newFriend.getId());
                 intent.putExtra("intentType", 1);
                 startActivity(intent);
+                break;
+
+            case R.id.iv_headPortrait:
+                Intent intent5 = new Intent(this, EnlargeImageActivity.class);
+                intent5.putExtra("image", imageUrl);
+                startActivity(intent5,
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                                ivHeadPortrait, "12").toBundle());
                 break;
         }
     }

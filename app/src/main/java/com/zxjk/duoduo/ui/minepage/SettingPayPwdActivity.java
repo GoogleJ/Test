@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -30,7 +29,13 @@ import com.zxjk.duoduo.utils.MD5Utils;
 import butterknife.ButterKnife;
 
 /**
- * @author Administrator
+ * *********************
+ * Administrator
+ * *********************
+ * 2019/5/17
+ * *********************
+ * 设置支付密码
+ * *********************
  */
 public class SettingPayPwdActivity extends BaseActivity {
     PayPsdInputView payPsdInputView;
@@ -133,7 +138,7 @@ public class SettingPayPwdActivity extends BaseActivity {
     @SuppressLint("CheckResult")
     public void settingPayPwd(String number, String securityCode, String newPwd, String newPwdTwo) {
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .fandPayPwd(number, securityCode, MD5Utils.getMD5(newPwd), MD5Utils.getMD5(newPwdTwo))
+                .fandPayPwd(number, securityCode, newPwd, newPwdTwo)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())

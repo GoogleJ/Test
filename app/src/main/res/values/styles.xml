@@ -8,6 +8,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="EnlargeTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/theme_color</item>
+        <item name="colorPrimaryDark">@color/theme_color</item>
+        <item name="colorAccent">@color/theme_color</item>
+    </style>
+
     <style name="share_pop_style">
         <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
         <item name="android:windowExitAnimation">@anim/push_buttom_out</item>

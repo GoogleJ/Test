@@ -6,11 +6,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.TextureView;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 
@@ -31,6 +31,7 @@ import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.rx.RxException;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
+import com.zxjk.duoduo.ui.EnlargeImageActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.ChatInformationActivity;
 import com.zxjk.duoduo.ui.grouppage.GroupChatInformationActivity;
@@ -42,11 +43,10 @@ import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameDownScorePlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameJiaoYiPlugin;
-import com.zxjk.duoduo.ui.msgpage.widget.GamePopupWindow;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameRecordPlugin;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameRulesPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameStartPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameUpScorePlugin;
+import com.zxjk.duoduo.ui.msgpage.widget.GamePopupWindow;
 import com.zxjk.duoduo.ui.widget.dialog.ExpiredEnvelopesDialog;
 import com.zxjk.duoduo.ui.widget.dialog.RedEvelopesDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
@@ -75,6 +75,7 @@ import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
 import io.rong.imlib.typingmessage.TypingStatus;
+import io.rong.message.ImageMessage;
 import io.rong.message.TextMessage;
 import io.rong.message.VoiceMessage;
 
@@ -324,6 +325,19 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
             @Override
             public boolean onMessageClick(Context context, View view, Message message) {
                 switch (message.getObjectName()) {
+                    case "RC:ImgMsg":
+                        String sMessage;
+                        if (((ImageMessage) message.getContent()).getLocalUri() == null) {
+                            sMessage = ((ImageMessage) message.getContent()).getMediaUrl().toString();
+                        } else {
+                            sMessage = ((ImageMessage) message.getContent()).getLocalUri().toString();
+                        }
+                        Intent intent5 = new Intent(ConversationActivity.this, EnlargeImageActivity.class);
+                        intent5.putExtra("image", sMessage);
+                        startActivity(intent5,
+                                ActivityOptionsCompat.makeSceneTransitionAnimation(ConversationActivity.this,
+                                        view, "12").toBundle());
+                        return true;
                     case "app:transfer":
                         //转账
                         Intent intent = new Intent(context, TransferInfoActivity.class);
@@ -540,7 +554,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                     && !Constant.userId.equals(groupResponse.getGroupInfo().getGroupOwnerId()))
                 runOnUiThread(() -> ServiceFactory.getInstance().getBaseService(Api.class)
                         .getGroupGameParameter(groupResponse.getGroupInfo().getId())
-                        .compose(bindToLifecycle())
+                        .compose(bindUntilEvent(ActivityEvent.STOP))
                         .compose(RxSchedulers.normalTrans())
                         .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this)))
                         .subscribe(getGroupGameParameterResponse -> {

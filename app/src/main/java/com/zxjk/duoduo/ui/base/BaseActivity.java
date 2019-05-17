@@ -53,10 +53,13 @@ public class BaseActivity extends RxAppCompatActivity {
         }
         rxPermissions.request(permissions)
                 .compose(bindToLifecycle())
-                .compose(rxPermissions.ensure(permissions))
+                .compose(rxPermissions.ensureEachCombined(permissions))
                 .subscribe(granted -> {
-                    if (!granted) {
+                    if (!granted.granted) {
                         ToastUtils.showShort("请开启相关权限");
+                    }
+                    if (null != result) {
+                        result.onResult(granted.granted);
                     }
                 });
     }

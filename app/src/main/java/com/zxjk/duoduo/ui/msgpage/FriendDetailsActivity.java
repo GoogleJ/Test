@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityOptionsCompat;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.shehuan.nicedialog.BaseNiceDialog;
@@ -24,6 +25,7 @@ import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
+import com.zxjk.duoduo.ui.EnlargeImageActivity;
 import com.zxjk.duoduo.ui.HomeActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.widget.CommonPopupWindow;
@@ -70,6 +72,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
     @BindView(R.id.tv_walletAddress)
     TextView tvWalletAddress;
 
+    String imageUrl;
     String sex = "0";
     private CommonPopupWindow popupWindow;
     DeleteFriendInformationDialog dialog;
@@ -125,6 +128,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
             if (friendInfoResponse.getId().equals(Constant.userId)) {
                 rl_end.setVisibility(View.GONE);
             }
+            imageUrl = friendInfoResponse.getHeadPortrait();
             GlideUtil.loadCornerImg(ivHeadPortrait, friendInfoResponse.getHeadPortrait(), 5);
             tvNickname.setText(friendInfoResponse.getNick());
             tvDuoDuoNumber.setText(getString(R.string.duoduo_acount) + " " + friendInfoResponse.getDuoduoId());
@@ -144,6 +148,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
             if (friendInfo.getId().equals(Constant.userId)) {
                 rl_end.setVisibility(View.GONE);
             }
+            imageUrl = friendInfo.getHeadPortrait();
             GlideUtil.loadCornerImg(ivHeadPortrait, friendInfo.getHeadPortrait(), 5);
             tvNickname.setText(friendInfo.getNick());
             tvDuoDuoNumber.setText(getString(R.string.duoduo_acount) + " " + friendInfo.getDuoduoId());
@@ -163,6 +168,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
             if (contactResponse.getId().equals(Constant.userId)) {
                 rl_end.setVisibility(View.GONE);
             }
+            imageUrl = contactResponse.getHeadPortrait();
             GlideUtil.loadCornerImg(ivHeadPortrait, contactResponse.getHeadPortrait(), 5);
             tvNickname.setText(contactResponse.getNick());
             tvDuoDuoNumber.setText(getString(R.string.duoduo_acount) + " " + contactResponse.getDuoduoId());
@@ -198,10 +204,19 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
         });
     }
 
-    @OnClick({R.id.tv_sendMessage, R.id.iv_duplication})
+    @OnClick({R.id.tv_sendMessage, R.id.iv_duplication, R.id.iv_headPortrait})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.iv_headPortrait:
+                Intent intent5 = new Intent(this, EnlargeImageActivity.class);
+                intent5.putExtra("image", imageUrl);
+                startActivity(intent5,
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                                ivHeadPortrait, "12").toBundle());
+
+                break;
+
             case R.id.iv_duplication:
                 ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 cm.setText(tvWalletAddress.getText().toString());
