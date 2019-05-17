@@ -131,11 +131,11 @@
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:background="@drawable/shape_bac_yellow_conor"
+                android:background="@drawable/shape_circular_bead_btn"
                 android:gravity="center"
                 android:onClick="share"
                 android:text="@string/sharecode"
-                android:textColor="@color/theme_color"
+                android:textColor="@android:color/white"
                 android:textSize="16sp" />
 
         </LinearLayout>
