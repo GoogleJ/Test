@@ -172,6 +172,7 @@
                     android:textSize="16sp" />
 
                 <LinearLayout
+                    android:gravity="end"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"

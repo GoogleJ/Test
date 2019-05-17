@@ -128,6 +128,7 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             ImageView ivGameModes = itemView.findViewById(R.id.ivGameModes);
             ImageView ivChouShui = itemView.findViewById(R.id.ivChouShui);
+            ImageView ivFanyong = itemView.findViewById(R.id.ivFanyong);
 
             cbGame1 = itemView.findViewById(R.id.cbGame1);
             cbGame2 = itemView.findViewById(R.id.cbGame2);
@@ -176,11 +177,9 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         proportionOfFees = response.getGroupClass().get(0).getGuaranteeFee();
                         typeName = response.getGroupClass().get(0).getTypeName();
 
-                        showFanYong = false;
                         ivGameModes.setImageResource(R.drawable.ic_create_gamegroup_youxi);
                         ivChouShui.setImageResource(R.drawable.ic_create_gamegroup_choushui);
-                        llFanyong1.setVisibility(View.GONE);
-                        llFanyong2.setVisibility(View.GONE);
+                        ivFanyong.setImageResource(R.drawable.ic_create_gamegroup_fanyong);
                         llAddFanYong.setVisibility(View.GONE);
                         cbGame1.setBackgroundResource(R.drawable.selector_create_gamegroup1);
                         cbGame2.setBackgroundResource(R.drawable.selector_create_gamegroup1);
@@ -191,11 +190,9 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         proportionOfFees = response.getGroupClass().get(1).getGuaranteeFee();
                         typeName = response.getGroupClass().get(1).getTypeName();
 
-                        showFanYong = false;
                         ivGameModes.setImageResource(R.drawable.ic_create_gamegroup_youxi1);
                         ivChouShui.setImageResource(R.drawable.ic_create_gamegroup_choushui1);
-                        llFanyong1.setVisibility(View.GONE);
-                        llFanyong2.setVisibility(View.GONE);
+                        ivFanyong.setImageResource(R.drawable.ic_create_gamegroup_fanyong1);
                         llAddFanYong.setVisibility(View.GONE);
                         cbGame1.setBackgroundResource(R.drawable.selector_create_gamegroup2);
                         cbGame2.setBackgroundResource(R.drawable.selector_create_gamegroup2);
@@ -208,20 +205,11 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                         ivGameModes.setImageResource(R.drawable.ic_create_gamegroup_youxi2);
                         ivChouShui.setImageResource(R.drawable.ic_create_gamegroup_choushui2);
-                        llFanyong1.setVisibility(View.VISIBLE);
+                        ivFanyong.setImageResource(R.drawable.ic_create_gamegroup_fanyong2);
                         cbGame1.setBackgroundResource(R.drawable.selector_create_gamegroup3);
                         cbGame2.setBackgroundResource(R.drawable.selector_create_gamegroup3);
                         cbGame3.setBackgroundResource(R.drawable.selector_create_gamegroup3);
                         llCommit.setBackgroundResource(R.drawable.shape_bac_create_gamegroup_commit3);
-                        if (switchFanyong.isChecked()) {
-                            llFanyong2.setVisibility(View.VISIBLE);
-                            llAddFanYong.setVisibility(View.VISIBLE);
-                            showFanYong = true;
-                        } else {
-                            llFanyong2.setVisibility(View.GONE);
-                            llAddFanYong.setVisibility(View.GONE);
-                            showFanYong = false;
-                        }
                     }
                     if (data.size() > 0) {
                         notifyItemRangeChanged(1, data.size());
@@ -364,11 +352,12 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     if (cbGame3.isChecked()) {
                         playId += "262,";
                     }
-                    if (!showFanYong) {
-                        commission = "";
-                    } else {
-                        commission = GsonUtils.toJson(data, false);
-                    }
+                }
+
+                if (!showFanYong) {
+                    commission = "";
+                } else {
+                    commission = GsonUtils.toJson(data, false);
                 }
 
                 playId = playId.substring(0, playId.length() - 1);

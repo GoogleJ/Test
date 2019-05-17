@@ -9,23 +9,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.GetTransferEthResponse;
 import com.zxjk.duoduo.ui.walletpage.BlockOrderDetailActivity;
 
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class ETHOrdersAdapter extends RecyclerView.Adapter<ETHOrdersAdapter.MyViewHolder> {
 
@@ -72,7 +66,7 @@ public class ETHOrdersAdapter extends RecyclerView.Adapter<ETHOrdersAdapter.MyVi
         holder.llItemEthOrdersJump.setOnClickListener(v -> {
             Intent intent = new Intent(context, BlockOrderDetailActivity.class);
             intent.putExtra("type", "0");
-            intent.putExtra("data", listBean);
+            intent.putExtra("data1", listBean);
             context.startActivity(intent);
         });
 

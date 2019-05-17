@@ -29,6 +29,7 @@ import com.zxjk.duoduo.DuoDuoFileProvider;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.response.GetAppVersionResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.skin.ContactFragment;
@@ -43,7 +44,9 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.UserInfo;
 
 import static com.ashokvarma.bottomnavigation.BottomNavigationBar.BACKGROUND_STYLE_RIPPLE;
 import static com.ashokvarma.bottomnavigation.BottomNavigationBar.BACKGROUND_STYLE_STATIC;
@@ -269,7 +272,14 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                 .getFriendListById()
                 .compose(bindUntilEvent(ActivityEvent.DESTROY))
                 .compose(RxSchedulers.ioObserver())
-                .subscribe(friendInfoResponses -> Constant.friendsList = friendInfoResponses.data, t -> initFriendList());
+                .subscribe(friendInfoResponses -> {
+                    Constant.friendsList = friendInfoResponses.data;
+                    for (FriendInfoResponse f : friendInfoResponses.data) {
+                        if (RongUserInfoManager.getInstance().getUserInfo(f.getId()) == null) {
+                            RongUserInfoManager.getInstance().setUserInfo(new UserInfo(f.getId(), f.getNick(), Uri.parse(f.getHeadPortrait())));
+                        }
+                    }
+                }, t -> initFriendList());
     }
 
     private void initFragment() {

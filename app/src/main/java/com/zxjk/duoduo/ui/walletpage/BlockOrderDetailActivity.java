@@ -12,13 +12,11 @@ import com.zxjk.duoduo.network.response.GetTransferEthResponse;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 
-import androidx.core.content.ContextCompat;
-
 
 public class BlockOrderDetailActivity extends BaseActivity {
 
+    private TextView tv_title;
     private ImageView ivBlockOrdersDetailTitle;
-    private TextView tvBlockOrdersDetailTitle;
     private TextView tvBlockOrdersDetailTips;
     private TextView tvBlockOrdersDetailMoney;
     private TextView tvItemSecond;
@@ -49,8 +47,9 @@ public class BlockOrderDetailActivity extends BaseActivity {
     private void initData() {
         String type = getIntent().getStringExtra("type");
         GetTransferAllResponse.ListBean data = (GetTransferAllResponse.ListBean) getIntent().getSerializableExtra("data");
+        GetTransferEthResponse.ListBean data1 = (GetTransferEthResponse.ListBean) getIntent().getSerializableExtra("data1");
 
-        if ("0".equals(type)) {
+        if ("0".equals(type) && data != null) {
             //eth转入失败-成功-进行中
             if (data.getInOrOut().equals("0") && data.getTxreceiptStatus().equals("0")) {
                 ivBlockOrdersDetailTitle.setImageResource(R.drawable.icon_transfer_failed);
@@ -73,7 +72,6 @@ public class BlockOrderDetailActivity extends BaseActivity {
                 tvBlockOrdersDetailAddress2.setText(data.getFromAddress().substring(0, 7) + "..." + data.getFromAddress().substring(data.getFromAddress().length() - 5));
                 return;
             }
-
             //eth转出失败-成功-进行中
             if (data.getInOrOut().equals("1") && data.getTxreceiptStatus().equals("0")) {
                 ivBlockOrdersDetailTitle.setImageResource(R.drawable.icon_transfer_failed);
@@ -103,7 +101,61 @@ public class BlockOrderDetailActivity extends BaseActivity {
             tvBlockOrdersDetailLast2.setText(data.getTransactionHash());
             tvBlockOrdeerDetailBlock.setText(data.getBlockNumber());
             tvItemSecond.setText("HKB");
-            tvBlockOrdersDetailTitle.setText(getString(R.string.transfer_details));
+            tv_title.setText(getString(R.string.transfer_details));
+            tvItemSecond.setText("ETH");
+        } else if ("0".equals(type) && data1 != null) {
+            //eth转入失败-成功-进行中
+            if (data1.getInOrOut().equals("0") && data1.getTxreceiptStatus().equals("0")) {
+                ivBlockOrdersDetailTitle.setImageResource(R.drawable.icon_transfer_failed);
+                tvBlockOrdersDetailTips.setText(getString(R.string.transfer_in_failed));
+                tvBlockOrdersDetailMoney.setText(data1.getBalance() + "ETH");
+                tvBlockOrdersDetailAddress1.setText(getString(R.string.receiptAddress));
+                tvBlockOrdersDetailAddress2.setText(data1.getFromAddress().substring(0, 7) + "..." + data1.getFromAddress().substring(data1.getFromAddress().length() - 5));
+
+            } else if (data1.getInOrOut().equals("0") && data1.getTxreceiptStatus().equals("1")) {
+                ivBlockOrdersDetailTitle.setImageResource(R.drawable.icon_transfer_successful);
+                tvBlockOrdersDetailTips.setText(getString(R.string.transfer_in_successful));
+                tvBlockOrdersDetailMoney.setText(data1.getBalance() + "ETH");
+                tvBlockOrdersDetailAddress1.setText(getString(R.string.receiptAddress));
+                tvBlockOrdersDetailAddress2.setText(data1.getFromAddress().substring(0, 7) + "..." + data1.getFromAddress().substring(data1.getFromAddress().length() - 5));
+            } else if (data1.getInOrOut().equals("0") && data1.getTxreceiptStatus().equals("2")) {
+                ivBlockOrdersDetailTitle.setImageResource(R.drawable.icon_caveat);
+                tvBlockOrdersDetailTips.setText(getString(R.string.transfer_in_wait));
+                tvBlockOrdersDetailMoney.setText(data1.getBalance() + "ETH");
+                tvBlockOrdersDetailAddress1.setText(getString(R.string.receiptAddress));
+                tvBlockOrdersDetailAddress2.setText(data1.getFromAddress().substring(0, 7) + "..." + data1.getFromAddress().substring(data1.getFromAddress().length() - 5));
+                return;
+            }
+            //eth转出失败-成功-进行中
+            if (data1.getInOrOut().equals("1") && data1.getTxreceiptStatus().equals("0")) {
+                ivBlockOrdersDetailTitle.setImageResource(R.drawable.icon_transfer_failed);
+                tvBlockOrdersDetailTips.setText(getString(R.string.transfer_out_failed));
+                tvBlockOrdersDetailMoney.setText("-" + data1.getBalance() + "ETH");
+                tvBlockOrdersDetailAddress1.setText(getString(R.string.receiptAddress));
+                tvBlockOrdersDetailAddress2.setText(data1.getFromAddress().substring(0, 7) + "..." + data1.getFromAddress().substring(data1.getFromAddress().length() - 5));
+            } else if (data1.getInOrOut().equals("1") && data1.getTxreceiptStatus().equals("1")) {
+                ivBlockOrdersDetailTitle.setImageResource(R.drawable.icon_transfer_successful);
+                tvBlockOrdersDetailTips.setText(getString(R.string.transfer_out_successful));
+                tvBlockOrdersDetailMoney.setText("-" + data1.getBalance() + "ETH");
+                tvBlockOrdersDetailAddress1.setText(getString(R.string.receiptAddress));
+                tvBlockOrdersDetailAddress2.setText(data1.getFromAddress().substring(0, 7) + "..." + data1.getFromAddress().substring(data1.getFromAddress().length() - 5));
+            } else if (data1.getInOrOut().equals("1") && data1.getTxreceiptStatus().equals("2")) {
+                ivBlockOrdersDetailTitle.setImageResource(R.drawable.icon_caveat);
+                tvBlockOrdersDetailTips.setText(getString(R.string.transfer_out_wait));
+                tvBlockOrdersDetailMoney.setText(data1.getBalance() + "ETH");
+                tvBlockOrdersDetailAddress1.setText(getString(R.string.receiptAddress));
+                tvBlockOrdersDetailAddress2.setText(data1.getFromAddress().substring(0, 7) + "..." + data1.getFromAddress().substring(data1.getFromAddress().length() - 5));
+                return;
+            }
+            tvItemFirst.setVisibility(View.GONE);
+            ivItemArrow.setVisibility(View.GONE);
+            tvBlockOrdersDetailCount.setText(data1.getBalance());
+            tvBlockOrdersDetailKuanggong.setText(data1.getGasUsed());
+            tvBlockOrdersDetailTime.setText(CommonUtils.formatTime(Long.parseLong(data1.getCreateTime())));
+            tvBlockOrdersDetailLast2.setText(data1.getTransactionHash());
+            tvBlockOrdeerDetailBlock.setText(data1.getBlockNumber());
+            tvItemSecond.setText("HKB");
+            tv_title.setText(getString(R.string.transfer_details));
             tvItemSecond.setText("ETH");
         } else if ("1".equals(type)) {
             //HKB转入失败-成功-进行中
@@ -174,7 +226,7 @@ public class BlockOrderDetailActivity extends BaseActivity {
             }
             tvItemFirst.setVisibility(View.VISIBLE);
             ivItemArrow.setVisibility(View.VISIBLE);
-            tvBlockOrdersDetailTitle.setText(R.string.transfer_commit_title);
+            tv_title.setText(R.string.transfer_commit_title);
             tvBlockOrdersDetailCurrency.setText(getString(R.string.tvBlockOrdersDetailCurrency));
             tvItemFirst.setText("HK");
             tvItemSecond.setText("HKB");
@@ -191,7 +243,6 @@ public class BlockOrderDetailActivity extends BaseActivity {
 
     private void initView() {
         ivBlockOrdersDetailTitle = findViewById(R.id.ivBlockOrdersDetailTitle);
-        tvBlockOrdersDetailTitle = findViewById(R.id.tvBlockOrdersDetailTitle);
         tvBlockOrdersDetailTips = findViewById(R.id.tvBlockOrdersDetailTips);
         tvBlockOrdersDetailMoney = findViewById(R.id.tvBlockOrdersDetailMoney);
         tvItemSecond = findViewById(R.id.tvItemSecond);
@@ -208,9 +259,8 @@ public class BlockOrderDetailActivity extends BaseActivity {
         tvItemFirst = findViewById(R.id.tvItemFirst);
         ivItemArrow = findViewById(R.id.ivItemArrow);
         collectionAddress = findViewById(R.id.collectionAddress);
+        tv_title = findViewById(R.id.tv_title);
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
     }
 
-    public void back(View view) {
-        finish();
-    }
 }
