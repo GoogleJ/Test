@@ -30,8 +30,8 @@ public class BaseFragment extends RxFragment  {
 
     public RxPermissions rxPermissions;
 
-    public void getPermisson(String... permissions) {
-        getPermisson(null, null, permissions);
+    public void getPermisson(BaseActivity.PermissionResult result, String... permissions) {
+        getPermisson(null, result, permissions);
     }
 
     public void getPermisson(View view, BaseActivity.PermissionResult result, String... permissions) {
@@ -47,19 +47,31 @@ public class BaseFragment extends RxFragment  {
                             result.onResult(permission.granted);
                         }
                     });
+
             return;
         }
         rxPermissions.request(permissions)
                 .compose(bindToLifecycle())
-                .compose(rxPermissions.ensure(permissions))
+                .compose(rxPermissions.ensureEachCombined(permissions))
                 .subscribe(granted -> {
-                    if (!granted) {
+                    if (!granted.granted) {
                         ToastUtils.showShort("请开启相关权限");
                     }
                     if (null != result) {
-                        result.onResult(granted);
+                        result.onResult(granted.granted);
                     }
                 });
+//        rxPermissions.request(permissions)
+//                .compose(bindToLifecycle())
+//                .compose(rxPermissions.ensure(permissions))
+//                .subscribe(granted -> {
+//                    if (!granted) {
+//                        ToastUtils.showShort("请开启相关权限");
+//                    }
+//                    if (null != result) {
+//                        result.onResult(granted);
+//                    }
+//                });
     }
 
     @Override

@@ -113,6 +113,8 @@ dependencies {
     //融云
     implementation project(':IMKit')
     implementation project(':IMLib')
+    implementation project(':CallLib')
+    implementation project(':CallKit')
 
     //glide
     implementation 'com.github.bumptech.glide:glide:4.9.0'

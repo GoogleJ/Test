@@ -61,6 +61,8 @@ public class GroupChatInformationActivity extends BaseActivity {
     TextView tv_title;
     private GroupResponse group;
 
+    private boolean isGameGroup;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +81,13 @@ public class GroupChatInformationActivity extends BaseActivity {
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(groupResponse -> {
+                    if (groupResponse.getMaxNumber().equals("")) {
+                        isGameGroup = false;
+                    } else {
+                        isGameGroup = true;
+                    }
                     group = groupResponse;
+
                     if (groupResponse.getGroupInfo().getGroupOwnerId().equals(Constant.userId)) {
                         rl_groupManage.setVisibility(View.VISIBLE);
                         if (Constant.isVerifyVerision) {
@@ -207,6 +215,7 @@ public class GroupChatInformationActivity extends BaseActivity {
     public void groupManagement(View view) {
         Intent intent = new Intent(this, GroupManagementActivity.class);
         intent.putExtra("groupId", group.getGroupInfo().getId());
+        intent.putExtra("isGameGroup", isGameGroup);
         startActivity(intent);
     }
 

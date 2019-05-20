@@ -181,8 +181,8 @@
     <include layout="@layout/layout_line10" />
 
     <RelativeLayout
-        style="@style/RLayoutStyle"
-        android:onClick="transferGroup">
+        android:id="@+id/rl_groupTransfer"
+        style="@style/RLayoutStyle">
 
         <TextView
             android:layout_width="wrap_content"

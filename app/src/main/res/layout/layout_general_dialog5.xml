@@ -79,7 +79,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/fou"
-                android:textColor="@color/pop_color2"
+                android:textColor="@color/color9"
                 android:textSize="16sp" />
 
             <View

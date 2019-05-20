@@ -33,13 +33,15 @@ public class ChooseNewOwnerActivity extends BaseActivity {
     RecyclerView mRecyclerView;
     ChooseNewOwnerAdapter mAdapter;
 
+    String groupId;
+    boolean isGameGroup;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_new_owner);
-        String groupId = getIntent().getStringExtra("groupId");
-
+        groupId = getIntent().getStringExtra("groupId");
+        isGameGroup = getIntent().getBooleanExtra("isGameGroup", false);
         TextView tv_title = findViewById(R.id.tv_title);
         tv_title.setText(getString(R.string.choose_a_new_owner_title));
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());

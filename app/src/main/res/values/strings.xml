@@ -905,4 +905,8 @@
     <string name="update_start">开始下载</string>
     <string name="zero">购买数量不能为零</string>
     <string name="decode_qr_failure">识别失败，请使用多多二维码</string>
+    <string name="non_transferable">该群为游戏群，不可转让</string>
+    <string name="audio_video">视频通话</string>
+    <string name="video_call">视频通话</string>
+    <string name="voice_call">语音通话</string>
 </resources>

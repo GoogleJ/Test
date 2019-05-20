@@ -15,7 +15,7 @@
     <color name="contact_letter_idx_bg">#00746262</color>
     <color name="list_item_bg_press">#F1EDED</color>
     <color name="game_quick_create_bg_normal">#FFFFFF</color>
-    <color name="text_select_color">#8B8888</color>
+    <color name="text_select_color">#8b8888</color>
     <color name="head_bg">#111111</color>
     <color name="main_list_divider">#C7C6C6</color>
     <color name="contacts_letters_color">#80807c</color>

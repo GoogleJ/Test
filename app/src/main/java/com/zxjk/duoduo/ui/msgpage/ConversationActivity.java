@@ -54,6 +54,7 @@ import com.zxjk.duoduo.utils.CommonUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -98,6 +99,7 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
     //游戏popwindow跳转计时器
     private long timeLeft;
     private GamePopupWindow gamePopupWindow;
+    public ArrayList<String> memberIds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -249,6 +251,11 @@ public class ConversationActivity extends BaseActivity implements RongIMClient.O
                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                     .compose(provider.bindToLifecycle())
                     .subscribe(groupInfo -> {
+                        memberIds = new ArrayList<>(groupInfo.getCustomers().size());
+                        for (GroupResponse.CustomersBean bean : groupInfo.getCustomers()) {
+                            memberIds.add(bean.getId());
+                        }
+
                         if (groupInfo.getGroupInfo().getIsDelete().equals("1")) {
 
                         }

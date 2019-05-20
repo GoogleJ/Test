@@ -1,5 +1,6 @@
 package com.zxjk.duoduo;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.Context;
 
@@ -8,9 +9,15 @@ import androidx.multidex.MultiDex;
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.Utils;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tencent.mmkv.MMKV;
+import com.zxjk.duoduo.network.Api;
+import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.BaseResponse;
+import com.zxjk.duoduo.network.response.GroupResponse;
+import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BasePluginExtensionModule;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardProvider;
@@ -22,8 +29,12 @@ import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferProvider;
 import com.zxjk.duoduo.utils.WeChatShareUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import io.rong.callkit.RongCallKit;
 import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtensionManager;
@@ -48,6 +59,7 @@ public class Application extends android.app.Application {
         WeChatShareUtil.wxShare.registerApp(APP_ID);
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void onCreate() {
         super.onCreate();
@@ -82,6 +94,23 @@ public class Application extends android.app.Application {
         RongIM.getInstance().enableNewComingMessageIcon(true);//显示新消息提醒
         RongIM.getInstance().enableUnreadMessageIcon(true);//显示未读消息数目
         setMyExtensionModule();
+
+        RongCallKit.setGroupMemberProvider((groupId, result) -> {
+            //返回群组成员userId的集合
+            ServiceFactory.getInstance().getBaseService(Api.class)
+                    .getGroupByGroupId(groupId)
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(response -> {
+                        ArrayList<String> strings = new ArrayList<>();
+                        GroupResponse data = response.data;
+                        for (GroupResponse.CustomersBean bean : data.getCustomers()) {
+                            strings.add(bean.getId());
+                        }
+                        result.onGotMemberList(strings);
+                    }, t -> {
+                    });
+            return null;
+        });
     }
 
     @Override

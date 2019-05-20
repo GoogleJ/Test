@@ -1,14 +1,6 @@
 package com.zxjk.duoduo.ui.msgpage.rongIMAdapter;
 
 
-import com.zxjk.duoduo.Constant;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameDownScorePlugin;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameDuobaoPlugin;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameRecordPlugin;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameRulesPlugin;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameStartPlugin;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameUpScorePlugin;
-
 import java.util.List;
 
 import io.rong.imkit.DefaultExtensionModule;
@@ -30,6 +22,8 @@ public class BasePluginExtensionModule extends DefaultExtensionModule {
         BusinessCardPlugin businessCardPlugin = new BusinessCardPlugin();
         MyCombineLocationPlugin locationPlugin = new MyCombineLocationPlugin();
         CollectionPlugin collectionPlugin = new CollectionPlugin();
+        //音视频
+        AudioVideoPlugin audioVideoPlugin = new AudioVideoPlugin();
 
         List<IPluginModule> list = super.getPluginModules(conversationType);
 
@@ -38,6 +32,7 @@ public class BasePluginExtensionModule extends DefaultExtensionModule {
             list.add(photoSelectorPlugin);
             list.add(takePhotoPlugin);
             list.add(transferPlugin);
+            list.add(audioVideoPlugin);
 //            list.add(voiceCallsPlugin);
             list.add(packetPlugin);
             list.add(businessCardPlugin);
