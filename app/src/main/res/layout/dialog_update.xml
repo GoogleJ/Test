@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="32dp"
-            android:lineSpacingExtra="8dp"
+            android:lineSpacingExtra="4dp"
             android:textColor="@color/black"
             android:textSize="17sp" />
 

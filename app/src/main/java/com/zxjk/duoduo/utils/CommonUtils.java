@@ -8,11 +8,9 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,10 +33,6 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 public class CommonUtils {
     private static Dialog dialog;
 
-    public static Dialog getDialog() {
-        return dialog;
-    }
-
     public static Dialog initDialog(Context context) {
         return initDialog(context, null);
     }
@@ -55,8 +49,7 @@ public class CommonUtils {
             }
         };
         dialog.setContentView(R.layout.dialog_loading);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.setCancelable(true);
+        dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         if (!TextUtils.isEmpty(loadText)) {
@@ -68,7 +61,9 @@ public class CommonUtils {
 
     public static void destoryDialog() {
         if (dialog != null) {
-            dialog.dismiss();
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
             dialog = null;
         }
     }

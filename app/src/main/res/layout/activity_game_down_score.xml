@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:background="@null"
-                android:hint="0.000"
+                android:hint="0.00"
                 android:imeOptions="actionDone"
                 android:inputType="numberDecimal"
                 android:textColor="@color/textcolor1"

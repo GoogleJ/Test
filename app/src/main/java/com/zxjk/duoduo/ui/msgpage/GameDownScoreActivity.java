@@ -3,6 +3,7 @@ package com.zxjk.duoduo.ui.msgpage;
 import android.annotation.SuppressLint;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.dialog.SelectPopupWindow;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
+import com.zxjk.duoduo.utils.MoneyValueFilter;
 
 import java.text.DecimalFormat;
 
@@ -62,8 +64,8 @@ public class GameDownScoreActivity extends BaseActivity {
 
         });
 
-
         et = findViewById(R.id.et);
+        et.setFilters(new InputFilter[]{new MoneyValueFilter()});
         tv = findViewById(R.id.tv);
         tv1 = findViewById(R.id.tv1);
 

@@ -15,6 +15,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.GetRebateByIdResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.utils.CommonUtils;
@@ -66,40 +67,40 @@ public class GameRecordDaiLiFragment extends BaseFragment {
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(getActivity())))
                 .subscribe(response -> {
                     if (response.code == CODE_SUCCESS) {
-//                        GetRebateByIdResponse response = s.data;
+                        GetRebateByIdResponse data = (GetRebateByIdResponse) response.data;
                         hasInitData = true;
-                        tvDaiLi.setText(response.data.getGrade());
-                        tvNum1.setText(response.data.getTeamNum());
-                        tvNum2.setText(response.data.getDirectNum());
-                        tvShouYi.setText(df.format(Double.parseDouble(response.data.getRebateRate())));
-                        tvHk.setText(response.data.getTeamTotalPer() + "HK");
-                        tvHkShouYi1.setText(response.data.getRebateAmount() + "HK");
-                        tvHkShouYi2.setText(response.data.getRebateTotalAmount() + "HK");
+                        tvDaiLi.setText(data.getGrade());
+                        tvNum1.setText(data.getTeamNum());
+                        tvNum2.setText(data.getDirectNum());
+                        tvShouYi.setText(df.format(Double.parseDouble(data.getRebateRate())));
+                        tvHk.setText(data.getTeamTotalPer() + "HK");
+                        tvHkShouYi1.setText(data.getRebateAmount() + "HK");
+                        tvHkShouYi2.setText(data.getRebateTotalAmount() + "HK");
                         //我的代理
                         rootView.findViewById(R.id.ll_myAgency).setOnClickListener(v -> {
                             Intent intent = new Intent(getActivity(), AgentBenefitActivity.class);
-                            intent.putExtra("groupId", response.data.getGroupId());
+                            intent.putExtra("groupId", data.getGroupId());
                             startActivity(intent);
                         });
                         //上周收益
                         rootView.findViewById(R.id.ll_lastEarnings).setOnClickListener(v -> {
                             Intent intent = new Intent(getActivity(), ExtractRewardActivity.class);
-                            intent.putExtra("groupId", response.data.getGroupId());
+                            intent.putExtra("groupId", data.getGroupId());
                             startActivity(intent);
                         });
                         //总收益
                         rootView.findViewById(R.id.ll_totalEarnings).setOnClickListener(v -> {
                             Intent intent = new Intent(getActivity(), DetailedStatementActivity.class);
-                            intent.putExtra("groupId", response.data.getGroupId());
-                            intent.putExtra("currentDirectPer", response.data.getCurrentDirectPer());
-                            intent.putExtra("currentTeamPer", response.data.getCurrentTeamPer());
+                            intent.putExtra("groupId", data.getGroupId());
+                            intent.putExtra("currentDirectPer", data.getCurrentDirectPer());
+                            intent.putExtra("currentTeamPer", data.getCurrentTeamPer());
 
                             startActivity(intent);
                         });
                         //我的团队
                         rootView.findViewById(R.id.ll_myGroup).setOnClickListener(v -> {
                             Intent intent = new Intent(getActivity(), MyGroupActivity.class);
-                            intent.putExtra("groupId", response.data.getGroupId());
+                            intent.putExtra("groupId", data.getGroupId());
                             startActivity(intent);
                         });
                     } else if (response.code == 2) {
@@ -114,14 +115,6 @@ public class GameRecordDaiLiFragment extends BaseFragment {
                         rootView.findViewById(R.id.ll_lastEarnings).setOnClickListener(v -> {
                             Intent intent = new Intent(getActivity(), ExtractRewardActivity.class);
                             intent.putExtra("groupId", groupId);
-                            startActivity(intent);
-                        });
-                        //总收益
-                        rootView.findViewById(R.id.ll_totalEarnings).setOnClickListener(v -> {
-                            Intent intent = new Intent(getActivity(), DetailedStatementActivity.class);
-                            intent.putExtra("groupId", groupId);
-                            intent.putExtra("currentDirectPer", response.data.getCurrentDirectPer());
-                            intent.putExtra("currentTeamPer", response.data.getCurrentTeamPer());
                             startActivity(intent);
                         });
                         //我的团队

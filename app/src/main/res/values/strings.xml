@@ -760,8 +760,8 @@
     <string name="input_outrate">不可超过总售出额，请重新输入</string>
     <string name="duo_duo_account">多多账号</string>
     <string name="group_number">团队人数</string>
-    <string name="last_week_contribution">上周贡献</string>
-    <string name="last_week_group_contribution">上周团队贡献</string>
+    <string name="last_week_contribution">上局贡献</string>
+    <string name="last_week_group_contribution">上局团队贡献</string>
     <string name="red_envelope">的红包</string>
     <string name="quxiao">取消</string>
     <string name="xiazhu_info">下注详情</string>
@@ -905,6 +905,7 @@
     <string name="update_start">开始下载</string>
     <string name="zero">购买数量不能为零</string>
     <string name="decode_qr_failure">识别失败，请使用多多二维码</string>
+    <string name="number_min">最小数量不能为0</string>
     <string name="non_transferable">该群为游戏群，不可转让</string>
     <string name="audio_video">视频通话</string>
     <string name="video_call">视频通话</string>

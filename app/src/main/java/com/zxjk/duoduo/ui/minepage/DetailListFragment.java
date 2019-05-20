@@ -7,6 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -16,13 +22,8 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.ui.minepage.adapter.DetailListAdapter;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class DetailListFragment extends BaseFragment {
     public String type;
@@ -80,7 +81,7 @@ public class DetailListFragment extends BaseFragment {
                     for (DetailListResposne d : detailListResposnes) {
                         total += Float.parseFloat(d.getHk());
                     }
-                    tvRedListMoney.setText(total.toString());
+                    tvRedListMoney.setText(new DecimalFormat("#0.00").format(total.toString()));
                 }, t -> {
                     handleApiError(t);
                     refresh.setRefreshing(false);

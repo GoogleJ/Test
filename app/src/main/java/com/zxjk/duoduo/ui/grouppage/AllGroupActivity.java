@@ -4,6 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -27,6 +30,7 @@ import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * author L
@@ -39,6 +43,7 @@ public class AllGroupActivity extends BaseActivity {
     private EditText etSearch;
     private RecyclerView recycler;
     private AllGroupAdapter adapter;
+    private List<GetAllPlayGroupResponse.GroupListBean> groupList;
 
     @SuppressLint("CheckResult")
     @Override
@@ -51,6 +56,26 @@ public class AllGroupActivity extends BaseActivity {
 
         etSearch = findViewById(R.id.etSearch);
         recycler = findViewById(R.id.recycler);
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (TextUtils.isEmpty(s.toString())) {
+                    adapter.setData(groupList);
+                } else {
+                    adapter.setData(search(s.toString()));
+                }
+            }
+        });
 
         recycler.setLayoutManager(new LinearLayoutManager(this));
         adapter = new AllGroupAdapter();
@@ -62,7 +87,7 @@ public class AllGroupActivity extends BaseActivity {
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(response -> {
-                    List<GetAllPlayGroupResponse.GroupListBean> groupList = new ArrayList<>();
+                    groupList = new ArrayList<>();
                     groupList.addAll(response.getGroupList());
                     for (GetAllPlayGroupResponse.GroupListBean bean : response.getGroupList()) {
                         for (String groupid : response.getJoin()) {
@@ -99,9 +124,37 @@ public class AllGroupActivity extends BaseActivity {
                                 .show(getSupportFragmentManager());
                     });
                 }, this::handleApiError);
-
-
     }
 
+    private List<GetAllPlayGroupResponse.GroupListBean> search(String str) {
+        List<GetAllPlayGroupResponse.GroupListBean> filterList = new ArrayList<>();// 过滤后的list
+        if (str.matches("^([0-9]|[/+]).*")) {// 正则表达式 匹配以数字或者加号开头的字符串(包括了带空格及-分割的号码)
+            String simpleStr = str.replaceAll("\\-|\\s", "");
+            for (GetAllPlayGroupResponse.GroupListBean contact : groupList) {
+                if (contact.getGroupNikeName() != null) {
+                    if (contact.getGroupNikeName().contains(simpleStr) || contact.getGroupNikeName().contains(str)) {
+                        if (!filterList.contains(contact)) {
+                            filterList.add(contact);
+                        }
+                    }
+                }
+            }
+        } else {
+            for (GetAllPlayGroupResponse.GroupListBean contact : groupList) {
+                if (contact.getGroupNikeName() != null) {
+                    //姓名全匹配,姓名首字母简拼匹配,姓名全字母匹配
+                    boolean isNameContains = contact.getGroupNikeName().toLowerCase(Locale.CHINESE)
+                            .contains(str.toLowerCase(Locale.CHINESE));
+
+                    if (isNameContains) {
+                        if (!filterList.contains(contact)) {
+                            filterList.add(contact);
+                        }
+                    }
+                }
+            }
+        }
+        return filterList;
+    }
 
 }

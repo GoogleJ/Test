@@ -27,7 +27,9 @@ public class RxSchedulers {
     public static <T> ObservableTransformer<T, T> ioObserver(Dialog d) {
         return upstream -> upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> {
-                    if (d != null) d.show();
+                    if (disposable != null && !disposable.isDisposed()) {
+                        if (d != null && d.getOwnerActivity()!= null && !d.getOwnerActivity().isDestroyed()) d.show();
+                    }
                 })
                 .doOnDispose(() -> {
                     if (d != null) CommonUtils.destoryDialog();

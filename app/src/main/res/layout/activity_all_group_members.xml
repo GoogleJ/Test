@@ -8,11 +8,6 @@
 
     <include layout="@layout/layout_title_back" />
 
-
-    <EditText
-        android:id="@+id/search_edit"
-        style="@style/SearchStyle" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"

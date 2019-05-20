@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zxjk.duoduo.Constant;
@@ -123,7 +124,7 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
                 finish();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            ToastUtils.showShort(R.string.decode_qr_failure);
         }
     }
 

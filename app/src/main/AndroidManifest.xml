@@ -44,18 +44,22 @@
         android:usesCleartextTraffic="true">
 
         <activity
+        android:name=".wxapi.WXEntryActivity"
+        android:exported="true"
+        android:launchMode="singleTop"
+        android:screenOrientation="portrait"
+        android:theme="@style/NoTitleTranslucent80Theme"/>
+
+        <activity
             android:name=".ui.EnlargeImageActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/EnlargeTheme" />
-
-        <!--<meta-data-->
-        <!--android:name="design_width_in_dp"-->
-        <!--android:value="375" />-->
-        <!--<meta-data-->
-        <!--android:name="design_height_in_dp"-->
-        <!--android:value="667" />-->
-
+            android:theme="@style/EnlargeTheme" /> <!-- <meta-data -->
+        <!-- android:name="design_width_in_dp" -->
+        <!-- android:value="375" /> -->
+        <!-- <meta-data -->
+        <!-- android:name="design_height_in_dp" -->
+        <!-- android:value="667" /> -->
         <activity
             android:name=".ui.msgpage.CreateGameGroupActivity"
             android:launchMode="singleTop"
@@ -355,7 +359,8 @@
         <activity
             android:name=".ui.msgpage.PeopleRedEnvelopesActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/RedPackageTheme" />
         <activity
             android:name=".ui.msgpage.TransferActivity"
             android:launchMode="singleTop"
@@ -375,7 +380,8 @@
         <activity
             android:name=".ui.msgpage.PeopleUnaccalimedActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/RedPackageTheme" />
         <activity
             android:name=".ui.walletpage.ExchangeListTypeActivity"
             android:launchMode="singleTop"

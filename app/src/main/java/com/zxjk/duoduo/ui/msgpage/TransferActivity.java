@@ -130,9 +130,13 @@ public class TransferActivity extends BaseActivity implements SelectPopupWindow.
 
             boolean fromScan = getIntent().getBooleanExtra("fromScan", false);
             if (fromScan) {
+                String money = getIntent().getStringExtra("money");
+                if (TextUtils.isEmpty(money)) {
+                    money = hk;
+                }
                 ServiceFactory.getInstance().getBaseService(Api.class)
-                        .transfer(getIntent().getStringExtra("userId"), getIntent().getStringExtra("money")
-                                , MD5Utils.getMD5(psw), "")
+                        .transfer(getIntent().getStringExtra("userId"), money
+                                , MD5Utils.getMD5(psw), remarks)
                         .compose(bindToLifecycle())
                         .flatMap((Function<BaseResponse<TransferResponse>, ObservableSource<BaseResponse<TransferResponse>>>) response -> ServiceFactory.getInstance().getBaseService(Api.class)
                                 .collect(response.data.getId()))

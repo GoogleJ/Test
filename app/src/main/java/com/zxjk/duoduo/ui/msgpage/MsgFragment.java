@@ -55,22 +55,24 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
         rootView.findViewById(R.id.rl_left).setOnClickListener(v ->
                 startActivity(new Intent(getActivity(), ContactsNewFriendActivity.class)));
 
+        popupWindow = new CommonPopupWindow.Builder(getActivity())
+                .setView(R.layout.pop_msg_top)
+                .setWidthAndHeight(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                .setAnimationStyle(R.style.AnimDown)
+                .setBackGroundLevel(1.0f)
+                .setViewOnclickListener(MsgFragment.this::getChildView)
+                .setOutsideTouchable(true)
+                .create();
+
+        getPermisson(popupWindow.getContentView().findViewById(R.id.scan), result -> {
+            if (result) startActivity(new Intent(getActivity(), QrCodeActivity.class));
+            popupWindow.dismiss();
+        }, Manifest.permission.CAMERA);
+
         rl_end.setOnClickListener(v -> {
             if (popupWindow != null && popupWindow.isShowing()) {
                 return;
             }
-            popupWindow = new CommonPopupWindow.Builder(getActivity())
-                    .setView(R.layout.pop_msg_top)
-                    .setWidthAndHeight(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                    .setAnimationStyle(R.style.AnimDown)
-                    .setBackGroundLevel(1.0f)
-                    .setViewOnclickListener(MsgFragment.this::getChildView)
-                    .setOutsideTouchable(true)
-                    .create();
-            getPermisson(popupWindow.getContentView().findViewById(R.id.scan), result -> {
-                if (result) startActivity(new Intent(getActivity(), QrCodeActivity.class));
-                popupWindow.dismiss();
-            }, Manifest.permission.CAMERA);
             popupWindow.showAsDropDown(rl_end);
         });
 

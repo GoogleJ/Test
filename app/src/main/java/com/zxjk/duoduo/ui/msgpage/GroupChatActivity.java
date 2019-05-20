@@ -144,15 +144,6 @@ public class GroupChatActivity extends BaseActivity implements TextWatcher {
                     boolean isNameContains = contact.getGroupNikeName().toLowerCase(Locale.CHINESE)
                             .contains(str.toLowerCase(Locale.CHINESE));
 
-//                    boolean isSortKeyContains = contact.sortKey.toLowerCase(Locale.CHINESE).replace(" ", "")
-//                            .contains(str.toLowerCase(Locale.CHINESE));
-//
-//                    boolean isSimpleSpellContains = contact.sortToken.simpleSpell.toLowerCase(Locale.CHINESE)
-//                            .contains(str.toLowerCase(Locale.CHINESE));
-//
-//                    boolean isWholeSpellContains = contact.sortToken.wholeSpell.toLowerCase(Locale.CHINESE)
-//                            .contains(str.toLowerCase(Locale.CHINESE));
-
                     if (isNameContains) {
                         if (!filterList.contains(contact)) {
                             filterList.add(contact);

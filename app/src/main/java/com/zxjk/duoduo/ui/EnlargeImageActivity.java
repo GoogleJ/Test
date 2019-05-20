@@ -17,6 +17,8 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.davemorrissey.labs.subscaleview.ImageSource;
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.shehuan.nicedialog.BaseNiceDialog;
@@ -59,9 +61,12 @@ import cn.bingoogolapple.qrcode.zxing.QRCodeDecoder;
  */
 public class EnlargeImageActivity extends BaseActivity {
 
-
     @BindView(R.id.pic)
     PinchImageView pic;
+
+    @BindView(R.id.iv)
+    SubsamplingScaleImageView iv;
+
     private Bitmap bitmap;
 
     @Override
@@ -71,66 +76,76 @@ public class EnlargeImageActivity extends BaseActivity {
         setContentView(R.layout.activity_enlarge_image);
         ButterKnife.bind(this);
         String imageUrl = getIntent().getStringExtra("image");
-        GlideUtil.loadNormalImg(pic, imageUrl, new RequestListener<Bitmap>() {
-            @Override
-            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
-                return false;
-            }
-
-            @Override
-            public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-                bitmap = resource;
-                pic.setImageBitmap(bitmap);
-                return true;
-            }
-        });
-
-        pic.setOnClickListener(v -> finishAfterTransition());
-
-        pic.setOnLongClickListener(v -> {
-            NiceDialog.init().setLayoutId(R.layout.layout_general_dialog6).setConvertListener(new ViewConvertListener() {
+        if (imageUrl.equals("GameRules")) {
+            CommonUtils.initDialog(this).show();
+            pic.setVisibility(View.GONE);
+            iv.setVisibility(View.VISIBLE);
+            iv.setOnImageEventListener(new SubsamplingScaleImageView.DefaultOnImageEventListener() {
                 @Override
-                protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
-                    holder.setText(R.id.tv_photograph, "保存图片");
-                    holder.setText(R.id.tv_photo_select, "识别二维码");
-                    //保存图片
+                public void onReady() {
+                    super.onReady();
+                    CommonUtils.destoryDialog();
+                }
+            });
+            iv.setImage(ImageSource.resource(R.drawable.gamerules));
+            iv.setOnClickListener(v -> finish());
 
-                    holder.setOnClickListener(R.id.tv_photograph, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
+        } else {
+            GlideUtil.loadNormalImg(pic, imageUrl, new RequestListener<Bitmap>() {
+                @Override
+                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                    return false;
+                }
+
+                @Override
+                public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                    bitmap = resource;
+                    pic.setImageBitmap(bitmap);
+                    return true;
+                }
+            });
+            pic.setOnClickListener(v -> finishAfterTransition());
+
+            pic.setOnLongClickListener(v -> {
+                NiceDialog.init().setLayoutId(R.layout.layout_general_dialog6).setConvertListener(new ViewConvertListener() {
+                    @Override
+                    protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                        holder.setText(R.id.tv_photograph, "保存图片");
+                        holder.setText(R.id.tv_photo_select, "识别二维码");
+
+                        //识别二维码
+                        holder.setOnClickListener(R.id.tv_photo_select, v -> {
                             dialog.dismiss();
-                            getPermisson(g -> {
-                                //保存到手机
-                                if (bitmap == null) {
+                            decode(bitmap, "解析二维码失败");
+                        });
+
+                        //保存图片
+                        holder.setOnClickListener(R.id.tv_photograph, v1 -> getPermisson(g -> {
+                            //保存到手机
+                            dialog.dismiss();
+                            if (bitmap == null) {
+                                return;
+                            }
+                            SaveImageUtil.get().savePic(bitmap, success -> {
+                                if (success) {
+                                    ToastUtils.showShort(R.string.savesucceed);
                                     return;
                                 }
-                                SaveImageUtil.get().savePic(bitmap, success -> {
-                                    if (success) {
-                                        ToastUtils.showShort(R.string.savesucceed);
-                                        return;
-                                    }
-                                    ToastUtils.showShort(R.string.savefailed);
-                                });
-                            }, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
+                                ToastUtils.showShort(R.string.savefailed);
+                            });
+                        }, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE));
 
-                        }
-                    });
+                        //取消
+                        holder.setOnClickListener(R.id.tv_cancel, v -> dialog.dismiss());
 
-                    //识别二维码
-                    holder.setOnClickListener(R.id.tv_photo_select, v -> {
-                        dialog.dismiss();
-                        decode(bitmap, "解析二维码失败");
-                    });
-                    //取消
-                    holder.setOnClickListener(R.id.tv_cancel, v -> dialog.dismiss());
-
-                }
-            }).setShowBottom(true)
-                    .setOutCancel(true)
-                    .setDimAmount(0.5f)
-                    .show(getSupportFragmentManager());
-            return true;
-        });
+                    }
+                }).setShowBottom(true)
+                        .setOutCancel(true)
+                        .setDimAmount(0.5f)
+                        .show(getSupportFragmentManager());
+                return true;
+            });
+        }
     }
 
     @SuppressLint("StaticFieldLeak")

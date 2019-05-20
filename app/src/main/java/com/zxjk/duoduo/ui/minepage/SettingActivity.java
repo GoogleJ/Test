@@ -90,8 +90,9 @@ public class SettingActivity extends BaseActivity {
         findViewById(R.id.rl_realNameAuthentication).setOnClickListener(v -> {
             if (Constant.currentUser.getIsAuthentication().equals("2")) {
                 ToastUtils.showShort(R.string.verifying_pleasewait);
-            } else if (!Constant.currentUser.getIsAuthentication().equals("0") &&
-                    !Constant.currentUser.getIsAuthentication().equals("1")) {
+            } else if (Constant.currentUser.getIsAuthentication().equals("0")) {
+                ToastUtils.showShort(R.string.authen_true);
+            } else {
                 startActivity(new Intent(SettingActivity.this, VerifiedActivity.class));
             }
         });

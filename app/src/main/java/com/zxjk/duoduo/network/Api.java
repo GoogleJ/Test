@@ -17,7 +17,6 @@ import com.zxjk.duoduo.network.response.GetGroupRedPackageInfoResponse;
 import com.zxjk.duoduo.network.response.GetIntegralDetailsResponse;
 import com.zxjk.duoduo.network.response.GetNumbeOfTransactionResponse;
 import com.zxjk.duoduo.network.response.GetOverOrderResponse;
-import com.zxjk.duoduo.network.response.GetRebateByIdResponse;
 import com.zxjk.duoduo.network.response.GetRebateDetailsResponse;
 import com.zxjk.duoduo.network.response.GetRebateInfoResponse;
 import com.zxjk.duoduo.network.response.GetRebatePayRecordResponse;
@@ -490,7 +489,7 @@ public interface Api {
 
     @POST("duoduo/playRebate/getRebateById")
     @FormUrlEncoded
-    Observable<BaseResponse<GetRebateByIdResponse>> getRebateById(@Field("groupId") String groupId);
+    Observable<BaseResponse> getRebateById(@Field("groupId") String groupId);
 
     @POST("duoduo/group/getAllPlayGroup")
     @FormUrlEncoded

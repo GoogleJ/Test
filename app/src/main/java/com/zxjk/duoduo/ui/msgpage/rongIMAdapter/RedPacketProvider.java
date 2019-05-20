@@ -20,8 +20,6 @@ import io.rong.imlib.model.Message;
 @ProviderTag(messageContent = RedPacketMessage.class)
 public class RedPacketProvider extends IContainerItemProvider.MessageProvider<RedPacketMessage> {
 
-    private Context context;
-
     class ViewHolder {
         TextView message;
         LinearLayout sendLayout;
@@ -29,9 +27,6 @@ public class RedPacketProvider extends IContainerItemProvider.MessageProvider<Re
 
     @Override
     public void bindView(View view, int position, RedPacketMessage redPacketMessage, UIMessage uiMessage) {
-        if (context == null) {
-            context = view.getContext();
-        }
 
         ViewHolder holder = (ViewHolder) view.getTag();
 
@@ -43,7 +38,7 @@ public class RedPacketProvider extends IContainerItemProvider.MessageProvider<Re
         }
 
         if (TextUtils.isEmpty(redPacketMessage.getRemark())) {
-            holder.message.setText(context.getResources().getString(R.string.m_red_envelopes_label));
+            holder.message.setText(R.string.m_red_envelopes_label);
         } else {
             holder.message.setText(redPacketMessage.getRemark());
         }
@@ -70,8 +65,8 @@ public class RedPacketProvider extends IContainerItemProvider.MessageProvider<Re
         View view = LayoutInflater.from(context).inflate(R.layout.item_red_packet_send, viewGroup, false);
         ViewHolder holder = new ViewHolder();
         holder.message = view.findViewById(R.id.remark);
-        view.setTag(holder);
         holder.sendLayout = view.findViewById(R.id.send_red_packet_layout);
+        view.setTag(holder);
         return view;
     }
 }

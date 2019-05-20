@@ -24,6 +24,10 @@ import com.zxjk.duoduo.utils.WindowUtils;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
@@ -136,5 +140,39 @@ public class WelcomeActivity extends BaseActivity {
             MMKVUtils.getInstance().enCode("isLogin", false);
             startActivity(new Intent(this, LoginActivity.class));
         }
+    }
+
+    public static void main(String[] args) {
+        Observable<Object> objectObservable = Observable.create(new ObservableOnSubscribe<Object>() {
+            @Override
+            public void subscribe(ObservableEmitter<Object> emitter) throws Exception {
+                System.out.println("?");
+                emitter.onNext("1");
+            }
+        });
+
+        objectObservable
+                .doOnSubscribe(disposable -> System.out.println("first"))
+                .subscribe(new Observer<Object>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        System.out.println("second");
+                    }
+
+                    @Override
+                    public void onNext(Object o) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }

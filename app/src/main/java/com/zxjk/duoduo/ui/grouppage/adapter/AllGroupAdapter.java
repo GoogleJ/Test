@@ -53,6 +53,8 @@ public class AllGroupAdapter extends RecyclerView.Adapter<AllGroupAdapter.ViewHo
             holder.tvType.setVisibility(View.VISIBLE);
         } else if (data.get(position).isHasJoined() == data.get(position - 1).isHasJoined()) {
             holder.tvType.setVisibility(View.GONE);
+        } else {
+            holder.tvType.setVisibility(View.VISIBLE);
         }
         holder.tvGroupName.setText(data.get(position).getGroupNikeName());
         holder.tvType.setText(data.get(position).isHasJoined() ? R.string.mygamegroup : R.string.allgamegroup);

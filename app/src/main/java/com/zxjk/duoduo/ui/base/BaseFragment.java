@@ -61,17 +61,6 @@ public class BaseFragment extends RxFragment  {
                         result.onResult(granted.granted);
                     }
                 });
-//        rxPermissions.request(permissions)
-//                .compose(bindToLifecycle())
-//                .compose(rxPermissions.ensure(permissions))
-//                .subscribe(granted -> {
-//                    if (!granted) {
-//                        ToastUtils.showShort("请开启相关权限");
-//                    }
-//                    if (null != result) {
-//                        result.onResult(granted);
-//                    }
-//                });
     }
 
     @Override

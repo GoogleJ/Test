@@ -42,9 +42,9 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:gravity="end"
-            android:hint="0.00"
+            android:hint="0"
             android:imeOptions="actionDone"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             android:textColor="@color/textColor3"
             android:textSize="30sp" />
 

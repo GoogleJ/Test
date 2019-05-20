@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.dialog.SelectPopupWindow;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
+import com.zxjk.duoduo.utils.MoneyValueFilter;
 
 /**
  * 提取奖励
@@ -41,13 +43,13 @@ public class ExtractRewardActivity extends BaseActivity implements SelectPopupWi
         initData();
     }
 
-
     private void initView() {
         groupId = getIntent().getStringExtra("groupId");
         TextView tv_title = findViewById(R.id.tv_title);
         TextView tv_end = findViewById(R.id.tv_end);
         tv_amountWithdrawal = findViewById(R.id.tv_amountWithdrawal);
         et_withdrawalAmount = findViewById(R.id.et_withdrawalAmount);
+        et_withdrawalAmount.setFilters(new InputFilter[]{new MoneyValueFilter()});
         tv_title.setText(getString(R.string.extract_reward));
         tv_end.setVisibility(View.VISIBLE);
         tv_end.setText(getString(R.string.record));
