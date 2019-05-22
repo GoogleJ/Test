@@ -19,7 +19,9 @@ public class RongPushMessageReceiver extends PushMessageReceiver {
     @Override
     public boolean onNotificationMessageClicked(Context context, PushType pushType, PushNotificationMessage pushNotificationMessage) {
         if (TextUtils.isEmpty(Constant.userId)) {
-            context.startActivity(new Intent(context,WelcomeActivity.class));
+            Intent intent = new Intent(context, WelcomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            context.startActivity(intent);
             return true;
         }
         return false;

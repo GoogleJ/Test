@@ -57,6 +57,58 @@
             <include layout="@layout/layout_line10" />
 
             <RelativeLayout
+                android:id="@+id/rl_setTop"
+                style="@style/RLayoutStyle">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:text="置顶聊天"
+                    android:textColor="@color/theme_color"
+                    android:textSize="16sp" />
+
+                <Switch
+                    android:id="@+id/switch1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="8dp"
+                    android:theme="@style/CommonSwitch" />
+
+            </RelativeLayout>
+
+            <include layout="@layout/layout_line" />
+
+            <RelativeLayout
+                android:id="@+id/rl_notNotify"
+                style="@style/RLayoutStyle">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:text="消息免打扰"
+                    android:textColor="@color/theme_color"
+                    android:textSize="16sp" />
+
+                <Switch
+                    android:id="@+id/switch2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="8dp"
+                    android:theme="@style/CommonSwitch" />
+
+            </RelativeLayout>
+
+            <include layout="@layout/layout_line" />
+
+            <RelativeLayout
                 android:id="@+id/rl_add"
                 style="@style/RLayoutStyle">
 

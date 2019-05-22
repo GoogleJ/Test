@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -63,46 +64,79 @@ public class GroupChatInformationActivity extends BaseActivity {
 
     private boolean isGameGroup;
 
+    private Switch switch1;
+    private Switch switch2;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_chat_information);
         tv_title = findViewById(R.id.tv_title);
 
+        switch1 = findViewById(R.id.switch1);
+        switch2 = findViewById(R.id.switch2);
+
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());
         see_more_group_members = findViewById(R.id.see_more_group_members);
 
         RelativeLayout rl_groupManage = findViewById(R.id.rl_groupManage);
 
-        String id = getIntent().getStringExtra("id");
-        ServiceFactory.getInstance().getBaseService(Api.class)
-                .getGroupByGroupId(id)
-                .compose(bindToLifecycle())
-                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                .compose(RxSchedulers.normalTrans())
-                .subscribe(groupResponse -> {
-                    if (groupResponse.getMaxNumber().equals("")) {
-                        isGameGroup = false;
-                    } else {
-                        isGameGroup = true;
-                    }
-                    group = groupResponse;
+        group = (GroupResponse) getIntent().getSerializableExtra("group");
 
-                    if (groupResponse.getGroupInfo().getGroupOwnerId().equals(Constant.userId)) {
-                        rl_groupManage.setVisibility(View.VISIBLE);
-                        if (Constant.isVerifyVerision) {
-                            rl_groupManage.setVisibility(View.GONE);
-                        }
-                    } else {
-                        rl_groupManage.setVisibility(View.GONE);
-                    }
+        if (group.getMaxNumber().equals("")) {
+            isGameGroup = false;
+        } else {
+            isGameGroup = true;
+        }
+        if (group.getGroupInfo().getGroupOwnerId().equals(Constant.userId)) {
+            rl_groupManage.setVisibility(View.VISIBLE);
+            if (Constant.isVerifyVerision) {
+                rl_groupManage.setVisibility(View.GONE);
+            }
+        } else {
+            rl_groupManage.setVisibility(View.GONE);
+        }
 
-                    initView();
-                }, this::handleApiError);
+        initView();
     }
 
     @SuppressLint("SetTextI18n")
     private void initView() {
+        RongIM.getInstance().getConversationNotificationStatus(Conversation.ConversationType.GROUP, group.getGroupInfo().getId(), new RongIMClient.ResultCallback<Conversation.ConversationNotificationStatus>() {
+            @Override
+            public void onSuccess(Conversation.ConversationNotificationStatus conversationNotificationStatus) {
+                if (conversationNotificationStatus == Conversation.ConversationNotificationStatus.NOTIFY) {
+                    switch2.setChecked(false);
+                } else {
+                    switch2.setChecked(true);
+                }
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+            }
+        });
+        switch2.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            Conversation.ConversationNotificationStatus status;
+            if (isChecked) {
+                status = Conversation.ConversationNotificationStatus.DO_NOT_DISTURB;
+            } else {
+                status = Conversation.ConversationNotificationStatus.NOTIFY;
+            }
+            RongIM.getInstance().setConversationNotificationStatus(Conversation.ConversationType.GROUP, group.getGroupInfo().getId(), status, null);
+        });
+
+        RongIM.getInstance().getConversation(Conversation.ConversationType.GROUP, group.getGroupInfo().getId(), new RongIMClient.ResultCallback<Conversation>() {
+            @Override
+            public void onSuccess(Conversation conversation) {
+                switch1.setChecked(conversation.isTop());
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+            }
+        });
+        switch1.setOnCheckedChangeListener((buttonView, isChecked) -> RongIM.getInstance().setConversationToTop(Conversation.ConversationType.GROUP, group.getGroupInfo().getId(), isChecked, null));
         tv_title.setText(getString(R.string.chat_message) + "(" + group.getCustomers().size() + ")");
         groupChatName = findViewById(R.id.group_chat_name);
         groupChatRecyclerView = findViewById(R.id.group_chat_recycler_view);

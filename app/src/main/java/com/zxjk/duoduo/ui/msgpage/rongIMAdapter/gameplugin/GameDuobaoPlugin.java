@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.ui.msgpage.JinDuoBaoActiviity;
 
 import io.rong.imkit.RongExtension;
 import io.rong.imkit.plugin.IPluginModule;
@@ -25,7 +26,7 @@ public class GameDuobaoPlugin implements IPluginModule {
 
     @Override
     public void onClick(Fragment fragment, RongExtension rongExtension) {
-
+        fragment.startActivity(new Intent(fragment.getContext(), JinDuoBaoActiviity.class));
     }
 
     @Override

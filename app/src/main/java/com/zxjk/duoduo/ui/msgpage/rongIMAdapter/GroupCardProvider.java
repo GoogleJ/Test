@@ -74,7 +74,7 @@ public class GroupCardProvider extends IContainerItemProvider.MessageProvider<Gr
 
     @Override
     public Spannable getContentSummary(GroupCardMessage groupCardMessage) {
-        return new SpannableString("您有一条群名片消息");
+        return new SpannableString("[群名片]");
     }
 
     @Override

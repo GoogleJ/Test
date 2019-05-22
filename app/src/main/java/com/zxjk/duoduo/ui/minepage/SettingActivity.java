@@ -142,7 +142,7 @@ public class SettingActivity extends BaseActivity {
                             .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(SettingActivity.this)))
                             .compose(RxSchedulers.normalTrans())
                             .subscribe(s -> {
-                                RongIM.getInstance().disconnect();
+                                RongIM.getInstance().logout();
                                 MMKVUtils.getInstance().enCode("isLogin", false);
                                 Constant.clear();
                                 ToastUtils.showShort(R.string.login_out);

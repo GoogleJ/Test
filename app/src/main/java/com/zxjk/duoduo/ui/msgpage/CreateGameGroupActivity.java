@@ -22,6 +22,8 @@ import com.zxjk.duoduo.ui.widget.dialog.SelectPopupWindow;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
 
+import java.text.DecimalFormat;
+
 import io.rong.imkit.RongIM;
 
 public class CreateGameGroupActivity extends BaseActivity implements SelectPopupWindow.OnPopWindowClickListener {
@@ -30,7 +32,7 @@ public class CreateGameGroupActivity extends BaseActivity implements SelectPopup
     private CreateGameGroupAdapter adapter;
     private SelectPopupWindow selectPopupWindow;
 
-    private String gameType, playId, pumpingRate, proportionOfFees, typeName, commission;
+    private String gameType, playId, pumpingRate, proportionOfFees, typeName, commission, duobao;
 
     @SuppressLint("CheckResult")
     @Override
@@ -55,13 +57,14 @@ public class CreateGameGroupActivity extends BaseActivity implements SelectPopup
                 .subscribe(response -> {
                     adapter = new CreateGameGroupAdapter(response, CreateGameGroupActivity.this);
                     recycler.setAdapter(adapter);
-                    adapter.setOnCreateGameGroupClick((gameType, playId, pumpingRate, proportionOfFees, typeName, commission) -> {
+                    adapter.setOnCreateGameGroupClick((gameType, playId, pumpingRate, proportionOfFees, typeName, commission, duobao) -> {
                         this.gameType = gameType;
                         this.playId = playId;
                         this.pumpingRate = pumpingRate;
                         this.proportionOfFees = proportionOfFees;
                         this.typeName = typeName;
                         this.commission = commission;
+                        this.duobao = duobao;
 
                         Rect rect = new Rect();
                         getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
@@ -69,18 +72,18 @@ public class CreateGameGroupActivity extends BaseActivity implements SelectPopup
                         selectPopupWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, winHeight - rect.bottom);
                     });
                 }, this::handleApiError);
-
     }
 
     @SuppressLint("CheckResult")
     @Override
     public void onPopWindowClickListener(String psw, boolean complete) {
         if (complete) {
+            DecimalFormat decimalFormat = new DecimalFormat("0.00");
             ServiceFactory.getInstance().getBaseService(Api.class)
-                    .makeGameGroup(gameType, playId, pumpingRate, MD5Utils.getMD5(psw), proportionOfFees, typeName, commission, "")
+                    .makeGameGroup(gameType, playId, pumpingRate, MD5Utils.getMD5(psw), proportionOfFees, typeName, commission, decimalFormat.format(Float.parseFloat(duobao)))
                     .compose(bindToLifecycle())
                     .compose(RxSchedulers.normalTrans())
-                    .compose(RxSchedulers.ioObserver())
+                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(CreateGameGroupActivity.this)))
                     .subscribe(response -> {
                         ToastUtils.showShort(R.string.create_game_group_success);
                         Intent intent = new Intent(this, HomeActivity.class);

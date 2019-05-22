@@ -82,7 +82,6 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
     int intentType = 0;
     private RelativeLayout rl_end;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,11 +95,9 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
         rl_end.setVisibility(View.VISIBLE);
         initUI();
         initFriendIntent();
-
     }
 
     private void initFriendIntent() {
-        //这个模块需要添加数据绑定
         intentType = getIntent().getIntExtra("intentType", 0);
         friendInfoResponse = (FriendInfoResponse) getIntent().getSerializableExtra("searchFriendDetails");
         friendInfo = (FriendInfoResponse) getIntent().getSerializableExtra("globalSearchFriendDetails");
@@ -214,15 +211,12 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                 startActivity(intent5,
                         ActivityOptionsCompat.makeSceneTransitionAnimation(this,
                                 ivHeadPortrait, "12").toBundle());
-
                 break;
-
             case R.id.iv_duplication:
                 ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 cm.setText(tvWalletAddress.getText().toString());
                 ToastUtils.showShort(getString(R.string.duplicated_to_clipboard));
                 break;
-
             case R.id.tv_sendMessage:
                 Intent intent = new Intent(this, HomeActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -301,22 +295,15 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                     }
                 }).setDimAmount(0.5f).setOutCancel(false).show(getSupportFragmentManager());
                 break;
-
-            default:
-                break;
         }
     }
 
     @Override
     public void getChildView(View view, int layoutResId) {
-        switch (layoutResId) {
-            case R.layout.popup_window_people_information:
-                view.findViewById(R.id.update_rename).setOnClickListener(this);
-                view.findViewById(R.id.recommend_to_friend).setOnClickListener(this);
-                view.findViewById(R.id.delete_friend).setOnClickListener(this);
-                break;
-            default:
-                break;
+        if (layoutResId == R.layout.popup_window_people_information) {
+            view.findViewById(R.id.update_rename).setOnClickListener(this);
+            view.findViewById(R.id.recommend_to_friend).setOnClickListener(this);
+            view.findViewById(R.id.delete_friend).setOnClickListener(this);
         }
     }
 
@@ -359,6 +346,4 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
             popupWindow.dismiss();
         }
     }
-
-
 }

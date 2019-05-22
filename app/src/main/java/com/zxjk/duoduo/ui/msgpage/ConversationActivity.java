@@ -35,8 +35,9 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.EnlargeImageActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.ChatInformationActivity;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BasePluginExtensionModule;
+import com.zxjk.duoduo.ui.grouppage.GroupChatInformationActivity;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.AudioVideoPlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BasePluginExtensionModule;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.PhotoSelectorPlugin;
@@ -46,6 +47,7 @@ import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.SampleTab;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameDownScorePlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameDuobaoPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameJiaoYiPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameRecordPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameRulesPlugin;
@@ -516,7 +518,7 @@ public class ConversationActivity extends BaseActivity {
                             extension.addPlugin(new AudioVideoPlugin());
                             extension.addPlugin(new GameRecordPlugin());
                             extension.addPlugin(new GameDownScorePlugin());
-//                            extension.addPlugin(new GameDuobaoPlugin());
+                            extension.addPlugin(new GameDuobaoPlugin());
                             if (groupInfo.getGroupInfo().getGroupOwnerId().equals(Constant.userId)) {
                                 //只有群主才能开始下注
                                 extension.addPlugin(new GameStartPlugin());
@@ -757,7 +759,7 @@ public class ConversationActivity extends BaseActivity {
             startActivity(intent);
         } else {
             Intent intent1 = new Intent(this, GroupChatInformationActivity.class);
-            intent1.putExtra("id", groupResponse.getGroupInfo().getId());
+            intent1.putExtra("group", groupResponse);
             startActivityForResult(intent1, 1);
         }
     }

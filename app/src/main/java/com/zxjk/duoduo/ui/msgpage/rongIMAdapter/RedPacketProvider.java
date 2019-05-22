@@ -52,7 +52,7 @@ public class RedPacketProvider extends IContainerItemProvider.MessageProvider<Re
 
     @Override
     public Spannable getContentSummary(RedPacketMessage redPacketMessage) {
-        return new SpannableString("您有一条红包消息");
+        return new SpannableString("[红包]");
     }
 
     @Override

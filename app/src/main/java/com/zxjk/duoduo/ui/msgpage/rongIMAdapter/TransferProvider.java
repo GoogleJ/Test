@@ -64,7 +64,7 @@ public class TransferProvider extends IContainerItemProvider.MessageProvider<Tra
 
     @Override
     public Spannable getContentSummary(TransferMessage transferMessage) {
-        return new SpannableString("您有一条转账消息");
+        return new SpannableString("[转账]");
     }
 
 

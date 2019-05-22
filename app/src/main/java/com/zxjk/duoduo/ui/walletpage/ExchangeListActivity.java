@@ -49,7 +49,6 @@ public class ExchangeListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exchange_list);
 
-
         String rate = getIntent().getStringExtra("rate");
 
         mAdapter = new ExchangeListAdapter(rate);
@@ -191,12 +190,19 @@ public class ExchangeListActivity extends BaseActivity {
         refreshLayout.setOnRefreshListener(this::reloadData);
     }
 
+    @Override
+    protected void onRestart() {
+        reloadData();
+        super.onRestart();
+    }
+
     private void reloadData() {
+        refreshLayout.setRefreshing(true);
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .getOverOrder()
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.normalTrans())
-                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                .compose(RxSchedulers.ioObserver())
                 .subscribe(getOverOrderResponses -> {
                     if (refreshLayout.isRefreshing()) {
                         refreshLayout.setRefreshing(false);

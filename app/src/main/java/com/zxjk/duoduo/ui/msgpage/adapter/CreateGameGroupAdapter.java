@@ -58,7 +58,7 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     public interface OnCreateGameGroupClick {
-        void click(String gameType, String playId, String pumpingRate, String proportionOfFees, String typeName, String commission);
+        void click(String gameType, String playId, String pumpingRate, String proportionOfFees, String typeName, String commission, String duobao);
     }
 
     public CreateGameGroupAdapter(GetGameClassResponse response, BaseActivity activity) {
@@ -327,6 +327,7 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         tvChoushui.setText("1%");
                     } else {
                         gameType = "4";
+                        typeName = response.getGroupClass().get(3).getTypeName();
                         ivChouShui.setImageResource(R.drawable.ic_create_gamegroup_beilv);
                         ivFanyong.setImageResource(R.drawable.ic_create_gamegroup_fanyong3);
                         llGameType1.setVisibility(View.GONE);
@@ -347,7 +348,8 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                             @Override
                             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                                 tvChoushui.setText(40 + progress / 100 + progress % 100 / 100f + "");
-                                pumpingRate = "0.0" + (progress + 1);
+                                String s = tvChoushui.getText().toString();
+                                pumpingRate = s;
                             }
 
                             @Override
@@ -446,9 +448,11 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             llCommit.setOnClickListener(v -> {
                 //创建游戏群
-                if (!cbGame1.isChecked() && !cbGame2.isChecked() && !cbGame3.isChecked()) {
-                    ToastUtils.showShort(R.string.select_game_type1);
-                    return;
+                if (gameType.equals("1") || gameType.equals("2") || gameType.equals("3")) {
+                    if (!cbGame1.isChecked() && !cbGame2.isChecked() && !cbGame3.isChecked()) {
+                        ToastUtils.showShort(R.string.select_game_type1);
+                        return;
+                    }
                 }
 
                 if (gameType.equals("1")) {
@@ -484,8 +488,7 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         playId += "262,";
                     }
                 } else if (gameType.equals("4")) {
-                    ToastUtils.showShort("多宝建群功能正在开发中，请耐心等待");
-                    return;
+                    playId = "81";
                 }
 
                 if (!showFanYong) {
@@ -494,10 +497,12 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     commission = GsonUtils.toJson(data, false);
                 }
 
-                playId = playId.substring(0, playId.length() - 1);
+                if (!gameType.equals("4")) {
+                    playId = playId.substring(0, playId.length() - 1);
+                }
 
                 if (onCreateGameGroupClick != null) {
-                    onCreateGameGroupClick.click(gameType, playId, pumpingRate, proportionOfFees, typeName, commission);
+                    onCreateGameGroupClick.click(gameType, playId, pumpingRate, proportionOfFees, typeName, commission, pumpingRate);
                     playId = "";
                 }
             });

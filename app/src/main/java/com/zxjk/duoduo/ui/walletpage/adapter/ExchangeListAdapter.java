@@ -39,7 +39,8 @@ public class ExchangeListAdapter extends BaseQuickAdapter<GetOverOrderResponse, 
         TextView exchange_list_currency = helper.getView(R.id.exchange_list_currency);
         TextView exchange_list_money = helper.getView(R.id.exchange_list_money);
 
-        exchange_list_date.setText(CommonUtils.timeStamp2Date(item.getCreateTime()));
+        exchange_list_date.setText(TextUtils.isEmpty(item.getCloseTime()) ? CommonUtils.timeStamp2Date(item.getCreateTime()) : CommonUtils.timeStamp2Date(item.getCloseTime()));
+
         exchange_list_currency.setText("HK");
         if (!TextUtils.isEmpty(item.getMoney())) {
             exchange_list_money.setText(item.getMoney() + " CNY");

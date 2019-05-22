@@ -82,12 +82,7 @@ public class GroupRedPacketActivity extends BaseActivity implements SelectPopupW
         TextView tv_end = findViewById(R.id.tv_end);
         tv_end.setVisibility(View.VISIBLE);
         tv_end.setText(getString(R.string.redrecord));
-        tv_end.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                jump2List();
-            }
-        });
+        tv_end.setOnClickListener(v -> jump2List());
 
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());
 
