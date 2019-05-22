@@ -108,7 +108,6 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
     }
 
-
     CheckBox cbGame1;
     CheckBox cbGame2;
     CheckBox cbGame3;
@@ -121,10 +120,14 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             // 设置数据
             banner.setPages(Arrays.asList(R.drawable.ic_create_gamegroup_banner1
                     , R.drawable.ic_create_gamegroup_banner2
-                    , R.drawable.ic_create_gamegroup_banner3), BannerViewHolder::new);
+                    , R.drawable.ic_create_gamegroup_banner3, R.drawable.ic_create_gamegroup_banner4), BannerViewHolder::new);
 
             banner.setCanLoop(false);
             banner.setIndicatorVisible(false);
+
+            LinearLayout llGameType1 = itemView.findViewById(R.id.llGameType1);
+            LinearLayout llGameType2 = itemView.findViewById(R.id.llGameType2);
+            LinearLayout llGamerules = itemView.findViewById(R.id.llGamerules);
 
             ImageView ivGameModes = itemView.findViewById(R.id.ivGameModes);
             ImageView ivChouShui = itemView.findViewById(R.id.ivChouShui);
@@ -136,6 +139,15 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
             SeekBar seekbar = itemView.findViewById(R.id.seekbar);
             TextView tvChoushui = itemView.findViewById(R.id.tvChoushui);
+            TextView tvDuoBao = itemView.findViewById(R.id.tvDuoBao);
+            TextView tvSeekMin = itemView.findViewById(R.id.tvSeekMin);
+            TextView tvSeekMax = itemView.findViewById(R.id.tvSeekMax);
+            TextView tvBeiLvTitle = itemView.findViewById(R.id.tvBeiLvTitle);
+
+            TextView tvFormHead1 = itemView.findViewById(R.id.tvFormHead1);
+            TextView tvFormHead2 = itemView.findViewById(R.id.tvFormHead2);
+            TextView tvFormHead3 = itemView.findViewById(R.id.tvFormHead3);
+            TextView tvFormHead4 = itemView.findViewById(R.id.tvFormHead4);
 
             LinearLayout llFanyong1 = itemView.findViewById(R.id.llFanyong1);
             LinearLayout llFanyong2 = itemView.findViewById(R.id.llFanyong2);
@@ -157,15 +169,46 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 }
             });
 
+            seekbar.setMax(4);
+            seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    tvChoushui.setText(progress + 1 + "%");
+                    pumpingRate = "0.0" + (progress + 1);
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+            });
+
+            tvChoushui.setText("1%");
+
             banner.getViewPager().addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
                 @Override
                 public void onPageSelected(int position) {
-                    int realposition = position % 3;
+                    int realposition = position % 4;
                     playId = "";
 
                     cbGame1.setChecked(false);
                     cbGame2.setChecked(false);
                     cbGame3.setChecked(false);
+                    llGameType1.setVisibility(View.VISIBLE);
+                    llGameType2.setVisibility(View.VISIBLE);
+                    llGamerules.setVisibility(View.GONE);
+                    tvDuoBao.setVisibility(View.GONE);
+                    llGamerules.setVisibility(View.GONE);
+                    tvDuoBao.setVisibility(View.GONE);
+                    tvSeekMin.setText("1%");
+                    tvSeekMax.setText("5%");
+                    tvBeiLvTitle.setText(R.string.choushuibili);
+
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         seekbar.setProgress(0, true);
                     } else {
@@ -185,6 +228,30 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         cbGame2.setBackgroundResource(R.drawable.selector_create_gamegroup1);
                         cbGame3.setBackgroundResource(R.drawable.selector_create_gamegroup1);
                         llCommit.setBackgroundResource(R.drawable.shape_bac_create_gamegroup_commit1);
+                        tvFormHead1.setBackgroundResource(R.drawable.shape_fanyong1_color1);
+                        tvFormHead2.setBackgroundColor(context.getColor(R.color.createGameGroup1));
+                        tvFormHead3.setBackgroundColor(context.getColor(R.color.createGameGroup1));
+                        tvFormHead4.setBackgroundResource(R.drawable.shape_fanyong2_color1);
+
+                        seekbar.setMax(4);
+                        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                            @Override
+                            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                                tvChoushui.setText(progress + 1 + "%");
+                                pumpingRate = "0.0" + (progress + 1);
+                            }
+
+                            @Override
+                            public void onStartTrackingTouch(SeekBar seekBar) {
+
+                            }
+
+                            @Override
+                            public void onStopTrackingTouch(SeekBar seekBar) {
+
+                            }
+                        });
+                        tvChoushui.setText("1%");
                     } else if (realposition == 1) {
                         gameType = "2";
                         proportionOfFees = response.getGroupClass().get(1).getGuaranteeFee();
@@ -198,7 +265,31 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         cbGame2.setBackgroundResource(R.drawable.selector_create_gamegroup2);
                         cbGame3.setBackgroundResource(R.drawable.selector_create_gamegroup2);
                         llCommit.setBackgroundResource(R.drawable.shape_bac_create_gamegroup_commit2);
-                    } else {
+                        tvFormHead1.setBackgroundResource(R.drawable.shape_fanyong1_color2);
+                        tvFormHead2.setBackgroundColor(context.getColor(R.color.createGameGroup2));
+                        tvFormHead3.setBackgroundColor(context.getColor(R.color.createGameGroup2));
+                        tvFormHead4.setBackgroundResource(R.drawable.shape_fanyong2_color2);
+
+                        seekbar.setMax(4);
+                        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                            @Override
+                            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                                tvChoushui.setText(progress + 1 + "%");
+                                pumpingRate = "0.0" + (progress + 1);
+                            }
+
+                            @Override
+                            public void onStartTrackingTouch(SeekBar seekBar) {
+
+                            }
+
+                            @Override
+                            public void onStopTrackingTouch(SeekBar seekBar) {
+
+                            }
+                        });
+                        tvChoushui.setText("1%");
+                    } else if (realposition == 2) {
                         gameType = "3";
                         proportionOfFees = response.getGroupClass().get(2).getGuaranteeFee();
                         typeName = response.getGroupClass().get(2).getTypeName();
@@ -210,31 +301,71 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         cbGame2.setBackgroundResource(R.drawable.selector_create_gamegroup3);
                         cbGame3.setBackgroundResource(R.drawable.selector_create_gamegroup3);
                         llCommit.setBackgroundResource(R.drawable.shape_bac_create_gamegroup_commit3);
+                        tvFormHead1.setBackgroundResource(R.drawable.shape_fanyong1_color3);
+                        tvFormHead2.setBackgroundColor(context.getColor(R.color.createGameGroup3));
+                        tvFormHead3.setBackgroundColor(context.getColor(R.color.createGameGroup3));
+                        tvFormHead4.setBackgroundResource(R.drawable.shape_fanyong2_color3);
+
+                        seekbar.setMax(4);
+                        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                            @Override
+                            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                                tvChoushui.setText(progress + 1 + "%");
+                                pumpingRate = "0.0" + (progress + 1);
+                            }
+
+                            @Override
+                            public void onStartTrackingTouch(SeekBar seekBar) {
+
+                            }
+
+                            @Override
+                            public void onStopTrackingTouch(SeekBar seekBar) {
+
+                            }
+                        });
+                        tvChoushui.setText("1%");
+                    } else {
+                        gameType = "4";
+                        ivChouShui.setImageResource(R.drawable.ic_create_gamegroup_beilv);
+                        ivFanyong.setImageResource(R.drawable.ic_create_gamegroup_fanyong3);
+                        llGameType1.setVisibility(View.GONE);
+                        llGameType2.setVisibility(View.GONE);
+                        llGamerules.setVisibility(View.VISIBLE);
+                        tvDuoBao.setVisibility(View.VISIBLE);
+                        tvSeekMin.setText("40");
+                        tvSeekMax.setText("49");
+                        tvBeiLvTitle.setText(R.string.beilv);
+                        llCommit.setBackgroundResource(R.drawable.shape_bac_create_gamegroup_commit4);
+                        tvFormHead1.setBackgroundResource(R.drawable.shape_fanyong1_color4);
+                        tvFormHead2.setBackgroundColor(context.getColor(R.color.createGameGroup4));
+                        tvFormHead3.setBackgroundColor(context.getColor(R.color.createGameGroup4));
+                        tvFormHead4.setBackgroundResource(R.drawable.shape_fanyong2_color4);
+
+                        seekbar.setMax(900);
+                        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                            @Override
+                            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                                tvChoushui.setText(40 + progress / 100 + progress % 100 / 100f + "");
+                                pumpingRate = "0.0" + (progress + 1);
+                            }
+
+                            @Override
+                            public void onStartTrackingTouch(SeekBar seekBar) {
+
+                            }
+
+                            @Override
+                            public void onStopTrackingTouch(SeekBar seekBar) {
+
+                            }
+                        });
+                        tvChoushui.setText("40");
                     }
+
                     if (data.size() > 0) {
                         notifyItemRangeChanged(1, data.size());
                     }
-                }
-            });
-
-//            seekbar.setMax(40);
-            seekbar.setMax(4);
-            seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-//                    tvChoushui.setText((progress) / 10f + 1 + "%");
-                    tvChoushui.setText(progress + 1 + "%");
-                    pumpingRate = "0.0" + (progress + 1);
-                }
-
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
-
-                }
-
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
-
                 }
             });
         }
@@ -267,7 +398,7 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         @Override
         public void onBind(Context context, int position, Integer data) {
-            int realPosition = position % 3;
+            int realPosition = position % 4;
             iv.setBackgroundResource(data);
             GetGameClassResponse.GroupClassBean groupClassBean = response.getGroupClass().get(realPosition);
 
@@ -352,6 +483,9 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     if (cbGame3.isChecked()) {
                         playId += "262,";
                     }
+                } else if (gameType.equals("4")) {
+                    ToastUtils.showShort("多宝建群功能正在开发中，请耐心等待");
+                    return;
                 }
 
                 if (!showFanYong) {

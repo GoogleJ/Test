@@ -924,7 +924,7 @@ public class SingleCallActivity extends BaseCallActivity implements Handler.Call
 //        intent.putExtra("floatbox", bundle);
 //        intent.putExtra("callAction", RongCallAction.ACTION_RESUME_CALL.getName());
 //        PendingIntent pendingIntent = PendingIntent.getActivity(this, 1000, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//        NotificationUtil.showNotification(this, "todo", "coontent", pendingIntent, CALL_NOTIFICATION_ID);
+//        NotificationUtil.showNotification(this, "", "coontent", pendingIntent, CALL_NOTIFICATION_ID);
 //    }
 
     public void onEventMainThread(HeadsetInfo headsetInfo) {

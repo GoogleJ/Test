@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -53,8 +54,6 @@ import static com.ashokvarma.bottomnavigation.BottomNavigationBar.BACKGROUND_STY
 import static com.google.android.material.tabs.TabLayout.MODE_FIXED;
 
 /**
- * todo 1.微信分享  2.exchangelist  3.转账更新
- *
  * @author Administrator
  */
 public class HomeActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
@@ -146,7 +145,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
             if (messageCount == 0) {
                 badgeItem.hide();
             } else {
-                if (messageCount > 100) {
+                if (messageCount >= 100) {
                     badgeItem.setText("...");
                 } else {
                     badgeItem.setText(String.valueOf(messageCount));
@@ -176,6 +175,8 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                         NiceDialog.init().setLayoutId(R.layout.dialog_update).setConvertListener(new ViewConvertListener() {
                             @Override
                             protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                                holder.setText(R.id.tv, data.getUpdateContent());
+                                ((TextView) holder.getView(R.id.tv)).setMovementMethod(new ScrollingMovementMethod());
                                 holder.getView(R.id.ivClose).setVisibility(data.getIsEnforcement().equals("0") ? View.VISIBLE : View.GONE);
                                 TextView tvUpdate = holder.getView(R.id.tvUpdate);
                                 tvUpdate.setOnClickListener(v -> {
@@ -220,9 +221,8 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                                     });
                                 });
                                 holder.setOnClickListener(R.id.ivClose, v -> dialog.dismiss());
-                                holder.setText(R.id.tv, data.getUpdateContent());
                             }
-                        }).setDimAmount(0.5f).setOutCancel(data.getIsEnforcement().equals("0")).show(getSupportFragmentManager());
+                        }).setDimAmount(0.5f).setOutCancel(false).show(getSupportFragmentManager());
                     }
                 }, t -> {
                 });
@@ -253,9 +253,11 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
     @Override
     public void onBackPressed() {
         if (!canFinish) {
-            ToastUtils.showShort(R.string.pressagain2finish);
-            canFinish = true;
             Observable.timer(2, TimeUnit.SECONDS)
+                    .doOnSubscribe(disposable -> {
+                        ToastUtils.showShort(R.string.pressagain2finish);
+                        canFinish = true;
+                    })
                     .compose(bindUntilEvent(ActivityEvent.DESTROY))
                     .subscribe(aLong -> canFinish = false);
             return;

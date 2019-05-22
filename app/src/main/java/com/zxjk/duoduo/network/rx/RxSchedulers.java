@@ -25,11 +25,12 @@ public class RxSchedulers {
 
     //带对话框的网络请求
     public static <T> ObservableTransformer<T, T> ioObserver(Dialog d) {
-        return upstream -> upstream.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+        return upstream -> upstream
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> {
-                    if (disposable != null && !disposable.isDisposed()) {
-                        if (d != null && d.getOwnerActivity()!= null && !d.getOwnerActivity().isDestroyed()) d.show();
-                    }
+                    if (d == null) return;
+                    d.show();
                 })
                 .doOnDispose(() -> {
                     if (d != null) CommonUtils.destoryDialog();

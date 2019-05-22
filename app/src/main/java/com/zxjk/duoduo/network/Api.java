@@ -17,6 +17,7 @@ import com.zxjk.duoduo.network.response.GetGroupRedPackageInfoResponse;
 import com.zxjk.duoduo.network.response.GetIntegralDetailsResponse;
 import com.zxjk.duoduo.network.response.GetNumbeOfTransactionResponse;
 import com.zxjk.duoduo.network.response.GetOverOrderResponse;
+import com.zxjk.duoduo.network.response.GetRebateByIdResponse;
 import com.zxjk.duoduo.network.response.GetRebateDetailsResponse;
 import com.zxjk.duoduo.network.response.GetRebateInfoResponse;
 import com.zxjk.duoduo.network.response.GetRebatePayRecordResponse;
@@ -489,7 +490,7 @@ public interface Api {
 
     @POST("duoduo/playRebate/getRebateById")
     @FormUrlEncoded
-    Observable<BaseResponse> getRebateById(@Field("groupId") String groupId);
+    Observable<BaseResponse<GetRebateByIdResponse>> getRebateById(@Field("groupId") String groupId);
 
     @POST("duoduo/group/getAllPlayGroup")
     @FormUrlEncoded
@@ -560,7 +561,7 @@ public interface Api {
     @POST("duoduo/group/makeGameGroup")
     @FormUrlEncoded
     Observable<BaseResponse<MakeGameGroupResponse>> makeGameGroup(@Field("gameType") String gameType, @Field("playId") String playId, @Field("pumpingRate") String pumpingRate,
-                                                    @Field("payPwd") String payPwd, @Field("proportionOfFees") String proportionOfFees, @Field("typeName") String typeName,
-                                                    @Field("commission") String commission, @Field("duobaoMultiple") String duobaoMultiple);
+                                                                  @Field("payPwd") String payPwd, @Field("proportionOfFees") String proportionOfFees, @Field("typeName") String typeName,
+                                                                  @Field("commission") String commission, @Field("duobaoMultiple") String duobaoMultiple);
 
 }

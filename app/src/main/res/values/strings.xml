@@ -910,4 +910,7 @@
     <string name="audio_video">视频通话</string>
     <string name="video_call">视频通话</string>
     <string name="voice_call">语音通话</string>
+    <string name="game_rules">游戏规则</string>
+    <string name="beilv">倍率</string>
+    <string name="jinduobao">金多宝</string>
 </resources>

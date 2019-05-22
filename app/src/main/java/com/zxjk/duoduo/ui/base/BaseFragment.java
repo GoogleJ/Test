@@ -47,7 +47,6 @@ public class BaseFragment extends RxFragment  {
                             result.onResult(permission.granted);
                         }
                     });
-
             return;
         }
         rxPermissions.request(permissions)

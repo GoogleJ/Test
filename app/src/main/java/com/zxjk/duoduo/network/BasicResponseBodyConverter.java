@@ -22,7 +22,7 @@ public class BasicResponseBodyConverter<T> implements Converter<ResponseBody, T>
         this.adapter = adapter;
     }
 
-    @Override 
+    @Override
     public T convert(ResponseBody value) throws IOException {
         String json = value.string();
         try {
@@ -33,7 +33,7 @@ public class BasicResponseBodyConverter<T> implements Converter<ResponseBody, T>
             if (code == Constant.CODE_UNLOGIN) {
                 throw new IOException(msg, new RxException.DuplicateLoginExcepiton(msg));
             }
-            if (code != Constant.CODE_SUCCESS && TextUtils.isEmpty(data) && code != 2 && code != 502 && code != 503 && code != 504) {
+            if (code != Constant.CODE_SUCCESS && TextUtils.isEmpty(data) && code != 502 && code != 503 && code != 504) {
                 throw new IOException(msg);
             }
         } catch (JSONException e) {

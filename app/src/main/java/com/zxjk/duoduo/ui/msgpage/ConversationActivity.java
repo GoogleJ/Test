@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 
 import com.blankj.utilcode.util.GsonUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shehuan.nicedialog.BaseNiceDialog;
 import com.shehuan.nicedialog.NiceDialog;
@@ -35,6 +36,8 @@ import com.zxjk.duoduo.ui.EnlargeImageActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.ChatInformationActivity;
 import com.zxjk.duoduo.ui.grouppage.GroupChatInformationActivity;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.AudioVideoPlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.PhotoSelectorPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketMessage;
@@ -98,6 +101,7 @@ public class ConversationActivity extends BaseActivity {
     private RongIM.OnSendMessageListener onSendMessageListener;
     private RongIMClient.OnReceiveMessageListener onReceiveMessageListener;
     private RongIMClient.TypingStatusListener typingStatusListener;
+    private RongIM.ConversationClickListener conversationClickListener;
     private RongExtension extension;
     //游戏popwindow跳转计时器
     private long timeLeft;
@@ -490,6 +494,7 @@ public class ConversationActivity extends BaseActivity {
                             extension.addPlugin(new PhotoSelectorPlugin());
                             extension.addPlugin(new RedPacketPlugin());
                             extension.addPlugin(new GameUpScorePlugin());
+                            extension.addPlugin(new AudioVideoPlugin());
                             extension.addPlugin(new GameRecordPlugin());
                             extension.addPlugin(new GameDownScorePlugin());
 //                            extension.addPlugin(new GameDuobaoPlugin());
@@ -518,20 +523,12 @@ public class ConversationActivity extends BaseActivity {
     }
 
     private void handleClickMsg() {
-        RongIM.setConversationClickListener(new RongIM.ConversationClickListener() {
+        conversationClickListener = new RongIM.ConversationClickListener() {
             @Override
             public boolean onUserPortraitClick(Context context, Conversation.ConversationType conversationType, UserInfo userInfo, String s) {
                 if (conversationType == Conversation.ConversationType.GROUP) {
-                    if (Constant.friendsList == null) {
-                        ServiceFactory.getInstance().getBaseService(Api.class)
-                                .getFriendListById()
-                                .compose(provider.bindToLifecycle())
-                                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this)))
-                                .compose(RxSchedulers.normalTrans())
-                                .subscribe(friendInfoResponses -> {
-                                    Constant.friendsList = friendInfoResponses;
-                                    handleFriendList(userInfo.getUserId());
-                                }, ConversationActivity.this::handleApiError);
+                    if (null == Constant.friendsList) {
+                        getFriendListById(userInfo.getUserId());
                     } else {
                         handleFriendList(userInfo.getUserId());
                     }
@@ -540,7 +537,7 @@ public class ConversationActivity extends BaseActivity {
                     intent.putExtra("friendId", userInfo.getUserId());
                     startActivity(intent);
                 }
-                return false;
+                return true;
             }
 
             @Override
@@ -551,6 +548,14 @@ public class ConversationActivity extends BaseActivity {
             @Override
             public boolean onMessageClick(Context context, View view, Message message) {
                 switch (message.getObjectName()) {
+                    case "MMyCardMsg":
+                        BusinessCardMessage businessCardMessage = (BusinessCardMessage) message.getContent();
+                        if (null == Constant.friendsList) {
+                            getFriendListById(businessCardMessage.getUserId());
+                        } else {
+                            handleFriendList(businessCardMessage.getUserId());
+                        }
+                        break;
                     case "RC:ImgMsg":
                         String sMessage;
                         if (((ImageMessage) message.getContent()).getLocalUri() == null) {
@@ -668,7 +673,8 @@ public class ConversationActivity extends BaseActivity {
             public boolean onMessageLongClick(Context context, View view, Message message) {
                 return false;
             }
-        });
+        };
+        RongIM.setConversationClickListener(conversationClickListener);
     }
 
     private void handleFriendList(String userId) {
@@ -749,10 +755,11 @@ public class ConversationActivity extends BaseActivity {
         onReceiveMessageListener = null;
         onSendMessageListener = null;
         typingStatusListener = null;
-        RongIMClient.setTypingStatusListener(null);
+        conversationClickListener = null;
         RongIM.setOnReceiveMessageListener(null);
         RongIMClient.setTypingStatusListener(null);
         RongIM.getInstance().setSendMessageListener(null);
+        RongIM.setConversationClickListener(null);
         super.onDestroy();
     }
 
@@ -763,4 +770,19 @@ public class ConversationActivity extends BaseActivity {
         }
         super.onStop();
     }
+
+    @SuppressLint("CheckResult")
+    public void getFriendListById(String userId) {
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .getFriendListById()
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                .compose(RxSchedulers.normalTrans())
+                .subscribe(friendInfoResponses -> {
+                    if (null == Constant.friendsList) {
+                        Constant.friendsList = friendInfoResponses;
+                        handleFriendList(userId);
+                    }
+                }, throwable -> LogUtils.d(throwable.getMessage()));
+    }
+
 }

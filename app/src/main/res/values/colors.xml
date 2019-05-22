@@ -111,6 +111,7 @@
     <color name="createGameGroup1">#C4C8D1</color>
     <color name="createGameGroup2">#CEAF81</color>
     <color name="createGameGroup3">#363638</color>
+    <color name="createGameGroup4">#445C97</color>
     <!--新的主题色-->
     <color name="colorTheme">#08C1BC</color>
     <!--取消按钮文字的颜色-->
