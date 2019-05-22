@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
@@ -18,6 +19,10 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.shehuan.nicedialog.BaseNiceDialog;
+import com.shehuan.nicedialog.NiceDialog;
+import com.shehuan.nicedialog.ViewConvertListener;
+import com.shehuan.nicedialog.ViewHolder;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -27,9 +32,12 @@ import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.dialog.SelectPopupWindow;
+import com.zxjk.duoduo.utils.ArithUtils;
 import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.utils.DataUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +78,8 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
     private TextView tv_aliPayInfo;
     private TextView tv_bankInfo;
     private TextView tvTipsExchange;
+    private TextView tv_poundage;
+    private String poundage;
 
     private List<String> paytypes = new ArrayList<>(3);
     private String buyType = "";
@@ -80,6 +90,8 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
     private boolean buyOrSale = true;
 
     private String totalPrice;
+    private String poun;
+    private String minExchangeFee;
 
     DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
@@ -95,8 +107,17 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.normalTrans())
                 .flatMap((Function<GetNumbeOfTransactionResponse, ObservableSource<List<PayInfoResponse>>>) s -> {
-                    runOnUiThread(() -> tvExchangePrice.setText(s.getHkPrice() + " CNY=1HK"));
-
+                    runOnUiThread(() ->
+                            tvExchangePrice.setText(s.getHkPrice() + " CNY=1HK"));
+                    if (s.getExchangeRate().equals("0") || TextUtils.isEmpty(s.getExchangeRate())) {
+                        tv_poundage.setVisibility(View.GONE);
+                    } else {
+                        double pou = ArithUtils.mul(Double.parseDouble(s.getExchangeRate()), Double.parseDouble("100"));
+                        tv_poundage.setText("交易手续费为" + DataUtils.getTwoDecimals(String.valueOf(pou)) + "%");
+                        poun = DataUtils.getTwoDecimals(String.valueOf(pou)) + "%";
+                        poundage = s.getExchangeRate();
+                        minExchangeFee = s.getMinExchangeFee();
+                    }
                     return ServiceFactory.getInstance().getBaseService(Api.class)
                             .getPayInfo().compose(RxSchedulers.normalTrans());
                 })
@@ -116,6 +137,7 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
 
     private void initViews() {
         selectPopupWindow = new SelectPopupWindow(this, this);
+        tv_poundage = findViewById(R.id.tv_poundage);
         llChooseMinMax = findViewById(R.id.llChooseMinMax);
         rl_weChat = findViewById(R.id.rl_weChat);
         rl_aliPay = findViewById(R.id.rl_aliPay);
@@ -156,6 +178,11 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
 
             @Override
             public void afterTextChanged(Editable s) {
+                String text = s.toString();
+                int len = s.toString().length();
+                if (len > 1 && text.startsWith("0")) {
+                    s.replace(0, 1, "");
+                }
                 if (!s.toString().equals("")) {
                     totalPrice = decimalFormat.format(CommonUtils.mul(Double.parseDouble(tvExchangePrice.getText().toString().split(" ")[0]), Double.parseDouble(s.toString())));
                 } else {
@@ -244,32 +271,144 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
             ToastUtils.showShort(R.string.select_saletype_tips);
             return;
         }
-        Api api = ServiceFactory.getInstance().getBaseService(Api.class);
+
 
         if (buyOrSale) {
-            api.isConfine().compose(bindToLifecycle())
-                    .compose(RxSchedulers.normalTrans())
-                    .flatMap((Function<String, ObservableSource<ReleaseSaleResponse>>) s -> api.releaseSale(etExchangeChooseCount.getText().toString(), totalPrice,
-                            "1", buyType).compose(RxSchedulers.normalTrans()))
-                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                    .subscribe(s -> {
-                        //购买
-                        Intent intent = new Intent(this, ConfirmBuyActivity.class);
-                        if (buyType.equals(PAYTYPE_WECHAT)) {
-                            s.setReceiptNumber(s.getWechatNick());
+            NiceDialog.init().setLayoutId(R.layout.layout_general_dialog10).setConvertListener(new ViewConvertListener() {
+                @Override
+                protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                    Log.e("PAY", "convertView: " + buyType);
+                    //购买数量
+                    holder.setText(R.id.tv_number, etExchangeChooseCount.getText().toString());
+                    //购买总金额
+                    holder.setText(R.id.tv_amount, totalPrice + "CNY");
+                    //支付方式
+                    if (!TextUtils.isEmpty(buyType)) {
+                        switch (buyType) {
+                            case "1":
+                                holder.getView(R.id.iv_wechat).setVisibility(View.VISIBLE);
+                                break;
+                            case "2":
+                                holder.getView(R.id.iv_alipay).setVisibility(View.VISIBLE);
+                                break;
+                            case "3":
+                                holder.getView(R.id.iv_bank).setVisibility(View.VISIBLE);
+                                break;
                         }
-                        intent.putExtra("data", s);
-                        s.setCreateTime(String.valueOf(System.currentTimeMillis()));
-                        intent.putExtra("rate", tvExchangePrice.getText().toString().split(" ")[0]);
-                        intent.putExtra("buytype", buyType);
-                        startActivity(intent);
-                    }, this::handleApiError);
+                    }
+                    //关闭
+                    holder.setOnClickListener(R.id.rl_close, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+
+                        }
+                    });
+                    //确认购买
+                    holder.setOnClickListener(R.id.tv_confirm, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Api api = ServiceFactory.getInstance().getBaseService(Api.class);
+                            api.isConfine().compose(bindToLifecycle())
+                                    .compose(RxSchedulers.normalTrans())
+                                    .flatMap((Function<String, ObservableSource<ReleaseSaleResponse>>) s -> api.releaseSale(etExchangeChooseCount.getText().toString(), totalPrice,
+                                            "1", buyType).compose(RxSchedulers.normalTrans()))
+                                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ExchangeActivity.this)))
+                                    .subscribe(s -> {
+                                        //购买
+                                        Intent intent = new Intent(ExchangeActivity.this, ConfirmBuyActivity.class);
+                                        if (buyType.equals(PAYTYPE_WECHAT)) {
+                                            s.setReceiptNumber(s.getWechatNick());
+                                        }
+                                        intent.putExtra("data", s);
+                                        s.setCreateTime(String.valueOf(System.currentTimeMillis()));
+                                        intent.putExtra("rate", tvExchangePrice.getText().toString().split(" ")[0]);
+                                        intent.putExtra("buytype", buyType);
+                                        startActivity(intent);
+                                    }, ExchangeActivity.this::handleApiError);
+                        }
+                    });
+
+                }
+            }).setDimAmount(0.5f).setShowBottom(true).setOutCancel(false).show(getSupportFragmentManager());
+
+
         } else {
-            KeyboardUtils.hideSoftInput(this);
-            Rect rect = new Rect();
-            getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
-            int winHeight = getWindow().getDecorView().getHeight();
-            selectPopupWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, winHeight - rect.bottom);
+            NiceDialog.init().setLayoutId(R.layout.layout_general_dialog9).setConvertListener(new ViewConvertListener() {
+                @Override
+                protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                    //出售数量
+                    holder.setText(R.id.tv_number, etExchangeChooseCount.getText().toString());
+                    //出售总金额
+                    holder.setText(R.id.tv_amount, totalPrice + "CNY");
+                    //手续费
+                    if (poundage.equals("0") || TextUtils.isEmpty(poundage)) {
+                        holder.getView(R.id.tv_transactionFee).setVisibility(View.GONE);
+                        holder.getView(R.id.tv_poundage).setVisibility(View.GONE);
+                    } else {
+                        double pous = ArithUtils.mul(Double.parseDouble(totalPrice), Double.parseDouble(poundage));
+                        BigDecimal data1 = new BigDecimal(String.valueOf(pous));
+                        BigDecimal data2 = new BigDecimal(minExchangeFee);
+                        if (data1.compareTo(data2) < 0) {
+                            holder.setText(R.id.tv_poundage, DataUtils.getTwoDecimals(minExchangeFee) + "HK (最小手续费为" + minExchangeFee + ")");
+                        } else {
+                            holder.setText(R.id.tv_poundage, DataUtils.getTwoDecimals(String.valueOf(pous)) + "HK (" + poun + ")");
+                        }
+                    }
+                    //收款方式
+                    if (getPayTypes().contains(",")) {
+                        String[] split = getPayTypes().split(",");
+                        for (String str : split) {
+                            switch (str) {
+                                case "1":
+                                    holder.getView(R.id.iv_wechat).setVisibility(View.VISIBLE);
+                                    break;
+                                case "2":
+                                    holder.getView(R.id.iv_alipay).setVisibility(View.VISIBLE);
+                                    break;
+                                case "3":
+                                    holder.getView(R.id.iv_bank).setVisibility(View.VISIBLE);
+                                    break;
+                            }
+                        }
+                    } else {
+                        switch (getPayTypes()) {
+                            case "1":
+                                holder.getView(R.id.iv_wechat).setVisibility(View.VISIBLE);
+                                break;
+                            case "2":
+                                holder.getView(R.id.iv_alipay).setVisibility(View.VISIBLE);
+                                break;
+                            case "3":
+                                holder.getView(R.id.iv_bank).setVisibility(View.VISIBLE);
+                                break;
+                        }
+                    }
+                    //关闭
+                    holder.setOnClickListener(R.id.rl_close, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+
+                        }
+                    });
+                    //确认出售
+                    holder.setOnClickListener(R.id.tv_confirm, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                            KeyboardUtils.hideSoftInput(ExchangeActivity.this);
+                            Rect rect = new Rect();
+                            getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+                            int winHeight = getWindow().getDecorView().getHeight();
+                            selectPopupWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, winHeight - rect.bottom);
+                        }
+                    });
+
+                }
+            }).setDimAmount(0.5f).setShowBottom(true).setOutCancel(false).show(getSupportFragmentManager());
+
+
         }
     }
 

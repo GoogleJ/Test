@@ -35,13 +35,14 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.EnlargeImageActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.ChatInformationActivity;
-import com.zxjk.duoduo.ui.grouppage.GroupChatInformationActivity;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BasePluginExtensionModule;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.AudioVideoPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.PhotoSelectorPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketPlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.SampleTab;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameDownScorePlugin;
@@ -67,7 +68,9 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtension;
+import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imkit.plugin.IPluginModule;
@@ -173,6 +176,8 @@ public class ConversationActivity extends BaseActivity {
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
         fragment = (ConversationFragment) fragments.get(0);
         messageAdapter = fragment.getMessageAdapter();
+
+
     }
 
     @NotNull
@@ -426,6 +431,20 @@ public class ConversationActivity extends BaseActivity {
 
     private void handleBean(String conversationType) {
         targetId = getIntent().getData().getQueryParameter("targetId");
+
+        List<IExtensionModule> moduleList = RongExtensionManager.getInstance().getExtensionModules();
+
+        if (moduleList != null) {
+            for (IExtensionModule module : moduleList) {
+                if (module instanceof BasePluginExtensionModule) {
+                    SampleTab sampleTab = (SampleTab) ((BasePluginExtensionModule) module).getList().get(1);
+                    sampleTab.setTargetId(targetId);
+                    sampleTab.setConversationType(conversationType);
+                    break;
+                }
+            }
+        }
+
         if (conversationType.equals("private")) {
             targetUserInfo = RongUserInfoManager.getInstance().getUserInfo(targetId);
             if (null == targetUserInfo) {
@@ -770,6 +789,8 @@ public class ConversationActivity extends BaseActivity {
         }
         super.onStop();
     }
+
+
 
     @SuppressLint("CheckResult")
     public void getFriendListById(String userId) {

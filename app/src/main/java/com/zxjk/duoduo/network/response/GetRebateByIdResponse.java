@@ -2,6 +2,7 @@ package com.zxjk.duoduo.network.response;
 
 public class GetRebateByIdResponse {
 
+
     /**
      * id : 18
      * groupId : 25

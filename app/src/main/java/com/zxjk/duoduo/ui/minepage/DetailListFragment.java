@@ -17,12 +17,11 @@ import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.DetailListResposne;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.ui.minepage.adapter.DetailListAdapter;
+import com.zxjk.duoduo.utils.DataUtils;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class DetailListFragment extends BaseFragment {
@@ -77,11 +76,16 @@ public class DetailListFragment extends BaseFragment {
                     }
                     adapter.setData(detailListResposnes);
                     refresh.setRefreshing(false);
-                    Float total = 0f;
-                    for (DetailListResposne d : detailListResposnes) {
-                        total += Float.parseFloat(d.getHk());
+                    if (detailListResposnes != null && detailListResposnes.size() != 0) {
+                        tvRedListMoney.setText(DataUtils.getTwoDecimals(String.valueOf(detailListResposnes.get(0).getSum())));
+                    } else {
+                        tvRedListMoney.setText("0.00");
                     }
-                    tvRedListMoney.setText(new DecimalFormat("#0.00").format(total.toString()));
+//                    double total = 0.00;
+//                    for (DetailListResposne d : detailListResposnes) {
+//                        total = ArithUtils.add(total, Double.parseDouble(d.getHk()));
+//                    }
+//                    tvRedListMoney.setText(DataUtils.getTwoDecimals(String.valueOf(total)));
                 }, t -> {
                     handleApiError(t);
                     refresh.setRefreshing(false);

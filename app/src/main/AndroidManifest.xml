@@ -42,13 +42,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ui.walletpage.OrderComplaintActivity"></activity>
         <activity android:name=".ui.msgpage.JinDuoBaoActiviity"></activity>
         <activity
-            android:name=".wxapi.WXEntryActivity"
-            android:exported="true"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/NoTitleTranslucent80Theme" />
+        android:name=".wxapi.WXEntryActivity"
+        android:exported="true"
+        android:launchMode="singleTop"
+        android:screenOrientation="portrait"
+        android:theme="@style/NoTitleTranslucent80Theme"/>
+
         <activity
             android:name=".ui.EnlargeImageActivity"
             android:launchMode="singleTop"
@@ -586,7 +588,9 @@
                 <action android:name="io.rong.push.intent.MESSAGE_CLICKED" />
                 <action android:name="io.rong.push.intent.THIRD_PARTY_PUSH_STATE" />
             </intent-filter>
-        </receiver> <!--  -->
+        </receiver>
+
+        <!---->
         <activity
             android:name="io.rong.callkit.MultiVideoCallActivity"
             android:exported="true"
@@ -628,7 +632,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="io.rong.callkit.CallSelectMemberActivity" />
+        <activity android:name="io.rong.callkit.CallSelectMemberActivity"/>
+
     </application>
 
 </manifest>

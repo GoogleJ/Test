@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.DetailListResposne;
 import com.zxjk.duoduo.ui.minepage.DetailInfoActivity;
+import com.zxjk.duoduo.utils.DataUtils;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,8 +66,8 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.Vi
         }
 
         private void bindData(DetailListResposne bean) {
-            tvItemDetaillistTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Long.parseLong(bean.getCreateTime())));
-            tvItemDetaillistMoney.setText(bean.getHk());
+            tvItemDetaillistTime.setText(DataUtils.timeStamp2Date(Long.parseLong(bean.getCreateTime()), "yyyy-MM-dd HH:mm:ss"));
+            tvItemDetaillistMoney.setText(DataUtils.getTwoDecimals(bean.getHk()));
             if (bean.getSource() == 0 || bean.getSource() == 2) {
                 ivItemDetaillist.setImageResource(R.drawable.ic_detail_item_type1);
                 tvItemDetaillistName.setText(R.string.red_packet);

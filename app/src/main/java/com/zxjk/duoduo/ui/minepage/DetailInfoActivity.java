@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.minepage;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.TextView;
@@ -7,8 +8,7 @@ import android.widget.TextView;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.DetailListResposne;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-
-import java.text.SimpleDateFormat;
+import com.zxjk.duoduo.utils.DataUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,12 +18,8 @@ public class DetailInfoActivity extends BaseActivity {
 
     @BindView(R.id.tv_title)
     TextView tvTitle;
-    private TextView tvMoney;
-    private TextView tvTradeType;
-    private TextView tvTradeTime;
-    private TextView tvTradeNumber;
-    private TextView tvTradeNote;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,16 +27,16 @@ public class DetailInfoActivity extends BaseActivity {
         ButterKnife.bind(this);
         tvTitle.setText(getString(R.string.shouruxiangqing));
 
-        tvMoney = findViewById(R.id.tvMoney);
-        tvTradeType = findViewById(R.id.tvTradeType);
-        tvTradeTime = findViewById(R.id.tvTradeTime);
-        tvTradeNumber = findViewById(R.id.tvTradeNumber);
-        tvTradeNote = findViewById(R.id.tvTradeNote);
+        TextView tvMoney = findViewById(R.id.tvMoney);
+        TextView tvTradeType = findViewById(R.id.tvTradeType);
+        TextView tvTradeTime = findViewById(R.id.tvTradeTime);
+        TextView tvTradeNumber = findViewById(R.id.tvTradeNumber);
+        TextView tvTradeNote = findViewById(R.id.tvTradeNote);
 
         DetailListResposne data = (DetailListResposne) getIntent().getSerializableExtra("data");
-        tvMoney.setText(data.getHk() + " HK");
+        tvMoney.setText(DataUtils.getTwoDecimals(data.getHk()) + " HK");
         tvTradeType.setText(getIntent().getStringExtra("type"));
-        tvTradeTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Long.parseLong(data.getCreateTime())));
+        tvTradeTime.setText(DataUtils.timeStamp2Date(Long.parseLong(data.getCreateTime()), "yyyy-MM-dd HH:mm:ss"));
         tvTradeNumber.setText(data.getSerialNumber());
         if (!TextUtils.isEmpty(getIntent().getStringExtra("remarks"))) {
             tvTradeNote.setText(getIntent().getStringExtra("remarks"));

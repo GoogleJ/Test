@@ -1,0 +1,50 @@
+package com.zxjk.duoduo.utils;
+
+import android.annotation.SuppressLint;
+import android.text.TextUtils;
+
+import androidx.annotation.Nullable;
+
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+/**
+ * *********************
+ * Administrator
+ * *********************
+ * 2019/5/21
+ * *********************
+ * 工具类
+ * *********************
+ */
+public class DataUtils {
+
+    /**
+     * 保留两位小数
+     *
+     * @param string 判断的string
+     * @return 空:"0.00" 不为空:string
+     */
+    public static String getTwoDecimals(@Nullable String string) {
+        if (string != null && !TextUtils.isEmpty(string) && !string.equalsIgnoreCase("null")
+                && !("").equals(string)) {
+            Double d = Double.parseDouble(string);
+            DecimalFormat decimalFormat = new DecimalFormat("0.00");
+            return decimalFormat.format(d);
+        }
+        return "0.00";
+    }
+
+    /**
+     * 13位时间戳转换日期格式字符串
+     *
+     * @param time
+     * @param format
+     * @return
+     */
+    public static String timeStamp2Date(long time, String format) {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat(format);
+        return sdf.format(new Date(time));
+    }
+}

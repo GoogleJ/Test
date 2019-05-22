@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.walletpage.OverOrderActivity">
-    <include layout="@layout/layout_title_back"/>
 
-   \
+    <include layout="@layout/layout_title_back" />
+
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -243,32 +242,20 @@
 
             </LinearLayout>
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="48dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="48dp"
-                android:background="@drawable/selector_login_btn_click_bg"
+            <TextView
+                style="@style/BtnStyle"
                 android:onClick="overOrder"
                 android:text="@string/money_received"
-                android:textColor="@color/themecolor"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="16sp" />
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="48dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="48dp"
-                android:layout_marginBottom="50dp"
-                android:background="@drawable/shape_bac_cancel"
+            <TextView
+                style="@style/BtnStyle"
+                android:layout_marginTop="0dp"
+                android:background="@drawable/shape_theme_gray"
                 android:onClick="rejectOrder"
                 android:text="@string/money_notreceived"
-                android:textColor="@color/themecolor"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textColor="@color/theme_color"
+                android:textSize="16sp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

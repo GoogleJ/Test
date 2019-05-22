@@ -132,7 +132,9 @@ public class BlockWalletActivity extends BaseActivity {
                 break;
             //记录
             case R.id.rl_end:
-                startActivity(new Intent(this, BlockWalletOrdersActivity.class));
+                if (Constant.walletResponse != null) {
+                    startActivity(new Intent(this, BlockWalletOrdersActivity.class));
+                }
                 break;
         }
     }

@@ -107,6 +107,7 @@ public class OrdersFragment extends BaseFragment {
     private void initData() {
         Api service = ServiceFactory.getInstance().getBaseService(Api.class);
         Observable<BaseResponse<GetTransferAllResponse>> upstream;
+
         switch (type) {
             case "1":
                 upstream = service.getTransferAll(Constant.walletResponse.getWalletAddress(), String.valueOf(page), String.valueOf(offset));

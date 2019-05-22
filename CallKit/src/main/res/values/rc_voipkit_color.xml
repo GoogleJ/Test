@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<color name="callkit_black">#000000</color>
+    <color name="colorTheme">#08C1BC</color>
     <!--多人视频修改 新的全屏底色-->
     <color name="rc_voip_background_color">#141C24</color>
     <color name="rc_voip_check_disable">#1f4a76</color>

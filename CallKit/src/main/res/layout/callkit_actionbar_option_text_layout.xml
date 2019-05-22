@@ -3,39 +3,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_actionbar"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/callkit_dimen_size_48"
-    android:background="@color/callkit_color_bar_bg">
+    android:layout_height="50dp"
+    android:background="#08C1BC">
 
-    <ImageButton
-        android:id="@+id/imgbtn_custom_nav_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:background="@android:color/transparent"
-        android:paddingBottom="@dimen/callkit_dimen_size_12"
-        android:paddingLeft="@dimen/callkit_dimen_size_14"
-        android:paddingRight="@dimen/callkit_dimen_size_14"
-        android:paddingTop="@dimen/callkit_dimen_size_12"
-        android:src="@drawable/callkit_ic_nav_back_x" />
+    <RelativeLayout
+        android:id="@+id/rl_back"
+        android:layout_width="50dp"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imgbtn_custom_nav_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ico_back" />
+
+    </RelativeLayout>
+
 
     <LinearLayout
         android:id="@+id/ll_custom_nav_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@id/imgbtn_custom_nav_back"
-        android:layout_toRightOf="@id/imgbtn_custom_nav_back"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_custom_nav_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:lines="1"
-            android:textColor="@color/callkit_color_normal_text"
+            android:textColor="@android:color/white"
             android:textSize="18sp" />
 
         <TextView
@@ -56,9 +54,9 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:background="@android:color/transparent"
-        android:paddingBottom="@dimen/callkit_dimen_size_12"
-        android:paddingRight="@dimen/callkit_dimen_size_14"
         android:paddingTop="@dimen/callkit_dimen_size_12"
+        android:paddingRight="@dimen/callkit_dimen_size_14"
+        android:paddingBottom="@dimen/callkit_dimen_size_12"
         android:textColor="@color/callkit_color_primary"
         android:textSize="17sp" />
 
@@ -70,10 +68,10 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:background="@android:color/transparent"
-        android:paddingBottom="@dimen/callkit_dimen_size_12"
         android:paddingLeft="@dimen/callkit_dimen_size_14"
-        android:paddingRight="@dimen/callkit_dimen_size_14"
         android:paddingTop="@dimen/callkit_dimen_size_12"
+        android:paddingRight="@dimen/callkit_dimen_size_14"
+        android:paddingBottom="@dimen/callkit_dimen_size_12"
         android:src="@drawable/callkit_selector_icon_search"
         android:visibility="gone" />
 </RelativeLayout>

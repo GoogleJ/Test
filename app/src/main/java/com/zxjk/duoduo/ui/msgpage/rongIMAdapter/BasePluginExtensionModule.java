@@ -1,9 +1,18 @@
 package com.zxjk.duoduo.ui.msgpage.rongIMAdapter;
 
 
+import android.util.Log;
+import android.view.KeyEvent;
+import android.widget.EditText;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import io.rong.imkit.DefaultExtensionModule;
+import io.rong.imkit.RongExtension;
+import io.rong.imkit.emoticon.EmojiTab;
+import io.rong.imkit.emoticon.IEmojiItemClickListener;
+import io.rong.imkit.emoticon.IEmoticonTab;
 import io.rong.imkit.plugin.IPluginModule;
 import io.rong.imlib.model.Conversation;
 
@@ -11,6 +20,12 @@ import io.rong.imlib.model.Conversation;
  * @author Administrator
  */
 public class BasePluginExtensionModule extends DefaultExtensionModule {
+    private EditText mEditText;
+    private List<IEmoticonTab> list;
+
+    public List<IEmoticonTab> getList() {
+        return list;
+    }
 
     @Override
     public List<IPluginModule> getPluginModules(Conversation.ConversationType conversationType) {
@@ -41,6 +56,35 @@ public class BasePluginExtensionModule extends DefaultExtensionModule {
 
         }
 
+        return list;
+    }
+
+    @Override
+    public void onAttachedToExtension(RongExtension extension) {
+        mEditText = extension.getInputEditText();
+    }
+
+    @Override
+    public void onDetachedFromExtension() {
+        mEditText = null;
+    }
+
+    @Override
+    public List<IEmoticonTab> getEmoticonTabs() {
+        EmojiTab emojiTab = new EmojiTab();
+        emojiTab.setOnItemClickListener(new IEmojiItemClickListener() {
+            public void onEmojiClick(String emoji) {
+                int start = BasePluginExtensionModule.this.mEditText.getSelectionStart();
+                BasePluginExtensionModule.this.mEditText.getText().insert(start, emoji);
+            }
+
+            public void onDeleteClick() {
+                BasePluginExtensionModule.this.mEditText.dispatchKeyEvent(new KeyEvent(0, 67));
+            }
+        });
+        list = new ArrayList<>();
+        list.add(emojiTab);
+        list.add(new SampleTab());
         return list;
     }
 }
