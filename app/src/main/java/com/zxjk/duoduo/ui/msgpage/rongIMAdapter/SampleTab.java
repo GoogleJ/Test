@@ -9,14 +9,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
+import com.stx.xhb.pagemenulibrary.PageMenuLayout;
+import com.stx.xhb.pagemenulibrary.holder.AbstractHolder;
+import com.stx.xhb.pagemenulibrary.holder.PageMenuViewHolderCreator;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.R.drawable;
 import com.zxjk.duoduo.utils.CommonUtils;
-import com.zxjk.duoduo.view.HorizontalPageLayoutManager;
-import com.zxjk.duoduo.view.PagingScrollHelper;
+import com.zxjk.duoduo.view.IndicatorView;
+import com.zxjk.duoduo.view.ModelHomeEntrance;
+import com.zxjk.duoduo.view.ScreenUtil;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -32,18 +39,16 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.message.ImageMessage;
 
-public class SampleTab implements IEmoticonTab, PagingScrollHelper.onPageChangeListener, View.OnClickListener {
-
-
-    private PagingScrollHelper scrollHelper = new PagingScrollHelper();
-    private RecyclerView.ItemDecoration lastItemDecoration = null;
+public class SampleTab implements IEmoticonTab {
+    private List<ModelHomeEntrance> homeEntrances;
+    private IndicatorView entranceIndicatorView;
+    private PageMenuLayout<ModelHomeEntrance> mPageMenuLayout;
     private int[] images = {R.drawable.ic_001, R.drawable.ic_002, drawable.ic_003,
             drawable.ic_004, drawable.ic_005, drawable.ic_006,
             drawable.ic_007, drawable.ic_008, drawable.ic_009};
 
     private String targetId;
     private String conversationType;
-
 
     public void setTargetId(String targetId) {
         this.targetId = targetId;
@@ -75,112 +80,95 @@ public class SampleTab implements IEmoticonTab, PagingScrollHelper.onPageChangeL
     private View initView(Context context) {
 
         View view = LayoutInflater.from(context).inflate(R.layout.layout_recyclerview, (ViewGroup) null);
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerview);
-        MyAdapter myAdapter = new MyAdapter();
-        recyclerView.setAdapter(myAdapter);
-        scrollHelper.setUpRecycleView(recyclerView);
-        scrollHelper.setOnPageChangeListener(this);
-        recyclerView.setHorizontalScrollBarEnabled(true);
-        HorizontalPageLayoutManager horizontalPageLayoutManager = new HorizontalPageLayoutManager(2, 4);
-        RecyclerView.LayoutManager layoutManager = horizontalPageLayoutManager;
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.removeItemDecoration(lastItemDecoration);
-        scrollHelper.updateLayoutManger();
-        scrollHelper.scrollToPosition(0);
+        entranceIndicatorView = view.findViewById(R.id.main_home_entrance_indicator);
+        mPageMenuLayout = view.findViewById(R.id.pagemenu);
+        initData();
         return view;
 
     }
 
-    @Override
-    public void onClick(View v) {
-
-    }
-
-    @Override
-    public void onPageChange(int index) {
-
-    }
-
-    class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-        List<Integer> data = new ArrayList<>();
-
-        public MyAdapter() {
-            setData();
+    private void initData() {
+        homeEntrances = new ArrayList<>();
+        for (int i = 0; i < images.length; i++) {
+            homeEntrances.add(new ModelHomeEntrance(images[i]));
         }
 
-        @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            View view = inflater.inflate(R.layout.item, parent, false);
-            return new MyViewHolder(view);
-        }
+        mPageMenuLayout.setPageDatas(homeEntrances, new PageMenuViewHolderCreator() {
+            @Override
+            public AbstractHolder createHolder(View itemView) {
+                return new AbstractHolder<ModelHomeEntrance>(itemView) {
+                    private TextView entranceNameTextView;
+                    private ImageView entranceIconImageView;
+
+                    @Override
+                    protected void initView(View itemView) {
+                        entranceIconImageView = itemView.findViewById(R.id.entrance_image);
+                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int) ((float) ScreenUtil.getScreenWidth() / 4.0f));
+                        itemView.setLayoutParams(layoutParams);
+                    }
+
+                    @Override
+                    public void bindView(RecyclerView.ViewHolder holder, final ModelHomeEntrance data, int pos) {
+                        entranceIconImageView.setImageResource(data.getImage());
+                        holder.itemView.setOnClickListener(v -> {
+                            Bitmap image = ((BitmapDrawable) entranceIconImageView.getDrawable()).getBitmap();
+
+                            saveBitmapFile(v.getContext(), image);
+                            Uri uri = Uri.fromFile(new File(v.getContext().getExternalCacheDir(), "1.jpg"));
+                            ImageMessage obtain = ImageMessage.obtain(uri, uri, true);
+                            Message obtain1;
+                            if (conversationType.equals("private")) {
+                                obtain1 = Message.obtain(targetId, Conversation.ConversationType.PRIVATE, obtain);
+                            } else {
+                                obtain1 = Message.obtain(targetId, Conversation.ConversationType.GROUP, obtain);
+                            }
+
+                            RongIM.getInstance().
+
+                                    sendImageMessage(obtain1, null, null, new RongIMClient.SendImageMessageCallback() {
+                                        @Override
+                                        public void onAttached(Message message) {
+
+                                        }
+
+                                        @Override
+                                        public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+                                            CommonUtils.destoryDialog();
+                                        }
+
+                                        @Override
+                                        public void onSuccess(Message message) {
+                                            CommonUtils.destoryDialog();
+                                        }
+
+                                        @Override
+                                        public void onProgress(Message message, int i) {
+
+                                        }
+                                    });
 
 
-        private void setData() {
-            for (int i = 0; i < images.length; i++) {
-                data.add(images[i]);
+                        });
+                    }
+                };
             }
-        }
 
-        @Override
-        public void onBindViewHolder(MyViewHolder holder, int position) {
-
-            holder.iv_image.setImageResource(data.get(position));
-            holder.itemView.setOnClickListener(v -> {
-                Bitmap image = ((BitmapDrawable) holder.iv_image.getDrawable()).getBitmap();
-                saveBitmapFile(v.getContext(), image);
-                Uri uri = Uri.fromFile(new File(v.getContext().getExternalCacheDir(), "1.jpg"));
-                ImageMessage obtain = ImageMessage.obtain(uri, uri, true);
-                Message obtain1;
-                if (conversationType.equals("private")) {
-                    obtain1 = Message.obtain(targetId, Conversation.ConversationType.PRIVATE, obtain);
-                } else {
-                    obtain1 = Message.obtain(targetId, Conversation.ConversationType.GROUP, obtain);
-                }
-
-                RongIM.getInstance().sendImageMessage(obtain1, null, null, new RongIMClient.SendImageMessageCallback() {
-                    @Override
-                    public void onAttached(Message message) {
-
-                    }
-
-                    @Override
-                    public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-                        CommonUtils.destoryDialog();
-                    }
-
-                    @Override
-                    public void onSuccess(Message message) {
-                        CommonUtils.destoryDialog();
-                    }
-
-                    @Override
-                    public void onProgress(Message message, int i) {
-
-                    }
-                });
-
-
-            });
-        }
-
-        @Override
-        public int getItemCount() {
-            return data.size();
-        }
-
-
-        public class MyViewHolder extends RecyclerView.ViewHolder {
-            ImageView iv_image;
-
-            public MyViewHolder(View itemView) {
-                super(itemView);
-                iv_image = itemView.findViewById(R.id.iv_image);
+            @Override
+            public int getLayoutId() {
+                return R.layout.item_home_entrance;
             }
-        }
+        });
+        entranceIndicatorView.setIndicatorCount(mPageMenuLayout.getPageCount());
+        mPageMenuLayout.setOnPageListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                entranceIndicatorView.setCurrentIndicator(position);
+            }
+        });
 
 
     }
+
 
     public void saveBitmapFile(Context context, Bitmap bitmap) {
         File file = new File(context.getExternalCacheDir(), "1.jpg");//将要保存图片的路径

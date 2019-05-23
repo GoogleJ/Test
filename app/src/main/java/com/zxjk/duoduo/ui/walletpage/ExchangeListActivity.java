@@ -134,10 +134,12 @@ public class ExchangeListActivity extends BaseActivity {
                 //挂单中
                 intent = new Intent(this, ConfirmSaleActivity.class);
                 ReleasePurchase data = new ReleasePurchase();
-                data.setPayType(g.getPayType());
-                data.setMoney(money);
-                data.setNumber(g.getNumber());
-
+                data.setPayType(g.getPayType());  //收款方式
+                data.setMoney(money);//出售总金额
+                data.setNumber(g.getNumber());//出售数量
+                data.setMinNum(g.getMinNum());//出售最小数量
+                data.setMaxNum(g.getMaxNum());//出售最大数量
+                data.setUnSaledNum(g.getUnSaledNum());//出售剩余数量
                 data.setCurrency(g.getCurrency());
                 data.setSellOrderId(g.getSellOrderId());
 

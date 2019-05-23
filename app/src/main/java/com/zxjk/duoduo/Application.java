@@ -28,6 +28,7 @@ import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketProvider;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferProvider;
 import com.zxjk.duoduo.utils.WeChatShareUtil;
+import com.zxjk.duoduo.view.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +68,7 @@ public class Application extends android.app.Application {
 //                .setSupportDP(true)
 //                .setSupportSP(true);
 //        AutoSizeConfig.getInstance().setCustomFragment(true);
-
+        ScreenUtil.init(this);
         MMKV.initialize(this);
         //微信分享
         regToWx();

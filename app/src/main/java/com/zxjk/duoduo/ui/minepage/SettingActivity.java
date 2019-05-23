@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -24,6 +25,7 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.LoginActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.ui.msgpage.AuthenticationActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MMKVUtils;
 
@@ -41,6 +43,7 @@ public class SettingActivity extends BaseActivity {
     private TextView tv_perfection;
     private ImageView iv_authentication;
     private TextView tv_authentication;
+    private String otherIdCardType = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,7 +96,65 @@ public class SettingActivity extends BaseActivity {
             } else if (Constant.currentUser.getIsAuthentication().equals("0")) {
                 ToastUtils.showShort(R.string.authen_true);
             } else {
-                startActivity(new Intent(SettingActivity.this, VerifiedActivity.class));
+                NiceDialog.init().setLayoutId(R.layout.layout_general_dialog11).setConvertListener(new ViewConvertListener() {
+                    @Override
+                    protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                        ImageView iv_idCard = holder.getView(R.id.iv_idCard);
+                        ImageView iv_passport = holder.getView(R.id.iv_passport);
+                        ImageView iv_other = holder.getView(R.id.iv_other);
+                        holder.setOnClickListener(R.id.ll_idCard, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                iv_idCard.setImageResource(R.drawable.ic_radio_select);
+                                iv_passport.setImageResource(R.drawable.ic_radio_unselect);
+                                iv_other.setImageResource(R.drawable.ic_radio_unselect);
+                                otherIdCardType = "1";
+
+                            }
+                        });
+                        holder.setOnClickListener(R.id.ll_passport, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                iv_idCard.setImageResource(R.drawable.ic_radio_unselect);
+                                iv_passport.setImageResource(R.drawable.ic_radio_select);
+                                iv_other.setImageResource(R.drawable.ic_radio_unselect);
+                                otherIdCardType = "2";
+                            }
+                        });
+                        holder.setOnClickListener(R.id.ll_other, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                iv_idCard.setImageResource(R.drawable.ic_radio_unselect);
+                                iv_passport.setImageResource(R.drawable.ic_radio_unselect);
+                                iv_other.setImageResource(R.drawable.ic_radio_select);
+                                otherIdCardType = "3";
+                            }
+                        });
+                        holder.setOnClickListener(R.id.tv_confirm, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (!TextUtils.isEmpty(otherIdCardType)) {
+                                    dialog.dismiss();
+                                    if (otherIdCardType.equals("1")) {
+                                        Intent intent = new Intent(SettingActivity.this, AuthenticationActivity.class);
+                                        startActivity(intent);
+                                    } else {
+                                        Intent intent = new Intent(SettingActivity.this, VerifiedActivity.class);
+                                        intent.putExtra("otherIdCardType", otherIdCardType);
+                                        startActivity(intent);
+                                    }
+                                } else {
+                                    ToastUtils.showShort("请选择证件类型");
+                                }
+
+
+                            }
+                        });
+
+                    }
+                }).setDimAmount(0.5f).setOutCancel(true).show(getSupportFragmentManager());
+
+
             }
         });
         //收款信息

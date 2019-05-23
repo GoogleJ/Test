@@ -148,7 +148,73 @@
                     android:id="@+id/tvConfirmSaleTotalPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/themecolor" />
+                    android:textColor="@color/theme_color" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="最小购买量"
+                    android:textColor="@color/color9" />
+
+                <TextView
+                    android:id="@+id/tv_minimumPurchase"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/theme_color" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="最大购买量"
+                    android:textColor="@color/color9" />
+
+                <TextView
+                    android:id="@+id/tv_maximumPurchase"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/theme_color" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="剩余数量"
+                    android:textColor="@color/color9" />
+
+                <TextView
+                    android:id="@+id/tv_numberRemaining"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/theme_color" />
 
             </LinearLayout>
 
@@ -164,7 +230,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/salePayType"
-                    android:textColor="@color/textcolor3" />
+                    android:textColor="@color/color9" />
 
                 <ImageView
                     android:id="@+id/iv_wechat"
@@ -204,7 +270,7 @@
             <TextView
                 style="@style/BtnStyle"
                 android:layout_marginTop="0dp"
-                android:layout_marginBottom="0dp"
+                android:layout_marginBottom="40dp"
                 android:background="@drawable/shape_theme_gray"
                 android:onClick="cancelOrder"
                 android:text="@string/cancel_order"

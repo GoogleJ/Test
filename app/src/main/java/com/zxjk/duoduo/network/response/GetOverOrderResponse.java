@@ -4,50 +4,53 @@ import java.io.Serializable;
 
 public class GetOverOrderResponse implements Serializable {
 
+
     /**
-     * id : 6
+     * id :
      * buyId :
      * buyDuoduoId :
-     * buyOrderId : 155418663766844
-     * buyNick : 周晓睿
-     * sellId : 4
+     * buyOrderId :
+     * sellId : 28
      * sellDuoduoId :
-     * sellOrderId : 155420700147526
-     * sellNick :
-     * bothOrderId : 15518722638311000000510000004
-     * number : 500
-     * money : 500.00
+     * sellOrderId : 6537214874479509504
+     * bothOrderId :
+     * number : 150
+     * money :
      * currency : 1
-     * sellPayType : 1,2
-     * payType : 1
-     * createTime : 1551872263831
-     * closeTime : 1551876423945
-     * status : 1
-     * picture : https://zhongxingjike.oss-cn-hongkong.aliyuncs.com/upload/FC888443-8DAF-4501-B7A7-5EAD7139657A.jpg
-     * isBuyPay : 1
+     * payType : 1,2,3
+     * createTime : 1558593481655
+     * closeTime :
+     * status : 5
+     * picture :
+     * isBuyPay :
      * payTime :
-     * isDelete : 0
+     * isDelete :
+     * sellPayType :
+     * buyNick :
      * payNumber :
-     * openBank :
      * payPicture :
      * wechatNick :
      * zhifubaoNumber :
+     * openBank :
+     * sellNick :
+     * minNum : 1.00
+     * maxNum : 150.00
+     * saledNum : 0
+     * unSaledNum : 150
+     * mobile : 15829371358
      */
 
     private String id;
     private String buyId;
     private String buyDuoduoId;
     private String buyOrderId;
-    private String buyNick;
     private String sellId;
     private String sellDuoduoId;
     private String sellOrderId;
-    private String sellNick;
     private String bothOrderId;
     private String number;
     private String money;
     private String currency;
-    private String sellPayType;
     private String payType;
     private String createTime;
     private String closeTime;
@@ -56,20 +59,19 @@ public class GetOverOrderResponse implements Serializable {
     private String isBuyPay;
     private String payTime;
     private String isDelete;
+    private String sellPayType;
+    private String buyNick;
     private String payNumber;
-    private String openBank;
     private String payPicture;
     private String wechatNick;
     private String zhifubaoNumber;
+    private String openBank;
+    private String sellNick;
+    private String minNum;
+    private String maxNum;
+    private String saledNum;
+    private String unSaledNum;
     private String mobile;
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
 
     public String getId() {
         return id;
@@ -103,14 +105,6 @@ public class GetOverOrderResponse implements Serializable {
         this.buyOrderId = buyOrderId;
     }
 
-    public String getBuyNick() {
-        return buyNick;
-    }
-
-    public void setBuyNick(String buyNick) {
-        this.buyNick = buyNick;
-    }
-
     public String getSellId() {
         return sellId;
     }
@@ -133,14 +127,6 @@ public class GetOverOrderResponse implements Serializable {
 
     public void setSellOrderId(String sellOrderId) {
         this.sellOrderId = sellOrderId;
-    }
-
-    public String getSellNick() {
-        return sellNick;
-    }
-
-    public void setSellNick(String sellNick) {
-        this.sellNick = sellNick;
     }
 
     public String getBothOrderId() {
@@ -173,14 +159,6 @@ public class GetOverOrderResponse implements Serializable {
 
     public void setCurrency(String currency) {
         this.currency = currency;
-    }
-
-    public String getSellPayType() {
-        return sellPayType;
-    }
-
-    public void setSellPayType(String sellPayType) {
-        this.sellPayType = sellPayType;
     }
 
     public String getPayType() {
@@ -247,20 +225,28 @@ public class GetOverOrderResponse implements Serializable {
         this.isDelete = isDelete;
     }
 
+    public String getSellPayType() {
+        return sellPayType;
+    }
+
+    public void setSellPayType(String sellPayType) {
+        this.sellPayType = sellPayType;
+    }
+
+    public String getBuyNick() {
+        return buyNick;
+    }
+
+    public void setBuyNick(String buyNick) {
+        this.buyNick = buyNick;
+    }
+
     public String getPayNumber() {
         return payNumber;
     }
 
     public void setPayNumber(String payNumber) {
         this.payNumber = payNumber;
-    }
-
-    public String getOpenBank() {
-        return openBank;
-    }
-
-    public void setOpenBank(String openBank) {
-        this.openBank = openBank;
     }
 
     public String getPayPicture() {
@@ -285,5 +271,61 @@ public class GetOverOrderResponse implements Serializable {
 
     public void setZhifubaoNumber(String zhifubaoNumber) {
         this.zhifubaoNumber = zhifubaoNumber;
+    }
+
+    public String getOpenBank() {
+        return openBank;
+    }
+
+    public void setOpenBank(String openBank) {
+        this.openBank = openBank;
+    }
+
+    public String getSellNick() {
+        return sellNick;
+    }
+
+    public void setSellNick(String sellNick) {
+        this.sellNick = sellNick;
+    }
+
+    public String getMinNum() {
+        return minNum;
+    }
+
+    public void setMinNum(String minNum) {
+        this.minNum = minNum;
+    }
+
+    public String getMaxNum() {
+        return maxNum;
+    }
+
+    public void setMaxNum(String maxNum) {
+        this.maxNum = maxNum;
+    }
+
+    public String getSaledNum() {
+        return saledNum;
+    }
+
+    public void setSaledNum(String saledNum) {
+        this.saledNum = saledNum;
+    }
+
+    public String getUnSaledNum() {
+        return unSaledNum;
+    }
+
+    public void setUnSaledNum(String unSaledNum) {
+        this.unSaledNum = unSaledNum;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 }

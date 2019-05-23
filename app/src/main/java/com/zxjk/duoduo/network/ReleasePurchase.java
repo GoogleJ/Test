@@ -4,19 +4,35 @@ import java.io.Serializable;
 
 public class ReleasePurchase implements Serializable {
 
+
     /**
-     * id :
-     * customerId : 34
-     * duoduoId : 6780785
-     * sellOrderId : 155341930630834
-     * number : 7000
-     * money : 0.0
-     * createTime : 1553419306308
+     * id : 127
+     * customerId : 28
+     * duoduoId : 81337019
+     * sellOrderId : 6537219758880722944
+     * number : 1050
+     * money : 935.34
+     * createTime : 1558594646185
      * currency : 1
      * payType : 1,2,3
      * closeTime :
      * isDelete :
      * payPwd :
+     * nick : ZXL
+     * receiptNumber :
+     * receiptPicture :
+     * buyOrderId :
+     * bothOrderId :
+     * minNum : 10
+     * maxNum : 1050
+     * saledNum :
+     * status :
+     * wechatNick :
+     * openBank :
+     * lastSaledNum : 0
+     * mobile : 15829371358
+     * isSystem :
+     * exchangeFee :
      */
 
     private String id;
@@ -31,6 +47,30 @@ public class ReleasePurchase implements Serializable {
     private String closeTime;
     private String isDelete;
     private String payPwd;
+    private String nick;
+    private String receiptNumber;
+    private String receiptPicture;
+    private String buyOrderId;
+    private String bothOrderId;
+    private String minNum;
+    private String maxNum;
+    private String saledNum;
+    private String status;
+    private String wechatNick;
+    private String openBank;
+    private String lastSaledNum;
+    private String mobile;
+    private String isSystem;
+    private String exchangeFee;
+    private String unSaledNum;
+
+    public String getUnSaledNum() {
+        return unSaledNum;
+    }
+
+    public void setUnSaledNum(String unSaledNum) {
+        this.unSaledNum = unSaledNum;
+    }
 
     public String getId() {
         return id;
@@ -126,5 +166,125 @@ public class ReleasePurchase implements Serializable {
 
     public void setPayPwd(String payPwd) {
         this.payPwd = payPwd;
+    }
+
+    public String getNick() {
+        return nick;
+    }
+
+    public void setNick(String nick) {
+        this.nick = nick;
+    }
+
+    public String getReceiptNumber() {
+        return receiptNumber;
+    }
+
+    public void setReceiptNumber(String receiptNumber) {
+        this.receiptNumber = receiptNumber;
+    }
+
+    public String getReceiptPicture() {
+        return receiptPicture;
+    }
+
+    public void setReceiptPicture(String receiptPicture) {
+        this.receiptPicture = receiptPicture;
+    }
+
+    public String getBuyOrderId() {
+        return buyOrderId;
+    }
+
+    public void setBuyOrderId(String buyOrderId) {
+        this.buyOrderId = buyOrderId;
+    }
+
+    public String getBothOrderId() {
+        return bothOrderId;
+    }
+
+    public void setBothOrderId(String bothOrderId) {
+        this.bothOrderId = bothOrderId;
+    }
+
+    public String getMinNum() {
+        return minNum;
+    }
+
+    public void setMinNum(String minNum) {
+        this.minNum = minNum;
+    }
+
+    public String getMaxNum() {
+        return maxNum;
+    }
+
+    public void setMaxNum(String maxNum) {
+        this.maxNum = maxNum;
+    }
+
+    public String getSaledNum() {
+        return saledNum;
+    }
+
+    public void setSaledNum(String saledNum) {
+        this.saledNum = saledNum;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getWechatNick() {
+        return wechatNick;
+    }
+
+    public void setWechatNick(String wechatNick) {
+        this.wechatNick = wechatNick;
+    }
+
+    public String getOpenBank() {
+        return openBank;
+    }
+
+    public void setOpenBank(String openBank) {
+        this.openBank = openBank;
+    }
+
+    public String getLastSaledNum() {
+        return lastSaledNum;
+    }
+
+    public void setLastSaledNum(String lastSaledNum) {
+        this.lastSaledNum = lastSaledNum;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getIsSystem() {
+        return isSystem;
+    }
+
+    public void setIsSystem(String isSystem) {
+        this.isSystem = isSystem;
+    }
+
+    public String getExchangeFee() {
+        return exchangeFee;
+    }
+
+    public void setExchangeFee(String exchangeFee) {
+        this.exchangeFee = exchangeFee;
     }
 }

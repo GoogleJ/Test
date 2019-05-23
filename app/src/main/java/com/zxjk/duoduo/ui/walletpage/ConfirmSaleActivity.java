@@ -18,6 +18,7 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.utils.DataUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +29,12 @@ public class ConfirmSaleActivity extends BaseActivity {
 
     @BindView(R.id.tv_title)
     TextView tvTitle;
+    @BindView(R.id.tv_minimumPurchase)
+    TextView tvMinimumPurchase;
+    @BindView(R.id.tv_maximumPurchase)
+    TextView tvMaximumPurchase;
+    @BindView(R.id.tv_numberRemaining)
+    TextView tvNumberRemaining;
     private ReleasePurchase data;
 
     private TextView tvConfirmSaleOrderId;
@@ -63,7 +70,9 @@ public class ConfirmSaleActivity extends BaseActivity {
         tvConfirmSalePriceReference.setText(rate);
         tvConfirmSaleCount.setText(data.getNumber());
         tvConfirmSaleTotalPrice.setText(data.getMoney());
-
+        tvMinimumPurchase.setText(DataUtils.getInteger(data.getMinNum()));
+        tvMaximumPurchase.setText(DataUtils.getInteger(data.getMaxNum()));
+        tvNumberRemaining.setText(DataUtils.getInteger(data.getUnSaledNum()));
         if (data.getPayType().contains(",")) {
             String[] split = data.getPayType().split(",");
             for (String str : split) {

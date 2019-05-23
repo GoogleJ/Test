@@ -100,7 +100,7 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exchange);
-
+        Log.e("ZXL", "onCreate: " + DataUtils.getCeilDecimals("1.723"));
         initViews();
 
         ServiceFactory.getInstance().getBaseService(Api.class).getNumbeOfTransaction()
@@ -164,7 +164,6 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
         etExchangeChooseCount = findViewById(R.id.etExchangeChooseCount);
         etMinMoney = findViewById(R.id.etMinMoney);
         etMaxMoney = findViewById(R.id.etMaxMoney);
-        etMaxMoney.setEnabled(false);
         etExchangeChooseCount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -189,7 +188,7 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                     totalPrice = "0";
                 }
                 tvExchangeTotal.setText(totalPrice);
-                etMaxMoney.setText(s.toString());
+
 
             }
         });
@@ -209,34 +208,44 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                 if (s.toString().length() == 0) {
                     return;
                 }
+                String text = s.toString();
+                int len = s.toString().length();
+                if (len > 1 && text.startsWith("0")) {
+                    s.replace(0, 1, "");
+                }
                 if (!TextUtils.isEmpty(etExchangeChooseCount.getText().toString().trim()) &&
                         Integer.parseInt(s.toString()) > Integer.parseInt(etExchangeChooseCount.getText().toString().trim())) {
                     ToastUtils.showShort(R.string.input_outrate);
                 }
             }
         });
-//        etMaxMoney.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                if (s.toString().length() == 0) {
-//                    return;
-//                }
-//                if (!TextUtils.isEmpty(etExchangeChooseCount.getText().toString().trim()) &&
-//                        Integer.parseInt(s.toString()) > Integer.parseInt(etExchangeChooseCount.getText().toString().trim())) {
-//                    ToastUtils.showShort(R.string.input_outrate);
-//                }
-//            }
-//        });
+        etMaxMoney.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().length() == 0) {
+                    return;
+                }
+                String text = s.toString();
+                int len = s.toString().length();
+                if (len > 1 && text.startsWith("0")) {
+                    s.replace(0, 1, "");
+                }
+                if (!TextUtils.isEmpty(etExchangeChooseCount.getText().toString().trim()) &&
+                        Integer.parseInt(s.toString()) > Integer.parseInt(etExchangeChooseCount.getText().toString().trim())) {
+                    ToastUtils.showShort(R.string.input_outrate);
+                }
+            }
+        });
 
         rgExchangeTop.setOnCheckedChangeListener(this);
         rgExchangeTop.check(R.id.rb1);
@@ -256,6 +265,22 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                 ToastUtils.showShort(getString(R.string.number_min));
                 return;
             }
+
+            if (!TextUtils.isEmpty(etMinMoney.getText().toString()) && !TextUtils.isEmpty(etExchangeChooseCount.getText().toString())) {
+                if (Integer.parseInt(etMinMoney.getText().toString()) > Integer.parseInt(etExchangeChooseCount.getText().toString())) {
+                    ToastUtils.showShort("最小数量不能大于出售数量");
+                    return;
+                }
+            }
+
+            if (!TextUtils.isEmpty(etMaxMoney.getText().toString()) && !TextUtils.isEmpty(etExchangeChooseCount.getText().toString())) {
+                if (Integer.parseInt(etMaxMoney.getText().toString()) > Integer.parseInt(etExchangeChooseCount.getText().toString())) {
+                    ToastUtils.showShort("最大数量不能大于出售数量");
+                    return;
+                }
+            }
+
+
         } else {
             if (Integer.parseInt(etExchangeChooseCount.getText().toString()) <= 0) {
                 ToastUtils.showShort(getString(R.string.zero));
@@ -346,13 +371,13 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                         holder.getView(R.id.tv_transactionFee).setVisibility(View.GONE);
                         holder.getView(R.id.tv_poundage).setVisibility(View.GONE);
                     } else {
-                        double pous = ArithUtils.mul(Double.parseDouble(totalPrice), Double.parseDouble(poundage));
+                        double pous = ArithUtils.mul(Double.parseDouble(etExchangeChooseCount.getText().toString()), Double.parseDouble(poundage));
                         BigDecimal data1 = new BigDecimal(String.valueOf(pous));
                         BigDecimal data2 = new BigDecimal(minExchangeFee);
                         if (data1.compareTo(data2) < 0) {
                             holder.setText(R.id.tv_poundage, DataUtils.getTwoDecimals(minExchangeFee) + "HK (最小手续费为" + minExchangeFee + ")");
                         } else {
-                            holder.setText(R.id.tv_poundage, DataUtils.getTwoDecimals(String.valueOf(pous)) + "HK (" + poun + ")");
+                            holder.setText(R.id.tv_poundage, DataUtils.getCeilDecimals(String.valueOf(pous)) + "HK (" + poun + ")");
                         }
                     }
                     //收款方式
@@ -528,6 +553,7 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                     .compose(RxSchedulers.normalTrans())
                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                     .subscribe(s -> {
+                        s.setUnSaledNum(s.getNumber());
                         Intent intent = new Intent(this, ConfirmSaleActivity.class);
                         intent.putExtra("data", s);
                         intent.putExtra("rate", tvExchangePrice.getText().toString());

@@ -30,18 +30,13 @@
                 android:textColor="@color/textColor3"
                 android:textSize="14sp" />
 
-            <RelativeLayout
-                style="@style/RLayoutStyle"
-                android:onClick="certificateType">
+            <RelativeLayout style="@style/RLayoutStyle">
 
                 <TextView
                     android:id="@+id/tv_certificateType"
                     style="@style/textStyle"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="15dp"
-                    android:hint="@string/please_select_the_type_of_document" />
-
-                <ImageView style="@style/ImageEnter" />
+                    android:layout_marginStart="15dp" />
 
 
             </RelativeLayout>

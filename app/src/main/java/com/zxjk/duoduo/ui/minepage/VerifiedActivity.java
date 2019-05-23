@@ -24,7 +24,6 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.dialog.BottomDialog;
-import com.zxjk.duoduo.ui.widget.dialog.DocumentSelectionDialog;
 import com.zxjk.duoduo.utils.AesUtil;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
@@ -44,6 +43,7 @@ import java.util.Collections;
 public class VerifiedActivity extends BaseActivity {
     public static final int REQUEST_TAKE = 1;
     public static final int REQUEST_ALBUM = 2;
+
 
     TextView tv_certificateType;
     EditText et_realName;
@@ -77,7 +77,6 @@ public class VerifiedActivity extends BaseActivity {
     String url2;
     String url3;
     ImageView handHeldPassportPhotoEdit;
-    DocumentSelectionDialog dialog;
     String realNames;
     String idCards;
 
@@ -97,42 +96,9 @@ public class VerifiedActivity extends BaseActivity {
         tv_commit = findViewById(R.id.tv_commit);
         tv_commit.setVisibility(View.VISIBLE);
         tv_commit.setText(getString(R.string.commit));
-
-        initDialog();
         initView();
     }
 
-    private void initDialog() {
-        dialog = new DocumentSelectionDialog(this);
-        dialog.setOnClickListener(new DocumentSelectionDialog.OnClickListener() {
-            @Override
-            public void onSelectedIdCard(String idCard) {
-                //点击身份证的时候赋值
-                otherIdCardType = "1";
-                tv_certificateType.setTextColor(getColor(R.color.themecolor));
-                tv_certificateType.setText(idCard);
-                dialog.dismiss();
-            }
-
-            @Override
-            public void onSelectedPassport(String passport) {
-                //点击护照的时候给赋值
-                otherIdCardType = "2";
-                tv_certificateType.setTextColor(getColor(R.color.themecolor));
-                tv_certificateType.setText(passport);
-                dialog.dismiss();
-            }
-
-            @Override
-            public void onSelectedOther(String other) {
-                //点击其他的时候给赋值
-                otherIdCardType = "3";
-                tv_certificateType.setTextColor(getColor(R.color.themecolor));
-                tv_certificateType.setText(other);
-                dialog.dismiss();
-            }
-        });
-    }
 
     @SuppressLint("WrongViewCast")
     private void initView() {
@@ -140,8 +106,13 @@ public class VerifiedActivity extends BaseActivity {
             CommonUtils.hideInputMethod(this);
             finish();
         });
-
         tv_certificateType = findViewById(R.id.tv_certificateType);
+        otherIdCardType = getIntent().getStringExtra("otherIdCardType");
+        if (otherIdCardType.equals("2")) {
+            tv_certificateType.setText("护照");
+        } else if (otherIdCardType.equals("3")) {
+            tv_certificateType.setText("其他国家或地区身份证");
+        }
         et_realName = findViewById(R.id.et_realName);
         idCard = findViewById(R.id.id_card);
         frontPhotoOfTheDocument = findViewById(R.id.front_photo_of_the_document);
@@ -281,9 +252,5 @@ public class VerifiedActivity extends BaseActivity {
                 }, this::handleApiError);
     }
 
-    //选择证件类型
-    @SuppressLint("NewApi")
-    public void certificateType(View view) {
-        dialog.show();
-    }
+
 }
