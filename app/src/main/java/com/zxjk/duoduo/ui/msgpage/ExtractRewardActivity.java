@@ -59,7 +59,6 @@ public class ExtractRewardActivity extends BaseActivity implements SelectPopupWi
             intent.putExtra("groupId", groupId);
             startActivity(intent);
         });
-
     }
 
     private void initData() {
@@ -73,8 +72,6 @@ public class ExtractRewardActivity extends BaseActivity implements SelectPopupWi
                     tv_amountWithdrawal.setText(" " + s + "HK");
                     findViewById(R.id.tv_confirmWithdrawal).setOnClickListener(v -> withdrawDeposit());
                 }, this::handleApiError);
-
-
     }
 
     private void withdrawDeposit() {
@@ -84,8 +81,6 @@ public class ExtractRewardActivity extends BaseActivity implements SelectPopupWi
         } else {
             ToastUtils.showShort(getString(R.string.hint_money));
         }
-
-
     }
 
     public void inoutPsw() {
@@ -109,11 +104,8 @@ public class ExtractRewardActivity extends BaseActivity implements SelectPopupWi
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
                     Intent intent = new Intent(this, WithdrawalSuccessActivity.class);
-                    intent.putExtra("money", et_withdrawalAmount.getText().toString());
+                    intent.putExtra("betMoney", et_withdrawalAmount.getText().toString());
                     startActivity(intent);
-
                 }, this::handleApiError);
-
-
     }
 }

@@ -129,7 +129,8 @@ public class GroupChatInformationActivity extends BaseActivity {
         RongIM.getInstance().getConversation(Conversation.ConversationType.GROUP, group.getGroupInfo().getId(), new RongIMClient.ResultCallback<Conversation>() {
             @Override
             public void onSuccess(Conversation conversation) {
-                switch1.setChecked(conversation.isTop());
+                if (conversation != null) switch1.setChecked(conversation.isTop());
+                else switch1.setEnabled(false);
             }
 
             @Override

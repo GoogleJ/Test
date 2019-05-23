@@ -16,15 +16,6 @@
             android:src="@drawable/ico_back" />
     </RelativeLayout>
 
-
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textColor="@android:color/white"
-        android:textSize="18sp" />
-
     <TextView
         android:id="@+id/tv_end"
         android:layout_width="wrap_content"
@@ -42,7 +33,7 @@
         android:layout_width="50dp"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
-        android:visibility="gone">
+        android:visibility="invisible">
 
         <ImageView
             android:id="@+id/iv_end"
@@ -67,8 +58,21 @@
         android:paddingBottom="5dp"
         android:text="@string/commit"
         android:textColor="@color/colorTheme"
-        android:textSize="14sp"
         android:visibility="gone" />
 
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
+        android:layout_toStartOf="@id/rl_end"
+        android:layout_toEndOf="@id/rl_back"
+        android:ellipsize="middle"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
 
 </RelativeLayout>

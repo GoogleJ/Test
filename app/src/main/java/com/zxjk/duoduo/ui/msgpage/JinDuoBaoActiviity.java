@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.msgpage;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -19,8 +20,14 @@ import com.shehuan.nicedialog.BaseNiceDialog;
 import com.shehuan.nicedialog.NiceDialog;
 import com.shehuan.nicedialog.ViewConvertListener;
 import com.shehuan.nicedialog.ViewHolder;
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.network.Api;
+import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.DuobaoParameterResponse;
+import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.RecyclerItemAverageDecoration;
 
 import java.util.ArrayList;
@@ -43,11 +50,26 @@ public class JinDuoBaoActiviity extends BaseActivity {
 
     private BaseNiceDialog dialog;
 
+    private DuobaoParameterResponse response;
+
+    @SuppressLint("CheckResult")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jin_duo_bao);
 
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .duobaoParameter(getIntent().getStringExtra("groupId"))
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                .compose(RxSchedulers.normalTrans())
+                .compose(bindToLifecycle())
+                .subscribe(response -> {
+                    this.response = response;
+                    initView();
+                }, this::handleApiError);
+    }
+
+    private void initView() {
         while (data.size() != 50) {
             data.add(new XiaZhuBean(data.size() > 9 ? (data.size() + "") : ("0" + data.size()), ""));
         }
@@ -60,6 +82,9 @@ public class JinDuoBaoActiviity extends BaseActivity {
 
         ((TextView) findViewById(R.id.tv_title)).setText(R.string.jinduobao);
 
+        recycler = findViewById(R.id.recycler);
+        tvDuoBaoMoney = findViewById(R.id.tvDuoBaoMoney);
+        tvDuoBaoPeilv = findViewById(R.id.tvDuoBaoPeilv);
         tvDuoBaoQiShu = findViewById(R.id.tvDuoBaoQiShu);
         tvDuoBaoNum1 = findViewById(R.id.tvDuoBaoNum1);
         tvDuoBaoNum2 = findViewById(R.id.tvDuoBaoNum2);
@@ -76,10 +101,6 @@ public class JinDuoBaoActiviity extends BaseActivity {
             adapter.setNewData(data2);
         });
 
-        recycler = findViewById(R.id.recycler);
-        tvDuoBaoMoney = findViewById(R.id.tvDuoBaoMoney);
-        tvDuoBaoPeilv = findViewById(R.id.tvDuoBaoPeilv);
-
         recycler.setLayoutManager(new GridLayoutManager(this, 6));
 
         int decoration = ScreenUtils.getScreenWidth() / 6 / 7;
@@ -93,8 +114,8 @@ public class JinDuoBaoActiviity extends BaseActivity {
                 layoutParams.height = itemHeight;
                 tv1.setLayoutParams(layoutParams);
 
-                tv1.setText(item.number);
-                if (!TextUtils.isEmpty(item.money)) {
+                tv1.setText(item.betCode);
+                if (!TextUtils.isEmpty(item.betMoney)) {
                     tv1.setTextColor(ContextCompat.getColor(JinDuoBaoActiviity.this, R.color.white));
                     tv1.setBackgroundResource(R.drawable.shape_duobaoxiazhu_selected);
                 } else {
@@ -103,9 +124,9 @@ public class JinDuoBaoActiviity extends BaseActivity {
                 }
 
                 TextView tv2 = helper.getView(R.id.tv2);
-                if (!TextUtils.isEmpty(item.money)) {
+                if (!TextUtils.isEmpty(item.betMoney)) {
                     tv2.setVisibility(View.VISIBLE);
-                    tv2.setText(item.money + "HK");
+                    tv2.setText(item.betMoney + "HK");
                 } else {
                     tv2.setVisibility(View.GONE);
                 }
@@ -118,8 +139,8 @@ public class JinDuoBaoActiviity extends BaseActivity {
                     .setConvertListener(new ViewConvertListener() {
                         @Override
                         protected void convertView(ViewHolder holder, BaseNiceDialog baseNiceDialog) {
-                            holder.setText(R.id.tvRate, bean.number);
-                            holder.setText(R.id.tv, bean.number);
+                            holder.setText(R.id.tvRate, "下注范围为" + response.getMinimumBetAmount() + "-" + response.getMaximumBetAmount());
+                            holder.setText(R.id.tv, bean.betCode);
                             EditText et = holder.getView(R.id.et);
 
                             holder.setOnClickListener(R.id.ivXiaZhu1, v -> {
@@ -176,22 +197,37 @@ public class JinDuoBaoActiviity extends BaseActivity {
 
                             holder.setOnClickListener(R.id.tv_determine, v -> {
                                 String trim = et.getText().toString().trim();
-                                bean.money = trim;
-                                adapter.notifyDataSetChanged();
+
+                                if (TextUtils.isEmpty(trim)) {
+                                    dialog.dismiss();
+                                    bean.betMoney = trim;
+                                    adapter.notifyDataSetChanged();
+                                    return;
+                                }
+
+                                int i = Integer.parseInt(trim);
+                                if (i < Float.parseFloat(response.getMinimumBetAmount()) || i > Float.parseFloat(response.getMaximumBetAmount())) {
+                                    ToastUtils.showShort(R.string.duobaoxiazhufail);
+                                    return;
+                                }
+
                                 dialog.dismiss();
+
+                                bean.betMoney = trim;
+                                adapter.notifyDataSetChanged();
 
                                 String total = "0";
                                 ArrayList<XiaZhuBean> finalData = new ArrayList<>();
                                 for (XiaZhuBean bean : data1) {
-                                    if (!TextUtils.isEmpty(bean.money)) {
+                                    if (!TextUtils.isEmpty(bean.betMoney)) {
                                         finalData.add(bean);
-                                        total = Integer.parseInt(bean.money) + Integer.parseInt(total) + "";
+                                        total = Integer.parseInt(bean.betMoney) + Integer.parseInt(total) + "";
                                     }
                                 }
                                 for (XiaZhuBean bean : data2) {
-                                    if (!TextUtils.isEmpty(bean.money)) {
+                                    if (!TextUtils.isEmpty(bean.betMoney)) {
                                         finalData.add(bean);
-                                        total = Integer.parseInt(bean.money) + Integer.parseInt(total) + "";
+                                        total = Integer.parseInt(bean.betMoney) + Integer.parseInt(total) + "";
                                     }
                                 }
                                 tvDuoBaoMoney.setText("下注总金额：" + total);
@@ -205,19 +241,26 @@ public class JinDuoBaoActiviity extends BaseActivity {
 
         recycler.addItemDecoration(new RecyclerItemAverageDecoration(decoration / 2 * 2, decoration, 6));
         recycler.setAdapter(adapter);
+
+        tvDuoBaoQiShu.setText("期数：" + response.getDuobaoMultiple());
+        tvDuoBaoPeilv.setText(response.getDuobaoMultiple());
     }
 
     //下注
+    @SuppressLint("CheckResult")
     public void onBet(View view) {
         ArrayList<XiaZhuBean> finalData = new ArrayList<>();
+        String total = "0";
         for (XiaZhuBean bean : data1) {
-            if (!TextUtils.isEmpty(bean.money)) {
+            if (!TextUtils.isEmpty(bean.betMoney)) {
                 finalData.add(bean);
+                total = Integer.parseInt(bean.betMoney) + Integer.parseInt(total) + "";
             }
         }
         for (XiaZhuBean bean : data2) {
-            if (!TextUtils.isEmpty(bean.money)) {
+            if (!TextUtils.isEmpty(bean.betMoney)) {
                 finalData.add(bean);
+                total = Integer.parseInt(bean.betMoney) + Integer.parseInt(total) + "";
             }
         }
 
@@ -226,15 +269,25 @@ public class JinDuoBaoActiviity extends BaseActivity {
             return;
         }
 
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .groupGamebettingForDuobao(getIntent().getStringExtra("groupId"), response.getExpect(), "香港金多寶", "81", Constant.userId, total,
+                        finalData)
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                .compose(RxSchedulers.normalTrans())
+                .subscribe(s -> {
+                    ToastUtils.showShort(R.string.xiazhuchenggong);
+                    finish();
+                }, this::handleApiError);
     }
 
-    class XiaZhuBean {
-        String number;
-        String money;
+    public class XiaZhuBean {
+        String betCode;
+        String betMoney;
 
         XiaZhuBean(String number, String money) {
-            this.number = number;
-            this.money = money;
+            this.betCode = number;
+            this.betMoney = money;
         }
     }
 }

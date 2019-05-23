@@ -14,7 +14,6 @@ import com.trello.rxlifecycle3.components.support.RxFragment;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.network.rx.RxException;
 import com.zxjk.duoduo.ui.LoginActivity;
-import com.zxjk.duoduo.ui.widget.dialog.ReLoginDialog;
 import com.zxjk.duoduo.utils.MMKVUtils;
 
 import io.rong.imkit.RongIM;
@@ -28,7 +27,7 @@ public class BaseFragment extends RxFragment  {
 
     public View rootView;
 
-    public RxPermissions rxPermissions;
+    private RxPermissions rxPermissions;
 
     public void getPermisson(BaseActivity.PermissionResult result, String... permissions) {
         getPermisson(null, result, permissions);
@@ -40,12 +39,9 @@ public class BaseFragment extends RxFragment  {
                     .compose(rxPermissions.ensureEachCombined(permissions))
                     .compose(bindToLifecycle())
                     .subscribe(permission -> {
-                        if (!permission.granted) {
-                            ToastUtils.showShort("请开启相关权限");
-                        }
-                        if (null != result) {
-                            result.onResult(permission.granted);
-                        }
+                        if (!permission.granted) ToastUtils.showShort("请开启相关权限");
+
+                        if (null != result) result.onResult(permission.granted);
                     });
             return;
         }
@@ -53,12 +49,9 @@ public class BaseFragment extends RxFragment  {
                 .compose(bindToLifecycle())
                 .compose(rxPermissions.ensureEachCombined(permissions))
                 .subscribe(granted -> {
-                    if (!granted.granted) {
-                        ToastUtils.showShort("请开启相关权限");
-                    }
-                    if (null != result) {
-                        result.onResult(granted.granted);
-                    }
+                    if (!granted.granted) ToastUtils.showShort("请开启相关权限");
+
+                    if (null != result) result.onResult(granted.granted);
                 });
     }
 
@@ -72,20 +65,15 @@ public class BaseFragment extends RxFragment  {
         if (throwable.getCause() instanceof RxException.DuplicateLoginExcepiton ||
                 throwable instanceof RxException.DuplicateLoginExcepiton) {
             // 重复登录，挤掉线
-            RongIM.getInstance().disconnect();
+            RongIM.getInstance().logout();
             Constant.clear();
             MMKVUtils.getInstance().enCode("isLogin", false);
-            ReLoginDialog reLoginDialog = new ReLoginDialog(getActivity());
-            reLoginDialog.setOnClickListener(() -> {
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            });
-            reLoginDialog.show();
-            return;
+
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         }
 
         ToastUtils.showShort(RxException.getMessage(throwable));
     }
-
 }

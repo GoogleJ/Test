@@ -4,6 +4,7 @@ import com.zxjk.duoduo.network.response.AllGroupMembersResponse;
 import com.zxjk.duoduo.network.response.BaseResponse;
 import com.zxjk.duoduo.network.response.CreateWalletResponse;
 import com.zxjk.duoduo.network.response.DetailListResposne;
+import com.zxjk.duoduo.network.response.DuobaoParameterResponse;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.response.GetAllPlayGroupResponse;
 import com.zxjk.duoduo.network.response.GetAppVersionResponse;
@@ -41,6 +42,7 @@ import com.zxjk.duoduo.network.response.SendGroupRedPackageResponse;
 import com.zxjk.duoduo.network.response.SignHkbOrHkExchangeResponse;
 import com.zxjk.duoduo.network.response.SignTransactionResponse;
 import com.zxjk.duoduo.network.response.TransferResponse;
+import com.zxjk.duoduo.ui.msgpage.JinDuoBaoActiviity;
 
 import java.util.List;
 
@@ -563,5 +565,15 @@ public interface Api {
     Observable<BaseResponse<MakeGameGroupResponse>> makeGameGroup(@Field("gameType") String gameType, @Field("playId") String playId, @Field("pumpingRate") String pumpingRate,
                                                                   @Field("payPwd") String payPwd, @Field("proportionOfFees") String proportionOfFees, @Field("typeName") String typeName,
                                                                   @Field("commission") String commission, @Field("duobaoMultiple") String duobaoMultiple);
+
+    @POST("duoduo/group/game/duobaoParameter")
+    @FormUrlEncoded
+    Observable<BaseResponse<DuobaoParameterResponse>> duobaoParameter(@Field("groupId") String groupId);
+
+    @POST("duoduo/group/game/groupGamebettingForDuobao")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> groupGamebettingForDuobao(@Field("groupId") String groupId,@Field("expect") String expect,
+                                                               @Field("playName") String playName,@Field("playId") String playId,
+                                                               @Field("customerId") String customerId, @Field("countMoney") String countMoney,@Field("duoBaoBetInfoBeanList") List<JinDuoBaoActiviity.XiaZhuBean> duoBaoBetInfoBeanList);
 
 }

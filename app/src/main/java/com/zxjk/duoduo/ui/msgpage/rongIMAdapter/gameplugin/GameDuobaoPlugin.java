@@ -25,12 +25,14 @@ public class GameDuobaoPlugin implements IPluginModule {
     }
 
     @Override
-    public void onClick(Fragment fragment, RongExtension rongExtension) {
-        fragment.startActivity(new Intent(fragment.getContext(), JinDuoBaoActiviity.class));
+    public void onActivityResult(int i, int i1, Intent intent) {
+
     }
 
     @Override
-    public void onActivityResult(int i, int i1, Intent intent) {
-
+    public void onClick(Fragment fragment, RongExtension rongExtension) {
+        Intent intent = new Intent(fragment.getContext(), JinDuoBaoActiviity.class);
+        intent.putExtra("groupId", rongExtension.getTargetId());
+        fragment.startActivity(intent);
     }
 }

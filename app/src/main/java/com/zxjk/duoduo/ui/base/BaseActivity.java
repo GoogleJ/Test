@@ -12,7 +12,6 @@ import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.network.rx.RxException;
 import com.zxjk.duoduo.ui.LoginActivity;
-import com.zxjk.duoduo.ui.widget.dialog.ReLoginDialog;
 import com.zxjk.duoduo.utils.MMKVUtils;
 
 import java.io.File;
@@ -41,24 +40,18 @@ public class BaseActivity extends RxAppCompatActivity {
             RxView.clicks(view)
                     .compose(rxPermissions.ensureEachCombined(permissions))
                     .subscribe(permission -> {
-                        if (!permission.granted) {
-                            ToastUtils.showShort("请开启相关权限");
-                        }
-                        if (null != result) {
-                            result.onResult(permission.granted);
-                        }
+                        if (!permission.granted) ToastUtils.showShort("请开启相关权限");
+
+                        if (null != result) result.onResult(permission.granted);
                     });
             return;
         }
         rxPermissions.request(permissions)
                 .compose(rxPermissions.ensureEachCombined(permissions))
                 .subscribe(granted -> {
-                    if (!granted.granted) {
-                        ToastUtils.showShort("请开启相关权限");
-                    }
-                    if (null != result) {
-                        result.onResult(granted.granted);
-                    }
+                    if (!granted.granted) ToastUtils.showShort("请开启相关权限");
+
+                    if (null != result) result.onResult(granted.granted);
                 });
     }
 
@@ -66,18 +59,13 @@ public class BaseActivity extends RxAppCompatActivity {
         if (throwable.getCause() instanceof RxException.DuplicateLoginExcepiton ||
                 throwable instanceof RxException.DuplicateLoginExcepiton) {
             // 重复登录，挤掉线
-            RongIM.getInstance().disconnect();
+            RongIM.getInstance().logout();
             Constant.clear();
             MMKVUtils.getInstance().enCode("isLogin", false);
 
-            ReLoginDialog reLoginDialog = new ReLoginDialog(this);
-            reLoginDialog.setOnClickListener(() -> {
-                Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            });
-            reLoginDialog.show();
-            return;
+            Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         }
         ToastUtils.showShort(RxException.getMessage(throwable));
     }
@@ -93,9 +81,7 @@ public class BaseActivity extends RxAppCompatActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(bindToLifecycle())
                 .subscribe(result -> {
-                    if (onFinish != null) {
-                        onFinish.onFinish(result);
-                    }
+                    if (onFinish != null) onFinish.onFinish(result);
                 });
     }
 }

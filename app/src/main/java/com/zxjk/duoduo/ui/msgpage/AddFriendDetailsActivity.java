@@ -103,7 +103,6 @@ public class AddFriendDetailsActivity extends BaseActivity {
                 ivGender.setImageDrawable(getDrawable(R.drawable.icon_gender_woman));
             }
         }
-
     }
 
     @OnClick({R.id.rl_back, R.id.tv_addAddressBook, R.id.iv_headPortrait})
@@ -119,7 +118,6 @@ public class AddFriendDetailsActivity extends BaseActivity {
                 intent.putExtra("intentType", 1);
                 startActivity(intent);
                 break;
-
             case R.id.iv_headPortrait:
                 Intent intent5 = new Intent(this, EnlargeImageActivity.class);
                 intent5.putExtra("image", imageUrl);

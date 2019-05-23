@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -17,6 +18,9 @@ import com.zxjk.duoduo.ui.LoginActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
+import com.zxjk.duoduo.utils.MMKVUtils;
+
+import io.rong.imkit.RongIM;
 
 /**
  * @author Administrator
@@ -50,11 +54,14 @@ public class ChangePwdActivity extends BaseActivity {
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ChangePwdActivity.this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(response -> {
-                    Intent intent = new Intent(this, LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
                     ToastUtils.showShort(R.string.successfully_modified);
-                    finish();
+                    RongIM.getInstance().logout();
+                    MMKVUtils.getInstance().enCode("isLogin", false);
+                    Constant.clear();
+                    ToastUtils.showShort(R.string.login_out);
+                    Intent intent = new Intent(ChangePwdActivity.this, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                 }, this::handleApiError);
     }
 

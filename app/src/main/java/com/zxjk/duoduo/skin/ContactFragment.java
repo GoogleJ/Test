@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,6 +23,7 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.rx.RxException;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
+import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.ui.msgpage.AddContactActivity;
 import com.zxjk.duoduo.ui.msgpage.FriendDetailsActivity;
 import com.zxjk.duoduo.ui.msgpage.GroupChatActivity;
@@ -55,7 +55,7 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.message.CommandMessage;
 
-public class ContactFragment extends Fragment implements View.OnClickListener {
+public class ContactFragment extends BaseFragment implements View.OnClickListener {
 
     @BindView(R.id.m_contact_add_friend_icon)
     ImageView addFriendImage;
@@ -123,6 +123,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
             deleteDialog.show(friendInfoResponse.getNick());
             deleteDialog.setOnClickListener(() -> ServiceFactory.getInstance().getBaseService(Api.class)
                     .deleteFriend(friendInfoResponse.getId())
+                    .compose(bindToLifecycle())
                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(getActivity())))
                     .compose(RxSchedulers.normalTrans())
                     .subscribe(s -> {
@@ -139,10 +140,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
 
                             @Override
                             public void onSuccess(Message message) {
-                                RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE
-                                        , friendInfoResponse.getId(), null);
-                                RongIMClient.getInstance().cleanHistoryMessages(Conversation.ConversationType.PRIVATE,
-                                        friendInfoResponse.getId(), 0, false, null);
+
                             }
 
                             @Override
@@ -150,6 +148,10 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
 
                             }
                         });
+                        RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE
+                                , friendInfoResponse.getId(), null);
+                        RongIMClient.getInstance().cleanHistoryMessages(Conversation.ConversationType.PRIVATE,
+                                friendInfoResponse.getId(), 0, false, null);
                     }, t -> ToastUtils.showShort(RxException.getMessage(t))));
 
             return false;
@@ -188,6 +190,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
     public void getFriendListInfoById() {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .getFriendListById()
+                .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(friendInfoResponses -> {
@@ -197,7 +200,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
                     if (Constant.friendsList == null) {
                         Constant.friendsList = list;
                     }
-                }, t -> ToastUtils.showShort(RxException.getMessage(t)));
+                }, this::handleApiError);
     }
 
     private void mapList(List<FriendInfoResponse> list) {
@@ -240,6 +243,7 @@ public class ContactFragment extends Fragment implements View.OnClickListener {
                 .getMyfriendsWaiting()
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(getActivity())))
                 .compose(RxSchedulers.normalTrans())
+                .compose(bindToLifecycle())
                 .subscribe(friendInfoResponses -> {
                     int newfriendRequestCount = SPUtils.getInstance().getInt("newfriendRequestCount", 0);
                     if (friendInfoResponses.size() > newfriendRequestCount) {

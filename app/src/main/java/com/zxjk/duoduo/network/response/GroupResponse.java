@@ -71,6 +71,15 @@ public class GroupResponse implements Serializable {
         private String isInviteConfirm;
         private String headPortrait;
         private String systemPumpingRate;
+        private String gameType;
+
+        public String getGameType() {
+            return gameType;
+        }
+
+        public void setGameType(String gameType) {
+            this.gameType = gameType;
+        }
 
         public String getSystemPumpingRate() {
             return systemPumpingRate;

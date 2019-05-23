@@ -81,7 +81,7 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
                 }.getType());
                 Intent intent = new Intent(this, TransferActivity.class);
                 intent.putExtra("fromScan", true);
-                intent.putExtra("money", uri.data.money);
+                intent.putExtra("betMoney", uri.data.money);
                 intent.putExtra("userId", uri.data.userId);
                 startActivity(intent);
                 finish();

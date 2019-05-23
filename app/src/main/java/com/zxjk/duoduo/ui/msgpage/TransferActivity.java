@@ -75,12 +75,12 @@ public class TransferActivity extends BaseActivity implements SelectPopupWindow.
 
         boolean fromScan = getIntent().getBooleanExtra("fromScan", false);
         if (fromScan) {
-            if (TextUtils.isEmpty(getIntent().getStringExtra("money"))) {
+            if (TextUtils.isEmpty(getIntent().getStringExtra("betMoney"))) {
                 m_transfer_money_text.setHint("0.00");
                 m_transfer_money_text.setEnabled(true);
                 m_transfer_money_text.setSelection(m_transfer_money_text.getText().length());
             } else {
-                m_transfer_money_text.setText(getIntent().getStringExtra("money"));
+                m_transfer_money_text.setText(getIntent().getStringExtra("betMoney"));
                 m_transfer_money_text.setEnabled(false);
             }
         }
@@ -130,7 +130,7 @@ public class TransferActivity extends BaseActivity implements SelectPopupWindow.
 
             boolean fromScan = getIntent().getBooleanExtra("fromScan", false);
             if (fromScan) {
-                String money = getIntent().getStringExtra("money");
+                String money = getIntent().getStringExtra("betMoney");
                 if (TextUtils.isEmpty(money)) {
                     money = hk;
                 }
@@ -172,7 +172,7 @@ public class TransferActivity extends BaseActivity implements SelectPopupWindow.
                             @Override
                             public void onSuccess(Message message) {
                                 Intent intent = new Intent(TransferActivity.this, TransferSuccessActivity.class);
-                                intent.putExtra("money", hk);
+                                intent.putExtra("betMoney", hk);
                                 intent.putExtra("name", targetUser.getName());
                                 startActivity(intent);
                                 finish();

@@ -24,6 +24,7 @@
                 android:onClick="groupChat">
 
                 <TextView
+                    android:id="@+id/tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -37,8 +38,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:layout_marginStart="8dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_toStartOf="@id/iv_enter" />
+                    android:layout_toStartOf="@id/iv_enter"
+                    android:layout_toEndOf="@id/tv"
+                    android:ellipsize="end"
+                    android:gravity="end"
+                    android:lines="1" />
 
                 <ImageView
                     android:id="@+id/iv_enter"

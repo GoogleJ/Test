@@ -12,17 +12,13 @@ import android.widget.TextView;
 
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Lifecycle;
 
 import com.blankj.utilcode.util.GsonUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shehuan.nicedialog.BaseNiceDialog;
 import com.shehuan.nicedialog.NiceDialog;
 import com.shehuan.nicedialog.ViewConvertListener;
 import com.shehuan.nicedialog.ViewHolder;
-import com.trello.lifecycle2.android.lifecycle.AndroidLifecycle;
-import com.trello.rxlifecycle3.LifecycleProvider;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
@@ -70,6 +66,7 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtension;
@@ -98,7 +95,6 @@ import io.rong.message.VoiceMessage;
 @SuppressLint("CheckResult")
 public class ConversationActivity extends BaseActivity {
     private Disposable gameWindowDisposable;
-    private final LifecycleProvider<Lifecycle.Event> provider = AndroidLifecycle.createLifecycleProvider(this);
 
     private TextView tvTitle;
     private String targetId;
@@ -145,6 +141,7 @@ public class ConversationActivity extends BaseActivity {
                         runOnUiThread(() -> Observable.timer(23, TimeUnit.SECONDS, Schedulers.io())
                                 .flatMap(aLong -> ServiceFactory.getInstance().getBaseService(Api.class)
                                         .getBetConutBygroupId(groupResponse.getGroupInfo().getId()))
+                                .doOnDispose(() -> ToastUtils.showShort(R.string.xiazhu_cancel))
                                 .compose(bindUntilEvent(ActivityEvent.STOP))
                                 .compose(RxSchedulers.normalTrans())
                                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this, "请耐心等待群员下注")))
@@ -179,8 +176,6 @@ public class ConversationActivity extends BaseActivity {
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
         fragment = (ConversationFragment) fragments.get(0);
         messageAdapter = fragment.getMessageAdapter();
-
-
     }
 
     @NotNull
@@ -456,7 +451,7 @@ public class ConversationActivity extends BaseActivity {
                         .getCustomerInfoById(targetId)
                         .compose(RxSchedulers.normalTrans())
                         .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                        .compose(provider.bindToLifecycle())
+                        .compose(bindToLifecycle())
                         .subscribe(loginResponse -> {
                             targetUserInfo = new UserInfo(targetId, loginResponse.getNick(), Uri.parse(loginResponse.getHeadPortrait()));
                             RongUserInfoManager.getInstance().setUserInfo(targetUserInfo);
@@ -494,17 +489,24 @@ public class ConversationActivity extends BaseActivity {
                     .getGroupByGroupId(targetId)
                     .compose(RxSchedulers.normalTrans())
                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                    .compose(provider.bindToLifecycle())
+                    .compose(bindToLifecycle())
                     .subscribe(groupInfo -> {
                         memberIds = new ArrayList<>(groupInfo.getCustomers().size());
                         for (GroupResponse.CustomersBean bean : groupInfo.getCustomers()) {
                             memberIds.add(bean.getId());
                         }
 
-                        if (groupInfo.getGroupInfo().getIsDelete().equals("1")) {
-
-                        }
                         List<IPluginModule> pluginModules = extension.getPluginModules();
+
+                        if (groupInfo.getGroupInfo().getIsDelete().equals("1")) {
+                            Iterator<IPluginModule> iterator = pluginModules.iterator();
+                            while (iterator.hasNext()) {
+                                IPluginModule next = iterator.next();
+                                iterator.remove();
+                                extension.removePlugin(next);
+                            }
+                        }
+
                         if (groupInfo.getGroupInfo().getGroupType().equals("1")) {
                             //游戏plugin
                             Iterator<IPluginModule> iterator = pluginModules.iterator();
@@ -513,28 +515,34 @@ public class ConversationActivity extends BaseActivity {
                                 iterator.remove();
                                 extension.removePlugin(next);
                             }
-                            extension.addPlugin(new PhotoSelectorPlugin());
-                            extension.addPlugin(new RedPacketPlugin());
-                            extension.addPlugin(new GameUpScorePlugin());
-                            extension.addPlugin(new AudioVideoPlugin());
-                            extension.addPlugin(new GameRecordPlugin());
-                            extension.addPlugin(new GameDownScorePlugin());
-                            extension.addPlugin(new GameDuobaoPlugin());
-                            if (groupInfo.getGroupInfo().getGroupOwnerId().equals(Constant.userId)) {
-                                //只有群主才能开始下注
-                                extension.addPlugin(new GameStartPlugin());
+                            if (!groupInfo.getGroupInfo().getIsDelete().equals("1")) {
+                                extension.addPlugin(new PhotoSelectorPlugin());
+                                extension.addPlugin(new RedPacketPlugin());
+                                extension.addPlugin(new GameUpScorePlugin());
+                                extension.addPlugin(new AudioVideoPlugin());
+                                extension.addPlugin(new GameRecordPlugin());
+                                extension.addPlugin(new GameDownScorePlugin());
+                                if (groupInfo.getGroupInfo().getGameType().equals("4")) {
+                                    //多宝群
+                                    extension.addPlugin(new GameDuobaoPlugin());
+                                } else if (groupInfo.getGroupInfo().getGroupOwnerId().equals(Constant.userId)) {
+                                    //普通游戏群 只有群主才能开始下注
+                                    extension.addPlugin(new GameStartPlugin());
+                                }
+                                extension.addPlugin(new GameJiaoYiPlugin());
+                                extension.addPlugin(new GameRulesPlugin());
                             }
-                            extension.addPlugin(new GameJiaoYiPlugin());
-                            extension.addPlugin(new GameRulesPlugin());
                             Constant.ownerIdForGameChat = groupInfo.getGroupInfo().getGroupOwnerId();
                         } else {
                             //群组plugin
-                            Iterator<IPluginModule> iterator = pluginModules.iterator();
-                            while (iterator.hasNext()) {
-                                IPluginModule next = iterator.next();
-                                if (next instanceof TransferPlugin || next instanceof BusinessCardPlugin) {
-                                    iterator.remove();
-                                    extension.removePlugin(next);
+                            if (!groupInfo.getGroupInfo().getIsDelete().equals("1")) {
+                                Iterator<IPluginModule> iterator = pluginModules.iterator();
+                                while (iterator.hasNext()) {
+                                    IPluginModule next = iterator.next();
+                                    if (next instanceof TransferPlugin || next instanceof BusinessCardPlugin) {
+                                        iterator.remove();
+                                        extension.removePlugin(next);
+                                    }
                                 }
                             }
                         }
@@ -604,7 +612,7 @@ public class ConversationActivity extends BaseActivity {
                         //获取红包状态
                         ServiceFactory.getInstance().getBaseService(Api.class)
                                 .getRedPackageStatus(redPacketMessage.getRedId(), redPacketMessage.getIsGame())
-                                .compose(provider.bindToLifecycle())
+                                .compose(bindToLifecycle())
                                 .compose(RxSchedulers.normalTrans())
                                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this)))
                                 .subscribe(s -> {
@@ -649,7 +657,7 @@ public class ConversationActivity extends BaseActivity {
                                         } else if (message.getConversationType().equals(Conversation.ConversationType.GROUP)) {
                                             dialog.setOnOpenListener(() -> ServiceFactory.getInstance().getBaseService(Api.class)
                                                     .receiveGroupRedPackage(redPacketMessage.getRedId(), redPacketMessage.getIsGame())
-                                                    .compose(provider.bindToLifecycle())
+                                                    .compose(bindToLifecycle())
                                                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this)))
                                                     .compose(RxSchedulers.normalTrans())
                                                     .subscribe(s2 -> {
@@ -668,7 +676,7 @@ public class ConversationActivity extends BaseActivity {
                                         } else {
                                             dialog.setOnOpenListener(() -> ServiceFactory.getInstance().getBaseService(Api.class)
                                                     .receivePersonalRedPackage(redPacketMessage.getRedId())
-                                                    .compose(provider.bindToLifecycle())
+                                                    .compose(bindToLifecycle())
                                                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this)))
                                                     .compose(RxSchedulers.normalTrans())
                                                     .subscribe(s1 -> {
@@ -681,7 +689,6 @@ public class ConversationActivity extends BaseActivity {
                                     }
                                 }, t -> ToastUtils.showShort(RxException.getMessage(t)));
                         break;
-                    default:
                 }
                 return false;
             }
@@ -707,6 +714,7 @@ public class ConversationActivity extends BaseActivity {
             startActivity(intent);
             return;
         }
+
         for (FriendInfoResponse f : Constant.friendsList) {
             if (f.getId().equals(userId)) {
                 //自己的好友，进入详情页（可聊天）
@@ -750,6 +758,10 @@ public class ConversationActivity extends BaseActivity {
     private MessageListAdapter messageAdapter;
 
     public void detail() {
+        if (groupResponse != null && groupResponse.getGroupInfo().getIsDelete().equals("1")) {
+            ToastUtils.showShort(R.string.deleted_group);
+            return;
+        }
         List<String> pathSegments = getIntent().getData().getPathSegments();
         String conversationType = pathSegments.get(pathSegments.size() - 1);
 
@@ -767,7 +779,6 @@ public class ConversationActivity extends BaseActivity {
 
     private void initView() {
         tvTitle = findViewById(R.id.tv_title);
-
         tvTitle.setText(targetUserInfo == null ? (groupResponse.getGroupInfo().getGroupNikeName() + "(" + groupResponse.getCustomers().size() + ")") : targetUserInfo.getName());
         registerOnTitleChange();
     }
@@ -793,8 +804,6 @@ public class ConversationActivity extends BaseActivity {
         super.onStop();
     }
 
-
-
     @SuppressLint("CheckResult")
     public void getFriendListById(String userId) {
         ServiceFactory.getInstance().getBaseService(Api.class)
@@ -806,7 +815,7 @@ public class ConversationActivity extends BaseActivity {
                         Constant.friendsList = friendInfoResponses;
                         handleFriendList(userId);
                     }
-                }, throwable -> LogUtils.d(throwable.getMessage()));
+                }, this::handleApiError);
     }
 
 }

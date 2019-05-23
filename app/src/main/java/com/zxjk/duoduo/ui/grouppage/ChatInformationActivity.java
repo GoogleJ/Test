@@ -88,7 +88,8 @@ public class ChatInformationActivity extends BaseActivity {
         RongIM.getInstance().getConversation(Conversation.ConversationType.PRIVATE, userInfo.getUserId(), new RongIMClient.ResultCallback<Conversation>() {
             @Override
             public void onSuccess(Conversation conversation) {
-                switch1.setChecked(conversation.isTop());
+                if (conversation != null) switch1.setChecked(conversation.isTop());
+                else switch1.setEnabled(false);
             }
 
             @Override
