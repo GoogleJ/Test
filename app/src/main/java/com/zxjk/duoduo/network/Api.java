@@ -1,5 +1,8 @@
 package com.zxjk.duoduo.network;
 
+import com.zxjk.duoduo.bean.AuditCertificationBean;
+import com.zxjk.duoduo.bean.CardBackBean;
+import com.zxjk.duoduo.bean.CardFaceBean;
 import com.zxjk.duoduo.network.response.AllGroupMembersResponse;
 import com.zxjk.duoduo.network.response.BaseResponse;
 import com.zxjk.duoduo.network.response.CreateWalletResponse;
@@ -47,9 +50,14 @@ import com.zxjk.duoduo.ui.msgpage.JinDuoBaoActiviity;
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface Api {
 
@@ -572,8 +580,18 @@ public interface Api {
 
     @POST("duoduo/group/game/groupGamebettingForDuobao")
     @FormUrlEncoded
-    Observable<BaseResponse<String>> groupGamebettingForDuobao(@Field("groupId") String groupId,@Field("expect") String expect,
-                                                               @Field("playName") String playName,@Field("playId") String playId,
-                                                               @Field("customerId") String customerId, @Field("countMoney") String countMoney,@Field("duoBaoBetInfoBeanList") List<JinDuoBaoActiviity.XiaZhuBean> duoBaoBetInfoBeanList);
+    Observable<BaseResponse<String>> groupGamebettingForDuobao(@Field("groupId") String groupId, @Field("expect") String expect,
+                                                               @Field("playName") String playName, @Field("playId") String playId,
+                                                               @Field("customerId") String customerId, @Field("countMoney") String countMoney, @Field("duoBaoBetInfoBeanList") List<JinDuoBaoActiviity.XiaZhuBean> duoBaoBetInfoBeanList);
+
+
+    @POST("rest/160601/ocr/ocr_idcard.json")
+    Observable<CardFaceBean> getOCRResult(@Body RequestBody body, @Header("Authorization") String authorization);
+
+    @POST("rest/160601/ocr/ocr_idcard.json")
+    Observable<CardBackBean> getOCRBackResult(@Body RequestBody body, @Header("Authorization") String authorization);
+
+    @GET("mobileCheck")
+    Observable<AuditCertificationBean> getCertification(@Query("idCard") String idCard, @Query("mobile") String mobile, @Query("name") String name, @Header("Authorization") String authorization);
 
 }

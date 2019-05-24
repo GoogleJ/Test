@@ -96,9 +96,11 @@ public class SettingActivity extends BaseActivity {
             } else if (Constant.currentUser.getIsAuthentication().equals("0")) {
                 ToastUtils.showShort(R.string.authen_true);
             } else {
+
                 NiceDialog.init().setLayoutId(R.layout.layout_general_dialog11).setConvertListener(new ViewConvertListener() {
                     @Override
                     protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                        otherIdCardType = "";
                         ImageView iv_idCard = holder.getView(R.id.iv_idCard);
                         ImageView iv_passport = holder.getView(R.id.iv_passport);
                         ImageView iv_other = holder.getView(R.id.iv_other);

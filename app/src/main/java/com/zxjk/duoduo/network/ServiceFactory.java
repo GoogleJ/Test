@@ -67,11 +67,43 @@ public class ServiceFactory {
                 .build();
     }
 
+    private Retrofit initNormal(String url) {
+        //Log拦截器
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        if (BuildConfig.enableLog) {
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        } else {
+            interceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
+        }
+        //构造client对象
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(interceptor).connectTimeout(10, TimeUnit.SECONDS)
+                .addInterceptor(chain -> {
+                    Request original = chain.request();
+                    Request.Builder requestBuilder = original.newBuilder();
+                    Request request = requestBuilder.build();
+                    return chain.proceed(request);
+                })
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .build();
+
+        return new Retrofit.Builder().baseUrl(url)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+    }
+
     public static ServiceFactory getInstance() {
         if (instance == null) {
             instance = new ServiceFactory();
         }
         return instance;
+    }
+
+    public <T> T getNormalService(String url, Class<T> from) {
+        return initNormal(url).create(from);
     }
 
     public <T> T getBaseService(Class<T> from) {

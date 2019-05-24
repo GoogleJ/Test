@@ -30,12 +30,15 @@ public class RxException {
         private String msg;
         private int code;
 
-        public ParamsException(String msg) {
-            super(msg);
+        public ParamsException() {
+            super("");
+        }
+
+        public void setMsg(String msg) {
             this.msg = msg;
         }
 
-        public ParamsException(String msg,int code) {
+        public ParamsException(String msg, int code) {
             super(msg);
             this.msg = msg;
             this.code = code;

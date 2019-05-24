@@ -919,4 +919,5 @@
     <string name="unlogin">暂未登录，请登录后重试</string>
     <string name="deleted_group">本群已不存在</string>
     <string name="duobaoxiazhufail">下注金额有误，请检查</string>
+    <string name="unknowerror">无法识别，请重试</string>
 </resources>

@@ -42,7 +42,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="190dp"
                     android:layout_gravity="center"
-                    android:background="#EDF4FE" />
+                    android:background="#EDF4FE"
+                    android:scaleType="center" />
 
                 <ImageView
                     android:id="@+id/iv_default1"
@@ -140,7 +141,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="190dp"
                     android:layout_gravity="center"
-                    android:background="#EDF4FE" />
+                    android:background="#EDF4FE"
+                    android:scaleType="center" />
 
                 <ImageView
                     android:id="@+id/iv_default2"

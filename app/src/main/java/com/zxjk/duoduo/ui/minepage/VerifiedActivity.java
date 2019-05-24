@@ -186,8 +186,8 @@ public class VerifiedActivity extends BaseActivity {
         bean.setRealName(realNames);
         bean.setType(otherIdCardType);
         bean.setPictureFront(url1);
-        bean.setPictureHand(url2);
-        bean.setPictureReverse(url3);
+        bean.setPictureHand(url3);
+        bean.setPictureReverse(url2);
         certification(AesUtil.getInstance().encrypt(GsonUtils.toJson(bean)));
     }
 
@@ -245,7 +245,6 @@ public class VerifiedActivity extends BaseActivity {
                     Constant.currentUser.setIsAuthentication("2");
                     Constant.currentUser.setRealname(realNames);
                     MMKVUtils.getInstance().enCode("login", Constant.currentUser);
-
                     SPUtils.getInstance().put("realNames", realNames);
                     ToastUtils.showShort(R.string.verified_success);
                     finish();
