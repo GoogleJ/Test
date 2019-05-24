@@ -919,5 +919,11 @@
     <string name="unlogin">暂未登录，请登录后重试</string>
     <string name="deleted_group">本群已不存在</string>
     <string name="duobaoxiazhufail">下注金额有误，请检查</string>
+    <string name="input_downscore3">下分金额不能为0</string>
+    <string name="inputupscore1">上分额度不能为0</string>
+    <string name="input_money1">金额不能为0</string>
+    <string name="input_num1">红包个数不能为0</string>
+    <string name="input_outrate1">最小数量不可大于最大数量</string>
+    <string name="input_outrate2">最大数量不可小于最小数量</string>
     <string name="unknowerror">无法识别，请重试</string>
 </resources>

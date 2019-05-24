@@ -251,6 +251,16 @@ public class GroupRedPacketActivity extends BaseActivity implements SelectPopupW
             return;
         }
 
+        if (Double.parseDouble(price) == 0) {
+            ToastUtils.showShort(R.string.input_money1);
+            return;
+        }
+
+        if (Double.parseDouble(num) == 0) {
+            ToastUtils.showShort(R.string.input_num1);
+            return;
+        }
+
         KeyboardUtils.hideSoftInput(this);
         Rect rect = new Rect();
         getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);

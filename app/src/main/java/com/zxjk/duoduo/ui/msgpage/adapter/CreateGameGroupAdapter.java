@@ -343,11 +343,11 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         tvFormHead3.setBackgroundColor(context.getColor(R.color.createGameGroup4));
                         tvFormHead4.setBackgroundResource(R.drawable.shape_fanyong2_color4);
 
-                        seekbar.setMax(900);
+                        seekbar.setMax(9);
                         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                             @Override
                             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                                tvChoushui.setText(40 + progress / 100 + progress % 100 / 100f + "");
+                                tvChoushui.setText(40 + progress + "");
                                 String s = tvChoushui.getText().toString();
                                 pumpingRate = s;
                             }

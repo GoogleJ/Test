@@ -182,7 +182,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                                 TextView tvUpdate = holder.getView(R.id.tvUpdate);
                                 tvUpdate.setOnClickListener(v -> {
                                     //后台下载APK并更新
-                                    ServiceFactory.downFile(data.getVersion(), data.getUpdateAddress(), new ServiceFactory.DownloadListener() {
+                                    ServiceFactory.downloadFile(data.getVersion(), data.getUpdateAddress(), new ServiceFactory.DownloadListener() {
                                         @Override
                                         public void onStart(long max) {
                                             runOnUiThread(() -> tvUpdate.setClickable(false));

@@ -88,6 +88,11 @@ public class GameUpScoreActivity extends BaseActivity {
             return;
         }
 
+        if (Double.parseDouble(trim) == 0) {
+            ToastUtils.showShort(R.string.inputupscore1);
+            return;
+        }
+
         KeyboardUtils.hideSoftInput(this);
         Rect rect = new Rect();
         getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);

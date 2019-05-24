@@ -95,22 +95,19 @@ public class AllGroupMembersActivity extends BaseActivity {
                     list.addAll(allGroupMembersResponses);
                     mAdapter.setNewData(list);
 
-                    mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                            if (Constant.friendsList == null) {
-                                ServiceFactory.getInstance().getBaseService(Api.class)
-                                        .getFriendListById()
-                                        .compose(bindToLifecycle())
-                                        .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(AllGroupMembersActivity.this)))
-                                        .compose(RxSchedulers.normalTrans())
-                                        .subscribe(friendInfoResponses -> {
-                                            Constant.friendsList = friendInfoResponses;
-                                            handleFriendList(list.get(position).getId());
-                                        }, AllGroupMembersActivity.this::handleApiError);
-                            } else {
-                                handleFriendList(list.get(position).getId());
-                            }
+                    mAdapter.setOnItemClickListener((adapter, view, position) -> {
+                        if (Constant.friendsList == null) {
+                            ServiceFactory.getInstance().getBaseService(Api.class)
+                                    .getFriendListById()
+                                    .compose(bindToLifecycle())
+                                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(AllGroupMembersActivity.this)))
+                                    .compose(RxSchedulers.normalTrans())
+                                    .subscribe(friendInfoResponses -> {
+                                        Constant.friendsList = friendInfoResponses;
+                                        handleFriendList(list.get(position).getId());
+                                    }, AllGroupMembersActivity.this::handleApiError);
+                        } else {
+                            handleFriendList(list.get(position).getId());
                         }
                     });
                 }, this::handleApiError);

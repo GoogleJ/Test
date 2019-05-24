@@ -100,7 +100,6 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exchange);
-        Log.e("ZXL", "onCreate: " + DataUtils.getCeilDecimals("1.723"));
         initViews();
 
         ServiceFactory.getInstance().getBaseService(Api.class).getNumbeOfTransaction()
@@ -205,14 +204,15 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().length() == 0) {
+                if (s.toString().trim().length() == 0) {
                     return;
                 }
-                String text = s.toString();
+                String text = s.toString().trim();
                 int len = s.toString().length();
                 if (len > 1 && text.startsWith("0")) {
                     s.replace(0, 1, "");
                 }
+
                 if (!TextUtils.isEmpty(etExchangeChooseCount.getText().toString().trim()) &&
                         Integer.parseInt(s.toString()) > Integer.parseInt(etExchangeChooseCount.getText().toString().trim())) {
                     ToastUtils.showShort(R.string.input_outrate);
@@ -235,7 +235,7 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                 if (s.toString().length() == 0) {
                     return;
                 }
-                String text = s.toString();
+                String text = s.toString().trim();
                 int len = s.toString().length();
                 if (len > 1 && text.startsWith("0")) {
                     s.replace(0, 1, "");
@@ -265,7 +265,6 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                 ToastUtils.showShort(getString(R.string.number_min));
                 return;
             }
-
             if (!TextUtils.isEmpty(etMinMoney.getText().toString()) && !TextUtils.isEmpty(etExchangeChooseCount.getText().toString())) {
                 if (Integer.parseInt(etMinMoney.getText().toString()) > Integer.parseInt(etExchangeChooseCount.getText().toString())) {
                     ToastUtils.showShort("最小数量不能大于出售数量");
@@ -280,7 +279,10 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                 }
             }
 
-
+            if (etMinMoney.getText().toString().length() != 0 && etMaxMoney.getText().toString().length() != 0 && Integer.parseInt(etMinMoney.getText().toString()) > Integer.parseInt(etMaxMoney.getText().toString())) {
+                ToastUtils.showShort(R.string.input_outrate1);
+                return;
+            }
         } else {
             if (Integer.parseInt(etExchangeChooseCount.getText().toString()) <= 0) {
                 ToastUtils.showShort(getString(R.string.zero));
@@ -296,7 +298,6 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
             ToastUtils.showShort(R.string.select_saletype_tips);
             return;
         }
-
 
         if (buyOrSale) {
             NiceDialog.init().setLayoutId(R.layout.layout_general_dialog10).setConvertListener(new ViewConvertListener() {
@@ -322,42 +323,31 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                         }
                     }
                     //关闭
-                    holder.setOnClickListener(R.id.rl_close, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
-
-                        }
-                    });
+                    holder.setOnClickListener(R.id.rl_close, v -> dialog.dismiss());
                     //确认购买
-                    holder.setOnClickListener(R.id.tv_confirm, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Api api = ServiceFactory.getInstance().getBaseService(Api.class);
-                            api.isConfine().compose(bindToLifecycle())
-                                    .compose(RxSchedulers.normalTrans())
-                                    .flatMap((Function<String, ObservableSource<ReleaseSaleResponse>>) s -> api.releaseSale(etExchangeChooseCount.getText().toString(), totalPrice,
-                                            "1", buyType).compose(RxSchedulers.normalTrans()))
-                                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ExchangeActivity.this)))
-                                    .subscribe(s -> {
-                                        //购买
-                                        Intent intent = new Intent(ExchangeActivity.this, ConfirmBuyActivity.class);
-                                        if (buyType.equals(PAYTYPE_WECHAT)) {
-                                            s.setReceiptNumber(s.getWechatNick());
-                                        }
-                                        intent.putExtra("data", s);
-                                        s.setCreateTime(String.valueOf(System.currentTimeMillis()));
-                                        intent.putExtra("rate", tvExchangePrice.getText().toString().split(" ")[0]);
-                                        intent.putExtra("buytype", buyType);
-                                        startActivity(intent);
-                                    }, ExchangeActivity.this::handleApiError);
-                        }
+                    holder.setOnClickListener(R.id.tv_confirm, v -> {
+                        Api api = ServiceFactory.getInstance().getBaseService(Api.class);
+                        api.isConfine().compose(bindToLifecycle())
+                                .compose(RxSchedulers.normalTrans())
+                                .flatMap((Function<String, ObservableSource<ReleaseSaleResponse>>) s -> api.releaseSale(etExchangeChooseCount.getText().toString(), totalPrice,
+                                        "1", buyType).compose(RxSchedulers.normalTrans()))
+                                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ExchangeActivity.this)))
+                                .subscribe(s -> {
+                                    //购买
+                                    Intent intent = new Intent(ExchangeActivity.this, ConfirmBuyActivity.class);
+                                    if (buyType.equals(PAYTYPE_WECHAT)) {
+                                        s.setReceiptNumber(s.getWechatNick());
+                                    }
+                                    intent.putExtra("data", s);
+                                    s.setCreateTime(String.valueOf(System.currentTimeMillis()));
+                                    intent.putExtra("rate", tvExchangePrice.getText().toString().split(" ")[0]);
+                                    intent.putExtra("buytype", buyType);
+                                    startActivity(intent);
+                                }, ExchangeActivity.this::handleApiError);
                     });
 
                 }
             }).setDimAmount(0.5f).setShowBottom(true).setOutCancel(false).show(getSupportFragmentManager());
-
-
         } else {
             NiceDialog.init().setLayoutId(R.layout.layout_general_dialog9).setConvertListener(new ViewConvertListener() {
                 @Override
@@ -410,30 +400,19 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                         }
                     }
                     //关闭
-                    holder.setOnClickListener(R.id.rl_close, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
-
-                        }
-                    });
+                    holder.setOnClickListener(R.id.rl_close, v -> dialog.dismiss());
                     //确认出售
-                    holder.setOnClickListener(R.id.tv_confirm, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
-                            KeyboardUtils.hideSoftInput(ExchangeActivity.this);
-                            Rect rect = new Rect();
-                            getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
-                            int winHeight = getWindow().getDecorView().getHeight();
-                            selectPopupWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, winHeight - rect.bottom);
-                        }
+                    holder.setOnClickListener(R.id.tv_confirm, v -> {
+                        dialog.dismiss();
+                        KeyboardUtils.hideSoftInput(ExchangeActivity.this);
+                        Rect rect = new Rect();
+                        getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+                        int winHeight = getWindow().getDecorView().getHeight();
+                        selectPopupWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, winHeight - rect.bottom);
                     });
 
                 }
             }).setDimAmount(0.5f).setShowBottom(true).setOutCancel(false).show(getSupportFragmentManager());
-
-
         }
     }
 

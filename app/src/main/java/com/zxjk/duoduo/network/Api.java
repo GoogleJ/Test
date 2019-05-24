@@ -17,6 +17,7 @@ import com.zxjk.duoduo.network.response.GetBetInfoDetailsResponse;
 import com.zxjk.duoduo.network.response.GetExtractRecordResponse;
 import com.zxjk.duoduo.network.response.GetGameClassResponse;
 import com.zxjk.duoduo.network.response.GetGroupGameParameterResponse;
+import com.zxjk.duoduo.network.response.GetGroupMemberPointsResponse;
 import com.zxjk.duoduo.network.response.GetGroupRedPackageInfoResponse;
 import com.zxjk.duoduo.network.response.GetIntegralDetailsResponse;
 import com.zxjk.duoduo.network.response.GetNumbeOfTransactionResponse;
@@ -480,7 +481,7 @@ public interface Api {
 
     @POST("duoduo/group/game/getGroupMemberPoints")
     @FormUrlEncoded
-    Observable<BaseResponse<String>> getGroupMemberPoints(@Field("groupId") String groupId);
+    Observable<BaseResponse<GetGroupMemberPointsResponse>> getGroupMemberPoints(@Field("groupId") String groupId);
 
     @POST("duoduo/group/game/upPoints")
     @FormUrlEncoded
