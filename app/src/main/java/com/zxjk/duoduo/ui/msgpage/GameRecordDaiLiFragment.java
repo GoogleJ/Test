@@ -31,12 +31,12 @@ public class GameRecordDaiLiFragment extends BaseFragment {
     private boolean hasInitData = false;
 
     private TextView tvDaiLi;
-    private TextView tvHk;
-    private TextView tvShouYi;
-    private TextView tvHkShouYi1;
-    private TextView tvHkShouYi2;
-    private TextView tvNum1;
-    private TextView tvNum2;
+    private TextView tv_totalPerformance;//总业绩
+    private TextView tv_earnings;//收益
+    private TextView tv_gainsBoard;//上局收益
+    private TextView tv_totalRevenue;//总收益
+    private TextView tv_totalTeamMembers;//团队总人数
+    private TextView tv_KeepPushingNumber;//直推人数
     private DecimalFormat df = new DecimalFormat("0.00%");
 
     @Nullable
@@ -45,12 +45,12 @@ public class GameRecordDaiLiFragment extends BaseFragment {
         rootView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_dailifanyong, container, false);
 
         tvDaiLi = rootView.findViewById(R.id.tvDaiLi);
-        tvHk = rootView.findViewById(R.id.tvHk);
-        tvShouYi = rootView.findViewById(R.id.tvShouYi);
-        tvHkShouYi1 = rootView.findViewById(R.id.tvHkShouYi1);
-        tvHkShouYi2 = rootView.findViewById(R.id.tvHkShouYi2);
-        tvNum1 = rootView.findViewById(R.id.tvNum1);
-        tvNum2 = rootView.findViewById(R.id.tvNum2);
+        tv_totalPerformance = rootView.findViewById(R.id.tv_totalPerformance);
+        tv_earnings = rootView.findViewById(R.id.tv_earnings);
+        tv_gainsBoard = rootView.findViewById(R.id.tv_gainsBoard);
+        tv_totalRevenue = rootView.findViewById(R.id.tv_totalRevenue);
+        tv_totalTeamMembers = rootView.findViewById(R.id.tv_totalTeamMembers);
+        tv_KeepPushingNumber = rootView.findViewById(R.id.tv_KeepPushingNumber);
 
         return rootView;
     }
@@ -65,11 +65,19 @@ public class GameRecordDaiLiFragment extends BaseFragment {
                 .subscribe(response -> {
                     hasInitData = true;
                     tvDaiLi.setText(response.getGrade());
-                    tvNum1.setText(response.getTeamNum());
-                    tvNum2.setText(response.getDirectNum());
-                    tvShouYi.setText(df.format(Double.parseDouble(response.getRebateRate())));
-                    tvHk.setText(response.getTeamTotalPer() + "HK");
-                    tvHkShouYi1.setText(response.getRebateTotalAmount() + "HK");
+                    //总业绩
+                    tv_totalPerformance.setText(response.getTeamTotalPer() + "HK");
+                    //收益
+                    tv_earnings.setText(df.format(Double.parseDouble(response.getRebateRate())));
+                    //上局收益
+                    tv_gainsBoard.setText(response.getRebateAmount() + "HK");
+                    //总收益
+                    tv_totalRevenue.setText(response.getRebateTotalAmount() + "HK");
+                    //团队总人数
+                    tv_totalTeamMembers.setText(response.getTeamNum());
+                    //直推人数
+                    tv_KeepPushingNumber.setText(response.getDirectNum());
+
                     //我的代理
                     rootView.findViewById(R.id.ll_myAgency).setOnClickListener(v -> {
                         Intent intent = new Intent(getActivity(), AgentBenefitActivity.class);

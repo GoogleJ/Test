@@ -42,7 +42,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.msgpage.AuthenticationActivity"></activity>
+        <activity android:name=".ui.msgpage.GroupGoldStupaInfoActivity"></activity>
+        <activity android:name=".ui.msgpage.AuthenticationActivity" />
         <activity android:name=".ui.walletpage.OrderComplaintActivity" />
         <activity android:name=".ui.msgpage.JinDuoBaoActiviity" />
         <activity

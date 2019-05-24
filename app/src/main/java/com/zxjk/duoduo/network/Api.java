@@ -14,9 +14,11 @@ import com.zxjk.duoduo.network.response.GetAppVersionResponse;
 import com.zxjk.duoduo.network.response.GetBalanceHkResponse;
 import com.zxjk.duoduo.network.response.GetBetConutBygroupIdResponse;
 import com.zxjk.duoduo.network.response.GetBetInfoDetailsResponse;
+import com.zxjk.duoduo.network.response.GetDuoBaoIntegralDetailsResponse;
 import com.zxjk.duoduo.network.response.GetExtractRecordResponse;
 import com.zxjk.duoduo.network.response.GetGameClassResponse;
 import com.zxjk.duoduo.network.response.GetGroupGameParameterResponse;
+import com.zxjk.duoduo.network.response.GetGroupOwnerDuoBaoBetInfoResponse;
 import com.zxjk.duoduo.network.response.GetGroupMemberPointsResponse;
 import com.zxjk.duoduo.network.response.GetGroupRedPackageInfoResponse;
 import com.zxjk.duoduo.network.response.GetIntegralDetailsResponse;
@@ -169,7 +171,7 @@ public interface Api {
     @FormUrlEncoded
     Observable<BaseResponse<ReleasePurchase>> releasePurchase(@Field("number") String number,
                                                               @Field("money") String money, @Field("currency") String currency, @Field("payPwd") String paypwd, @Field("payTpye") String payTpye,
-                                                              @Field("minNum") String minNum, @Field("maxNum") String maxNum);
+                                                              @Field("minNum") String minNum, @Field("maxNum") String maxNum, @Field("exchangeFee") String exchangeFee);
 
     @POST("duoduo/exchange/releaseSale")
     @FormUrlEncoded
@@ -595,4 +597,13 @@ public interface Api {
     @GET("mobileCheck")
     Observable<AuditCertificationBean> getCertification(@Query("idCard") String idCard, @Query("mobile") String mobile, @Query("name") String name, @Header("Authorization") String authorization);
 
+
+    @POST("duoduo/group/game/GetDuoBaoIntegralDetailsResponse")
+    @FormUrlEncoded
+    Observable<BaseResponse<List<GetDuoBaoIntegralDetailsResponse>>> getDuoBaoIntegralDetails(@Field("groupId") String groupId);
+
+
+    @POST("duoduo/group/game/getGroupOwnerDuoBaoBetInfo")
+    @FormUrlEncoded
+    Observable<BaseResponse<List<GetGroupOwnerDuoBaoBetInfoResponse>>> getGroupOwnerDuoBaoBetInfo(@Field("groupId") String groupId, @Field("expect") String expect);
 }

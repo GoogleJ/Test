@@ -56,7 +56,7 @@ public class DataUtils {
 
     /**
      * 保留整数
-     * ceil
+     *
      *
      * @param string 判断的string
      * @return 空:"0" 不为空:string

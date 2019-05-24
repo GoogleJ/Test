@@ -93,6 +93,8 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
     private String poun;
     private String minExchangeFee;
 
+    private String pos;
+
     DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
     @SuppressLint("SetTextI18n")
@@ -358,6 +360,7 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                     holder.setText(R.id.tv_amount, totalPrice + "CNY");
                     //手续费
                     if (poundage.equals("0") || TextUtils.isEmpty(poundage)) {
+                        pos = "0";
                         holder.getView(R.id.tv_transactionFee).setVisibility(View.GONE);
                         holder.getView(R.id.tv_poundage).setVisibility(View.GONE);
                     } else {
@@ -365,9 +368,13 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                         BigDecimal data1 = new BigDecimal(String.valueOf(pous));
                         BigDecimal data2 = new BigDecimal(minExchangeFee);
                         if (data1.compareTo(data2) < 0) {
-                            holder.setText(R.id.tv_poundage, DataUtils.getTwoDecimals(minExchangeFee) + "HK (最小手续费为" + minExchangeFee + ")");
+                            pos = DataUtils.getTwoDecimals(minExchangeFee);
+                            holder.setText(R.id.tv_poundage, pos + "HK (最小手续费为" + minExchangeFee + ")");
+
                         } else {
-                            holder.setText(R.id.tv_poundage, DataUtils.getCeilDecimals(String.valueOf(pous)) + "HK (" + poun + ")");
+                            pos = DataUtils.getCeilDecimals(String.valueOf(pous));
+                            holder.setText(R.id.tv_poundage, pos + "HK (" + poun + ")");
+
                         }
                     }
                     //收款方式
@@ -527,7 +534,7 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
         if (complete) {
             ServiceFactory.getInstance().getBaseService(Api.class)
                     .releasePurchase(etExchangeChooseCount.getText().toString(), String.valueOf(totalPrice),
-                            "1", MD5Utils.getMD5(psw), getPayTypes(), etMinMoney.getText().toString().trim(), etMaxMoney.getText().toString().trim())
+                            "1", MD5Utils.getMD5(psw), getPayTypes(), etMinMoney.getText().toString().trim(), etMaxMoney.getText().toString().trim(), pos)
                     .compose(bindToLifecycle())
                     .compose(RxSchedulers.normalTrans())
                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))

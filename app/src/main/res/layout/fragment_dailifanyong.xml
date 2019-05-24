@@ -66,7 +66,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvHk"
+                    android:id="@+id/tv_totalPerformance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0HK"
@@ -97,7 +97,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvShouYi"
+                    android:id="@+id/tv_earnings"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0.00%"
@@ -170,7 +170,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvHkShouYi1"
+                    android:id="@+id/tv_gainsBoard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0HK"
@@ -201,7 +201,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvHkShouYi2"
+                    android:id="@+id/tv_totalRevenue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0HK"
@@ -275,7 +275,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvNum1"
+                    android:id="@+id/tv_totalTeamMembers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
@@ -306,7 +306,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvNum2"
+                    android:id="@+id/tv_KeepPushingNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"

@@ -17,6 +17,7 @@ import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
@@ -43,6 +44,8 @@ public class GameRecordActivity extends BaseActivity {
     private int[] mTitleDataList2 = new int[]{R.string.jifen, R.string.fanyongfafang};
     private boolean isOwner = false;
     private String groupId;
+    GroupResponse groupResponse = new GroupResponse();
+
 
     @SuppressLint("CheckResult")
     @Override
@@ -61,6 +64,7 @@ public class GameRecordActivity extends BaseActivity {
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(response -> {
+                    groupResponse = response;
                     String groupOwnerId = response.getGroupInfo().getGroupOwnerId();
                     if (groupOwnerId.equals(Constant.userId)) {
                         isOwner = true;
@@ -85,6 +89,7 @@ public class GameRecordActivity extends BaseActivity {
                 if (position == 0) {
                     GameRecordFragment fragment1 = new GameRecordFragment();
                     fragment1.groupId = groupId;
+                    fragment1.groupResponse = groupResponse;
                     return fragment1;
                 } else {
                     if (isOwner) {
