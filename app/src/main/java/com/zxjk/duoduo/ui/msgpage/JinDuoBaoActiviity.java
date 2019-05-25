@@ -1,8 +1,10 @@
 package com.zxjk.duoduo.ui.msgpage;
 
 import android.annotation.SuppressLint;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -12,6 +14,8 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.GsonUtils;
+import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -20,20 +24,24 @@ import com.shehuan.nicedialog.BaseNiceDialog;
 import com.shehuan.nicedialog.NiceDialog;
 import com.shehuan.nicedialog.ViewConvertListener;
 import com.shehuan.nicedialog.ViewHolder;
-import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.request.GroupGamebettingForDuobaoRequest;
 import com.zxjk.duoduo.network.response.DuobaoParameterResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.ui.widget.dialog.SelectPopupWindow;
 import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.utils.MD5Utils;
 import com.zxjk.duoduo.utils.RecyclerItemAverageDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class JinDuoBaoActiviity extends BaseActivity {
+public class JinDuoBaoActiviity extends BaseActivity implements SelectPopupWindow.OnPopWindowClickListener {
+
+    private SelectPopupWindow selectPopupWindow;
 
     private TextView tvDuoBaoQiShu;
     private TextView tvDuoBaoNum1;
@@ -57,6 +65,8 @@ public class JinDuoBaoActiviity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jin_duo_bao);
+
+        selectPopupWindow = new SelectPopupWindow(this, this);
 
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .duobaoParameter(getIntent().getStringExtra("groupId"))
@@ -242,43 +252,64 @@ public class JinDuoBaoActiviity extends BaseActivity {
         recycler.addItemDecoration(new RecyclerItemAverageDecoration(decoration / 2 * 2, decoration, 6));
         recycler.setAdapter(adapter);
 
-        tvDuoBaoQiShu.setText("期数：" + response.getDuobaoMultiple());
+        tvDuoBaoQiShu.setText("期数：" + response.getExpect());
         tvDuoBaoPeilv.setText(response.getDuobaoMultiple());
     }
+
+    private ArrayList<XiaZhuBean> finalData11;
+    private String total11;
 
     //下注
     @SuppressLint("CheckResult")
     public void onBet(View view) {
-        ArrayList<XiaZhuBean> finalData = new ArrayList<>();
-        String total = "0";
+        finalData11 = new ArrayList<>();
+        total11 = "0";
         for (XiaZhuBean bean : data1) {
             if (!TextUtils.isEmpty(bean.betMoney)) {
-                finalData.add(bean);
-                total = Integer.parseInt(bean.betMoney) + Integer.parseInt(total) + "";
+                finalData11.add(bean);
+                total11 = Integer.parseInt(bean.betMoney) + Integer.parseInt(total11) + "";
             }
         }
         for (XiaZhuBean bean : data2) {
             if (!TextUtils.isEmpty(bean.betMoney)) {
-                finalData.add(bean);
-                total = Integer.parseInt(bean.betMoney) + Integer.parseInt(total) + "";
+                finalData11.add(bean);
+                total11 = Integer.parseInt(bean.betMoney) + Integer.parseInt(total11) + "";
             }
         }
 
-        if (finalData.size() == 0) {
+        if (finalData11.size() == 0) {
             ToastUtils.showShort(R.string.qingxiazhu);
             return;
         }
 
-        ServiceFactory.getInstance().getBaseService(Api.class)
-                .groupGamebettingForDuobao(getIntent().getStringExtra("groupId"), response.getExpect(), "香港金多寶", "81", Constant.userId, total,
-                        finalData)
-                .compose(bindToLifecycle())
-                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                .compose(RxSchedulers.normalTrans())
-                .subscribe(s -> {
-                    ToastUtils.showShort(R.string.xiazhuchenggong);
-                    finish();
-                }, this::handleApiError);
+        KeyboardUtils.hideSoftInput(this);
+        Rect rect = new Rect();
+        getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+        int winHeight = getWindow().getDecorView().getHeight();
+        selectPopupWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, winHeight - rect.bottom);
+    }
+
+    @SuppressLint("CheckResult")
+    @Override
+    public void onPopWindowClickListener(String psw, boolean complete) {
+        if (complete) {
+            GroupGamebettingForDuobaoRequest request = new GroupGamebettingForDuobaoRequest();
+            request.setExpect(response.getExpect());
+            request.setCountMoney(total11);
+            request.setPayPwd(MD5Utils.getMD5(psw));
+            request.setGroupId(getIntent().getStringExtra("groupId"));
+            request.setDuoBaoBetInfoBeanList(finalData11);
+
+            ServiceFactory.getInstance().getBaseService(Api.class)
+                    .groupGamebettingForDuobao(GsonUtils.toJson(request))
+                    .compose(bindToLifecycle())
+                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                    .compose(RxSchedulers.normalTrans())
+                    .subscribe(s -> {
+                        ToastUtils.showShort(R.string.xiazhuchenggong);
+                        finish();
+                    }, this::handleApiError);
+        }
     }
 
     public class XiaZhuBean {

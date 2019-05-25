@@ -1,6 +1,7 @@
 package com.zxjk.duoduo.ui.msgpage.adapter;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +12,13 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.GetDuoBaoIntegralDetailsResponse;
 import com.zxjk.duoduo.network.response.GetIntegralDetailsResponse;
+import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.ui.msgpage.GroupGoldStupaInfoActivity;
+import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.DuoBaoPopupWindowOwner;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameRecordPopupWindow;
 
 import java.text.SimpleDateFormat;
@@ -27,10 +31,25 @@ public class GameGoldAdapter extends RecyclerView.Adapter<GameGoldAdapter.ViewHo
     private List<GetDuoBaoIntegralDetailsResponse> data = new ArrayList<>();
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     public String groupId = "";
+    public GroupResponse group;
+
+    private OnclickListener onclickListener;
+
+    public void setOnclickListener(OnclickListener onclickListener) {
+        this.onclickListener = onclickListener;
+    }
+
+    public interface OnclickListener {
+        void click(int position);
+    }
 
     public void setData(List<GetDuoBaoIntegralDetailsResponse> data) {
         this.data = data;
         notifyDataSetChanged();
+    }
+
+    public List<GetDuoBaoIntegralDetailsResponse> getData() {
+        return this.data;
     }
 
     @NonNull
@@ -52,16 +71,31 @@ public class GameGoldAdapter extends RecyclerView.Adapter<GameGoldAdapter.ViewHo
             getIntegralDetailsResponse1.setIntegral(getIntegralDetailsResponse.getIntegral());
             getIntegralDetailsResponse1.setRemainingIntegral(getIntegralDetailsResponse.getRemainingIntegral());
 
-            gameRecordPopupWindow.show(1, getIntegralDetailsResponse1);
             if (getIntegralDetailsResponse.getTitle().equals("上分")) {
                 gameRecordPopupWindow.show(1, getIntegralDetailsResponse1);
-            } else if (getIntegralDetailsResponse.getTitle().equals("下分")) {
+                return;
+            }
+            if (getIntegralDetailsResponse.getTitle().equals("下分")) {
                 gameRecordPopupWindow.show(2, getIntegralDetailsResponse1);
+                return;
+            }
+
+            if (group.getGroupInfo().getGroupOwnerId().equals(Constant.userId)) {
+                //群主
+                if (holder.tvHk.getText().equals("未开奖")) {
+                    DuoBaoPopupWindowOwner duoBaoPopupWindowOwner = new DuoBaoPopupWindowOwner(holder.itemView.getContext());
+                    duoBaoPopupWindowOwner.show(getIntegralDetailsResponse);
+                } else {
+                    Intent intent = new Intent(holder.itemView.getContext(), GroupGoldStupaInfoActivity.class);
+                    intent.putExtra("expect", data.get(holder.getAdapterPosition()).getExpect());
+                    intent.putExtra("groupId", groupId);
+                    holder.itemView.getContext().startActivity(intent);
+                }
             } else {
-                Intent intent = new Intent(holder.itemView.getContext(), GroupGoldStupaInfoActivity.class);
-                intent.putExtra("expect", data.get(holder.getAdapterPosition()).getExpect());
-                intent.putExtra("groupId", groupId);
-                holder.itemView.getContext().startActivity(intent);
+                //群成员弹框
+                if (onclickListener != null) {
+                    onclickListener.click(holder.getAdapterPosition());
+                }
             }
         });
     }
@@ -88,15 +122,21 @@ public class GameGoldAdapter extends RecyclerView.Adapter<GameGoldAdapter.ViewHo
         }
 
         void bindData(GetDuoBaoIntegralDetailsResponse bean) {
-            tvTitle.setText(bean.getExpect());
             if (bean.getTitle().equals("上分")) {
                 iv.setImageResource(R.drawable.ic_game_record_list10);
             }
             if (bean.getTitle().equals("下分")) {
                 iv.setImageResource(R.drawable.ic_game_record_list7);
+            } else {
+                iv.setImageResource(R.drawable.ic_jinduobao);
             }
+            tvTitle.setText(bean.getTitle());
 
-            tvTime.setText(simpleDateFormat.format(Long.valueOf(bean.getTime())));
+            if (!TextUtils.isEmpty(bean.getTime())) {
+                tvTime.setText(simpleDateFormat.format(Long.valueOf(bean.getTime())));
+            } else {
+                tvTime.setText("暂无时间");
+            }
             if (bean.getType().equals("0")) {
                 //转进
                 if (bean.getIntegral().contains("-")) {

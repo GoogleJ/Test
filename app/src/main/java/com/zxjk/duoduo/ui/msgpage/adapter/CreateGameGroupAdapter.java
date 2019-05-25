@@ -328,6 +328,7 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     } else {
                         gameType = "4";
                         typeName = response.getGroupClass().get(3).getTypeName();
+                        proportionOfFees = response.getGroupClass().get(3).getGuaranteeFee();
                         ivChouShui.setImageResource(R.drawable.ic_create_gamegroup_beilv);
                         ivFanyong.setImageResource(R.drawable.ic_create_gamegroup_fanyong3);
                         llGameType1.setVisibility(View.GONE);

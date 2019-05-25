@@ -18,8 +18,9 @@ import com.zxjk.duoduo.network.response.GetDuoBaoIntegralDetailsResponse;
 import com.zxjk.duoduo.network.response.GetExtractRecordResponse;
 import com.zxjk.duoduo.network.response.GetGameClassResponse;
 import com.zxjk.duoduo.network.response.GetGroupGameParameterResponse;
-import com.zxjk.duoduo.network.response.GetGroupOwnerDuoBaoBetInfoResponse;
+import com.zxjk.duoduo.network.response.GetGroupMemberDuoBaoBetInfoResponse;
 import com.zxjk.duoduo.network.response.GetGroupMemberPointsResponse;
+import com.zxjk.duoduo.network.response.GetGroupOwnerDuoBaoBetInfoResponse;
 import com.zxjk.duoduo.network.response.GetGroupRedPackageInfoResponse;
 import com.zxjk.duoduo.network.response.GetIntegralDetailsResponse;
 import com.zxjk.duoduo.network.response.GetNumbeOfTransactionResponse;
@@ -48,7 +49,6 @@ import com.zxjk.duoduo.network.response.SendGroupRedPackageResponse;
 import com.zxjk.duoduo.network.response.SignHkbOrHkExchangeResponse;
 import com.zxjk.duoduo.network.response.SignTransactionResponse;
 import com.zxjk.duoduo.network.response.TransferResponse;
-import com.zxjk.duoduo.ui.msgpage.JinDuoBaoActiviity;
 
 import java.util.List;
 
@@ -583,10 +583,7 @@ public interface Api {
 
     @POST("duoduo/group/game/groupGamebettingForDuobao")
     @FormUrlEncoded
-    Observable<BaseResponse<String>> groupGamebettingForDuobao(@Field("groupId") String groupId, @Field("expect") String expect,
-                                                               @Field("playName") String playName, @Field("playId") String playId,
-                                                               @Field("customerId") String customerId, @Field("countMoney") String countMoney, @Field("duoBaoBetInfoBeanList") List<JinDuoBaoActiviity.XiaZhuBean> duoBaoBetInfoBeanList);
-
+    Observable<BaseResponse<String>> groupGamebettingForDuobao(@Field("data") String data);
 
     @POST("rest/160601/ocr/ocr_idcard.json")
     Observable<CardFaceBean> getOCRResult(@Body RequestBody body, @Header("Authorization") String authorization);
@@ -598,7 +595,7 @@ public interface Api {
     Observable<AuditCertificationBean> getCertification(@Query("idCard") String idCard, @Query("mobile") String mobile, @Query("name") String name, @Header("Authorization") String authorization);
 
 
-    @POST("duoduo/group/game/GetDuoBaoIntegralDetailsResponse")
+    @POST("duoduo/group/game/getDuoBaoIntegralDetails")
     @FormUrlEncoded
     Observable<BaseResponse<List<GetDuoBaoIntegralDetailsResponse>>> getDuoBaoIntegralDetails(@Field("groupId") String groupId);
 
@@ -606,4 +603,8 @@ public interface Api {
     @POST("duoduo/group/game/getGroupOwnerDuoBaoBetInfo")
     @FormUrlEncoded
     Observable<BaseResponse<List<GetGroupOwnerDuoBaoBetInfoResponse>>> getGroupOwnerDuoBaoBetInfo(@Field("groupId") String groupId, @Field("expect") String expect);
+
+    @POST("duoduo/group/game/getGroupMemberDuoBaoBetInfo")
+    @FormUrlEncoded
+    Observable<BaseResponse<GetGroupMemberDuoBaoBetInfoResponse>> getGroupMemberDuoBaoBetInfo(@Field("groupId") String groupId, @Field("expect") String expect, @Field("customerId") String customerId);
 }

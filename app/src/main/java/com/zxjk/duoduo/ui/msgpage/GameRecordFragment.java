@@ -14,14 +14,16 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.GetDuoBaoIntegralDetailsResponse;
 import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.ui.msgpage.adapter.GameGoldAdapter;
 import com.zxjk.duoduo.ui.msgpage.adapter.GameRecordAdapter;
+import com.zxjk.duoduo.ui.msgpage.widget.DuoBaoGameDetailPopWindow;
 import com.zxjk.duoduo.utils.CommonUtils;
 
-public class GameRecordFragment extends BaseFragment {
+public class GameRecordFragment extends BaseFragment implements GameGoldAdapter.OnclickListener {
 
     public GroupResponse groupResponse;
     private boolean hasInitData = false;
@@ -38,16 +40,18 @@ public class GameRecordFragment extends BaseFragment {
         ((SwipeRefreshLayout) rootView).addView(recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         rootView.setOverScrollMode(View.OVER_SCROLL_NEVER);
-        ((SwipeRefreshLayout) rootView).setOnRefreshListener(() -> initData());
+        ((SwipeRefreshLayout) rootView).setOnRefreshListener(this::initData);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter1.groupId = groupId;
-
 
         if (groupResponse.getGroupInfo().getGameType().equals("4")) {
             adapter2 = new GameGoldAdapter();
+            adapter2.setOnclickListener(this);
+            adapter2.groupId = groupId;
+            adapter2.group = groupResponse;
             recyclerView.setAdapter(adapter2);
         } else {
             adapter1 = new GameRecordAdapter();
+            adapter1.groupId = groupId;
             recyclerView.setAdapter(adapter1);
         }
 
@@ -56,6 +60,7 @@ public class GameRecordFragment extends BaseFragment {
 
     @SuppressLint("CheckResult")
     private void initData() {
+        ((SwipeRefreshLayout) rootView).setRefreshing(true);
         if (groupResponse.getGroupInfo().getGameType().equals("4")) {
             ServiceFactory.getInstance().getBaseService(Api.class)
                     .getDuoBaoIntegralDetails(groupId)
@@ -101,5 +106,21 @@ public class GameRecordFragment extends BaseFragment {
             initData();
         }
         super.onStart();
+    }
+
+    //多宝item点击（群成员）
+    @SuppressLint("CheckResult")
+    @Override
+    public void click(int position) {
+        GetDuoBaoIntegralDetailsResponse r = adapter2.getData().get(position);
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .getGroupMemberDuoBaoBetInfo(groupId, r.getExpect(), r.getCustomerId())
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.normalTrans())
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(getActivity())))
+                .subscribe(response -> {
+                    DuoBaoGameDetailPopWindow duoBaoGameDetailPopWindow = new DuoBaoGameDetailPopWindow(getContext(), response, r);
+                    duoBaoGameDetailPopWindow.showPopupWindow();
+                }, this::handleApiError);
     }
 }

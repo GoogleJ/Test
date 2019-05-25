@@ -18,6 +18,15 @@ public class GetGroupOwnerDuoBaoBetInfoResponse {
     private String remainingIntegral;
     private String type;
     private String expect;
+    private String customerId;
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
 
     public String getTitle() {
         return title;

@@ -17,6 +17,33 @@ public class GetDuoBaoIntegralDetailsResponse {
     private String remainingIntegral;
     private String type;
     private String expect;
+    private String betSum;
+    private String betCount;
+    private String customerId;
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getBetSum() {
+        return betSum;
+    }
+
+    public void setBetSum(String betSum) {
+        this.betSum = betSum;
+    }
+
+    public String getBetCount() {
+        return betCount;
+    }
+
+    public void setBetCount(String betCount) {
+        this.betCount = betCount;
+    }
 
     public String getTitle() {
         return title;

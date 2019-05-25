@@ -11,9 +11,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.GetGroupOwnerDuoBaoBetInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.GroupGoldStupaInfoAdapter;
+import com.zxjk.duoduo.ui.msgpage.widget.DuoBaoGameDetailPopWindow;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 import butterknife.BindView;
@@ -31,7 +33,6 @@ import butterknife.OnClick;
  */
 public class GroupGoldStupaInfoActivity extends BaseActivity {
 
-
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.recyclerView)
@@ -40,7 +41,6 @@ public class GroupGoldStupaInfoActivity extends BaseActivity {
     SwipeRefreshLayout refresh;
 
     private GroupGoldStupaInfoAdapter goldStupaInfoAdapter;
-    private LinearLayoutManager linearLayoutManager;
 
     private String groupId;
     private String expect;
@@ -52,47 +52,47 @@ public class GroupGoldStupaInfoActivity extends BaseActivity {
         ButterKnife.bind(this);
         initView();
         initData();
-        data();
     }
 
-
+    @SuppressLint("CheckResult")
     private void initView() {
         tvTitle.setText("下注详情");
         groupId = getIntent().getStringExtra("groupId");
         expect = getIntent().getStringExtra("expect");
-
-    }
-
-    private void initData() {
-        linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         goldStupaInfoAdapter = new GroupGoldStupaInfoAdapter();
         recyclerView.setAdapter(goldStupaInfoAdapter);
-        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                data();
-            }
-        });
+        refresh.setOnRefreshListener(this::initData);
 
+        goldStupaInfoAdapter.setOnItemClickListener((adapter, view, position) -> {
+            GetGroupOwnerDuoBaoBetInfoResponse o = (GetGroupOwnerDuoBaoBetInfoResponse) adapter.getData().get(position);
+            ServiceFactory.getInstance().getBaseService(Api.class)
+                    .getGroupMemberDuoBaoBetInfo(groupId, expect, o.getCustomerId())
+                    .compose(bindToLifecycle())
+                    .compose(RxSchedulers.normalTrans())
+                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(GroupGoldStupaInfoActivity.this)))
+                    .subscribe(response -> {
+                        DuoBaoGameDetailPopWindow duoBaoGameDetailPopWindow = new DuoBaoGameDetailPopWindow(this, response, o);
+                        duoBaoGameDetailPopWindow.showPopupWindow();
+                    }, GroupGoldStupaInfoActivity.this::handleApiError);
+        });
     }
 
-
     @SuppressLint("CheckResult")
-    private void data() {
+    private void initData() {
+        refresh.setRefreshing(true);
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .getGroupOwnerDuoBaoBetInfo(groupId, expect)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.normalTrans())
-                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(GroupGoldStupaInfoActivity.this)))
                 .subscribe(responses -> {
+                    refresh.setRefreshing(false);
                     goldStupaInfoAdapter.setNewData(responses);
                 }, t -> {
-
+                    refresh.setRefreshing(false);
                     handleApiError(t);
                 });
-
-
     }
 
     @OnClick(R.id.rl_back)

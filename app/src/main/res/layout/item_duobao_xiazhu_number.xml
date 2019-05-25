@@ -12,7 +12,6 @@
         android:layout_marginTop="4dp"
         android:background="@drawable/shape_themecolor_circle"
         android:gravity="center"
-        android:text="•••"
         android:textColor="@color/white"
         android:textSize="13sp" />
 
