@@ -89,7 +89,19 @@ public class EnlargeImageActivity extends BaseActivity {
             });
             iv.setImage(ImageSource.resource(R.drawable.gamerules));
             iv.setOnClickListener(v -> finish());
-
+        } else if (imageUrl.equals("GameRules2")) {
+            CommonUtils.initDialog(this).show();
+            pic.setVisibility(View.GONE);
+            iv.setVisibility(View.VISIBLE);
+            iv.setOnImageEventListener(new SubsamplingScaleImageView.DefaultOnImageEventListener() {
+                @Override
+                public void onReady() {
+                    super.onReady();
+                    CommonUtils.destoryDialog();
+                }
+            });
+            iv.setImage(ImageSource.resource(R.drawable.gamerules2));
+            iv.setOnClickListener(v -> finish());
         } else {
             GlideUtil.loadNormalImg(pic, imageUrl, new RequestListener<Bitmap>() {
                 @Override

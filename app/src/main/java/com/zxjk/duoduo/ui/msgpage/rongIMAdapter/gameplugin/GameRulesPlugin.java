@@ -3,6 +3,7 @@ package com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
@@ -16,6 +17,9 @@ import io.rong.imkit.RongExtension;
 import io.rong.imkit.plugin.IPluginModule;
 
 public class GameRulesPlugin implements IPluginModule {
+
+    public String duobao = "";
+
     @Override
     public Drawable obtainDrawable(Context context) {
         return ContextCompat.getDrawable(context, R.drawable.ic_plugin_gamerule);
@@ -29,7 +33,11 @@ public class GameRulesPlugin implements IPluginModule {
     @Override
     public void onClick(Fragment fragment, RongExtension rongExtension) {
         Intent intent5 = new Intent(fragment.getContext(), EnlargeImageActivity.class);
-        intent5.putExtra("image", "GameRules");
+        if (TextUtils.isEmpty(duobao)) {
+            intent5.putExtra("image", "GameRules");
+        } else {
+            intent5.putExtra("image", "GameRules2");
+        }
         fragment.startActivity(intent5);
     }
 

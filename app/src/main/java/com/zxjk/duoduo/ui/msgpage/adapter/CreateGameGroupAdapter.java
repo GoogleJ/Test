@@ -1,6 +1,7 @@
 package com.zxjk.duoduo.ui.msgpage.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -29,6 +30,7 @@ import com.zhouwei.mzbanner.holder.MZViewHolder;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.GetGameClassResponse;
 import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.ui.minepage.OnlineServiceActivity;
 import com.zxjk.duoduo.ui.msgpage.widget.ChooseFanYongPopWindow;
 import com.zxjk.duoduo.utils.CommonUtils;
 
@@ -418,6 +420,8 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private LinearLayout llAddFanYong;
     private LinearLayout llCommit;
     private ChooseFanYongPopWindow chooseFanYongPopWindow;
+    private CheckBox cbMianZe;
+    private TextView tvmianze;
 
     class ViewHolder2 extends RecyclerView.ViewHolder {
 
@@ -425,6 +429,14 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             super(itemView);
             llAddFanYong = itemView.findViewById(R.id.llAddFanYong);
             llCommit = itemView.findViewById(R.id.llCommit);
+            cbMianZe = itemView.findViewById(R.id.cbMianZe);
+            tvmianze = itemView.findViewById(R.id.tvmianze);
+
+            tvmianze.setOnClickListener(v -> {
+                Intent intent = new Intent(itemView.getContext(), OnlineServiceActivity.class);
+                intent.putExtra("url", "https://wq0725.github.io/duoduo.github.io/");
+                itemView.getContext().startActivity(intent);
+            });
 
             llAddFanYong.setOnClickListener(v -> {
                 List<GetGameClassResponse.CommissionConfigBean> temp = new ArrayList<>();
@@ -454,6 +466,11 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         ToastUtils.showShort(R.string.select_game_type1);
                         return;
                     }
+                }
+
+                if (!cbMianZe.isChecked()) {
+                    ToastUtils.showShort(R.string.check_mianze);
+                    return;
                 }
 
                 if (gameType.equals("1")) {

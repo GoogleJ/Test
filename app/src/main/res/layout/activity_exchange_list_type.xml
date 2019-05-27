@@ -113,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="end"
-            android:text="0.87 CNY=1HK"
+            android:text="0.87 CNY/HK"
             android:textColor="@color/themecolor"
             android:textSize="15sp" />
 

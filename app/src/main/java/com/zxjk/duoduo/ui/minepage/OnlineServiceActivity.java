@@ -3,6 +3,7 @@ package com.zxjk.duoduo.ui.minepage;
 import android.annotation.SuppressLint;
 import android.net.http.SslError;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -33,7 +34,11 @@ public class OnlineServiceActivity extends BaseActivity {
         webView = findViewById(R.id.web_view);
         tv_title = findViewById(R.id.tv_title);
         url = getIntent().getStringExtra("url");
-        tv_title.setText(R.string.keFu);
+        if (TextUtils.isEmpty(url)) {
+            tv_title.setText(R.string.keFu);
+        } else {
+            tv_title.setText(R.string.shengming);
+        }
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());
         initSetting();
     }

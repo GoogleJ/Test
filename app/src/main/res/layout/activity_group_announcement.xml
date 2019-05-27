@@ -19,8 +19,8 @@
         android:gravity="top"
         android:hint="@string/group_announcement_edit"
         android:lines="5"
+        android:maxLength="1000"
         android:padding="15dp"
-        android:text=""
         android:textSize="16sp" />
 
 </LinearLayout>

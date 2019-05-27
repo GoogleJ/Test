@@ -26,6 +26,7 @@ import com.zxjk.duoduo.utils.MMKVUtils;
 
 import io.rong.imkit.RongIM;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
 
@@ -97,8 +98,6 @@ public class UpdateUserInfoActivity extends BaseActivity {
             tv_title.setText(R.string.changegroupname);
             etChangeSign.setHint(R.string.hint_groupname);
         }
-
-
     }
 
     private void initView() {

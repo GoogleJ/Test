@@ -53,7 +53,6 @@ public class CreateGroupActivity extends BaseActivity {
 
     private List<String> selectedIds = new ArrayList<>();
 
-
     private RecyclerView recycler1;
     private RecyclerView recycler2;
     private CreateGroupTopAdapter adapter1; //建群适配器（顶部）

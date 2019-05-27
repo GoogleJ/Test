@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.GetRedPackageRecordResponse;
 import com.zxjk.duoduo.ui.msgpage.PeopleUnaccalimedActivity;
-import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -67,6 +67,7 @@ public class RedPackageRecoderAdapter extends RecyclerView.Adapter<RedPackageRec
         TextView tvRedPackageNick;
         TextView tvRedPackageTime;
         TextView tvRedPackageMoney;
+        ImageView iv;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -74,6 +75,7 @@ public class RedPackageRecoderAdapter extends RecyclerView.Adapter<RedPackageRec
             tvRedPackageNick = itemView.findViewById(R.id.tvRedPackageNick);
             tvRedPackageTime = itemView.findViewById(R.id.tvRedPackageTime);
             tvRedPackageMoney = itemView.findViewById(R.id.tvRedPackageMoney);
+            iv = itemView.findViewById(R.id.iv);
         }
 
         void bindData(GetRedPackageRecordResponse.RedpackageListBean bean) {
@@ -81,16 +83,13 @@ public class RedPackageRecoderAdapter extends RecyclerView.Adapter<RedPackageRec
             tvRedPackageTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Long.parseLong(bean.getCreateTime())));
             tvRedPackageMoney.setText(df.format(bean.getMoney()) + "HK");
             if (TextUtils.isEmpty(bean.getTYPE())) {
-                tvRedPackageNick.setCompoundDrawablesRelative(null, null, null, null);
-                tvRedPackageNick.setCompoundDrawablePadding(CommonUtils.dip2px(context, 0));
+                iv.setVisibility(View.GONE);
                 return;
             }
             if (bean.getTYPE().equals("1")) {
-                tvRedPackageNick.setCompoundDrawablesRelative(null, null, context.getDrawable(R.drawable.ic_redpackage_pingshouqi), null);
-                tvRedPackageNick.setCompoundDrawablePadding(CommonUtils.dip2px(context, 4));
+                iv.setVisibility(View.VISIBLE);
             } else {
-                tvRedPackageNick.setCompoundDrawablesRelative(null, null, null, null);
-                tvRedPackageNick.setCompoundDrawablePadding(CommonUtils.dip2px(context, 0));
+                iv.setVisibility(View.GONE);
             }
         }
     }

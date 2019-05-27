@@ -73,12 +73,14 @@ import io.rong.imkit.RongExtension;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationFragment;
+import io.rong.imkit.model.GroupUserInfo;
 import io.rong.imkit.plugin.IPluginModule;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imkit.widget.adapter.MessageListAdapter;
 import io.rong.imlib.MessageTag;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Group;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
@@ -491,6 +493,10 @@ public class ConversationActivity extends BaseActivity {
                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                     .compose(bindToLifecycle())
                     .subscribe(groupInfo -> {
+                        if (null != RongUserInfoManager.getInstance().getGroupInfo(groupInfo.getGroupInfo().getId())
+                                && !RongUserInfoManager.getInstance().getGroupInfo(groupInfo.getGroupInfo().getId()).getName().equals(groupInfo.getGroupInfo().getGroupNikeName())) {
+                            RongUserInfoManager.getInstance().setGroupInfo(new Group(groupInfo.getGroupInfo().getId(), groupInfo.getGroupInfo().getGroupNikeName(), Uri.parse(groupInfo.getGroupInfo().getHeadPortrait())));
+                        }
                         memberIds = new ArrayList<>(groupInfo.getCustomers().size());
                         for (GroupResponse.CustomersBean bean : groupInfo.getCustomers()) {
                             memberIds.add(bean.getId());
@@ -517,20 +523,22 @@ public class ConversationActivity extends BaseActivity {
                             }
                             if (!groupInfo.getGroupInfo().getIsDelete().equals("1")) {
                                 extension.addPlugin(new PhotoSelectorPlugin());
-                                extension.addPlugin(new RedPacketPlugin());
+//                                extension.addPlugin(new RedPacketPlugin());
                                 extension.addPlugin(new GameUpScorePlugin());
                                 extension.addPlugin(new AudioVideoPlugin());
                                 extension.addPlugin(new GameRecordPlugin());
                                 extension.addPlugin(new GameDownScorePlugin());
+                                GameRulesPlugin gameRulesPlugin = new GameRulesPlugin();
                                 if (groupInfo.getGroupInfo().getGameType().equals("4") && !groupInfo.getGroupInfo().getGroupOwnerId().equals(Constant.userId)) {
                                     //多宝群
                                     extension.addPlugin(new GameDuobaoPlugin());
+                                    gameRulesPlugin.duobao = "true";
                                 } else if (!groupInfo.getGroupInfo().getGameType().equals("4") && groupInfo.getGroupInfo().getGroupOwnerId().equals(Constant.userId)) {
                                     //普通游戏群 只有群主才能开始下注
                                     extension.addPlugin(new GameStartPlugin());
                                 }
                                 extension.addPlugin(new GameJiaoYiPlugin());
-                                extension.addPlugin(new GameRulesPlugin());
+                                extension.addPlugin(gameRulesPlugin);
                             }
                             Constant.ownerIdForGameChat = groupInfo.getGroupInfo().getGroupOwnerId();
                         } else {

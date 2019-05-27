@@ -105,7 +105,7 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                 .compose(RxSchedulers.normalTrans())
                 .flatMap((Function<GetNumbeOfTransactionResponse, ObservableSource<List<PayInfoResponse>>>) s -> {
                     runOnUiThread(() ->
-                            tvExchangePrice.setText(s.getHkPrice() + " CNY=1HK"));
+                            tvExchangePrice.setText(s.getHkPrice() + " CNY/HK"));
                     if (TextUtils.isEmpty(s.getExchangeRate()) || s.getExchangeRate().equals("0")) {
                         tv_poundage.setVisibility(View.GONE);
                     } else {

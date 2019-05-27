@@ -58,21 +58,13 @@ public class SampleTab implements IEmoticonTab {
         this.conversationType = conversationType;
     }
 
-
-    public SampleTab() {
-
-    }
-
-
     public Drawable obtainTabDrawable(Context context) {
         return context.getResources().getDrawable(drawable.ic_001);
     }
 
     public View obtainTabPager(Context context) {
-//        RongIMClient.getInstance().getCurrentUserId();
         return this.initView(context);
     }
-
 
     public void onTableSelected(int position) {
     }
@@ -123,9 +115,7 @@ public class SampleTab implements IEmoticonTab {
                                 obtain1 = Message.obtain(targetId, Conversation.ConversationType.GROUP, obtain);
                             }
 
-                            RongIM.getInstance().
-
-                                    sendImageMessage(obtain1, null, null, new RongIMClient.SendImageMessageCallback() {
+                            RongIM.getInstance().sendImageMessage(obtain1, null, null, new RongIMClient.SendImageMessageCallback() {
                                         @Override
                                         public void onAttached(Message message) {
 
@@ -146,8 +136,6 @@ public class SampleTab implements IEmoticonTab {
 
                                         }
                                     });
-
-
                         });
                     }
                 };
@@ -165,7 +153,6 @@ public class SampleTab implements IEmoticonTab {
                 entranceIndicatorView.setCurrentIndicator(position);
             }
         });
-
 
     }
 

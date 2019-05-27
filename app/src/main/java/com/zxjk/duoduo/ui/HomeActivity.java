@@ -278,10 +278,10 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                 .subscribe(response -> {
                     Constant.friendsList = response.data;
                     for (FriendInfoResponse f : response.data) {
-                        if (RongUserInfoManager.getInstance().getUserInfo(f.getId()) == null) {
+//                        if (RongUserInfoManager.getInstance().getUserInfo(f.getId()) == null) {
 //                            RongUserInfoManager.getInstance().setUserInfo(new UserInfo(f.getId(), TextUtils.isEmpty(f.getRemark()) ? f.getNick() : f.getRemark(), Uri.parse(f.getHeadPortrait())));
                             RongUserInfoManager.getInstance().setUserInfo(new UserInfo(f.getId(), f.getNick(), Uri.parse(f.getHeadPortrait())));
-                        }
+//                        }
                     }
                 }, t -> {
                     //重复登录不再递归，避免过多请求
