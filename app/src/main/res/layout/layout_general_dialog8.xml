@@ -9,28 +9,28 @@
     <TextView
         android:id="@+id/tv_videoCall"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:background="@android:color/white"
+        android:drawableStart="@drawable/ic_video_call"
+        android:drawablePadding="15dp"
         android:gravity="center_vertical"
         android:paddingStart="20dp"
         android:text="@string/video_call"
-        android:textColor="@color/theme_color"
+        android:textColor="@android:color/black"
         android:textSize="16sp" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/background_color" />
 
     <TextView
         android:id="@+id/tv_voiceCall"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:background="@android:color/white"
+        android:drawableStart="@drawable/ic_voice_call"
+        android:drawablePadding="15dp"
         android:gravity="center_vertical"
         android:paddingStart="20dp"
         android:text="@string/voice_call"
-        android:textColor="@color/theme_color"
+        android:textColor="@android:color/black"
         android:textSize="16sp" />
 
 

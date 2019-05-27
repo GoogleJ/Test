@@ -884,7 +884,7 @@
     <string name="noscore">暂未在本群上分，无法游戏</string>
     <string name="group_max_number">群成员已达上限,无法继续邀请</string>
     <string name="number_max">数量不能小于50</string>
-    <string name="input_max_number">请输入数量并且不能小于50</string>
+    <string name="input_max_number">请输入数量</string>
     <string name="no_update_nick">暂无权限修改群昵称</string>
     <string name="connect_failed">连接失败，请稍后重试</string>
     <string name="input_ticheng">请输入提成比例</string>

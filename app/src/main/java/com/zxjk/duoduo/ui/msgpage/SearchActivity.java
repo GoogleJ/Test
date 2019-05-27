@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -24,6 +23,8 @@ import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.SearchAdapter;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,9 +43,6 @@ public class SearchActivity extends BaseActivity {
 
     SearchAdapter mAdapter;
     Intent intent;
-    FriendInfoResponse friendInfo;
-
-
     View emptyView;
 
     @Override
@@ -54,12 +52,7 @@ public class SearchActivity extends BaseActivity {
         ButterKnife.bind(this);
         TextView tv_title = findViewById(R.id.tv_title);
         tv_title.setText(getString(R.string.search));
-        findViewById(R.id.rl_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
 
         emptyView = getLayoutInflater().inflate(R.layout.view_app_null_type, null);
         emptyView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -77,7 +70,8 @@ public class SearchActivity extends BaseActivity {
             //搜索按键action
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 if (!TextUtils.isEmpty(searchEdit.getText().toString())) {
-                    searchFriendInfo(searchEdit.getText().toString());
+                    //searchFriendInfo(searchEdit.getText().toString());
+                    getFriendListInfoById(searchEdit.getText().toString());
                 } else {
                     ToastUtils.showShort(getString(R.string.input_search_edit));
                 }
@@ -94,58 +88,38 @@ public class SearchActivity extends BaseActivity {
         mAdapter = new SearchAdapter(this);
         mAdapter.setEmptyView(emptyView);
         mRecyclerView.setAdapter(mAdapter);
-        getFriendListInfoById();
-        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
             FriendInfoResponse friendInfoResponse = mAdapter.getData().get(position);
-            if (friendInfo.getId().equals(friendInfoResponse.getId())) {
-                intent = new Intent(SearchActivity.this, FriendDetailsActivity.class);
-                intent.putExtra("searchFriendDetails", friendInfoResponse);
-                intent.putExtra("intentType", 0);
-                startActivity(intent);
-            }
+            Intent intent = new Intent(SearchActivity.this, FriendDetailsActivity.class);
+            intent.putExtra("intentType", 2);
+            intent.putExtra("contactResponse", friendInfoResponse);
+            startActivity(intent);
         });
         mAdapter.notifyDataSetChanged();
-
     }
 
-    @SuppressLint("CheckResult")
-    public void searchFriendInfo(String data) {
-        //模糊搜索用户
-        ServiceFactory.getInstance().getBaseService(Api.class)
-                .searchFriend(data)
-                .compose(bindToLifecycle())
-                .compose(RxSchedulers.ioObserver())
-                .compose(RxSchedulers.normalTrans())
-                .subscribe(data1 -> {
-                    //此处是进行比较，如果搜索出来的数据在好友列表中已存在，那么我们添加到我们的适配器中，如果不存在，我们就删除这个好友
-                    for (int i = 0; i < data1.size(); i++) {
-                        if (friendInfo.getId().equals(data1.get(i).getId()) && !data1.get(i).getId().equals(Constant.userId)) {
-                            mAdapter.addData(data1.get(i));
-                        } else {
-                            if (data1.size() >= 0) {
-                                data1.remove(i);
-                                ToastUtils.showShort(getString(R.string.please_add_friend));
-                            }
-
-
-                        }
-                    }
-                }, this::handleApiError);
-    }
-
-    public void getFriendListInfoById() {
+    public void getFriendListInfoById(String f) {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .getFriendListById()
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(friendInfoResponses -> {
+                    mAdapter.setNewData(new ArrayList<>());
                     for (int i = 0; i < friendInfoResponses.size(); i++) {
-                        //获取好友列表中的数据，跟已有的数据进行比对
-                        friendInfo = new FriendInfoResponse(friendInfoResponses.get(i));
+                        if (friendInfoResponses.get(i).getId().contains(f)
+                                || friendInfoResponses.get(i).getMobile().contains(f)
+                                || friendInfoResponses.get(i).getNick().contains(f)
+                                || friendInfoResponses.get(i).getRealname().contains(f)) {
+                            mAdapter.addData(friendInfoResponses.get(i));
+                        }
                     }
-                }, this::handleApiError);
+                    if (mAdapter.getData().size() == 0) {
+                        ToastUtils.showShort("暂无该好友");
+                    }
 
+                }, this::handleApiError);
     }
+
 
 }

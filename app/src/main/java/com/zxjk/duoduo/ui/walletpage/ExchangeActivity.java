@@ -57,7 +57,6 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
 
     private TextView tvExchangePrice;
     private TextView tvExchangeTotal;
-    private RadioGroup rgExchangeTop;
     private TextView tvExchangeLine1;
     private TextView tvExchangeLine3;
     private TextView tvExchangeLine4;
@@ -67,9 +66,6 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
     private EditText etMinMoney;
     private EditText etMaxMoney;
 
-    private RelativeLayout rl_weChat;
-    private RelativeLayout rl_aliPay;
-    private RelativeLayout rl_bank;
     private LinearLayout llChooseMinMax;
     private CheckBox checkbox_weChat;
     private CheckBox checkbox_aliPay;
@@ -79,7 +75,7 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
     private TextView tv_bankInfo;
     private TextView tvTipsExchange;
     private TextView tv_poundage;
-    private String poundage;
+    private String poundage = "";
 
     private List<String> paytypes = new ArrayList<>(3);
     private String buyType = "";
@@ -89,11 +85,11 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
 
     private boolean buyOrSale = true;
 
-    private String totalPrice;
-    private String poun;
-    private String minExchangeFee;
+    private String totalPrice = "";
+    private String poun = "";
+    private String minExchangeFee = "";
 
-    private String pos;
+    private String pos = "";
 
     DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
@@ -110,7 +106,7 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                 .flatMap((Function<GetNumbeOfTransactionResponse, ObservableSource<List<PayInfoResponse>>>) s -> {
                     runOnUiThread(() ->
                             tvExchangePrice.setText(s.getHkPrice() + " CNY=1HK"));
-                    if (s.getExchangeRate().equals("0") || TextUtils.isEmpty(s.getExchangeRate())) {
+                    if (TextUtils.isEmpty(s.getExchangeRate()) || s.getExchangeRate().equals("0")) {
                         tv_poundage.setVisibility(View.GONE);
                     } else {
                         double pou = ArithUtils.mul(Double.parseDouble(s.getExchangeRate()), Double.parseDouble("100"));
@@ -140,9 +136,9 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
         selectPopupWindow = new SelectPopupWindow(this, this);
         tv_poundage = findViewById(R.id.tv_poundage);
         llChooseMinMax = findViewById(R.id.llChooseMinMax);
-        rl_weChat = findViewById(R.id.rl_weChat);
-        rl_aliPay = findViewById(R.id.rl_aliPay);
-        rl_bank = findViewById(R.id.rl_bank);
+        RelativeLayout rl_weChat = findViewById(R.id.rl_weChat);
+        RelativeLayout rl_aliPay = findViewById(R.id.rl_aliPay);
+        RelativeLayout rl_bank = findViewById(R.id.rl_bank);
         checkbox_weChat = findViewById(R.id.checkbox_weChat);
         checkbox_aliPay = findViewById(R.id.checkbox_aliPay);
         checkbox_bank = findViewById(R.id.checkbox_bank);
@@ -156,7 +152,7 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
 
         tvExchangePrice = findViewById(R.id.tvExchangePrice);
         tvExchangeTotal = findViewById(R.id.tvExchangeTotal);
-        rgExchangeTop = findViewById(R.id.rgExchangeTop);
+        RadioGroup rgExchangeTop = findViewById(R.id.rgExchangeTop);
         tvExchangeLine1 = findViewById(R.id.tvExchangeLine1);
         tvExchangeLine3 = findViewById(R.id.tvExchangeLine3);
         tvExchangeLine4 = findViewById(R.id.tvExchangeLine4);
@@ -259,11 +255,13 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
             return;
         }
         if (!buyOrSale) {
-            if (Integer.parseInt(etExchangeChooseCount.getText().toString()) < 50) {
+            if (!TextUtils.isEmpty(etExchangeChooseCount.getText().toString())
+                    && Integer.parseInt(etExchangeChooseCount.getText().toString()) < 50) {
                 ToastUtils.showShort(getString(R.string.number_max));
                 return;
             }
-            if (!TextUtils.isEmpty(etMinMoney.getText().toString().trim()) && Integer.parseInt(etMinMoney.getText().toString().trim()) == 0) {
+            if (!TextUtils.isEmpty(etMinMoney.getText().toString().trim())
+                    && Integer.parseInt(etMinMoney.getText().toString().trim()) == 0) {
                 ToastUtils.showShort(getString(R.string.number_min));
                 return;
             }
@@ -281,7 +279,10 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                 }
             }
 
-            if (etMinMoney.getText().toString().length() != 0 && etMaxMoney.getText().toString().length() != 0 && Integer.parseInt(etMinMoney.getText().toString()) > Integer.parseInt(etMaxMoney.getText().toString())) {
+            if (!TextUtils.isEmpty(etMinMoney.getText().toString()) &&
+                    !TextUtils.isEmpty(etMaxMoney.getText().toString()) &&
+                    Integer.parseInt(etMinMoney.getText().toString()) >
+                            Integer.parseInt(etMaxMoney.getText().toString())) {
                 ToastUtils.showShort(R.string.input_outrate1);
                 return;
             }
@@ -359,7 +360,7 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                     //出售总金额
                     holder.setText(R.id.tv_amount, totalPrice + "CNY");
                     //手续费
-                    if (poundage.equals("0") || TextUtils.isEmpty(poundage)) {
+                    if (TextUtils.isEmpty(poundage) || poundage.equals("0")) {
                         pos = "0";
                         holder.getView(R.id.tv_transactionFee).setVisibility(View.GONE);
                         holder.getView(R.id.tv_poundage).setVisibility(View.GONE);

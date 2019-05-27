@@ -244,14 +244,22 @@ public class GroupChatInformationActivity extends BaseActivity {
 
     /**
      * 管理群
+     * 群转让
      *
      * @param view
      */
     public void groupManagement(View view) {
-        Intent intent = new Intent(this, GroupManagementActivity.class);
-        intent.putExtra("groupId", group.getGroupInfo().getId());
-        intent.putExtra("isGameGroup", isGameGroup);
-        startActivity(intent);
+//        Intent intent = new Intent(this, GroupManagementActivity.class);
+//        intent.putExtra("groupId", group.getGroupInfo().getId());
+//        intent.putExtra("isGameGroup", isGameGroup);
+//        startActivity(intent);
+        if (!isGameGroup) {
+            Intent intent = new Intent(this, ChooseNewOwnerActivity.class);
+            intent.putExtra("groupId", group.getGroupInfo().getId());
+            startActivity(intent);
+        } else {
+            ToastUtils.showShort(getString(R.string.non_transferable));
+        }
     }
 
     /**

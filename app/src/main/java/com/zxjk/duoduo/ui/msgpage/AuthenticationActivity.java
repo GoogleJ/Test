@@ -49,7 +49,7 @@ import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 import okhttp3.RequestBody;
 
-import static com.zxjk.duoduo.Constant.appcode;
+import static com.zxjk.duoduo.Constant.APP_CODE;
 
 /**
  * *********************
@@ -201,7 +201,7 @@ public class AuthenticationActivity extends BaseActivity {
     private void cardBack() {
         RequestBody requestBody = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), body);
         Api api = ServiceFactory.getInstance().getNormalService("https://dm-51.data.aliyun.com/", Api.class);
-        api.getOCRBackResult(requestBody, "APPCODE " + appcode)
+        api.getOCRBackResult(requestBody, "APP_CODE " + APP_CODE)
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(bindToLifecycle())
                 .subscribe(cardBackBean -> {
@@ -217,7 +217,7 @@ public class AuthenticationActivity extends BaseActivity {
     private void cardFront() {
         RequestBody requestBody = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), body);
         Api api = ServiceFactory.getInstance().getNormalService("https://dm-51.data.aliyun.com/", Api.class);
-        api.getOCRResult(requestBody, "APPCODE " + appcode)
+        api.getOCRResult(requestBody, "APP_CODE " + APP_CODE)
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(bindToLifecycle())
                 .subscribe(cardFaceBean -> {
@@ -276,7 +276,7 @@ public class AuthenticationActivity extends BaseActivity {
         bean.setPictureReverse(reverseUrl);
         String dataStr = AesUtil.getInstance().encrypt(GsonUtils.toJson(bean));
         ServiceFactory.getInstance().getNormalService("http://phonethird.market.alicloudapi.com/", Api.class)
-                .getCertification(etIdCard.getText().toString(), Constant.currentUser.getMobile(), etName.getText().toString(), "APPCODE " + appcode)
+                .getCertification(etIdCard.getText().toString(), Constant.currentUser.getMobile(), etName.getText().toString(), "APP_CODE " + APP_CODE)
                 .flatMap((Function<AuditCertificationBean, Observable<String>>) auditCertificationBean -> {
                     if (auditCertificationBean.getStatus().equals("01")) {
                         return ServiceFactory.getInstance().getBaseService(Api.class)

@@ -14,20 +14,20 @@ import com.zxjk.duoduo.utils.GlideUtil;
  */
 public class SearchAdapter extends BaseQuickAdapter<FriendInfoResponse, BaseViewHolder> {
 
-    private Context context;
+    Context context;
 
     public SearchAdapter(Context context) {
-        super(R.layout.item_search);
-        this.context = context;
+        super(R.layout.item_consatnt_friend);
+        context = mContext;
     }
 
     @Override
     protected void convert(BaseViewHolder helper, FriendInfoResponse item) {
-        helper.setText(R.id.m_item_search_text, item.getNick())
-                .setText(R.id.m_item_search_dudu_id, context.getString(R.string.duoduo_id) + " " + item.getDuoduoId())
-                .addOnClickListener(R.id.m_item_search_layout);
-        ImageView heardImage = helper.getView(R.id.m_item_search_icon);
-        GlideUtil.loadCornerImg(heardImage, item.getHeadPortrait(), 5);
+        helper.setText(R.id.m_user_name, item.getNick())
+                .setText(R.id.m_singture_text, helper.itemView.getContext().getString(R.string.bank_real_name) + ":" + item.getRealname());
 
+
+        ImageView heardImage = helper.getView(R.id.m_constants_header_icon);
+        GlideUtil.loadCornerImg(heardImage, item.getHeadPortrait(), 5);
     }
 }
