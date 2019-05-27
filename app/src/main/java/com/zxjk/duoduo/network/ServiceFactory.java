@@ -149,10 +149,6 @@ public class ServiceFactory {
                     downloadListener.onStart(total);
                     if (is != null) {
                         File file = new File(Utils.getApp().getCacheDir(), version + ".apk");
-                        if (file.exists()) {
-                            downloadListener.onSuccess();
-                            return;
-                        }
                         fos = new FileOutputStream(file);
                         byte[] buf = new byte[1024];
                         int ch;
@@ -172,11 +168,13 @@ public class ServiceFactory {
                         if (is != null)
                             is.close();
                     } catch (IOException e) {
+                        downloadListener.onFailure();
                     }
                     try {
                         if (fos != null)
                             fos.close();
                     } catch (IOException e) {
+                        downloadListener.onFailure();
                     }
                 }
             }

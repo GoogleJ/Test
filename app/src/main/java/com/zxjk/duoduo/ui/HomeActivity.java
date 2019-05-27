@@ -78,11 +78,6 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        File file = new File(Utils.getApp().getCacheDir(), AppUtils.getAppVersionName() + ".apk");
-        if (file.exists()) {
-            file.delete();
-        }
-
         getVersion();
 
         initFriendList();
@@ -172,6 +167,11 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                     GetAppVersionResponse data = response.data;
                     String appVersionName = AppUtils.getAppVersionName();
 
+                    File file = new File(Utils.getApp().getCacheDir(), data.getVersion() + ".apk");
+                    if (file.exists()) {
+                        file.delete();
+                    }
+
                     if (!appVersionName.equals(data.getVersion())) {
                         NiceDialog.init().setLayoutId(R.layout.dialog_update).setConvertListener(new ViewConvertListener() {
                             @Override
@@ -214,6 +214,10 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                                         @Override
                                         public void onFailure() {
                                             runOnUiThread(() -> {
+                                                File file = new File(Utils.getApp().getCacheDir(), data.getVersion() + ".apk");
+                                                if (file.exists()) {
+                                                    file.delete();
+                                                }
                                                 tvUpdate.setClickable(true);
                                                 tvUpdate.setText(R.string.dianjichongshi);
                                             });

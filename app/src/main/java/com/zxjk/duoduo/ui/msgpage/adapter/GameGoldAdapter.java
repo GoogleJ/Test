@@ -124,8 +124,7 @@ public class GameGoldAdapter extends RecyclerView.Adapter<GameGoldAdapter.ViewHo
         void bindData(GetDuoBaoIntegralDetailsResponse bean) {
             if (bean.getTitle().equals("上分")) {
                 iv.setImageResource(R.drawable.ic_game_record_list10);
-            }
-            if (bean.getTitle().equals("下分")) {
+            } else if (bean.getTitle().equals("下分")) {
                 iv.setImageResource(R.drawable.ic_game_record_list7);
             } else {
                 iv.setImageResource(R.drawable.ic_jinduobao);
