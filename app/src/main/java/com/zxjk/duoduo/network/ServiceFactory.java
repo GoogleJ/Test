@@ -80,7 +80,8 @@ public class ServiceFactory {
                 .addInterceptor(interceptor).connectTimeout(10, TimeUnit.SECONDS)
                 .addInterceptor(chain -> {
                     Request original = chain.request();
-                    Request.Builder requestBuilder = original.newBuilder();
+                    Request.Builder requestBuilder = original.newBuilder()
+                            .header("Authorization", "APPCODE " + Constant.APP_CODE);
                     Request request = requestBuilder.build();
                     return chain.proceed(request);
                 })

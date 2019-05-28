@@ -4,10 +4,8 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -38,7 +36,6 @@ import com.zxjk.duoduo.utils.MMKVUtils;
 import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.Collections;
 
@@ -49,8 +46,6 @@ import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 import okhttp3.RequestBody;
 
-import static com.zxjk.duoduo.Constant.APP_CODE;
-
 /**
  * *********************
  * Administrator
@@ -58,7 +53,7 @@ import static com.zxjk.duoduo.Constant.APP_CODE;
  * 2019/5/23
  * *********************
  * 实名认证
- * 大陆大陆身份证信息
+ * 大陆身份证信息
  * *********************
  */
 public class AuthenticationActivity extends BaseActivity {
@@ -96,11 +91,10 @@ public class AuthenticationActivity extends BaseActivity {
     @BindView(R.id.rl_reverse)
     RelativeLayout rlReverse;
     //正面
-    String frontUrl;
+    String frontUrl = "";
     //反面
-    String reverseUrl;
+    String reverseUrl = "";
     String body = "";
-    Bitmap bitmap;
     public static final int REQUEST_TAKE = 1;
 
     public static final int REQUEST_ALBUM = 2;
@@ -153,31 +147,18 @@ public class AuthenticationActivity extends BaseActivity {
             }
         }
         if (!TextUtils.isEmpty(path)) {
-            String p = path;
             zipFile(Collections.singletonList(path), files -> {
                 File file = files.get(0);
                 OssUtils.uploadFile(file.getAbsolutePath(), url -> {
                     if (currentPictureFlag == 1) {
-                        frontUrl = url;
                         ivDefault1.setVisibility(View.GONE);
-                        GlideUtil.loadCornerImg(ivCardFront, frontUrl, 5);
-//                        bitmap = ImageUtils.getBitmap(file);
-//                        if (bitmap == null) {
-//                            ToastUtils.showShort("图片有误");
-//                            return;
-//                        }
+                        frontUrl = url;
                         data("face", url);
                         cardFront();
                     }
                     if (currentPictureFlag == 2) {
-                        reverseUrl = url;
                         ivDefault2.setVisibility(View.GONE);
-                        GlideUtil.loadCornerImg(ivCardReverse, reverseUrl, 5);
-//                        bitmap = ImageUtils.getBitmap(file);
-//                        if (bitmap == null) {
-//                            ToastUtils.showShort("图片有误");
-//                            return;
-//                        }
+                        reverseUrl = url;
                         data("back", url);
                         cardBack();
                     }
@@ -197,15 +178,17 @@ public class AuthenticationActivity extends BaseActivity {
         body = new Gson().toJson(bitMapBean);
     }
 
+    //身份证背面识别
     @SuppressLint({"CheckResult", "SetTextI18n"})
     private void cardBack() {
         RequestBody requestBody = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), body);
         Api api = ServiceFactory.getInstance().getNormalService("https://dm-51.data.aliyun.com/", Api.class);
-        api.getOCRBackResult(requestBody, "APP_CODE " + APP_CODE)
+        api.getOCRBackResult(requestBody)
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(bindToLifecycle())
                 .subscribe(cardBackBean -> {
                     if (cardBackBean.isSuccess()) {
+                        GlideUtil.loadCornerImg(ivCardReverse, reverseUrl, 5);
                         etIssuingAuthority.setText(cardBackBean.getIssue());
                         etValidTerm.setText(cardBackBean.getStart_date() + " - " + cardBackBean.getEnd_date());
                         rlReverse.setVisibility(View.VISIBLE);
@@ -213,34 +196,22 @@ public class AuthenticationActivity extends BaseActivity {
                 }, t -> ToastUtils.showShort(R.string.unknowerror));
     }
 
+    //身份证正面识别
     @SuppressLint("CheckResult")
     private void cardFront() {
         RequestBody requestBody = RequestBody.create(okhttp3.MediaType.parse("application/json;charset=UTF-8"), body);
         Api api = ServiceFactory.getInstance().getNormalService("https://dm-51.data.aliyun.com/", Api.class);
-        api.getOCRResult(requestBody, "APP_CODE " + APP_CODE)
+        api.getOCRResult(requestBody)
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(bindToLifecycle())
                 .subscribe(cardFaceBean -> {
                     if (cardFaceBean.isSuccess()) {
+                        GlideUtil.loadCornerImg(ivCardFront, frontUrl, 5);
                         etName.setText(cardFaceBean.getName());
                         etIdCard.setText(cardFaceBean.getNum());
                         rlFront.setVisibility(View.VISIBLE);
                     }
                 }, t -> ToastUtils.showShort(R.string.unknowerror));
-    }
-
-    /**
-     * 将Bitmap转换成Base64字符串
-     *
-     * @param bitmap
-     * @return
-     */
-    public static String bitmapToBase64(Bitmap bitmap) {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);//参数100表示不压缩
-        byte[] bytes = bos.toByteArray();
-        //转换来的base64码需要加前缀，必须是NO_WRAP参数，表示没有空格。
-        return Base64.encodeToString(bytes, Base64.NO_WRAP);
     }
 
     @OnClick({R.id.rl_back, R.id.tv_submit})
@@ -262,7 +233,8 @@ public class AuthenticationActivity extends BaseActivity {
         if (TextUtils.isEmpty(etIdCard.getText().toString()) ||
                 TextUtils.isEmpty(etName.getText().toString()) ||
                 TextUtils.isEmpty(frontUrl) ||
-                TextUtils.isEmpty(reverseUrl) || TextUtils.isEmpty(etIssuingAuthority.getText().toString()) ||
+                TextUtils.isEmpty(reverseUrl) ||
+                TextUtils.isEmpty(etIssuingAuthority.getText().toString()) ||
                 TextUtils.isEmpty(etValidTerm.getText().toString())) {
             ToastUtils.showShort("请检查信息是否完整");
             return;
@@ -276,7 +248,7 @@ public class AuthenticationActivity extends BaseActivity {
         bean.setPictureReverse(reverseUrl);
         String dataStr = AesUtil.getInstance().encrypt(GsonUtils.toJson(bean));
         ServiceFactory.getInstance().getNormalService("http://phonethird.market.alicloudapi.com/", Api.class)
-                .getCertification(etIdCard.getText().toString(), Constant.currentUser.getMobile(), etName.getText().toString(), "APP_CODE " + APP_CODE)
+                .getCertification(etIdCard.getText().toString(), Constant.currentUser.getMobile(), etName.getText().toString())
                 .flatMap((Function<AuditCertificationBean, Observable<String>>) auditCertificationBean -> {
                     if (auditCertificationBean.getStatus().equals("01")) {
                         return ServiceFactory.getInstance().getBaseService(Api.class)

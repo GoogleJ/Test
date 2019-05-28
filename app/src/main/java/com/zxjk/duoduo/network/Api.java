@@ -58,7 +58,6 @@ import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -586,13 +585,13 @@ public interface Api {
     Observable<BaseResponse<String>> groupGamebettingForDuobao(@Field("data") String data);
 
     @POST("rest/160601/ocr/ocr_idcard.json")
-    Observable<CardFaceBean> getOCRResult(@Body RequestBody body, @Header("Authorization") String authorization);
+    Observable<CardFaceBean> getOCRResult(@Body RequestBody body);
 
     @POST("rest/160601/ocr/ocr_idcard.json")
-    Observable<CardBackBean> getOCRBackResult(@Body RequestBody body, @Header("Authorization") String authorization);
+    Observable<CardBackBean> getOCRBackResult(@Body RequestBody body);
 
     @GET("mobileCheck")
-    Observable<AuditCertificationBean> getCertification(@Query("idCard") String idCard, @Query("mobile") String mobile, @Query("name") String name, @Header("Authorization") String authorization);
+    Observable<AuditCertificationBean> getCertification(@Query("idCard") String idCard, @Query("mobile") String mobile, @Query("name") String name);
 
 
     @POST("duoduo/group/game/getDuoBaoIntegralDetails")
