@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.minepage.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,27 +66,79 @@ public class DetailListAdapter extends RecyclerView.Adapter<DetailListAdapter.Vi
             tvItemDetaillistMoney = itemView.findViewById(R.id.tvItemDetaillistMoney);
         }
 
+        @SuppressLint("SetTextI18n")
         private void bindData(DetailListResposne bean) {
             tvItemDetaillistTime.setText(DataUtils.timeStamp2Date(Long.parseLong(bean.getCreateTime()), "yyyy-MM-dd HH:mm:ss"));
             tvItemDetaillistMoney.setText(DataUtils.getTwoDecimals(bean.getHk()));
-            if (bean.getSource() == 0 || bean.getSource() == 2) {
-                ivItemDetaillist.setImageResource(R.drawable.ic_detail_item_type1);
-                tvItemDetaillistName.setText(R.string.red_packet);
-            } else if (bean.getSource() == 1) {
-                ivItemDetaillist.setImageResource(R.drawable.ic_detail_item_type2);
-                tvItemDetaillistName.setText(R.string.transfer);
-            } else if (bean.getSource() == 8 || bean.getSource() == 9 || bean.getSource() == -9) {
-                ivItemDetaillist.setImageResource(R.drawable.ic_detail_item_type3);
-                tvItemDetaillistName.setText(R.string.huazhuan);
-            } else if (bean.getSource() == 4) {
-                ivItemDetaillist.setImageResource(R.drawable.ic_detail_item_type4);
-                tvItemDetaillistName.setText(R.string.chushou);
-            } else if (bean.getSource() == 5) {
-                ivItemDetaillist.setImageResource(R.drawable.ic_detail_item_type6);
-                tvItemDetaillistName.setText(R.string.dingdanchexiao);
-            } else {
-                ivItemDetaillist.setImageResource(R.drawable.ic_detail_item_type5);
-                tvItemDetaillistName.setText(R.string.others);
+            switch (bean.getSource()) {
+                case 0:
+                    ivItemDetaillist.setImageResource(R.drawable.ic_type0);
+                    tvItemDetaillistName.setText("红包");
+                    break;
+                case 1:
+                    ivItemDetaillist.setImageResource(R.drawable.ic_type1);
+                    tvItemDetaillistName.setText("转账");
+                    break;
+                case 2:
+                    ivItemDetaillist.setImageResource(R.drawable.ic_type2);
+                    tvItemDetaillistName.setText("红包退还");
+                    break;
+                case 3:
+                    ivItemDetaillist.setImageResource(R.drawable.ic_type3);
+                    tvItemDetaillistName.setText("游戏上分");
+                    break;
+                case 4:
+                    ivItemDetaillist.setImageResource(R.drawable.ic_type4);
+                    tvItemDetaillistName.setText("挂单出售");
+                    break;
+                case 5:
+                    ivItemDetaillist.setImageResource(R.drawable.ic_type5);
+                    tvItemDetaillistName.setText("撤销订单");
+                    break;
+                case 6:
+                    ivItemDetaillist.setImageResource(R.drawable.ic_type6);
+                    tvItemDetaillistName.setText("买入HK");
+                    break;
+                case -3:
+                    ivItemDetaillist.setImageResource(R.drawable.ic_type03);
+                    tvItemDetaillistName.setText("游戏下分");
+                    break;
+                case 7:
+                    ivItemDetaillist.setImageResource(R.drawable.ic_type7_12_13);
+                    tvItemDetaillistName.setText("群主下分手续费收取");
+                    break;
+                case 8:
+                    ivItemDetaillist.setImageResource(R.drawable.ic_type8_9_09);
+                    tvItemDetaillistName.setText("HKB转HK");
+                    break;
+                case 9:
+                    ivItemDetaillist.setImageResource(R.drawable.ic_type8_9_09);
+                    tvItemDetaillistName.setText("HK转HKB");
+                    break;
+                case -9:
+                    ivItemDetaillist.setImageResource(R.drawable.ic_type8_9_09);
+                    tvItemDetaillistName.setText("HK转HKB失败");
+                    break;
+                case 10:
+                    ivItemDetaillist.setImageResource(R.drawable.ic_type10);
+                    tvItemDetaillistName.setText("申诉退回");
+                    break;
+                case 11:
+                    ivItemDetaillist.setImageResource(R.drawable.ic_type11);
+                    tvItemDetaillistName.setText("注册赠送");
+                    break;
+                case 12:
+                    ivItemDetaillist.setImageResource(R.drawable.ic_type7_12_13);
+                    tvItemDetaillistName.setText("HK转HKB手续费");
+                    break;
+                case 13:
+                    ivItemDetaillist.setImageResource(R.drawable.ic_type7_12_13);
+                    tvItemDetaillistName.setText("交易所手续费收取");
+                    break;
+                default:
+                    ivItemDetaillist.setImageResource(R.drawable.ic_detail_item_type5);
+                    tvItemDetaillistName.setText("其他");
+                    break;
             }
         }
     }
