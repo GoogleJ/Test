@@ -66,17 +66,18 @@ public class ExpiredEnvelopesDialog extends Dialog {
         GlideUtil.loadCornerImg(m_transfer_envelopes_heard, userInfo.getPortraitUri().toString(), 5);
         m_red_envelopes_user.setText(userInfo.getName() + context.getString(R.string.dehongbao));
 
+        m_expired_envelopes_info.setOnClickListener(v -> {
+            Intent intent1 = new Intent(context, PeopleUnaccalimedActivity.class);
+            intent1.putExtra("id", redId);
+            intent1.putExtra("isShow", false);
+            context.startActivity(intent1);
+            dismiss();
+        });
+
         if (!isExpired) {
             m_expired_envelopes_text.setText(R.string.red_packet_tips2);
-            m_expired_envelopes_info.setVisibility(View.VISIBLE);
-            m_expired_envelopes_info.setOnClickListener(v -> {
-                Intent intent1 = new Intent(context, PeopleUnaccalimedActivity.class);
-                intent1.putExtra("id", redId);
-                intent1.putExtra("isShow", false);
-                context.startActivity(intent1);
-                dismiss();
-            });
         }
+
         show();
     }
 

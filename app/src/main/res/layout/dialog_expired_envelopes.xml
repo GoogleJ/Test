@@ -84,8 +84,7 @@
                 android:padding="8dp"
                 android:text="@string/m_expired_envelopes_info"
                 android:textColor="@color/white"
-                android:textSize="15sp"
-                android:visibility="gone" />
+                android:textSize="15sp" />
 
         </RelativeLayout>
 

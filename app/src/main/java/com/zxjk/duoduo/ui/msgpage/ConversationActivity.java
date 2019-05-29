@@ -529,9 +529,11 @@ public class ConversationActivity extends BaseActivity {
                                 extension.addPlugin(new GameRecordPlugin());
                                 extension.addPlugin(new GameDownScorePlugin());
                                 GameRulesPlugin gameRulesPlugin = new GameRulesPlugin();
-                                if (groupInfo.getGroupInfo().getGameType().equals("4") && !groupInfo.getGroupInfo().getGroupOwnerId().equals(Constant.userId)) {
+                                if (groupInfo.getGroupInfo().getGameType().equals("4")) {
                                     //多宝群
-                                    extension.addPlugin(new GameDuobaoPlugin());
+                                    if (!groupInfo.getGroupInfo().getGroupOwnerId().equals(Constant.userId)) {
+                                        extension.addPlugin(new GameDuobaoPlugin());
+                                    }
                                     gameRulesPlugin.duobao = "true";
                                 } else if (!groupInfo.getGroupInfo().getGameType().equals("4") && groupInfo.getGroupInfo().getGroupOwnerId().equals(Constant.userId)) {
                                     //普通游戏群 只有群主才能开始下注
