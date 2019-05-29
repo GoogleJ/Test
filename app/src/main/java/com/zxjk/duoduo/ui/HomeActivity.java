@@ -19,6 +19,7 @@ import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
+import com.blankj.utilcode.util.VibrateUtils;
 import com.shehuan.nicedialog.BaseNiceDialog;
 import com.shehuan.nicedialog.NiceDialog;
 import com.shehuan.nicedialog.ViewConvertListener;
@@ -344,6 +345,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
     }
 
     private void switchFragment(Fragment fragment) {
+        VibrateUtils.vibrate(50);
         //判断当前显示的Fragment是不是切换的Fragment
         if (mFragment != fragment) {
             //判断切换的Fragment是否已经添加过
