@@ -6,7 +6,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.network.ReleasePurchase;
 import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.utils.DataUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,7 +21,6 @@ import butterknife.OnClick;
  * 2019/5/22
  * *********************
  * 订单正在申诉
- * 订单申诉失败
  * 订单申诉成功
  * *********************
  */
@@ -61,6 +62,12 @@ public class OrderComplaintActivity extends BaseActivity {
     TextView tv8;
     @BindView(R.id.tv_complaintResults)
     TextView tvComplaintResults;
+    //申诉类型
+    @BindView(R.id.tv_appealType)
+    TextView tvAppealType;
+
+    private ReleasePurchase data;
+    private String rate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,25 +81,41 @@ public class OrderComplaintActivity extends BaseActivity {
 
     private void initView() {
         tvTitle.setText("订单申诉");
-
-        tvComplaint.setText("订单正在申诉");
-        ivComplaint.setImageResource(R.drawable.icon_pending);
-        tv7.setVisibility(View.GONE);
-        tvProcessingTime.setVisibility(View.GONE);
-        tv8.setVisibility(View.GONE);
-        tvComplaintResults.setVisibility(View.GONE);
-
-        tvComplaint.setText("订单申诉失败");
-        ivComplaint.setImageResource(R.drawable.icon_transfer_failed);
-
-        tvComplaint.setText("订单申诉完成");
-        ivComplaint.setImageResource(R.drawable.icon_transfer_successful);
-
-
+        data = (ReleasePurchase) getIntent().getSerializableExtra("data");
+        rate = getIntent().getStringExtra("rate");
+        switch (data.getStatus()) {
+            case "6":
+                tvComplaint.setText("订单正在申诉");
+                ivComplaint.setImageResource(R.drawable.icon_pending);
+                tv7.setVisibility(View.GONE);
+                tvProcessingTime.setVisibility(View.GONE);
+                tv8.setVisibility(View.GONE);
+                tvComplaintResults.setVisibility(View.GONE);
+                break;
+            case "4":
+                tvComplaint.setText("订单申诉完成");
+                ivComplaint.setImageResource(R.drawable.icon_transfer_successful);
+                break;
+        }
     }
 
     private void initData() {
-
+        //交易单号
+        tvTransactionNumber.setText(data.getBothOrderId());
+        //申诉人
+        tvPlaintiff.setText(data.getPlaintiffNick());
+        //被申诉人
+        tvByPlaintiff.setText(data.getIndicteeNick());
+        //数量
+        tvNumber.setText(data.getNumber());
+        //金额
+        tvAmount.setText(DataUtils.getTwoDecimals(data.getMoney()));
+        //申诉类型
+        tvAppealType.setText(data.getAppealType());
+        //处理时间
+        tvProcessingTime.setText(DataUtils.timeStamp2Date(Long.parseLong(data.getCreateTime()), "yyyy-MM-dd HH:mm:ss"));
+        //申诉结果
+        tvComplaintResults.setText(data.getProcessResult());
     }
 
     @OnClick({R.id.rl_back, R.id.iv_proofComplaint})
@@ -104,6 +127,7 @@ public class OrderComplaintActivity extends BaseActivity {
                 break;
             //查看凭证
             case R.id.iv_proofComplaint:
+
                 break;
         }
     }

@@ -15,7 +15,7 @@ public class ShenSuRequest {
      * pictureThree : https://zhongxingjike.oss-cn-hongkong.aliyuncs.com/upload/FC888443-8DAF-4501-B7A7-5EAD7139657A.jpg
      * contact : 17792249637
      */
-
+    private String appealType;
     private String plaintiffId;
     private String plaintiffDuoduoId;
     private String indicteeId;
@@ -27,6 +27,14 @@ public class ShenSuRequest {
     private String pictureTwo;
     private String pictureThree;
     private String contact;
+
+    public String getAppealType() {
+        return appealType;
+    }
+
+    public void setAppealType(String appealType) {
+        this.appealType = appealType;
+    }
 
     public String getPlaintiffId() {
         return plaintiffId;

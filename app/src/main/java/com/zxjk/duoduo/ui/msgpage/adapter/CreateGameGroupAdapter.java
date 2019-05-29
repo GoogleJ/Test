@@ -564,6 +564,7 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         EditText editText = holder.getView(R.id.et_content);
                         DecimalFormat df = new DecimalFormat("0.0000");
                         editText.setHint(df.format(Float.parseFloat(data.get(adapterPosition - 1).getCommission())));
+
                         holder.setOnClickListener(R.id.tv_cancel, v1 -> dialog.dismiss());
                         holder.setOnClickListener(R.id.tv_notarize, v -> {
                             String trim = editText.getText().toString().trim();
@@ -572,7 +573,10 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                                 return;
                             }
                             try {
-                                Float.parseFloat(trim);
+                                if (Float.parseFloat(trim) < 0 || Float.parseFloat(trim) > 1) {
+                                    ToastUtils.showShort("请输入0到1之间的数字");
+                                    return;
+                                }
                                 data.get(adapterPosition - 1).setCommission(trim);
                                 notifyItemChanged(adapterPosition);
                             } catch (Exception e) {

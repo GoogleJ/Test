@@ -142,12 +142,16 @@ public class ExchangeListActivity extends BaseActivity {
                 data.setUnSaledNum(g.getUnSaledNum());//出售剩余数量
                 data.setCurrency(g.getCurrency());
                 data.setSellOrderId(g.getSellOrderId());
-
                 intent.putExtra("data", data);
                 intent.putExtra("rate", rate);
             } else if (g.getStatus().equals("4")) {
-                //todo 申诉
-                intent = new Intent(this, ExchangeOrderFailedActivity.class);
+                //申诉完成
+                intent = new Intent(this, OrderComplaintActivity.class);
+                intent.putExtra("data", g);
+                intent.putExtra("rate", rate);
+            } else if (g.getStatus().equals("6")) {
+                //申诉中
+                intent = new Intent(this, OrderComplaintActivity.class);
                 intent.putExtra("data", g);
                 intent.putExtra("rate", rate);
             } else {
@@ -212,11 +216,14 @@ public class ExchangeListActivity extends BaseActivity {
                     List<GetOverOrderResponse> temp = new ArrayList<>();
                     for (GetOverOrderResponse r : getOverOrderResponses) {
                         if (flag == 1) {
-                            if (r.getStatus().equals("3") || r.getStatus().equals("5")) {
+                            if (r.getStatus().equals("3") || r.getStatus().equals("5") || r.getStatus().equals("6")) {
                                 temp.add(r);
                             }
-                        } else if (flag == 2 && !r.getStatus().equals("3") && !r.getStatus().equals("5")) {
-                            temp.add(r);
+                        } else if (flag == 2) {
+                            if (r.getStatus().equals("0") || r.getStatus().equals("1") ||
+                                    r.getStatus().equals("2") || r.getStatus().equals("4")) {
+                                temp.add(r);
+                            }
                         }
                     }
                     mAdapter.setNewData(temp);

@@ -29,6 +29,8 @@ public class ExchangeOrderFailedActivity extends AppCompatActivity {
     private TextView tvConfirmSaleTotalPrice;
     private ImageView iv_wechat, iv_alipay, iv_bank;
 
+    String rate = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +49,7 @@ public class ExchangeOrderFailedActivity extends AppCompatActivity {
         iv_wechat = findViewById(R.id.iv_wechat);
         iv_alipay = findViewById(R.id.iv_alipay);
         iv_bank = findViewById(R.id.iv_bank);
-
+        rate = getIntent().getStringExtra("rate");
         GetOverOrderResponse data = (GetOverOrderResponse) getIntent().getSerializableExtra("data");
         tvConfirmSaleOrderId.setText(TextUtils.isEmpty(data.getBothOrderId()) ? (TextUtils.isEmpty(data.getSellOrderId()) ?
                 data.getBuyOrderId() : data.getSellOrderId()) : data.getBothOrderId());
@@ -75,6 +77,7 @@ public class ExchangeOrderFailedActivity extends AppCompatActivity {
             case R.id.tv_end:
                 Intent intent = new Intent(this, ShenSuActivity.class);
                 intent.putExtra("data", getIntent().getSerializableExtra("data"));
+                intent.putExtra("rate", rate);
                 startActivity(intent);
                 break;
         }

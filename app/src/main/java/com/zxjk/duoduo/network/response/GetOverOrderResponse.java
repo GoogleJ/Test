@@ -72,6 +72,42 @@ public class GetOverOrderResponse implements Serializable {
     private String saledNum;
     private String unSaledNum;
     private String mobile;
+    private String plaintiffNick;
+    private String indicteeNick;
+    private String appealType;
+    private String processResult;
+
+    public String getPlaintiffNick() {
+        return plaintiffNick;
+    }
+
+    public void setPlaintiffNick(String plaintiffNick) {
+        this.plaintiffNick = plaintiffNick;
+    }
+
+    public String getIndicteeNick() {
+        return indicteeNick;
+    }
+
+    public void setIndicteeNick(String indicteeNick) {
+        this.indicteeNick = indicteeNick;
+    }
+
+    public String getAppealType() {
+        return appealType;
+    }
+
+    public void setAppealType(String appealType) {
+        this.appealType = appealType;
+    }
+
+    public String getProcessResult() {
+        return processResult;
+    }
+
+    public void setProcessResult(String processResult) {
+        this.processResult = processResult;
+    }
 
     public String getId() {
         return id;

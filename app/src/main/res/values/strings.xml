@@ -658,7 +658,7 @@
     <string name="shensu">申诉</string>
     <string name="paytype1">付款方式</string>
     <string name="input_shensu">请填写您需要申诉的信息...</string>
-    <string name="uploadSign">上传凭证:</string>
+    <string name="uploadSign">上传凭证（不超过三张）</string>
     <string name="uploadSignTip">（不超过三张）</string>
     <string name="input_reason">请填写申诉信息</string>
     <string name="report">举报</string>

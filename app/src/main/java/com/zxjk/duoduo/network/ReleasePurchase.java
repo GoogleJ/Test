@@ -35,6 +35,10 @@ public class ReleasePurchase implements Serializable {
      * exchangeFee :
      */
 
+    private String buyDuoduoId;
+    private String sellDuoduoId;
+    private String buyNick;
+    private String sellNick;
     private String id;
     private int customerId;
     private String duoduoId;
@@ -63,6 +67,74 @@ public class ReleasePurchase implements Serializable {
     private String isSystem;
     private String exchangeFee;
     private String unSaledNum;
+    private String plaintiffNick;
+    private String indicteeNick;
+    private String appealType;
+    private String processResult;
+
+    public String getPlaintiffNick() {
+        return plaintiffNick;
+    }
+
+    public void setPlaintiffNick(String plaintiffNick) {
+        this.plaintiffNick = plaintiffNick;
+    }
+
+    public String getIndicteeNick() {
+        return indicteeNick;
+    }
+
+    public void setIndicteeNick(String indicteeNick) {
+        this.indicteeNick = indicteeNick;
+    }
+
+    public String getAppealType() {
+        return appealType;
+    }
+
+    public void setAppealType(String appealType) {
+        this.appealType = appealType;
+    }
+
+    public String getProcessResult() {
+        return processResult;
+    }
+
+    public void setProcessResult(String processResult) {
+        this.processResult = processResult;
+    }
+
+    public String getBuyDuoduoId() {
+        return buyDuoduoId;
+    }
+
+    public void setBuyDuoduoId(String buyDuoduoId) {
+        this.buyDuoduoId = buyDuoduoId;
+    }
+
+    public String getSellDuoduoId() {
+        return sellDuoduoId;
+    }
+
+    public void setSellDuoduoId(String sellDuoduoId) {
+        this.sellDuoduoId = sellDuoduoId;
+    }
+
+    public String getBuyNick() {
+        return buyNick;
+    }
+
+    public void setBuyNick(String buyNick) {
+        this.buyNick = buyNick;
+    }
+
+    public String getSellNick() {
+        return sellNick;
+    }
+
+    public void setSellNick(String sellNick) {
+        this.sellNick = sellNick;
+    }
 
     public String getUnSaledNum() {
         return unSaledNum;

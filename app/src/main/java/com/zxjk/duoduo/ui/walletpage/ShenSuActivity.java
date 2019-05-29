@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -68,13 +69,17 @@ public class ShenSuActivity extends BaseActivity {
     private String url2 = "";
     private String url3 = "";
     private int currentImg = 1;
+    private String appealType = "";
 
 
     private ImageView ivadd1, ivadd2, ivadd3;
 
+    private TextView tv_appealType;
+
 
     private static final int REQUEST_TAKE = 1;
     private static final int REQUEST_ALBUM = 2;
+    String rate = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +87,7 @@ public class ShenSuActivity extends BaseActivity {
         setContentView(R.layout.activity_shen_su);
         ButterKnife.bind(this);
         tvTitle.setText(getString(R.string.shensu));
+        rate = getIntent().getStringExtra("rate");
         ivadd1 = findViewById(R.id.iv_add1);
         ivadd2 = findViewById(R.id.iv_add2);
         ivadd3 = findViewById(R.id.iv_add3);
@@ -98,6 +104,10 @@ public class ShenSuActivity extends BaseActivity {
         fl3 = findViewById(R.id.fl3);
         iv3 = findViewById(R.id.iv3);
         ivedit3 = findViewById(R.id.ivedit3);
+
+        tv_appealType = findViewById(R.id.tv_appealType);
+        RelativeLayout rl_appealType = findViewById(R.id.rl_appealType);
+
 
         iv1.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
             ViewGroup.LayoutParams layoutParams = llContainer.getLayoutParams();
@@ -140,6 +150,72 @@ public class ShenSuActivity extends BaseActivity {
 
             }
         });
+
+        rl_appealType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                appealType();
+
+            }
+        });
+    }
+
+    private void appealType() {
+        NiceDialog.init().setLayoutId(R.layout.layout_general_dialog12).setConvertListener(new ViewConvertListener() {
+            @Override
+            protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                holder.setOnClickListener(R.id.tv_appealType0, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        appealType = "0";
+                        dialog.dismiss();
+                        tv_appealType.setText("恶意买卖");
+                    }
+                });
+                holder.setOnClickListener(R.id.tv_appealType1, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        appealType = "1";
+                        dialog.dismiss();
+                        tv_appealType.setText("买家未付款");
+                    }
+                });
+                holder.setOnClickListener(R.id.tv_appealType2, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        appealType = "2";
+                        dialog.dismiss();
+                        tv_appealType.setText("卖家不释放币");
+                    }
+                });
+                holder.setOnClickListener(R.id.tv_appealType3, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        appealType = "3";
+                        dialog.dismiss();
+                        tv_appealType.setText("长时间无回应");
+                    }
+                });
+                holder.setOnClickListener(R.id.tv_appealType4, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        appealType = "4";
+                        dialog.dismiss();
+                        tv_appealType.setText("其它");
+                    }
+                });
+                holder.setOnClickListener(R.id.rl_close, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+            }
+        }).setShowBottom(true)
+                .setOutCancel(false)
+                .setDimAmount(0.5f)
+                .show(getSupportFragmentManager());
     }
 
     //提交
@@ -149,34 +225,36 @@ public class ShenSuActivity extends BaseActivity {
             ToastUtils.showShort(R.string.input_reason);
             return;
         }
+
+        if (TextUtils.isEmpty(tv_appealType.getText().toString().trim())) {
+            ToastUtils.showShort("请选择申诉类型");
+            return;
+        }
+
         if (TextUtils.isEmpty(url1)) {
             ToastUtils.showShort(R.string.upload_picture);
             return;
         }
 
         GetOverOrderResponse data = (GetOverOrderResponse) getIntent().getSerializableExtra("data");
-
         ShenSuRequest request = new ShenSuRequest();
-        request.setAppealReason(et.getText().toString().trim());
-        request.setBothOrderId(data.getBothOrderId());
-        request.setContact(Constant.currentUser.getMobile());
-        request.setPlaintiffId(Constant.currentUser.getId());
+        request.setPlaintiffId(Constant.userId);
         request.setPlaintiffDuoduoId(Constant.currentUser.getDuoduoId());
+        request.setBothOrderId(data.getBothOrderId());
+        request.setAppealReason(et.getText().toString().trim());
         request.setCurrency(data.getCurrency());
         request.setPictureOne(url1);
         request.setPictureTwo(url2);
         request.setPictureThree(url3);
-
-
+        request.setContact(Constant.currentUser.getMobile());
+        request.setAppealType(appealType);
         if (Constant.userId.equals(data.getSellId())) {
             request.setIndicteeId(data.getBuyId());
             request.setIndicteeDuoduoId(data.getBuyDuoduoId());
-
         } else {
             request.setIndicteeId(data.getSellId());
             request.setIndicteeDuoduoId(data.getSellDuoduoId());
         }
-
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .addAppeal(new Gson().toJson(request))
                 .compose(bindToLifecycle())
@@ -184,8 +262,9 @@ public class ShenSuActivity extends BaseActivity {
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .subscribe(s -> {
                     ToastUtils.showShort(getString(R.string.shensu_success));
-                    Intent intent = new Intent(this, ExchangeActivity.class);
+                    Intent intent = new Intent(this, ExchangeListActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.putExtra("rate", rate);
                     startActivity(intent);
                 }, this::handleApiError);
     }
