@@ -7,6 +7,7 @@
     <include layout="@layout/layout_title_back" />
 
     <LinearLayout
+        android:id="@+id/llTop"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:gravity="center"

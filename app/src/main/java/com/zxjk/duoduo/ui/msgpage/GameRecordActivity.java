@@ -99,6 +99,7 @@ public class GameRecordActivity extends BaseActivity {
                     }
                     GameRecordDaiLiFragment fragment2 = new GameRecordDaiLiFragment();
                     fragment2.groupId = groupId;
+                    fragment2.groupResponse = groupResponse;
                     return fragment2;
                 }
             }

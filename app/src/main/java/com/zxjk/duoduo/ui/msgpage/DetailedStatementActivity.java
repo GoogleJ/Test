@@ -2,6 +2,8 @@ package com.zxjk.duoduo.ui.msgpage;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,6 +32,7 @@ public class DetailedStatementActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private TextView tv_currentDirectPer, tv_currentTeamPer;
     private String groupId, currentDirectPer, currentTeamPer;
+    private LinearLayout llTop;
 
     private int page = 1;
     private int offset = 15;
@@ -68,13 +71,12 @@ public class DetailedStatementActivity extends BaseActivity {
                 }
             }
         });
-
     }
-
 
     @SuppressLint("SetTextI18n")
     private void initView() {
         TextView tv_title = findViewById(R.id.tv_title);
+        llTop = findViewById(R.id.llTop);
         tv_title.setText(getString(R.string.detailed_statement));
         groupId = getIntent().getStringExtra("groupId");
         currentDirectPer = getIntent().getStringExtra("currentDirectPer");
@@ -93,8 +95,8 @@ public class DetailedStatementActivity extends BaseActivity {
             initData();
             swipeRefreshLayout.setRefreshing(false);
         });
+        llTop.setVisibility(getIntent().getBooleanExtra("duobao", false) ? View.GONE : View.VISIBLE);
     }
-
 
     private void initData() {
         ServiceFactory.getInstance().getBaseService(Api.class)
@@ -125,7 +127,5 @@ public class DetailedStatementActivity extends BaseActivity {
                     swipeRefreshLayout.setRefreshing(false);
 
                 });
-
-
     }
 }

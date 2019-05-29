@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import androidx.annotation.Nullable;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.utils.CommonUtils;
@@ -28,6 +30,7 @@ import java.text.DecimalFormat;
 public class GameRecordDaiLiFragment extends BaseFragment {
 
     public String groupId;
+    public GroupResponse groupResponse;
     private boolean hasInitData = false;
 
     private TextView tvDaiLi;
@@ -37,6 +40,7 @@ public class GameRecordDaiLiFragment extends BaseFragment {
     private TextView tv_totalRevenue;//总收益
     private TextView tv_totalTeamMembers;//团队总人数
     private TextView tv_KeepPushingNumber;//直推人数
+    private LinearLayout ll_myGroup;
     private DecimalFormat df = new DecimalFormat("0.00%");
 
     @Nullable
@@ -51,6 +55,11 @@ public class GameRecordDaiLiFragment extends BaseFragment {
         tv_totalRevenue = rootView.findViewById(R.id.tv_totalRevenue);
         tv_totalTeamMembers = rootView.findViewById(R.id.tv_totalTeamMembers);
         tv_KeepPushingNumber = rootView.findViewById(R.id.tv_KeepPushingNumber);
+        ll_myGroup = rootView.findViewById(R.id.ll_myGroup);
+
+        if (groupResponse.getGroupInfo().getGameType().equals("4")) {
+            ll_myGroup.setVisibility(View.GONE);
+        }
 
         return rootView;
     }
@@ -79,11 +88,13 @@ public class GameRecordDaiLiFragment extends BaseFragment {
                     tv_KeepPushingNumber.setText(response.getDirectNum());
 
                     //我的代理
-                    rootView.findViewById(R.id.ll_myAgency).setOnClickListener(v -> {
-                        Intent intent = new Intent(getActivity(), AgentBenefitActivity.class);
-                        intent.putExtra("groupId", response.getGroupId());
-                        startActivity(intent);
-                    });
+                    if (!groupResponse.getGroupInfo().getGameType().equals("4")) {
+                        rootView.findViewById(R.id.ll_myAgency).setOnClickListener(v -> {
+                            Intent intent = new Intent(getActivity(), AgentBenefitActivity.class);
+                            intent.putExtra("groupId", response.getGroupId());
+                            startActivity(intent);
+                        });
+                    }
                     //上周收益
                     rootView.findViewById(R.id.ll_lastEarnings).setOnClickListener(v -> {
                         Intent intent = new Intent(getActivity(), ExtractRewardActivity.class);
@@ -96,6 +107,7 @@ public class GameRecordDaiLiFragment extends BaseFragment {
                         intent.putExtra("groupId", response.getGroupId());
                         intent.putExtra("currentDirectPer", response.getCurrentDirectPer());
                         intent.putExtra("currentTeamPer", response.getCurrentTeamPer());
+                        intent.putExtra("duobao", groupResponse.getGroupInfo().getGameType().equals("4"));
                         startActivity(intent);
                     });
                     //我的团队
