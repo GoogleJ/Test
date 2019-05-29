@@ -15,7 +15,12 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.GsonUtils;
+import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.shehuan.nicedialog.BaseNiceDialog;
+import com.shehuan.nicedialog.NiceDialog;
+import com.shehuan.nicedialog.ViewConvertListener;
+import com.shehuan.nicedialog.ViewHolder;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -24,7 +29,6 @@ import com.zxjk.duoduo.network.response.LoginResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.MyQrCodeActivity;
-import com.zxjk.duoduo.ui.widget.dialog.BottomDialog;
 import com.zxjk.duoduo.ui.widget.dialog.ChooseSexDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
@@ -164,7 +168,7 @@ public class UserInfoActivity extends BaseActivity {
 
         getPermisson(rl_headPortrait, result -> {
             if (result) {
-                BottomDialog.dialogType(this, REQUEST_TAKE, REQUEST_ALBUM);
+                dialogType();
             }
         }, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
@@ -204,7 +208,6 @@ public class UserInfoActivity extends BaseActivity {
         intent.putExtra(type, changeEmail);
         startActivity(intent);
     }
-
 
 
     @Override
@@ -247,5 +250,30 @@ public class UserInfoActivity extends BaseActivity {
                 });
             });
         }
+    }
+
+    private void dialogType() {
+        KeyboardUtils.hideSoftInput(UserInfoActivity.this);
+        NiceDialog.init().setLayoutId(R.layout.layout_general_dialog6).setConvertListener(new ViewConvertListener() {
+            @Override
+            protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                //拍照
+                holder.setOnClickListener(R.id.tv_photograph, v -> {
+                    dialog.dismiss();
+                    TakePicUtil.takePicture(UserInfoActivity.this, REQUEST_TAKE);
+                });
+                //相册选择
+                holder.setOnClickListener(R.id.tv_photo_select, v -> {
+                    dialog.dismiss();
+                    TakePicUtil.albumPhoto(UserInfoActivity.this, REQUEST_ALBUM);
+                });
+                //取消
+                holder.setOnClickListener(R.id.tv_cancel, v -> dialog.dismiss());
+
+            }
+        }).setShowBottom(true)
+                .setOutCancel(true)
+                .setDimAmount(0.5f)
+                .show(getSupportFragmentManager());
     }
 }

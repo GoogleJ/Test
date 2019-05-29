@@ -16,6 +16,10 @@ import androidx.annotation.Nullable;
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.shehuan.nicedialog.BaseNiceDialog;
+import com.shehuan.nicedialog.NiceDialog;
+import com.shehuan.nicedialog.ViewConvertListener;
+import com.shehuan.nicedialog.ViewHolder;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.VerifiedBean;
@@ -23,7 +27,6 @@ import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.ui.widget.dialog.BottomDialog;
 import com.zxjk.duoduo.utils.AesUtil;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
@@ -126,7 +129,7 @@ public class VerifiedActivity extends BaseActivity {
         getPermisson(frontPhotoOfTheDocument, result -> {
             if (result) {
                 currentPictureFlag = 1;
-                BottomDialog.dialogType(this, REQUEST_TAKE, REQUEST_ALBUM);
+                dialogType();
 
             }
         }, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
@@ -134,14 +137,14 @@ public class VerifiedActivity extends BaseActivity {
         getPermisson(reversePhotoOfTheDocument, result -> {
             if (result) {
                 currentPictureFlag = 2;
-                BottomDialog.dialogType(this, REQUEST_TAKE, REQUEST_ALBUM);
+                dialogType();
             }
         }, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
 
         getPermisson(handHeldPassportPhoto, result -> {
             if (result) {
                 currentPictureFlag = 3;
-                BottomDialog.dialogType(this, REQUEST_TAKE, REQUEST_ALBUM);
+                dialogType();
 
             }
         }, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
@@ -251,5 +254,29 @@ public class VerifiedActivity extends BaseActivity {
                 }, this::handleApiError);
     }
 
+    //底部弹窗dialog 拍照、选择相册、取消
+    private void dialogType() {
+        NiceDialog.init().setLayoutId(R.layout.layout_general_dialog6).setConvertListener(new ViewConvertListener() {
+            @Override
+            protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                //拍照
+                holder.setOnClickListener(R.id.tv_photograph, v -> {
+                    dialog.dismiss();
+                    TakePicUtil.takePicture(VerifiedActivity.this, REQUEST_TAKE);
+                });
+                //相册选择
+                holder.setOnClickListener(R.id.tv_photo_select, v -> {
+                    dialog.dismiss();
+                    TakePicUtil.albumPhoto(VerifiedActivity.this, REQUEST_ALBUM);
+                });
+                //取消
+                holder.setOnClickListener(R.id.tv_cancel, v -> dialog.dismiss());
+
+            }
+        }).setShowBottom(true)
+                .setOutCancel(true)
+                .setDimAmount(0.5f)
+                .show(getSupportFragmentManager());
+    }
 
 }

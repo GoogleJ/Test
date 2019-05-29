@@ -17,9 +17,14 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.shehuan.nicedialog.BaseNiceDialog;
+import com.shehuan.nicedialog.NiceDialog;
+import com.shehuan.nicedialog.ViewConvertListener;
+import com.shehuan.nicedialog.ViewHolder;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -28,7 +33,6 @@ import com.zxjk.duoduo.network.response.GetOverOrderResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.walletpage.model.ShenSuRequest;
-import com.zxjk.duoduo.ui.widget.dialog.BottomDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
@@ -104,21 +108,21 @@ public class ShenSuActivity extends BaseActivity {
         getPermisson(fl1, result -> {
             if (result) {
                 currentImg = 1;
-                BottomDialog.dialogType(this, REQUEST_TAKE, REQUEST_ALBUM);
+                dialogType();
             }
         }, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
         getPermisson(fl2, result -> {
             if (result) {
                 currentImg = 2;
-                BottomDialog.dialogType(this, REQUEST_TAKE, REQUEST_ALBUM);
+                dialogType();
             }
         }, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
         getPermisson(fl3, result -> {
             if (result) {
                 currentImg = 3;
-                BottomDialog.dialogType(this, REQUEST_TAKE, REQUEST_ALBUM);
+                dialogType();
             }
         }, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
@@ -236,4 +240,30 @@ public class ShenSuActivity extends BaseActivity {
     public void onClick() {
         finish();
     }
+
+    private void dialogType() {
+        KeyboardUtils.hideSoftInput(ShenSuActivity.this);
+        NiceDialog.init().setLayoutId(R.layout.layout_general_dialog6).setConvertListener(new ViewConvertListener() {
+            @Override
+            protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                //拍照
+                holder.setOnClickListener(R.id.tv_photograph, v -> {
+                    dialog.dismiss();
+                    TakePicUtil.takePicture(ShenSuActivity.this, REQUEST_TAKE);
+                });
+                //相册选择
+                holder.setOnClickListener(R.id.tv_photo_select, v -> {
+                    dialog.dismiss();
+                    TakePicUtil.albumPhoto(ShenSuActivity.this, REQUEST_ALBUM);
+                });
+                //取消
+                holder.setOnClickListener(R.id.tv_cancel, v -> dialog.dismiss());
+
+            }
+        }).setShowBottom(true)
+                .setOutCancel(true)
+                .setDimAmount(0.5f)
+                .show(getSupportFragmentManager());
+    }
+
 }

@@ -18,7 +18,7 @@
             android:gravity="center"
             android:text="@string/grade"
             android:textColor="@color/textcolor1"
-            android:textSize="15sp" />
+            android:textSize="14sp" />
 
         <View
             android:layout_width="1dp"
@@ -30,11 +30,11 @@
             android:id="@+id/tv_linePerformance"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:gravity="center"
             android:text="@string/performance"
             android:textColor="@color/textcolor1"
-            android:textSize="15sp" />
+            android:textSize="14sp" />
 
         <View
             android:layout_width="1dp"
@@ -49,7 +49,7 @@
             android:gravity="center"
             android:text="@string/commission_rate"
             android:textColor="@color/textcolor1"
-            android:textSize="15sp" />
+            android:textSize="14sp" />
 
     </LinearLayout>
 

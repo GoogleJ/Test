@@ -28,8 +28,6 @@ import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.ImgActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.ui.widget.dialog.BottomDialog;
-import com.zxjk.duoduo.ui.widget.dialog.ConfirmDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
@@ -78,8 +76,6 @@ public class ConfirmBuyActivity extends BaseActivity {
     private LinearLayout llConfirmBuyQR;
     private TextView tvConfirmBuyReceiverBank;
 
-    private ConfirmDialog dialogConfirm;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +86,7 @@ public class ConfirmBuyActivity extends BaseActivity {
 
 
         getPermisson(findViewById(R.id.llUploadSign), granted -> {
-            BottomDialog.dialogType(this, REQUEST_TAKE, REQUEST_ALBUM);
+            dialogType();
         }, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
 
@@ -298,4 +294,30 @@ public class ConfirmBuyActivity extends BaseActivity {
     public void onViewClicked() {
         finish();
     }
+
+    //底部弹窗dialog 拍照、选择相册、取消
+    private void dialogType() {
+        NiceDialog.init().setLayoutId(R.layout.layout_general_dialog6).setConvertListener(new ViewConvertListener() {
+            @Override
+            protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                //拍照
+                holder.setOnClickListener(R.id.tv_photograph, v -> {
+                    dialog.dismiss();
+                    TakePicUtil.takePicture(ConfirmBuyActivity.this, REQUEST_TAKE);
+                });
+                //相册选择
+                holder.setOnClickListener(R.id.tv_photo_select, v -> {
+                    dialog.dismiss();
+                    TakePicUtil.albumPhoto(ConfirmBuyActivity.this, REQUEST_ALBUM);
+                });
+                //取消
+                holder.setOnClickListener(R.id.tv_cancel, v -> dialog.dismiss());
+
+            }
+        }).setShowBottom(true)
+                .setOutCancel(true)
+                .setDimAmount(0.5f)
+                .show(getSupportFragmentManager());
+    }
+
 }
