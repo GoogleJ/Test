@@ -149,7 +149,11 @@ public class JinDuoBaoActiviity extends BaseActivity implements SelectPopupWindo
                     .setConvertListener(new ViewConvertListener() {
                         @Override
                         protected void convertView(ViewHolder holder, BaseNiceDialog baseNiceDialog) {
-                            holder.setText(R.id.tvRate, "下注范围为" + response.getMinimumBetAmount() + "-" + response.getMaximumBetAmount());
+                            if (!TextUtils.isEmpty(response.getMaximumBetAmount())) {
+                                holder.setText(R.id.tvRate, "下注范围为" + response.getMinimumBetAmount() + "-" + response.getMaximumBetAmount());
+                            } else {
+                                holder.setText(R.id.tvRate, "最小下注" + response.getMinimumBetAmount());
+                            }
                             holder.setText(R.id.tv, bean.betCode);
                             EditText et = holder.getView(R.id.et);
 
@@ -216,7 +220,7 @@ public class JinDuoBaoActiviity extends BaseActivity implements SelectPopupWindo
                                 }
 
                                 int i = Integer.parseInt(trim);
-                                if (i < Float.parseFloat(response.getMinimumBetAmount()) || i > Float.parseFloat(response.getMaximumBetAmount())) {
+                                if (i < Float.parseFloat(response.getMinimumBetAmount()) || (!TextUtils.isEmpty(response.getMaximumBetAmount()) && i > Float.parseFloat(response.getMaximumBetAmount()))) {
                                     ToastUtils.showShort(R.string.duobaoxiazhufail);
                                     return;
                                 }

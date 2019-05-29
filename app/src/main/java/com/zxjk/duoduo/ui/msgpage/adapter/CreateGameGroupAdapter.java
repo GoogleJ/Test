@@ -218,6 +218,7 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     }
 
                     if (realposition == 0) {
+                        pumpingRate = "0.01";
                         gameType = "1";
                         proportionOfFees = response.getGroupClass().get(0).getGuaranteeFee();
                         typeName = response.getGroupClass().get(0).getTypeName();
@@ -255,6 +256,7 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         });
                         tvChoushui.setText("1%");
                     } else if (realposition == 1) {
+                        pumpingRate = "0.01";
                         gameType = "2";
                         proportionOfFees = response.getGroupClass().get(1).getGuaranteeFee();
                         typeName = response.getGroupClass().get(1).getTypeName();
@@ -292,6 +294,7 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         });
                         tvChoushui.setText("1%");
                     } else if (realposition == 2) {
+                        pumpingRate = "0.01";
                         gameType = "3";
                         proportionOfFees = response.getGroupClass().get(2).getGuaranteeFee();
                         typeName = response.getGroupClass().get(2).getTypeName();
@@ -328,6 +331,7 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         });
                         tvChoushui.setText("1%");
                     } else {
+                        pumpingRate = "40.0";
                         gameType = "4";
                         typeName = response.getGroupClass().get(3).getTypeName();
                         proportionOfFees = response.getGroupClass().get(3).getGuaranteeFee();
@@ -346,13 +350,12 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         tvFormHead3.setBackgroundColor(context.getColor(R.color.createGameGroup4));
                         tvFormHead4.setBackgroundResource(R.drawable.shape_fanyong2_color4);
 
-                        seekbar.setMax(9);
+                        seekbar.setMax(18);
                         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                             @Override
                             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                                tvChoushui.setText(40 + progress + "");
-                                String s = tvChoushui.getText().toString();
-                                pumpingRate = s;
+                                tvChoushui.setText(40f + progress * 0.5f + "");
+                                pumpingRate = tvChoushui.getText().toString();
                             }
 
                             @Override
@@ -365,7 +368,7 @@ public class CreateGameGroupAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                             }
                         });
-                        tvChoushui.setText("40");
+                        tvChoushui.setText("40.0");
                     }
 
                     if (data.size() > 0) {

@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.msgpage;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -62,6 +63,7 @@ public class PhoneContactActivity extends BaseActivity implements TextWatcher {
     }
 
     //获取好友列表
+    @SuppressLint("CheckResult")
     public void getFriendListById() {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .getFriendListById()
@@ -82,8 +84,7 @@ public class PhoneContactActivity extends BaseActivity implements TextWatcher {
                     mAdapter = new PhoneContactAdapter(this);
                     mAdapter.setNewData(list);
                     mRecyclerView.setAdapter(mAdapter);
-                    mAdapter.setOnItemChildClickListener((adapter, view, position) -> sendSMS("您的好友通过多多社区给您留言了啦，赶快注册去查看吧", position));
-//
+                    mAdapter.setOnItemChildClickListener((adapter, view, position) -> sendSMS("您的好友通过多多社区给您留言了啦，赶快注册去查看吧。https://fir.im/xa5w", position));
                 }, this::handleApiError);
     }
 
