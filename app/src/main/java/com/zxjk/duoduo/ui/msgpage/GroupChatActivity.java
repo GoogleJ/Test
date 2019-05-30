@@ -80,7 +80,7 @@ public class GroupChatActivity extends BaseActivity implements TextWatcher {
         mGroupChatRecyclerView.setAdapter(groupChatAdapter);
 
         groupChatAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            Constant.groupChatResponse = groupChatAdapter.getData().get(position);
+
             RongIM.getInstance().startGroupChat(this, groupChatAdapter.getData().get(position).getId(), groupChatAdapter.getData().get(position).getGroupNikeName());
         });
     }
