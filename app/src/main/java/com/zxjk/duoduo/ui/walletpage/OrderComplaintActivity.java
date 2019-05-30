@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.ReleasePurchase;
+import com.zxjk.duoduo.network.response.GetOverOrderResponse;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.DataUtils;
 
@@ -66,7 +66,7 @@ public class OrderComplaintActivity extends BaseActivity {
     @BindView(R.id.tv_appealType)
     TextView tvAppealType;
 
-    private ReleasePurchase data;
+    private GetOverOrderResponse data;
     private String rate;
 
     @Override
@@ -81,7 +81,7 @@ public class OrderComplaintActivity extends BaseActivity {
 
     private void initView() {
         tvTitle.setText("订单申诉");
-        data = (ReleasePurchase) getIntent().getSerializableExtra("data");
+        data = (GetOverOrderResponse) getIntent().getSerializableExtra("data");
         rate = getIntent().getStringExtra("rate");
         switch (data.getStatus()) {
             case "6":

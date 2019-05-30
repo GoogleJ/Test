@@ -244,6 +244,7 @@
 
             <TextView
                 style="@style/BtnStyle"
+                android:layout_marginBottom="20dp"
                 android:onClick="overOrder"
                 android:text="@string/money_received"
                 android:textSize="16sp" />
@@ -251,6 +252,7 @@
             <TextView
                 style="@style/BtnStyle"
                 android:layout_marginTop="0dp"
+                android:layout_marginBottom="40dp"
                 android:background="@drawable/shape_theme_gray"
                 android:onClick="rejectOrder"
                 android:text="@string/money_notreceived"

@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import com.blankj.utilcode.util.DeviceUtils;
 import com.zxjk.duoduo.network.response.CreateWalletResponse;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
-import com.zxjk.duoduo.network.response.GroupChatResponse;
 import com.zxjk.duoduo.network.response.LoginResponse;
 
 import java.util.List;
@@ -16,6 +15,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import io.rong.imlib.model.Message;
 
 public class Constant {
+    //省市区数据
+    public static final String CITY_DATA = "china_city_data.json";
     //阿里OSS上传地址
     public static final String OSS_URL = "https://zhongxingjike.oss-cn-hongkong.aliyuncs.com/upload/";
     //            public static final String BASE_URL = "https://192.168.0.112:8085/";
@@ -60,7 +61,6 @@ public class Constant {
      * 新增（修改收款方式）实体
      */
     public static CreateWalletResponse walletResponse;
-    public static GroupChatResponse groupChatResponse = new GroupChatResponse();
     public static List<FriendInfoResponse> friendsList;
     public static Message tempMsg;
     public static String changeGroupName = null;

@@ -32,7 +32,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".Application"
@@ -43,7 +43,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.msgpage.GroupGoldStupaInfoActivity"></activity>
+        <activity android:name=".ui.AMapActivity"></activity>
+        <activity android:name=".ui.msgpage.GroupGoldStupaInfoActivity" />
         <activity android:name=".ui.msgpage.AuthenticationActivity" />
         <activity android:name=".ui.walletpage.OrderComplaintActivity" />
         <activity android:name=".ui.msgpage.JinDuoBaoActiviity" />
@@ -231,6 +232,8 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="cf78026d76c3b2dcd0a8384061970712" />
+        <!-- 定位需要的服务 -->
+        <service android:name="com.amap.api.location.APSService"/>
 
         <activity
             android:name=".ui.msgpage.ConversationActivity"

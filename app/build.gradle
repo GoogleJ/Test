@@ -155,12 +155,13 @@ dependencies {
 
     //banner for create gamegroup
     implementation 'com.github.pinguo-zhouwei:MZBannerView:v2.0.2'
-
     implementation 'com.github.SheHuan:NiceDialog:1.1.9'
     implementation 'com.tencent:mmkv:1.0.19'
-//    implementation 'me.jessyan:autosize:1.1.2'
+
+    //    implementation 'me.jessyan:autosize:1.1.2'
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
     implementation 'com.github.xiaohaibin:PageMenuLayout:0.3.0'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-1'
-
+    implementation 'org.jsoup:jsoup:1.11.2'
+    implementation files('libs/AMap_Location_V4.6.0_20190423.jar')
 }

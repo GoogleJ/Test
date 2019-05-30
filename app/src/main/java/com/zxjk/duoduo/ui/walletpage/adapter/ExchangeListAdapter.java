@@ -108,6 +108,9 @@ public class ExchangeListAdapter extends BaseQuickAdapter<GetOverOrderResponse, 
         if (item.getStatus().equals("5")) {
             exchange_list_type.setText(R.string.guadan);
         }
+        if (item.getStatus().equals("6")) {
+            exchange_list_type.setText("订单申诉中");
+        }
     }
 
 }
