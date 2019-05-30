@@ -7,14 +7,12 @@
     android:background="@color/theme_color"
     tools:context=".ui.EnlargeImageActivity">
 
-    <com.zxjk.duoduo.ui.widget.PinchImageView
-        android:id="@+id/pic"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="50dp"
-        android:scaleType="centerCrop" />
+        android:layout_marginTop="66dp"
+        android:layout_marginBottom="50dp" />
 
     <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
         android:id="@+id/iv"

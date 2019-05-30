@@ -13,5 +13,3 @@ CallKit/build
 CallLib/build
 IMKit/build
 IMLib/build
-IMLib/AndroidManifest.xml
-app/src/main/java/com/zxjk/duoduo/Constant.java

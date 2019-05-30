@@ -59,6 +59,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -78,6 +79,7 @@ import io.rong.imkit.plugin.IPluginModule;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imkit.widget.adapter.MessageListAdapter;
 import io.rong.imlib.MessageTag;
+import io.rong.imlib.RongCommonDefine;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
@@ -597,17 +599,46 @@ public class ConversationActivity extends BaseActivity {
                         }
                         break;
                     case "RC:ImgMsg":
-                        String sMessage;
-                        if (((ImageMessage) message.getContent()).getLocalUri() == null) {
-                            sMessage = ((ImageMessage) message.getContent()).getMediaUrl().toString();
-                        } else {
-                            sMessage = ((ImageMessage) message.getContent()).getLocalUri().toString();
-                        }
                         Intent intent5 = new Intent(ConversationActivity.this, EnlargeImageActivity.class);
-                        intent5.putExtra("image", sMessage);
-                        startActivity(intent5,
-                                ActivityOptionsCompat.makeSceneTransitionAnimation(ConversationActivity.this,
-                                        view, "12").toBundle());
+                        ArrayList<Message> messageList = new ArrayList<>();
+                        RongIMClient.getInstance().getHistoryMessages(message.getConversationType(), message.getTargetId(), "RC:ImgMsg"
+                                , message.getMessageId(), Integer.MAX_VALUE, RongCommonDefine.GetMessageDirection.FRONT, new RongIMClient.ResultCallback<List<Message>>() {
+                                    @Override
+                                    public void onSuccess(List<Message> messages) {
+                                        if (messages != null) {
+                                            Collections.reverse(messages);
+                                            messageList.addAll(messages);
+                                        }
+                                        intent5.putExtra("index", messageList.size());
+                                        messageList.add(message);
+                                        RongIMClient.getInstance().getHistoryMessages(message.getConversationType(), message.getTargetId(), "RC:ImgMsg"
+                                                , message.getMessageId(), Integer.MAX_VALUE, RongCommonDefine.GetMessageDirection.BEHIND, new RongIMClient.ResultCallback<List<Message>>() {
+                                                    @Override
+                                                    public void onSuccess(List<Message> messages) {
+                                                        if (messages != null) {
+                                                            messageList.addAll(messages);
+                                                        }
+                                                        Bundle bundle = new Bundle();
+                                                        bundle.putParcelableArrayList("images", messageList);
+                                                        intent5.putExtra("images", bundle);
+                                                        intent5.putExtra("image", "");
+                                                        startActivity(intent5,
+                                                                ActivityOptionsCompat.makeSceneTransitionAnimation(ConversationActivity.this,
+                                                                        view, "12").toBundle());
+                                                    }
+
+                                                    @Override
+                                                    public void onError(RongIMClient.ErrorCode errorCode) {
+
+                                                    }
+                                                });
+                                    }
+
+                                    @Override
+                                    public void onError(RongIMClient.ErrorCode errorCode) {
+
+                                    }
+                                });
                         return true;
                     case "app:transfer":
                         //转账
@@ -827,5 +858,4 @@ public class ConversationActivity extends BaseActivity {
                     }
                 }, this::handleApiError);
     }
-
 }
