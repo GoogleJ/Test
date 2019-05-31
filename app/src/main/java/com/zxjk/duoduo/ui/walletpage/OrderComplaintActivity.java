@@ -1,12 +1,16 @@
 package com.zxjk.duoduo.ui.walletpage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.app.ActivityOptionsCompat;
+
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.GetOverOrderResponse;
+import com.zxjk.duoduo.ui.ProofComplaintActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.DataUtils;
 
@@ -65,6 +69,7 @@ public class OrderComplaintActivity extends BaseActivity {
     //申诉类型
     @BindView(R.id.tv_appealType)
     TextView tvAppealType;
+
 
     private GetOverOrderResponse data;
     private String rate;
@@ -127,6 +132,11 @@ public class OrderComplaintActivity extends BaseActivity {
                 break;
             //查看凭证
             case R.id.iv_proofComplaint:
+                Intent intent = new Intent(OrderComplaintActivity.this, ProofComplaintActivity.class);
+                intent.putExtra("images", data.getPicture());
+                startActivity(intent,
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                                ivProofComplaint, "12").toBundle());
 
                 break;
         }

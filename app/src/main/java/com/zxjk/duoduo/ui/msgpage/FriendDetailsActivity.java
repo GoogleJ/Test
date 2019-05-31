@@ -25,8 +25,8 @@ import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
-import com.zxjk.duoduo.ui.EnlargeImageActivity;
 import com.zxjk.duoduo.ui.HomeActivity;
+import com.zxjk.duoduo.ui.ZoomActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.widget.CommonPopupWindow;
 import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendInformationDialog;
@@ -206,7 +206,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_headPortrait:
-                Intent intent5 = new Intent(this, EnlargeImageActivity.class);
+                Intent intent5 = new Intent(this, ZoomActivity.class);
                 intent5.putExtra("image", imageUrl);
                 startActivity(intent5,
                         ActivityOptionsCompat.makeSceneTransitionAnimation(this,
