@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.core.app.ActivityOptionsCompat;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 import com.zxjk.duoduo.Constant;
@@ -18,7 +20,7 @@ import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
-import com.zxjk.duoduo.ui.ImgActivity;
+import com.zxjk.duoduo.ui.ZoomActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.VerificationActivity;
 
@@ -49,6 +51,7 @@ public class WaitForJudgeActivity extends BaseActivity {
     private boolean isFriend;
     private String friendId;
     private String friendNickName;
+    private ImageView iv_qrCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +63,7 @@ public class WaitForJudgeActivity extends BaseActivity {
         tv_title.setText(getString(R.string.waiting_audit));
 
         tvWaitForJudgeCountDown = findViewById(R.id.tvWaitForJudgeCountDown);
-
+        iv_qrCode = findViewById(R.id.iv_qrCode);
         TextView tvWaitForJudgeOrderId = findViewById(R.id.tvWaitForJudgeOrderId);
         TextView tvWaitForJudgeMoney = findViewById(R.id.tvWaitForJudgeMoney);
         TextView tvWaitForJudgePrice = findViewById(R.id.tvWaitForJudgePrice);
@@ -167,9 +170,13 @@ public class WaitForJudgeActivity extends BaseActivity {
             //收款码
             case R.id.rl_payment_code:
                 ReleaseSaleResponse data1 = (ReleaseSaleResponse) getIntent().getSerializableExtra("data");
-                Intent intent = new Intent(this, ImgActivity.class);
-                intent.putExtra("url", data1.getReceiptPicture());
-                startActivity(intent);
+                Intent intent5 = new Intent(this, ZoomActivity.class);
+                intent5.putExtra("image", data1.getReceiptPicture());
+                startActivity(intent5,
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                                iv_qrCode, "12").toBundle());
+
+
                 break;
             //加好友
             case R.id.rl_add_buddy:

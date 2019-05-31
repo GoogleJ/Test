@@ -7,10 +7,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.response.GetOverOrderResponse;
-import com.zxjk.duoduo.ui.ImgActivity;
+import com.zxjk.duoduo.ui.ZoomActivity;
 
 import java.text.SimpleDateFormat;
 
@@ -29,6 +30,7 @@ public class ExchangeOrderSuccessActivity extends AppCompatActivity {
     private TextView tv7;
     private TextView tv8;
     private ImageView iv_wechat, iv_alipay, iv_bank;
+    private ImageView iv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class ExchangeOrderSuccessActivity extends AppCompatActivity {
         iv_wechat = findViewById(R.id.iv_wechat);
         iv_alipay = findViewById(R.id.iv_alipay);
         iv_bank = findViewById(R.id.iv_bank);
+        iv = findViewById(R.id.iv);
         GetOverOrderResponse data = (GetOverOrderResponse) getIntent().getSerializableExtra("data");
 
         tv2.setText(data.getMoney());
@@ -66,9 +69,11 @@ public class ExchangeOrderSuccessActivity extends AppCompatActivity {
 
     public void showQR(View view) {
         GetOverOrderResponse data = (GetOverOrderResponse) getIntent().getSerializableExtra("data");
-        Intent intent = new Intent(this, ImgActivity.class);
-        intent.putExtra("url", data.getPicture());
-        startActivity(intent);
+        Intent intent5 = new Intent(this, ZoomActivity.class);
+        intent5.putExtra("image", data.getPicture());
+        startActivity(intent5,
+                ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                        iv, "12").toBundle());
     }
 
     @OnClick(R.id.rl_back)

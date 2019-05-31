@@ -25,6 +25,8 @@ import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -225,6 +227,11 @@ public class ExchangeListActivity extends BaseActivity {
                                 temp.add(r);
                             }
                         }
+                    }
+                    if (flag == 1) {
+                        Collections.sort(temp, (o1, o2) -> -o1.getCreateTime().compareTo(o2.getCreateTime()));
+                    } else if (flag == 2) {
+                        Collections.sort(temp, (o1, o2) -> -o1.getCloseTime().compareTo(o2.getCloseTime()));
                     }
                     mAdapter.setNewData(temp);
                 }, t -> {

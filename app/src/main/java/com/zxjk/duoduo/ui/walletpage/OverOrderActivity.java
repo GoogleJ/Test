@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.app.ActivityOptionsCompat;
+
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shehuan.nicedialog.BaseNiceDialog;
@@ -20,7 +22,7 @@ import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.GetOverOrderResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
-import com.zxjk.duoduo.ui.ImgActivity;
+import com.zxjk.duoduo.ui.ZoomActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.dialog.SelectPopupWindow;
 import com.zxjk.duoduo.utils.CommonUtils;
@@ -108,9 +110,11 @@ public class OverOrderActivity extends BaseActivity {
     }
 
     public void showQR(View view) {
-        Intent intent = new Intent(this, ImgActivity.class);
-        intent.putExtra("url", data.getPicture());
-        startActivity(intent);
+        Intent intent5 = new Intent(this, ZoomActivity.class);
+        intent5.putExtra("image", data.getPicture());
+        startActivity(intent5,
+                ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                        iv, "12").toBundle());
     }
 
     //拒绝审核

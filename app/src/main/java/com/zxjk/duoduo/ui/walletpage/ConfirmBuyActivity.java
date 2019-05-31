@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityOptionsCompat;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.shehuan.nicedialog.BaseNiceDialog;
@@ -26,7 +27,7 @@ import com.zxjk.duoduo.network.ReleasePurchase;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
-import com.zxjk.duoduo.ui.ImgActivity;
+import com.zxjk.duoduo.ui.ZoomActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.OssUtils;
@@ -237,9 +238,11 @@ public class ConfirmBuyActivity extends BaseActivity {
         if (llConfirmBuyBank.getVisibility() == View.VISIBLE) {
             return;
         }
-        Intent intent = new Intent(this, ImgActivity.class);
-        intent.putExtra("url", data.getReceiptPicture());
-        startActivity(intent);
+        Intent intent5 = new Intent(this, ZoomActivity.class);
+        intent5.putExtra("image", data.getReceiptPicture());
+        startActivity(intent5,
+                ActivityOptionsCompat.makeSceneTransitionAnimation(this,
+                        tvConfirmBuyReceiverQR, "12").toBundle());
     }
 
     public void copyNick(View view) {
