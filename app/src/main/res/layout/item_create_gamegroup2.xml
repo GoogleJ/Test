@@ -72,8 +72,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="2dp"
-            android:text="免责声明"
-            android:textColor="@color/textcolor1" />
+            android:text="@string/check_mianze"
+            android:textColor="@color/colorTheme" />
 
     </LinearLayout>
 
