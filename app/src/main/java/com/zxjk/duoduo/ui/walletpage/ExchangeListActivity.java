@@ -26,7 +26,6 @@ import com.zxjk.duoduo.utils.CommonUtils;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**

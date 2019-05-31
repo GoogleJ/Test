@@ -25,7 +25,7 @@ public class OssUtils {
 
     public static void uploadFile(String filePath, OssCallBack ossCallBack, OssProgressCallBack progressCallBack) {
         String fileName = Constant.userId + System.currentTimeMillis();
-        PutObjectRequest put = new PutObjectRequest("zhongxingjike", "upload/" +
+        PutObjectRequest put = new PutObjectRequest("zhongxingjike2", "upload/" +
                 fileName, filePath);
         if (progressCallBack != null) {
             put.setProgressCallback((request, currentSize, totalSize) -> {

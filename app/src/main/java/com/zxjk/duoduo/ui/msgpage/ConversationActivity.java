@@ -32,7 +32,6 @@ import com.zxjk.duoduo.ui.EnlargeImageActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.ChatInformationActivity;
 import com.zxjk.duoduo.ui.grouppage.GroupChatInformationActivity;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BasePluginExtensionModule;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.AudioVideoPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BasePluginExtensionModule;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardMessage;
@@ -67,14 +66,12 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtension;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationFragment;
-import io.rong.imkit.model.GroupUserInfo;
 import io.rong.imkit.plugin.IPluginModule;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imkit.widget.adapter.MessageListAdapter;
@@ -87,7 +84,6 @@ import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
 import io.rong.imlib.typingmessage.TypingStatus;
-import io.rong.message.ImageMessage;
 import io.rong.message.TextMessage;
 import io.rong.message.VoiceMessage;
 
@@ -148,7 +144,7 @@ public class ConversationActivity extends BaseActivity {
                                 .doOnDispose(() -> ToastUtils.showShort(R.string.xiazhu_cancel))
                                 .compose(bindUntilEvent(ActivityEvent.STOP))
                                 .compose(RxSchedulers.normalTrans())
-                                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this, "请耐心等待群员下注")))
+                                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this, "请耐心等待群员下注(23S)")))
                                 .subscribe(response -> {
                                     if (response.getCount() == 0) {
                                         ToastUtils.showShort(R.string.noxiazhu);

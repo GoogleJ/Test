@@ -27,6 +27,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Demo class
  * 这个是国家代码选择的类
@@ -39,6 +43,8 @@ public class CountrySelectActivity extends BaseActivity {
     RecyclerView lv_list;
     ArrayList<CountryEntity> allCountryCodeList;
     private static final String EXTRA_DATA = "data";
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
 
     public static void start(Activity activity, int requestCode) {
         Intent intent = new Intent(activity, CountrySelectActivity.class);
@@ -49,6 +55,8 @@ public class CountrySelectActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_country_select);
+        ButterKnife.bind(this);
+        tvTitle.setText(getString(R.string.selectcountries));
         lv_list = findViewById(R.id.lv_list);
         initList();
         buildLitterIdx();
@@ -134,8 +142,9 @@ public class CountrySelectActivity extends BaseActivity {
         return pinyinName.toString().substring(0, 1).toUpperCase();
     }
 
-    public void back(View view) {
+
+    @OnClick(R.id.rl_back)
+    public void onClick() {
         finish();
     }
-
 }

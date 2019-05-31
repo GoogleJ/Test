@@ -9,15 +9,12 @@ import androidx.multidex.MultiDex;
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.Utils;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tencent.mmkv.MMKV;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.BaseResponse;
 import com.zxjk.duoduo.network.response.GroupResponse;
-import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BasePluginExtensionModule;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardProvider;
@@ -33,7 +30,6 @@ import com.zxjk.duoduo.view.ScreenUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import io.rong.callkit.RongCallKit;
 import io.rong.imkit.DefaultExtensionModule;
@@ -122,8 +118,8 @@ public class Application extends android.app.Application {
 
     //初始化阿里云OSS上传服务
     private void initOSS() {
-        String AK = "LTAI8wpEjXW0r2y9";
-        String SK = "4Dv0UhSB16KLPKC8GR6DuH9GTEGil7";
+        String AK = "LTAI3V54BzteDdTi";
+        String SK = "h59RLWudf6XMXO4bSqSOwsK3nBHXSK";
         OSSPlainTextAKSKCredentialProvider ossPlainTextAKSKCredentialProvider =
                 new OSSPlainTextAKSKCredentialProvider(AK, SK);
         String endpoint = "oss-cn-hongkong.aliyuncs.com";

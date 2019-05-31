@@ -104,9 +104,16 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 String mobile = edit_mobile.getText().toString().trim();
                 String country = login_country.getText().toString().trim();
                 countryCode = country.substring(1);
-                if (!TextUtils.isEmpty(mobile) && RegexUtils.isMobileExact(mobile)) {
-                    registerCode(countryCode + "-" + mobile);
-                    return;
+                if (login_country.getText().toString().equals("+86")) {
+                    if (!TextUtils.isEmpty(mobile) && RegexUtils.isMobileExact(mobile)) {
+                        registerCode(countryCode + "-" + mobile);
+                        return;
+                    }
+                } else {
+                    if (!TextUtils.isEmpty(mobile)) {
+                        registerCode(countryCode + "-" + mobile);
+                        return;
+                    }
                 }
                 ToastUtils.showShort(getString(R.string.edit_mobile_tip));
                 break;
@@ -117,11 +124,20 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 mobile = edit_mobile.getText().toString().trim();
                 password = edit_password.getText().toString().trim();
                 String code = edit_register_code.getText().toString().trim();
-
-                if (TextUtils.isEmpty(mobile) || !RegexUtils.isMobileExact(mobile)) {
-                    ToastUtils.showShort(getString(R.string.edit_mobile_tip));
-                    return;
+                //是否中国大陆手机
+                if (login_country.getText().toString().equals("+86")) {
+                    if (TextUtils.isEmpty(mobile) || !RegexUtils.isMobileExact(mobile)) {
+                        ToastUtils.showShort(getString(R.string.edit_mobile_tip));
+                        return;
+                    }
+                } else {
+                    if (TextUtils.isEmpty(mobile)) {
+                        ToastUtils.showShort(getString(R.string.input_phone));
+                        return;
+                    }
                 }
+
+
                 if (TextUtils.isEmpty(code) || code.length() != 6) {
                     ToastUtils.showShort(getString(R.string.edit_code_tip));
                     return;
