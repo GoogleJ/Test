@@ -15,7 +15,6 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.GsonUtils;
-import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.shehuan.nicedialog.BaseNiceDialog;
@@ -287,7 +286,6 @@ public class AuthenticationActivity extends BaseActivity {
                     Constant.currentUser.setIsAuthentication("2");
                     Constant.currentUser.setRealname(etName.getText().toString());
                     MMKVUtils.getInstance().enCode("login", Constant.currentUser);
-                    SPUtils.getInstance().put("realNames", etName.getText().toString());
                     ToastUtils.showShort(R.string.verified_success);
                     finish();
                 }, this::handleApiError);

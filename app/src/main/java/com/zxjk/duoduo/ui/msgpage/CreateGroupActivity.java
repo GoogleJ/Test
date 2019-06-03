@@ -36,12 +36,12 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.bingoogolapple.qrcode.zxing.ZXingView;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
+import io.rong.message.InformationNotificationMessage;
 
 /**
  * author L
@@ -376,10 +376,28 @@ public class CreateGroupActivity extends BaseActivity {
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
-                    Intent intent = new Intent(this, HomeActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    RongIM.getInstance().startGroupChat(this, s.getId(), s.getGroupNikeName());
+                    selectedIds.add(Constant.userId);
+                    InformationNotificationMessage message = InformationNotificationMessage.obtain(Constant.currentUser.getNick() + getString(R.string.notice_creategroup));
+                    RongIM.getInstance().sendDirectionalMessage(Conversation.ConversationType.GROUP, s.getId(), message, selectedIds.toArray(new String[]{}), null, null, new IRongCallback.ISendMessageCallback() {
+                        @Override
+                        public void onAttached(Message message) {
+
+                        }
+
+                        @Override
+                        public void onSuccess(Message message) {
+                            ToastUtils.showShort(R.string.create_game_group_success);
+                            Intent intent = new Intent(CreateGroupActivity.this, HomeActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                            RongIM.getInstance().startGroupChat(CreateGroupActivity.this, s.getId(), s.getGroupNikeName());
+                        }
+
+                        @Override
+                        public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+                            ToastUtils.showShort(R.string.function_fail);
+                        }
+                    });
                 }, this::handleApiError);
     }
 

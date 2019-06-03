@@ -54,7 +54,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="42dp"
         android:lineSpacingExtra="6dp"
-        android:text="对接香港金多寶平台，金多寶当期从1～49个数字中摇出6个号码和1个特别号码（或称特码），在群内押中特码即获取相应赔率。"
+        android:text="每期从1-49个数字中开出一个特别号码，玩家可以猜测并下注可能开出的号码，如果猜中，按群主设置的倍数打赏给玩家。"
         android:textColor="@color/textcolor1"
         android:textSize="15sp"
         android:visibility="gone" />

@@ -14,7 +14,6 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.GsonUtils;
-import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.shehuan.nicedialog.BaseNiceDialog;
 import com.shehuan.nicedialog.NiceDialog;
@@ -248,7 +247,6 @@ public class VerifiedActivity extends BaseActivity {
                     Constant.currentUser.setIsAuthentication("2");
                     Constant.currentUser.setRealname(realNames);
                     MMKVUtils.getInstance().enCode("login", Constant.currentUser);
-                    SPUtils.getInstance().put("realNames", realNames);
                     ToastUtils.showShort(R.string.verified_success);
                     finish();
                 }, this::handleApiError);

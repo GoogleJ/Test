@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -25,6 +26,11 @@ import com.zxjk.duoduo.utils.MD5Utils;
 import java.text.DecimalFormat;
 
 import io.rong.imkit.RongIM;
+import io.rong.imlib.IRongCallback;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Message;
+import io.rong.message.InformationNotificationMessage;
 
 public class CreateGameGroupActivity extends BaseActivity implements SelectPopupWindow.OnPopWindowClickListener {
 
@@ -85,11 +91,27 @@ public class CreateGameGroupActivity extends BaseActivity implements SelectPopup
                     .compose(RxSchedulers.normalTrans())
                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(CreateGameGroupActivity.this)))
                     .subscribe(response -> {
-                        ToastUtils.showShort(R.string.create_game_group_success);
-                        Intent intent = new Intent(this, HomeActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                        RongIM.getInstance().startGroupChat(this, response.getId(), response.getGroupNikeName());
+                        InformationNotificationMessage message = InformationNotificationMessage.obtain(getString(R.string.notice_creategamegroup));
+                        RongIM.getInstance().sendDirectionalMessage(Conversation.ConversationType.GROUP, response.getId(), message, new String[]{Constant.userId}, null, null, new IRongCallback.ISendMessageCallback() {
+                            @Override
+                            public void onAttached(Message message) {
+
+                            }
+
+                            @Override
+                            public void onSuccess(Message message) {
+                                ToastUtils.showShort(R.string.create_game_group_success);
+                                Intent intent = new Intent(CreateGameGroupActivity.this, HomeActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                RongIM.getInstance().startGroupChat(CreateGameGroupActivity.this, response.getId(), response.getGroupNikeName());
+                            }
+
+                            @Override
+                            public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+                                ToastUtils.showShort(R.string.function_fail);
+                            }
+                        });
                     }, this::handleApiError);
         }
     }

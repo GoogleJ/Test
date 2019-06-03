@@ -86,14 +86,12 @@ public class ZhuanChuActivity extends BaseActivity implements SeekBar.OnSeekBarC
         });
     }
 
-
     //选择联系人
     public void addressList(View view) {
         Intent intent = new Intent(this, SelectContactActivity.class);
         intent.putExtra("fromZhuanChu", true);
         startActivityForResult(intent, 1);
     }
-
 
     private String walletAddress;
     private String count;

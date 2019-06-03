@@ -42,7 +42,7 @@ public class CommonUtils {
             @Override
             public void onWindowFocusChanged(boolean hasFocus) {
                 super.onWindowFocusChanged(hasFocus);
-                if (hasFocus) {
+                if (hasFocus && dialog != null) {
                     ImageView iv = dialog.findViewById(R.id.iv);
                     Glide.with(context).asGif().load(R.drawable.loading).into(iv);
                 }
@@ -56,6 +56,10 @@ public class CommonUtils {
             TextView tips = dialog.findViewById(R.id.tv_dialog_content);
             tips.setText(loadText);
         }
+        return dialog;
+    }
+
+    public static Dialog getDialog() {
         return dialog;
     }
 

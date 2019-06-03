@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -24,7 +25,9 @@ import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.BaseResponse;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
+import com.zxjk.duoduo.network.response.GetBetConutBygroupIdResponse;
 import com.zxjk.duoduo.network.response.GroupResponse;
 import com.zxjk.duoduo.network.rx.RxException;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
@@ -66,6 +69,7 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtension;
@@ -84,8 +88,12 @@ import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
 import io.rong.imlib.typingmessage.TypingStatus;
+import io.rong.message.InformationNotificationMessage;
 import io.rong.message.TextMessage;
 import io.rong.message.VoiceMessage;
+
+import static com.zxjk.duoduo.Constant.CODE_SUCCESS;
+import static com.zxjk.duoduo.Constant.CODE_UNLOGIN;
 
 /**
  * author L
@@ -138,23 +146,59 @@ public class ConversationActivity extends BaseActivity {
                             ((TextMessage) message.getContent()).getExtra().equals("start")
                             && ((TextMessage) content).getContent().equals("开始下注")) {
                         //发送完"开始下注" 计时23S
-                        runOnUiThread(() -> Observable.timer(23, TimeUnit.SECONDS, Schedulers.io())
-                                .flatMap(aLong -> ServiceFactory.getInstance().getBaseService(Api.class)
-                                        .getBetConutBygroupId(groupResponse.getGroupInfo().getId()))
-                                .doOnDispose(() -> ToastUtils.showShort(R.string.xiazhu_cancel))
-                                .compose(bindUntilEvent(ActivityEvent.STOP))
-                                .compose(RxSchedulers.normalTrans())
-                                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this, "请耐心等待群员下注(23S)")))
-                                .subscribe(response -> {
-                                    if (response.getCount() == 0) {
-                                        ToastUtils.showShort(R.string.noxiazhu);
-                                        return;
+                        runOnUiThread(() -> Observable.intervalRange(1, 23, 1, 1, TimeUnit.SECONDS)
+                                .flatMap(aLong -> {
+                                    if (aLong == 23) {
+                                        return ServiceFactory.getInstance().getBaseService(Api.class)
+                                                .getBetConutBygroupId(groupResponse.getGroupInfo().getId());
                                     }
-                                    Intent intent = new Intent(ConversationActivity.this, GroupRedPacketActivity.class);
-                                    intent.putExtra("isGame", "0");
-                                    intent.putExtra("groupId", groupResponse.getGroupInfo().getId());
-                                    intent.putExtra("fromeGame", response);
-                                    startActivity(intent);
+                                    return Observable.just(aLong);
+                                })
+                                .compose(bindUntilEvent(ActivityEvent.STOP))
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .doOnSubscribe(disposable -> {
+                                    CommonUtils.initDialog(ConversationActivity.this, "请耐心等待群员下注(23S)");
+                                    if (CommonUtils.getDialog() == null) return;
+                                    CommonUtils.getDialog().show();
+                                })
+                                .doOnDispose(() -> {
+                                    if (CommonUtils.getDialog() != null) {
+                                        CommonUtils.destoryDialog();
+                                        ToastUtils.showShort(R.string.xiazhu_cancel);
+                                    }
+                                })
+                                .doOnError(t -> {
+                                    if (CommonUtils.getDialog() != null)
+                                        CommonUtils.destoryDialog();
+                                })
+                                .doOnComplete(() -> {
+                                    if (CommonUtils.getDialog() != null)
+                                        CommonUtils.destoryDialog();
+                                })
+                                .subscribe(response -> {
+                                    if (response instanceof BaseResponse) {
+                                        BaseResponse response1 = (BaseResponse) response;
+                                        if (response1.code == CODE_SUCCESS) {
+                                            GetBetConutBygroupIdResponse data = (GetBetConutBygroupIdResponse) response1.data;
+                                            if (data.getCount() == 0) {
+                                                ToastUtils.showShort(R.string.noxiazhu);
+                                                return;
+                                            }
+                                            Intent intent = new Intent(ConversationActivity.this, GroupRedPacketActivity.class);
+                                            intent.putExtra("isGame", "0");
+                                            intent.putExtra("groupId", groupResponse.getGroupInfo().getId());
+                                            intent.putExtra("fromeGame", data);
+                                            startActivity(intent);
+                                        } else if (response1.code == CODE_UNLOGIN) {
+                                            Observable.error(new RxException.DuplicateLoginExcepiton("重复登录"));
+                                        } else {
+                                            Observable.error(new RxException.ParamsException(response1.msg, response1.code));
+                                        }
+                                    } else if (response instanceof Long) {
+                                        TextView textView = CommonUtils.getDialog().findViewById(R.id.tv_dialog_content);
+                                        textView.setText("请耐心等待群员下注(" + (23 - ((Long) response) + "S)"));
+                                    }
                                 }, ConversationActivity.this::handleApiError));
                     }
                 }
@@ -698,6 +742,17 @@ public class ConversationActivity extends BaseActivity {
                                                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this)))
                                                     .compose(RxSchedulers.normalTrans())
                                                     .subscribe(s2 -> {
+                                                        if (!message.getSenderUserId().equals(Constant.userId)) {
+                                                            InformationNotificationMessage message1 = InformationNotificationMessage.obtain(Constant.currentUser.getNick() + "领取了"
+                                                                    + s2.getSendCustomerInfo().getUsernick() + "的红包");
+                                                            RongIM.getInstance().sendDirectionalMessage(Conversation.ConversationType.GROUP, groupResponse.getGroupInfo().getId(), message1, new String[]{message.getSenderUserId()}
+                                                                    , null, null, null);
+                                                        } else {
+                                                            InformationNotificationMessage message1 = InformationNotificationMessage.obtain("你领取了你的红包");
+                                                            RongIM.getInstance().sendDirectionalMessage(Conversation.ConversationType.GROUP, groupResponse.getGroupInfo().getId(), message1, new String[]{Constant.userId}
+                                                                    , null, null, null);
+                                                        }
+
                                                         Intent intent1 = new Intent(context, PeopleUnaccalimedActivity.class);
                                                         intent1.putExtra("id", redPacketMessage.getRedId());
                                                         intent1.putExtra("isGame", redPacketMessage.getIsGame());
@@ -717,6 +772,11 @@ public class ConversationActivity extends BaseActivity {
                                                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConversationActivity.this)))
                                                     .compose(RxSchedulers.normalTrans())
                                                     .subscribe(s1 -> {
+                                                        InformationNotificationMessage message1 = InformationNotificationMessage.obtain(Constant.currentUser.getNick() + "领取了" +
+                                                                s1.getSendUserInfo().getUsernick() + "的红包");
+                                                        RongIM.getInstance().sendDirectionalMessage(Conversation.ConversationType.PRIVATE, targetId, message1, new String[]{targetId}
+                                                                , null, null, null);
+
                                                         Intent intent2 = new Intent(ConversationActivity.this, PeopleRedEnvelopesActivity.class);
                                                         intent2.putExtra("msg", message);
                                                         startActivity(intent2);
