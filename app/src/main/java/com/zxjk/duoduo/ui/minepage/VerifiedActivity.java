@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -36,6 +37,10 @@ import com.zxjk.duoduo.utils.TakePicUtil;
 import java.io.File;
 import java.util.Collections;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * author L
  * create at 2019/5/7
@@ -45,44 +50,56 @@ import java.util.Collections;
 public class VerifiedActivity extends BaseActivity {
     public static final int REQUEST_TAKE = 1;
     public static final int REQUEST_ALBUM = 2;
-
-
-    TextView tv_certificateType;
-    EditText et_realName;
-
-    EditText idCard;
-    /**
-     * 证件正面照
-     */
-    ImageView frontPhotoOfTheDocument;
-    /**
-     * 证件正面照编辑
-     */
-    ImageView frontPhotoOfTheDocumentEdit;
-    /**
-     * 证件反面照
-     */
-    ImageView reversePhotoOfTheDocument;
-    /**
-     * 证件反面照编辑
-     */
-    ImageView reversePhotoOfTheDocumentEdit;
-    /**
-     * 手持证件照
-     */
-    ImageView handHeldPassportPhoto;
-    /**
-     * 手持证件照编辑
-     */
-
     String url1;
     String url2;
     String url3;
-    ImageView handHeldPassportPhotoEdit;
-    String realNames;
-    String idCards;
+    //提交
+    @BindView(R.id.tv_commit)
+    TextView tvCommit;
+    //标题
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    //证件类型
+    @BindView(R.id.tv_certificateType)
+    TextView tvCertificateType;
+    //真实姓名
+    @BindView(R.id.et_realName)
+    EditText etRealName;
+    //证件号码
+    @BindView(R.id.et_idCard)
+    EditText etIdCard;
+    //正面照片
+    @BindView(R.id.iv_frontPhoto)
+    ImageView ivFrontPhoto;
+    //正面照片右上角编辑
+    @BindView(R.id.iv_frontPhotoEdit)
+    ImageView ivFrontPhotoEdit;
+    //正面照片
+    @BindView(R.id.rl_front)
+    RelativeLayout rlFront;
+    //反面照片
+    @BindView(R.id.iv_reversePhoto)
+    ImageView ivReversePhoto;
+    @BindView(R.id.tv_reverse)
+    TextView tvReverse;
+    //反面照片右上角编辑
+    @BindView(R.id.iv_reversePhotoEdit)
+    ImageView ivReversePhotoEdit;
+    //反面照片
+    @BindView(R.id.rl_reverse)
+    RelativeLayout rlReverse;
+    //手持照
+    @BindView(R.id.iv_heldPhoto)
+    ImageView ivHeldPhoto;
+    @BindView(R.id.tv_heldPhoto)
+    TextView tvHeldPhoto;
+    //手持照右上角编辑
+    @BindView(R.id.iv_heldPhotoEdit)
+    ImageView ivHeldPhotoEdit;
+    //手持照
+    @BindView(R.id.rl_heldPhoto)
+    RelativeLayout rlHeldPhoto;
 
-    TextView tv_commit;
 
     private int currentPictureFlag;
     private String otherIdCardType = "";
@@ -92,40 +109,27 @@ public class VerifiedActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verified);
-
-        TextView tv_title = findViewById(R.id.tv_title);
-        tv_title.setText(getString(R.string.verified));
-        tv_commit = findViewById(R.id.tv_commit);
-        tv_commit.setVisibility(View.VISIBLE);
-        tv_commit.setText(getString(R.string.commit));
+        ButterKnife.bind(this);
         initView();
     }
 
 
     @SuppressLint("WrongViewCast")
     private void initView() {
-        findViewById(R.id.rl_back).setOnClickListener(v -> {
-            CommonUtils.hideInputMethod(this);
-            finish();
-        });
-        tv_certificateType = findViewById(R.id.tv_certificateType);
         otherIdCardType = getIntent().getStringExtra("otherIdCardType");
+        tvTitle.setText(getString(R.string.verified));
+        tvCommit.setVisibility(View.VISIBLE);
+        tvCommit.setText(getString(R.string.commit));
         if (otherIdCardType.equals("2")) {
-            tv_certificateType.setText("护照");
+            tvCertificateType.setText("护照");
+            tvReverse.setText("手持证件照");
+            ivReversePhoto.setImageResource(R.drawable.icon_hand_held_passport_photo);
+            rlHeldPhoto.setVisibility(View.GONE);
         } else if (otherIdCardType.equals("3")) {
-            tv_certificateType.setText("其他国家或地区身份证");
+            tvCertificateType.setText("其他国家或地区身份证");
         }
-        et_realName = findViewById(R.id.et_realName);
-        idCard = findViewById(R.id.id_card);
-        frontPhotoOfTheDocument = findViewById(R.id.front_photo_of_the_document);
-        frontPhotoOfTheDocumentEdit = findViewById(R.id.front_photo_of_the_document_edit);
-        reversePhotoOfTheDocument = findViewById(R.id.reverse_photo_of_the_document);
-        reversePhotoOfTheDocumentEdit = findViewById(R.id.reverse_photo_of_the_document_edit);
-        handHeldPassportPhoto = findViewById(R.id.hand_held_passport_photo);
-        handHeldPassportPhotoEdit = findViewById(R.id.hand_held_passport_photo_edit);
-        tv_commit.setOnClickListener(v -> commit());
 
-        getPermisson(frontPhotoOfTheDocument, result -> {
+        getPermisson(rlFront, result -> {
             if (result) {
                 currentPictureFlag = 1;
                 dialogType();
@@ -133,14 +137,14 @@ public class VerifiedActivity extends BaseActivity {
             }
         }, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
 
-        getPermisson(reversePhotoOfTheDocument, result -> {
+        getPermisson(rlReverse, result -> {
             if (result) {
                 currentPictureFlag = 2;
                 dialogType();
             }
         }, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
 
-        getPermisson(handHeldPassportPhoto, result -> {
+        getPermisson(rlHeldPhoto, result -> {
             if (result) {
                 currentPictureFlag = 3;
                 dialogType();
@@ -150,19 +154,13 @@ public class VerifiedActivity extends BaseActivity {
     }
 
     private void commit() {
-        realNames = et_realName.getText().toString().trim();
-        idCards = idCard.getText().toString().trim();
-        if (TextUtils.isEmpty(realNames)) {
+
+        if (TextUtils.isEmpty(etRealName.getText().toString())) {
             ToastUtils.showShort(R.string.edit_real_name);
             return;
         }
 
-        if (otherIdCardType.equals("")) {
-            ToastUtils.showShort(getString(R.string.please_select_the_type_of_document));
-            return;
-        }
-
-        if (TextUtils.isEmpty(idCards)) {
+        if (TextUtils.isEmpty(etIdCard.getText().toString())) {
             ToastUtils.showShort(R.string.edit_id_cards);
             return;
         }
@@ -177,19 +175,25 @@ public class VerifiedActivity extends BaseActivity {
             return;
         }
 
-        if (TextUtils.isEmpty(url3)) {
-            ToastUtils.showShort(R.string.verified_realname3);
-            return;
+        if (otherIdCardType.equals("3")) {
+            if (TextUtils.isEmpty(url3)) {
+                ToastUtils.showShort(R.string.verified_realname3);
+                return;
+            }
         }
-
         VerifiedBean bean = new VerifiedBean();
-
-        bean.setNumber(idCards);
-        bean.setRealName(realNames);
+        bean.setNumber(etIdCard.getText().toString());
+        bean.setRealName(etRealName.getText().toString());
         bean.setType(otherIdCardType);
-        bean.setPictureFront(url1);
-        bean.setPictureHand(url3);
-        bean.setPictureReverse(url2);
+        if (otherIdCardType.equals("2")) {
+            bean.setPictureFront(url1);
+            bean.setPictureReverse("");
+            bean.setPictureHand(url2);
+        } else if (otherIdCardType.equals("3")) {
+            bean.setPictureFront(url1);
+            bean.setPictureReverse(url2);
+            bean.setPictureHand(url3);
+        }
         certification(AesUtil.getInstance().encrypt(GsonUtils.toJson(bean)));
     }
 
@@ -217,20 +221,20 @@ public class VerifiedActivity extends BaseActivity {
                 OssUtils.uploadFile(file.getAbsolutePath(), url -> {
                     if (currentPictureFlag == 1) {
                         url1 = url;
-                        frontPhotoOfTheDocumentEdit.setVisibility(View.VISIBLE);
-                        GlideUtil.loadCornerImg(frontPhotoOfTheDocument, url, 5);
+                        ivFrontPhotoEdit.setVisibility(View.VISIBLE);
+                        GlideUtil.loadCornerImg(ivFrontPhoto, url, 5);
                         return;
                     }
                     if (currentPictureFlag == 2) {
                         url2 = url;
-                        reversePhotoOfTheDocumentEdit.setVisibility(View.VISIBLE);
-                        GlideUtil.loadCornerImg(reversePhotoOfTheDocument, url, 5);
+                        ivReversePhotoEdit.setVisibility(View.VISIBLE);
+                        GlideUtil.loadCornerImg(ivReversePhoto, url, 5);
                         return;
                     }
                     if (currentPictureFlag == 3) {
                         url3 = url;
-                        handHeldPassportPhotoEdit.setVisibility(View.VISIBLE);
-                        GlideUtil.loadCornerImg(handHeldPassportPhoto, url, 5);
+                        ivHeldPhotoEdit.setVisibility(View.VISIBLE);
+                        GlideUtil.loadCornerImg(ivHeldPhoto, url, 5);
                     }
                 });
             });
@@ -245,7 +249,7 @@ public class VerifiedActivity extends BaseActivity {
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
                     Constant.currentUser.setIsAuthentication("2");
-                    Constant.currentUser.setRealname(realNames);
+                    Constant.currentUser.setRealname(etRealName.getText().toString());
                     MMKVUtils.getInstance().enCode("login", Constant.currentUser);
                     ToastUtils.showShort(R.string.verified_success);
                     finish();
@@ -277,4 +281,16 @@ public class VerifiedActivity extends BaseActivity {
                 .show(getSupportFragmentManager());
     }
 
+    @OnClick({R.id.rl_back, R.id.tv_commit})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.rl_back:
+                finish();
+                break;
+            case R.id.tv_commit:
+                commit();
+                break;
+
+        }
+    }
 }

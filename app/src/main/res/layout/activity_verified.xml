@@ -57,7 +57,7 @@
             <include layout="@layout/layout_line" />
 
             <EditText
-                android:id="@+id/id_card"
+                android:id="@+id/et_idCard"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/white"
@@ -94,7 +94,7 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:id="@+id/front_photo_of_the_document"
+                        android:id="@+id/iv_frontPhoto"
                         android:layout_width="match_parent"
                         android:layout_height="103dp"
                         android:background="@drawable/shape_circular_bead1"
@@ -104,7 +104,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/front_photo_of_the_document"
+                        android:layout_below="@+id/iv_frontPhoto"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
                         android:text="@string/front_photo_of_the_document"
@@ -112,7 +112,7 @@
                         android:textSize="14sp" />
 
                     <ImageView
-                        android:id="@+id/front_photo_of_the_document_edit"
+                        android:id="@+id/iv_frontPhotoEdit"
                         android:layout_width="29dp"
                         android:layout_height="29dp"
                         android:layout_alignParentEnd="true"
@@ -122,7 +122,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/rl_contrary"
+                    android:id="@+id/rl_reverse"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
@@ -132,7 +132,7 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:id="@+id/reverse_photo_of_the_document"
+                        android:id="@+id/iv_reversePhoto"
                         android:layout_width="match_parent"
                         android:layout_height="103dp"
                         android:background="@drawable/shape_circular_bead1"
@@ -140,9 +140,10 @@
                         android:src="@drawable/icon_add_a_photo_of_the_id" />
 
                     <TextView
+                        android:id="@+id/tv_reverse"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/reverse_photo_of_the_document"
+                        android:layout_below="@+id/iv_reversePhoto"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
                         android:text="@string/reverse_photo_of_the_document"
@@ -150,7 +151,7 @@
                         android:textSize="14sp" />
 
                     <ImageView
-                        android:id="@+id/reverse_photo_of_the_document_edit"
+                        android:id="@+id/iv_reversePhotoEdit"
                         android:layout_width="29dp"
                         android:layout_height="29dp"
                         android:layout_alignParentEnd="true"
@@ -165,7 +166,7 @@
                 android:orientation="horizontal">
 
                 <RelativeLayout
-                    android:id="@+id/rl_passportPhoto"
+                    android:id="@+id/rl_heldPhoto"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="15dp"
@@ -173,7 +174,7 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:id="@+id/hand_held_passport_photo"
+                        android:id="@+id/iv_heldPhoto"
                         android:layout_width="match_parent"
                         android:layout_height="103dp"
                         android:background="@drawable/shape_circular_bead1"
@@ -181,10 +182,10 @@
                         android:src="@drawable/icon_hand_held_passport_photo" />
 
                     <TextView
-                        android:id="@+id/hand_held_passport_photo_text"
+                        android:id="@+id/tv_heldPhoto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/hand_held_passport_photo"
+                        android:layout_below="@+id/iv_heldPhoto"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
                         android:text="@string/hand_held_passport_photo"
@@ -192,7 +193,7 @@
                         android:textSize="14sp" />
 
                     <ImageView
-                        android:id="@+id/hand_held_passport_photo_edit"
+                        android:id="@+id/iv_heldPhotoEdit"
                         android:layout_width="29dp"
                         android:layout_height="29dp"
                         android:layout_alignParentEnd="true"

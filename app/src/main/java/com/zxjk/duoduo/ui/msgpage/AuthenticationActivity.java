@@ -153,13 +153,11 @@ public class AuthenticationActivity extends BaseActivity {
                 File file = files.get(0);
                 OssUtils.uploadFile(file.getAbsolutePath(), url -> {
                     if (currentPictureFlag == 1) {
-                        ivDefault1.setVisibility(View.GONE);
                         frontUrl = url;
                         data("face", url);
                         cardFront();
                     }
                     if (currentPictureFlag == 2) {
-                        ivDefault2.setVisibility(View.GONE);
                         reverseUrl = url;
                         data("back", url);
                         cardBack();
@@ -190,6 +188,7 @@ public class AuthenticationActivity extends BaseActivity {
                 .compose(bindToLifecycle())
                 .subscribe(cardBackBean -> {
                     if (cardBackBean.isSuccess()) {
+                        ivDefault2.setVisibility(View.GONE);
                         GlideUtil.loadCornerImg(ivCardReverse, reverseUrl, 5);
                         etIssuingAuthority.setText(cardBackBean.getIssue());
                         etValidTerm.setText(cardBackBean.getStart_date() + " - " + cardBackBean.getEnd_date());
@@ -208,6 +207,7 @@ public class AuthenticationActivity extends BaseActivity {
                 .compose(bindToLifecycle())
                 .subscribe(cardFaceBean -> {
                     if (cardFaceBean.isSuccess()) {
+                        ivDefault1.setVisibility(View.GONE);
                         GlideUtil.loadCornerImg(ivCardFront, frontUrl, 5);
                         etName.setText(cardFaceBean.getName());
                         etIdCard.setText(cardFaceBean.getNum());
@@ -246,8 +246,8 @@ public class AuthenticationActivity extends BaseActivity {
         bean.setRealName(etName.getText().toString());
         bean.setType("1");
         bean.setPictureFront(frontUrl);
-        bean.setPictureHand("");
         bean.setPictureReverse(reverseUrl);
+        bean.setPictureHand("");
         String dataStr = AesUtil.getInstance().encrypt(GsonUtils.toJson(bean));
         ServiceFactory.getInstance().getNormalService("http://phonethird.market.alicloudapi.com/", Api.class)
                 .getCertification(etIdCard.getText().toString(), Constant.currentUser.getMobile(), etName.getText().toString())

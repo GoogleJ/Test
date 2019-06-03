@@ -20,6 +20,7 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.ui.msgpage.MyQrCodeActivity;
 import com.zxjk.duoduo.ui.walletpage.BlockWalletActivity;
+import com.zxjk.duoduo.ui.walletpage.ExchangeActivity;
 import com.zxjk.duoduo.ui.walletpage.RecipetQRActivity;
 import com.zxjk.duoduo.utils.GlideUtil;
 
@@ -46,7 +47,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         RelativeLayout rl_blockWallet = view.findViewById(R.id.rl_blockWallet);
         RelativeLayout rl_collectionCode = view.findViewById(R.id.rl_collectionCode);
         RelativeLayout rl_setting = view.findViewById(R.id.rl_setting);
-
+        RelativeLayout rl_exchange = view.findViewById(R.id.rl_exchange);
 
         CardView cv_Info = view.findViewById(R.id.cv_Info);
         TextView tv_DuoDuoNumber = view.findViewById(R.id.tv_DuoDuoNumber);
@@ -63,6 +64,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         rl_setting.setOnClickListener(this);
         cv_Info.setOnClickListener(this);
         iv_QRCode.setOnClickListener(this);
+        rl_exchange.setOnClickListener(this);
 
         if (Constant.isVerifyVerision) {
             rl_blockWallet.setVisibility(View.GONE);
@@ -105,6 +107,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             //余额
             case R.id.rl_balance:
                 startActivity(new Intent(getContext(), BalanceLeftActivity.class));
+                break;
+            //多多交易所
+            case R.id.rl_exchange:
+                startActivity(new Intent(getActivity(), ExchangeActivity.class));
                 break;
             //数字钱包
             case R.id.rl_blockWallet:

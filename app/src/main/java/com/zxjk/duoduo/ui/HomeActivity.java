@@ -40,7 +40,6 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.CommunityFragment;
 import com.zxjk.duoduo.ui.minepage.MineFragment;
 import com.zxjk.duoduo.ui.msgpage.MsgFragment;
-import com.zxjk.duoduo.ui.walletpage.WalletFragment;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -69,7 +68,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
 
     MsgFragment msgFragment;
     CommunityFragment communityFragment;
-    WalletFragment walletFragment;
+    //WalletFragment walletFragment;
     MineFragment mineFragment;
     ContactFragment contactFragment;
 
@@ -128,7 +127,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                     // 添加Item
                     .addItem(new BottomNavigationItem(R.drawable.tab_message_icon_nl, "消息").setInactiveIconResource(R.drawable.tab_message_icon_hl).setBadgeItem(badgeItem))
                     .addItem(new BottomNavigationItem(R.drawable.tab_qun_icon_nl, "通讯录").setInactiveIconResource(R.drawable.tab_qun_icon_hl))
-                    .addItem(new BottomNavigationItem(R.drawable.tab_wallet_icon_nl, "钱包").setInactiveIconResource(R.drawable.tab_wallet_icon_hl))
+                    // .addItem(new BottomNavigationItem(R.drawable.tab_wallet_icon_nl, "钱包").setInactiveIconResource(R.drawable.tab_wallet_icon_hl))
                     .addItem(new BottomNavigationItem(R.drawable.tab_setting_icon_nl, "我的").setInactiveIconResource(R.drawable.tab_setting_icon_hl))
                     //设置默认选中位置
                     .setFirstSelectedPosition(0)
@@ -285,7 +284,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                     for (FriendInfoResponse f : response.data) {
 //                        if (RongUserInfoManager.getInstance().getUserInfo(f.getId()) == null) {
 //                            RongUserInfoManager.getInstance().setUserInfo(new UserInfo(f.getId(), TextUtils.isEmpty(f.getRemark()) ? f.getNick() : f.getRemark(), Uri.parse(f.getHeadPortrait())));
-                            RongUserInfoManager.getInstance().setUserInfo(new UserInfo(f.getId(), f.getNick(), Uri.parse(f.getHeadPortrait())));
+                        RongUserInfoManager.getInstance().setUserInfo(new UserInfo(f.getId(), f.getNick(), Uri.parse(f.getHeadPortrait())));
 //                        }
                     }
                 }, t -> {
@@ -301,7 +300,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
     private void initFragment() {
         msgFragment = new MsgFragment();
         communityFragment = new CommunityFragment();
-        walletFragment = new WalletFragment();
+        // walletFragment = new WalletFragment();
         mineFragment = new MineFragment();
         contactFragment = new ContactFragment();
 
@@ -320,14 +319,14 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
             case 1:
                 switchFragment(contactFragment);
                 break;
+//            case 2:
+//                if (Constant.isVerifyVerision) {
+//                    switchFragment(mineFragment);
+//                    break;
+//                }
+//                switchFragment(walletFragment);
+//                break;
             case 2:
-                if (Constant.isVerifyVerision) {
-                    switchFragment(mineFragment);
-                    break;
-                }
-                switchFragment(walletFragment);
-                break;
-            case 3:
                 switchFragment(mineFragment);
                 break;
             default:

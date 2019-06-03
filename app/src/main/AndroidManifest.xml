@@ -43,6 +43,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ui.msgpage.GroupMasterPointsActivity"></activity>
         <activity
             android:name=".ui.ZoomActivity"
             android:launchMode="singleTop"

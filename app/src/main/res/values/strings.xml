@@ -365,9 +365,9 @@
     <string name="please_input_phone_code">请输入正确得短信验证码</string>
     <string name="please_input_pay_pwd">请输入支付密码</string>
     <string name="group_chat_invitation">群聊邀请</string>
-    <string name="verified_realname1">请上传正面身份证照片</string>
-    <string name="verified_realname2">请上传反面身份证照片</string>
-    <string name="verified_realname3">请上传手持身份证照片</string>
+    <string name="verified_realname1">请上传证件正面照片</string>
+    <string name="verified_realname2">请上传证件反面照片</string>
+    <string name="verified_realname3">请上传手持证件照片</string>
     <string name="verifiedfailed">认证失败</string>
     <string name="verifing">认证中</string>
     <string name="currentCoin">当前币种</string>
@@ -699,7 +699,7 @@
     <string name="input_downscore">请输入要下分的数额</string>
     <string name="input_downscore1">下分数额大于当前可下分总额</string>
     <string name="input_downscore2">下分成功</string>
-    <string name="upscoretotal">上分额度</string>
+    <string name="upscoretotal">上分金额</string>
     <string name="upscorecommit">确认上分</string>
     <string name="inputupscore">请输入上分额度</string>
     <string name="upscore1">成功上分 </string>
@@ -925,11 +925,12 @@
     <string name="input_num1">红包个数不能为0</string>
     <string name="input_outrate1">最小数量不可大于最大数量</string>
     <string name="input_outrate2">最大数量不可小于最小数量</string>
-    <string name="unknowerror">无法识别，请重试</string>
+    <string name="unknowerror">无法识别，请重新上传</string>
     <string name="check_mianze">请阅读并勾选免责声明</string>
     <string name="shengming">声明</string>
     <string name="click_retry">点击重试</string>
     <string name="input_phone">请输入手机号</string>
+    <string name="exchange">多多交易所</string>
     <string name="notice_creategamegroup">您创建了一个游戏群组</string>
     <string name="notice_creategroup">创建了一个群组</string>
     <string name="new_friend1">你俩已经是好友了，现在开始聊天吧</string>

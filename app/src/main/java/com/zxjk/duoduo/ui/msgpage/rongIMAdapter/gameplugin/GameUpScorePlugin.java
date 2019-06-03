@@ -8,13 +8,25 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.ui.msgpage.GameDownScoreActivity;
 import com.zxjk.duoduo.ui.msgpage.GameUpScoreActivity;
+import com.zxjk.duoduo.ui.msgpage.GroupMasterPointsActivity;
 
 import io.rong.imkit.RongExtension;
 import io.rong.imkit.plugin.IPluginModule;
 
 public class GameUpScorePlugin implements IPluginModule {
+
+    String gameType;
+    boolean isGroup;
+
+    public void setGameType(String gameType) {
+        this.gameType = gameType;
+    }
+
+    public void setGroup(boolean group) {
+        isGroup = group;
+    }
+
     @Override
     public Drawable obtainDrawable(Context context) {
         return ContextCompat.getDrawable(context, R.drawable.ic_plugin_upscore);
@@ -27,9 +39,18 @@ public class GameUpScorePlugin implements IPluginModule {
 
     @Override
     public void onClick(Fragment fragment, RongExtension rongExtension) {
-        Intent intent = new Intent(fragment.getContext(), GameUpScoreActivity.class);
-        intent.putExtra("groupId", rongExtension.getTargetId());
-        fragment.startActivity(intent);
+        if (isGroup) {
+            Intent intent = new Intent(fragment.getContext(), GroupMasterPointsActivity.class);
+            intent.putExtra("groupId", rongExtension.getTargetId());
+            intent.putExtra("gameType", gameType);
+            fragment.startActivity(intent);
+        } else {
+            Intent intent = new Intent(fragment.getContext(), GameUpScoreActivity.class);
+            intent.putExtra("groupId", rongExtension.getTargetId());
+            fragment.startActivity(intent);
+        }
+
+
     }
 
     @Override

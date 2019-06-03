@@ -16,8 +16,8 @@
 
         <!-- imlib config begin -->
         <meta-data
-        android:name="RONG_CLOUD_APP_KEY"
-        android:value="mgb7ka1nmdwcg" />
+            android:name="RONG_CLOUD_APP_KEY"
+            android:value="mgb7ka1nmdwcg" />
         <!--test-->
         <!--<meta-data-->
         <!--android:name="RONG_CLOUD_APP_KEY"-->
@@ -25,8 +25,8 @@
 
         <!--release-->
         <!--<meta-data-->
-            <!--android:name="RONG_CLOUD_APP_KEY"-->
-            <!--android:value="uwd1c0sxuqp71" />-->
+        <!--android:name="RONG_CLOUD_APP_KEY"-->
+        <!--android:value="uwd1c0sxuqp71" />-->
 
         <service
             android:name="io.rong.imlib.ipc.RongService"

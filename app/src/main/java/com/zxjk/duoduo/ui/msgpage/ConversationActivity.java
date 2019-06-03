@@ -118,6 +118,7 @@ public class ConversationActivity extends BaseActivity {
     private GamePopupWindow gamePopupWindow;
     public ArrayList<String> memberIds;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -566,7 +567,15 @@ public class ConversationActivity extends BaseActivity {
                             if (!groupInfo.getGroupInfo().getIsDelete().equals("1")) {
                                 extension.addPlugin(new PhotoSelectorPlugin());
 //                                extension.addPlugin(new RedPacketPlugin());
-                                extension.addPlugin(new GameUpScorePlugin());
+                                //上分 区分游戏群类型、是否群主
+                                GameUpScorePlugin gameUpScorePlugin = new GameUpScorePlugin();
+                                if (groupInfo.getGroupInfo().getGroupOwnerId().equals(Constant.userId)) {
+                                    gameUpScorePlugin.setGroup(true);
+                                } else {
+                                    gameUpScorePlugin.setGroup(false);
+                                }
+                                gameUpScorePlugin.setGameType(groupInfo.getGroupInfo().getGameType());
+                                extension.addPlugin(gameUpScorePlugin);
                                 extension.addPlugin(new AudioVideoPlugin());
                                 extension.addPlugin(new GameRecordPlugin());
                                 extension.addPlugin(new GameDownScorePlugin());
