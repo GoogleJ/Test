@@ -77,6 +77,35 @@
             <include layout="@layout/layout_line10" />
 
             <RelativeLayout
+                style="@style/RLayoutStyle"
+                android:onClick="groupQR">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/group_qr"
+                    android:textColor="@color/theme_color"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_toStartOf="@id/iv_enter1"
+                    android:src="@drawable/icon_qr_code" />
+
+                <ImageView
+                    android:id="@+id/iv_enter1"
+                    style="@style/ImageEnter" />
+
+            </RelativeLayout>
+
+            <include layout="@layout/layout_line10" />
+
+            <RelativeLayout
                 android:id="@+id/rl_setTop"
                 style="@style/RLayoutStyle">
 
@@ -126,36 +155,7 @@
 
             </RelativeLayout>
 
-            <include layout="@layout/layout_line" />
-
-            <RelativeLayout
-                style="@style/RLayoutStyle"
-                android:onClick="groupQR">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="15dp"
-                    android:text="@string/group_qr"
-                    android:textColor="@color/theme_color"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="10dp"
-                    android:layout_toStartOf="@id/iv_enter1"
-                    android:src="@drawable/icon_qr_code" />
-
-                <ImageView
-                    android:id="@+id/iv_enter1"
-                    style="@style/ImageEnter" />
-
-            </RelativeLayout>
-
-            <include layout="@layout/layout_line" />
+            <include layout="@layout/layout_line10" />
 
             <RelativeLayout
                 style="@style/RLayoutStyle"
@@ -170,6 +170,25 @@
                     android:textColor="@color/theme_color"
                     android:textSize="16sp" />
 
+                <ImageView style="@style/ImageEnter" />
+
+            </RelativeLayout>
+
+            <include layout="@layout/layout_line" />
+
+            <RelativeLayout
+                android:id="@+id/rl_qk"
+                style="@style/RLayoutStyle"
+                android:onClick="clearHistory">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:text="清空聊天记录"
+                    android:textColor="@color/theme_color"
+                    android:textSize="16sp" />
 
                 <ImageView style="@style/ImageEnter" />
 
@@ -190,7 +209,6 @@
                     android:text="@string/group_announcement"
                     android:textColor="@color/theme_color"
                     android:textSize="16sp" />
-
 
                 <TextView
                     android:id="@+id/announcement"
@@ -228,7 +246,6 @@
                     android:text="群转让"
                     android:textColor="@color/theme_color"
                     android:textSize="16sp" />
-
 
                 <ImageView style="@style/ImageEnter" />
 

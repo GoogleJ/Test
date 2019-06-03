@@ -9,7 +9,6 @@
 
     <include layout="@layout/layout_title" />
 
-
     <LinearLayout
         android:id="@+id/m_constacts_layout1"
         android:layout_width="match_parent"

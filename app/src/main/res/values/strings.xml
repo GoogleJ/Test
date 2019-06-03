@@ -932,4 +932,5 @@
     <string name="input_phone">请输入手机号</string>
     <string name="notice_creategamegroup">您创建了一个游戏群组</string>
     <string name="notice_creategroup">创建了一个群组</string>
+    <string name="new_friend1">你俩已经是好友了，现在开始聊天吧</string>
 </resources>

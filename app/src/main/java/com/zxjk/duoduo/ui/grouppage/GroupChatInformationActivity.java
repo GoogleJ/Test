@@ -16,6 +16,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.shehuan.nicedialog.BaseNiceDialog;
+import com.shehuan.nicedialog.NiceDialog;
+import com.shehuan.nicedialog.ViewConvertListener;
+import com.shehuan.nicedialog.ViewHolder;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -333,6 +337,35 @@ public class GroupChatInformationActivity extends BaseActivity {
                         }), this::handleApiError);
     }
 
+    //清理历史记录
+    public void clearHistory(View view) {
+        NiceDialog.init().setLayoutId(R.layout.layout_general_dialog).setConvertListener(new ViewConvertListener() {
+            @Override
+            protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                holder.setText(R.id.tv_title, "提示");
+                holder.setText(R.id.tv_content, "确定要清空当前聊天记录吗？");
+                holder.setText(R.id.tv_cancel, "取消");
+                holder.setText(R.id.tv_notarize, "确认");
+                holder.setOnClickListener(R.id.tv_cancel, v1 -> dialog.dismiss());
+                holder.setOnClickListener(R.id.tv_notarize, v1 -> RongIM.getInstance().clearMessages(Conversation.ConversationType.GROUP, group.getGroupInfo().getId(), new RongIMClient.ResultCallback<Boolean>() {
+                    @Override
+                    public void onSuccess(Boolean aBoolean) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(GroupChatInformationActivity.this, HomeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onError(RongIMClient.ErrorCode errorCode) {
+                        dialog.dismiss();
+                        ToastUtils.showShort(R.string.function_fail);
+                    }
+                }));
+            }
+        }).setDimAmount(0.5f).setOutCancel(false).show(getSupportFragmentManager());
+    }
+
     public void groupChat(View view) {
         if (group.getGroupInfo().getGroupOwnerId().equals(Constant.currentUser.getId())) {
             Intent intent = new Intent(this, UpdateUserInfoActivity.class);
@@ -342,7 +375,6 @@ public class GroupChatInformationActivity extends BaseActivity {
         } else {
             ToastUtils.showShort(getString(R.string.no_update_nick));
         }
-
     }
 
     @Override

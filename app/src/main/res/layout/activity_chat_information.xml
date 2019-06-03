@@ -52,6 +52,7 @@
                     android:textSize="14sp" />
 
                 <ImageView style="@style/ImageEnter" />
+
             </RelativeLayout>
 
             <include layout="@layout/layout_line10" />
@@ -106,7 +107,7 @@
 
             </RelativeLayout>
 
-            <include layout="@layout/layout_line" />
+            <include layout="@layout/layout_line10" />
 
             <RelativeLayout
                 android:id="@+id/rl_add"
@@ -122,6 +123,7 @@
                     android:textSize="16sp" />
 
                 <ImageView style="@style/ImageEnter" />
+
             </RelativeLayout>
 
             <include layout="@layout/layout_line" />
@@ -140,6 +142,7 @@
                     android:textSize="16sp" />
 
                 <ImageView style="@style/ImageEnter" />
+
             </RelativeLayout>
 
             <include layout="@layout/layout_line" />
@@ -158,10 +161,11 @@
                     android:textSize="16sp" />
 
                 <ImageView style="@style/ImageEnter" />
+
             </RelativeLayout>
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
 
 </LinearLayout>

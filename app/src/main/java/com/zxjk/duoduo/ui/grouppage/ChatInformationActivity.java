@@ -123,11 +123,11 @@ public class ChatInformationActivity extends BaseActivity {
                 holder.setText(R.id.tv_cancel, "取消");
                 holder.setText(R.id.tv_notarize, "确认");
                 holder.setOnClickListener(R.id.tv_cancel, v1 -> dialog.dismiss());
-
-                holder.setOnClickListener(R.id.tv_notarize, v12 -> RongIMClient.getInstance().cleanHistoryMessages(Conversation.ConversationType.PRIVATE
-                        , userInfo.getUserId(), 0, false, new RongIMClient.OperationCallback() {
+                holder.setOnClickListener(R.id.tv_notarize, v12 -> RongIM.getInstance().clearMessages(Conversation.ConversationType.PRIVATE
+                        , userInfo.getUserId(), new RongIMClient.ResultCallback<Boolean>() {
                             @Override
-                            public void onSuccess() {
+                            public void onSuccess(Boolean aBoolean) {
+                                dialog.dismiss();
                                 Intent intent = new Intent(ChatInformationActivity.this, HomeActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
@@ -135,10 +135,10 @@ public class ChatInformationActivity extends BaseActivity {
 
                             @Override
                             public void onError(RongIMClient.ErrorCode errorCode) {
+                                dialog.dismiss();
                                 ToastUtils.showShort(R.string.function_fail);
                             }
                         }));
-
             }
         }).setDimAmount(0.5f).setOutCancel(false).show(getSupportFragmentManager()));
         findViewById(R.id.rl_juBao).setOnClickListener(v -> startActivity(new Intent(ChatInformationActivity.this, SkinReportActivity.class)));

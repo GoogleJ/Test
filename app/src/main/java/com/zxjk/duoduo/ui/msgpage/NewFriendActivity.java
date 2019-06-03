@@ -30,6 +30,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
+import io.rong.message.InformationNotificationMessage;
 
 /**
  * 新的朋友
@@ -84,10 +87,6 @@ public class NewFriendActivity extends BaseActivity {
                     break;
                 case R.id.m_add_btn_layout:
                     if (isTrue) {
-//                        Intent intent = new Intent(NewFriendActivity.this, AddFriendDetailsActivity.class);
-//                        intent.putExtra("fromwaiting", true);
-//                        intent.putExtra("newFriend", mAdapter.getData().get(position));
-//                        startActivity(intent);
                     } else {
                         Intent intent = new Intent(NewFriendActivity.this, FriendDetailsActivity.class);
                         intent.putExtra("searchFriendDetails", mAdapter.getData().get(position));
@@ -98,15 +97,7 @@ public class NewFriendActivity extends BaseActivity {
             }
             mAdapter.notifyDataSetChanged();
         });
-//        mAdapter.setOnItemChildLongClickListener((adapter, view, position) -> {
-//            dialog = new DeleteFriendInformationDialog(NewFriendActivity.this);
-//            dialog.setOnClickListener(() -> {
-//                dialog.dismiss();
-//                deleteMyfirendsWaiting(list.get(position).getId());
-//            });
-//            dialog.show(list.get(position).getNick());
-//            return false;
-//        });
+
         if (mAdapter.getData().size() == 0) {
             View view = LayoutInflater.from(this).inflate(R.layout.view_app_null_type, null);
             mAdapter.setEmptyView(view);
@@ -142,22 +133,11 @@ public class NewFriendActivity extends BaseActivity {
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(NewFriendActivity.this)))
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(s -> ToastUtils.showShort(getString(R.string.add_friend_successful)), this::handleApiError);
-    }
-
-    /**
-     * 删除好友申请
-     *
-     * @param friendId
-     */
-
-    public void deleteMyfirendsWaiting(String friendId) {
-        ServiceFactory.getInstance().getBaseService(Api.class)
-                .deleteMyfirendsWaiting(friendId)
-                .compose(bindToLifecycle())
-                .compose(RxSchedulers.ioObserver())
-                .compose(RxSchedulers.normalTrans())
-                .subscribe(s -> mAdapter.notifyDataSetChanged(), this::handleApiError);
+                .subscribe(s -> {
+                    ToastUtils.showShort(getString(R.string.add_friend_successful));
+                    InformationNotificationMessage message = InformationNotificationMessage.obtain(getString(R.string.new_friend1));
+                    RongIM.getInstance().sendDirectionalMessage(Conversation.ConversationType.PRIVATE, friendId, message, new String[]{friendId}, null, null, null);
+                }, this::handleApiError);
     }
 
     @Override

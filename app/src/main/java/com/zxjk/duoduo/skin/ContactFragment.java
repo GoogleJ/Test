@@ -48,12 +48,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.IRongCallback;
-import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.Message;
-import io.rong.message.CommandMessage;
 
 public class ContactFragment extends BaseFragment implements View.OnClickListener {
 
@@ -117,44 +111,6 @@ public class ContactFragment extends BaseFragment implements View.OnClickListene
             intent.putExtra("intentType", 2);
             intent.putExtra("contactResponse", friendInfoResponse);
             startActivity(intent);
-        });
-        mAdapter.setOnItemChildLongClickListener((adapter, view, position) -> {
-            FriendInfoResponse friendInfoResponse = mAdapter.getData().get(position);
-            deleteDialog.show(friendInfoResponse.getNick());
-            deleteDialog.setOnClickListener(() -> ServiceFactory.getInstance().getBaseService(Api.class)
-                    .deleteFriend(friendInfoResponse.getId())
-                    .compose(bindToLifecycle())
-                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(getActivity())))
-                    .compose(RxSchedulers.normalTrans())
-                    .subscribe(s -> {
-                        ToastUtils.showShort(R.string.delete_friend_succesed);
-                        adapter.getData().remove(position);
-                        adapter.notifyItemRemoved(position);
-
-                        Message myMessage = Message.obtain(friendInfoResponse.getId(), Conversation.ConversationType.PRIVATE, CommandMessage.obtain("deleteFriend", ""));
-                        RongIM.getInstance().sendMessage(myMessage, null, null, new IRongCallback.ISendMessageCallback() {
-                            @Override
-                            public void onAttached(Message message) {
-
-                            }
-
-                            @Override
-                            public void onSuccess(Message message) {
-
-                            }
-
-                            @Override
-                            public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-
-                            }
-                        });
-                        RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE
-                                , friendInfoResponse.getId(), null);
-                        RongIMClient.getInstance().cleanHistoryMessages(Conversation.ConversationType.PRIVATE,
-                                friendInfoResponse.getId(), 0, false, null);
-                    }, t -> ToastUtils.showShort(RxException.getMessage(t))));
-
-            return false;
         });
         if (mAdapter.getData().size() == 0) {
             View view = LayoutInflater.from(getActivity()).inflate(R.layout.view_app_null_type, null);

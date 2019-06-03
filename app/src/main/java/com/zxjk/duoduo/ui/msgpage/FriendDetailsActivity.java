@@ -37,11 +37,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
-import io.rong.imlib.IRongCallback;
-import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.Message;
-import io.rong.message.CommandMessage;
 
 /**
  * author L
@@ -290,7 +286,6 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                             } else {
                                 FriendDetailsActivity.this.deleteFriend(contactResponse.getId());
                             }
-                            FriendDetailsActivity.this.finish();
                         });
                     }
                 }).setDimAmount(0.5f).setOutCancel(false).show(getSupportFragmentManager());
@@ -310,32 +305,18 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
     public void deleteFriend(String friendId) {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .deleteFriend(friendId)
-                .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
+                .compose(bindToLifecycle())
                 .subscribe(s -> {
-                    Message myMessage = Message.obtain(friendId, Conversation.ConversationType.PRIVATE, CommandMessage.obtain("deleteFriend", ""));
-                    RongIM.getInstance().sendMessage(myMessage, null, null, new IRongCallback.ISendMessageCallback() {
-                        @Override
-                        public void onAttached(Message message) {
-
-                        }
-
-                        @Override
-                        public void onSuccess(Message message) {
-                            ToastUtils.showShort(getString(R.string.the_friend_has_been_deleted));
-                            dialog.dismiss();
-                            RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE
-                                    , friendId, null);
-                            RongIMClient.getInstance().cleanHistoryMessages(Conversation.ConversationType.PRIVATE,
-                                    friendId, 0, false, null);
-                        }
-
-                        @Override
-                        public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-
-                        }
-                    });
+                    ToastUtils.showShort(getString(R.string.the_friend_has_been_deleted));
+                    RongIM.getInstance().clearMessages(Conversation.ConversationType.PRIVATE,
+                            friendId, null);
+                    RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE
+                            , friendId, null);
+                    Intent intent = new Intent(FriendDetailsActivity.this, HomeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                 }, this::handleApiError);
     }
 
