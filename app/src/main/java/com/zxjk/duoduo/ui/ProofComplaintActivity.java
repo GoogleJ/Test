@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.blankj.utilcode.util.ScreenUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.PinchImageView;
@@ -28,6 +29,7 @@ public class ProofComplaintActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ScreenUtils.setFullScreen(this);
         setContentView(R.layout.activity_proof_complaint);
         ButterKnife.bind(this);
         initView();

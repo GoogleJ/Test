@@ -45,7 +45,6 @@ public class PinchImageView extends ImageView {
      * @see #setOnClickListener(OnClickListener)
      */
     private OnClickListener mOnClickListener;
-
     /**
      * 外界长按事件
      *
@@ -1733,4 +1732,6 @@ public class PinchImageView extends ImageView {
             }
         }
     }
+
+
 }

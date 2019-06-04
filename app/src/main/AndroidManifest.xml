@@ -47,13 +47,11 @@
         <activity
             android:name=".ui.ZoomActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/EnlargeTheme" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.ProofComplaintActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/EnlargeTheme" />
+            android:screenOrientation="portrait" />
         <activity android:name=".ui.AMapActivity" />
         <activity android:name=".ui.msgpage.GroupGoldStupaInfoActivity" />
         <activity android:name=".ui.msgpage.AuthenticationActivity" />
@@ -68,8 +66,8 @@
         <activity
             android:name=".ui.EnlargeImageActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/EnlargeTheme" /> <!-- <meta-data -->
+            android:screenOrientation="portrait" />
+        <!-- <meta-data -->
         <!-- android:name="design_width_in_dp" -->
         <!-- android:value="375" /> -->
         <!-- <meta-data -->

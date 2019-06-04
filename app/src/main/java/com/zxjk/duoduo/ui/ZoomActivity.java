@@ -2,6 +2,7 @@ package com.zxjk.duoduo.ui;
 
 import android.os.Bundle;
 
+import com.blankj.utilcode.util.ScreenUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.PinchImageView;
@@ -20,13 +21,13 @@ import butterknife.ButterKnife;
  * *********************
  */
 public class ZoomActivity extends BaseActivity {
-
     @BindView(R.id.pic)
     PinchImageView pic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ScreenUtils.setFullScreen(this);
         setContentView(R.layout.activity_zoom);
         ButterKnife.bind(this);
         initView();

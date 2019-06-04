@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.msgpage.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -53,7 +54,7 @@ public class GameRecordAdapter extends RecyclerView.Adapter<GameRecordAdapter.Vi
                 gameRecordPopupWindow.show(1, data.get(holder.getAdapterPosition()));
             } else if (getIntegralDetailsResponse.getTitle().equals("下分")) {
                 gameRecordPopupWindow.show(2, data.get(holder.getAdapterPosition()));
-            } else if (getIntegralDetailsResponse.getTitle().equals("提现")) {
+            } else if (getIntegralDetailsResponse.getTitle().equals("返佣")) {
                 gameRecordPopupWindow.show(4, data.get(holder.getAdapterPosition()));
             } else {
                 String redPackageId = getIntegralDetailsResponse.getRedPackageId();
@@ -86,6 +87,7 @@ public class GameRecordAdapter extends RecyclerView.Adapter<GameRecordAdapter.Vi
             iv = itemView.findViewById(R.id.iv);
         }
 
+        @SuppressLint("SetTextI18n")
         void bindData(GetIntegralDetailsResponse bean) {
             if (bean.getTitle().equals("上分")) {
                 iv.setImageResource(R.drawable.ic_game_record_list10);
@@ -105,7 +107,7 @@ public class GameRecordAdapter extends RecyclerView.Adapter<GameRecordAdapter.Vi
             if (bean.getTitle().equals("流局")) {
                 iv.setImageResource(R.drawable.ic_game_record_list4);
             }
-            if (bean.getTitle().equals("提现")) {
+            if (bean.getTitle().equals("返佣")) {
                 iv.setImageResource(R.drawable.ic_game_record_list11);
             }
             if (bean.getTitle().contains("期")) {

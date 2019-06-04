@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -69,7 +68,6 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtension;
@@ -588,7 +586,7 @@ public class ConversationActivity extends BaseActivity {
                                     gameRulesPlugin.duobao = "true";
                                 } else if (!groupInfo.getGroupInfo().getGameType().equals("4") && groupInfo.getGroupInfo().getGroupOwnerId().equals(Constant.userId)) {
                                     //普通游戏群 只有群主才能开始下注
-                                    extension.addPlugin(new GameStartPlugin());
+                                     extension.addPlugin(new GameStartPlugin());
                                 }
                                 extension.addPlugin(new GameJiaoYiPlugin());
                                 extension.addPlugin(gameRulesPlugin);

@@ -4,13 +4,14 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.PointF;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,12 +22,14 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.blankj.utilcode.util.BarUtils;
+import com.blankj.utilcode.util.ImageUtils;
+import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomViewTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.davemorrissey.labs.subscaleview.ImageSource;
+import com.davemorrissey.labs.subscaleview.ImageViewState;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.github.ybq.android.spinkit.SpriteFactory;
@@ -44,9 +47,7 @@ import com.zxjk.duoduo.ui.minepage.scanuri.Action1;
 import com.zxjk.duoduo.ui.minepage.scanuri.BaseUri;
 import com.zxjk.duoduo.ui.msgpage.GroupQRActivity;
 import com.zxjk.duoduo.ui.msgpage.TransferActivity;
-import com.zxjk.duoduo.ui.widget.PinchImageView;
 import com.zxjk.duoduo.utils.CommonUtils;
-import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.utils.SaveImageUtil;
 
 import org.json.JSONObject;
@@ -76,13 +77,13 @@ public class EnlargeImageActivity extends BaseActivity {
     @BindView(R.id.pager)
     ViewPager pager;
 
-    private Bitmap bitmap;
+    private Bitmap bitmap1;
     private ArrayList<Message> images;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        BarUtils.setNavBarVisibility(this, false);
+        ScreenUtils.setFullScreen(this);
         setContentView(R.layout.activity_enlarge_image);
         ButterKnife.bind(this);
         String imageUrl = getIntent().getStringExtra("image");
@@ -96,8 +97,14 @@ public class EnlargeImageActivity extends BaseActivity {
                     CommonUtils.destoryDialog();
                 }
             });
-            iv.setImage(ImageSource.resource(R.drawable.gamerules));
-            iv.setOnClickListener(v -> finish());
+            Bitmap bitmap = ImageUtils.drawable2Bitmap(getDrawable(R.drawable.gamerules));
+            float initImageScale = getInitImageScale(bitmap);
+            iv.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CUSTOM);
+            iv.setMinScale(initImageScale);//最小显示比例
+            iv.setMaxScale(initImageScale + 2.0f);//最大显示比例
+            iv.setImage((ImageSource.bitmap(bitmap)), new ImageViewState(initImageScale, new PointF(0, 0), 0));
+            // iv.setImage(ImageSource.resource(R.drawable.gamerules));
+            iv.setOnClickListener(v -> finishAfterTransition());
         } else if (imageUrl.equals("GameRules2")) {
             CommonUtils.initDialog(this).show();
             iv.setVisibility(View.VISIBLE);
@@ -108,8 +115,14 @@ public class EnlargeImageActivity extends BaseActivity {
                     CommonUtils.destoryDialog();
                 }
             });
-            iv.setImage(ImageSource.resource(R.drawable.gamerules2));
-            iv.setOnClickListener(v -> finish());
+            Bitmap bitmap = ImageUtils.drawable2Bitmap(getDrawable(R.drawable.gamerules2));
+            float initImageScale = getInitImageScale(bitmap);
+            iv.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CUSTOM);
+            iv.setMinScale(initImageScale);//最小显示比例
+            iv.setMaxScale(initImageScale + 2.0f);//最大显示比例
+            iv.setImage((ImageSource.bitmap(bitmap)), new ImageViewState(initImageScale, new PointF(0, 0), 0));
+            // iv.setImage(ImageSource.resource(R.drawable.gamerules2));
+            iv.setOnClickListener(v -> finishAfterTransition());
         } else {
             Bundle bundle = getIntent().getBundleExtra("images");
             images = bundle.getParcelableArrayList("images");
@@ -147,7 +160,8 @@ public class EnlargeImageActivity extends BaseActivity {
 
     private View initView(int position) {
         RelativeLayout layout = new RelativeLayout(EnlargeImageActivity.this);
-        PinchImageView imageView = new PinchImageView(EnlargeImageActivity.this);
+        //  PinchImageView imageView = new PinchImageView(EnlargeImageActivity.this);
+        SubsamplingScaleImageView imageView = new SubsamplingScaleImageView(EnlargeImageActivity.this);
         SpinKitView progressBar = new SpinKitView(EnlargeImageActivity.this);
         progressBar.setIndeterminateDrawable(SpriteFactory.create(Style.FADING_CIRCLE));
 
@@ -156,7 +170,7 @@ public class EnlargeImageActivity extends BaseActivity {
         textView.setTextSize(17);
         textView.setGravity(Gravity.CENTER);
         textView.setTextColor(ContextCompat.getColor(EnlargeImageActivity.this, R.color.white));
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        //  imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(CommonUtils.dip2px(EnlargeImageActivity.this, 32), CommonUtils.dip2px(EnlargeImageActivity.this, 32));
         layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
 
@@ -176,22 +190,47 @@ public class EnlargeImageActivity extends BaseActivity {
                 sMessage = ((ImageMessage) message.getContent()).getLocalUri().toString();
             }
 
-            GlideUtil.loadNormalImg(imageView, sMessage, new RequestListener<Bitmap>() {
+            Glide.with(this).load(sMessage).into(new CustomViewTarget<SubsamplingScaleImageView, Drawable>(imageView) {
                 @Override
-                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                public void onLoadFailed(@Nullable Drawable errorDrawable) {
                     progressBar.setVisibility(View.GONE);
                     textView.setVisibility(View.VISIBLE);
-                    return false;
                 }
 
                 @Override
-                public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                     progressBar.setVisibility(View.GONE);
-                    bitmap = resource;
-                    imageView.setImageBitmap(bitmap);
-                    return true;
+                    bitmap1 = ImageUtils.drawable2Bitmap(resource);
+                    float initImageScale = getInitImageScale(bitmap1);
+                    imageView.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CUSTOM);
+                    imageView.setMinScale(initImageScale);//最小显示比例
+                    imageView.setMaxScale(initImageScale + 2.0f);//最大显示比例
+                    imageView.setImage((ImageSource.bitmap(bitmap1)), new ImageViewState(initImageScale, new PointF(0, 0), 0));
+                }
+
+                @Override
+                protected void onResourceCleared(@Nullable Drawable placeholder) {
+                    progressBar.setVisibility(View.GONE);
                 }
             });
+
+
+//            GlideUtil.loadNormalImg(imageView, sMessage, new RequestListener<Bitmap>() {
+//                @Override
+//                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+//                    progressBar.setVisibility(View.GONE);
+//                    textView.setVisibility(View.VISIBLE);
+//                    return false;
+//                }
+//
+//                @Override
+//                public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+//                    progressBar.setVisibility(View.GONE);
+//                    bitmap = resource;
+//                    imageView.setImageBitmap(bitmap);
+//                    return true;
+//                }
+//            });
         });
 
         textView.performClick();
@@ -208,17 +247,17 @@ public class EnlargeImageActivity extends BaseActivity {
                     //识别二维码
                     holder.setOnClickListener(R.id.tv_photo_select, v -> {
                         dialog.dismiss();
-                        decode(bitmap, "解析二维码失败");
+                        decode(bitmap1, "解析二维码失败");
                     });
 
                     //保存图片
                     holder.setOnClickListener(R.id.tv_photograph, v1 -> getPermisson(g -> {
                         //保存到手机
                         dialog.dismiss();
-                        if (bitmap == null) {
+                        if (bitmap1 == null) {
                             return;
                         }
-                        SaveImageUtil.get().savePic(bitmap, success -> {
+                        SaveImageUtil.get().savePic(bitmap1, success -> {
                             if (success) {
                                 ToastUtils.showShort(R.string.savesucceed);
                                 return;
@@ -298,5 +337,31 @@ public class EnlargeImageActivity extends BaseActivity {
                 }
             }
         }.execute();
+    }
+
+    public float getInitImageScale(Bitmap bitmap) {
+        int width = ScreenUtils.getScreenWidth();
+        int height = ScreenUtils.getScreenHeight();
+        // 拿到图片的宽和高
+        int dw = bitmap.getWidth();
+        int dh = bitmap.getHeight();
+        float scale = 1.0f;
+        //图片宽度大于屏幕，但高度小于屏幕，则缩小图片至填满屏幕宽
+        if (dw > width && dh <= height) {
+            scale = width * 1.0f / dw;
+        }
+        //图片宽度小于屏幕，但高度大于屏幕，则放大图片至填满屏幕宽
+        if (dw <= width && dh > height) {
+            scale = width * 1.0f / dw;
+        }
+        //图片高度和宽度都小于屏幕，则放大图片至填满屏幕宽
+        if (dw < width && dh < height) {
+            scale = width * 1.0f / dw;
+        }
+        //图片高度和宽度都大于屏幕，则缩小图片至填满屏幕宽
+        if (dw > width && dh > height) {
+            scale = width * 1.0f / dw;
+        }
+        return scale;
     }
 }
