@@ -618,11 +618,7 @@ public class ConversationActivity extends BaseActivity {
             @Override
             public boolean onUserPortraitClick(Context context, Conversation.ConversationType conversationType, UserInfo userInfo, String s) {
                 if (conversationType == Conversation.ConversationType.GROUP) {
-                    if (null == Constant.friendsList) {
-                        getFriendListById(userInfo.getUserId());
-                    } else {
-                        handleFriendList(userInfo.getUserId());
-                    }
+                    CommonUtils.resolveFriendList(ConversationActivity.this, userInfo.getUserId());
                 } else {
                     Intent intent = new Intent(ConversationActivity.this, FriendDetailsActivity.class);
                     intent.putExtra("friendId", userInfo.getUserId());
@@ -641,11 +637,7 @@ public class ConversationActivity extends BaseActivity {
                 switch (message.getObjectName()) {
                     case "MMyCardMsg":
                         BusinessCardMessage businessCardMessage = (BusinessCardMessage) message.getContent();
-                        if (null == Constant.friendsList) {
-                            getFriendListById(businessCardMessage.getUserId());
-                        } else {
-                            handleFriendList(businessCardMessage.getUserId());
-                        }
+                        CommonUtils.resolveFriendList(ConversationActivity.this, businessCardMessage.getUserId());
                         break;
                     case "RC:ImgMsg":
                         Intent intent5 = new Intent(ConversationActivity.this, EnlargeImageActivity.class);
@@ -812,33 +804,6 @@ public class ConversationActivity extends BaseActivity {
         RongIM.setConversationClickListener(conversationClickListener);
     }
 
-    private void handleFriendList(String userId) {
-        if (userId.equals(Constant.userId)) {
-            //扫到了自己
-            Intent intent = new Intent(this, FriendDetailsActivity.class);
-            intent.putExtra("friendId", userId);
-            startActivity(intent);
-            return;
-        }
-
-        for (FriendInfoResponse f : Constant.friendsList) {
-            if (f.getId().equals(userId)) {
-                //自己的好友，进入详情页（可聊天）
-                Intent intent = new Intent(this, FriendDetailsActivity.class);
-                intent.putExtra("searchFriendDetails", f);
-                startActivity(intent);
-                finish();
-                return;
-            }
-        }
-
-        //陌生人，进入加好友页面
-        Intent intent = new Intent(this, AddFriendDetailsActivity.class);
-        intent.putExtra("newFriendId", userId);
-        startActivity(intent);
-        finish();
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -908,19 +873,5 @@ public class ConversationActivity extends BaseActivity {
             gamePopupWindow.dismiss();
         }
         super.onStop();
-    }
-
-    @SuppressLint("CheckResult")
-    public void getFriendListById(String userId) {
-        ServiceFactory.getInstance().getBaseService(Api.class)
-                .getFriendListById()
-                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                .compose(RxSchedulers.normalTrans())
-                .subscribe(friendInfoResponses -> {
-                    if (null == Constant.friendsList) {
-                        Constant.friendsList = friendInfoResponses;
-                        handleFriendList(userId);
-                    }
-                }, this::handleApiError);
     }
 }

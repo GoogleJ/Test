@@ -114,12 +114,6 @@ public interface Api {
     @POST("duoduo/friend/getFriendListById")
     Observable<BaseResponse<List<FriendInfoResponse>>> getFriendListById();
 
-    @POST("duoduo/friend/searchFriend")
-    @FormUrlEncoded
-    Observable<BaseResponse<List<FriendInfoResponse>>> searchFriend(
-            @Field("data") String data
-    );
-
     @POST("duoduo/friend/searchCustomer")
     @FormUrlEncoded
     Observable<BaseResponse<List<FriendInfoResponse>>> searchCustomerInfo(
@@ -141,12 +135,6 @@ public interface Api {
     Observable<BaseResponse<String>> addFriend(
             @Field("friendId") String friendId,
             @Field("markName") String markName
-    );
-
-    @POST("duoduo/friend/deleteMyfriendsWaiting")
-    @FormUrlEncoded
-    Observable<BaseResponse<String>> deleteMyfirendsWaiting(
-            @Field("deleteCustomerId") String friendId
     );
 
     @POST("duoduo/customer/updateMobile")
@@ -262,9 +250,6 @@ public interface Api {
 
     @POST("duoduo/exchange/getOverOrder")
     Observable<BaseResponse<List<GetOverOrderResponse>>> getOverOrder();
-
-    @POST("duoduo/exchange/getReleasePurchase")
-    Observable<BaseResponse<List<GetReleasePurchaseResponse>>> getReleasePurchase();
 
     @POST("duoduo/wallet/getWallet")
     @FormUrlEncoded

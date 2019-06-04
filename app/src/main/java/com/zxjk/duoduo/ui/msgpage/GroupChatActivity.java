@@ -155,8 +155,4 @@ public class GroupChatActivity extends BaseActivity implements TextWatcher {
         return filterList;
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }

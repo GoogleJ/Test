@@ -5,6 +5,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -73,34 +74,23 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
     private CommonPopupWindow popupWindow;
     DeleteFriendInformationDialog dialog;
     FriendInfoResponse friendInfoResponse;
-    FriendInfoResponse friendInfo;
-    FriendInfoResponse contactResponse;
-    int intentType = 0;
     private RelativeLayout rl_end;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_people_information);
-        ButterKnife.bind(this);
 
-        TextView tv_title = findViewById(R.id.tv_title);
-        tv_title.setText(getString(R.string.personal_details));
-        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
-        rl_end = findViewById(R.id.rl_end);
-        rl_end.setVisibility(View.VISIBLE);
         initUI();
+
         initFriendIntent();
     }
 
     private void initFriendIntent() {
-        intentType = getIntent().getIntExtra("intentType", 0);
-        friendInfoResponse = (FriendInfoResponse) getIntent().getSerializableExtra("searchFriendDetails");
-        friendInfo = (FriendInfoResponse) getIntent().getSerializableExtra("globalSearchFriendDetails");
-        contactResponse = (FriendInfoResponse) getIntent().getSerializableExtra("contactResponse");
-
-        if (intentType == 0 && friendInfoResponse == null) {
+        friendInfoResponse = (FriendInfoResponse) getIntent().getSerializableExtra("friendResponse");
+        if (friendInfoResponse == null) {
             String friendId = getIntent().getStringExtra("friendId");
+
             ServiceFactory.getInstance().getBaseService(Api.class)
                     .getFriendInfoById(friendId)
                     .compose(bindToLifecycle())
@@ -110,77 +100,42 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                         friendInfoResponse = r;
                         handData();
                     }, this::handleApiError);
-            return;
+        } else {
+            handData();
         }
-        handData();
     }
 
     @SuppressLint("SetTextI18n")
     private void handData() {
-        if (intentType == 0) {
-            if (friendInfoResponse.getId().equals(Constant.userId)) {
-                rl_end.setVisibility(View.GONE);
-            }
-            imageUrl = friendInfoResponse.getHeadPortrait();
-            GlideUtil.loadCornerImg(ivHeadPortrait, friendInfoResponse.getHeadPortrait(), 5);
-            tvNickname.setText(friendInfoResponse.getNick());
-            tvDuoDuoNumber.setText(getString(R.string.duoduo_acount) + " " + friendInfoResponse.getDuoduoId());
-            tvRealName.setText(getString(R.string.real_name) + " " + friendInfoResponse.getRealname());
-            tvDistrict.setText(getString(R.string.district) + " " + friendInfoResponse.getAddress());
-            tvPhoneNumber.setText(friendInfoResponse.getMobile());
-            tvEmail.setText(friendInfoResponse.getEmail());
-            tvSignature.setText(friendInfoResponse.getSignature());
-            tvWalletAddress.setText(friendInfoResponse.getWalletAddress());
-            if (sex.equals(friendInfoResponse.getSex())) {
-                //男
-                ivGender.setImageDrawable(getDrawable(R.drawable.icon_gender_man));
-            } else {
-                ivGender.setImageDrawable(getDrawable(R.drawable.icon_gender_woman));
-            }
-        } else if (intentType == 1) {
-            if (friendInfo.getId().equals(Constant.userId)) {
-                rl_end.setVisibility(View.GONE);
-            }
-            imageUrl = friendInfo.getHeadPortrait();
-            GlideUtil.loadCornerImg(ivHeadPortrait, friendInfo.getHeadPortrait(), 5);
-            tvNickname.setText(friendInfo.getNick());
-            tvDuoDuoNumber.setText(getString(R.string.duoduo_acount) + " " + friendInfo.getDuoduoId());
-            tvRealName.setText(getString(R.string.real_name) + " " + friendInfo.getRealname());
-            tvDistrict.setText(getString(R.string.district) + " " + friendInfo.getAddress());
-            tvPhoneNumber.setText(friendInfo.getMobile());
-            tvEmail.setText(friendInfo.getEmail());
-            tvSignature.setText(friendInfo.getSignature());
-            tvWalletAddress.setText(friendInfo.getWalletAddress());
-            if (sex.equals(friendInfo.getSex())) {
-                //男
-                ivGender.setImageDrawable(getDrawable(R.drawable.icon_gender_man));
-            } else {
-                ivGender.setImageDrawable(getDrawable(R.drawable.icon_gender_woman));
-            }
+        imageUrl = friendInfoResponse.getHeadPortrait();
+        GlideUtil.loadCornerImg(ivHeadPortrait, friendInfoResponse.getHeadPortrait(), 5);
+        tvDuoDuoNumber.setText(getString(R.string.duoduo_acount) + " " + friendInfoResponse.getDuoduoId());
+        tvRealName.setText(getString(R.string.real_name) + " " + friendInfoResponse.getRealname());
+        tvDistrict.setText(getString(R.string.district) + " " + friendInfoResponse.getAddress());
+        tvPhoneNumber.setText(friendInfoResponse.getMobile());
+        tvEmail.setText(friendInfoResponse.getEmail());
+        tvSignature.setText(friendInfoResponse.getSignature());
+        tvWalletAddress.setText(friendInfoResponse.getWalletAddress());
+        if (sex.equals(friendInfoResponse.getSex())) {
+            ivGender.setImageDrawable(getDrawable(R.drawable.icon_gender_man));
         } else {
-            if (contactResponse.getId().equals(Constant.userId)) {
-                rl_end.setVisibility(View.GONE);
-            }
-            imageUrl = contactResponse.getHeadPortrait();
-            GlideUtil.loadCornerImg(ivHeadPortrait, contactResponse.getHeadPortrait(), 5);
-            tvNickname.setText(contactResponse.getNick());
-            tvDuoDuoNumber.setText(getString(R.string.duoduo_acount) + " " + contactResponse.getDuoduoId());
-            tvRealName.setText(getString(R.string.real_name) + " " + contactResponse.getRealname());
-            tvDistrict.setText(getString(R.string.district) + " " + contactResponse.getAddress());
-            tvPhoneNumber.setText(contactResponse.getMobile());
-            tvEmail.setText(contactResponse.getEmail());
-            tvSignature.setText(contactResponse.getSignature());
-            tvWalletAddress.setText(contactResponse.getWalletAddress());
-            if (sex.equals(contactResponse.getSex())) {
-                //男
-                ivGender.setImageDrawable(getDrawable(R.drawable.icon_gender_man));
-            } else {
-                ivGender.setImageDrawable(getDrawable(R.drawable.icon_gender_woman));
-            }
+            ivGender.setImageDrawable(getDrawable(R.drawable.icon_gender_woman));
+        }
+        if (friendInfoResponse.getId().equals(Constant.userId)) {
+            rl_end.setVisibility(View.INVISIBLE);
+            tvNickname.setText(friendInfoResponse.getNick());
+        } else {
+            tvNickname.setText(TextUtils.isEmpty(friendInfoResponse.getRemark()) ? friendInfoResponse.getNick() : friendInfoResponse.getRemark());
         }
     }
 
     private void initUI() {
+        ButterKnife.bind(this);
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.personal_details));
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
+        rl_end = findViewById(R.id.rl_end);
+        rl_end.setVisibility(View.VISIBLE);
         rl_end.setOnClickListener(v -> {
             if (popupWindow != null && popupWindow.isShowing()) {
                 return;
@@ -190,7 +145,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                     .setWidthAndHeight(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                     .setAnimationStyle(R.style.AnimDown)
                     .setBackGroundLevel(1.0f)
-                    .setViewOnclickListener(FriendDetailsActivity.this::getChildView)
+                    .setViewOnclickListener(FriendDetailsActivity.this)
                     .setOutsideTouchable(true)
                     .create();
             popupWindow.showAsDropDown(rl_end);
@@ -217,48 +172,19 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                 Intent intent = new Intent(this, HomeActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-                if (intentType == 0) {
-                    RongIM.getInstance().startPrivateChat(this, friendInfoResponse.getId(), friendInfoResponse.getNick());
-                } else if (intentType == 1) {
-                    RongIM.getInstance().startPrivateChat(this, friendInfo.getId(), friendInfo.getNick());
-                } else {
-                    RongIM.getInstance().startPrivateChat(this, contactResponse.getId(), contactResponse.getNick());
-                }
+                RongIM.getInstance().startPrivateChat(this, friendInfoResponse.getId(), friendInfoResponse.getNick());
                 break;
             case R.id.update_rename:
                 popupWindow.dismiss();
                 Intent intent1 = new Intent(FriendDetailsActivity.this, ModifyNotesActivity.class);
-                String id;
-                if (intentType == 0) {
-                    id = friendInfoResponse.getId();
-                } else if (intentType == 1) {
-                    id = friendInfo.getId();
-                } else {
-                    id = contactResponse.getId();
-                }
-                intent1.putExtra("friendId", id);
-                startActivity(intent1);
+                intent1.putExtra("friendId", friendInfoResponse.getId());
+                startActivityForResult(intent1, 1);
                 break;
             case R.id.recommend_to_friend:
                 popupWindow.dismiss();
                 Intent intentCard = new Intent(FriendDetailsActivity.this, SelectContactForCardActivity.class);
-                if (intentType == 0) {
-                    intentCard.putExtra("userType", 1);
-                    intentCard.putExtra("intentType", 1);
-                    intentCard.putExtra("friendInfoResponseId", friendInfoResponse.getId());
-                    startActivity(intentCard);
-                    return;
-                } else if (intentType == 1) {
-                    intentCard.putExtra("userType", 2);
-                    intentCard.putExtra("intentType", 1);
-                    intentCard.putExtra("friendInfoId", friendInfo.getId());
-                    startActivity(intentCard);
-                } else {
-                    intentCard.putExtra("userType", 3);
-                    intentCard.putExtra("intentType", 1);
-                    intentCard.putExtra("contactResponseId", contactResponse.getId());
-                    startActivity(intentCard);
-                }
+                intentCard.putExtra("userId", friendInfoResponse.getId());
+                startActivity(intentCard);
                 break;
             case R.id.delete_friend:
                 popupWindow.dismiss();
@@ -267,26 +193,11 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                     protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
                         holder.setText(R.id.tv_title, "删除联系人");
                         TextView textView = holder.getView(R.id.tv_content);
-                        if (intentType == 0) {
-                            textView.setText(String.format(getResources().getString(R.string.m_delete_friend_label), friendInfoResponse.getNick()));
-                        } else if (intentType == 1) {
-                            textView.setText(String.format(getResources().getString(R.string.m_delete_friend_label), friendInfo.getNick()));
-                        } else {
-                            textView.setText(String.format(getResources().getString(R.string.m_delete_friend_label), contactResponse.getNick()));
-                        }
+                        textView.setText(String.format(getResources().getString(R.string.m_delete_friend_label), friendInfoResponse.getNick()));
                         holder.setText(R.id.tv_cancel, "取消");
                         holder.setText(R.id.tv_notarize, "删除");
                         holder.setOnClickListener(R.id.tv_cancel, v1 -> dialog.dismiss());
-                        holder.setOnClickListener(R.id.tv_notarize, v12 -> {
-                            dialog.dismiss();
-                            if (intentType == 0) {
-                                FriendDetailsActivity.this.deleteFriend(friendInfoResponse.getId());
-                            } else if (intentType == 1) {
-                                FriendDetailsActivity.this.deleteFriend(friendInfo.getId());
-                            } else {
-                                FriendDetailsActivity.this.deleteFriend(contactResponse.getId());
-                            }
-                        });
+                        holder.setOnClickListener(R.id.tv_notarize, v12 -> deleteFriend(friendInfoResponse.getId(), dialog));
                     }
                 }).setDimAmount(0.5f).setOutCancel(false).show(getSupportFragmentManager());
                 break;
@@ -302,13 +213,14 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
         }
     }
 
-    public void deleteFriend(String friendId) {
+    private void deleteFriend(String friendId, BaseNiceDialog dialog) {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .deleteFriend(friendId)
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
                 .compose(bindToLifecycle())
                 .subscribe(s -> {
+                    dialog.dismiss();
                     ToastUtils.showShort(getString(R.string.the_friend_has_been_deleted));
                     RongIM.getInstance().clearMessages(Conversation.ConversationType.PRIVATE,
                             friendId, null);
@@ -321,10 +233,12 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        if (popupWindow != null) {
-            popupWindow.dismiss();
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == 1) {
+            String remark = data.getStringExtra("remark");
+            if (!TextUtils.isEmpty(remark))
+                tvNickname.setText(remark);
         }
     }
 }

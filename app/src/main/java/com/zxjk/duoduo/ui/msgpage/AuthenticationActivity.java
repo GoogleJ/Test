@@ -163,8 +163,6 @@ public class AuthenticationActivity extends BaseActivity {
                         cardBack();
                     }
                 });
-
-
             });
         }
     }

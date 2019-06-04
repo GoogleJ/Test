@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
-
 public class GetPhoneNumberFromMobileUtils {
     private List<PhoneInfo> list;
 
@@ -24,7 +22,7 @@ public class GetPhoneNumberFromMobileUtils {
             //读取通讯录的姓名
             String name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
             //读取通讯录的号码
-            String number = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+            String number = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)).replace(" ", "");
             PhoneInfo phoneInfo = new PhoneInfo(name, number);
             if (list.contains(phoneInfo)) {
                 continue;

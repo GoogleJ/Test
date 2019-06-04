@@ -1,7 +1,6 @@
 package com.zxjk.duoduo.ui;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
@@ -36,13 +35,6 @@ public class ZoomActivity extends BaseActivity {
     private void initView() {
         String imageUrl = getIntent().getStringExtra("image");
         GlideUtil.loadNormalImg(pic, imageUrl);
-        pic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finishAfterTransition();
-            }
-        });
-
-
+        pic.setOnClickListener(v -> finishAfterTransition());
     }
 }

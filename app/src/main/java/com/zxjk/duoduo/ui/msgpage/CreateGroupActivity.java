@@ -3,6 +3,7 @@ package com.zxjk.duoduo.ui.msgpage;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -258,7 +259,7 @@ public class CreateGroupActivity extends BaseActivity {
     private void addFirstLetterForList1(List<GroupResponse.CustomersBean> list) {
         Comparator<GroupResponse.CustomersBean> comparator = (f1, f2) -> f1.getFirstLetter().compareTo(f2.getFirstLetter());
         for (GroupResponse.CustomersBean c : list) {
-            c.setFirstLetter(PinYinUtils.converterToFirstSpell(c.getNick()));
+            c.setFirstLetter(PinYinUtils.converterToFirstSpell(TextUtils.isEmpty(c.getRemark()) ? c.getNick() : c.getRemark()));
         }
         Collections.sort(list, comparator);
     }
@@ -266,7 +267,7 @@ public class CreateGroupActivity extends BaseActivity {
     private void addFirstLetterForList(List<FriendInfoResponse> list) {
         Comparator<FriendInfoResponse> comparator = (f1, f2) -> f1.getFirstLeter().compareTo(f2.getFirstLeter());
         for (FriendInfoResponse f : list) {
-            f.setFirstLeter(PinYinUtils.converterToFirstSpell(f.getNick()));
+            f.setFirstLeter(PinYinUtils.converterToFirstSpell(TextUtils.isEmpty(f.getRemark()) ? f.getNick() : f.getRemark()));
         }
         Collections.sort(list, comparator);
     }
@@ -279,7 +280,6 @@ public class CreateGroupActivity extends BaseActivity {
         }
         return -1;
     }
-
 
     public void confirm() {
         if (eventType == EVENT_CREATEGROUP) {

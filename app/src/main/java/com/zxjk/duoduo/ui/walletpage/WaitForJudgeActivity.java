@@ -14,7 +14,6 @@ import androidx.core.app.ActivityOptionsCompat;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.trello.rxlifecycle3.android.ActivityEvent;
-import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -90,38 +89,25 @@ public class WaitForJudgeActivity extends BaseActivity {
         }
 
         response = (ReleaseSaleResponse) getIntent().getSerializableExtra("data");
-        if (Constant.friendsList != null) {
-            for (int i = 0; i < Constant.friendsList.size(); i++) {
-                if (String.valueOf(response.getCustomerId()).equals(Constant.friendsList.get(i).getId())) {
-                    tvChat.setText(getString(R.string.send_message));
-                    friendId = Constant.friendsList.get(i).getId();
-                    friendNickName = Constant.friendsList.get(i).getNick();
-                    isFriend = true;
-                    break;
-                }
-            }
-        } else {
-            ServiceFactory.getInstance().getBaseService(Api.class)
-                    .getFriendListById()
-                    .compose(bindToLifecycle())
-                    .compose(RxSchedulers.ioObserver())
-                    .compose(RxSchedulers.normalTrans())
-                    .subscribe(listBaseResponse -> {
-                        Constant.friendsList = listBaseResponse;
-                        if (listBaseResponse != null) {
-                            for (int i = 0; i < listBaseResponse.size(); i++) {
-                                if (String.valueOf(response.getCustomerId()).equals(listBaseResponse.get(i).getId())) {
-                                    tvChat.setText(getString(R.string.send_message));
-                                    friendId = listBaseResponse.get(i).getId();
-                                    friendNickName = listBaseResponse.get(i).getNick();
-                                    isFriend = true;
-                                    break;
-                                }
+
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .getFriendListById()
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.ioObserver())
+                .compose(RxSchedulers.normalTrans())
+                .subscribe(listBaseResponse -> {
+                    if (listBaseResponse != null) {
+                        for (int i = 0; i < listBaseResponse.size(); i++) {
+                            if (String.valueOf(response.getCustomerId()).equals(listBaseResponse.get(i).getId())) {
+                                tvChat.setText(getString(R.string.send_message));
+                                friendId = listBaseResponse.get(i).getId();
+                                friendNickName = listBaseResponse.get(i).getNick();
+                                isFriend = true;
+                                break;
                             }
                         }
-
-                    }, this::handleApiError);
-        }
+                    }
+                }, this::handleApiError);
 
         tvWaitForJudgeOrderId.setText(response.getBothOrderId());
         tvWaitForJudgeMoney.setText(response.getMoney());
@@ -175,20 +161,14 @@ public class WaitForJudgeActivity extends BaseActivity {
                 startActivity(intent5,
                         ActivityOptionsCompat.makeSceneTransitionAnimation(this,
                                 iv_qrCode, "12").toBundle());
-
-
                 break;
             //加好友
             case R.id.rl_add_buddy:
                 if (isFriend) {
-//                    Intent intent2 = new Intent(this, HomeActivity.class);
-//                    intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                    startActivity(intent2);
                     RongIM.getInstance().startPrivateChat(this, friendId, friendNickName);
                 } else {
                     Intent intent1 = new Intent(this, VerificationActivity.class);
-                    intent1.putExtra("addFriend", String.valueOf(response.getCustomerId()));
-                    intent1.putExtra("intentType", 1);
+                    intent1.putExtra("friendId", String.valueOf(response.getCustomerId()));
                     startActivity(intent1);
                 }
                 break;

@@ -79,23 +79,21 @@ public class SearchActivity extends BaseActivity {
             }
             return false;
         });
-
     }
 
     private void initUI() {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(manager);
-        mAdapter = new SearchAdapter(this);
+        mAdapter = new SearchAdapter();
         mAdapter.setEmptyView(emptyView);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             FriendInfoResponse friendInfoResponse = mAdapter.getData().get(position);
             Intent intent = new Intent(SearchActivity.this, FriendDetailsActivity.class);
-            intent.putExtra("intentType", 2);
-            intent.putExtra("contactResponse", friendInfoResponse);
+            intent.putExtra("friendResponse", friendInfoResponse);
             startActivity(intent);
         });
-        mAdapter.notifyDataSetChanged();
+        mAdapter.setNewData(new ArrayList<>());
     }
 
     public void getFriendListInfoById(String f) {
@@ -108,6 +106,7 @@ public class SearchActivity extends BaseActivity {
                     mAdapter.setNewData(new ArrayList<>());
                     for (int i = 0; i < friendInfoResponses.size(); i++) {
                         if (friendInfoResponses.get(i).getId().contains(f)
+                                || friendInfoResponses.get(i).getRemark().contains(f)
                                 || friendInfoResponses.get(i).getMobile().contains(f)
                                 || friendInfoResponses.get(i).getNick().contains(f)
                                 || friendInfoResponses.get(i).getRealname().contains(f)) {
@@ -115,11 +114,8 @@ public class SearchActivity extends BaseActivity {
                         }
                     }
                     if (mAdapter.getData().size() == 0) {
-                        ToastUtils.showShort("暂无该好友");
+                        ToastUtils.showShort("查无此人");
                     }
-
                 }, this::handleApiError);
     }
-
-
 }

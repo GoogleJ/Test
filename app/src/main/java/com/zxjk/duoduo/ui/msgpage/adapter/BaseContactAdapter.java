@@ -1,6 +1,6 @@
 package com.zxjk.duoduo.ui.msgpage.adapter;
 
-import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -14,17 +14,13 @@ import com.zxjk.duoduo.utils.GlideUtil;
  * @author Administrator
  */
 public class BaseContactAdapter extends BaseQuickAdapter<FriendInfoResponse, BaseViewHolder> {
-
-    Context context;
-
     public BaseContactAdapter() {
         super(R.layout.item_consatnt_friend);
-        context = mContext;
     }
 
     @Override
     protected void convert(BaseViewHolder helper, FriendInfoResponse item) {
-        helper.setText(R.id.m_user_name, item.getNick())
+        helper.setText(R.id.m_user_name, TextUtils.isEmpty(item.getRemark()) ? item.getNick() : item.getRemark())
                 .setText(R.id.m_singture_text, helper.itemView.getContext().getString(R.string.bank_real_name) + ":" + item.getRealname())
                 .setText(R.id.tvFirstLetter, item.getSortLetters())
                 .addOnClickListener(R.id.m_constacts_friend)

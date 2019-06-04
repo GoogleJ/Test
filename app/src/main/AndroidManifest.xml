@@ -231,10 +231,6 @@
             android:name=".ui.msgpage.SelectContactForCardActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.msgpage.ContactsNewFriendActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
@@ -379,10 +375,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.msgpage.TransferInfoActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.msgpage.ConversationForAddActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity

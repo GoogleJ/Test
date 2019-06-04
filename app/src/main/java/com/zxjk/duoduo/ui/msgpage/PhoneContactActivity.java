@@ -58,8 +58,6 @@ public class PhoneContactActivity extends BaseActivity implements TextWatcher {
         searchEdit.addTextChangedListener(this);
         list = getPhoneNumberFromMobile.getPhoneNumberFromMobile(this);
         getFriendListById();
-
-
     }
 
     //获取好友列表
@@ -73,13 +71,12 @@ public class PhoneContactActivity extends BaseActivity implements TextWatcher {
                 .subscribe(friendInfoResponses -> {
                     for (int i = 0; i < list.size(); i++) {
                         for (int j = 0; j < friendInfoResponses.size(); j++) {
-                            if (list.get(i).getNumber().replace(" ", "").equals(friendInfoResponses.get(j).getMobile())) {
+                            if (list.get(i).getNumber().equals(friendInfoResponses.get(j).getMobile())) {
                                 list.get(i).setAdd(true);
                             }
                         }
                     }
                     LinearLayoutManager manager = new LinearLayoutManager(PhoneContactActivity.this);
-                    manager.setOrientation(RecyclerView.VERTICAL);
                     mRecyclerView.setLayoutManager(manager);
                     mAdapter = new PhoneContactAdapter(this);
                     mAdapter.setNewData(list);
@@ -96,7 +93,6 @@ public class PhoneContactActivity extends BaseActivity implements TextWatcher {
         Intent intent = new Intent(Intent.ACTION_SENDTO, smsToUri);
         intent.putExtra("sms_body", smsBody);
         startActivity(intent);
-
     }
 
     @Override
@@ -115,14 +111,8 @@ public class PhoneContactActivity extends BaseActivity implements TextWatcher {
             return;
         }
         String groupname = s.toString();
-        if (groupname != null || groupname.length() > 0) {
-            List<PhoneInfo> groupnamelist = search(groupname); //查找对应的群组数据
-            mAdapter.setNewData(groupnamelist);
-        } else {
-            mAdapter.setNewData(list);
-        }
-
-
+        List<PhoneInfo> groupnamelist = search(groupname);
+        mAdapter.setNewData(groupnamelist);
     }
 
     /**
@@ -150,16 +140,6 @@ public class PhoneContactActivity extends BaseActivity implements TextWatcher {
                     //姓名全匹配,姓名首字母简拼匹配,姓名全字母匹配
                     boolean isNameContains = contact.getName().toLowerCase(Locale.CHINESE)
                             .contains(str.toLowerCase(Locale.CHINESE));
-
-//                    boolean isSortKeyContains = contact.sortKey.toLowerCase(Locale.CHINESE).replace(" ", "")
-//                            .contains(str.toLowerCase(Locale.CHINESE));
-//
-//                    boolean isSimpleSpellContains = contact.sortToken.simpleSpell.toLowerCase(Locale.CHINESE)
-//                            .contains(str.toLowerCase(Locale.CHINESE));
-//
-//                    boolean isWholeSpellContains = contact.sortToken.wholeSpell.toLowerCase(Locale.CHINESE)
-//                            .contains(str.toLowerCase(Locale.CHINESE));
-
                     if (isNameContains) {
                         if (!filterList.contains(contact)) {
                             filterList.add(contact);
@@ -170,5 +150,4 @@ public class PhoneContactActivity extends BaseActivity implements TextWatcher {
         }
         return filterList;
     }
-
 }

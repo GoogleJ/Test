@@ -34,22 +34,8 @@ public class BusinessCardPlugin implements IPluginModule {
 
     @Override
     public void onClick(Fragment fragment, RongExtension rongExtension) {
-        switch (rongExtension.getConversationType()) {
-            case GROUP:
-                Intent intentGroup = new Intent(fragment.getContext(), SelectContactForCardActivity.class);
-                intentGroup.putExtra("intentType", 0);
-                fragment.startActivity(intentGroup);
-                break;
-            case PRIVATE:
-                Intent intent = new Intent(fragment.getContext(), SelectContactForCardActivity.class);
-                intent.putExtra("userType", 0);
-                intent.putExtra("intentType", 1);
-                intent.putExtra("userId", rongExtension.getTargetId());
-                fragment.startActivity(intent);
-                break;
-            default:
-                break;
-        }
+        Intent intent = new Intent(fragment.getContext(), SelectContactForCardActivity.class);
+        intent.putExtra("userId", rongExtension.getTargetId());
+        fragment.startActivity(intent);
     }
-
 }

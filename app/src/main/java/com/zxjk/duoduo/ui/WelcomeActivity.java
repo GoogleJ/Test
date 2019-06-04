@@ -24,10 +24,6 @@ import com.zxjk.duoduo.utils.WindowUtils;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
@@ -73,29 +69,6 @@ public class WelcomeActivity extends BaseActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);  //全屏
         setContentView(R.layout.activity_welcome);
-//        Constant.isVerifyVerision = SPUtils.getInstance().getBoolean("isVerifyVerision", true);
-//        ServiceFactory.getInstance().getBaseService(Api.class)
-//                .getAppVersion()
-//                .compose(bindToLifecycle())
-//                .compose(RxSchedulers.ioObserver())
-//                .subscribe(response -> {
-//                    if (response.code != Constant.CODE_SUCCESS) {
-//                        return;
-//                    }
-//                    GetAppVersionResponse data = response.data;
-//                    int appVersionCode = AppUtils.getAppVersionCode();
-//                    String appVersionName = AppUtils.getAppVersionName();
-//                    Log.e("appVersionCode", appVersionCode + "");
-//                    Log.e("appVersionName", appVersionName);
-//
-////                    if (data.getVersion().equals("0.0.1")) {
-////                        Constant.isVerifyVerision = true;
-////                    } else {
-////                        Constant.isVerifyVerision = false;
-////                        SPUtils.getInstance().put("isVerifyVerision", false);
-////                    }
-//                }, t -> {
-//                });
         WindowUtils.hideBottomUIMenu(this);
         checkUserState();
     }
@@ -140,39 +113,5 @@ public class WelcomeActivity extends BaseActivity {
             MMKVUtils.getInstance().enCode("isLogin", false);
             startActivity(new Intent(this, LoginActivity.class));
         }
-    }
-
-    public static void main(String[] args) {
-        Observable<Object> objectObservable = Observable.create(new ObservableOnSubscribe<Object>() {
-            @Override
-            public void subscribe(ObservableEmitter<Object> emitter) throws Exception {
-                System.out.println("?");
-                emitter.onNext("1");
-            }
-        });
-
-        objectObservable
-                .doOnSubscribe(disposable -> System.out.println("first"))
-                .subscribe(new Observer<Object>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        System.out.println("second");
-                    }
-
-                    @Override
-                    public void onNext(Object o) {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
     }
 }

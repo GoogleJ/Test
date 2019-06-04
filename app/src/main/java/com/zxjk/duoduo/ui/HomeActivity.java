@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -68,7 +69,6 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
 
     MsgFragment msgFragment;
     CommunityFragment communityFragment;
-    //WalletFragment walletFragment;
     MineFragment mineFragment;
     ContactFragment contactFragment;
 
@@ -127,7 +127,6 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                     // 添加Item
                     .addItem(new BottomNavigationItem(R.drawable.tab_message_icon_nl, "消息").setInactiveIconResource(R.drawable.tab_message_icon_hl).setBadgeItem(badgeItem))
                     .addItem(new BottomNavigationItem(R.drawable.tab_qun_icon_nl, "通讯录").setInactiveIconResource(R.drawable.tab_qun_icon_hl))
-                    // .addItem(new BottomNavigationItem(R.drawable.tab_wallet_icon_nl, "钱包").setInactiveIconResource(R.drawable.tab_wallet_icon_hl))
                     .addItem(new BottomNavigationItem(R.drawable.tab_setting_icon_nl, "我的").setInactiveIconResource(R.drawable.tab_setting_icon_hl))
                     //设置默认选中位置
                     .setFirstSelectedPosition(0)
@@ -282,10 +281,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                 .subscribe(response -> {
                     Constant.friendsList = response.data;
                     for (FriendInfoResponse f : response.data) {
-//                        if (RongUserInfoManager.getInstance().getUserInfo(f.getId()) == null) {
-//                            RongUserInfoManager.getInstance().setUserInfo(new UserInfo(f.getId(), TextUtils.isEmpty(f.getRemark()) ? f.getNick() : f.getRemark(), Uri.parse(f.getHeadPortrait())));
-                        RongUserInfoManager.getInstance().setUserInfo(new UserInfo(f.getId(), f.getNick(), Uri.parse(f.getHeadPortrait())));
-//                        }
+                        RongUserInfoManager.getInstance().setUserInfo(new UserInfo(f.getId(), TextUtils.isEmpty(f.getRemark()) ? f.getNick() : f.getRemark(), Uri.parse(f.getHeadPortrait())));
                     }
                 }, t -> {
                     //重复登录不再递归，避免过多请求
@@ -293,7 +289,8 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                             t instanceof RxException.DuplicateLoginExcepiton) {
                         return;
                     }
-                    initFriendList();
+                    Observable.timer(10, TimeUnit.SECONDS)
+                            .subscribe(aLong -> initFriendList());
                 });
     }
 
@@ -319,13 +316,6 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
             case 1:
                 switchFragment(contactFragment);
                 break;
-//            case 2:
-//                if (Constant.isVerifyVerision) {
-//                    switchFragment(mineFragment);
-//                    break;
-//                }
-//                switchFragment(walletFragment);
-//                break;
             case 2:
                 switchFragment(mineFragment);
                 break;
@@ -345,15 +335,11 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
 
     private void switchFragment(Fragment fragment) {
         VibrateUtils.vibrate(50);
-        //判断当前显示的Fragment是不是切换的Fragment
         if (mFragment != fragment) {
-            //判断切换的Fragment是否已经添加过
             if (!fragment.isAdded()) {
-                //如果没有，则先把当前的Fragment隐藏，把切换的Fragment添加上
                 getSupportFragmentManager().beginTransaction().hide(mFragment)
                         .add(R.id.fragment_content, fragment).commit();
             } else {
-                //如果已经添加过，则先把当前的Fragment隐藏，把切换的Fragment显示出来
                 getSupportFragmentManager().beginTransaction().hide(mFragment).show(fragment).commit();
             }
             mFragment = fragment;

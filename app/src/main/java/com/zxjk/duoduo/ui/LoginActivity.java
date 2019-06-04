@@ -59,13 +59,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @BindView(R.id.tv_login)
     TextView tvLogin;
 
-
     public static void start(AppCompatActivity activity) {
         Intent intent = new Intent(activity, LoginActivity.class);
         activity.startActivity(intent);
     }
-
-    AccountFreezeDialog dialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -153,7 +150,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     Constant.authentication = loginResponse.getIsAuthentication();
 
                     if (loginResponse.getIsDelete().equals(Constant.FLAG_IS_DELETE)) {
-                        dialog = new AccountFreezeDialog(LoginActivity.this);
+                        AccountFreezeDialog dialog = new AccountFreezeDialog(LoginActivity.this);
                         dialog.show();
                     } else if (loginResponse.getIsFirstLogin().equals(Constant.FLAG_FIRSTLOGIN)) {
                         LoginActivity.this.startActivity(new Intent(LoginActivity.this, EditPersonalInformationFragment.class));

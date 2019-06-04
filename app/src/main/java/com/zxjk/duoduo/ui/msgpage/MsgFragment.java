@@ -52,15 +52,13 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
         TextView tv_title = rootView.findViewById(R.id.tv_title);
         tv_title.setText(getString(R.string.msg_title));
         RelativeLayout rl_end = rootView.findViewById(R.id.rl_end);
-        rootView.findViewById(R.id.rl_left).setOnClickListener(v ->
-                startActivity(new Intent(getActivity(), ContactsNewFriendActivity.class)));
 
         popupWindow = new CommonPopupWindow.Builder(getActivity())
                 .setView(R.layout.pop_msg_top)
                 .setWidthAndHeight(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
                 .setAnimationStyle(R.style.AnimDown)
                 .setBackGroundLevel(1.0f)
-                .setViewOnclickListener(MsgFragment.this::getChildView)
+                .setViewOnclickListener(MsgFragment.this)
                 .setOutsideTouchable(true)
                 .create();
 
@@ -75,17 +73,14 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
             }
             popupWindow.showAsDropDown(rl_end);
         });
-
     }
 
     @Override
     public void getChildView(View view, int layoutResId) {
-        switch (layoutResId) {
-            case R.layout.pop_msg_top:
-                view.findViewById(R.id.send_group_chat).setOnClickListener(this);
-                view.findViewById(R.id.invite_friends).setOnClickListener(this);
-                view.findViewById(R.id.collection_and_payment).setOnClickListener(this);
-                break;
+        if (layoutResId == R.layout.pop_msg_top) {
+            view.findViewById(R.id.send_group_chat).setOnClickListener(this);
+            view.findViewById(R.id.invite_friends).setOnClickListener(this);
+            view.findViewById(R.id.collection_and_payment).setOnClickListener(this);
         }
     }
 

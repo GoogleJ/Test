@@ -34,26 +34,16 @@ public class VerificationActivity extends BaseActivity {
     @BindView(R.id.tv_title)
     TextView tvTitle;
 
-    int intentType;
-    String conversationForAdd;
-    String newFriend;
+    String friendId;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verification);
         ButterKnife.bind(this);
-        initView();
-    }
-
-    protected void initView() {
         tvTitle.setText(getString(R.string.m_verification_title_bar));
-        int type = 0;
-        intentType = getIntent().getIntExtra("intentType", type);
-        conversationForAdd = getIntent().getStringExtra("ConversationForAdd");
-        newFriend = getIntent().getStringExtra("addFriend");
+        friendId = getIntent().getStringExtra("friendId");
     }
-
 
     public void applyAddFriend(String friendId, String remark) {
         ServiceFactory.getInstance().getBaseService(Api.class)
@@ -78,11 +68,7 @@ public class VerificationActivity extends BaseActivity {
                 verificationEdit.setText("");
                 break;
             case R.id.m_verification_send_btn:
-                if (intentType == 0) {
-                    applyAddFriend(conversationForAdd, verificationEdit.getText().toString());
-                } else {
-                    applyAddFriend(newFriend, verificationEdit.getText().toString());
-                }
+                applyAddFriend(friendId, verificationEdit.getText().toString());
                 break;
         }
     }

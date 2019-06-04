@@ -3,6 +3,7 @@ package com.zxjk.duoduo.skin;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -33,12 +33,7 @@ import com.zxjk.duoduo.ui.msgpage.adapter.BaseContactAdapter;
 import com.zxjk.duoduo.ui.msgpage.widget.IndexView;
 import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendInformationDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
-
-import net.sourceforge.pinyin4j.PinyinHelper;
-import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
-import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
-import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
-import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
+import com.zxjk.duoduo.utils.PinYinUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -90,7 +85,6 @@ public class ContactFragment extends BaseFragment implements View.OnClickListene
         layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new BaseContactAdapter();
-        getFriendListInfoById();
         indexView.setShowTextDialog(constactsDialog);
         indexView.setOnTouchingLetterChangedListener(letter -> {
             for (int i = 0; i < list.size(); i++) {
@@ -108,8 +102,7 @@ public class ContactFragment extends BaseFragment implements View.OnClickListene
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             FriendInfoResponse friendInfoResponse = mAdapter.getData().get(position);
             Intent intent = new Intent(getActivity(), FriendDetailsActivity.class);
-            intent.putExtra("intentType", 2);
-            intent.putExtra("contactResponse", friendInfoResponse);
+            intent.putExtra("friendResponse", friendInfoResponse);
             startActivity(intent);
         });
         if (mAdapter.getData().size() == 0) {
@@ -143,7 +136,7 @@ public class ContactFragment extends BaseFragment implements View.OnClickListene
      * 获取好友列表
      */
     @SuppressLint("CheckResult")
-    public void getFriendListInfoById() {
+    private void getFriendListInfoById() {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .getFriendListById()
                 .compose(bindToLifecycle())
@@ -153,48 +146,19 @@ public class ContactFragment extends BaseFragment implements View.OnClickListene
                     list = friendInfoResponses;
                     mapList(list);
                     mAdapter.setNewData(list);
-                    if (Constant.friendsList == null) {
-                        Constant.friendsList = list;
-                    }
                 }, this::handleApiError);
     }
 
     private void mapList(List<FriendInfoResponse> list) {
         for (FriendInfoResponse f : list) {
-            f.setSortLetters(converterToFirstSpell(f.getNick()));
+            f.setSortLetters(PinYinUtils.converterToFirstSpell(TextUtils.isEmpty(f.getRemark()) ? f.getNick() : f.getRemark()));
         }
         Comparator<FriendInfoResponse> comparator = (o1, o2) -> o1.getSortLetters().compareTo(o2.getSortLetters());
         Collections.sort(list, comparator);
     }
 
-    public static String converterToFirstSpell(String chines) {
-        StringBuilder pinyinName = new StringBuilder();
-        char[] nameChar = chines.toCharArray();
-        HanyuPinyinOutputFormat defaultFormat = new HanyuPinyinOutputFormat();
-        defaultFormat.setCaseType(HanyuPinyinCaseType.UPPERCASE);
-        defaultFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
-        for (char aNameChar : nameChar) {
-            if (aNameChar > 128) {
-                try {
-                    String[] strings = PinyinHelper.toHanyuPinyinStringArray(
-                            aNameChar, defaultFormat);
-                    if (strings == null) {
-                        return "#";
-                    }
-
-                    pinyinName.append(strings[0].charAt(0));
-                } catch (BadHanyuPinyinOutputFormatCombination e) {
-                    e.printStackTrace();
-                }
-            } else {
-                pinyinName.append(aNameChar);
-            }
-        }
-        return pinyinName.toString().substring(0, 1).toUpperCase();
-    }
-
     @SuppressLint("CheckResult")
-    public void getMyfriendsWaiting() {
+    private void getMyfriendsWaiting() {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .getMyfriendsWaiting()
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(getActivity())))

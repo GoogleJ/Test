@@ -32,12 +32,4 @@ public class PinYinUtils {
         }
         return pinyinName.toString().substring(0, 1).toUpperCase();
     }
-
-    public static void main(String[] args) {
-        for (int i = 0; i < 123; i++) {
-            char c = (char) i;
-            System.out.print(i);
-            System.out.println(c);
-        }
-    }
 }

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -16,9 +17,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Lifecycle;
 
 import com.bumptech.glide.Glide;
+import com.trello.lifecycle2.android.lifecycle.AndroidLifecycle;
+import com.trello.rxlifecycle3.LifecycleProvider;
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.network.Api;
+import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.FriendInfoResponse;
+import com.zxjk.duoduo.network.rx.RxSchedulers;
+import com.zxjk.duoduo.ui.base.BaseActivity;
+import com.zxjk.duoduo.ui.msgpage.AddFriendDetailsActivity;
+import com.zxjk.duoduo.ui.msgpage.FriendDetailsActivity;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -26,6 +38,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import io.rong.imkit.userInfoCache.RongUserInfoManager;
+import io.rong.imlib.model.UserInfo;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
@@ -200,5 +215,50 @@ public class CommonUtils {
         return "0.00";
     }
 
+    public static void resolveFriendList(BaseActivity activity, String friendId) {
+        if (Constant.friendsList == null) {
+            LifecycleProvider<Lifecycle.Event> provider = AndroidLifecycle.createLifecycleProvider(activity);
+            ServiceFactory.getInstance().getBaseService(Api.class)
+                    .getFriendListById()
+                    .compose(provider.bindToLifecycle())
+                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(activity)))
+                    .compose(RxSchedulers.normalTrans())
+                    .subscribe(friendInfoResponses -> {
+                        Constant.friendsList = friendInfoResponses;
+                        for (FriendInfoResponse f : friendInfoResponses) {
+                            RongUserInfoManager.getInstance().setUserInfo(new UserInfo(f.getId(), TextUtils.isEmpty(f.getRemark()) ? f.getNick() : f.getRemark(), Uri.parse(f.getHeadPortrait())));
+                        }
+                        handleFriendList(activity, friendId);
+                    }, activity::handleApiError);
+        } else {
+            handleFriendList(activity, friendId);
+        }
+    }
+
+    private static void handleFriendList(BaseActivity activity, String userId) {
+        if (userId.equals(Constant.userId)) {
+            //扫到了自己
+            Intent intent = new Intent(activity, FriendDetailsActivity.class);
+            intent.putExtra("friendId", userId);
+            activity.startActivity(intent);
+            return;
+        }
+        for (FriendInfoResponse f : Constant.friendsList) {
+            if (f.getId().equals(userId)) {
+                //自己的好友，进入详情页（可聊天）
+                Intent intent = new Intent(activity, FriendDetailsActivity.class);
+                intent.putExtra("friendResponse", f);
+                activity.startActivity(intent);
+                activity.finish();
+                return;
+            }
+        }
+
+        //陌生人，进入加好友页面
+        Intent intent = new Intent(activity, AddFriendDetailsActivity.class);
+        intent.putExtra("friendId", userId);
+        activity.startActivity(intent);
+        activity.finish();
+    }
 
 }

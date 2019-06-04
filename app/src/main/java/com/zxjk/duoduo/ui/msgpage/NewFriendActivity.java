@@ -89,7 +89,7 @@ public class NewFriendActivity extends BaseActivity {
                     if (isTrue) {
                     } else {
                         Intent intent = new Intent(NewFriendActivity.this, FriendDetailsActivity.class);
-                        intent.putExtra("searchFriendDetails", mAdapter.getData().get(position));
+                        intent.putExtra("friendResponse", mAdapter.getData().get(position));
                         startActivity(intent);
                     }
                     break;

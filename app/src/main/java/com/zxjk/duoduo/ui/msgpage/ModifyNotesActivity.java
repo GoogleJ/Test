@@ -1,7 +1,9 @@
 package com.zxjk.duoduo.ui.msgpage;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -9,9 +11,11 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
+import com.zxjk.duoduo.network.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
@@ -40,7 +44,12 @@ public class ModifyNotesActivity extends BaseActivity {
         tv_commit.setVisibility(View.VISIBLE);
         tv_commit.setText(getString(R.string.queding));
         tv_commit.setOnClickListener(v -> {
-            updateRemark(getIntent().getStringExtra("friendId"), modifyNotesEdit.getText().toString());
+            String s = modifyNotesEdit.getText().toString();
+            if (TextUtils.isEmpty(s)) {
+                ToastUtils.showShort(R.string.input_skin);
+                return;
+            }
+            updateRemark(getIntent().getStringExtra("friendId"), s);
         });
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());
     }
@@ -53,6 +62,15 @@ public class ModifyNotesActivity extends BaseActivity {
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(friendInfoResponse -> {
                     ToastUtils.showShort(getString(R.string.successfully_modified));
+                    for (FriendInfoResponse f : Constant.friendsList) {
+                        if (f.getId().equals(friendId)) {
+                            f.setRemark(remark);
+                            break;
+                        }
+                    }
+                    Intent intent = new Intent();
+                    intent.putExtra("remark", remark);
+                    setResult(1, intent);
                     finish();
                 }, this::handleApiError);
     }

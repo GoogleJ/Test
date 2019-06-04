@@ -15,10 +15,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.Api;
-import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.FriendInfoResponse;
-import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.AgreeGroupChatActivity;
 import com.zxjk.duoduo.ui.minepage.scanuri.Action1;
@@ -97,22 +93,7 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
                     return;
                 }
 
-                if (Constant.friendsList == null) {
-                    ServiceFactory.getInstance().getBaseService(Api.class)
-                            .getFriendListById()
-                            .compose(bindToLifecycle())
-                            .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                            .compose(RxSchedulers.normalTrans())
-                            .subscribe(friendInfoResponses -> {
-                                if (Constant.friendsList == null) {
-                                    Constant.friendsList = friendInfoResponses;
-                                }
-
-                                handleFriendList(userId);
-                            }, this::handleApiError);
-                } else {
-                    handleFriendList(userId);
-                }
+                CommonUtils.resolveFriendList(this, userId);
             } else if (action.equals("action3")) {
                 BaseUri<GroupQRActivity.GroupQRData> uri = new Gson().fromJson(result, new TypeToken<BaseUri<GroupQRActivity.GroupQRData>>() {
                 }.getType());
@@ -133,32 +114,6 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
         if (isDark) {
             zxingview.openFlashlight();
         }
-    }
-
-    private void handleFriendList(String userId) {
-        if (userId.equals(Constant.userId)) {
-            //扫到了自己
-            Intent intent = new Intent(this, FriendDetailsActivity.class);
-            intent.putExtra("friendId", userId);
-            startActivity(intent);
-            return;
-        }
-        for (FriendInfoResponse f : Constant.friendsList) {
-            if (f.getId().equals(userId)) {
-                //扫到了自己的好友，进入详情页（可聊天）
-                Intent intent = new Intent(this, FriendDetailsActivity.class);
-                intent.putExtra("searchFriendDetails", f);
-                startActivity(intent);
-                finish();
-                return;
-            }
-        }
-
-        //扫到了陌生人，进入加好友页面
-        Intent intent = new Intent(this, AddFriendDetailsActivity.class);
-        intent.putExtra("newFriendId", userId);
-        startActivity(intent);
-        finish();
     }
 
     @Override

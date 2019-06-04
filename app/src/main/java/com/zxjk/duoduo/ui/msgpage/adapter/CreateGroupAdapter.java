@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.msgpage.adapter;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -125,7 +126,7 @@ public class CreateGroupAdapter extends RecyclerView.Adapter<CreateGroupAdapter.
 
         private void bindData(FriendInfoResponse bean) {
             GlideUtil.loadCornerImg(remove_headers, bean.getHeadPortrait(), 5);
-            user_name.setText(bean.getNick());
+            user_name.setText(TextUtils.isEmpty(bean.getRemark()) ? bean.getNick() : bean.getRemark());
             selected_delete.setChecked(bean.isChecked());
             tvLetter.setText(bean.getFirstLeter());
         }
