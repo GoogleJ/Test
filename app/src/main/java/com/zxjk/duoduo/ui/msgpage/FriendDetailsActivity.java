@@ -34,11 +34,17 @@ import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendInformationDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 
+import java.util.Iterator;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.IRongCallback;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Message;
+import io.rong.message.CommandMessage;
 
 /**
  * author L
@@ -220,12 +226,37 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                 .compose(RxSchedulers.normalTrans())
                 .compose(bindToLifecycle())
                 .subscribe(s -> {
+                    Iterator<FriendInfoResponse> iterator = Constant.friendsList.iterator();
+                    while (iterator.hasNext()) {
+                        FriendInfoResponse next = iterator.next();
+                        if (next.getId().equals(friendId)) {
+                            iterator.remove();
+                            break;
+                        }
+                    }
                     dialog.dismiss();
                     ToastUtils.showShort(getString(R.string.the_friend_has_been_deleted));
                     RongIM.getInstance().clearMessages(Conversation.ConversationType.PRIVATE,
                             friendId, null);
                     RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE
                             , friendId, null);
+                    CommandMessage commandMessage = CommandMessage.obtain("deleteFriend", "");
+                    Message deleteFriend = Message.obtain(friendId, Conversation.ConversationType.PRIVATE, commandMessage);
+                    RongIM.getInstance().sendMessage(deleteFriend, "", "", new IRongCallback.ISendMessageCallback() {
+                        @Override
+                        public void onAttached(Message message) {
+                        }
+
+                        @Override
+                        public void onSuccess(Message message) {
+
+                        }
+
+                        @Override
+                        public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+
+                        }
+                    });
                     Intent intent = new Intent(FriendDetailsActivity.this, HomeActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);

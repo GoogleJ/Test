@@ -2,6 +2,7 @@ package com.zxjk.duoduo.ui.msgpage;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,7 +14,6 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -31,7 +31,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.UserInfo;
 import io.rong.message.InformationNotificationMessage;
 
 /**
@@ -73,8 +75,6 @@ public class NewFriendActivity extends BaseActivity {
         mRecyclerView.setAdapter(mAdapter);
 
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            View vp = (View) view.getParent();
-            TextView mark = vp.findViewById(R.id.m_item_new_friend_message_label);
             FriendInfoResponse item = (FriendInfoResponse) adapter.getData().get(position);
             boolean isTrue = item.getStatus().equals("0");
             switch (view.getId()) {
@@ -82,7 +82,7 @@ public class NewFriendActivity extends BaseActivity {
                     if (isTrue) {
                         item.setStatus("2");
                         adapter.notifyItemChanged(position);
-                        addFriend(mAdapter.getData().get(position).getId(), mark.getText().toString());
+                        addFriend(mAdapter.getData().get(position).getId(), item.getNick(), item);
                     }
                     break;
                 case R.id.m_add_btn_layout:
@@ -115,7 +115,6 @@ public class NewFriendActivity extends BaseActivity {
                 .compose(RxSchedulers.ioObserver())
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
-                    SPUtils.getInstance().put("newfriendRequestCount", s.size());
                     list.addAll(s);
                     mAdapter.setNewData(s);
                 }, this::handleApiError);
@@ -126,14 +125,16 @@ public class NewFriendActivity extends BaseActivity {
      *
      * @param friendId
      * @param markName
+     * @param item
      */
-    public void addFriend(String friendId, String markName) {
+    public void addFriend(String friendId, String markName, FriendInfoResponse item) {
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .addFriend(friendId, markName)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(NewFriendActivity.this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
+                    RongUserInfoManager.getInstance().setUserInfo(new UserInfo(item.getId(), item.getNick(), Uri.parse(item.getHeadPortrait())));
                     ToastUtils.showShort(getString(R.string.add_friend_successful));
                     InformationNotificationMessage message = InformationNotificationMessage.obtain(getString(R.string.new_friend1));
                     RongIM.getInstance().sendDirectionalMessage(Conversation.ConversationType.PRIVATE, friendId, message, new String[]{friendId}, null, null, null);

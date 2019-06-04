@@ -114,13 +114,6 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
 
         if (mConversationListFragment == null) {
             mConversationListFragment = createConversationList();
-            RongIM.getInstance().setOnReceiveMessageListener((message, i) -> {
-                if (message.getContent() instanceof CommandMessage) {
-                    RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE
-                            , message.getSenderUserId(), null);
-                }
-                return false;
-            });
         }
 
         switchFragment(mConversationListFragment, R.id.conversationlist);

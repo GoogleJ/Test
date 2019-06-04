@@ -41,6 +41,7 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.CommunityFragment;
 import com.zxjk.duoduo.ui.minepage.MineFragment;
 import com.zxjk.duoduo.ui.msgpage.MsgFragment;
+import com.zxjk.duoduo.utils.MMKVUtils;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -50,6 +51,7 @@ import io.rong.imkit.RongIM;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
+import io.rong.message.CommandMessage;
 
 import static com.ashokvarma.bottomnavigation.BottomNavigationBar.BACKGROUND_STYLE_RIPPLE;
 import static com.ashokvarma.bottomnavigation.BottomNavigationBar.BACKGROUND_STYLE_STATIC;
@@ -67,10 +69,54 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
 
     private Fragment mFragment;
 
+    public BadgeItem badgeItem2;
+
     MsgFragment msgFragment;
     CommunityFragment communityFragment;
     MineFragment mineFragment;
     ContactFragment contactFragment;
+
+    @Override
+    protected void onDestroy() {
+        RongIM.setOnReceiveMessageListener(null);
+        super.onDestroy();
+    }
+
+    @SuppressLint("CheckResult")
+    @Override
+    protected void onResume() {
+        Observable.timer(1, TimeUnit.SECONDS)
+                .subscribe(aLong -> RongIM.setOnReceiveMessageListener((message, i) -> {
+                    if (message.getContent() instanceof CommandMessage) {
+                        CommandMessage commandMessage = (CommandMessage) message.getContent();
+                        if (commandMessage.getName().equals("deleteFriend")) {
+                            RongIM.getInstance().clearMessages(Conversation.ConversationType.PRIVATE, message.getSenderUserId(), null);
+                            RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE, message.getSenderUserId(), null);
+                        } else if (commandMessage.getName().equals("addFriend")) {
+                            runOnUiThread(() -> {
+                                long newFriendCount = MMKVUtils.getInstance().decodeLong("newFriendCount");
+                                newFriendCount += 1;
+                                MMKVUtils.getInstance().enCode("newFriendCount", newFriendCount);
+                                if (newFriendCount == 0) {
+                                    badgeItem2.hide();
+                                } else {
+                                    badgeItem2.show(true);
+                                    if (newFriendCount >= 100) {
+                                        badgeItem2.setText("99+");
+                                    } else {
+                                        badgeItem2.setText(String.valueOf(newFriendCount));
+                                    }
+                                }
+                                if (contactFragment.getDotNewFriend() != null) {
+                                    contactFragment.getDotNewFriend().setVisibility(View.VISIBLE);
+                                }
+                            });
+                        }
+                    }
+                    return false;
+                }));
+        super.onResume();
+    }
 
     @SuppressLint({"WrongConstant", "CheckResult"})
     @Override
@@ -89,8 +135,16 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
 
         BadgeItem badgeItem = new BadgeItem();
         badgeItem.setHideOnSelect(false)
-                .setBackgroundColorResource(R.color.colorAccent)
+                .setBackgroundColorResource(R.color.red_eth_in)
                 .setBorderWidth(0);
+
+        badgeItem2 = new BadgeItem();
+        badgeItem2.setHideOnSelect(false)
+                .setBackgroundColorResource(R.color.red_eth_in)
+                .setBorderWidth(0);
+
+        getNewFriendCount();
+
         //设置Item选中颜色方法
         m_bottom_bar.setActiveColor(R.color.colorAccent)
                 //设置Item未选中颜色方法
@@ -126,7 +180,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                     .setInActiveColor("#000000")
                     // 添加Item
                     .addItem(new BottomNavigationItem(R.drawable.tab_message_icon_nl, "消息").setInactiveIconResource(R.drawable.tab_message_icon_hl).setBadgeItem(badgeItem))
-                    .addItem(new BottomNavigationItem(R.drawable.tab_qun_icon_nl, "通讯录").setInactiveIconResource(R.drawable.tab_qun_icon_hl))
+                    .addItem(new BottomNavigationItem(R.drawable.tab_qun_icon_nl, "通讯录").setInactiveIconResource(R.drawable.tab_qun_icon_hl).setBadgeItem(badgeItem2))
                     .addItem(new BottomNavigationItem(R.drawable.tab_setting_icon_nl, "我的").setInactiveIconResource(R.drawable.tab_setting_icon_hl))
                     //设置默认选中位置
                     .setFirstSelectedPosition(0)
@@ -141,13 +195,27 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                 badgeItem.hide();
             } else {
                 if (messageCount >= 100) {
-                    badgeItem.setText("...");
+                    badgeItem.setText("99+");
                 } else {
                     badgeItem.setText(String.valueOf(messageCount));
                 }
                 badgeItem.show(true);
             }
         }, Conversation.ConversationType.PRIVATE, Conversation.ConversationType.GROUP);
+    }
+
+    private void getNewFriendCount() {
+        long newFriendCount = MMKVUtils.getInstance().decodeLong("newFriendCount");
+        if (newFriendCount == 0) {
+            badgeItem2.hide();
+        } else {
+            badgeItem2.show(true);
+            if (newFriendCount >= 100) {
+                badgeItem2.setText("99+");
+            } else {
+                badgeItem2.setText(String.valueOf(newFriendCount));
+            }
+        }
     }
 
     private long max1;

@@ -15,14 +15,12 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blankj.utilcode.util.SPUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.response.FriendInfoResponse;
-import com.zxjk.duoduo.network.rx.RxException;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
+import com.zxjk.duoduo.ui.HomeActivity;
 import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.ui.msgpage.AddContactActivity;
 import com.zxjk.duoduo.ui.msgpage.FriendDetailsActivity;
@@ -32,7 +30,7 @@ import com.zxjk.duoduo.ui.msgpage.SearchActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.BaseContactAdapter;
 import com.zxjk.duoduo.ui.msgpage.widget.IndexView;
 import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendInformationDialog;
-import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.utils.MMKVUtils;
 import com.zxjk.duoduo.utils.PinYinUtils;
 
 import java.util.ArrayList;
@@ -65,6 +63,10 @@ public class ContactFragment extends BaseFragment implements View.OnClickListene
 
     DeleteFriendInformationDialog deleteDialog;
 
+    public View getDotNewFriend() {
+        return dotNewFriend;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -73,12 +75,13 @@ public class ContactFragment extends BaseFragment implements View.OnClickListene
         ButterKnife.bind(this, rootview);
         deleteDialog = new DeleteFriendInformationDialog(getActivity());
         initView(rootview);
-        getMyfriendsWaiting();
-
         return rootview;
     }
 
     private void initView(View rootview) {
+        if (MMKVUtils.getInstance().decodeLong("newFriendCount") != 0) {
+            dotNewFriend.setVisibility(View.VISIBLE);
+        }
         tv_title = rootview.findViewById(R.id.tv_title);
         tv_title.setText(getString(R.string.phone_tunxun));
 
@@ -119,8 +122,10 @@ public class ContactFragment extends BaseFragment implements View.OnClickListene
                 startActivity(new Intent(getActivity(), GroupChatActivity.class));
                 break;
             case R.id.m_contact_add_friend_btn:
-                dotNewFriend.setVisibility(View.GONE);
-                startActivityForResult(new Intent(getActivity(), NewFriendActivity.class), 10);
+                ((HomeActivity) getActivity()).badgeItem2.hide();
+                MMKVUtils.getInstance().enCode("newFriendCount", 0);
+                dotNewFriend.setVisibility(View.INVISIBLE);
+                startActivity(new Intent(getActivity(), NewFriendActivity.class));
                 break;
             case R.id.m_contact_new_friend_btn:
                 startActivity(new Intent(getActivity(), AddContactActivity.class));
@@ -155,21 +160,6 @@ public class ContactFragment extends BaseFragment implements View.OnClickListene
         }
         Comparator<FriendInfoResponse> comparator = (o1, o2) -> o1.getSortLetters().compareTo(o2.getSortLetters());
         Collections.sort(list, comparator);
-    }
-
-    @SuppressLint("CheckResult")
-    private void getMyfriendsWaiting() {
-        ServiceFactory.getInstance().getBaseService(Api.class)
-                .getMyfriendsWaiting()
-                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(getActivity())))
-                .compose(RxSchedulers.normalTrans())
-                .compose(bindToLifecycle())
-                .subscribe(friendInfoResponses -> {
-                    int newfriendRequestCount = SPUtils.getInstance().getInt("newfriendRequestCount", 0);
-                    if (friendInfoResponses.size() > newfriendRequestCount) {
-                        dotNewFriend.setVisibility(View.VISIBLE);
-                    }
-                }, t -> ToastUtils.showShort(RxException.getMessage(t)));
     }
 
     @Override

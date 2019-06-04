@@ -20,6 +20,12 @@ import com.zxjk.duoduo.utils.CommonUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.IRongCallback;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Message;
+import io.rong.message.CommandMessage;
 
 /**
  * author L
@@ -52,9 +58,26 @@ public class VerificationActivity extends BaseActivity {
                 .compose(RxSchedulers.normalTrans())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .subscribe(listBaseResponse -> {
-                    KeyboardUtils.hideSoftInput(this);
-                    ToastUtils.showShort(getString(R.string.has_bean_sent));
-                    finish();
+                    CommandMessage commandMessage = CommandMessage.obtain("addFriend", "");
+                    Message message = Message.obtain(friendId, Conversation.ConversationType.PRIVATE, commandMessage);
+                    RongIM.getInstance().sendMessage(message, "", "", new IRongCallback.ISendMessageCallback() {
+                        @Override
+                        public void onAttached(Message message) {
+
+                        }
+
+                        @Override
+                        public void onSuccess(Message message) {
+                            KeyboardUtils.hideSoftInput(VerificationActivity.this);
+                            ToastUtils.showShort(getString(R.string.has_bean_sent));
+                            finish();
+                        }
+
+                        @Override
+                        public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+                            ToastUtils.showShort(R.string.function_fail);
+                        }
+                    });
                 }, this::handleApiError);
     }
 
