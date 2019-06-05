@@ -1,7 +1,8 @@
 package com.zxjk.duoduo.network.request;
 
 import com.zxjk.duoduo.Constant;
-import com.zxjk.duoduo.ui.msgpage.JinDuoBaoActiviity;
+import com.zxjk.duoduo.ui.msgpage.JinDuoBaoActivity;
+
 import java.util.List;
 
 public class GroupGamebettingForDuobaoRequest {
@@ -13,7 +14,7 @@ public class GroupGamebettingForDuobaoRequest {
     private String groupId;
     private String expect;
     private String countMoney;
-    private List<JinDuoBaoActiviity.XiaZhuBean> duoBaoBetInfoBeanList;
+    private List<JinDuoBaoActivity.XiaZhuBean> duoBaoBetInfoBeanList;
     private String payPwd;
 
     public String getPayPwd() {
@@ -72,11 +73,11 @@ public class GroupGamebettingForDuobaoRequest {
         this.countMoney = countMoney;
     }
 
-    public List<JinDuoBaoActiviity.XiaZhuBean> getDuoBaoBetInfoBeanList() {
+    public List<JinDuoBaoActivity.XiaZhuBean> getDuoBaoBetInfoBeanList() {
         return duoBaoBetInfoBeanList;
     }
 
-    public void setDuoBaoBetInfoBeanList(List<JinDuoBaoActiviity.XiaZhuBean> duoBaoBetInfoBeanList) {
+    public void setDuoBaoBetInfoBeanList(List<JinDuoBaoActivity.XiaZhuBean> duoBaoBetInfoBeanList) {
         this.duoBaoBetInfoBeanList = duoBaoBetInfoBeanList;
     }
 }

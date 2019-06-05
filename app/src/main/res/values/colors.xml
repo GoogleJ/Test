@@ -127,4 +127,8 @@
     <!--颜色值393939-->
     <color name="color39">#393939</color>
     <color name="colorDuoBao">#CDCDCD</color>
+    <color name="colorDBRed">#EA5457</color>
+    <color name="colorDBGreen">#11BE11</color>
+    <color name="colorDBBlue">#44A1E7</color>
+    <color name="colorDBOrange">#FA911F</color>
 </resources>

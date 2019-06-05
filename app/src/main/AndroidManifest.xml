@@ -55,7 +55,10 @@
         <activity android:name=".ui.msgpage.GroupGoldStupaInfoActivity" />
         <activity android:name=".ui.msgpage.AuthenticationActivity" />
         <activity android:name=".ui.walletpage.OrderComplaintActivity" />
-        <activity android:name=".ui.msgpage.JinDuoBaoActiviity" />
+        <activity
+            android:name=".ui.msgpage.JinDuoBaoActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
