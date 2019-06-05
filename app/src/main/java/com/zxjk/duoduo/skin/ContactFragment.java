@@ -166,6 +166,5 @@ public class ContactFragment extends BaseFragment implements View.OnClickListene
     public void onResume() {
         super.onResume();
         getFriendListInfoById();
-        mAdapter.notifyDataSetChanged();
     }
 }

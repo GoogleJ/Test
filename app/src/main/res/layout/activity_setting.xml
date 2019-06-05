@@ -46,20 +46,6 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/rl_intimacy"
-                style="@style/RLayoutStyle"
-                android:visibility="gone">
-
-                <TextView
-                    style="@style/textStyle"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="15dp"
-                    android:text="@string/intimacy" />
-
-                <ImageView style="@style/ImageEnter" />
-            </RelativeLayout>
-
-            <RelativeLayout
                 android:id="@+id/rl_realNameAuthentication"
                 style="@style/RLayoutStyle">
 

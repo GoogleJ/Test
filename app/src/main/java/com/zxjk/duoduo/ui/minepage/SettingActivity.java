@@ -86,9 +86,6 @@ public class SettingActivity extends BaseActivity {
         findViewById(R.id.rl_newMessage).setOnClickListener(v -> {
 
         });
-        //隐私
-        findViewById(R.id.rl_intimacy).setOnClickListener(v ->
-                startActivity(new Intent(SettingActivity.this, PrivacyActivity.class)));
         //实名认证
         findViewById(R.id.rl_realNameAuthentication).setOnClickListener(v -> {
             if (Constant.currentUser.getIsAuthentication().equals("2")) {
@@ -104,53 +101,41 @@ public class SettingActivity extends BaseActivity {
                         ImageView iv_idCard = holder.getView(R.id.iv_idCard);
                         ImageView iv_passport = holder.getView(R.id.iv_passport);
                         ImageView iv_other = holder.getView(R.id.iv_other);
-                        holder.setOnClickListener(R.id.ll_idCard, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                iv_idCard.setImageResource(R.drawable.ic_radio_select);
-                                iv_passport.setImageResource(R.drawable.ic_radio_unselect);
-                                iv_other.setImageResource(R.drawable.ic_radio_unselect);
-                                otherIdCardType = "1";
+                        holder.setOnClickListener(R.id.ll_idCard, v13 -> {
+                            iv_idCard.setImageResource(R.drawable.ic_radio_select);
+                            iv_passport.setImageResource(R.drawable.ic_radio_unselect);
+                            iv_other.setImageResource(R.drawable.ic_radio_unselect);
+                            otherIdCardType = "1";
 
-                            }
                         });
-                        holder.setOnClickListener(R.id.ll_passport, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                iv_idCard.setImageResource(R.drawable.ic_radio_unselect);
-                                iv_passport.setImageResource(R.drawable.ic_radio_select);
-                                iv_other.setImageResource(R.drawable.ic_radio_unselect);
-                                otherIdCardType = "2";
-                            }
+                        holder.setOnClickListener(R.id.ll_passport, v14 -> {
+                            iv_idCard.setImageResource(R.drawable.ic_radio_unselect);
+                            iv_passport.setImageResource(R.drawable.ic_radio_select);
+                            iv_other.setImageResource(R.drawable.ic_radio_unselect);
+                            otherIdCardType = "2";
                         });
-                        holder.setOnClickListener(R.id.ll_other, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                iv_idCard.setImageResource(R.drawable.ic_radio_unselect);
-                                iv_passport.setImageResource(R.drawable.ic_radio_unselect);
-                                iv_other.setImageResource(R.drawable.ic_radio_select);
-                                otherIdCardType = "3";
-                            }
+                        holder.setOnClickListener(R.id.ll_other, v16 -> {
+                            iv_idCard.setImageResource(R.drawable.ic_radio_unselect);
+                            iv_passport.setImageResource(R.drawable.ic_radio_unselect);
+                            iv_other.setImageResource(R.drawable.ic_radio_select);
+                            otherIdCardType = "3";
                         });
-                        holder.setOnClickListener(R.id.tv_confirm, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (!TextUtils.isEmpty(otherIdCardType)) {
-                                    dialog.dismiss();
-                                    if (otherIdCardType.equals("1")) {
-                                        Intent intent = new Intent(SettingActivity.this, AuthenticationActivity.class);
-                                        startActivity(intent);
-                                    } else {
-                                        Intent intent = new Intent(SettingActivity.this, VerifiedActivity.class);
-                                        intent.putExtra("otherIdCardType", otherIdCardType);
-                                        startActivity(intent);
-                                    }
+                        holder.setOnClickListener(R.id.tv_confirm, v15 -> {
+                            if (!TextUtils.isEmpty(otherIdCardType)) {
+                                dialog.dismiss();
+                                if (otherIdCardType.equals("1")) {
+                                    Intent intent = new Intent(SettingActivity.this, AuthenticationActivity.class);
+                                    startActivity(intent);
                                 } else {
-                                    ToastUtils.showShort("请选择证件类型");
+                                    Intent intent = new Intent(SettingActivity.this, VerifiedActivity.class);
+                                    intent.putExtra("otherIdCardType", otherIdCardType);
+                                    startActivity(intent);
                                 }
-
-
+                            } else {
+                                ToastUtils.showShort("请选择证件类型");
                             }
+
+
                         });
 
                     }
