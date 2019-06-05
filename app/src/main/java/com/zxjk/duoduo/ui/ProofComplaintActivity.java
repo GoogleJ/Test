@@ -1,8 +1,10 @@
 package com.zxjk.duoduo.ui;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
@@ -31,6 +33,7 @@ public class ProofComplaintActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         ScreenUtils.setFullScreen(this);
         setContentView(R.layout.activity_proof_complaint);
+        getWindow().getDecorView().setBackgroundColor(Color.BLACK);
         ButterKnife.bind(this);
         initView();
     }
@@ -81,6 +84,11 @@ public class ProofComplaintActivity extends BaseActivity {
                 GlideUtil.loadNormalImg(piv, images[position]);
             }
         });
+    }
 
+    @Override
+    public void finishAfterTransition() {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        super.finishAfterTransition();
     }
 }

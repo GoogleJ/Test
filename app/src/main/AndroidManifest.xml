@@ -85,10 +85,6 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.ImgActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.minepage.HelpActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />

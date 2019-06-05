@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -12,21 +13,24 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ImageUtils;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.CustomViewTarget;
+import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.ImageViewState;
@@ -77,7 +81,7 @@ public class EnlargeImageActivity extends BaseActivity {
     @BindView(R.id.pager)
     ViewPager pager;
 
-    private Bitmap bitmap1;
+    private Bitmap currentBitmap;
     private ArrayList<Message> images;
 
     @Override
@@ -85,6 +89,7 @@ public class EnlargeImageActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         ScreenUtils.setFullScreen(this);
         setContentView(R.layout.activity_enlarge_image);
+        getWindow().getDecorView().setBackgroundColor(Color.BLACK);
         ButterKnife.bind(this);
         String imageUrl = getIntent().getStringExtra("image");
         if (imageUrl.equals("GameRules")) {
@@ -97,13 +102,12 @@ public class EnlargeImageActivity extends BaseActivity {
                     CommonUtils.destoryDialog();
                 }
             });
-            Bitmap bitmap = ImageUtils.drawable2Bitmap(getDrawable(R.drawable.gamerules));
-            float initImageScale = getInitImageScale(bitmap);
+            currentBitmap = ImageUtils.drawable2Bitmap(getDrawable(R.drawable.gamerules));
+            float initImageScale = getInitImageScale(currentBitmap);
             iv.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CUSTOM);
             iv.setMinScale(initImageScale);//最小显示比例
             iv.setMaxScale(initImageScale + 2.0f);//最大显示比例
-            iv.setImage((ImageSource.bitmap(bitmap)), new ImageViewState(initImageScale, new PointF(0, 0), 0));
-            // iv.setImage(ImageSource.resource(R.drawable.gamerules));
+            iv.setImage((ImageSource.bitmap(currentBitmap)), new ImageViewState(initImageScale, new PointF(0, 0), 0));
             iv.setOnClickListener(v -> finishAfterTransition());
         } else if (imageUrl.equals("GameRules2")) {
             CommonUtils.initDialog(this).show();
@@ -115,168 +119,52 @@ public class EnlargeImageActivity extends BaseActivity {
                     CommonUtils.destoryDialog();
                 }
             });
-            Bitmap bitmap = ImageUtils.drawable2Bitmap(getDrawable(R.drawable.gamerules2));
-            float initImageScale = getInitImageScale(bitmap);
+            currentBitmap = ImageUtils.drawable2Bitmap(getDrawable(R.drawable.gamerules2));
+            float initImageScale = getInitImageScale(currentBitmap);
             iv.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CUSTOM);
             iv.setMinScale(initImageScale);//最小显示比例
             iv.setMaxScale(initImageScale + 2.0f);//最大显示比例
-            iv.setImage((ImageSource.bitmap(bitmap)), new ImageViewState(initImageScale, new PointF(0, 0), 0));
-            // iv.setImage(ImageSource.resource(R.drawable.gamerules2));
+            iv.setImage((ImageSource.bitmap(currentBitmap)), new ImageViewState(initImageScale, new PointF(0, 0), 0));
             iv.setOnClickListener(v -> finishAfterTransition());
         } else {
             Bundle bundle = getIntent().getBundleExtra("images");
             images = bundle.getParcelableArrayList("images");
-            pager.setAdapter(new PagerAdapter() {
+
+            PagerAdapter pagerAdapter = new PagerAdapter();
+
+            pager.setAdapter(pagerAdapter);
+
+            pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
                 @Override
-                public int getCount() {
-                    return EnlargeImageActivity.this.images.size();
-                }
+                public void onPageSelected(int position) {
+                    currentBitmap = null;
+                    String sMessage;
+                    Message message = images.get(position);
+                    if (((ImageMessage) message.getContent()).getLocalUri() == null) {
+                        sMessage = ((ImageMessage) message.getContent()).getMediaUrl().toString();
+                    } else {
+                        sMessage = ((ImageMessage) message.getContent()).getLocalUri().toString();
+                    }
+                    Glide.with(EnlargeImageActivity.this)
+                            .asBitmap()
+                            .load(sMessage)
+                            .listener(new RequestListener<Bitmap>() {
+                                @Override
+                                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                                    return false;
+                                }
 
-                @Override
-                public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-                    return view == object;
-                }
-
-                @NonNull
-                @Override
-                public Object instantiateItem(@NonNull ViewGroup container, int position) {
-
-
-                    View view = initView(position);
-
-                    container.addView(view);
-
-                    return view;
-                }
-
-                @Override
-                public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-                    container.removeView((View) object);
+                                @Override
+                                public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                                    currentBitmap = resource;
+                                    return false;
+                                }
+                            }).submit();
                 }
             });
+
             pager.setCurrentItem(getIntent().getIntExtra("index", 0));
         }
-    }
-
-    private View initView(int position) {
-        RelativeLayout layout = new RelativeLayout(EnlargeImageActivity.this);
-        //  PinchImageView imageView = new PinchImageView(EnlargeImageActivity.this);
-        SubsamplingScaleImageView imageView = new SubsamplingScaleImageView(EnlargeImageActivity.this);
-        SpinKitView progressBar = new SpinKitView(EnlargeImageActivity.this);
-        progressBar.setIndeterminateDrawable(SpriteFactory.create(Style.FADING_CIRCLE));
-
-        TextView textView = new TextView(EnlargeImageActivity.this);
-        textView.setText(R.string.click_retry);
-        textView.setTextSize(17);
-        textView.setGravity(Gravity.CENTER);
-        textView.setTextColor(ContextCompat.getColor(EnlargeImageActivity.this, R.color.white));
-        //  imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(CommonUtils.dip2px(EnlargeImageActivity.this, 32), CommonUtils.dip2px(EnlargeImageActivity.this, 32));
-        layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-
-        layout.addView(imageView, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        layout.addView(textView, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        layout.addView(progressBar, layoutParams);
-
-        textView.setOnClickListener(v -> {
-            textView.setVisibility(View.GONE);
-            progressBar.setVisibility(View.VISIBLE);
-
-            String sMessage;
-            Message message = images.get(position);
-            if (((ImageMessage) message.getContent()).getLocalUri() == null) {
-                sMessage = ((ImageMessage) message.getContent()).getMediaUrl().toString();
-            } else {
-                sMessage = ((ImageMessage) message.getContent()).getLocalUri().toString();
-            }
-
-            Glide.with(this).load(sMessage).into(new CustomViewTarget<SubsamplingScaleImageView, Drawable>(imageView) {
-                @Override
-                public void onLoadFailed(@Nullable Drawable errorDrawable) {
-                    progressBar.setVisibility(View.GONE);
-                    textView.setVisibility(View.VISIBLE);
-                }
-
-                @Override
-                public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                    progressBar.setVisibility(View.GONE);
-                    bitmap1 = ImageUtils.drawable2Bitmap(resource);
-                    float initImageScale = getInitImageScale(bitmap1);
-                    imageView.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CUSTOM);
-                    imageView.setMinScale(initImageScale);//最小显示比例
-                    imageView.setMaxScale(initImageScale + 2.0f);//最大显示比例
-                    imageView.setImage((ImageSource.bitmap(bitmap1)), new ImageViewState(initImageScale, new PointF(0, 0), 0));
-                }
-
-                @Override
-                protected void onResourceCleared(@Nullable Drawable placeholder) {
-                    progressBar.setVisibility(View.GONE);
-                }
-            });
-
-
-//            GlideUtil.loadNormalImg(imageView, sMessage, new RequestListener<Bitmap>() {
-//                @Override
-//                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
-//                    progressBar.setVisibility(View.GONE);
-//                    textView.setVisibility(View.VISIBLE);
-//                    return false;
-//                }
-//
-//                @Override
-//                public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
-//                    progressBar.setVisibility(View.GONE);
-//                    bitmap = resource;
-//                    imageView.setImageBitmap(bitmap);
-//                    return true;
-//                }
-//            });
-        });
-
-        textView.performClick();
-
-        imageView.setOnClickListener(v -> finishAfterTransition());
-
-        imageView.setOnLongClickListener(v -> {
-            NiceDialog.init().setLayoutId(R.layout.layout_general_dialog6).setConvertListener(new ViewConvertListener() {
-                @Override
-                protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
-                    holder.setText(R.id.tv_photograph, "保存图片");
-                    holder.setText(R.id.tv_photo_select, "识别二维码");
-
-                    //识别二维码
-                    holder.setOnClickListener(R.id.tv_photo_select, v -> {
-                        dialog.dismiss();
-                        decode(bitmap1, "解析二维码失败");
-                    });
-
-                    //保存图片
-                    holder.setOnClickListener(R.id.tv_photograph, v1 -> getPermisson(g -> {
-                        //保存到手机
-                        dialog.dismiss();
-                        if (bitmap1 == null) {
-                            return;
-                        }
-                        SaveImageUtil.get().savePic(bitmap1, success -> {
-                            if (success) {
-                                ToastUtils.showShort(R.string.savesucceed);
-                                return;
-                            }
-                            ToastUtils.showShort(R.string.savefailed);
-                        });
-                    }, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE));
-
-                    //取消
-                    holder.setOnClickListener(R.id.tv_cancel, v -> dialog.dismiss());
-
-                }
-            }).setShowBottom(true)
-                    .setOutCancel(true)
-                    .setDimAmount(0.5f)
-                    .show(getSupportFragmentManager());
-            return true;
-        });
-        return layout;
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -339,7 +227,7 @@ public class EnlargeImageActivity extends BaseActivity {
         }.execute();
     }
 
-    public float getInitImageScale(Bitmap bitmap) {
+    private float getInitImageScale(Bitmap bitmap) {
         int width = ScreenUtils.getScreenWidth();
         int height = ScreenUtils.getScreenHeight();
         // 拿到图片的宽和高
@@ -363,5 +251,153 @@ public class EnlargeImageActivity extends BaseActivity {
             scale = width * 1.0f / dw;
         }
         return scale;
+    }
+
+    @Override
+    public void finishAfterTransition() {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        super.finishAfterTransition();
+    }
+
+    class PagerAdapter extends androidx.viewpager.widget.PagerAdapter {
+        private RelativeLayout mCurrentView;
+
+        @Override
+        public void setPrimaryItem(ViewGroup container, int position, Object object) {
+            mCurrentView = (RelativeLayout) object;
+        }
+
+        public RelativeLayout getPrimaryItem() {
+            return mCurrentView;
+        }
+
+        @Override
+        public int getCount() {
+            return EnlargeImageActivity.this.images.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
+            return view == object;
+        }
+
+        @NonNull
+        @Override
+        public Object instantiateItem(@NonNull ViewGroup container, int position) {
+
+            View view = initView(position);
+
+            container.addView(view);
+
+            return view;
+        }
+
+        @Override
+        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+            container.removeView((View) object);
+        }
+
+        private View initView(int position) {
+            RelativeLayout layout = new RelativeLayout(EnlargeImageActivity.this);
+            SubsamplingScaleImageView imageView = new SubsamplingScaleImageView(EnlargeImageActivity.this);
+            SpinKitView progressBar = new SpinKitView(EnlargeImageActivity.this);
+            progressBar.setIndeterminateDrawable(SpriteFactory.create(Style.FADING_CIRCLE));
+
+            TextView textView = new TextView(EnlargeImageActivity.this);
+            textView.setText(R.string.click_retry);
+            textView.setTextSize(17);
+            textView.setGravity(Gravity.CENTER);
+            textView.setTextColor(ContextCompat.getColor(EnlargeImageActivity.this, R.color.white));
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(CommonUtils.dip2px(EnlargeImageActivity.this, 32), CommonUtils.dip2px(EnlargeImageActivity.this, 32));
+            layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+
+            layout.addView(imageView, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            layout.addView(textView, new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            layout.addView(progressBar, layoutParams);
+
+            textView.setOnClickListener(v -> {
+                textView.setVisibility(View.GONE);
+                progressBar.setVisibility(View.VISIBLE);
+
+                String sMessage;
+                Message message = images.get(position);
+                if (((ImageMessage) message.getContent()).getLocalUri() == null) {
+                    sMessage = ((ImageMessage) message.getContent()).getMediaUrl().toString();
+                } else {
+                    sMessage = ((ImageMessage) message.getContent()).getLocalUri().toString();
+                }
+
+                Glide.with(EnlargeImageActivity.this).load(sMessage).into(new CustomViewTarget<SubsamplingScaleImageView, Drawable>(imageView) {
+                    @Override
+                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                        progressBar.setVisibility(View.GONE);
+                        textView.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                        progressBar.setVisibility(View.GONE);
+                        Bitmap bitmap = ImageUtils.drawable2Bitmap(resource);
+                        float initImageScale = getInitImageScale(bitmap);
+                        imageView.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CUSTOM);
+                        imageView.setMinScale(initImageScale);//最小显示比例
+                        imageView.setMaxScale(initImageScale + 2.0f);//最大显示比例
+                        imageView.setImage((ImageSource.bitmap(bitmap)), new ImageViewState(initImageScale, new PointF(0, 0), 0));
+                    }
+
+                    @Override
+                    protected void onResourceCleared(@Nullable Drawable placeholder) {
+                        progressBar.setVisibility(View.GONE);
+                    }
+                });
+            });
+
+            textView.performClick();
+
+            imageView.setOnClickListener(v -> finishAfterTransition());
+
+            imageView.setOnLongClickListener(v -> {
+                NiceDialog.init().setLayoutId(R.layout.layout_general_dialog6).setConvertListener(new ViewConvertListener() {
+                    @Override
+                    protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                        holder.setText(R.id.tv_photograph, "保存图片");
+                        holder.setText(R.id.tv_photo_select, "识别二维码");
+
+                        //识别二维码
+                        holder.setOnClickListener(R.id.tv_photo_select, v -> {
+                            dialog.dismiss();
+                            if (currentBitmap == null) {
+                                return;
+                            }
+                            decode(currentBitmap, getString(R.string.decode_qr_failure));
+                        });
+
+                        //保存图片
+                        holder.setOnClickListener(R.id.tv_photograph, v1 -> getPermisson(g -> {
+                            //保存到手机
+                            dialog.dismiss();
+                            if (currentBitmap == null) {
+                                return;
+                            }
+                            SaveImageUtil.get().savePic(currentBitmap, success -> {
+                                if (success) {
+                                    ToastUtils.showShort(R.string.savesucceed);
+                                    return;
+                                }
+                                ToastUtils.showShort(R.string.savefailed);
+                            });
+                        }, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE));
+
+                        //取消
+                        holder.setOnClickListener(R.id.tv_cancel, v -> dialog.dismiss());
+                    }
+                }).setShowBottom(true)
+                        .setOutCancel(true)
+                        .setDimAmount(0.5f)
+                        .show(getSupportFragmentManager());
+                return true;
+            });
+            return layout;
+        }
     }
 }

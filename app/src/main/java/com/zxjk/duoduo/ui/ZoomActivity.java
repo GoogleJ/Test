@@ -1,6 +1,8 @@
 package com.zxjk.duoduo.ui;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.WindowManager;
 
 import com.blankj.utilcode.util.ScreenUtils;
 import com.zxjk.duoduo.R;
@@ -29,6 +31,7 @@ public class ZoomActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         ScreenUtils.setFullScreen(this);
         setContentView(R.layout.activity_zoom);
+        getWindow().getDecorView().setBackgroundColor(Color.BLACK);
         ButterKnife.bind(this);
         initView();
     }
@@ -37,5 +40,11 @@ public class ZoomActivity extends BaseActivity {
         String imageUrl = getIntent().getStringExtra("image");
         GlideUtil.loadNormalImg(pic, imageUrl);
         pic.setOnClickListener(v -> finishAfterTransition());
+    }
+
+    @Override
+    public void finishAfterTransition() {
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        super.finishAfterTransition();
     }
 }
