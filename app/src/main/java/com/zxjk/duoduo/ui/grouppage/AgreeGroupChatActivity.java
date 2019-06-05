@@ -26,7 +26,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import io.rong.imkit.RongIM;
+import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Message;
+import io.rong.message.InformationNotificationMessage;
 
 /**
  * author L
@@ -41,8 +45,8 @@ public class AgreeGroupChatActivity extends BaseActivity {
 
     private String groupName;
 
-    //是否游戏群
-    private boolean isGroup;
+    //游戏群是否人数已满
+    private boolean canJoin;
 
     @SuppressLint("CheckResult")
     @Override
@@ -78,7 +82,7 @@ public class AgreeGroupChatActivity extends BaseActivity {
                     .subscribe(response -> {
                         if (!TextUtils.isEmpty(response.getMaxNumber())) {
                             if (response.getCustomers().size() >= Integer.parseInt(response.getMaxNumber())) {
-                                isGroup = true;
+                                canJoin = true;
                             }
 
                         }
@@ -112,7 +116,7 @@ public class AgreeGroupChatActivity extends BaseActivity {
                                 .build();
                         tvGroupName.setText(groupName + "(" + response.getCustomers().size() + "人)");
                         joinGroupBtn.setOnClickListener(v -> {
-                            if (isGroup) {
+                            if (canJoin) {
                                 ToastUtils.showShort(getString(R.string.group_max_number));
                                 return;
                             }
@@ -140,7 +144,7 @@ public class AgreeGroupChatActivity extends BaseActivity {
                     .build();
             tvGroupName.setText(groupName + "(" + headUrls.split(",").length + "人)");
             joinGroupBtn.setOnClickListener(v -> {
-                if (isGroup) {
+                if (canJoin) {
                     ToastUtils.showShort(getString(R.string.group_max_number));
                     return;
                 }
@@ -157,21 +161,38 @@ public class AgreeGroupChatActivity extends BaseActivity {
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
+                    //更新名片
                     int id = getIntent().getIntExtra("id", -1);
-                    RongIM.getInstance().setMessageExtra(id, "1", new RongIMClient.ResultCallback<Boolean>() {
+                    if (id != -1) {
+                        RongIM.getInstance().setMessageExtra(id, "1", null);
+                    }
+
+                    //发送进群灰条
+                    InformationNotificationMessage notificationMessage = InformationNotificationMessage.obtain("\"" +
+                            Constant.currentUser.getNick() + "\"加入了群组");
+                    Message message = Message.obtain(groupId, Conversation.ConversationType.GROUP, notificationMessage);
+                    RongIM.getInstance().sendMessage(message, "", "", new IRongCallback.ISendMessageCallback() {
                         @Override
-                        public void onSuccess(Boolean aBoolean) {
-                            Intent intent = new Intent(AgreeGroupChatActivity.this, HomeActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(intent);
-                            RongIM.getInstance().startGroupChat(AgreeGroupChatActivity.this, groupId, groupName);
+                        public void onAttached(Message message) {
+                            
                         }
 
                         @Override
-                        public void onError(RongIMClient.ErrorCode errorCode) {
+                        public void onSuccess(Message message) {
+
+                        }
+
+                        @Override
+                        public void onError(Message message, RongIMClient.ErrorCode errorCode) {
 
                         }
                     });
+
+                    //开启会话
+                    Intent intent = new Intent(AgreeGroupChatActivity.this, HomeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    RongIM.getInstance().startGroupChat(AgreeGroupChatActivity.this, groupId, groupName);
                 }, this::handleApiError);
     }
 }
