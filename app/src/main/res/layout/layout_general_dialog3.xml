@@ -29,18 +29,31 @@
             android:id="@+id/et_content"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_margin="20dp"
-            android:background="@null"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/shape_db_white"
             android:gravity="center"
             android:hint="@string/please_money"
             android:inputType="numberDecimal"
             android:textColor="@color/theme_color"
             android:textSize="16sp" />
 
+        <TextView
+            android:id="@+id/tv_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="最小下注"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.1dp"
+            android:layout_marginTop="20dp"
             android:background="@color/pop_color3" />
+
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -74,8 +75,8 @@ public class JinDuoBaoActivity extends BaseActivity implements SelectPopupWindow
     @BindView(R.id.recyclerViewZodiac)
     RecyclerView recyclerViewZodiac;
     //输入金额
-    @BindView(R.id.et_input_money)
-    EditText etInputMoney;
+    @BindView(R.id.tv_input_money)
+    TextView tvInputMoney;
     //赔率
     @BindView(R.id.tv_odds)
     TextView tvOdds;
@@ -94,6 +95,7 @@ public class JinDuoBaoActivity extends BaseActivity implements SelectPopupWindow
     //绿波
     @BindView(R.id.tv_db_green)
     TextView tvDbGreen;
+
 
     //是否选中红
     private boolean isDbRed;
@@ -210,28 +212,33 @@ public class JinDuoBaoActivity extends BaseActivity implements SelectPopupWindow
                 tv1.setText(item.betCode);
 
                 if (!TextUtils.isEmpty(item.hue)) {
-                    tv1.setBackgroundResource(R.drawable.shape_duobaoxiazhu_selected);
+                    tv1.setBackgroundResource(R.drawable.shape_db_theme_circular);
                     tv1.setTextColor(ContextCompat.getColor(JinDuoBaoActivity.this, R.color.white));
                     String[] strings = item.hue.split("-");
                     if (strings[strings.length - 1].equals("red")) {
-                        tv1.setBackgroundResource(R.drawable.shape_db_red);
+                        tv1.setBackgroundResource(R.drawable.shape_db_red_circular);
                     } else if (strings[strings.length - 1].equals("blue")) {
-                        tv1.setBackgroundResource(R.drawable.shape_db_blue);
+                        tv1.setBackgroundResource(R.drawable.shape_db_blue_circular);
                     } else if (strings[strings.length - 1].equals("green")) {
-                        tv1.setBackgroundResource(R.drawable.shape_db_green);
+                        tv1.setBackgroundResource(R.drawable.shape_db_green_circular);
                     }
                 } else {
                     if (!item.betMoney.equals("0")) {
-                        tv1.setBackgroundResource(R.drawable.shape_duobaoxiazhu_selected);
+                        tv1.setBackgroundResource(R.drawable.shape_db_theme_circular);
                         tv1.setTextColor(ContextCompat.getColor(JinDuoBaoActivity.this, R.color.white));
                     } else {
-                        tv1.setTextColor(ContextCompat.getColor(JinDuoBaoActivity.this, R.color.text_color1));
-                        tv1.setBackgroundResource(R.drawable.shape_duobaoxiazhu_normal);
+                        tv1.setTextColor(ContextCompat.getColor(JinDuoBaoActivity.this, R.color.black));
+                        tv1.setBackgroundResource(R.drawable.shape_db_white_circular);
                     }
                 }
 
                 TextView tv2 = helper.getView(R.id.tv2);
-                tv2.setText(item.betMoney + "HK");
+                if (item.betMoney.equals("0")) {
+                    tv2.setText("");
+                } else {
+                    tv2.setText(item.betMoney);
+                }
+
             }
         };
 
@@ -242,9 +249,9 @@ public class JinDuoBaoActivity extends BaseActivity implements SelectPopupWindow
                         @Override
                         protected void convertView(ViewHolder holder, BaseNiceDialog baseNiceDialog) {
                             if (!TextUtils.isEmpty(response.getMaximumBetAmount())) {
-                                holder.setText(R.id.tvRate, "下注范围为" + response.getMinimumBetAmount() + "-" + response.getMaximumBetAmount());
+                                holder.setText(R.id.tvRate, "下注范围为" + response.getMinimumBetAmount() + "-" + response.getMaximumBetAmount() + "\n" + "金额为空时，点击确认取消该号码下注。");
                             } else {
-                                holder.setText(R.id.tvRate, "最小下注" + response.getMinimumBetAmount());
+                                holder.setText(R.id.tvRate, "最小下注" + response.getMinimumBetAmount() + "\n" + "金额为空时，点击确认取消该号码下注。");
                             }
                             holder.setText(R.id.tv, bean.betCode);
                             EditText et = holder.getView(R.id.et);
@@ -306,8 +313,30 @@ public class JinDuoBaoActivity extends BaseActivity implements SelectPopupWindow
 
                                 if (TextUtils.isEmpty(trim)) {
                                     dialog.dismiss();
-                                    bean.betMoney = trim;
-                                    adapter.notifyDataSetChanged();
+                                    currentMoney -= Integer.parseInt(bean.betMoney);
+                                    bean.betMoney = "0";
+                                    XiaZhuBean xiaZhuBean;
+                                    if (adapter.getData().size() == 24) {
+                                        xiaZhuBean = data1.get(position);
+                                    } else {
+                                        xiaZhuBean = data2.get(position);
+                                    }
+                                    if (!TextUtils.isEmpty(xiaZhuBean.hue)) {
+                                        String[] split = xiaZhuBean.hue.split("-");
+//                                        for (int i = 0; i < split.length; i++) {
+//                                            if (!split[i].equals("red") && !split[i].equals("blue") && !split[i].equals("green")) {
+//                                                DuobaoParameterResponse.ChineseZodiacBean zodiacBean = zodiacAdapter.getData().get(Integer.parseInt(split[i].substring(1)));
+//                                                zodiacBean.setMoney(zodiacBean.getMoney() / zodiacBean.getCode().split(",").length);
+//                                            }
+//                                        }
+                                        xiaZhuBean.hue = "";
+                                    }
+                                    if (currentCount != 0) {
+                                        currentCount -= 1;
+                                    }
+                                    adapter.notifyItemChanged(position);
+                                    tvDbTotalMoney.setText(currentMoney + "HK");
+                                    tvDbNumber.setText(currentCount + "");
                                     return;
                                 }
 
@@ -316,16 +345,30 @@ public class JinDuoBaoActivity extends BaseActivity implements SelectPopupWindow
                                     ToastUtils.showShort(R.string.duobaoxiazhufail);
                                     return;
                                 }
-
                                 dialog.dismiss();
-
+                                currentMoney -= Integer.parseInt(bean.betMoney);
                                 bean.betMoney = trim;
-                                adapter.notifyDataSetChanged();
-
                                 currentMoney += Integer.parseInt(bean.betMoney);
-                                if (TextUtils.isEmpty(bean.hue)) {
+                                XiaZhuBean xiaZhuBean;
+                                if (adapter.getData().size() == 24) {
+                                    xiaZhuBean = data1.get(position);
+                                } else {
+                                    xiaZhuBean = data2.get(position);
+                                }
+                                if (!TextUtils.isEmpty(xiaZhuBean.hue)) {
+                                    String[] split = xiaZhuBean.hue.split("-");
+//                                    for (int j = 0; j < split.length; j++) {
+//                                        if (!split[j].equals("red") && !split[j].equals("blue") && !split[j].equals("green")) {
+//                                            DuobaoParameterResponse.ChineseZodiacBean zodiacBean = zodiacAdapter.getData().get(Integer.parseInt(split[j].substring(1)));
+//                                            zodiacBean.setMoney(zodiacBean.getMoney() / zodiacBean.getCode().split(",").length);
+//                                        }
+//                                    }
+                                    xiaZhuBean.hue = "";
+                                } else {
                                     currentCount += 1;
                                 }
+
+                                adapter.notifyItemChanged(position);
                                 tvDbTotalMoney.setText(currentMoney + "HK");
                                 tvDbNumber.setText(currentCount + "");
                             });
@@ -357,10 +400,10 @@ public class JinDuoBaoActivity extends BaseActivity implements SelectPopupWindow
         zodiacAdapter.setOnItemClickListener((adapter, view, position) -> {
             if (zodiacAdapter.getData().get(position).isChecked()) {
                 zodiacAdapter.getData().get(position).setChecked(false);
-                select(String.valueOf(position), false, position);
+                select("J" + position, false, position);
             } else {
                 zodiacAdapter.getData().get(position).setChecked(true);
-                select(String.valueOf(position), true, position);
+                select("J" + position, true, position);
             }
             zodiacAdapter.notifyItemChanged(position);
         });
@@ -393,7 +436,7 @@ public class JinDuoBaoActivity extends BaseActivity implements SelectPopupWindow
         }
     }
 
-    @OnClick({R.id.rl_back, R.id.tvDuoBaoNum1, R.id.tvDuoBaoNum2, R.id.tv_db_red, R.id.tv_db_blue, R.id.tv_db_green, R.id.iv_db_reset, R.id.iv_db_10, R.id.iv_db_50, R.id.iv_db_100, R.id.iv_db_200, R.id.iv_db_500, R.id.tv_bottomPour})
+    @OnClick({R.id.rl_back, R.id.tvDuoBaoNum1, R.id.tvDuoBaoNum2, R.id.tv_db_red, R.id.tv_db_blue, R.id.tv_db_green, R.id.iv_db_reset, R.id.iv_db_10, R.id.iv_db_50, R.id.iv_db_100, R.id.iv_db_200, R.id.iv_db_500, R.id.tv_input_money, R.id.tv_bottomPour})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rl_back:
@@ -453,6 +496,7 @@ public class JinDuoBaoActivity extends BaseActivity implements SelectPopupWindow
                 currentCount = 0;
                 currentMoney = 0;
                 tvDbNumber.setText("0");
+                tvInputMoney.setText("0");
                 tvDbTotalMoney.setText("0HK");
                 data1.clear();
                 data2.clear();
@@ -503,18 +547,61 @@ public class JinDuoBaoActivity extends BaseActivity implements SelectPopupWindow
             case R.id.iv_db_500:
                 setMoney(500);
                 break;
+            case R.id.tv_input_money:
+                NiceDialog.init().setLayoutId(R.layout.layout_general_dialog3).setConvertListener(new ViewConvertListener() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                        holder.setText(R.id.tv_title, "下注金额");
+                        TextView textView = holder.getView(R.id.tv_rate);
+                        textView.setVisibility(View.VISIBLE);
+                        if (!TextUtils.isEmpty(response.getMaximumBetAmount())) {
+                            textView.setText("下注范围为" + response.getMinimumBetAmount() + "-" + response.getMaximumBetAmount());
+                        } else {
+                            textView.setText("最小下注" + response.getMinimumBetAmount());
+                        }
+                        holder.setText(R.id.tv_cancel, "取消");
+                        holder.setText(R.id.tv_notarize, "确认");
+                        EditText editText = holder.getView(R.id.et_content);
+                        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        holder.setOnClickListener(R.id.tv_cancel, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+
+                            }
+                        });
+                        holder.setOnClickListener(R.id.tv_notarize, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (!TextUtils.isEmpty(editText.getText().toString())) {
+                                    if (Integer.parseInt(editText.getText().toString()) >= Integer.parseInt(response.getMinimumBetAmount())) {
+                                        dialog.dismiss();
+                                        tvInputMoney.setText(editText.getText().toString());
+                                        setMoney(Integer.parseInt(tvInputMoney.getText().toString()));
+                                    } else {
+                                        ToastUtils.showShort(R.string.duobaoxiazhufail);
+                                    }
+                                }
+
+
+                            }
+                        });
+                    }
+                }).setDimAmount(0.5f).setOutCancel(false).show(getSupportFragmentManager());
+                break;
             //下注
             case R.id.tv_bottomPour:
                 finalData11 = new ArrayList<>();
                 total11 = "0";
                 for (XiaZhuBean bean : data1) {
-                    if (!TextUtils.isEmpty(bean.betMoney)) {
+                    if (!TextUtils.isEmpty(bean.betMoney) && !bean.betMoney.equals("0")) {
                         finalData11.add(bean);
                         total11 = Integer.parseInt(bean.betMoney) + Integer.parseInt(total11) + "";
                     }
                 }
                 for (XiaZhuBean bean : data2) {
-                    if (!TextUtils.isEmpty(bean.betMoney)) {
+                    if (!TextUtils.isEmpty(bean.betMoney) && !bean.betMoney.equals("0")) {
                         finalData11.add(bean);
                         total11 = Integer.parseInt(bean.betMoney) + Integer.parseInt(total11) + "";
                     }
@@ -553,9 +640,8 @@ public class JinDuoBaoActivity extends BaseActivity implements SelectPopupWindow
                     } else if (str.equals("green")) {
                         temp3 = true;
                     } else {
-                        int j = Integer.parseInt(str);
-                        if (sb.indexOf(j + ",") == -1) {
-                            sb.append(j + ",");
+                        if (sb.indexOf(str + ",") == -1) {
+                            sb.append(str + ",");
                         }
                     }
                     if (!TextUtils.isEmpty(b.betMoney)) {
@@ -585,9 +671,8 @@ public class JinDuoBaoActivity extends BaseActivity implements SelectPopupWindow
                     } else if (str.equals("green")) {
                         temp3 = true;
                     } else {
-                        int j = Integer.parseInt(str);
-                        if (sb.indexOf(j + ",") == -1) {
-                            sb.append(j + ",");
+                        if (sb.indexOf(str + ",") == -1) {
+                            sb.append(str + ",");
                         }
                     }
                     if (!TextUtils.isEmpty(b.betMoney)) {
@@ -617,7 +702,7 @@ public class JinDuoBaoActivity extends BaseActivity implements SelectPopupWindow
         if (sb.length() != 0) {
             String[] split = sb.toString().split(",");
             for (String s : split) {
-                DuobaoParameterResponse.ChineseZodiacBean zodiacBean = zodiacAdapter.getData().get(Integer.parseInt(s));
+                DuobaoParameterResponse.ChineseZodiacBean zodiacBean = zodiacAdapter.getData().get(Integer.parseInt(s.substring(1)));
                 zodiacBean.setMoney(zodiacBean.getMoney() + money);
             }
         }
@@ -659,7 +744,7 @@ public class JinDuoBaoActivity extends BaseActivity implements SelectPopupWindow
                     } else if (type.equals("green") && contains) {
                         i1 -= greenCurrentMoney;
                     } else if (contains) {
-                        int i2 = Integer.parseInt(type);
+                        int i2 = Integer.parseInt(type.substring(1));
                         DuobaoParameterResponse.ChineseZodiacBean zodiacBean = zodiacAdapter.getData().get(i2);
                         i1 -= zodiacBean.getMoney();
                     }
@@ -697,7 +782,7 @@ public class JinDuoBaoActivity extends BaseActivity implements SelectPopupWindow
                     } else if (type.equals("green") && contains) {
                         i1 -= greenCurrentMoney;
                     } else if (contains) {
-                        int i2 = Integer.parseInt(type);
+                        int i2 = Integer.parseInt(type.substring(1));
                         DuobaoParameterResponse.ChineseZodiacBean zodiacBean = zodiacAdapter.getData().get(i2);
                         i1 -= zodiacBean.getMoney();
                     }
@@ -721,7 +806,7 @@ public class JinDuoBaoActivity extends BaseActivity implements SelectPopupWindow
         } else if (type.equals("green")) {
             greenCurrentMoney = 0;
         } else {
-            int i2 = Integer.parseInt(type);
+            int i2 = Integer.parseInt(type.substring(1));
             DuobaoParameterResponse.ChineseZodiacBean zodiacBean = zodiacAdapter.getData().get(i2);
             zodiacBean.setMoney(0);
         }
