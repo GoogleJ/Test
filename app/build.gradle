@@ -9,13 +9,13 @@ android {
             storePassword 'duoduo'
         }
     }
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.zxjk.duoduo"
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 8
-        versionName "1.5.2"
+        versionCode 10
+        versionName "1.7"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         ndk {
@@ -49,7 +49,7 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
-    buildToolsVersion '28.0.3'
+    buildToolsVersion '29.0.0'
     compileOptions {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
@@ -59,7 +59,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha03'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0-beta01'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     //Rxlifecycle
     implementation 'com.trello.rxlifecycle3:rxlifecycle:3.0.0'
@@ -110,12 +110,10 @@ dependencies {
     //Loading
     implementation 'com.github.ybq:Android-SpinKit:1.2.0'
 
-    //添加依赖  安卓黄油刀，可减少部分代码，具体看个人习惯
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
 
-    //这个是对方法数进行的依赖
-    implementation 'androidx.multidex:multidex:2.0.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
 
     //融云
     implementation project(':IMKit')
