@@ -3,6 +3,7 @@ package com.zxjk.duoduo.ui.msgpage.widget;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,13 +21,12 @@ import com.zxjk.duoduo.ui.msgpage.GroupGoldStupaInfoActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.DataUtils;
 import com.zxjk.duoduo.utils.RecyclerItemAverageDecoration;
-
-import java.util.List;
+import com.zxjk.duoduo.view.ScreenUtil;
 
 import razerdp.basepopup.BasePopupWindow;
 
 public class DuoBaoGameDetailPopWindow extends BasePopupWindow {
-
+    private TextView tv;
     //期数
     private TextView tv1;
 
@@ -66,6 +66,7 @@ public class DuoBaoGameDetailPopWindow extends BasePopupWindow {
     public DuoBaoGameDetailPopWindow(Context context, GetGroupMemberDuoBaoBetInfoResponse response, GetDuoBaoIntegralDetailsResponse r) {
         super(context);
 
+        tv = findViewById(R.id.tv);
         tv1 = findViewById(R.id.tv1);
         tv2 = findViewById(R.id.tv2);
         tv3 = findViewById(R.id.tv3);
@@ -81,22 +82,25 @@ public class DuoBaoGameDetailPopWindow extends BasePopupWindow {
         ll3 = findViewById(R.id.ll3);
         ll4 = findViewById(R.id.ll4);
 
-        List<GetGroupMemberDuoBaoBetInfoResponse.BetInfoBean> data;
-        if (response.getBetInfo().size() >= 10) {
-            data = response.getBetInfo().subList(0, 10);
-        } else {
-            data = response.getBetInfo();
+        if (response.getBetInfo().size() > 10) {
+            tv.setVisibility(View.VISIBLE);
+        }
+
+        if (response.getBetInfo().size() <= 5) {
+            recycler.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+                ViewGroup.LayoutParams layoutParams = recycler.getLayoutParams();
+                if (layoutParams.height != ScreenUtil.dip2px(50)) {
+                    layoutParams.height = ScreenUtil.dip2px(50);
+                    recycler.setLayoutParams(layoutParams);
+                }
+            });
         }
 
         recycler.setLayoutManager(new GridLayoutManager(context, 5));
         recycler.addItemDecoration(new RecyclerItemAverageDecoration(0, CommonUtils.dip2px(context, 8), 5));
-        recycler.setAdapter(new BaseQuickAdapter<GetGroupMemberDuoBaoBetInfoResponse.BetInfoBean, BaseViewHolder>(R.layout.item_duobao_xiazhu_number, data) {
+        recycler.setAdapter(new BaseQuickAdapter<GetGroupMemberDuoBaoBetInfoResponse.BetInfoBean, BaseViewHolder>(R.layout.item_duobao_xiazhu_number, response.getBetInfo()) {
             @Override
             protected void convert(BaseViewHolder helper, GetGroupMemberDuoBaoBetInfoResponse.BetInfoBean item) {
-                if (helper.getAdapterPosition() == 9) {
-                    helper.setText(R.id.tv1, "•••");
-                    return;
-                }
                 helper.setText(R.id.tv1, item.getBetCode());
                 helper.setText(R.id.tv2, item.getBetMoneyForCode());
             }
@@ -151,6 +155,7 @@ public class DuoBaoGameDetailPopWindow extends BasePopupWindow {
     public DuoBaoGameDetailPopWindow(GroupGoldStupaInfoActivity context, GetGroupMemberDuoBaoBetInfoResponse response, GetGroupOwnerDuoBaoBetInfoResponse o) {
         super(context);
 
+        tv = findViewById(R.id.tv);
         tv1 = findViewById(R.id.tv1);
         tv2 = findViewById(R.id.tv2);
         tv3 = findViewById(R.id.tv3);
@@ -166,22 +171,25 @@ public class DuoBaoGameDetailPopWindow extends BasePopupWindow {
         ll3 = findViewById(R.id.ll3);
         ll4 = findViewById(R.id.ll4);
 
-        List<GetGroupMemberDuoBaoBetInfoResponse.BetInfoBean> data;
-        if (response.getBetInfo().size() >= 10) {
-            data = response.getBetInfo().subList(0, 10);
-        } else {
-            data = response.getBetInfo();
+        if (response.getBetInfo().size() > 10) {
+            tv.setVisibility(View.VISIBLE);
+
+        }
+        if (response.getBetInfo().size() <= 5) {
+            recycler.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
+                ViewGroup.LayoutParams layoutParams = recycler.getLayoutParams();
+                if (layoutParams.height != ScreenUtil.dip2px(50)) {
+                    layoutParams.height = ScreenUtil.dip2px(50);
+                    recycler.setLayoutParams(layoutParams);
+                }
+            });
         }
 
         recycler.setLayoutManager(new GridLayoutManager(context, 5));
         recycler.addItemDecoration(new RecyclerItemAverageDecoration(0, CommonUtils.dip2px(context, 8), 5));
-        recycler.setAdapter(new BaseQuickAdapter<GetGroupMemberDuoBaoBetInfoResponse.BetInfoBean, BaseViewHolder>(R.layout.item_duobao_xiazhu_number, data) {
+        recycler.setAdapter(new BaseQuickAdapter<GetGroupMemberDuoBaoBetInfoResponse.BetInfoBean, BaseViewHolder>(R.layout.item_duobao_xiazhu_number, response.getBetInfo()) {
             @Override
             protected void convert(BaseViewHolder helper, GetGroupMemberDuoBaoBetInfoResponse.BetInfoBean item) {
-                if (helper.getAdapterPosition() == 9) {
-                    helper.setText(R.id.tv1, "•••");
-                    return;
-                }
                 helper.setText(R.id.tv1, item.getBetCode());
                 helper.setText(R.id.tv2, item.getBetMoneyForCode());
             }

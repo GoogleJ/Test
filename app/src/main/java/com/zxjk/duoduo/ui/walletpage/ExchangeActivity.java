@@ -104,17 +104,19 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.normalTrans())
                 .flatMap((Function<GetNumbeOfTransactionResponse, ObservableSource<List<PayInfoResponse>>>) s -> {
-                    runOnUiThread(() ->
-                            tvExchangePrice.setText(s.getHkPrice() + " CNY/HK"));
-                    if (TextUtils.isEmpty(s.getExchangeRate()) || s.getExchangeRate().equals("0")) {
-                        tv_poundage.setVisibility(View.GONE);
-                    } else {
-                        double pou = ArithUtils.mul(Double.parseDouble(s.getExchangeRate()), Double.parseDouble("100"));
-                        tv_poundage.setText("交易手续费为" + DataUtils.getTwoDecimals(String.valueOf(pou)) + "%");
-                        poun = DataUtils.getTwoDecimals(String.valueOf(pou)) + "%";
-                        poundage = s.getExchangeRate();
-                        minExchangeFee = s.getMinExchangeFee();
-                    }
+                    runOnUiThread(() -> {
+                        tvExchangePrice.setText(s.getHkPrice() + " CNY/HK");
+                        if (TextUtils.isEmpty(s.getExchangeRate()) || s.getExchangeRate().equals("0")) {
+                            tv_poundage.setVisibility(View.GONE);
+                        } else {
+                            double pou = ArithUtils.mul(Double.parseDouble(s.getExchangeRate()), Double.parseDouble("100"));
+                            tv_poundage.setText("交易手续费为" + DataUtils.getTwoDecimals(String.valueOf(pou)) + "%");
+                            poun = DataUtils.getTwoDecimals(String.valueOf(pou)) + "%";
+                            poundage = s.getExchangeRate();
+                            minExchangeFee = s.getMinExchangeFee();
+                        }
+                    });
+
                     return ServiceFactory.getInstance().getBaseService(Api.class)
                             .getPayInfo().compose(RxSchedulers.normalTrans());
                 })

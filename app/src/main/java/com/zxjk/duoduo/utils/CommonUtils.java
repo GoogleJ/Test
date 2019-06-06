@@ -64,7 +64,7 @@ public class CommonUtils {
             }
         };
         dialog.setContentView(R.layout.dialog_loading);
-        dialog.setCancelable(false);
+        dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         if (!TextUtils.isEmpty(loadText)) {

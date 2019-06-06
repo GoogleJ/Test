@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color"
-    android:orientation="vertical"
-    tools:ignore="all">
+    android:orientation="vertical">
 
 
     <androidx.cardview.widget.CardView
@@ -54,6 +53,7 @@
                     android:textSize="12sp" />
 
                 <RelativeLayout
+                    android:id="@+id/rl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -76,6 +76,7 @@
                         android:layout_alignEnd="@id/tv_2"
                         android:layout_marginTop="2dp"
                         android:background="@android:color/black" />
+
                 </RelativeLayout>
 
                 <TextView
@@ -88,7 +89,6 @@
                     android:text=">"
                     android:textColor="@android:color/black"
                     android:textSize="16sp" />
-
 
             </RelativeLayout>
 

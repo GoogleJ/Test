@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,12 +41,16 @@ public class GameRecordDaiLiFragment extends BaseFragment {
     private TextView tv_totalTeamMembers;//团队总人数
     private TextView tv_KeepPushingNumber;//直推人数
     private DecimalFormat df = new DecimalFormat("0.00%");
+    private RelativeLayout rl;
+    private TextView tv_more;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_dailifanyong, container, false);
 
+        rl = rootView.findViewById(R.id.rl);
+        tv_more = rootView.findViewById(R.id.tv_more);
         tvDaiLi = rootView.findViewById(R.id.tvDaiLi);
         tv_totalPerformance = rootView.findViewById(R.id.tv_totalPerformance);
         tv_earnings = rootView.findViewById(R.id.tv_earnings);
@@ -54,11 +58,6 @@ public class GameRecordDaiLiFragment extends BaseFragment {
         tv_totalRevenue = rootView.findViewById(R.id.tv_totalRevenue);
         tv_totalTeamMembers = rootView.findViewById(R.id.tv_totalTeamMembers);
         tv_KeepPushingNumber = rootView.findViewById(R.id.tv_KeepPushingNumber);
-        LinearLayout ll_myGroup = rootView.findViewById(R.id.ll_myGroup);
-
-        if (groupResponse.getGroupInfo().getGameType().equals("4")) {
-            ll_myGroup.setVisibility(View.GONE);
-        }
 
         return rootView;
     }
@@ -93,6 +92,9 @@ public class GameRecordDaiLiFragment extends BaseFragment {
                             intent.putExtra("groupId", response.getGroupId());
                             startActivity(intent);
                         });
+                    } else {
+                        rl.setVisibility(View.GONE);
+                        tv_more.setVisibility(View.GONE);
                     }
                     //上周收益
                     rootView.findViewById(R.id.ll_lastEarnings).setOnClickListener(v -> {

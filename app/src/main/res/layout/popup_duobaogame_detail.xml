@@ -82,17 +82,35 @@
             android:layout_marginBottom="16dp"
             android:paddingEnd="32dp">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="下注号码："
-                android:textColor="@color/textcolor2"
-                android:textSize="16sp" />
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="下注号码："
+                    android:textColor="@color/textcolor2"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="(滑动查看)  "
+                    android:textSize="13sp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:overScrollMode="never" />
 
         </LinearLayout>
