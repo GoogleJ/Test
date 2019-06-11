@@ -4,13 +4,12 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import androidx.annotation.RequiresApi;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -64,7 +63,6 @@ public class SettingActivity extends BaseActivity {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void initView() {
         TextView tv_title = findViewById(R.id.tv_title);
         tv_title.setText("设置");
@@ -77,15 +75,32 @@ public class SettingActivity extends BaseActivity {
         boolean hasCompletePay = SPUtils.getInstance().getBoolean(Constant.currentUser.getId(), false);
         tv_perfection = findViewById(R.id.tv_perfection);
         tv_perfection.setText(hasCompletePay ? R.string.complete_payinfo : R.string.uncomplete_payinfo);
+
         //返回
         rl_back.setOnClickListener(v -> finish());
+
         //账号
         findViewById(R.id.rl_account_number).setOnClickListener(v ->
                 startActivity(new Intent(SettingActivity.this, AccountActivity.class)));
-        //新消息通知
-        findViewById(R.id.rl_newMessage).setOnClickListener(v -> {
 
-        });
+        //新消息通知
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            findViewById(R.id.rl_newMessage).setOnClickListener(v -> {
+                Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
+                intent.putExtra(Settings.EXTRA_CHANNEL_ID, "rc_notification_id");
+                intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
+                startActivity(intent);
+            });
+        } else {
+            findViewById(R.id.rl_newMessage).setOnClickListener(v -> {
+                Intent intent = new Intent();
+                intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+                intent.putExtra("app_package", this.getPackageName());
+                intent.putExtra("app_uid", this.getApplicationInfo().uid);
+                startActivity(intent);
+            });
+        }
+
         //实名认证
         findViewById(R.id.rl_realNameAuthentication).setOnClickListener(v -> {
             if (Constant.currentUser.getIsAuthentication().equals("2")) {

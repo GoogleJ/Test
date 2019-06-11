@@ -40,9 +40,7 @@ public class ProofComplaintActivity extends BaseActivity {
 
     private void initView() {
         imageUrl = getIntent().getStringExtra("images");
-        if (imageUrl.contains(",")) {
-            images = imageUrl.split(",");
-        }
+        images = imageUrl.split(",");
         pager.setAdapter(new PagerAdapter() {
             @Override
             public int getCount() {

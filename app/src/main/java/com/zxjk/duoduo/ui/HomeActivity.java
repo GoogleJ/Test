@@ -1,6 +1,10 @@
 package com.zxjk.duoduo.ui;
 
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationChannelGroup;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -38,12 +42,14 @@ import com.zxjk.duoduo.network.rx.RxException;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.skin.ContactFragment;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-import com.zxjk.duoduo.ui.grouppage.CommunityFragment;
 import com.zxjk.duoduo.ui.minepage.MineFragment;
 import com.zxjk.duoduo.ui.msgpage.MsgFragment;
 import com.zxjk.duoduo.utils.MMKVUtils;
+import com.zxjk.duoduo.utils.badge.BadgeNumberManager;
+import com.zxjk.duoduo.utils.badge.MobileBrand;
 
 import java.io.File;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -52,6 +58,8 @@ import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 import io.rong.message.CommandMessage;
+import io.rong.pushperm.ResultCallback;
+import io.rong.pushperm.RongPushPremissionsCheckHelper;
 
 import static com.ashokvarma.bottomnavigation.BottomNavigationBar.BACKGROUND_STYLE_RIPPLE;
 import static com.ashokvarma.bottomnavigation.BottomNavigationBar.BACKGROUND_STYLE_STATIC;
@@ -71,10 +79,11 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
 
     public BadgeItem badgeItem2;
 
-    MsgFragment msgFragment;
-    CommunityFragment communityFragment;
-    MineFragment mineFragment;
-    ContactFragment contactFragment;
+    private MsgFragment msgFragment;
+    private MineFragment mineFragment;
+    private ContactFragment contactFragment;
+
+    private int messageCount;
 
     @Override
     protected void onDestroy() {
@@ -85,8 +94,32 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
     @SuppressLint("CheckResult")
     @Override
     protected void onResume() {
+        cleanBadge();
         Observable.timer(1, TimeUnit.SECONDS)
                 .subscribe(aLong -> RongIM.setOnReceiveMessageListener((message, i) -> {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        NotificationManager mNotificationManager = (NotificationManager) this
+                                .getSystemService(Context.NOTIFICATION_SERVICE);
+                        List<NotificationChannel> notificationChannels = mNotificationManager.getNotificationChannels();
+                        List<NotificationChannelGroup> notificationChannelGroups = mNotificationManager.getNotificationChannelGroups();
+                    }
+                    //update badge
+                    if (!AppUtils.isAppForeground()) {
+                        if (!Build.MANUFACTURER.equalsIgnoreCase(MobileBrand.XIAOMI)) {
+                            BadgeNumberManager.from(this).setBadgeNumber(++messageCount);
+                        } else {
+                            //MIUI
+//                            NotificationManager mNotificationManager = (NotificationManager) this
+//                                    .getSystemService(Context.NOTIFICATION_SERVICE);
+//                            StatusBarNotification[] activeNotifications = mNotificationManager.getActiveNotifications();
+//                            if (activeNotifications.length != 0) {
+//                                BadgeNumberManagerXiaoMi.setBadgeNumber(activeNotifications[0].getNotification(), ++messageCount);
+//                                mNotificationManager.notify(activeNotifications[0].getId(), activeNotifications[0].getNotification());
+//                            }
+                        }
+                    }
+
+                    //handle command(delete add newfriend)
                     if (message.getContent() instanceof CommandMessage) {
                         CommandMessage commandMessage = (CommandMessage) message.getContent();
                         if (commandMessage.getName().equals("deleteFriend")) {
@@ -130,6 +163,45 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
 
         initFragment();
 
+        initView();
+
+        getNewFriendCount();
+
+        checkPermission();
+    }
+
+    private void cleanBadge() {
+        messageCount = 0;
+        if (!Build.MANUFACTURER.equalsIgnoreCase(MobileBrand.XIAOMI)) {
+            BadgeNumberManager.from(this).setBadgeNumber(0);
+        }
+    }
+
+    private void checkPermission() {
+        RongPushPremissionsCheckHelper.checkPermissionsAndShowDialog(this, new ResultCallback() {
+            @Override
+            public void onAreadlyOpened(String value) {
+
+            }
+
+            @Override
+            public boolean onBeforeShowDialog(String value) {
+                return false;
+            }
+
+            @Override
+            public void onGoToSetting(String value) {
+
+            }
+
+            @Override
+            public void onFailed(String value, FailedType type) {
+
+            }
+        });
+    }
+
+    private void initView() {
         fragment_content = findViewById(R.id.fragment_content);
         m_bottom_bar = findViewById(R.id.m_bottom_bar);
 
@@ -142,8 +214,6 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
         badgeItem2.setHideOnSelect(false)
                 .setBackgroundColorResource(R.color.red_eth_in)
                 .setBorderWidth(0);
-
-        getNewFriendCount();
 
         //设置Item选中颜色方法
         m_bottom_bar.setActiveColor(R.color.colorAccent)
@@ -319,25 +389,12 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
         return null;
     }
 
-    private boolean canFinish = false;
-
-    @SuppressLint("CheckResult")
     @Override
     public void onBackPressed() {
-        if (!canFinish) {
-            Observable.timer(2, TimeUnit.SECONDS)
-                    .doOnSubscribe(disposable -> {
-                        ToastUtils.showShort(R.string.pressagain2finish);
-                        canFinish = true;
-                    })
-                    .compose(bindUntilEvent(ActivityEvent.DESTROY))
-                    .subscribe(aLong -> canFinish = false);
-            return;
-        } else {
-            RongIM.getInstance().disconnect();
-            Constant.clear();
-        }
-        super.onBackPressed();
+        Intent home = new Intent(Intent.ACTION_MAIN);
+        home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        home.addCategory(Intent.CATEGORY_HOME);
+        startActivity(home);
     }
 
     @SuppressLint("CheckResult")
@@ -364,8 +421,6 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
 
     private void initFragment() {
         msgFragment = new MsgFragment();
-        communityFragment = new CommunityFragment();
-        // walletFragment = new WalletFragment();
         mineFragment = new MineFragment();
         contactFragment = new ContactFragment();
 

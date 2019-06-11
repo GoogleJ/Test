@@ -5,12 +5,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Window;
-import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.DeviceUtils;
+import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Application;
@@ -19,7 +18,6 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.MMKVUtils;
-import com.zxjk.duoduo.utils.WindowUtils;
 
 import java.util.concurrent.TimeUnit;
 
@@ -65,11 +63,8 @@ public class WelcomeActivity extends BaseActivity {
                 return;
             }
         }
-        requestWindowFeature(Window.FEATURE_NO_TITLE);  //无title
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);  //全屏
+        ScreenUtils.setFullScreen(this);
         setContentView(R.layout.activity_welcome);
-        WindowUtils.hideBottomUIMenu(this);
         checkUserState();
     }
 
@@ -113,5 +108,10 @@ public class WelcomeActivity extends BaseActivity {
             MMKVUtils.getInstance().enCode("isLogin", false);
             startActivity(new Intent(this, LoginActivity.class));
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

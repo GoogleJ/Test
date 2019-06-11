@@ -57,7 +57,7 @@ public class TransferProvider extends IContainerItemProvider.MessageProvider<Tra
         } else {
             // 未被领取
             holder.sendLayout.setAlpha(1f);
-            holder.remark.setText(transferMessage.getRemark());
+            holder.remark.setText(TextUtils.isEmpty(transferMessage.getRemark()) ? "转账给" + transferMessage.getName() : transferMessage.getRemark());
         }
         holder.transferMoney.setText(transferMessage.getMoney() + "HK");
     }

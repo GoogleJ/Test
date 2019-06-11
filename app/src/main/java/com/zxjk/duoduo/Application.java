@@ -42,6 +42,8 @@ import io.rong.message.ImageMessage;
 import io.rong.message.RichContentMessage;
 import io.rong.message.TextMessage;
 import io.rong.message.VoiceMessage;
+import io.rong.push.RongPushClient;
+import io.rong.push.pushconfig.PushConfig;
 
 public class Application extends android.app.Application {
 
@@ -49,23 +51,15 @@ public class Application extends android.app.Application {
 
     private static final String APP_ID = "wx95412ba899539c33";
 
-    private void regToWx() {
-        // 通过WXAPIFactory工厂，获取IWXAPI的实例
-        WeChatShareUtil.wxShare = WXAPIFactory.createWXAPI(this, APP_ID, true);
-        // 将应用的appId注册到微信
-        WeChatShareUtil.wxShare.registerApp(APP_ID);
-    }
-
     @SuppressLint("CheckResult")
     @Override
     public void onCreate() {
         super.onCreate();
-//        AutoSizeConfig.getInstance().getUnitsManager()
-//                .setSupportDP(true)
-//                .setSupportSP(true);
-//        AutoSizeConfig.getInstance().setCustomFragment(true);
+
         ScreenUtil.init(this);
+
         MMKV.initialize(this);
+
         //微信分享
         regToWx();
 
@@ -78,6 +72,10 @@ public class Application extends android.app.Application {
         MultiDex.install(this);
 
         //融云初始化
+        PushConfig config = new PushConfig.Builder()
+                .enableMiPush("2882303761517995445", "5101799544445")
+                .build();
+        RongPushClient.setPushConfig(config);
         RongIM.init(this);
         RongIM.registerMessageType(RedPacketMessage.class);
         RongIM.registerMessageType(BusinessCardMessage.class);
@@ -91,7 +89,6 @@ public class Application extends android.app.Application {
         RongIM.getInstance().enableNewComingMessageIcon(true);//显示新消息提醒
         RongIM.getInstance().enableUnreadMessageIcon(true);//显示未读消息数目
         setMyExtensionModule();
-
         RongCallKit.setGroupMemberProvider((groupId, result) -> {
             //返回群组成员userId的集合
             ServiceFactory.getInstance().getBaseService(Api.class)
@@ -110,10 +107,11 @@ public class Application extends android.app.Application {
         });
     }
 
-    @Override
-    public void onTerminate() {
-        Constant.clear();
-        super.onTerminate();
+    private void regToWx() {
+        // 通过WXAPIFactory工厂，获取IWXAPI的实例
+        WeChatShareUtil.wxShare = WXAPIFactory.createWXAPI(this, APP_ID, true);
+        // 将应用的appId注册到微信
+        WeChatShareUtil.wxShare.registerApp(APP_ID);
     }
 
     //初始化阿里云OSS上传服务
@@ -124,25 +122,15 @@ public class Application extends android.app.Application {
                 new OSSPlainTextAKSKCredentialProvider(AK, SK);
         String endpoint = "oss-cn-hongkong.aliyuncs.com";
         oss = new OSSClient(this, endpoint, ossPlainTextAKSKCredentialProvider);
-
     }
 
-    /**
-     * 这个是对融云的方法进行的包装
-     *
-     * @param context
-     * @return
-     */
     public static String getCurProcessName(Context context) {
-
         int pid = android.os.Process.myPid();
-
         ActivityManager activityManager = (ActivityManager) context
                 .getSystemService(Context.ACTIVITY_SERVICE);
 
         for (ActivityManager.RunningAppProcessInfo appProcess : activityManager
                 .getRunningAppProcesses()) {
-
             if (appProcess.pid == pid) {
                 return appProcess.processName;
             }
@@ -223,5 +211,11 @@ public class Application extends android.app.Application {
             RongExtensionManager.getInstance().unregisterExtensionModule(defaultModule);
             RongExtensionManager.getInstance().registerExtensionModule(new BasePluginExtensionModule());
         }
+    }
+
+    @Override
+    public void onTerminate() {
+        Constant.clear();
+        super.onTerminate();
     }
 }

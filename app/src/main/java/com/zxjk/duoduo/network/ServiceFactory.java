@@ -141,6 +141,10 @@ public class ServiceFactory {
 
             @Override
             public void onResponse(Call call, Response response) {
+                if (response.code() != 200) {
+                    downloadListener.onFailure();
+                    return;
+                }
                 InputStream is = null;//输入流
                 FileOutputStream fos = null;//输出流
                 try {

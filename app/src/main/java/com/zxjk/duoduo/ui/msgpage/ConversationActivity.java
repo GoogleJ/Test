@@ -116,7 +116,6 @@ public class ConversationActivity extends BaseActivity {
     private GamePopupWindow gamePopupWindow;
     public ArrayList<String> memberIds;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

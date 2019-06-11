@@ -70,7 +70,6 @@ public class OrderComplaintActivity extends BaseActivity {
     @BindView(R.id.tv_appealType)
     TextView tvAppealType;
 
-
     private GetOverOrderResponse data;
     private String rate;
 
@@ -82,7 +81,6 @@ public class OrderComplaintActivity extends BaseActivity {
         initView();
         initData();
     }
-
 
     private void initView() {
         tvTitle.setText("订单申诉");
@@ -137,7 +135,6 @@ public class OrderComplaintActivity extends BaseActivity {
                 startActivity(intent,
                         ActivityOptionsCompat.makeSceneTransitionAnimation(this,
                                 ivProofComplaint, "12").toBundle());
-
                 break;
         }
     }

@@ -308,7 +308,6 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
             NiceDialog.init().setLayoutId(R.layout.layout_general_dialog10).setConvertListener(new ViewConvertListener() {
                 @Override
                 protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
-                    Log.e("PAY", "convertView: " + buyType);
                     //购买数量
                     holder.setText(R.id.tv_number, etExchangeChooseCount.getText().toString());
                     //购买总金额

@@ -32,6 +32,13 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!--华为手机更新应用桌面角标需要的权限-->
+    <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE"/>
+    <!-- 小米 配置开始 < -->
+    <permission
+        android:name="${applicationId}.permission.MIPUSH_RECEIVE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="${applicationId}.permission.MIPUSH_RECEIVE" /> <!-- 小米 配置结束 < -->
 
     <application
         android:name=".Application"
@@ -42,7 +49,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.msgpage.GroupMasterPointsActivity"></activity>
+        <activity
+            android:name=".ui.msgpage.GroupMasterPointsActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.ZoomActivity"
             android:launchMode="singleTop"
@@ -51,10 +61,22 @@
             android:name=".ui.ProofComplaintActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.AMapActivity" />
-        <activity android:name=".ui.msgpage.GroupGoldStupaInfoActivity" />
-        <activity android:name=".ui.msgpage.AuthenticationActivity" />
-        <activity android:name=".ui.walletpage.OrderComplaintActivity" />
+        <activity
+            android:name=".ui.AMapActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.msgpage.GroupGoldStupaInfoActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.msgpage.AuthenticationActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.walletpage.OrderComplaintActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.msgpage.JinDuoBaoActivity"
             android:launchMode="singleTop"
@@ -69,12 +91,6 @@
             android:name=".ui.EnlargeImageActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <!-- <meta-data -->
-        <!-- android:name="design_width_in_dp" -->
-        <!-- android:value="375" /> -->
-        <!-- <meta-data -->
-        <!-- android:name="design_height_in_dp" -->
-        <!-- android:value="667" /> -->
         <activity
             android:name=".ui.msgpage.CreateGameGroupActivity"
             android:launchMode="singleTop"
@@ -249,6 +265,7 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.walletpage.BlockWalletActivity"
             android:launchMode="singleTop"
@@ -620,6 +637,56 @@
             </intent-filter>
         </activity>
         <activity android:name="io.rong.callkit.CallSelectMemberActivity" />
+
+        <!-- 小米 配置开始 < -->
+        <service
+            android:name="com.xiaomi.push.service.XMPushService"
+            android:enabled="true" />
+        <service
+            android:name="com.xiaomi.mipush.sdk.PushMessageHandler"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name="com.xiaomi.mipush.sdk.MessageHandleService"
+            android:enabled="true" />
+        <!--注：此service必须在2.2.5版本以后（包括2.2.5版本）加入-->
+
+        <service
+            android:name="com.xiaomi.push.service.XMJobService"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <!--注：此service必须在3.0.1版本以后（包括3.0.1版本）加入-->
+
+        <receiver
+            android:name="com.xiaomi.push.service.receivers.NetworkStatusReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.xiaomi.push.service.receivers.PingReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.xiaomi.push.PING_TIMER" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="io.rong.push.platform.mi.MiMessageReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.ERROR" />
+            </intent-filter>
+        </receiver>
+        <!-- 小米 配置结束 < -->
     </application>
 
 </manifest>

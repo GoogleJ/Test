@@ -2,6 +2,7 @@ package com.zxjk.duoduo.ui.msgpage;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -22,6 +23,8 @@ import com.zxjk.duoduo.utils.CommonUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.rong.imkit.userInfoCache.RongUserInfoManager;
+import io.rong.imlib.model.UserInfo;
 
 /**
  * author L
@@ -60,7 +63,9 @@ public class ModifyNotesActivity extends BaseActivity {
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                 .compose(RxSchedulers.normalTrans())
-                .subscribe(friendInfoResponse -> {
+                .subscribe(r -> {
+                    RongUserInfoManager.getInstance().setUserInfo(new UserInfo(r.getId(),
+                            remark, Uri.parse(r.getHeadPortrait())));
                     ToastUtils.showShort(getString(R.string.successfully_modified));
                     for (FriendInfoResponse f : Constant.friendsList) {
                         if (f.getId().equals(friendId)) {
