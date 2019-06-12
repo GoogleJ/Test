@@ -53,6 +53,7 @@ public class CommonUtils {
     }
 
     public static Dialog initDialog(Context context, String loadText) {
+        destoryDialog();
         dialog = new Dialog(context) {
             @Override
             public void onWindowFocusChanged(boolean hasFocus) {

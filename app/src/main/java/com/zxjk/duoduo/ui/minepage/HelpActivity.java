@@ -21,13 +21,10 @@ public class HelpActivity extends BaseActivity {
         tv_title.setText(getString(R.string.help_center));
 
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());
-
     }
 
     public void jump(View view) {
         finish();
         startActivity(new Intent(this, OnlineServiceActivity.class));
     }
-
-
 }

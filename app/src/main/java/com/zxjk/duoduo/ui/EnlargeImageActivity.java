@@ -162,14 +162,12 @@ public class EnlargeImageActivity extends BaseActivity {
                             }).submit();
                 }
             });
-
             pager.setCurrentItem(getIntent().getIntExtra("index", 0));
         }
     }
 
     @SuppressLint("StaticFieldLeak")
-    private void decode(final Bitmap bitmap, final String errorTip) {
-
+    private void decode(final Bitmap bitmap) {
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... params) {
@@ -179,7 +177,7 @@ public class EnlargeImageActivity extends BaseActivity {
             @Override
             protected void onPostExecute(String result) {
                 if (TextUtils.isEmpty(result)) {
-                    ToastUtils.showShort(errorTip);
+                    ToastUtils.showShort(R.string.decode_qr_failure);
                 } else {
                     parseResult(result);
                 }
@@ -195,7 +193,6 @@ public class EnlargeImageActivity extends BaseActivity {
                     }
 
                     Object action = jsonObject.opt("action");
-
                     if (action.equals("action1")) {
                         BaseUri<Action1> uri = new Gson().fromJson(result, new TypeToken<BaseUri<Action1>>() {
                         }.getType());
@@ -260,16 +257,6 @@ public class EnlargeImageActivity extends BaseActivity {
     }
 
     class PagerAdapter extends androidx.viewpager.widget.PagerAdapter {
-        private RelativeLayout mCurrentView;
-
-        @Override
-        public void setPrimaryItem(ViewGroup container, int position, Object object) {
-            mCurrentView = (RelativeLayout) object;
-        }
-
-        public RelativeLayout getPrimaryItem() {
-            return mCurrentView;
-        }
 
         @Override
         public int getCount() {
@@ -369,7 +356,7 @@ public class EnlargeImageActivity extends BaseActivity {
                             if (currentBitmap == null) {
                                 return;
                             }
-                            decode(currentBitmap, getString(R.string.decode_qr_failure));
+                            decode(currentBitmap);
                         });
 
                         //保存图片

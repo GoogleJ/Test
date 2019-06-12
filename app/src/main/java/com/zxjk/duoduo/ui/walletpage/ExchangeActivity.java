@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
@@ -32,10 +31,12 @@ import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.dialog.SelectPopupWindow;
+import com.zxjk.duoduo.utils.AliPayUtils;
 import com.zxjk.duoduo.utils.ArithUtils;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.DataUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
+import com.zxjk.duoduo.utils.QRUtil;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -338,18 +339,35 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ExchangeActivity.this)))
                                 .subscribe(s -> {
                                     //购买
+                                    dialog.dismiss();
                                     Intent intent = new Intent(ExchangeActivity.this, ConfirmBuyActivity.class);
                                     if (buyType.equals(PAYTYPE_WECHAT)) {
                                         s.setReceiptNumber(s.getWechatNick());
                                     }
-                                    intent.putExtra("data", s);
-                                    s.setCreateTime(String.valueOf(System.currentTimeMillis()));
-                                    intent.putExtra("rate", tvExchangePrice.getText().toString().split(" ")[0]);
-                                    intent.putExtra("buytype", buyType);
-                                    startActivity(intent);
+                                    if (buyType.equals(PAYTYPE_ALI)) {
+                                        QRUtil.decode(ExchangeActivity.this, s.getReceiptPicture(), result -> {
+                                            if (!TextUtils.isEmpty(result) && result.contains("QR.ALIPAY.COM")) {
+                                                if (AliPayUtils.hasInstalledAlipayClient(ExchangeActivity.this)) {
+                                                    intent.putExtra("data", s);
+                                                    s.setCreateTime(String.valueOf(System.currentTimeMillis()));
+                                                    intent.putExtra("rate", tvExchangePrice.getText().toString().split(" ")[0]);
+                                                    intent.putExtra("buytype", buyType);
+                                                    startActivity(intent);
+                                                    AliPayUtils.startAlipayClient(ExchangeActivity.this, result);
+                                                } else {
+                                                    ToastUtils.showShort(R.string.installalipay);
+                                                }
+                                            }
+                                        });
+                                    } else {
+                                        intent.putExtra("data", s);
+                                        s.setCreateTime(String.valueOf(System.currentTimeMillis()));
+                                        intent.putExtra("rate", tvExchangePrice.getText().toString().split(" ")[0]);
+                                        intent.putExtra("buytype", buyType);
+                                        startActivity(intent);
+                                    }
                                 }, ExchangeActivity.this::handleApiError);
                     });
-
                 }
             }).setDimAmount(0.5f).setShowBottom(true).setOutCancel(false).show(getSupportFragmentManager());
         } else {
@@ -376,7 +394,6 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                         } else {
                             pos = DataUtils.getCeilDecimals(String.valueOf(pous));
                             holder.setText(R.id.tv_poundage, pos + "HK (" + poun + ")");
-
                         }
                     }
                     //收款方式

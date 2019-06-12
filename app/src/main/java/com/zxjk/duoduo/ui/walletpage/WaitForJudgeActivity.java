@@ -13,7 +13,6 @@ import android.widget.TextView;
 import androidx.core.app.ActivityOptionsCompat;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.trello.rxlifecycle3.android.ActivityEvent;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
@@ -124,7 +123,7 @@ public class WaitForJudgeActivity extends BaseActivity {
         Observable.interval(0, 1, TimeUnit.SECONDS)
                 .take(total)
                 .observeOn(AndroidSchedulers.mainThread())
-                .compose(bindUntilEvent(ActivityEvent.STOP))
+                .compose(bindToLifecycle())
                 .subscribe(l -> {
                     long minute = (total - l) / 60;
                     long second = (total - l) % 60;

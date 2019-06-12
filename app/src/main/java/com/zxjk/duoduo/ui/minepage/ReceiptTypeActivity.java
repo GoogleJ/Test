@@ -48,18 +48,17 @@ import static com.zxjk.duoduo.ui.EditPersonalInformationFragment.REQUEST_TAKE;
  */
 @SuppressLint("CheckResult")
 public class ReceiptTypeActivity extends BaseActivity implements View.OnClickListener {
-    RelativeLayout nickName, realName, accountIdCard;
-    TextView receiptTypeName, receiptTypeCard, receiptTypePaymentName;
-    TextView receiptTypeRealName, receiptTypeRealCardName, receiptTypePayment;
-    ImageView receiptTypeGo, receiptTypeCardGo, receiptTypePaymentGo;
-    TextView commitBtn;
-    String wechat = "1";
-    String alipay = "2";
-    String bank = "3";
-    PaymentTypeDialog dialog;
-    String types;
+    private RelativeLayout nickName, realName, accountIdCard;
+    private TextView receiptTypeName, receiptTypeCard, receiptTypePaymentName;
+    private TextView receiptTypeRealName, receiptTypeRealCardName, receiptTypePayment;
+    private ImageView receiptTypeGo, receiptTypeCardGo, receiptTypePaymentGo;
+    private TextView commitBtn;
+    private String wechat = "1";
+    private String alipay = "2";
+    private String bank = "3";
+    private PaymentTypeDialog dialog;
+    private String types;
     private String url;
-
     private TextView tv_title;
 
     @Override
@@ -72,7 +71,6 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initClick() {
-
         nickName.setOnClickListener(this);
         realName.setOnClickListener(this);
         commitBtn.setOnClickListener(this);
@@ -128,8 +126,6 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
             getPermisson(accountIdCard, result -> {
                 if (result) {
                     dialogType();
-
-
                 }
             }, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         } else {
@@ -173,14 +169,8 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
                             receiptTypeRealCardName.setText(payInfoResponses.get(i).getPayNumber());
                             receiptTypePayment.setText(payInfoResponses.get(i).getOpenBank());
                         }
-
-
                     }
-
-
                 });
-
-
     }
 
     @Override
@@ -311,7 +301,6 @@ public class ReceiptTypeActivity extends BaseActivity implements View.OnClickLis
                 });
                 //取消
                 holder.setOnClickListener(R.id.tv_cancel, v -> dialog.dismiss());
-
             }
         }).setShowBottom(true)
                 .setOutCancel(true)

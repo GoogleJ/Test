@@ -749,7 +749,7 @@
     <string name="hint_money">提现金额输入有误,请重新输入</string>
     <string name="game_daxiao1">大小单</string>
     <string name="gamedetail">游戏详情</string>
-    <string name="helper_tips">人工服务时间：工作日9:0-18:00</string>
+    <string name="helper_tips">人工服务时间：工作日9:00-18:00</string>
     <string name="zixun">立即咨询</string>
     <string name="helper_tips1">多多優社是什么平台？</string>
     <string name="helper_tips2">多多優社是一款“区块链+社交+金融”的DAPP应用，为区块链生态打造真正应用场景落地的项目，通过区块链技术解决支付问题；</string>
@@ -935,4 +935,5 @@
     <string name="notice_creategroup">创建了一个群组</string>
     <string name="new_friend1">你俩已经是好友了，现在开始聊天吧</string>
     <string name="searching">搜索中...</string>
+    <string name="installalipay">未安装支付宝，请自行转账</string>
 </resources>

@@ -77,19 +77,22 @@ public class ConfirmBuyActivity extends BaseActivity {
     private LinearLayout llConfirmBuyQR;
     private TextView tvConfirmBuyReceiverBank;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_buy);
+
+        initView();
+
+        initData();
+    }
+
+    private void initView() {
         ButterKnife.bind(this);
         tvTitle.setText(getString(R.string.buy));
-
-
         getPermisson(findViewById(R.id.llUploadSign), granted -> {
             dialogType();
         }, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
 
         tvConfirmBuyPayType = findViewById(R.id.tvConfirmBuyPayType);
         tvConfirmBuyMoney = findViewById(R.id.tvConfirmBuyMoney);
@@ -105,7 +108,9 @@ public class ConfirmBuyActivity extends BaseActivity {
         llConfirmBuyBank = findViewById(R.id.llConfirmBuyBank);
         llConfirmBuyQR = findViewById(R.id.llConfirmBuyQR);
         tvConfirmBuyReceiverBank = findViewById(R.id.tvConfirmBuyReceiverBank);
+    }
 
+    private void initData() {
         data = (ReleaseSaleResponse) getIntent().getSerializableExtra("data");
         String buytype = getIntent().getStringExtra("buytype");
 
@@ -146,7 +151,6 @@ public class ConfirmBuyActivity extends BaseActivity {
             default:
         }
         tvConfirmBuyPayType.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
-
         tvConfirmBuyReceiver.setText(data.getNick());
         tvConfirmBuyReceiverAccount.setText(data.getReceiptNumber());
         tvConfirmBuyOrderId.setText(data.getBothOrderId());
@@ -202,7 +206,7 @@ public class ConfirmBuyActivity extends BaseActivity {
             @Override
             protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
                 holder.setText(R.id.tv_title, "取消订单");
-                holder.setText(R.id.tv_content, "取消订单不会退款，一天内取消 3笔交易会限制买入功能。？");
+                holder.setText(R.id.tv_content, "取消订单不会退款，一天内取消 3笔交易会限制买入功能。");
                 holder.setText(R.id.tv_cancel, "取消");
                 holder.setText(R.id.tv_notarize, "确认");
                 holder.setOnClickListener(R.id.tv_cancel, v -> dialog.dismiss());
