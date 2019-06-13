@@ -14,12 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.GetDuoBaoIntegralDetailsResponse;
-import com.zxjk.duoduo.network.response.GetIntegralDetailsResponse;
-import com.zxjk.duoduo.network.response.GroupResponse;
+import com.zxjk.duoduo.bean.response.GetDuoBaoIntegralDetailsResponse;
+import com.zxjk.duoduo.bean.response.GetIntegralDetailsResponse;
+import com.zxjk.duoduo.bean.response.GroupResponse;
 import com.zxjk.duoduo.ui.msgpage.GroupGoldStupaInfoActivity;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.DuoBaoPopupWindowOwner;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameRecordPopupWindow;
+import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.game.DuoBaoPopupWindowOwner;
+import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.game.GameRecordPopupWindow;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

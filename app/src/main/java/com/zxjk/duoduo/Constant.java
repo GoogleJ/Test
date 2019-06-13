@@ -4,9 +4,9 @@ import android.graphics.Bitmap;
 import android.text.TextUtils;
 
 import com.blankj.utilcode.util.DeviceUtils;
-import com.zxjk.duoduo.network.response.CreateWalletResponse;
-import com.zxjk.duoduo.network.response.FriendInfoResponse;
-import com.zxjk.duoduo.network.response.LoginResponse;
+import com.zxjk.duoduo.bean.response.CreateWalletResponse;
+import com.zxjk.duoduo.bean.response.FriendInfoResponse;
+import com.zxjk.duoduo.bean.response.LoginResponse;
 
 import java.util.List;
 import java.util.Locale;
@@ -19,8 +19,8 @@ public class Constant {
     public static final String CITY_DATA = "china_city_data.json";
     //阿里OSS上传地址
     public static final String OSS_URL = "https://zhongxingjike2.oss-cn-hongkong.aliyuncs.com/upload/";
-//    public static final String BASE_URL = "https://192.168.0.111:8085/";
-    public static final String BASE_URL = "https://duoduoweb.zzgb.net.cn";
+    public static final String BASE_URL = "https://192.168.0.113:8085/";
+//    public static final String BASE_URL = "https://duoduoweb.zzgb.net.cn";
     public static final String APP_CODE = "fb0e95b069f74f29a2f972f9454d7d1a";
     public static boolean isVerifyVerision = false;
 
@@ -41,6 +41,20 @@ public class Constant {
 
     public static LoginResponse currentUser = new LoginResponse();
 
+    public static final String LOCAL_CHANNEL_ID = "rc_notification_id";
+
+    public static CreateWalletResponse walletResponse;
+    public static List<FriendInfoResponse> friendsList;
+    public static Message tempMsg;
+    public static String changeGroupName = null;
+    public static String ownerIdForGameChat = "";
+
+    //是否可以查看红包记录页，默认为0，可查看。 每开启一个游戏
+    public static AtomicInteger canCheckRedRecord = new AtomicInteger(0);
+
+    //分享群二维码
+    public static Bitmap shareGroupQR;
+
     public static void clear() {
         Constant.token = "";
         Constant.userId = "";
@@ -53,20 +67,5 @@ public class Constant {
         ownerIdForGameChat = null;
         shareGroupQR = null;
     }
-
-    /**
-     * 新增（修改收款方式）实体
-     */
-    public static CreateWalletResponse walletResponse;
-    public static List<FriendInfoResponse> friendsList;
-    public static Message tempMsg;
-    public static String changeGroupName = null;
-    public static String ownerIdForGameChat = "";
-
-    //是否可以查看红包记录页，默认为0，可查看。 每开启一个游戏
-    public static AtomicInteger canCheckRedRecord = new AtomicInteger(0);
-
-    //分享群二维码
-    public static Bitmap shareGroupQR;
 
 }

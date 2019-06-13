@@ -1,7 +1,7 @@
 package com.zxjk.duoduo.utils;
 
 import com.tencent.mmkv.MMKV;
-import com.zxjk.duoduo.network.response.LoginResponse;
+import com.zxjk.duoduo.bean.response.LoginResponse;
 
 public class MMKVUtils {
     private static MMKVUtils mmkvUtils;

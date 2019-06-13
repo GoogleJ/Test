@@ -2,7 +2,7 @@ package com.zxjk.duoduo.network.rx;
 
 import android.app.Dialog;
 
-import com.zxjk.duoduo.network.response.BaseResponse;
+import com.zxjk.duoduo.bean.response.BaseResponse;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 import io.reactivex.Observable;

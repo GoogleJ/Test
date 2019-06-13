@@ -14,18 +14,17 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tencent.mmkv.MMKV;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.GroupResponse;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BasePluginExtensionModule;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardMessage;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardProvider;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.GroupCardMessage;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.GroupCardProvider;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketMessage;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketProvider;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferMessage;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferProvider;
+import com.zxjk.duoduo.bean.response.GroupResponse;
+import com.zxjk.duoduo.ui.msgpage.rongIM.BasePluginExtensionModule;
+import com.zxjk.duoduo.ui.msgpage.rongIM.message.BusinessCardMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIM.provider.BusinessCardProvider;
+import com.zxjk.duoduo.ui.msgpage.rongIM.message.GroupCardMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIM.provider.GroupCardProvider;
+import com.zxjk.duoduo.ui.msgpage.rongIM.message.RedPacketMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIM.provider.RedPacketProvider;
+import com.zxjk.duoduo.ui.msgpage.rongIM.message.TransferMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIM.provider.TransferProvider;
 import com.zxjk.duoduo.utils.WeChatShareUtil;
-import com.zxjk.duoduo.view.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,8 +54,6 @@ public class Application extends android.app.Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        ScreenUtil.init(this);
 
         MMKV.initialize(this);
 

@@ -8,8 +8,7 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.DuobaoParameterResponse;
-import com.zxjk.duoduo.ui.msgpage.bean.ZodiacBean;
+import com.zxjk.duoduo.bean.response.DuobaoParameterResponse;
 
 import java.util.List;
 

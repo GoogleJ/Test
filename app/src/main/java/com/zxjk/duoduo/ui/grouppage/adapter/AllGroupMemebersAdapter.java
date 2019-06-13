@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.GroupResponse;
+import com.zxjk.duoduo.bean.response.GroupResponse;
 import com.zxjk.duoduo.utils.GlideUtil;
 
 

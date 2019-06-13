@@ -9,7 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.GetOverOrderResponse;
+import com.zxjk.duoduo.bean.response.GetOverOrderResponse;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.text.DecimalFormat;

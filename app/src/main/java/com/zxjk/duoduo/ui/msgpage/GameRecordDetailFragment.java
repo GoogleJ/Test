@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.zxjk.duoduo.network.response.GetBetInfoDetailsResponse;
+import com.zxjk.duoduo.bean.response.GetBetInfoDetailsResponse;
 import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.ui.msgpage.adapter.GameRecordDetailAdapter;
 import java.util.List;

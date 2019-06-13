@@ -14,7 +14,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.GetTransferEthResponse;
+import com.zxjk.duoduo.bean.response.GetTransferEthResponse;
 import com.zxjk.duoduo.ui.walletpage.BlockOrderDetailActivity;
 
 import java.text.SimpleDateFormat;

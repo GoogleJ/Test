@@ -13,7 +13,7 @@ import com.shehuan.nicedialog.ViewConvertListener;
 import com.shehuan.nicedialog.ViewHolder;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
-import com.zxjk.duoduo.network.ReleasePurchase;
+import com.zxjk.duoduo.bean.response.ReleasePurchaseResponse;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
@@ -35,7 +35,7 @@ public class ConfirmSaleActivity extends BaseActivity {
     TextView tvMaximumPurchase;
     @BindView(R.id.tv_numberRemaining)
     TextView tvNumberRemaining;
-    private ReleasePurchase data;
+    private ReleasePurchaseResponse data;
 
     private TextView tvConfirmSaleOrderId;
     private TextView tvConfirmSaleCoinType;
@@ -53,7 +53,7 @@ public class ConfirmSaleActivity extends BaseActivity {
         ButterKnife.bind(this);
         tvTitle.setText(getString(R.string.order_success));
 
-        data = (ReleasePurchase) getIntent().getSerializableExtra("data");
+        data = (ReleasePurchaseResponse) getIntent().getSerializableExtra("data");
         rate = getIntent().getStringExtra("rate");
 
         tvConfirmSaleOrderId = findViewById(R.id.tvConfirmSaleOrderId);

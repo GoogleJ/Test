@@ -81,7 +81,6 @@ public class ProvinceAdapter extends BaseAdapter {
         holder.name.setEnabled(!checked);
         holder.selectImg.setVisibility(checked ? View.VISIBLE : View.GONE);
 
-
         return convertView;
     }
 

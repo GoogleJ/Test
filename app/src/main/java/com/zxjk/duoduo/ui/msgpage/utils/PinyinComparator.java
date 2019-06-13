@@ -3,7 +3,7 @@ package com.zxjk.duoduo.ui.msgpage.utils;
 
 
 
-import com.zxjk.duoduo.network.response.FriendInfoResponse;
+import com.zxjk.duoduo.bean.response.FriendInfoResponse;
 
 import java.util.Comparator;
 

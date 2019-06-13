@@ -3,7 +3,7 @@ package com.zxjk.duoduo.ui.msgpage.adapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.GetRebateInfoResponse;
+import com.zxjk.duoduo.bean.response.GetRebateInfoResponse;
 import com.zxjk.duoduo.utils.ArithUtils;
 import com.zxjk.duoduo.utils.DataUtils;
 

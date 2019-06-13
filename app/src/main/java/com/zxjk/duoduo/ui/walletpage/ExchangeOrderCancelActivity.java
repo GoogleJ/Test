@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.GetOverOrderResponse;
+import com.zxjk.duoduo.bean.response.GetOverOrderResponse;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

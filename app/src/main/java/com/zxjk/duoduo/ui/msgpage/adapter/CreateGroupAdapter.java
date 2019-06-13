@@ -13,8 +13,8 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.FriendInfoResponse;
-import com.zxjk.duoduo.network.response.GroupResponse;
+import com.zxjk.duoduo.bean.response.FriendInfoResponse;
+import com.zxjk.duoduo.bean.response.GroupResponse;
 import com.zxjk.duoduo.utils.GlideUtil;
 
 import java.util.ArrayList;

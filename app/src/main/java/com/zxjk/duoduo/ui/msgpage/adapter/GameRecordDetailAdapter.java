@@ -10,7 +10,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.GetBetInfoDetailsResponse;
+import com.zxjk.duoduo.bean.response.GetBetInfoDetailsResponse;
 
 import java.util.List;
 

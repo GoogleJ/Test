@@ -16,7 +16,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.GetBetInfoDetailsResponse;
+import com.zxjk.duoduo.bean.response.GetBetInfoDetailsResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;

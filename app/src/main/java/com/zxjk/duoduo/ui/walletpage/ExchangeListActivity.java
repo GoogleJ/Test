@@ -14,10 +14,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
-import com.zxjk.duoduo.network.ReleasePurchase;
+import com.zxjk.duoduo.bean.response.ReleasePurchaseResponse;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.GetOverOrderResponse;
-import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
+import com.zxjk.duoduo.bean.response.GetOverOrderResponse;
+import com.zxjk.duoduo.bean.response.ReleaseSaleResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.walletpage.adapter.ExchangeListAdapter;
@@ -134,7 +134,7 @@ public class ExchangeListActivity extends BaseActivity {
                 }
                 //挂单中
                 intent = new Intent(this, ConfirmSaleActivity.class);
-                ReleasePurchase data = new ReleasePurchase();
+                ReleasePurchaseResponse data = new ReleasePurchaseResponse();
                 data.setPayType(g.getPayType());  //收款方式
                 data.setMoney(money);//出售总金额
                 data.setNumber(g.getNumber());//出售数量

@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.DetailListResposne;
+import com.zxjk.duoduo.bean.response.DetailListResposne;
 import com.zxjk.duoduo.ui.minepage.DetailInfoActivity;
 import com.zxjk.duoduo.utils.DataUtils;
 

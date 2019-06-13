@@ -11,7 +11,6 @@ import com.zxjk.duoduo.R;
 
 public class ChooseCoinActivity extends AppCompatActivity {
 
-
     private TextView tv_currency;
 
     @Override
@@ -20,10 +19,7 @@ public class ChooseCoinActivity extends AppCompatActivity {
         setContentView(R.layout.activity_choose_coin);
         initView();
         initData();
-
-
     }
-
 
     private void initView() {
         String coin = getIntent().getStringExtra("coin");
@@ -36,8 +32,6 @@ public class ChooseCoinActivity extends AppCompatActivity {
             tv_currency.setText("ETH");
             iv_currency.setImageResource(R.drawable.ic_eth);
         }
-
-
     }
 
     private void initData() {
@@ -48,8 +42,5 @@ public class ChooseCoinActivity extends AppCompatActivity {
             setResult(2, intent);
             finish();
         });
-
     }
-
-
 }

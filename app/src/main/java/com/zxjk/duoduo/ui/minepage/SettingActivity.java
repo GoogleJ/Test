@@ -78,16 +78,14 @@ public class SettingActivity extends BaseActivity {
 
         //返回
         rl_back.setOnClickListener(v -> finish());
-
         //账号
         findViewById(R.id.rl_account_number).setOnClickListener(v ->
                 startActivity(new Intent(SettingActivity.this, AccountActivity.class)));
-
         //新消息通知
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             findViewById(R.id.rl_newMessage).setOnClickListener(v -> {
                 Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
-                intent.putExtra(Settings.EXTRA_CHANNEL_ID, "rc_notification_id");
+                intent.putExtra(Settings.EXTRA_CHANNEL_ID, Constant.LOCAL_CHANNEL_ID);
                 intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
                 startActivity(intent);
             });
@@ -100,7 +98,6 @@ public class SettingActivity extends BaseActivity {
                 startActivity(intent);
             });
         }
-
         //实名认证
         findViewById(R.id.rl_realNameAuthentication).setOnClickListener(v -> {
             if (Constant.currentUser.getIsAuthentication().equals("2")) {
@@ -108,7 +105,6 @@ public class SettingActivity extends BaseActivity {
             } else if (Constant.currentUser.getIsAuthentication().equals("0")) {
                 ToastUtils.showShort(R.string.authen_true);
             } else {
-
                 NiceDialog.init().setLayoutId(R.layout.layout_general_dialog11).setConvertListener(new ViewConvertListener() {
                     @Override
                     protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
@@ -121,7 +117,6 @@ public class SettingActivity extends BaseActivity {
                             iv_passport.setImageResource(R.drawable.ic_radio_unselect);
                             iv_other.setImageResource(R.drawable.ic_radio_unselect);
                             otherIdCardType = "1";
-
                         });
                         holder.setOnClickListener(R.id.ll_passport, v14 -> {
                             iv_idCard.setImageResource(R.drawable.ic_radio_unselect);
@@ -149,14 +144,9 @@ public class SettingActivity extends BaseActivity {
                             } else {
                                 ToastUtils.showShort("请选择证件类型");
                             }
-
-
                         });
-
                     }
                 }).setDimAmount(0.5f).setOutCancel(true).show(getSupportFragmentManager());
-
-
             }
         });
         //收款信息
@@ -217,7 +207,6 @@ public class SettingActivity extends BaseActivity {
 
             }
         }).setDimAmount(0.5f).setOutCancel(false).show(getSupportFragmentManager()));
-
     }
 
     private void isAuthentication() {
@@ -255,6 +244,4 @@ public class SettingActivity extends BaseActivity {
                     }, this::handleApiError);
         }
     }
-
-
 }

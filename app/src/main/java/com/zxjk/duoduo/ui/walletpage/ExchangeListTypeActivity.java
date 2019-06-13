@@ -7,7 +7,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.GetOverOrderResponse;
+import com.zxjk.duoduo.bean.response.GetOverOrderResponse;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 
 import butterknife.BindView;

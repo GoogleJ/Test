@@ -3,7 +3,7 @@ package com.zxjk.duoduo.ui.msgpage.adapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.GetRebateDetailsResponse;
+import com.zxjk.duoduo.bean.response.GetRebateDetailsResponse;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 public class DetailedStatementAdapter extends BaseQuickAdapter<GetRebateDetailsResponse.ListBean, BaseViewHolder> {

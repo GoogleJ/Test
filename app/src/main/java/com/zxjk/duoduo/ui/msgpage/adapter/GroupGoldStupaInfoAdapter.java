@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.GetGroupOwnerDuoBaoBetInfoResponse;
+import com.zxjk.duoduo.bean.response.GetGroupOwnerDuoBaoBetInfoResponse;
 import com.zxjk.duoduo.utils.DataUtils;
 
 import java.util.ArrayList;

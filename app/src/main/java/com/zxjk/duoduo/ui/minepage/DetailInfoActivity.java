@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.DetailListResposne;
+import com.zxjk.duoduo.bean.response.DetailListResposne;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.DataUtils;
 

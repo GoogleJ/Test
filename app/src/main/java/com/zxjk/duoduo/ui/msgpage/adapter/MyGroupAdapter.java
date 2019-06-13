@@ -3,7 +3,7 @@ package com.zxjk.duoduo.ui.msgpage.adapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.GetTeamInfoResponse;
+import com.zxjk.duoduo.bean.response.GetTeamInfoResponse;
 
 public class MyGroupAdapter extends BaseQuickAdapter<GetTeamInfoResponse, BaseViewHolder> {
     public MyGroupAdapter() {

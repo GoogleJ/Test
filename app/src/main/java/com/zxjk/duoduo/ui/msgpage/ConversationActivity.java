@@ -24,33 +24,32 @@ import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.BaseResponse;
-import com.zxjk.duoduo.network.response.FriendInfoResponse;
-import com.zxjk.duoduo.network.response.GetBetConutBygroupIdResponse;
-import com.zxjk.duoduo.network.response.GroupResponse;
+import com.zxjk.duoduo.bean.response.BaseResponse;
+import com.zxjk.duoduo.bean.response.GetBetConutBygroupIdResponse;
+import com.zxjk.duoduo.bean.response.GroupResponse;
 import com.zxjk.duoduo.network.rx.RxException;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.EnlargeImageActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.ChatInformationActivity;
 import com.zxjk.duoduo.ui.grouppage.GroupChatInformationActivity;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.AudioVideoPlugin;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BasePluginExtensionModule;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardMessage;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardPlugin;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.PhotoSelectorPlugin;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketMessage;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.RedPacketPlugin;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.SampleTab;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferMessage;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.TransferPlugin;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameDownScorePlugin;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameDuobaoPlugin;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameJiaoYiPlugin;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameRecordPlugin;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameRulesPlugin;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameStartPlugin;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameUpScorePlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.AudioVideoPlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIM.BasePluginExtensionModule;
+import com.zxjk.duoduo.ui.msgpage.rongIM.message.BusinessCardMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.BusinessCardPlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.PhotoSelectorPlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIM.message.RedPacketMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.RedPacketPlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIM.rongTab.SampleTab;
+import com.zxjk.duoduo.ui.msgpage.rongIM.message.TransferMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.TransferPlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.game.GameDownScorePlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.game.GameDuobaoPlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.game.GameJiaoYiPlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.game.GameRecordPlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.game.GameRulesPlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.game.GameStartPlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.game.GameUpScorePlugin;
 import com.zxjk.duoduo.ui.msgpage.widget.GamePopupWindow;
 import com.zxjk.duoduo.ui.widget.dialog.ExpiredEnvelopesDialog;
 import com.zxjk.duoduo.ui.widget.dialog.RedEvelopesDialog;
@@ -68,6 +67,7 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtension;
@@ -158,21 +158,14 @@ public class ConversationActivity extends BaseActivity {
                                 .doOnSubscribe(disposable -> {
                                     CommonUtils.initDialog(ConversationActivity.this, "请耐心等待群员下注(23S)");
                                     if (CommonUtils.getDialog() == null) return;
+                                    CommonUtils.getDialog().setCancelable(false);
                                     CommonUtils.getDialog().show();
                                 })
-                                .doOnDispose(() -> {
-                                    if (CommonUtils.getDialog() != null) {
-                                        CommonUtils.destoryDialog();
-                                        ToastUtils.showShort(R.string.xiazhu_cancel);
-                                    }
-                                })
-                                .doOnError(t -> {
-                                    if (CommonUtils.getDialog() != null)
-                                        CommonUtils.destoryDialog();
-                                })
+                                .doOnDispose(CommonUtils::destoryDialog)
+                                .doOnError(t -> CommonUtils.destoryDialog())
                                 .doOnComplete(() -> {
-                                    if (CommonUtils.getDialog() != null)
-                                        CommonUtils.destoryDialog();
+                                    CommonUtils.destoryDialog();
+                                    ToastUtils.showShort(R.string.xiazhu_cancel);
                                 })
                                 .subscribe(response -> {
                                     if (response instanceof BaseResponse) {
@@ -585,7 +578,7 @@ public class ConversationActivity extends BaseActivity {
                                     gameRulesPlugin.duobao = "true";
                                 } else if (!groupInfo.getGroupInfo().getGameType().equals("4") && groupInfo.getGroupInfo().getGroupOwnerId().equals(Constant.userId)) {
                                     //普通游戏群 只有群主才能开始下注
-                                     extension.addPlugin(new GameStartPlugin());
+                                    extension.addPlugin(new GameStartPlugin());
                                 }
                                 extension.addPlugin(new GameJiaoYiPlugin());
                                 extension.addPlugin(gameRulesPlugin);

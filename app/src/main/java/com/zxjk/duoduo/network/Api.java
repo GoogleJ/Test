@@ -3,52 +3,52 @@ package com.zxjk.duoduo.network;
 import com.zxjk.duoduo.bean.AuditCertificationBean;
 import com.zxjk.duoduo.bean.CardBackBean;
 import com.zxjk.duoduo.bean.CardFaceBean;
-import com.zxjk.duoduo.network.response.AllGroupMembersResponse;
-import com.zxjk.duoduo.network.response.BaseResponse;
-import com.zxjk.duoduo.network.response.CreateWalletResponse;
-import com.zxjk.duoduo.network.response.DetailListResposne;
-import com.zxjk.duoduo.network.response.DuobaoParameterResponse;
-import com.zxjk.duoduo.network.response.FriendInfoResponse;
-import com.zxjk.duoduo.network.response.GetAllPlayGroupResponse;
-import com.zxjk.duoduo.network.response.GetAppVersionResponse;
-import com.zxjk.duoduo.network.response.GetBalanceHkResponse;
-import com.zxjk.duoduo.network.response.GetBetConutBygroupIdResponse;
-import com.zxjk.duoduo.network.response.GetBetInfoDetailsResponse;
-import com.zxjk.duoduo.network.response.GetDuoBaoIntegralDetailsResponse;
-import com.zxjk.duoduo.network.response.GetExtractRecordResponse;
-import com.zxjk.duoduo.network.response.GetGameClassResponse;
-import com.zxjk.duoduo.network.response.GetGroupGameParameterResponse;
-import com.zxjk.duoduo.network.response.GetGroupMemberDuoBaoBetInfoResponse;
-import com.zxjk.duoduo.network.response.GetGroupMemberPointsResponse;
-import com.zxjk.duoduo.network.response.GetGroupOwnerDuoBaoBetInfoResponse;
-import com.zxjk.duoduo.network.response.GetGroupRedPackageInfoResponse;
-import com.zxjk.duoduo.network.response.GetIntegralDetailsResponse;
-import com.zxjk.duoduo.network.response.GetNumbeOfTransactionResponse;
-import com.zxjk.duoduo.network.response.GetOverOrderResponse;
-import com.zxjk.duoduo.network.response.GetRebateByIdResponse;
-import com.zxjk.duoduo.network.response.GetRebateDetailsResponse;
-import com.zxjk.duoduo.network.response.GetRebateInfoResponse;
-import com.zxjk.duoduo.network.response.GetRebatePayRecordResponse;
-import com.zxjk.duoduo.network.response.GetRedPackageRecordResponse;
-import com.zxjk.duoduo.network.response.GetRedPackageStatusResponse;
-import com.zxjk.duoduo.network.response.GetReleasePurchaseResponse;
-import com.zxjk.duoduo.network.response.GetTeamInfoResponse;
-import com.zxjk.duoduo.network.response.GetTransferAllResponse;
-import com.zxjk.duoduo.network.response.GetTransferEthResponse;
-import com.zxjk.duoduo.network.response.GroupChatResponse;
-import com.zxjk.duoduo.network.response.GroupResponse;
-import com.zxjk.duoduo.network.response.LoginResponse;
-import com.zxjk.duoduo.network.response.MakeGameGroupResponse;
-import com.zxjk.duoduo.network.response.PayInfoResponse;
-import com.zxjk.duoduo.network.response.PersonalRedPackageInfoResponse;
-import com.zxjk.duoduo.network.response.ReceiveGroupRedPackageResponse;
-import com.zxjk.duoduo.network.response.ReceivePersonalRedPackageResponse;
-import com.zxjk.duoduo.network.response.RedPackageResponse;
-import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
-import com.zxjk.duoduo.network.response.SendGroupRedPackageResponse;
-import com.zxjk.duoduo.network.response.SignHkbOrHkExchangeResponse;
-import com.zxjk.duoduo.network.response.SignTransactionResponse;
-import com.zxjk.duoduo.network.response.TransferResponse;
+import com.zxjk.duoduo.bean.response.AllGroupMembersResponse;
+import com.zxjk.duoduo.bean.response.BaseResponse;
+import com.zxjk.duoduo.bean.response.CreateWalletResponse;
+import com.zxjk.duoduo.bean.response.DetailListResposne;
+import com.zxjk.duoduo.bean.response.DuobaoParameterResponse;
+import com.zxjk.duoduo.bean.response.FriendInfoResponse;
+import com.zxjk.duoduo.bean.response.GetAllPlayGroupResponse;
+import com.zxjk.duoduo.bean.response.GetAppVersionResponse;
+import com.zxjk.duoduo.bean.response.GetBalanceHkResponse;
+import com.zxjk.duoduo.bean.response.GetBetConutBygroupIdResponse;
+import com.zxjk.duoduo.bean.response.GetBetInfoDetailsResponse;
+import com.zxjk.duoduo.bean.response.GetDuoBaoIntegralDetailsResponse;
+import com.zxjk.duoduo.bean.response.GetExtractRecordResponse;
+import com.zxjk.duoduo.bean.response.GetGameClassResponse;
+import com.zxjk.duoduo.bean.response.GetGroupGameParameterResponse;
+import com.zxjk.duoduo.bean.response.GetGroupMemberDuoBaoBetInfoResponse;
+import com.zxjk.duoduo.bean.response.GetGroupMemberPointsResponse;
+import com.zxjk.duoduo.bean.response.GetGroupOwnerDuoBaoBetInfoResponse;
+import com.zxjk.duoduo.bean.response.GetGroupRedPackageInfoResponse;
+import com.zxjk.duoduo.bean.response.GetIntegralDetailsResponse;
+import com.zxjk.duoduo.bean.response.GetNumbeOfTransactionResponse;
+import com.zxjk.duoduo.bean.response.GetOverOrderResponse;
+import com.zxjk.duoduo.bean.response.GetRebateByIdResponse;
+import com.zxjk.duoduo.bean.response.GetRebateDetailsResponse;
+import com.zxjk.duoduo.bean.response.GetRebateInfoResponse;
+import com.zxjk.duoduo.bean.response.GetRebatePayRecordResponse;
+import com.zxjk.duoduo.bean.response.GetRedPackageRecordResponse;
+import com.zxjk.duoduo.bean.response.GetRedPackageStatusResponse;
+import com.zxjk.duoduo.bean.response.GetTeamInfoResponse;
+import com.zxjk.duoduo.bean.response.GetTransferAllResponse;
+import com.zxjk.duoduo.bean.response.GetTransferEthResponse;
+import com.zxjk.duoduo.bean.response.GroupChatResponse;
+import com.zxjk.duoduo.bean.response.GroupResponse;
+import com.zxjk.duoduo.bean.response.LoginResponse;
+import com.zxjk.duoduo.bean.response.MakeGameGroupResponse;
+import com.zxjk.duoduo.bean.response.PayInfoResponse;
+import com.zxjk.duoduo.bean.response.PersonalRedPackageInfoResponse;
+import com.zxjk.duoduo.bean.response.ReceiveGroupRedPackageResponse;
+import com.zxjk.duoduo.bean.response.ReceivePersonalRedPackageResponse;
+import com.zxjk.duoduo.bean.response.RedPackageResponse;
+import com.zxjk.duoduo.bean.response.ReleasePurchaseResponse;
+import com.zxjk.duoduo.bean.response.ReleaseSaleResponse;
+import com.zxjk.duoduo.bean.response.SendGroupRedPackageResponse;
+import com.zxjk.duoduo.bean.response.SignHkbOrHkExchangeResponse;
+import com.zxjk.duoduo.bean.response.SignTransactionResponse;
+import com.zxjk.duoduo.bean.response.TransferResponse;
 
 import java.util.List;
 
@@ -156,9 +156,9 @@ public interface Api {
 
     @POST("duoduo/exchange/releasePurchase")
     @FormUrlEncoded
-    Observable<BaseResponse<ReleasePurchase>> releasePurchase(@Field("number") String number,
-                                                              @Field("money") String money, @Field("currency") String currency, @Field("payPwd") String paypwd, @Field("payTpye") String payTpye,
-                                                              @Field("minNum") String minNum, @Field("maxNum") String maxNum, @Field("exchangeFee") String exchangeFee);
+    Observable<BaseResponse<ReleasePurchaseResponse>> releasePurchase(@Field("number") String number,
+                                                                      @Field("money") String money, @Field("currency") String currency, @Field("payPwd") String paypwd, @Field("payTpye") String payTpye,
+                                                                      @Field("minNum") String minNum, @Field("maxNum") String maxNum, @Field("exchangeFee") String exchangeFee);
 
     @POST("duoduo/exchange/releaseSale")
     @FormUrlEncoded

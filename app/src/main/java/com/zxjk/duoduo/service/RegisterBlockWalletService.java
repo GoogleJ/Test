@@ -11,9 +11,9 @@ import com.google.gson.Gson;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.BaseResponse;
-import com.zxjk.duoduo.network.response.CreateWalletResponse;
-import com.zxjk.duoduo.network.response.LoginResponse;
+import com.zxjk.duoduo.bean.response.BaseResponse;
+import com.zxjk.duoduo.bean.response.CreateWalletResponse;
+import com.zxjk.duoduo.bean.response.LoginResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.utils.MMKVUtils;
 

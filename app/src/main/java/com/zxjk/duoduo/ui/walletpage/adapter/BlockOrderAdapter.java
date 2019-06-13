@@ -10,14 +10,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.GetReleasePurchaseResponse;
-import com.zxjk.duoduo.network.response.GetTransferAllResponse;
-import com.zxjk.duoduo.ui.walletpage.model.BlockWalletOrderData;
+import com.zxjk.duoduo.bean.response.GetTransferAllResponse;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
-
-import javax.crypto.interfaces.PBEKey;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;

@@ -20,9 +20,6 @@ import java.io.InputStreamReader;
  */
 
 public class utils {
-    
-    String cityJsonStr = "";
-    
     //读取方法
     public static String getJson(Context context, String fileName) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -33,45 +30,32 @@ public class utils {
             while ((line = bf.readLine()) != null) {
                 stringBuilder.append(line);
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return stringBuilder.toString();
     }
-    
-    public static void setBackgroundAlpha(Context mContext, float bgAlpha) {
-//        WindowManager.LayoutParams lp = ((Activity) mContext).getWindow().getAttributes();
-//        lp.alpha = bgAlpha;
-//        ((Activity) mContext).getWindow().setAttributes(lp);
 
+    public static void setBackgroundAlpha(Context mContext, float bgAlpha) {
         if (bgAlpha == 1f) {
             clearDim((Activity) mContext);
-        }else{
+        } else {
             applyDim((Activity) mContext, bgAlpha);
         }
     }
 
     private static void applyDim(Activity activity, float bgAlpha) {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            ViewGroup parent = (ViewGroup) activity.getWindow().getDecorView().getRootView();
-            //activity跟布局
-//        ViewGroup parent = (ViewGroup) parent1.getChildAt(0);
-            Drawable dim = new ColorDrawable(Color.BLACK);
-            dim.setBounds(0, 0, parent.getWidth(), parent.getHeight());
-            dim.setAlpha((int) (255 * bgAlpha));
-            ViewGroupOverlay overlay = parent.getOverlay();
-            overlay.add(dim);
-        }
+        ViewGroup parent = (ViewGroup) activity.getWindow().getDecorView().getRootView();
+        Drawable dim = new ColorDrawable(Color.BLACK);
+        dim.setBounds(0, 0, parent.getWidth(), parent.getHeight());
+        dim.setAlpha((int) (255 * bgAlpha));
+        ViewGroupOverlay overlay = parent.getOverlay();
+        overlay.add(dim);
     }
 
     private static void clearDim(Activity activity) {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            ViewGroup parent = (ViewGroup) activity.getWindow().getDecorView().getRootView();
-            //activity跟布局
-//        ViewGroup parent = (ViewGroup) parent1.getChildAt(0);
-            ViewGroupOverlay overlay = parent.getOverlay();
-            overlay.clear();
-        }
+        ViewGroup parent = (ViewGroup) activity.getWindow().getDecorView().getRootView();
+        ViewGroupOverlay overlay = parent.getOverlay();
+        overlay.clear();
     }
 }

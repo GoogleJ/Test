@@ -23,12 +23,12 @@ import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.FriendInfoResponse;
+import com.zxjk.duoduo.bean.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.HomeActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.SelectForCardAdapter;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.BusinessCardMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIM.message.BusinessCardMessage;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.io.BufferedOutputStream;
@@ -116,7 +116,6 @@ public class SelectContactForCardActivity extends BaseActivity implements TextWa
                 });
                 return;
             }
-
             shareCard(position);
         });
     }

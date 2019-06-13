@@ -23,9 +23,9 @@ import com.shehuan.nicedialog.ViewConvertListener;
 import com.shehuan.nicedialog.ViewHolder;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
-import com.zxjk.duoduo.network.ReleasePurchase;
+import com.zxjk.duoduo.bean.response.ReleasePurchaseResponse;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.response.ReleaseSaleResponse;
+import com.zxjk.duoduo.bean.response.ReleaseSaleResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.ZoomActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
@@ -218,7 +218,7 @@ public class ConfirmBuyActivity extends BaseActivity {
                             .compose(bindToLifecycle())
                             .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ConfirmBuyActivity.this)))
                             .subscribe(s -> {
-                                ReleasePurchase result = new ReleasePurchase();
+                                ReleasePurchaseResponse result = new ReleasePurchaseResponse();
                                 result.setSellOrderId(data.getBothOrderId());
                                 result.setCurrency(data.getCurrency());
                                 result.setNumber(data.getNumber());

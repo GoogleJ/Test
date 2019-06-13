@@ -11,7 +11,7 @@
         app:pagemenu_row_count="2"
         app:pagemenu_span_count="4" />
 
-    <com.zxjk.duoduo.view.IndicatorView
+    <com.zxjk.duoduo.ui.msgpage.rongIM.rongTab.IndicatorView
         android:id="@+id/main_home_entrance_indicator"
         android:layout_width="match_parent"
         android:layout_height="20dp"

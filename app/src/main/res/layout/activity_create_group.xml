@@ -25,7 +25,6 @@
 
     </LinearLayout>
 
-
     <RelativeLayout
         android:id="@+id/rl_myGameGroup"
         style="@style/RLayoutStyle">

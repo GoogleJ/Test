@@ -14,7 +14,6 @@
         android:id="@+id/search_select_contact"
         style="@style/SearchStyle" />
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/card_recycler_view"
         android:layout_width="match_parent"

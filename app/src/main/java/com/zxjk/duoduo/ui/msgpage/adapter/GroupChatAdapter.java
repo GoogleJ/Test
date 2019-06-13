@@ -8,7 +8,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.othershe.combinebitmap.CombineBitmap;
 import com.othershe.combinebitmap.layout.WechatLayoutManager;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.GroupChatResponse;
+import com.zxjk.duoduo.bean.response.GroupChatResponse;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.util.Arrays;

@@ -19,9 +19,9 @@ import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.GetGroupGameParameterResponse;
+import com.zxjk.duoduo.bean.response.GetGroupGameParameterResponse;
 import com.zxjk.duoduo.ui.msgpage.GroupGamebettingRequeust;
-import com.zxjk.duoduo.ui.msgpage.rongIMAdapter.gameplugin.GameAdapter;
+import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.game.GameAdapter;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;

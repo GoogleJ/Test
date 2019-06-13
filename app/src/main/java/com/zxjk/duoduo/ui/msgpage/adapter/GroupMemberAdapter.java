@@ -7,7 +7,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.GroupResponse;
+import com.zxjk.duoduo.bean.response.GroupResponse;
 import com.zxjk.duoduo.utils.GlideUtil;
 import java.util.ArrayList;
 import java.util.List;

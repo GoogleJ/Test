@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.othershe.combinebitmap.CombineBitmap;
 import com.othershe.combinebitmap.layout.WechatLayoutManager;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.GetAllPlayGroupResponse;
+import com.zxjk.duoduo.bean.response.GetAllPlayGroupResponse;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.util.ArrayList;

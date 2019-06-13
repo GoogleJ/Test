@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.ReleasePurchase;
+import com.zxjk.duoduo.bean.response.ReleasePurchaseResponse;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 
 import butterknife.BindView;
@@ -15,7 +15,7 @@ public class CancelOrderActivity extends BaseActivity {
 
     @BindView(R.id.tv_title)
     TextView tvTitle;
-    private ReleasePurchase data;
+    private ReleasePurchaseResponse data;
 
     private TextView tvConfirmSaleOrderId;
     private TextView tvConfirmSaleCoinType;
@@ -31,7 +31,7 @@ public class CancelOrderActivity extends BaseActivity {
         ButterKnife.bind(this);
         tvTitle.setText(getString(R.string.sale_cancel));
 
-        data = (ReleasePurchase) getIntent().getSerializableExtra("data");
+        data = (ReleasePurchaseResponse) getIntent().getSerializableExtra("data");
         String rate = getIntent().getStringExtra("rate");
 
         tvConfirmSaleOrderId = findViewById(R.id.tvConfirmSaleOrderId);

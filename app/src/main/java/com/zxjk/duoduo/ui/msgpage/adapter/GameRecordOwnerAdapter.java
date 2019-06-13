@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.GetRebatePayRecordResponse;
+import com.zxjk.duoduo.bean.response.GetRebatePayRecordResponse;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

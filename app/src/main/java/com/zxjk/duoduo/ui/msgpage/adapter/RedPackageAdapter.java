@@ -6,9 +6,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.GetGroupRedPackageInfoResponse;
+import com.zxjk.duoduo.bean.response.GetGroupRedPackageInfoResponse;
 import com.zxjk.duoduo.utils.GlideUtil;
 import java.text.SimpleDateFormat;
 import java.util.List;

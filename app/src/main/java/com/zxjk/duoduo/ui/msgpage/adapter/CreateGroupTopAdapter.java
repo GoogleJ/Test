@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.FriendInfoResponse;
+import com.zxjk.duoduo.bean.response.FriendInfoResponse;
 import com.zxjk.duoduo.utils.GlideUtil;
 
 import java.util.ArrayList;

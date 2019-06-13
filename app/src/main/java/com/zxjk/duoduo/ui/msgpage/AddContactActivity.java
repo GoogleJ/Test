@@ -83,14 +83,11 @@ public class AddContactActivity extends BaseActivity {
                             dialog.dismiss();
                             WeChatShareUtil.shareImg(AddContactActivity.this, 1);
                         });
-
                     }
                 }).setShowBottom(true)
                         .setDimAmount(0.5f)
                         .show(getSupportFragmentManager());
-
                 break;
-
         }
     }
 }

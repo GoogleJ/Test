@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.GetGameClassResponse;
+import com.zxjk.duoduo.bean.response.GetGameClassResponse;
 
 import java.util.List;
 

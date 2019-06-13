@@ -28,7 +28,7 @@ import com.shehuan.nicedialog.ViewHolder;
 import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZViewHolder;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.GetGameClassResponse;
+import com.zxjk.duoduo.bean.response.GetGameClassResponse;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.minepage.OnlineServiceActivity;
 import com.zxjk.duoduo.ui.msgpage.widget.ChooseFanYongPopWindow;

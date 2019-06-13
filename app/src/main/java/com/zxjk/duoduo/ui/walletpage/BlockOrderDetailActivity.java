@@ -7,8 +7,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.GetTransferAllResponse;
-import com.zxjk.duoduo.network.response.GetTransferEthResponse;
+import com.zxjk.duoduo.bean.response.GetTransferAllResponse;
+import com.zxjk.duoduo.bean.response.GetTransferEthResponse;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 

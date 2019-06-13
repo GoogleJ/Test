@@ -11,17 +11,17 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.Utils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.response.GetDuoBaoIntegralDetailsResponse;
-import com.zxjk.duoduo.network.response.GetGroupMemberDuoBaoBetInfoResponse;
-import com.zxjk.duoduo.network.response.GetGroupOwnerDuoBaoBetInfoResponse;
+import com.zxjk.duoduo.bean.response.GetDuoBaoIntegralDetailsResponse;
+import com.zxjk.duoduo.bean.response.GetGroupMemberDuoBaoBetInfoResponse;
+import com.zxjk.duoduo.bean.response.GetGroupOwnerDuoBaoBetInfoResponse;
 import com.zxjk.duoduo.ui.msgpage.GroupGoldStupaInfoActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.DataUtils;
 import com.zxjk.duoduo.utils.RecyclerItemAverageDecoration;
-import com.zxjk.duoduo.view.ScreenUtil;
 
 import razerdp.basepopup.BasePopupWindow;
 
@@ -89,8 +89,8 @@ public class DuoBaoGameDetailPopWindow extends BasePopupWindow {
         if (response.getBetInfo().size() <= 5) {
             recycler.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
                 ViewGroup.LayoutParams layoutParams = recycler.getLayoutParams();
-                if (layoutParams.height != ScreenUtil.dip2px(50)) {
-                    layoutParams.height = ScreenUtil.dip2px(50);
+                if (layoutParams.height != CommonUtils.dip2px(Utils.getApp(),50)) {
+                    layoutParams.height = CommonUtils.dip2px(Utils.getApp(),50);
                     recycler.setLayoutParams(layoutParams);
                 }
             });
@@ -178,8 +178,8 @@ public class DuoBaoGameDetailPopWindow extends BasePopupWindow {
         if (response.getBetInfo().size() <= 5) {
             recycler.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
                 ViewGroup.LayoutParams layoutParams = recycler.getLayoutParams();
-                if (layoutParams.height != ScreenUtil.dip2px(50)) {
-                    layoutParams.height = ScreenUtil.dip2px(50);
+                if (layoutParams.height != CommonUtils.dip2px(Utils.getApp(),50)) {
+                    layoutParams.height = CommonUtils.dip2px(Utils.getApp(),50);
                     recycler.setLayoutParams(layoutParams);
                 }
             });
