@@ -14,22 +14,18 @@ public class PinYinUtils {
         HanyuPinyinOutputFormat defaultFormat = new HanyuPinyinOutputFormat();
         defaultFormat.setCaseType(HanyuPinyinCaseType.UPPERCASE);
         defaultFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
-        for (char aNameChar : nameChar) {
-            if (aNameChar > 128) {
-                try {
-                    String[] strings = PinyinHelper.toHanyuPinyinStringArray(
-                            aNameChar, defaultFormat);
-                    if (strings == null) {
-                        return "#";
-                    }
-                    pinyinName.append(strings[0].charAt(0));
-                } catch (BadHanyuPinyinOutputFormatCombination e) {
-                    e.printStackTrace();
-                }
-            } else {
-                pinyinName.append(aNameChar);
+        if ((nameChar[0] >= 65 && nameChar[0] <= 90) || (nameChar[0] >= 97 && nameChar[0] <= 122)) {
+            pinyinName.append(nameChar[0]);
+        } else {
+            try {
+                String[] strings = PinyinHelper.toHanyuPinyinStringArray(nameChar[0], defaultFormat);
+                if (strings == null) return "#";
+                pinyinName.append(strings[0].charAt(0));
+            } catch (BadHanyuPinyinOutputFormatCombination e) {
+                e.printStackTrace();
             }
         }
-        return pinyinName.toString().substring(0, 1).toUpperCase();
+
+        return pinyinName.toString().toUpperCase();
     }
 }

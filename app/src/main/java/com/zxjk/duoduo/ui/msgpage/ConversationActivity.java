@@ -841,6 +841,9 @@ public class ConversationActivity extends BaseActivity {
         if (conversationType.equals("private")) {
             startActivity(intent);
         } else {
+            if (groupResponse == null) {
+                return;
+            }
             Intent intent1 = new Intent(this, GroupChatInformationActivity.class);
             intent1.putExtra("group", groupResponse);
             startActivityForResult(intent1, 1);

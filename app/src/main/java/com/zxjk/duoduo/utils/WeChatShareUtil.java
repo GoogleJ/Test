@@ -40,7 +40,6 @@ public class WeChatShareUtil {
             WXMediaMessage msg = new WXMediaMessage();
             msg.mediaObject = imgObj;
             msg.title = "多多优社";
-            bmp.recycle();
             mBp.recycle();
             SendMessageToWX.Req req = new SendMessageToWX.Req();
             req.transaction = buildTransaction("img");

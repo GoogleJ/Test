@@ -289,6 +289,7 @@ public class EnlargeImageActivity extends BaseActivity {
             SubsamplingScaleImageView imageView = new SubsamplingScaleImageView(EnlargeImageActivity.this);
             SpinKitView progressBar = new SpinKitView(EnlargeImageActivity.this);
             progressBar.setIndeterminateDrawable(SpriteFactory.create(Style.FADING_CIRCLE));
+            progressBar.setVisibility(View.GONE);
 
             TextView textView = new TextView(EnlargeImageActivity.this);
             textView.setText(R.string.click_retry);

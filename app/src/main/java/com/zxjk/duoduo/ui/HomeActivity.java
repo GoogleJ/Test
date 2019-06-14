@@ -39,7 +39,6 @@ import com.zxjk.duoduo.bean.response.FriendInfoResponse;
 import com.zxjk.duoduo.bean.response.GetAppVersionResponse;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.network.rx.RxException;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.skin.ContactFragment;
 import com.zxjk.duoduo.ui.base.BaseActivity;
@@ -408,13 +407,13 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                         RongUserInfoManager.getInstance().setUserInfo(new UserInfo(f.getId(), TextUtils.isEmpty(f.getRemark()) ? f.getNick() : f.getRemark(), Uri.parse(f.getHeadPortrait())));
                     }
                 }, t -> {
-                    //重复登录不再递归，避免过多请求
-                    if (t.getCause() instanceof RxException.DuplicateLoginExcepiton ||
-                            t instanceof RxException.DuplicateLoginExcepiton) {
-                        return;
-                    }
-                    Observable.timer(10, TimeUnit.SECONDS)
-                            .subscribe(aLong -> initFriendList());
+//                    //重复登录不再递归，避免过多请求
+//                    if (t.getCause() instanceof RxException.DuplicateLoginExcepiton ||
+//                            t instanceof RxException.DuplicateLoginExcepiton) {
+//                        return;
+//                    }
+//                    Observable.timer(10, TimeUnit.SECONDS)
+//                            .subscribe(aLong -> initFriendList());
                 });
     }
 

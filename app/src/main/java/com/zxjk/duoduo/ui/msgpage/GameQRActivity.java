@@ -188,12 +188,12 @@ public class GameQRActivity extends BaseActivity {
         tv4 = findViewById(R.id.tv4);
         recyclerView = findViewById(R.id.recyclerView);
         rlContent = findViewById(R.id.rlContent);
+        rlContent.setDrawingCacheEnabled(true);
     }
 
     public void save(View view) {
         getPermisson(findViewById(R.id.tvSave), g -> {
             //保存到手机
-            rlContent.buildDrawingCache();
             Bitmap bitmap = rlContent.getDrawingCache();
             if (bitmap == null) {
                 return;
@@ -213,7 +213,6 @@ public class GameQRActivity extends BaseActivity {
         RongIMClient.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
             @Override
             public void onSuccess(List<Conversation> conversations) {
-                rlContent.buildDrawingCache();
                 Bitmap bitmap = rlContent.getDrawingCache();
                 if (bitmap == null) {
                     return;
@@ -232,7 +231,6 @@ public class GameQRActivity extends BaseActivity {
     }
 
     public void wechat(View view) {
-        rlContent.buildDrawingCache();
         Bitmap bitmap = rlContent.getDrawingCache();
         if (bitmap == null) {
             return;
@@ -241,7 +239,6 @@ public class GameQRActivity extends BaseActivity {
     }
 
     public void timeline(View view) {
-        rlContent.buildDrawingCache();
         Bitmap bitmap = rlContent.getDrawingCache();
         if (bitmap == null) {
             return;
