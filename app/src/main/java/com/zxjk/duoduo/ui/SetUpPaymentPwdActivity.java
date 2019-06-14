@@ -188,6 +188,7 @@ public class SetUpPaymentPwdActivity extends BaseActivity {
 
                 @Override
                 public void onTokenIncorrect() {
+                    ToastUtils.showShort(R.string.connect_failed);
                 }
 
                 @Override

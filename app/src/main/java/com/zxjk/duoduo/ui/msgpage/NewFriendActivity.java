@@ -32,8 +32,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
+import io.rong.imlib.IRongCallback;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
+import io.rong.message.CommandMessage;
 import io.rong.message.InformationNotificationMessage;
 
 /**
@@ -138,6 +142,24 @@ public class NewFriendActivity extends BaseActivity {
                     ToastUtils.showShort(getString(R.string.add_friend_successful));
                     InformationNotificationMessage message = InformationNotificationMessage.obtain(getString(R.string.new_friend1));
                     RongIM.getInstance().sendDirectionalMessage(Conversation.ConversationType.PRIVATE, friendId, message, new String[]{friendId}, null, null, null);
+                    CommandMessage commandMessage = CommandMessage.obtain("agreeFriend", "");
+                    Message message1 = Message.obtain(friendId, Conversation.ConversationType.PRIVATE, commandMessage);
+                    RongIM.getInstance().sendMessage(message1, "", "", new IRongCallback.ISendMessageCallback() {
+                        @Override
+                        public void onAttached(Message message) {
+
+                        }
+
+                        @Override
+                        public void onSuccess(Message message) {
+
+                        }
+
+                        @Override
+                        public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+
+                        }
+                    });
                 }, this::handleApiError);
     }
 

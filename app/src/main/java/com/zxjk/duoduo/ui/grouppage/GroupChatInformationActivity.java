@@ -32,6 +32,7 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.adapter.AllGroupMemebersAdapter;
 import com.zxjk.duoduo.ui.minepage.UpdateUserInfoActivity;
 import com.zxjk.duoduo.ui.msgpage.CreateGroupActivity;
+import com.zxjk.duoduo.ui.msgpage.GameQRActivity;
 import com.zxjk.duoduo.ui.msgpage.GroupQRActivity;
 import com.zxjk.duoduo.ui.widget.dialog.ConfirmDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
@@ -373,8 +374,14 @@ public class GroupChatInformationActivity extends BaseActivity {
 
     //群二维码
     public void groupQR(View view) {
-        Intent intent = new Intent(this, GroupQRActivity.class);
-        intent.putExtra("data", group);
-        startActivity(intent);
+        if (group.getGroupInfo().getGroupType().equals("1")) {
+            Intent intent = new Intent(this, GameQRActivity.class);
+            intent.putExtra("data", group);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, GroupQRActivity.class);
+            intent.putExtra("data", group);
+            startActivity(intent);
+        }
     }
 }

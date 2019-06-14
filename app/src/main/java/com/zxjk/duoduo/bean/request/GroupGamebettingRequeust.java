@@ -1,4 +1,4 @@
-package com.zxjk.duoduo.ui.msgpage;
+package com.zxjk.duoduo.bean.request;
 
 public class GroupGamebettingRequeust {
     private String groupId;

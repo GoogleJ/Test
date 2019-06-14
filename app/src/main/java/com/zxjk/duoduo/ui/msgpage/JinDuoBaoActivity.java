@@ -96,7 +96,6 @@ public class JinDuoBaoActivity extends BaseActivity implements SelectPopupWindow
     @BindView(R.id.tv_db_green)
     TextView tvDbGreen;
 
-
     //是否选中红
     private boolean isDbRed;
     //是否选中蓝

@@ -19,8 +19,8 @@ public class Constant {
     public static final String CITY_DATA = "china_city_data.json";
     //阿里OSS上传地址
     public static final String OSS_URL = "https://zhongxingjike2.oss-cn-hongkong.aliyuncs.com/upload/";
-    public static final String BASE_URL = "https://192.168.0.113:8085/";
-//    public static final String BASE_URL = "https://duoduoweb.zzgb.net.cn";
+    public static final String BASE_URL = "https://192.168.0.104:8085/";
+    //    public static final String BASE_URL = "https://duoduoweb.zzgb.net.cn";
     public static final String APP_CODE = "fb0e95b069f74f29a2f972f9454d7d1a";
     public static boolean isVerifyVerision = false;
 
@@ -42,6 +42,8 @@ public class Constant {
     public static LoginResponse currentUser = new LoginResponse();
 
     public static final String LOCAL_CHANNEL_ID = "rc_notification_id";
+
+    public static int messageCount = 0;
 
     public static CreateWalletResponse walletResponse;
     public static List<FriendInfoResponse> friendsList;

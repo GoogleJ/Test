@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.response.GetIntegralDetailsResponse;
 import com.zxjk.duoduo.ui.msgpage.GameRecordDetailActivity;
@@ -57,6 +58,10 @@ public class GameRecordAdapter extends RecyclerView.Adapter<GameRecordAdapter.Vi
             } else if (getIntegralDetailsResponse.getTitle().equals("返佣")) {
                 gameRecordPopupWindow.show(4, data.get(holder.getAdapterPosition()));
             } else {
+                if (TextUtils.isEmpty(getIntegralDetailsResponse.getIntegral())) {
+                    ToastUtils.showShort("请等待结算");
+                    return;
+                }
                 String redPackageId = getIntegralDetailsResponse.getRedPackageId();
                 Intent intent = new Intent(holder.itemView.getContext(), GameRecordDetailActivity.class);
                 intent.putExtra("redPackageId", redPackageId);
@@ -124,6 +129,7 @@ public class GameRecordAdapter extends RecyclerView.Adapter<GameRecordAdapter.Vi
                 }
             }
             tvTime.setText(simpleDateFormat.format(Long.valueOf(bean.getTime())));
+            tvLeft.setText("剩余:" + bean.getRemainingIntegral() + "HK");
             if (bean.getType().equals("0")) {
                 //转进
                 if (bean.getIntegral().contains("-")) {
@@ -137,7 +143,9 @@ public class GameRecordAdapter extends RecyclerView.Adapter<GameRecordAdapter.Vi
                 tvHk.setText("-" + bean.getIntegral() + "HK");
                 tvHk.setTextColor(ContextCompat.getColor(tvHk.getContext(), R.color.textcolor1));
             }
-            tvLeft.setText("剩余:" + bean.getRemainingIntegral() + "HK");
+            if (TextUtils.isEmpty(bean.getIntegral())) {
+                tvHk.setText("结算中");
+            }
         }
     }
 }

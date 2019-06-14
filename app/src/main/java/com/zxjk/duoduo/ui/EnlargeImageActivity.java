@@ -325,6 +325,7 @@ public class EnlargeImageActivity extends BaseActivity {
                     public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                         progressBar.setVisibility(View.GONE);
                         Bitmap bitmap = ImageUtils.drawable2Bitmap(resource);
+                        currentBitmap = bitmap;
                         float initImageScale = getInitImageScale(bitmap);
                         imageView.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CUSTOM);
                         imageView.setMinScale(initImageScale);//最小显示比例

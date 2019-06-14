@@ -26,6 +26,7 @@ import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imkit.widget.adapter.ConversationListAdapter;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
+import io.rong.imlib.model.UserInfo;
 
 public class CusConversationListAdapter extends ConversationListAdapter {
 
@@ -42,6 +43,14 @@ public class CusConversationListAdapter extends ConversationListAdapter {
     @Override
     protected void bindView(View v, int position, UIConversation data) {
         super.bindView(v, position, data);
+
+        if (data.getConversationType().equals(Conversation.ConversationType.SYSTEM)) {
+            ImageView imageView = v.findViewById(R.id.rc_mask);
+            imageView.setVisibility(View.VISIBLE);
+            imageView.setImageResource(R.mipmap.ic_launcher);
+            RongUserInfoManager.getInstance().setUserInfo(new UserInfo(data.getConversationTargetId(), "支付凭证", null));
+            return;
+        }
 
         if (data.getConversationType() != Conversation.ConversationType.GROUP) {
             ImageView imageView = v.findViewById(R.id.rc_mask);

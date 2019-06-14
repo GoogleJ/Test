@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llContent"
     android:layout_width="56dp"
     android:layout_height="56dp"
     android:layout_marginBottom="8dp"
@@ -11,7 +12,6 @@
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="大"
         android:textColor="@color/themecolor" />
 
     <TextView
@@ -19,7 +19,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="0.95倍"
-        android:textColor="@color/themecolor" />
+        android:gravity="center"
+        android:lines="1"
+        android:textColor="@color/themecolor"
+        android:textSize="13sp" />
 
 </LinearLayout>

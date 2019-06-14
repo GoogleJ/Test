@@ -41,6 +41,7 @@ public class WelcomeActivity extends BaseActivity {
             Observable.timer(2000, TimeUnit.MILLISECONDS)
                     .compose(bindToLifecycle())
                     .compose(RxSchedulers.ioObserver())
+                    .compose(bindToLifecycle())
                     .subscribe(aLong -> {
                         startActivity(new Intent(this, LoginActivity.class));
                         finish();
@@ -82,6 +83,13 @@ public class WelcomeActivity extends BaseActivity {
 
                     @Override
                     public void onTokenIncorrect() {
+                        MMKVUtils.getInstance().enCode("isLogin", false);
+                        Constant.clear();
+                        ToastUtils.showShort(getString(R.string.login_again));
+                        Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
                     }
 
                     @Override
@@ -100,6 +108,7 @@ public class WelcomeActivity extends BaseActivity {
                         Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
+                        finish();
                     }
                 });
             }
@@ -107,11 +116,8 @@ public class WelcomeActivity extends BaseActivity {
             ToastUtils.showShort(getString(R.string.login_again));
             MMKVUtils.getInstance().enCode("isLogin", false);
             startActivity(new Intent(this, LoginActivity.class));
+            finish();
         }
     }
 
-    @Override
-    public void onBackPressed() {
-
-    }
 }

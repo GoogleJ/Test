@@ -17,6 +17,7 @@ import com.zxjk.duoduo.bean.response.GetBetInfoDetailsResponse;
 import com.zxjk.duoduo.bean.response.GetDuoBaoIntegralDetailsResponse;
 import com.zxjk.duoduo.bean.response.GetExtractRecordResponse;
 import com.zxjk.duoduo.bean.response.GetGameClassResponse;
+import com.zxjk.duoduo.bean.response.GetGameInfoByGroupIdResponse;
 import com.zxjk.duoduo.bean.response.GetGroupGameParameterResponse;
 import com.zxjk.duoduo.bean.response.GetGroupMemberDuoBaoBetInfoResponse;
 import com.zxjk.duoduo.bean.response.GetGroupMemberPointsResponse;
@@ -591,4 +592,8 @@ public interface Api {
     @POST("duoduo/group/game/getGroupMemberDuoBaoBetInfo")
     @FormUrlEncoded
     Observable<BaseResponse<GetGroupMemberDuoBaoBetInfoResponse>> getGroupMemberDuoBaoBetInfo(@Field("groupId") String groupId, @Field("expect") String expect, @Field("customerId") String customerId);
+
+    @POST("duoduo/group/game/getGameInfoByGroupId")
+    @FormUrlEncoded
+    Observable<BaseResponse<GetGameInfoByGroupIdResponse>> getGameInfoByGroupId(@Field("groupId") String groupId);
 }

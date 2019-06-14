@@ -100,10 +100,8 @@ public class VerifiedActivity extends BaseActivity {
     @BindView(R.id.rl_heldPhoto)
     RelativeLayout rlHeldPhoto;
 
-
     private int currentPictureFlag;
     private String otherIdCardType = "";
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -290,7 +288,6 @@ public class VerifiedActivity extends BaseActivity {
             case R.id.tv_commit:
                 commit();
                 break;
-
         }
     }
 }

@@ -3,6 +3,7 @@ package com.zxjk.duoduo.ui.msgpage.rongIM.plugin.game;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.response.GetGroupGameParameterResponse;
+import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.util.List;
 
@@ -59,17 +61,30 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView name;
         private TextView beilv;
+        private LinearLayout llContent;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name);
             beilv = itemView.findViewById(R.id.beilv);
+            llContent = itemView.findViewById(R.id.llContent);
             itemView.setOnClickListener(v -> setCheckedPosition(getAdapterPosition()));
         }
 
         void bindData(GetGroupGameParameterResponse.ParentListBean.ChildListBean bean) {
             name.setText(bean.getPlayName());
-            beilv.setText(bean.getMultiple() + "倍");
+            if (bean.getPlayName().equals("幸运六")) {
+                beilv.setText("12.00/" + bean.getMultiple() + "倍");
+                ViewGroup.LayoutParams layoutParams = llContent.getLayoutParams();
+                layoutParams.width = CommonUtils.dip2px(itemView.getContext(), 120);
+                llContent.setLayoutParams(layoutParams);
+            } else {
+                ViewGroup.LayoutParams layoutParams = llContent.getLayoutParams();
+                layoutParams.width = CommonUtils.dip2px(itemView.getContext(), 56);
+                llContent.setLayoutParams(layoutParams);
+                beilv.setText(bean.getMultiple() + "倍");
+            }
         }
     }
+
 }

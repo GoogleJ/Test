@@ -42,6 +42,16 @@
             android:textColor="@color/textcolor2"
             android:textSize="16sp" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_gravity="start"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="16dp"
+            android:overScrollMode="never"
+            android:paddingEnd="40dp" />
+
         <TextView
             android:id="@+id/tv3"
             android:layout_width="match_parent"

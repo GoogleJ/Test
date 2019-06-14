@@ -12,17 +12,19 @@ import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvide
 import com.blankj.utilcode.util.Utils;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tencent.mmkv.MMKV;
+import com.zxjk.duoduo.bean.response.GroupResponse;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.bean.response.GroupResponse;
 import com.zxjk.duoduo.ui.msgpage.rongIM.BasePluginExtensionModule;
 import com.zxjk.duoduo.ui.msgpage.rongIM.message.BusinessCardMessage;
-import com.zxjk.duoduo.ui.msgpage.rongIM.provider.BusinessCardProvider;
 import com.zxjk.duoduo.ui.msgpage.rongIM.message.GroupCardMessage;
-import com.zxjk.duoduo.ui.msgpage.rongIM.provider.GroupCardProvider;
 import com.zxjk.duoduo.ui.msgpage.rongIM.message.RedPacketMessage;
-import com.zxjk.duoduo.ui.msgpage.rongIM.provider.RedPacketProvider;
+import com.zxjk.duoduo.ui.msgpage.rongIM.message.SystemMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIM.message.TransferMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIM.provider.BusinessCardProvider;
+import com.zxjk.duoduo.ui.msgpage.rongIM.provider.GroupCardProvider;
+import com.zxjk.duoduo.ui.msgpage.rongIM.provider.RedPacketProvider;
+import com.zxjk.duoduo.ui.msgpage.rongIM.provider.SystemProvider;
 import com.zxjk.duoduo.ui.msgpage.rongIM.provider.TransferProvider;
 import com.zxjk.duoduo.utils.WeChatShareUtil;
 
@@ -78,10 +80,12 @@ public class Application extends android.app.Application {
         RongIM.registerMessageType(BusinessCardMessage.class);
         RongIM.registerMessageType(TransferMessage.class);
         RongIM.registerMessageType(GroupCardMessage.class);
+        RongIM.registerMessageType(SystemMessage.class);
         RongIM.registerMessageTemplate(new RedPacketProvider());
         RongIM.registerMessageTemplate(new TransferProvider());
         RongIM.registerMessageTemplate(new BusinessCardProvider());
         RongIM.registerMessageTemplate(new GroupCardProvider());
+        RongIM.registerMessageTemplate(new SystemProvider());
         RongIM.getInstance().setMessageAttachedUserInfo(true);
         RongIM.getInstance().enableNewComingMessageIcon(true);//显示新消息提醒
         RongIM.getInstance().enableUnreadMessageIcon(true);//显示未读消息数目

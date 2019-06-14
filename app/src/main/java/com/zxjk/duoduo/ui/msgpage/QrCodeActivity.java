@@ -4,6 +4,8 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -69,6 +71,9 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
             if (!schem.equals("com.zxjk.duoduo")) {
                 throw new RuntimeException();
             }
+
+            Ringtone rt = RingtoneManager.getRingtone(getApplicationContext(), RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+            rt.play();
 
             Object action = jsonObject.opt("action");
 

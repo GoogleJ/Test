@@ -72,6 +72,15 @@ public class GroupResponse implements Serializable {
         private String headPortrait;
         private String systemPumpingRate;
         private String gameType;
+        private String groupOwnerName;
+
+        public String getGroupOwnerName() {
+            return groupOwnerName;
+        }
+
+        public void setGroupOwnerName(String groupOwnerName) {
+            this.groupOwnerName = groupOwnerName;
+        }
 
         public String getGameType() {
             return gameType;

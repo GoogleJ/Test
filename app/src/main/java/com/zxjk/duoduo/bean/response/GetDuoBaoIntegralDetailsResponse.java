@@ -1,16 +1,22 @@
 package com.zxjk.duoduo.bean.response;
 
-public class GetDuoBaoIntegralDetailsResponse {
+import java.util.List;
 
+public class GetDuoBaoIntegralDetailsResponse {
     /**
-     * title : 金多寶第2019060期
-     * time : 1558710821803
-     * integral : 300.00
-     * remainingIntegral : 400.00
+     * customerId :
+     * title : 金多寶第2019064期
+     * time : 1559995449000
+     * integral :
+     * remainingIntegral : 561195.00
      * type : 2
-     * expect : 2019060
+     * expect : 2019064
+     * betSum : 350
+     * betCount : 2
+     * betInfo : [{"betCode":"01","betMoneyForCode":"150"},{"betCode":"08","betMoneyForCode":"50"},{"betCode":"18","betMoneyForCode":"50"},{"betCode":"24","betMoneyForCode":"100"}]
      */
 
+    private String customerId;
     private String title;
     private String time;
     private String integral;
@@ -19,7 +25,7 @@ public class GetDuoBaoIntegralDetailsResponse {
     private String expect;
     private String betSum;
     private String betCount;
-    private String customerId;
+    private List<BetInfoBean> betInfo;
 
     public String getCustomerId() {
         return customerId;
@@ -27,22 +33,6 @@ public class GetDuoBaoIntegralDetailsResponse {
 
     public void setCustomerId(String customerId) {
         this.customerId = customerId;
-    }
-
-    public String getBetSum() {
-        return betSum;
-    }
-
-    public void setBetSum(String betSum) {
-        this.betSum = betSum;
-    }
-
-    public String getBetCount() {
-        return betCount;
-    }
-
-    public void setBetCount(String betCount) {
-        this.betCount = betCount;
     }
 
     public String getTitle() {
@@ -91,5 +81,55 @@ public class GetDuoBaoIntegralDetailsResponse {
 
     public void setExpect(String expect) {
         this.expect = expect;
+    }
+
+    public String getBetSum() {
+        return betSum;
+    }
+
+    public void setBetSum(String betSum) {
+        this.betSum = betSum;
+    }
+
+    public String getBetCount() {
+        return betCount;
+    }
+
+    public void setBetCount(String betCount) {
+        this.betCount = betCount;
+    }
+
+    public List<BetInfoBean> getBetInfo() {
+        return betInfo;
+    }
+
+    public void setBetInfo(List<BetInfoBean> betInfo) {
+        this.betInfo = betInfo;
+    }
+
+    public static class BetInfoBean {
+        /**
+         * betCode : 01
+         * betMoneyForCode : 150
+         */
+
+        private String betCode;
+        private String betMoneyForCode;
+
+        public String getBetCode() {
+            return betCode;
+        }
+
+        public void setBetCode(String betCode) {
+            this.betCode = betCode;
+        }
+
+        public String getBetMoneyForCode() {
+            return betMoneyForCode;
+        }
+
+        public void setBetMoneyForCode(String betMoneyForCode) {
+            this.betMoneyForCode = betMoneyForCode;
+        }
     }
 }

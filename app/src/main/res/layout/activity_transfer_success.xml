@@ -9,7 +9,6 @@
 
     <include layout="@layout/layout_title_back" />
 
-
     <ImageView
         android:id="@+id/m_transfer_info_icon"
         android:layout_width="wrap_content"
@@ -45,7 +44,7 @@
         android:layout_weight="1"
         android:gravity="top|center_horizontal"
         android:textColor="@color/themecolor"
-        android:textSize="26dp" />
+        android:textSize="26sp" />
 
     <Button
         android:layout_width="224dp"

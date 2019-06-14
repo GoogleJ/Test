@@ -2,9 +2,8 @@ package com.zxjk.duoduo.ui.minepage;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Build;
+import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -81,23 +80,15 @@ public class SettingActivity extends BaseActivity {
         //账号
         findViewById(R.id.rl_account_number).setOnClickListener(v ->
                 startActivity(new Intent(SettingActivity.this, AccountActivity.class)));
+
         //新消息通知
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            findViewById(R.id.rl_newMessage).setOnClickListener(v -> {
-                Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
-                intent.putExtra(Settings.EXTRA_CHANNEL_ID, Constant.LOCAL_CHANNEL_ID);
-                intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
-                startActivity(intent);
-            });
-        } else {
-            findViewById(R.id.rl_newMessage).setOnClickListener(v -> {
-                Intent intent = new Intent();
-                intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
-                intent.putExtra("app_package", this.getPackageName());
-                intent.putExtra("app_uid", this.getApplicationInfo().uid);
-                startActivity(intent);
-            });
-        }
+        findViewById(R.id.rl_newMessage).setOnClickListener(v -> {
+            Intent mItent = new Intent();
+            mItent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+            mItent.setData(Uri.fromParts("package", getPackageName(), null));
+            startActivity(mItent);
+        });
+
         //实名认证
         findViewById(R.id.rl_realNameAuthentication).setOnClickListener(v -> {
             if (Constant.currentUser.getIsAuthentication().equals("2")) {

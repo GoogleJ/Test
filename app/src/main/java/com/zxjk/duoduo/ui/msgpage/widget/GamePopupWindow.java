@@ -20,7 +20,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.response.GetGroupGameParameterResponse;
-import com.zxjk.duoduo.ui.msgpage.GroupGamebettingRequeust;
+import com.zxjk.duoduo.bean.request.GroupGamebettingRequeust;
 import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.game.GameAdapter;
 
 import java.util.ArrayList;

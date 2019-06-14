@@ -19,6 +19,7 @@ public class QRUtil {
     public static void decode(BaseActivity activity, Bitmap b, Consumer<String> consumer) {
         Observable.create((ObservableOnSubscribe<String>) e -> e.onNext(QRCodeDecoder.syncDecodeQRCode(b)))
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(activity)))
+                .compose(activity.bindToLifecycle())
                 .subscribe(consumer);
     }
 
@@ -29,6 +30,8 @@ public class QRUtil {
                     .load(url)
                     .submit();
             e.onNext(QRCodeDecoder.syncDecodeQRCode(futureBitmap.get()));
-        }).compose(RxSchedulers.ioObserver(CommonUtils.initDialog(activity))).subscribe(consumer);
+        }).compose(RxSchedulers.ioObserver(CommonUtils.initDialog(activity)))
+                .compose(activity.bindToLifecycle())
+                .subscribe(consumer);
     }
 }

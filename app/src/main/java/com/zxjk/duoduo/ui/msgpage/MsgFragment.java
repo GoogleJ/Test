@@ -132,7 +132,7 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
                 //订阅号
                 .appendQueryParameter(Conversation.ConversationType.APP_PUBLIC_SERVICE.getName(), "true")
                 //系统
-                .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "true")
+                .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "false")
                 .build();
 
         listFragment.setUri(uri);

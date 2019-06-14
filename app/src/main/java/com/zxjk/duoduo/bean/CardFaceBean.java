@@ -1,6 +1,5 @@
 package com.zxjk.duoduo.bean;
 
-import java.util.List;
 
 /**
  * *********************

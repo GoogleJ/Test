@@ -22,6 +22,7 @@ import com.shehuan.nicedialog.ViewHolder;
 import com.trello.rxlifecycle3.android.ActivityEvent;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.bean.request.GroupGamebettingRequeust;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.bean.response.BaseResponse;
@@ -131,6 +132,14 @@ public class ConversationActivity extends BaseActivity {
 
         extension = findViewById(io.rong.imkit.R.id.rc_extension);
 
+        if (conversationType.equals("system")) {
+            rl_end.setVisibility(View.INVISIBLE);
+            tvTitle = findViewById(R.id.tv_title);
+            tvTitle.setText("支付凭证");
+            extension.removeAllViews();
+            return;
+        }
+
         onReceiveMessageListener = onReceiveMessage();
 
         RongIM.setOnReceiveMessageListener(onReceiveMessageListener);
@@ -145,6 +154,12 @@ public class ConversationActivity extends BaseActivity {
                             && ((TextMessage) content).getContent().equals("开始下注")) {
                         //发送完"开始下注" 计时23S
                         runOnUiThread(() -> Observable.intervalRange(1, 23, 1, 1, TimeUnit.SECONDS)
+                                .doOnDispose(() -> {
+                                    CommonUtils.destoryDialog();
+                                    ToastUtils.showShort(R.string.xiazhu_cancel);
+                                })
+                                .doOnError(t -> CommonUtils.destoryDialog())
+                                .doOnComplete(CommonUtils::destoryDialog)
                                 .flatMap(aLong -> {
                                     if (aLong == 23) {
                                         return ServiceFactory.getInstance().getBaseService(Api.class)
@@ -160,12 +175,6 @@ public class ConversationActivity extends BaseActivity {
                                     if (CommonUtils.getDialog() == null) return;
                                     CommonUtils.getDialog().setCancelable(false);
                                     CommonUtils.getDialog().show();
-                                })
-                                .doOnDispose(CommonUtils::destoryDialog)
-                                .doOnError(t -> CommonUtils.destoryDialog())
-                                .doOnComplete(() -> {
-                                    CommonUtils.destoryDialog();
-                                    ToastUtils.showShort(R.string.xiazhu_cancel);
                                 })
                                 .subscribe(response -> {
                                     if (response instanceof BaseResponse) {
@@ -280,8 +289,8 @@ public class ConversationActivity extends BaseActivity {
                                     BigDecimal data3 = new BigDecimal(maxMoney);
                                     //下注金额 <= 剩余金额
                                     if (data1.compareTo(data2) <= 0) {
-                                        //最大赔率<= 剩余金额
-                                        if (data3.compareTo(data2) <= 0) {
+                                        //最大赔率 <= 剩余金额
+                                        if (requeust1.getPlayName().equals("百家乐") || data3.compareTo(data2) <= 0) {
                                             gamePopupWindow.dismiss();
                                             //确认下注
                                             NiceDialog.init().setLayoutId(R.layout.layout_dialog_fragment)

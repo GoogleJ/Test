@@ -1,11 +1,12 @@
 package com.zxjk.duoduo.ui;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
 import android.app.NotificationChannel;
-import android.app.NotificationChannelGroup;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,10 +35,10 @@ import com.zxjk.duoduo.BuildConfig;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.DuoDuoFileProvider;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.Api;
-import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.bean.response.FriendInfoResponse;
 import com.zxjk.duoduo.bean.response.GetAppVersionResponse;
+import com.zxjk.duoduo.network.Api;
+import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxException;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.skin.ContactFragment;
@@ -46,10 +47,8 @@ import com.zxjk.duoduo.ui.minepage.MineFragment;
 import com.zxjk.duoduo.ui.msgpage.MsgFragment;
 import com.zxjk.duoduo.utils.MMKVUtils;
 import com.zxjk.duoduo.utils.badge.BadgeNumberManager;
-import com.zxjk.duoduo.utils.badge.MobileBrand;
 
 import java.io.File;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -63,7 +62,6 @@ import io.rong.pushperm.RongPushPremissionsCheckHelper;
 
 import static com.ashokvarma.bottomnavigation.BottomNavigationBar.BACKGROUND_STYLE_RIPPLE;
 import static com.ashokvarma.bottomnavigation.BottomNavigationBar.BACKGROUND_STYLE_STATIC;
-import static com.google.android.material.tabs.TabLayout.MODE_FIXED;
 
 /**
  * @author Administrator
@@ -83,8 +81,6 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
     private MineFragment mineFragment;
     private ContactFragment contactFragment;
 
-    private int messageCount;
-
     @Override
     protected void onDestroy() {
         RongIM.setOnReceiveMessageListener(null);
@@ -97,28 +93,10 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
         cleanBadge();
         Observable.timer(1, TimeUnit.SECONDS)
                 .subscribe(aLong -> RongIM.setOnReceiveMessageListener((message, i) -> {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        NotificationManager mNotificationManager = (NotificationManager) this
-                                .getSystemService(Context.NOTIFICATION_SERVICE);
-                        List<NotificationChannel> notificationChannels = mNotificationManager.getNotificationChannels();
-                        List<NotificationChannelGroup> notificationChannelGroups = mNotificationManager.getNotificationChannelGroups();
-                    }
                     //update badge
                     if (!AppUtils.isAppForeground()) {
-                        if (!Build.MANUFACTURER.equalsIgnoreCase(MobileBrand.XIAOMI)) {
-                            BadgeNumberManager.from(this).setBadgeNumber(++messageCount);
-                        } else {
-                            //MIUI
-//                            NotificationManager mNotificationManager = (NotificationManager) this
-//                                    .getSystemService(Context.NOTIFICATION_SERVICE);
-//                            StatusBarNotification[] activeNotifications = mNotificationManager.getActiveNotifications();
-//                            if (activeNotifications.length != 0) {
-//                                BadgeNumberManagerXiaoMi.setBadgeNumber(activeNotifications[0].getNotification(), ++messageCount);
-//                                mNotificationManager.notify(activeNotifications[0].getId(), activeNotifications[0].getNotification());
-//                            }
-                        }
+                        BadgeNumberManager.from(this).setBadgeNumber(++Constant.messageCount);
                     }
-
                     //handle command(delete add newfriend)
                     if (message.getContent() instanceof CommandMessage) {
                         CommandMessage commandMessage = (CommandMessage) message.getContent();
@@ -144,6 +122,8 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                                     contactFragment.getDotNewFriend().setVisibility(View.VISIBLE);
                                 }
                             });
+                        } else if (commandMessage.getName().equals("agreeFriend")) {
+                            //同意添加好友 刷新通讯录
                         }
                     }
                     return false;
@@ -157,6 +137,8 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        createChannel();
+
         getVersion();
 
         initFriendList();
@@ -167,14 +149,31 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
 
         getNewFriendCount();
 
-        checkPermission();
+        //checkPermission(); 检测是否开启自启动和通知
+    }
+
+    private void createChannel() {
+        NotificationManager mNotificationManager = (NotificationManager) this
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (mNotificationManager != null &&
+                    mNotificationManager.getNotificationChannel(Constant.LOCAL_CHANNEL_ID) == null) {
+                NotificationChannel notificationChannel = new NotificationChannel(Constant.LOCAL_CHANNEL_ID, "新消息", NotificationManager.IMPORTANCE_HIGH);
+                notificationChannel.enableLights(true);
+                notificationChannel.enableVibration(true);
+                notificationChannel.setLightColor(Color.WHITE);
+                notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+                notificationChannel.setShowBadge(true);
+                notificationChannel.setBypassDnd(true);
+                notificationChannel.setVibrationPattern(new long[]{100});
+                mNotificationManager.createNotificationChannel(notificationChannel);
+            }
+        }
     }
 
     private void cleanBadge() {
-        messageCount = 0;
-        if (!Build.MANUFACTURER.equalsIgnoreCase(MobileBrand.XIAOMI)) {
-            BadgeNumberManager.from(this).setBadgeNumber(0);
-        }
+        Constant.messageCount = 0;
+        BadgeNumberManager.from(this).setBadgeNumber(0);
     }
 
     private void checkPermission() {
@@ -225,7 +224,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
         m_bottom_bar.setMode(BottomNavigationBar.MODE_FIXED);
         // 设置mode
         if (Constant.isVerifyVerision) {
-            m_bottom_bar.setMode(MODE_FIXED)
+            m_bottom_bar
                     // 背景样式
                     .setBackgroundStyle(BACKGROUND_STYLE_RIPPLE)
                     // 背景颜色
@@ -241,7 +240,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                     // 提交初始化（完成配置）
                     .initialise();
         } else {
-            m_bottom_bar.setMode(MODE_FIXED)
+            m_bottom_bar
                     // 背景样式
                     .setBackgroundStyle(BACKGROUND_STYLE_STATIC)
                     // 背景颜色

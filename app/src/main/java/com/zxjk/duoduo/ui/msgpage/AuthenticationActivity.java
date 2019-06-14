@@ -256,25 +256,7 @@ public class AuthenticationActivity extends BaseActivity {
                                 .compose(RxSchedulers.normalTrans());
                     } else {
                         RxException.ParamsException exception = new RxException.ParamsException();
-                        switch (auditCertificationBean.getStatus()) {
-                            case "02":
-                                exception.setMsg("实名认证不通过");
-                                break;
-                            case "202":
-                                exception.setMsg("无法验证");
-                                break;
-                            case "204":
-                                exception.setMsg("姓名错误");
-                                break;
-                            case "205":
-                                exception.setMsg("身份证号错误");
-                                break;
-                            case "206":
-                                exception.setMsg("电话号码错误");
-                                break;
-                            default:
-                                exception.setMsg("未知异常");
-                        }
+                        exception.setMsg(getString(R.string.cantverify));
                         throw exception;
                     }
                 })

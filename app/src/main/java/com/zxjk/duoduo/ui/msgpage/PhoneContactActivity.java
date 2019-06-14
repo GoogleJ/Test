@@ -1,9 +1,12 @@
 package com.zxjk.duoduo.ui.msgpage;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
@@ -20,7 +23,6 @@ import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.PhoneContactAdapter;
-import com.zxjk.duoduo.ui.msgpage.utils.GetPhoneNumberFromMobileUtils;
 import com.zxjk.duoduo.utils.CommonUtils;
 
 import java.util.ArrayList;
@@ -37,12 +39,10 @@ import java.util.Locale;
  * *********************
  */
 public class PhoneContactActivity extends BaseActivity implements TextWatcher {
-    RecyclerView mRecyclerView;
-    List<PhoneInfo> list = new ArrayList<PhoneInfo>();
-    EditText searchEdit;
-
-    private GetPhoneNumberFromMobileUtils getPhoneNumberFromMobile;
-    PhoneContactAdapter mAdapter;
+    private RecyclerView mRecyclerView;
+    private List<PhoneInfo> list = new ArrayList<PhoneInfo>();
+    private EditText searchEdit;
+    private PhoneContactAdapter mAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,11 +53,30 @@ public class PhoneContactActivity extends BaseActivity implements TextWatcher {
         tv_title.setText(getString(R.string.m_add_friend_contact_label_1));
         mRecyclerView = findViewById(R.id.phone_contact_recycler_view);
 
-        getPhoneNumberFromMobile = new GetPhoneNumberFromMobileUtils();
         searchEdit = findViewById(R.id.search_edit);
         searchEdit.addTextChangedListener(this);
-        list = getPhoneNumberFromMobile.getPhoneNumberFromMobile(this);
+        list = getPhoneNumberFromMobile(this);
         getFriendListById();
+    }
+
+    private List<PhoneInfo> getPhoneNumberFromMobile(Context context) {
+        List<PhoneInfo> list = new ArrayList<>();
+        Cursor cursor = context.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                null, null, null, null);
+        //moveToNext方法返回的是一个boolean类型的数据
+        while (cursor.moveToNext()) {
+            //读取通讯录的姓名
+            String name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+            //读取通讯录的号码
+            String number = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)).replace(" ", "");
+            PhoneInfo phoneInfo = new PhoneInfo(name, number);
+            if (list.contains(phoneInfo)) {
+                continue;
+            }
+            list.add(phoneInfo);
+        }
+        cursor.close();
+        return list;
     }
 
     //获取好友列表

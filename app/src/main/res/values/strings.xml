@@ -936,4 +936,6 @@
     <string name="new_friend1">你俩已经是好友了，现在开始聊天吧</string>
     <string name="searching">搜索中...</string>
     <string name="installalipay">未安装支付宝，请自行转账</string>
+    <string name="duoduo">多多</string>
+    <string name="cantverify">手机号身份信息不匹配，请提供正确的实名信息或手动实名申请</string>
 </resources>

@@ -182,7 +182,7 @@ public class GroupQRActivity extends BaseActivity {
         });
     }
 
-    public class GroupQRData {
+    public static class GroupQRData {
         public String groupId;
         public String inviterId;
         public String groupName;
