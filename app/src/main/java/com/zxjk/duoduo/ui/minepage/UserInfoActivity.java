@@ -209,7 +209,6 @@ public class UserInfoActivity extends BaseActivity {
         startActivity(intent);
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

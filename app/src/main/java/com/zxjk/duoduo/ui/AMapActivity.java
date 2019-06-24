@@ -58,10 +58,8 @@ public class AMapActivity extends BaseActivity {
         aMap.setTrafficEnabled(false);
         aMap.setMapType(AMap.MAP_TYPE_NORMAL);
         mLocationClient = new AMapLocationClient(getApplicationContext());
-        mLocationOption = new AMapLocationClientOption();
         mLocationOption = getDefaultOption();
         mLocationClient.setLocationOption(mLocationOption);
-        mLocationClient.startLocation();
         mLocationClient.setLocationListener(aMapLocation -> {
             if (mLocationOption != null) {
                 if (aMapLocation.getErrorCode() == 0) {
@@ -75,6 +73,7 @@ public class AMapActivity extends BaseActivity {
             }
 
         });
+        mLocationClient.startLocation();
 
         MyLocationStyle myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）如果不设置myLocationType，默认也会执行此种模式。
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);//定位一次，且将视角移动到地图中心点。
@@ -105,7 +104,6 @@ public class AMapActivity extends BaseActivity {
         tvCommit.setText("确认");
     }
 
-
     @OnClick({R.id.rl_back, R.id.tv_commit})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -119,7 +117,6 @@ public class AMapActivity extends BaseActivity {
                     setResult(1001, intent);
                     finish();
                 }
-
                 break;
         }
     }

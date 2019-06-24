@@ -65,7 +65,6 @@ public class EditPersonalInformationFragment extends BaseActivity {
     private String url;
     private LoginResponse update;
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,13 +79,11 @@ public class EditPersonalInformationFragment extends BaseActivity {
     @SuppressLint("SetTextI18n")
     private void initView() {
         tvTitle.setText(getString(R.string.m_edit_information_title_bar));
-        getPermisson(ivHead, granted -> {
-            dialogType();
-        }, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
+        getPermisson(ivHead, granted -> dialogType(),
+                Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
 
-        getPermisson(ivLocation, granted -> {
-                    locationAMap();
-                }, Manifest.permission.ACCESS_COARSE_LOCATION,
+        getPermisson(ivLocation, granted -> locationAMap(),
+                Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -108,7 +105,6 @@ public class EditPersonalInformationFragment extends BaseActivity {
     private void showJD() {
         cityPicker.showCityPicker();
     }
-
 
     @OnClick({R.id.rl_back, R.id.tv_district, R.id.tv_complete})
     public void onClick(View view) {
@@ -156,7 +152,6 @@ public class EditPersonalInformationFragment extends BaseActivity {
                     filePath = TakePicUtil.getPath(this, data.getData());
                     break;
                 default:
-                    break;
             }
         }
         if (!TextUtils.isEmpty(filePath)) {
@@ -226,6 +221,5 @@ public class EditPersonalInformationFragment extends BaseActivity {
         Intent intent = new Intent(this, AMapActivity.class);
         startActivityForResult(intent, 1002);
     }
-
 
 }

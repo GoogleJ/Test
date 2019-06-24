@@ -35,6 +35,7 @@ import com.zxjk.duoduo.bean.response.GetRedPackageStatusResponse;
 import com.zxjk.duoduo.bean.response.GetTeamInfoResponse;
 import com.zxjk.duoduo.bean.response.GetTransferAllResponse;
 import com.zxjk.duoduo.bean.response.GetTransferEthResponse;
+import com.zxjk.duoduo.bean.response.GetVicinityResponse;
 import com.zxjk.duoduo.bean.response.GroupChatResponse;
 import com.zxjk.duoduo.bean.response.GroupResponse;
 import com.zxjk.duoduo.bean.response.LoginResponse;
@@ -596,4 +597,8 @@ public interface Api {
     @POST("duoduo/group/game/getGameInfoByGroupId")
     @FormUrlEncoded
     Observable<BaseResponse<GetGameInfoByGroupIdResponse>> getGameInfoByGroupId(@Field("groupId") String groupId);
+
+    @POST("duoduo/customer/getVicinity")
+    @FormUrlEncoded
+    Observable<BaseResponse<List<GetVicinityResponse>>> getVicinity(@Field("lon") String lon, @Field("lat") String lat);
 }

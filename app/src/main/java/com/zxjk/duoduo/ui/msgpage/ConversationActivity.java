@@ -68,7 +68,6 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtension;
@@ -129,7 +128,6 @@ public class ConversationActivity extends BaseActivity {
         RelativeLayout rl_end = findViewById(R.id.rl_end);
         rl_end.setVisibility(View.VISIBLE);
         rl_end.setOnClickListener(v -> detail());
-
         extension = findViewById(io.rong.imkit.R.id.rc_extension);
 
         if (conversationType.equals("system")) {
@@ -144,6 +142,18 @@ public class ConversationActivity extends BaseActivity {
 
         RongIM.setOnReceiveMessageListener(onReceiveMessageListener);
 
+        registerSendMessageListener();
+
+        handleBean(conversationType);
+
+        handleClickMsg();
+
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        fragment = (ConversationFragment) fragments.get(0);
+        messageAdapter = fragment.getMessageAdapter();
+    }
+
+    private void registerSendMessageListener() {
         onSendMessageListener = new RongIM.OnSendMessageListener() {
             @Override
             public Message onSend(Message message) {
@@ -212,14 +222,6 @@ public class ConversationActivity extends BaseActivity {
         };
 
         RongIM.getInstance().setSendMessageListener(onSendMessageListener);
-
-        handleBean(conversationType);
-
-        handleClickMsg();
-
-        List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        fragment = (ConversationFragment) fragments.get(0);
-        messageAdapter = fragment.getMessageAdapter();
     }
 
     @NotNull

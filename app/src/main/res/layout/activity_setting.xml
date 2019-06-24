@@ -79,6 +79,7 @@
                 <ImageView
                     android:id="@+id/iv_enter"
                     style="@style/ImageEnter" />
+
             </RelativeLayout>
 
             <include layout="@layout/layout_line" />
@@ -104,6 +105,7 @@
                 <ImageView
                     android:id="@+id/iv_enter1"
                     style="@style/ImageEnter" />
+
             </RelativeLayout>
 
             <include layout="@layout/layout_line10" />
@@ -119,6 +121,7 @@
                     android:text="@string/help_center" />
 
                 <ImageView style="@style/ImageEnter" />
+
             </RelativeLayout>
 
             <include layout="@layout/layout_line" />
@@ -134,6 +137,7 @@
                     android:text="@string/feedback" />
 
                 <ImageView style="@style/ImageEnter" />
+
             </RelativeLayout>
 
             <include layout="@layout/layout_line" />
@@ -149,6 +153,7 @@
                     android:text="@string/about_duo_duo" />
 
                 <ImageView style="@style/ImageEnter" />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -163,6 +168,7 @@
                     android:text="@string/language_switch" />
 
                 <ImageView style="@style/ImageEnter" />
+
             </RelativeLayout>
 
             <include layout="@layout/layout_line" />
@@ -178,6 +184,7 @@
                     android:text="@string/online_customer_service" />
 
                 <ImageView style="@style/ImageEnter" />
+
             </RelativeLayout>
 
             <RelativeLayout

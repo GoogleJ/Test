@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.minepage;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +16,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.blankj.utilcode.util.ToastUtils;
+import com.blankj.utilcode.util.Utils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseFragment;
@@ -22,6 +27,7 @@ import com.zxjk.duoduo.ui.msgpage.MyQrCodeActivity;
 import com.zxjk.duoduo.ui.walletpage.BlockWalletActivity;
 import com.zxjk.duoduo.ui.walletpage.ExchangeActivity;
 import com.zxjk.duoduo.ui.walletpage.RecipetQRActivity;
+import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 
 /**
@@ -71,9 +77,33 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         } else {
             rl_blockWallet.setVisibility(View.VISIBLE);
         }
+
+        //附近的人
+        getPermisson(view.findViewById(R.id.rl_nearby), granted -> {
+            if (!granted) {
+                return;
+            }
+            AMapLocationClient mLocationClient = new AMapLocationClient(Utils.getApp());
+            AMapLocationClientOption mLocationOption = new AMapLocationClientOption();
+            mLocationOption.setLocationPurpose(AMapLocationClientOption.AMapLocationPurpose.SignIn);
+            mLocationClient.setLocationOption(mLocationOption);
+            mLocationClient.setLocationListener(location -> {
+                CommonUtils.destoryDialog();
+                if (location.getErrorCode() == 0) {
+                    Intent intent = new Intent(getContext(), NearByActivity.class);
+                    intent.putExtra("location", location);
+                    startActivity(intent);
+                } else {
+                    ToastUtils.showShort(R.string.getlocation_fail);
+                }
+            });
+            CommonUtils.initDialog(getActivity(), getString(R.string.getlocation)).show();
+            mLocationClient.startLocation();
+
+        }, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION);
+
         return view;
     }
-
 
     @Override
     public void onResume() {
@@ -125,7 +155,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(new Intent(getContext(), SettingActivity.class));
                 break;
             default:
-                break;
         }
     }
 }

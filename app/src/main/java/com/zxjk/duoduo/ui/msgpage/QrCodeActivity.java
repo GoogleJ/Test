@@ -12,11 +12,13 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.ui.WebActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.AgreeGroupChatActivity;
 import com.zxjk.duoduo.ui.minepage.scanuri.Action1;
@@ -26,10 +28,14 @@ import com.zxjk.duoduo.utils.TakePicUtil;
 
 import org.json.JSONObject;
 
+import java.util.concurrent.TimeUnit;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.zxing.ZXingView;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
  *
@@ -65,15 +71,24 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
 
     @Override
     public void onScanQRCodeSuccess(String result) {
+        Ringtone rt = RingtoneManager.getRingtone(getApplicationContext(), RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+        rt.play();
+
+        String regexUrl = "^https?:/{2}\\w.+$";
+        if (RegexUtils.isMatch(regexUrl, result)) {
+            Intent intent = new Intent(this, WebActivity.class);
+            intent.putExtra("url", result);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
         try {
             JSONObject jsonObject = new JSONObject(result);
             Object schem = jsonObject.opt("schem");
             if (!schem.equals("com.zxjk.duoduo")) {
                 throw new RuntimeException();
             }
-
-            Ringtone rt = RingtoneManager.getRingtone(getApplicationContext(), RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-            rt.play();
 
             Object action = jsonObject.opt("action");
 
@@ -111,6 +126,10 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
             }
         } catch (Exception e) {
             ToastUtils.showShort(R.string.decode_qr_failure);
+            Observable.timer(3, TimeUnit.SECONDS)
+                    .compose(bindToLifecycle())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(l -> zxingview.startSpot());
         }
     }
 

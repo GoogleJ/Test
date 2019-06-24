@@ -938,4 +938,12 @@
     <string name="installalipay">未安装支付宝，请自行转账</string>
     <string name="duoduo">多多</string>
     <string name="cantverify">手机号身份信息不匹配，请提供正确的实名信息或手动实名申请</string>
+    <string name="collection_nearby">附近的人</string>
+    <string name="getlocation_fail">未能获取当前位置，请重试</string>
+    <string name="getlocation">正在获取当前位置</string>
+    <string name="loadurl_fail">无法加载该网页，请在浏览器中尝试</string>
+    <string name="popnearby_onlygirl">只看女生</string>
+    <string name="popnearby_onlyboy">只看男生</string>
+    <string name="popnearby_all">查看全部</string>
+    <string name="popnearby_clear">清除位置并退出</string>
 </resources>

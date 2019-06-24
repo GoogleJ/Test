@@ -223,8 +223,6 @@ public class CommonPopupWindow extends PopupWindow {
             popupWindow.setOutsideTouchable(touchable);//设置outside可点击
             popupWindow.setFocusable(touchable);
         }
-
-
     }
 
     public static class PopupParams {

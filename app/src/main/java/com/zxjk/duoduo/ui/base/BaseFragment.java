@@ -37,7 +37,6 @@ public class BaseFragment extends RxFragment  {
         if (view != null) {
             RxView.clicks(view)
                     .compose(rxPermissions.ensureEachCombined(permissions))
-                    .compose(bindToLifecycle())
                     .subscribe(permission -> {
                         if (!permission.granted) ToastUtils.showShort("请开启相关权限");
 
@@ -46,7 +45,6 @@ public class BaseFragment extends RxFragment  {
             return;
         }
         rxPermissions.request(permissions)
-                .compose(bindToLifecycle())
                 .compose(rxPermissions.ensureEachCombined(permissions))
                 .subscribe(granted -> {
                     if (!granted.granted) ToastUtils.showShort("请开启相关权限");
