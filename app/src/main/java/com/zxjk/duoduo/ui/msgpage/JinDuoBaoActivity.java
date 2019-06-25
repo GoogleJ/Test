@@ -563,28 +563,19 @@ public class JinDuoBaoActivity extends BaseActivity implements SelectPopupWindow
                         holder.setText(R.id.tv_notarize, "确认");
                         EditText editText = holder.getView(R.id.et_content);
                         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-                        holder.setOnClickListener(R.id.tv_cancel, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog.dismiss();
-
-                            }
-                        });
-                        holder.setOnClickListener(R.id.tv_notarize, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (!TextUtils.isEmpty(editText.getText().toString())) {
-                                    if (Integer.parseInt(editText.getText().toString()) >= Integer.parseInt(response.getMinimumBetAmount())) {
-                                        dialog.dismiss();
-                                        tvInputMoney.setText(editText.getText().toString());
-                                        setMoney(Integer.parseInt(tvInputMoney.getText().toString()));
-                                    } else {
-                                        ToastUtils.showShort(R.string.duobaoxiazhufail);
-                                    }
+                        holder.setOnClickListener(R.id.tv_cancel, v -> dialog.dismiss());
+                        holder.setOnClickListener(R.id.tv_notarize, v -> {
+                            if (!TextUtils.isEmpty(editText.getText().toString())) {
+                                if (Integer.parseInt(editText.getText().toString()) >= Integer.parseInt(response.getMinimumBetAmount())) {
+                                    dialog.dismiss();
+                                    tvInputMoney.setText(editText.getText().toString());
+                                    setMoney(Integer.parseInt(tvInputMoney.getText().toString()));
+                                } else {
+                                    ToastUtils.showShort(R.string.duobaoxiazhufail);
                                 }
-
-
                             }
+
+
                         });
                     }
                 }).setDimAmount(0.5f).setOutCancel(false).show(getSupportFragmentManager());

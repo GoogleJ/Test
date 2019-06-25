@@ -10,6 +10,7 @@ import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.CollectionPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.MyCombineLocationPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.PhotoSelectorPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.RedPacketPlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.SightPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.TakePhotoPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.TransferPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.VoiceCallsPlugin;
@@ -57,6 +58,7 @@ public class BasePluginExtensionModule extends DefaultExtensionModule {
             list.add(photoSelectorPlugin);
             list.add(takePhotoPlugin);
             list.add(transferPlugin);
+            list.add(new SightPlugin());
             list.add(audioVideoPlugin);
 //            list.add(voiceCallsPlugin);
             list.add(packetPlugin);

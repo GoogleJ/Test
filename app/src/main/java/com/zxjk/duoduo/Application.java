@@ -37,10 +37,12 @@ import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.widget.provider.SightMessageItemProvider;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
 import io.rong.message.ImageMessage;
 import io.rong.message.RichContentMessage;
+import io.rong.message.SightMessage;
 import io.rong.message.TextMessage;
 import io.rong.message.VoiceMessage;
 import io.rong.push.RongPushClient;
@@ -70,17 +72,22 @@ public class Application extends android.app.Application {
 
         MultiDex.install(this);
 
-        //融云初始化
+        //融云推送设置
         PushConfig config = new PushConfig.Builder()
                 .enableMiPush("2882303761517995445", "5101799544445")
+                .enableVivoPush(true)
                 .build();
         RongPushClient.setPushConfig(config);
+
+        //融云初始化
         RongIM.init(this);
         RongIM.registerMessageType(RedPacketMessage.class);
         RongIM.registerMessageType(BusinessCardMessage.class);
         RongIM.registerMessageType(TransferMessage.class);
         RongIM.registerMessageType(GroupCardMessage.class);
         RongIM.registerMessageType(SystemMessage.class);
+        RongIM.registerMessageType(SightMessage.class);
+        RongIM.registerMessageTemplate(new SightMessageItemProvider());
         RongIM.registerMessageTemplate(new RedPacketProvider());
         RongIM.registerMessageTemplate(new TransferProvider());
         RongIM.registerMessageTemplate(new BusinessCardProvider());

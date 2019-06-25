@@ -100,6 +100,8 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha03'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+    //底部navigationbar
     implementation 'com.ashokvarma.android:bottom-navigation-bar:1.3.1'
 
     //AliyunOSS
@@ -110,8 +112,12 @@ dependencies {
 
     //Loading
     implementation 'com.github.ybq:Android-SpinKit:1.2.0'
+
+    //butterknife
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
+
+    //multidex
     implementation 'androidx.multidex:multidex:2.0.1'
 
     //融云
@@ -119,6 +125,7 @@ dependencies {
     implementation project(':IMLib')
     implementation project(':CallLib')
     implementation project(':CallKit')
+    implementation project(':Sight')
     api project(':android-push-settings')
 
     //glide
@@ -133,13 +140,13 @@ dependencies {
     //扫描二维码
     implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.3.6'
 
-    // 通用适配器
+    //通用适配器
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
 
-    // 平滑按钮
+    //平滑按钮
     implementation 'com.github.zcweng:switch-button:0.0.3@aar'
 
-    // popwindow
+    //popwindow
     implementation 'com.github.razerdp:BasePopup:2.1.9'
 
     //群组头像
@@ -155,17 +162,31 @@ dependencies {
 
     //banner for create gamegroup
     implementation 'com.github.pinguo-zhouwei:MZBannerView:v2.0.2'
+
+    //对话框
     implementation 'com.github.SheHuan:NiceDialog:1.1.9'
+
+    //fast sp
     implementation 'com.tencent:mmkv:1.0.19'
 
-    //    implementation 'me.jessyan:autosize:1.1.2'
+    //加载长图
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
+
+    //游戏表情
     implementation 'com.github.xiaohaibin:PageMenuLayout:0.3.0'
+
+    //leakcanary
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-1'
+
+    //京东地区选择
     implementation 'org.jsoup:jsoup:1.11.2'
+
+    //高德地图
     implementation files('libs/AMap_Location_V4.6.0_20190423.jar')
+
     //小米推送
     implementation files('libs/MiPush_SDK_Client_3_6_18.jar')
+
     //华为推送
-    api 'com.huawei.android.hms:push:2.6.1.301'
+    api  'com.huawei.android.hms:push:2.6.3.306'
 }
