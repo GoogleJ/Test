@@ -21,6 +21,7 @@ import com.zxjk.duoduo.ui.msgpage.widget.CommonPopupWindow;
 import com.zxjk.duoduo.ui.walletpage.RecipetQRActivity;
 
 import butterknife.ButterKnife;
+import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 import io.rong.message.CommandMessage;
@@ -106,14 +107,14 @@ public class MsgFragment extends BaseFragment implements View.OnClickListener, C
     }
 
     private void initConversationList(Bundle bundle) {
+        if (mConversationListFragment == null) {
+            mConversationListFragment = createConversationList();
+        }
+
         if (bundle != null) {
             mCurrentFragment = getCurrentFragment(bundle);
             String currentFragmentTag = bundle.getString(CONVERSATIONLIST_FRAGMENT_KEY, CONVERSATIONLIST_FRAGMENT_KEY);
             mConversationListFragment = (CusConversationListFragment) getFragment(currentFragmentTag);
-        }
-
-        if (mConversationListFragment == null) {
-            mConversationListFragment = createConversationList();
         }
 
         switchFragment(mConversationListFragment, R.id.conversationlist);

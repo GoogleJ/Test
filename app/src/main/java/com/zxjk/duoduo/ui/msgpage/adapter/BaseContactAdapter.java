@@ -26,6 +26,10 @@ public class BaseContactAdapter extends BaseQuickAdapter<FriendInfoResponse, Bas
                 .addOnClickListener(R.id.m_constacts_friend)
                 .addOnLongClickListener(R.id.m_constacts_friend);
 
+        if (item.getRealname().equals("已隐藏") || item.getRealname().equals("未实名认证")) {
+            helper.setGone(R.id.m_singture_text, false);
+        }
+
         ImageView heardImage = helper.getView(R.id.m_constants_header_icon);
 
         View view = helper.getView(R.id.tvFirstLetter);

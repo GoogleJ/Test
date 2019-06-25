@@ -57,11 +57,8 @@ public class UserInfoActivity extends BaseActivity {
     private TextView tv_personalizedSignature;
     private TextView tv_email;
     private TextView tv_walletAddress;
-
-
     private ImageView iv_headPortrait;
     private TextView tv_nickname;
-
 
     private static final int REQUEST_TAKE = 1;
     private static final int REQUEST_ALBUM = 2;
@@ -80,7 +77,7 @@ public class UserInfoActivity extends BaseActivity {
         tv_title.setText(getString(R.string.userinfo));
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());
 
-        findViews();
+        initView();
 
         dialog = new ChooseSexDialog(this, sex -> {
             if (sex.equals(Constant.currentUser.getSex())) {
@@ -150,11 +147,9 @@ public class UserInfoActivity extends BaseActivity {
         }
     }
 
-    private void findViews() {
+    private void initView() {
         RelativeLayout rl_walletAddress = findViewById(R.id.rl_walletAddress);
-        if (Constant.isVerifyVerision) {
-            rl_walletAddress.setVisibility(View.GONE);
-        }
+
         iv_headPortrait = findViewById(R.id.iv_headPortrait);
         RelativeLayout rl_headPortrait = findViewById(R.id.rl_headPortrait);
         tv_nickname = findViewById(R.id.tv_nickname);

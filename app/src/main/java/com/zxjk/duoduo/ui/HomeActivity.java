@@ -59,7 +59,6 @@ import io.rong.message.CommandMessage;
 import io.rong.pushperm.ResultCallback;
 import io.rong.pushperm.RongPushPremissionsCheckHelper;
 
-import static com.ashokvarma.bottomnavigation.BottomNavigationBar.BACKGROUND_STYLE_RIPPLE;
 import static com.ashokvarma.bottomnavigation.BottomNavigationBar.BACKGROUND_STYLE_STATIC;
 
 /**
@@ -221,40 +220,22 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                 .setBarBackgroundColor("#FFFFFF");
 
         m_bottom_bar.setMode(BottomNavigationBar.MODE_FIXED);
-        // 设置mode
-        if (Constant.isVerifyVerision) {
-            m_bottom_bar
-                    // 背景样式
-                    .setBackgroundStyle(BACKGROUND_STYLE_RIPPLE)
-                    // 背景颜色
-                    .setBarBackgroundColor("#ffffff")
-                    .setActiveColor("#08C1BC")
-                    .setInActiveColor("#000000")
-                    // 添加Item
-                    .addItem(new BottomNavigationItem(R.drawable.tab_message_icon_nl, "消息").setInactiveIconResource(R.drawable.tab_message_icon_hl).setBadgeItem(badgeItem))
-                    .addItem(new BottomNavigationItem(R.drawable.tab_wallet_icon_nl, "联系人").setInactiveIconResource(R.drawable.tab_wallet_icon_hl))
-                    .addItem(new BottomNavigationItem(R.drawable.tab_setting_icon_nl, "我的").setInactiveIconResource(R.drawable.tab_setting_icon_hl))
-                    //设置默认选中位置
-                    .setFirstSelectedPosition(0)
-                    // 提交初始化（完成配置）
-                    .initialise();
-        } else {
-            m_bottom_bar
-                    // 背景样式
-                    .setBackgroundStyle(BACKGROUND_STYLE_STATIC)
-                    // 背景颜色
-                    .setBarBackgroundColor("#ffffff")
-                    .setActiveColor("#08C1BC")
-                    .setInActiveColor("#000000")
-                    // 添加Item
-                    .addItem(new BottomNavigationItem(R.drawable.tab_message_icon_nl, "消息").setInactiveIconResource(R.drawable.tab_message_icon_hl).setBadgeItem(badgeItem))
-                    .addItem(new BottomNavigationItem(R.drawable.tab_qun_icon_nl, "通讯录").setInactiveIconResource(R.drawable.tab_qun_icon_hl).setBadgeItem(badgeItem2))
-                    .addItem(new BottomNavigationItem(R.drawable.tab_setting_icon_nl, "我的").setInactiveIconResource(R.drawable.tab_setting_icon_hl))
-                    //设置默认选中位置
-                    .setFirstSelectedPosition(0)
-                    // 提交初始化（完成配置）
-                    .initialise();
-        }
+
+        m_bottom_bar
+                // 背景样式
+                .setBackgroundStyle(BACKGROUND_STYLE_STATIC)
+                // 背景颜色
+                .setBarBackgroundColor("#ffffff")
+                .setActiveColor("#08C1BC")
+                .setInActiveColor("#000000")
+                // 添加Item
+                .addItem(new BottomNavigationItem(R.drawable.tab_message_icon_nl, "消息").setInactiveIconResource(R.drawable.tab_message_icon_hl).setBadgeItem(badgeItem))
+                .addItem(new BottomNavigationItem(R.drawable.tab_qun_icon_nl, "通讯录").setInactiveIconResource(R.drawable.tab_qun_icon_hl).setBadgeItem(badgeItem2))
+                .addItem(new BottomNavigationItem(R.drawable.tab_setting_icon_nl, "我的").setInactiveIconResource(R.drawable.tab_setting_icon_hl))
+                //设置默认选中位置
+                .setFirstSelectedPosition(0)
+                // 提交初始化（完成配置）
+                .initialise();
 
         m_bottom_bar.setTabSelectedListener(this);
 

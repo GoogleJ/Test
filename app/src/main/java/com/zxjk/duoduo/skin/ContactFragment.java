@@ -16,9 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.bean.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.bean.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.HomeActivity;
 import com.zxjk.duoduo.ui.base.BaseFragment;
@@ -29,7 +29,6 @@ import com.zxjk.duoduo.ui.msgpage.NewFriendActivity;
 import com.zxjk.duoduo.ui.msgpage.SearchActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.BaseContactAdapter;
 import com.zxjk.duoduo.ui.msgpage.widget.IndexView;
-import com.zxjk.duoduo.ui.msgpage.widget.dialog.DeleteFriendInformationDialog;
 import com.zxjk.duoduo.utils.MMKVUtils;
 import com.zxjk.duoduo.utils.PinYinUtils;
 
@@ -58,10 +57,7 @@ public class ContactFragment extends BaseFragment implements View.OnClickListene
 
     private TextView tv_title;
 
-    private LinearLayoutManager layoutManager;
     List<FriendInfoResponse> list = new ArrayList<>();
-
-    DeleteFriendInformationDialog deleteDialog;
 
     public View getDotNewFriend() {
         return dotNewFriend;
@@ -73,7 +69,6 @@ public class ContactFragment extends BaseFragment implements View.OnClickListene
         super.onCreateView(inflater, container, savedInstanceState);
         View rootview = LayoutInflater.from(getContext()).inflate(R.layout.activity_constacts_new_friend, container, false);
         ButterKnife.bind(this, rootview);
-        deleteDialog = new DeleteFriendInformationDialog(getActivity());
         initView(rootview);
         return rootview;
     }
@@ -85,16 +80,14 @@ public class ContactFragment extends BaseFragment implements View.OnClickListene
         tv_title = rootview.findViewById(R.id.tv_title);
         tv_title.setText(getString(R.string.phone_tunxun));
 
-        layoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new BaseContactAdapter();
         indexView.setShowTextDialog(constactsDialog);
         indexView.setOnTouchingLetterChangedListener(letter -> {
             for (int i = 0; i < list.size(); i++) {
-                //获取名字的首字母
                 String letters = list.get(i).getSortLetters();
                 if (letters.equals(letter)) {
-                    //第一次出现的位置
                     mRecyclerView.scrollToPosition(i);
                     break;
                 }

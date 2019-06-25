@@ -41,6 +41,7 @@ import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.BusinessCardPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.PhotoSelectorPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIM.message.RedPacketMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.RedPacketPlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.SightPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIM.rongTab.SampleTab;
 import com.zxjk.duoduo.ui.msgpage.rongIM.message.TransferMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.TransferPlugin;
@@ -89,7 +90,6 @@ import io.rong.imlib.typingmessage.TypingStatus;
 import io.rong.message.InformationNotificationMessage;
 import io.rong.message.TextMessage;
 import io.rong.message.VoiceMessage;
-import io.rong.sight.SightPlugin;
 
 import static com.zxjk.duoduo.Constant.CODE_SUCCESS;
 import static com.zxjk.duoduo.Constant.CODE_UNLOGIN;

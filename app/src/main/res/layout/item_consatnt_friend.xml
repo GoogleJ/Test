@@ -33,27 +33,32 @@
             android:scaleType="centerCrop"
             android:src="@drawable/icon_header" />
 
-        <TextView
-            android:id="@+id/m_user_name"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginStart="12dp"
             android:layout_toEndOf="@id/m_constants_header_icon"
-            android:textColor="@color/theme_color"
-            android:textSize="16sp" />
+            android:gravity="center_vertical"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/m_singture_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/m_user_name"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="4dp"
-            android:layout_toEndOf="@id/m_constants_header_icon"
-            android:ellipsize="end"
-            android:maxLength="15"
-            android:textColor="@color/text_color2"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/m_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/theme_color"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/m_singture_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/m_user_name"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:maxLength="15"
+                android:textColor="@color/text_color2" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

@@ -57,8 +57,7 @@ public class RegisterBlockWalletService extends Service {
 
                     stopSelf();
                 }, t -> Observable.timer(20, TimeUnit.SECONDS)
-                        .subscribe(aLong -> startService(intent), throwable -> {
-                        }));
+                        .subscribe(aLong -> startService(intent)));
 
         return super.onStartCommand(intent, flags, startId);
     }

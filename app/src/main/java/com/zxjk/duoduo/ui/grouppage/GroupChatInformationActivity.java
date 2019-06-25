@@ -92,9 +92,6 @@ public class GroupChatInformationActivity extends BaseActivity {
         }
         if (group.getGroupInfo().getGroupOwnerId().equals(Constant.userId)) {
             rl_groupManage.setVisibility(View.VISIBLE);
-            if (Constant.isVerifyVerision) {
-                rl_groupManage.setVisibility(View.GONE);
-            }
         } else {
             rl_groupManage.setVisibility(View.GONE);
         }
@@ -176,9 +173,6 @@ public class GroupChatInformationActivity extends BaseActivity {
         View footerView = LayoutInflater.from(this).inflate(R.layout.view_bottom_del, null);
         ImageView delMembers = footerView.findViewById(R.id.delete_members);
         ImageView addMembers = footerView.findViewById(R.id.add_members);
-        if (Constant.isVerifyVerision) {
-            addMembers.setVisibility(View.GONE);
-        }
         if (group.getGroupInfo().getGroupOwnerId().equals(Constant.userId)) {
             //群主才能踢人
             delMembers.setVisibility(View.VISIBLE);

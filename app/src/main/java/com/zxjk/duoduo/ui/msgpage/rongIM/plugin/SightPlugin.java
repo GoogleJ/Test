@@ -11,7 +11,7 @@ public class SightPlugin extends io.rong.sight.SightPlugin {
 
     @Override
     public Drawable obtainDrawable(Context context) {
-        return ContextCompat.getDrawable(context, R.drawable.ic_audio);
+        return ContextCompat.getDrawable(context, R.drawable.ic_audio_sight);
     }
 
     @Override
