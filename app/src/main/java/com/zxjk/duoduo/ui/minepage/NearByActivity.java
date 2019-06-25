@@ -2,8 +2,8 @@ package com.zxjk.duoduo.ui.minepage;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
+import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amap.api.location.AMapLocation;
+import com.amap.api.maps.AMapUtils;
+import com.amap.api.maps.model.LatLng;
+import com.blankj.utilcode.util.ScreenUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zxjk.duoduo.R;
@@ -33,6 +36,7 @@ public class NearByActivity extends BaseActivity {
     private RecyclerView recycler;
     private BaseQuickAdapter<GetVicinityResponse, BaseViewHolder> adapter;
     private List<GetVicinityResponse> nearList;
+    private AMapLocation l;
 
     @SuppressLint("CheckResult")
     @Override
@@ -40,7 +44,7 @@ public class NearByActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_near_by);
 
-        AMapLocation l = getIntent().getParcelableExtra("location");
+        l = getIntent().getParcelableExtra("location");
 
         ServiceFactory.getInstance().getBaseService(Api.class)
                 .getVicinity(String.valueOf(l.getLongitude()), String.valueOf(l.getLatitude()))
@@ -58,8 +62,13 @@ public class NearByActivity extends BaseActivity {
         adapter = new BaseQuickAdapter<GetVicinityResponse, BaseViewHolder>(R.layout.item_nearby, nearList) {
             @Override
             protected void convert(BaseViewHolder helper, GetVicinityResponse item) {
+                float distance = AMapUtils.calculateLineDistance(
+                        new LatLng(Double.parseDouble(item.getLatitude()), Double.parseDouble(item.getLongitude())),
+                        new LatLng(l.getLatitude(), l.getLongitude()));
+
                 helper.setText(R.id.tvName, item.getNick())
-                        .setText(R.id.tvDistence, item.getDistance());
+                        .setText(R.id.tvDistence, parseDistance(distance));
+
                 GlideUtil.loadCornerImg(helper.getView(R.id.ivHead), item.getHeadPortrait(), 3);
 
                 helper.setImageResource(R.id.ivSex, item.getSex().equals("0") ? R.drawable.icon_gender_man : R.drawable.icon_gender_woman);
@@ -80,10 +89,15 @@ public class NearByActivity extends BaseActivity {
     }
 
     private void detail() {
+        TranslateAnimation showAnimation = new TranslateAnimation(0f, 0f, ScreenUtils.getScreenHeight(), 0f);
+        showAnimation.setDuration(250);
+        TranslateAnimation dismissAnimation = new TranslateAnimation(0f, 0f, 0f, ScreenUtils.getScreenHeight());
+        dismissAnimation.setDuration(500);
         QuickPopupBuilder.with(NearByActivity.this)
                 .contentView(R.layout.popup_nearby)
                 .config(new QuickPopupConfig()
-                        .gravity(Gravity.BOTTOM)
+                        .withShowAnimation(showAnimation)
+                        .withDismissAnimation(dismissAnimation)
                         .withClick(R.id.tv1, v -> handlePopwindow(1), true)
                         .withClick(R.id.tv2, v -> handlePopwindow(2), true)
                         .withClick(R.id.tv3, v -> handlePopwindow(3), true)
@@ -132,6 +146,18 @@ public class NearByActivity extends BaseActivity {
             }
         }
         return result;
+    }
+
+    private String parseDistance(float distance) {
+        if (distance <= 1) {
+            return "1m";
+        } else if (distance <= 100) {
+            return ((int) (distance)) + "m";
+        } else if (distance > 100 && distance < 1000) {
+            return ((int) (distance / 100)) + "00m内";
+        } else {
+            return (((int) (distance - distance % 1000)) / 1000) + "km内";
+        }
     }
 
 }
