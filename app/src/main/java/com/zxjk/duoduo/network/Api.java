@@ -601,4 +601,12 @@ public interface Api {
     @POST("duoduo/customer/getVicinity")
     @FormUrlEncoded
     Observable<BaseResponse<List<GetVicinityResponse>>> getVicinity(@Field("lon") String lon, @Field("lat") String lat);
+
+    @POST("duoduo/customer/operateOpenPhone")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> operateOpenPhone(@Field("openPhone") String openPhone);
+
+    @POST("duoduo/customer/operateRealName")
+    @FormUrlEncoded
+    Observable<BaseResponse<String>> operateRealName(@Field("isShowRealname") String isShowRealname);
 }

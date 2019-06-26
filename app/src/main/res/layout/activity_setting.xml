@@ -49,6 +49,22 @@
             <include layout="@layout/layout_line" />
 
             <RelativeLayout
+                android:id="@+id/rl_privicy"
+                style="@style/RLayoutStyle">
+
+                <TextView
+                    style="@style/textStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/privacy" />
+
+                <ImageView style="@style/ImageEnter" />
+
+            </RelativeLayout>
+
+            <include layout="@layout/layout_line" />
+
+            <RelativeLayout
                 android:id="@+id/rl_realNameAuthentication"
                 style="@style/RLayoutStyle">
 
@@ -187,29 +203,6 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/rl_switchAccount"
-                style="@style/RLayoutStyle"
-                android:visibility="gone">
-
-                <TextView
-                    style="@style/textStyle"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="15dp"
-                    android:text="@string/switch_account" />
-
-                <TextView
-                    android:id="@+id/tv_nickName"
-                    style="@style/textStyle"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="10dp"
-                    android:layout_toStartOf="@+id/iv_enter2" />
-
-                <ImageView
-                    android:id="@+id/iv_enter2"
-                    style="@style/ImageEnter" />
-            </RelativeLayout>
-
             <include layout="@layout/layout_line10" />
 
             <RelativeLayout
@@ -222,7 +215,6 @@
                     android:text="@string/logout" />
 
             </RelativeLayout>
-
 
         </LinearLayout>
 

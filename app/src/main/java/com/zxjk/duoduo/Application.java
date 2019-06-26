@@ -75,7 +75,7 @@ public class Application extends android.app.Application {
         //融云推送设置
         PushConfig config = new PushConfig.Builder()
                 .enableMiPush("2882303761517995445", "5101799544445")
-                .enableVivoPush(true)
+                .enableHWPush(true)
                 .build();
         RongPushClient.setPushConfig(config);
 

@@ -69,17 +69,20 @@ public class SettingActivity extends BaseActivity {
 
         tv_authentication = findViewById(R.id.tv_authentication);
         iv_authentication = findViewById(R.id.iv_authentication);
-        TextView tv_nickName = findViewById(R.id.tv_nickName);
-        tv_nickName.setText(Constant.currentUser.getNick());
         boolean hasCompletePay = SPUtils.getInstance().getBoolean(Constant.currentUser.getId(), false);
         tv_perfection = findViewById(R.id.tv_perfection);
         tv_perfection.setText(hasCompletePay ? R.string.complete_payinfo : R.string.uncomplete_payinfo);
 
         //返回
         rl_back.setOnClickListener(v -> finish());
+
         //账号
         findViewById(R.id.rl_account_number).setOnClickListener(v ->
                 startActivity(new Intent(SettingActivity.this, AccountActivity.class)));
+
+        //隐私
+        findViewById(R.id.rl_privicy).setOnClickListener(v ->
+                startActivity(new Intent(SettingActivity.this, PrivicyActivity.class)));
 
         //新消息通知
         findViewById(R.id.rl_newMessage).setOnClickListener(v -> {
@@ -167,9 +170,6 @@ public class SettingActivity extends BaseActivity {
         //在线客服
         findViewById(R.id.rl_onlineCustomerService).setOnClickListener(v ->
                 startActivity(new Intent(SettingActivity.this, OnlineServiceActivity.class)));
-        //切换账号
-        findViewById(R.id.rl_switchAccount).setOnClickListener(v ->
-                startActivity(new Intent(SettingActivity.this, AccountSwitchActivity.class)));
         //退出
         findViewById(R.id.rl_logout).setOnClickListener(v -> NiceDialog.init().setLayoutId(R.layout.layout_general_dialog).setConvertListener(new ViewConvertListener() {
             @Override

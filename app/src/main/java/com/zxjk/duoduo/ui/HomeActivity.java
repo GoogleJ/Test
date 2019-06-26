@@ -289,6 +289,11 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                     }
 
                     if (!appVersionName.equals(data.getVersion())) {
+                        if (data.getVersion().equals("1.9")) {
+                            Constant.currentUser.setIsShowRealname("1");
+                            Constant.currentUser.setOpenPhone("1");
+                            MMKVUtils.getInstance().enCode("login", Constant.currentUser);
+                        }
                         NiceDialog.init().setLayoutId(R.layout.dialog_update).setConvertListener(new ViewConvertListener() {
                             @Override
                             protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {

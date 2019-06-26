@@ -20,13 +20,6 @@
             android:drawableLeft="@drawable/rc_back_icon"
             android:singleLine="true" />
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="24dp"
-            android:layout_marginBottom="12dp"
-            android:layout_marginTop="12dp"
-            android:background="#0083e0" />
-
         <TextView
             android:id="@+id/rc_action_bar_title"
             android:layout_width="0dp"

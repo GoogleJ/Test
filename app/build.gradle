@@ -34,7 +34,11 @@ android {
         }
         debug {
             buildConfigField("boolean", "enableLog", "true")
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable true
             signingConfig signingConfigs.release
+            zipAlignEnabled true
         }
     }
     allprojects {
@@ -188,5 +192,6 @@ dependencies {
     implementation files('libs/MiPush_SDK_Client_3_6_18.jar')
 
     //华为推送
-    api  'com.huawei.android.hms:push:2.6.3.306'
+    implementation 'com.huawei.android.hms:base:2.6.3.306'
+    implementation 'com.huawei.android.hms:push:2.6.3.306'
 }

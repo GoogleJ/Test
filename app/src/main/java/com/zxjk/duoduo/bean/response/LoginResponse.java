@@ -4,34 +4,40 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class LoginResponse implements Parcelable {
+
     /**
-     * id : 4
-     * duoduoId : 10000004
-     * nick : 4号用户
-     * realname :
-     * mobile : 18202987805
-     * password : 14e1b600b1fd579f47433b88e8d85291
-     * address : beijing
+     * id : 6
+     * duoduoId : 66230107
+     * nick : 靳政阳
+     * realname : 哈哈
+     * mobile : 15935910958
+     * password : ff92a240d11b05ebd392348c35f781b2
+     * address : 急急急
      * email :
-     * headPortrait : https://zhongxingjike.oss-cn-hongkong.aliyuncs.com/upload/FC888443-8DAF-4501-B7A7-5EAD7139657A.jpg
+     * headPortrait : https://zhongxingjike2.oss-cn-hongkong.aliyuncs.com/upload/61558430186274.jpg
      * sex : 0
-     * signature : 饿了了
-     * walletAddress :
+     * signature :
+     * walletAddress : 0xbF395381550A87326827fd0402d43a357FAE11a7
      * idCard :
      * isShowRealname : 0
-     * updateTime : 1552839507662
-     * createTime :
+     * updateTime : 1559190215476
+     * createTime : 1556353207645
      * isDelete : 0
-     * token : eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0IiwiaXNzIjoiZHVvZHVvIiwianRpIjoiMzIxNjU0MTExIn0.JdddTri7172qkvHKXDfmRDPR6HatCTpHxiAkdiI7GQY
+     * token : eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2IiwiaXNzIjoiZHVvZHVvIiwianRpIjoiZjQ6Y2I6NTI6MjA6YmM6YWYifQ._4O5nKGOIQSqHGJvwqmPlPJbrQgXj3JXxrSZZsXum98
      * remark :
-     * rongToken : NxgHGk1qzACem1Js1tLQE702a5n+rzXoZ3Aj3/5nogmk0P2rdaAtUQ+ptQpowx2j1NHoPEbm8e4qFHLxR/8ruA==
+     * rongToken : rDSq/2sq9meqjQS5jH3Y1qGHEX9paktqQgu6Agk+CWPtj1lb/W0JXrTH3Y+qgY8aCWCgde78lmMADONJUIyPww==
      * payPwd :
      * isFirstLogin : 1
      * renegeNumber : 0
      * isConfine : 0
      * status :
-     * isAuthentication : 1.未实名 2.认证中 0.已实名
-     * onlineService : https://tb.53kf.com/code/client/10197755/1
+     * isAuthentication : 0
+     * onlineService : https://tb.53kf.com/code/client/10197755/1?header=none
+     * isSystems : 0
+     * longitude :
+     * latitude :
+     * distance :
+     * openPhone : 1
      */
 
     private String id;
@@ -61,13 +67,11 @@ public class LoginResponse implements Parcelable {
     private String status;
     private String isAuthentication;
     private String onlineService;
-
-    public LoginResponse(String id) {
-        this.id = id;
-    }
-
-    public LoginResponse() {
-    }
+    private String isSystems;
+    private String longitude;
+    private String latitude;
+    private String distance;
+    private String openPhone;
 
     public String getId() {
         return id;
@@ -285,6 +289,46 @@ public class LoginResponse implements Parcelable {
         this.onlineService = onlineService;
     }
 
+    public String getIsSystems() {
+        return isSystems;
+    }
+
+    public void setIsSystems(String isSystems) {
+        this.isSystems = isSystems;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
+    }
+
+    public String getOpenPhone() {
+        return openPhone;
+    }
+
+    public void setOpenPhone(String openPhone) {
+        this.openPhone = openPhone;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -319,6 +363,18 @@ public class LoginResponse implements Parcelable {
         dest.writeString(this.status);
         dest.writeString(this.isAuthentication);
         dest.writeString(this.onlineService);
+        dest.writeString(this.isSystems);
+        dest.writeString(this.longitude);
+        dest.writeString(this.latitude);
+        dest.writeString(this.distance);
+        dest.writeString(this.openPhone);
+    }
+
+    public LoginResponse() {
+    }
+
+    public LoginResponse(String userid) {
+        this.id = userid;
     }
 
     protected LoginResponse(Parcel in) {
@@ -349,9 +405,14 @@ public class LoginResponse implements Parcelable {
         this.status = in.readString();
         this.isAuthentication = in.readString();
         this.onlineService = in.readString();
+        this.isSystems = in.readString();
+        this.longitude = in.readString();
+        this.latitude = in.readString();
+        this.distance = in.readString();
+        this.openPhone = in.readString();
     }
 
-    public static final Parcelable.Creator<LoginResponse> CREATOR = new Parcelable.Creator<LoginResponse>() {
+    public static final Creator<LoginResponse> CREATOR = new Creator<LoginResponse>() {
         @Override
         public LoginResponse createFromParcel(Parcel source) {
             return new LoginResponse(source);
