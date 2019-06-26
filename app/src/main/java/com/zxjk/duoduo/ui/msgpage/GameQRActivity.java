@@ -106,6 +106,11 @@ public class GameQRActivity extends BaseActivity {
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(r -> {
+                    if (r.getPlayCommissionConfigList().size() == 0) {
+                        recyclerView.setVisibility(View.GONE);
+                        tv3.setVisibility(View.GONE);
+                    }
+
                     tvGroupOwner.setText("群主:" + r.group.getGroupOwnerNick());
                     String playId = r.group.getPlayId();
 
@@ -152,8 +157,10 @@ public class GameQRActivity extends BaseActivity {
                             recyclerView.setVisibility(View.GONE);
                             //tv4.setVisibility(View.VISIBLE);
                             tv2.setText("倍率：" + r.getGroup().getDuobaoMultiple());
-                            tv3.setText("游戏返佣：" + Double.parseDouble(r.getPlayCommissionConfigList().get(0).getCommission()) * 100 + "%");
-                            tv4.setText("单个号码最大下注金额：" + r.getPlayCommissionConfigList().get(0).getMax());
+                            if (r.getPlayCommissionConfigList().size() != 0) {
+                                tv3.setText("游戏返佣：" + Double.parseDouble(r.getPlayCommissionConfigList().get(0).getCommission()) * 100 + "%");
+                                tv4.setText("单个号码最大下注金额：" + r.getPlayCommissionConfigList().get(0).getMax());
+                            }
                             break;
                         default:
                     }
