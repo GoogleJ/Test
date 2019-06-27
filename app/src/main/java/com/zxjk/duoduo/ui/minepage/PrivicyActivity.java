@@ -38,9 +38,9 @@ public class PrivicyActivity extends BaseActivity {
         switch3 = findViewById(R.id.switch3);
 
         if (Constant.currentUser.getIsShowRealname().equals("1")) {
-            switch2.setChecked(true);
-        } else {
             switch2.setChecked(false);
+        } else {
+            switch2.setChecked(true);
         }
 
         switch2.setOnClickListener(v -> ServiceFactory.getInstance().getBaseService(Api.class)
@@ -57,9 +57,9 @@ public class PrivicyActivity extends BaseActivity {
     @Override
     public void handleApiError(Throwable throwable) {
         if (Constant.currentUser.getIsShowRealname().equals("1")) {
-            switch2.setChecked(true);
-        } else {
             switch2.setChecked(false);
+        } else {
+            switch2.setChecked(true);
         }
         super.handleApiError(throwable);
     }

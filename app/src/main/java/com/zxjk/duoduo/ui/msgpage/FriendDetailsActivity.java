@@ -116,7 +116,11 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
         imageUrl = friendInfoResponse.getHeadPortrait();
         GlideUtil.loadCornerImg(ivHeadPortrait, friendInfoResponse.getHeadPortrait(), 5);
         tvDuoDuoNumber.setText(getString(R.string.duoduo_acount) + " " + friendInfoResponse.getDuoduoId());
-        tvRealName.setText(getString(R.string.real_name) + " " + friendInfoResponse.getRealname());
+        if (friendInfoResponse.getIsShowRealname().equals("0")) {
+            tvRealName.setVisibility(View.INVISIBLE);
+        } else {
+            tvRealName.setText(getString(R.string.real_name) + " " + friendInfoResponse.getRealname());
+        }
         tvDistrict.setText(getString(R.string.district) + " " + friendInfoResponse.getAddress());
         tvPhoneNumber.setText(friendInfoResponse.getMobile());
         tvEmail.setText(friendInfoResponse.getEmail());

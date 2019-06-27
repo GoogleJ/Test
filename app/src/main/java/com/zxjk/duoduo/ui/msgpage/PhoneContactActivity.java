@@ -16,8 +16,10 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.PhoneInfo;
+import com.zxjk.duoduo.bean.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
@@ -40,7 +42,7 @@ import java.util.Locale;
  */
 public class PhoneContactActivity extends BaseActivity implements TextWatcher {
     private RecyclerView mRecyclerView;
-    private List<PhoneInfo> list = new ArrayList<PhoneInfo>();
+    private List<PhoneInfo> list = new ArrayList<>();
     private EditText searchEdit;
     private PhoneContactAdapter mAdapter;
 
@@ -82,26 +84,49 @@ public class PhoneContactActivity extends BaseActivity implements TextWatcher {
     //获取好友列表
     @SuppressLint("CheckResult")
     public void getFriendListById() {
-        ServiceFactory.getInstance().getBaseService(Api.class)
-                .getFriendListById()
-                .compose(bindToLifecycle())
-                .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
-                .compose(RxSchedulers.normalTrans())
-                .subscribe(friendInfoResponses -> {
-                    for (int i = 0; i < list.size(); i++) {
-                        for (int j = 0; j < friendInfoResponses.size(); j++) {
-                            if (list.get(i).getNumber().equals(friendInfoResponses.get(j).getMobile())) {
-                                list.get(i).setAdd(true);
-                            }
+        if (Constant.friendsList == null) {
+            ServiceFactory.getInstance().getBaseService(Api.class)
+                    .getFriendListById()
+                    .compose(bindToLifecycle())
+                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
+                    .compose(RxSchedulers.normalTrans())
+                    .subscribe(this::handleResult, this::handleApiError);
+        } else {
+            handleResult(Constant.friendsList);
+        }
+    }
+
+    @SuppressLint("CheckResult")
+    private void handleResult(List<FriendInfoResponse> friendInfoResponses) {
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = 0; j < friendInfoResponses.size(); j++) {
+                if (list.get(i).getNumber().equals(friendInfoResponses.get(j).getMobile())) {
+                    list.get(i).setAdd(true);
+                }
+            }
+        }
+        LinearLayoutManager manager = new LinearLayoutManager(PhoneContactActivity.this);
+        mRecyclerView.setLayoutManager(manager);
+        mAdapter = new PhoneContactAdapter(this);
+        mAdapter.setNewData(list);
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            if (list.get(position).isAdd()) {
+                return;
+            }
+            ServiceFactory.getInstance().getBaseService(Api.class)
+                    .searchCustomerInfo(list.get(position).getNumber())
+                    .compose(bindToLifecycle())
+                    .compose(RxSchedulers.normalTrans())
+                    .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(PhoneContactActivity.this)))
+                    .subscribe(friendInfoResponses1 -> {
+                        if (friendInfoResponses1.size() == 0) {
+                            sendSMS("您的好友通过多多社区给您留言了啦，赶快注册去查看吧。https://fir.im/xa5w", position);
+                        } else {
+                            CommonUtils.resolveFriendList(PhoneContactActivity.this, friendInfoResponses1.get(0).getId());
                         }
-                    }
-                    LinearLayoutManager manager = new LinearLayoutManager(PhoneContactActivity.this);
-                    mRecyclerView.setLayoutManager(manager);
-                    mAdapter = new PhoneContactAdapter(this);
-                    mAdapter.setNewData(list);
-                    mRecyclerView.setAdapter(mAdapter);
-                    mAdapter.setOnItemChildClickListener((adapter, view, position) -> sendSMS("您的好友通过多多社区给您留言了啦，赶快注册去查看吧。https://fir.im/xa5w", position));
-                }, this::handleApiError);
+                    }, this::handleApiError);
+        });
     }
 
     private void sendSMS(String smsBody, int position) {

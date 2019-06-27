@@ -29,7 +29,7 @@ public class PhoneContactAdapter extends BaseQuickAdapter<PhoneInfo, BaseViewHol
     protected void convert(BaseViewHolder helper, PhoneInfo item) {
         View view = helper.getView(R.id.apply_to_add);
         if (!item.isAdd()) {
-            helper.setText(R.id.apply_to_add, "邀请")
+            helper.setText(R.id.apply_to_add, R.string.add)
                     .setTextColor(R.id.apply_to_add, context.getColor(R.color.colorWhite));
             view.setBackgroundResource(R.drawable.shape_theme);
         } else {
