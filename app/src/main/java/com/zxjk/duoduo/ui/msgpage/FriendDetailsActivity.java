@@ -122,7 +122,8 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
             tvRealName.setText(getString(R.string.real_name) + " " + friendInfoResponse.getRealname());
         }
         tvDistrict.setText(getString(R.string.district) + " " + friendInfoResponse.getAddress());
-        tvPhoneNumber.setText(friendInfoResponse.getMobile());
+        String mobile = friendInfoResponse.getMobile();
+        tvPhoneNumber.setText(mobile.substring(0, 3) + "****" + mobile.substring(7));
         tvEmail.setText(friendInfoResponse.getEmail());
         tvSignature.setText(friendInfoResponse.getSignature());
         tvWalletAddress.setText(friendInfoResponse.getWalletAddress());
