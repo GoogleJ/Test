@@ -60,6 +60,7 @@ public class ConfirmBuyActivity extends BaseActivity {
     private static final int REQUEST_ALBUM = 2;
 
     private ReleaseSaleResponse data;
+    private int limitNum = 3;
 
     private TextView tvConfirmBuyPayType; //支付类型
     private TextView tvConfirmBuyMoney; //需支付
@@ -90,10 +91,8 @@ public class ConfirmBuyActivity extends BaseActivity {
     private void initView() {
         ButterKnife.bind(this);
         tvTitle.setText(getString(R.string.buy));
-        getPermisson(findViewById(R.id.llUploadSign), granted -> {
-            dialogType();
-        }, Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
+        getPermisson(findViewById(R.id.llUploadSign), granted -> dialogType(),
+                Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         tvConfirmBuyPayType = findViewById(R.id.tvConfirmBuyPayType);
         tvConfirmBuyMoney = findViewById(R.id.tvConfirmBuyMoney);
         tvConfirmBuyReceiver = findViewById(R.id.tvConfirmBuyReceiver);
@@ -158,6 +157,13 @@ public class ConfirmBuyActivity extends BaseActivity {
         tvConfirmBuyReceiverSinglePrice.setText(getIntent().getStringExtra("rate"));
         tvConfirmBuyOrderTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Long.parseLong(data.getCreateTime())));
         tvConfirmBuyMoney.setText(data.getMoney() + "CNY");
+
+        if (!TextUtils.isEmpty(data.getDefaultLimitTransactions())) {
+            try {
+                limitNum = Integer.parseInt(data.getDefaultLimitTransactions());
+            } catch (Exception e) {
+            }
+        }
     }
 
     //我已完成支付
@@ -190,14 +196,10 @@ public class ConfirmBuyActivity extends BaseActivity {
                                 startActivity(intent);
                                 finish();
                             }, ConfirmBuyActivity.this::handleApiError);
-
-
                 });
 
             }
         }).setDimAmount(0.5f).setOutCancel(false).show(getSupportFragmentManager());
-
-
     }
 
     //取消订单
@@ -206,7 +208,7 @@ public class ConfirmBuyActivity extends BaseActivity {
             @Override
             protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
                 holder.setText(R.id.tv_title, "取消订单");
-                holder.setText(R.id.tv_content, "取消订单不会退款，一天内取消 3笔交易会限制买入功能。");
+                holder.setText(R.id.tv_content, "取消订单不会退款，一天内取消" + limitNum + "笔交易会限制买入功能。");
                 holder.setText(R.id.tv_cancel, "取消");
                 holder.setText(R.id.tv_notarize, "确认");
                 holder.setOnClickListener(R.id.tv_cancel, v -> dialog.dismiss());

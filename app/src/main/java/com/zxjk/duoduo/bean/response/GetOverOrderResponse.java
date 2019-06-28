@@ -76,6 +76,15 @@ public class GetOverOrderResponse implements Serializable {
     private String indicteeNick;
     private String appealType;
     private String processResult;
+    private String defaultLimitTransactions;
+
+    public String getDefaultLimitTransactions() {
+        return defaultLimitTransactions;
+    }
+
+    public void setDefaultLimitTransactions(String defaultLimitTransactions) {
+        this.defaultLimitTransactions = defaultLimitTransactions;
+    }
 
     public String getPlaintiffNick() {
         return plaintiffNick;

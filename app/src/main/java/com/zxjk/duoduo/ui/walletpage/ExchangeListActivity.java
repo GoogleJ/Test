@@ -83,6 +83,7 @@ public class ExchangeListActivity extends BaseActivity {
                         data.setOpenBank(g.getOpenBank());
                         data.setMobile(g.getMobile());
                         data.setReceiptPicture(g.getPayPicture());
+                        data.setDefaultLimitTransactions(g.getDefaultLimitTransactions());
                         intent.putExtra("data", data);
                         intent.putExtra("buytype", g.getPayType());
                         intent.putExtra("rate", rate);

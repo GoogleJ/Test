@@ -26,7 +26,7 @@ public class AboutActivity extends BaseActivity {
     private void initView() {
         TextView tv_title = findViewById(R.id.tv_title);
         TextView tv_versionName = findViewById(R.id.tv_versionName);
-        tv_versionName.setText("V " + CommonUtils.getVersionName(this));
+        tv_versionName.setText(CommonUtils.getVersionName(this));
         tv_title.setText(getString(R.string.about_duo_duo));
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());
     }

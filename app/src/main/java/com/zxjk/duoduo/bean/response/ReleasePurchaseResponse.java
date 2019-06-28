@@ -70,6 +70,15 @@ public class ReleasePurchaseResponse implements Serializable {
     private String indicteeNick;
     private String appealType;
     private String processResult;
+    private String accountLimitTransaction;
+
+    public String getAccountLimitTransaction() {
+        return accountLimitTransaction;
+    }
+
+    public void setAccountLimitTransaction(String accountLimitTransaction) {
+        this.accountLimitTransaction = accountLimitTransaction;
+    }
 
     public String getPlaintiffNick() {
         return plaintiffNick;

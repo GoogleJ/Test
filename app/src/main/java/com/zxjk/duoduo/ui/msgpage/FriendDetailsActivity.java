@@ -117,7 +117,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
         GlideUtil.loadCornerImg(ivHeadPortrait, friendInfoResponse.getHeadPortrait(), 5);
         tvDuoDuoNumber.setText(getString(R.string.duoduo_acount) + " " + friendInfoResponse.getDuoduoId());
         if (friendInfoResponse.getIsShowRealname().equals("0")) {
-            tvRealName.setVisibility(View.INVISIBLE);
+            tvRealName.setText(R.string.real_name1);
         } else {
             tvRealName.setText(getString(R.string.real_name) + " " + friendInfoResponse.getRealname());
         }

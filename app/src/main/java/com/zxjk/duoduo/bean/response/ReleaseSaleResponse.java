@@ -40,6 +40,15 @@ public class ReleaseSaleResponse implements Serializable {
     private String payTime;
     private String openBank;
     private String mobile;
+    private String defaultLimitTransactions;
+
+    public String getDefaultLimitTransactions() {
+        return defaultLimitTransactions;
+    }
+
+    public void setDefaultLimitTransactions(String defaultLimitTransactions) {
+        this.defaultLimitTransactions = defaultLimitTransactions;
+    }
 
     public String getMobile() {
         return mobile;
