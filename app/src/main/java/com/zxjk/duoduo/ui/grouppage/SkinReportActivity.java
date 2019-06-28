@@ -1,4 +1,4 @@
-package com.zxjk.duoduo.skin;
+package com.zxjk.duoduo.ui.grouppage;
 
 import android.os.Bundle;
 import android.text.TextUtils;

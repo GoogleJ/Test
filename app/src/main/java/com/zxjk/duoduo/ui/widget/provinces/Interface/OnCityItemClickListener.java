@@ -1,9 +1,9 @@
-package com.zxjk.duoduo.provinces.Interface;
+package com.zxjk.duoduo.ui.widget.provinces.Interface;
 
 
-import com.zxjk.duoduo.provinces.bean.CityBean;
-import com.zxjk.duoduo.provinces.bean.DistrictBean;
-import com.zxjk.duoduo.provinces.bean.ProvinceBean;
+import com.zxjk.duoduo.ui.widget.provinces.bean.CityBean;
+import com.zxjk.duoduo.ui.widget.provinces.bean.DistrictBean;
+import com.zxjk.duoduo.ui.widget.provinces.bean.ProvinceBean;
 
 /**
  * 作者：liji on 2017/11/16 10:06

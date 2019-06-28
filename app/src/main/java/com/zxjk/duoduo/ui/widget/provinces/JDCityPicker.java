@@ -1,4 +1,4 @@
-package com.zxjk.duoduo.provinces;
+package com.zxjk.duoduo.ui.widget.provinces;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -23,17 +23,17 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.provinces.Interface.OnCityItemClickListener;
-import com.zxjk.duoduo.provinces.bean.CityBean;
-import com.zxjk.duoduo.provinces.bean.DistrictBean;
-import com.zxjk.duoduo.provinces.bean.ProvinceBean;
+import com.zxjk.duoduo.ui.widget.provinces.Interface.OnCityItemClickListener;
+import com.zxjk.duoduo.ui.widget.provinces.bean.CityBean;
+import com.zxjk.duoduo.ui.widget.provinces.bean.DistrictBean;
+import com.zxjk.duoduo.ui.widget.provinces.bean.ProvinceBean;
 
 import java.util.List;
 
-import static com.zxjk.duoduo.provinces.JDConst.INDEX_INVALID;
-import static com.zxjk.duoduo.provinces.JDConst.INDEX_TAB_AREA;
-import static com.zxjk.duoduo.provinces.JDConst.INDEX_TAB_CITY;
-import static com.zxjk.duoduo.provinces.JDConst.INDEX_TAB_PROVINCE;
+import static com.zxjk.duoduo.ui.widget.provinces.JDConst.INDEX_INVALID;
+import static com.zxjk.duoduo.ui.widget.provinces.JDConst.INDEX_TAB_AREA;
+import static com.zxjk.duoduo.ui.widget.provinces.JDConst.INDEX_TAB_CITY;
+import static com.zxjk.duoduo.ui.widget.provinces.JDConst.INDEX_TAB_PROVINCE;
 
 
 /**

@@ -52,8 +52,7 @@ public class ServiceFactory {
                     Request request = requestBuilder.build();
                     return chain.proceed(request);
                 })
-                .sslSocketFactory(SslContextFactory.getSSlSocketFactory(SslContextFactory.getInputStream()))
-                .hostnameVerifier(SslContextFactory.getHostnameVerifier())
+                .hostnameVerifier((s, sslSession) -> true)
                 .readTimeout(60, TimeUnit.SECONDS)
                 .writeTimeout(60, TimeUnit.SECONDS)
                 .build();

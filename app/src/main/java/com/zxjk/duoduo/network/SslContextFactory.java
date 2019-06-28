@@ -9,24 +9,23 @@ import java.security.SecureRandom;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateFactory;
 
-import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
 public class SslContextFactory {
-    /**
-     * 单项认证
-     */
-    public static SSLSocketFactory get(InputStream... certificates) {
+
+    public static SSLSocketFactory setCertificates(InputStream... certificates) {
         try {
-            CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
+            CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509","BC");
             KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
             keyStore.load(null);
             int index = 0;
             for (InputStream certificate : certificates) {
                 String certificateAlias = Integer.toString(index++);
-                keyStore.setCertificateEntry(certificateAlias, certificateFactory.generateCertificate(certificate));
+                Certificate certificate1 = certificateFactory.generateCertificate(certificate);
+                keyStore.setCertificateEntry(certificateAlias, certificate1);
+
                 try {
                     if (certificate != null)
                         certificate.close();
@@ -46,51 +45,12 @@ public class SslContextFactory {
                             trustManagerFactory.getTrustManagers(),
                             new SecureRandom()
                     );
+
             return sslContext.getSocketFactory();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
-    }
-
-
-
-
-
-    //获取这个SSLSocketFactory
-    public static SSLSocketFactory getSSlSocketFactory(InputStream certificates) {
-        SSLContext sslContext = null;
-        try {
-            CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
-
-            Certificate ca;
-            try {
-                ca = certificateFactory.generateCertificate(certificates);
-
-            } finally {
-                certificates.close();
-            }
-
-            // Create a KeyStore containing our trusted CAs
-            String keyStoreType = KeyStore.getDefaultType();
-            KeyStore keyStore = KeyStore.getInstance(keyStoreType);
-            keyStore.load(null, null);
-            keyStore.setCertificateEntry("ca", ca);
-
-            // Create a TrustManager that trusts the CAs in our KeyStore
-            String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
-            TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
-            tmf.init(keyStore);
-
-            // Create an SSLContext that uses our TrustManager
-            sslContext = SSLContext.getInstance("SSL");
-            sslContext.init(null, tmf.getTrustManagers(), null);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return sslContext != null ? sslContext.getSocketFactory() : null;
     }
 
     //读取证书文件
@@ -104,10 +64,5 @@ public class SslContextFactory {
         return inputStream;
     }
 
-    //获取HostnameVerifier
-    public static HostnameVerifier getHostnameVerifier() {
-        HostnameVerifier hostnameVerifier = (s, sslSession) -> true;
-        return hostnameVerifier;
-    }
 
 }

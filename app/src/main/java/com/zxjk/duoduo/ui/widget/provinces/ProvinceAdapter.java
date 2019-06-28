@@ -1,4 +1,4 @@
-package com.zxjk.duoduo.provinces;
+package com.zxjk.duoduo.ui.widget.provinces;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,11 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.provinces.bean.ProvinceBean;
+import com.zxjk.duoduo.ui.widget.provinces.bean.ProvinceBean;
 
 import java.util.List;
 
-import static com.zxjk.duoduo.provinces.JDConst.INDEX_INVALID;
+import static com.zxjk.duoduo.ui.widget.provinces.JDConst.INDEX_INVALID;
 
 /**
  * 作者：liji on 2018/1/29 17:01

@@ -1,4 +1,4 @@
-package com.zxjk.duoduo.provinces;
+package com.zxjk.duoduo.ui.widget.provinces;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,11 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.provinces.bean.DistrictBean;
+import com.zxjk.duoduo.ui.widget.provinces.bean.CityBean;
 
 import java.util.List;
 
-import static com.zxjk.duoduo.provinces.JDConst.INDEX_INVALID;
+import static com.zxjk.duoduo.ui.widget.provinces.JDConst.INDEX_INVALID;
 
 
 /**
@@ -22,42 +22,41 @@ import static com.zxjk.duoduo.provinces.JDConst.INDEX_INVALID;
  * QQ ：275137657
  */
 
-public class AreaAdapter extends BaseAdapter {
+public class CityAdapter extends BaseAdapter {
 
     Context context;
 
-    List<DistrictBean> mDistrictList;
+    List<CityBean> mCityList;
 
-    private int districtIndex = INDEX_INVALID;
+    private int cityIndex = INDEX_INVALID;
 
-    public AreaAdapter(Context context, List<DistrictBean> mDistrictList) {
+    public CityAdapter(Context context, List<CityBean> mCityList) {
         this.context = context;
-        this.mDistrictList = mDistrictList;
+        this.mCityList = mCityList;
     }
 
-
     public int getSelectedPosition() {
-        return this.districtIndex;
+        return this.cityIndex;
     }
 
     public void updateSelectedPosition(int index) {
-        this.districtIndex = index;
+        this.cityIndex = index;
     }
 
     @Override
     public int getCount() {
-        return mDistrictList.size();
+        return mCityList.size();
     }
 
     @Override
-    public DistrictBean getItem(int position) {
-        return mDistrictList.get(position);
+    public CityBean getItem(int position) {
+        return mCityList.get(position);
     }
 
 
     @Override
     public long getItemId(int position) {
-        return Long.parseLong(mDistrictList.get(position).getId());
+        return Long.parseLong(mCityList.get(position).getId());
     }
 
     @Override
@@ -76,10 +75,10 @@ public class AreaAdapter extends BaseAdapter {
             holder = (Holder) convertView.getTag();
         }
 
-        DistrictBean item = getItem(position);
+        CityBean item = getItem(position);
         holder.name.setText(item.getName());
 
-        boolean checked = districtIndex != INDEX_INVALID && mDistrictList.get(districtIndex).getId().equals(item.getId());
+        boolean checked = cityIndex != INDEX_INVALID && mCityList.get(cityIndex).getId().equals(item.getId());
         holder.name.setEnabled(!checked);
         holder.selectImg.setVisibility(checked ? View.VISIBLE : View.GONE);
 

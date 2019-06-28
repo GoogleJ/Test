@@ -33,6 +33,7 @@ import com.zxjk.duoduo.bean.response.GetRebatePayRecordResponse;
 import com.zxjk.duoduo.bean.response.GetRedPackageRecordResponse;
 import com.zxjk.duoduo.bean.response.GetRedPackageStatusResponse;
 import com.zxjk.duoduo.bean.response.GetTeamInfoResponse;
+import com.zxjk.duoduo.bean.response.GetThirdPartyPaymentOrderResponse;
 import com.zxjk.duoduo.bean.response.GetTransferAllResponse;
 import com.zxjk.duoduo.bean.response.GetTransferEthResponse;
 import com.zxjk.duoduo.bean.response.GetVicinityResponse;
@@ -50,6 +51,7 @@ import com.zxjk.duoduo.bean.response.ReleaseSaleResponse;
 import com.zxjk.duoduo.bean.response.SendGroupRedPackageResponse;
 import com.zxjk.duoduo.bean.response.SignHkbOrHkExchangeResponse;
 import com.zxjk.duoduo.bean.response.SignTransactionResponse;
+import com.zxjk.duoduo.bean.response.ThirdPartyPaymentResponse;
 import com.zxjk.duoduo.bean.response.TransferResponse;
 
 import java.util.List;
@@ -609,4 +611,12 @@ public interface Api {
     @POST("duoduo/customer/operateRealName")
     @FormUrlEncoded
     Observable<BaseResponse<String>> operateRealName(@Field("isShowRealname") String isShowRealname);
+
+    @POST("duoduo/customer/getThirdPartyPaymentOrder")
+    @FormUrlEncoded
+    Observable<BaseResponse<GetThirdPartyPaymentOrderResponse>> getThirdPartyPaymentOrder(@Field("orderId") String orderId);
+
+    @POST("duoduo/customer/thirdPartyPayment")
+    @FormUrlEncoded
+    Observable<BaseResponse<ThirdPartyPaymentResponse>> thirdPartyPayment(@Field("data") String data, @Field("payPwd") String payPwd);
 }

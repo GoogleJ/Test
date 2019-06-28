@@ -1,4 +1,4 @@
-package com.zxjk.duoduo.provinces;
+package com.zxjk.duoduo.ui.widget.provinces;
 
 import android.app.Activity;
 import android.content.Context;

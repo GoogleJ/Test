@@ -1,7 +1,9 @@
-package com.zxjk.duoduo.provinces.bean;
+package com.zxjk.duoduo.ui.widget.provinces.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import java.util.ArrayList;
 
 /**
  * @2Do:
@@ -9,11 +11,15 @@ import android.os.Parcelable;
  * @Version v ${VERSION}
  * @Date 2017/7/7 0007.
  */
-public class DistrictBean implements Parcelable {
+public class CityBean implements Parcelable {
+    
 
     private String id; /*110101*/
     
     private String name; /*东城区*/
+
+
+    private ArrayList<DistrictBean> cityList;
 
     @Override
     public String toString() {
@@ -36,6 +42,14 @@ public class DistrictBean implements Parcelable {
         this.name = name;
     }
 
+    public ArrayList<DistrictBean> getCityList() {
+        return cityList;
+    }
+
+    public void setCityList(ArrayList<DistrictBean> cityList) {
+        this.cityList = cityList;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -45,25 +59,27 @@ public class DistrictBean implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
         dest.writeString(this.name);
+        dest.writeTypedList(this.cityList);
     }
 
-    public DistrictBean() {
+    public CityBean() {
     }
 
-    protected DistrictBean(Parcel in) {
+    protected CityBean(Parcel in) {
         this.id = in.readString();
         this.name = in.readString();
+        this.cityList = in.createTypedArrayList(DistrictBean.CREATOR);
     }
 
-    public static final Creator<DistrictBean> CREATOR = new Creator<DistrictBean>() {
+    public static final Creator<CityBean> CREATOR = new Creator<CityBean>() {
         @Override
-        public DistrictBean createFromParcel(Parcel source) {
-            return new DistrictBean(source);
+        public CityBean createFromParcel(Parcel source) {
+            return new CityBean(source);
         }
 
         @Override
-        public DistrictBean[] newArray(int size) {
-            return new DistrictBean[size];
+        public CityBean[] newArray(int size) {
+            return new CityBean[size];
         }
     };
 }

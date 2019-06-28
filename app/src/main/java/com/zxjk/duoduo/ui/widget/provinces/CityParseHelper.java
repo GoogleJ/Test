@@ -1,13 +1,13 @@
-package com.zxjk.duoduo.provinces;
+package com.zxjk.duoduo.ui.widget.provinces;
 
 import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zxjk.duoduo.Constant;
-import com.zxjk.duoduo.provinces.bean.CityBean;
-import com.zxjk.duoduo.provinces.bean.DistrictBean;
-import com.zxjk.duoduo.provinces.bean.ProvinceBean;
+import com.zxjk.duoduo.ui.widget.provinces.bean.CityBean;
+import com.zxjk.duoduo.ui.widget.provinces.bean.DistrictBean;
+import com.zxjk.duoduo.ui.widget.provinces.bean.ProvinceBean;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

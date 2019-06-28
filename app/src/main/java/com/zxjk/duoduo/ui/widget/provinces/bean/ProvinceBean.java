@@ -1,4 +1,4 @@
-package com.zxjk.duoduo.provinces.bean;
+package com.zxjk.duoduo.ui.widget.provinces.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
