@@ -57,7 +57,7 @@ public class GameStartPlugin implements IPluginModule {
                 .compose(RxSchedulers.normalTrans())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(fragment.getActivity())))
                 .compose(((BaseActivity) fragment.getActivity()).bindUntilEvent(ActivityEvent.DESTROY))
-                .subscribe(s -> Observable.interval(0, 1, TimeUnit.SECONDS)
+                .subscribe(s -> Observable.interval(0, 2, TimeUnit.SECONDS)
                         .take(4)
                         .doOnDispose(() -> {
                             finish = true;

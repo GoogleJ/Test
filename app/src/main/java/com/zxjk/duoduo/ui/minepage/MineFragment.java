@@ -72,6 +72,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         iv_QRCode.setOnClickListener(this);
         rl_exchange.setOnClickListener(this);
 
+        if (Constant.isVerify) {
+            rl_balance.setVisibility(View.GONE);
+            rl_blockWallet.setVisibility(View.GONE);
+            rl_exchange.setVisibility(View.GONE);
+            rl_collectionCode.setVisibility(View.GONE);
+        }
+
         //附近的人
         getPermisson(view.findViewById(R.id.rl_nearby), granted -> {
             if (!granted) {

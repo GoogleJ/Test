@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -103,7 +104,6 @@ public class CreateGroupActivity extends BaseActivity {
 
         eventType = getIntent().getIntExtra("eventType", -1);
 
-
         confirmText = tv_commit.getText();
         recycler1 = findViewById(R.id.recycler1);
         recycler2 = findViewById(R.id.recycler2);
@@ -127,6 +127,13 @@ public class CreateGroupActivity extends BaseActivity {
         }
 
         tv_commit.setOnClickListener(v -> confirm());
+
+        RelativeLayout rl_myGameGroup = findViewById(R.id.rl_myGameGroup);
+        RelativeLayout rl_newGameGroup = findViewById(R.id.rl_newGameGroup);
+        if (Constant.isVerify) {
+            rl_myGameGroup.setVisibility(View.GONE);
+            rl_newGameGroup.setVisibility(View.GONE);
+        }
     }
 
     //删除成员逻辑

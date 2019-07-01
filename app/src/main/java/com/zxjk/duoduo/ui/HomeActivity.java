@@ -283,6 +283,13 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                     GetAppVersionResponse data = response.data;
                     String appVersionName = AppUtils.getAppVersionName();
 
+                    if (data.getVersion().equals("verifying")) {
+                        Constant.isVerify = true;
+                        return;
+                    } else {
+                        Constant.isVerify = false;
+                    }
+
                     File file = new File(Utils.getApp().getCacheDir(), data.getVersion() + ".apk");
                     if (file.exists()) {
                         file.delete();
