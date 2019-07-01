@@ -39,10 +39,15 @@ public class AddWaysActivity extends BaseActivity {
 
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());
 
-        if (Constant.currentUser.getOpenPhone().equals("1")) {
-            switch2.setChecked(true);
+        if (Constant.currentUser.getOpenPhone() != null) {
+            if (Constant.currentUser.getOpenPhone().equals("1")) {
+                switch2.setChecked(true);
+            } else {
+                switch2.setChecked(false);
+            }
         } else {
-            switch2.setChecked(false);
+            Constant.currentUser.setOpenPhone("1");
+            switch2.setChecked(true);
         }
 
         switch2.setOnClickListener(v -> ServiceFactory.getInstance().getBaseService(Api.class)
