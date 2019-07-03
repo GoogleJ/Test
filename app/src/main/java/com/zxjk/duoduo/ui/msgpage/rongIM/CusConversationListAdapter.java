@@ -48,7 +48,10 @@ public class CusConversationListAdapter extends ConversationListAdapter {
             ImageView imageView = v.findViewById(R.id.rc_mask);
             imageView.setVisibility(View.VISIBLE);
             imageView.setImageResource(R.mipmap.ic_launcher);
-            RongUserInfoManager.getInstance().setUserInfo(new UserInfo(data.getConversationTargetId(), "支付凭证", null));
+            UserInfo u = RongUserInfoManager.getInstance().getUserInfo(data.getConversationTargetId());
+            if (u == null) {
+                RongUserInfoManager.getInstance().setUserInfo(new UserInfo(data.getConversationTargetId(), "支付凭证", null));
+            }
             return;
         }
 
