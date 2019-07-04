@@ -344,27 +344,23 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                                     if (buyType.equals(PAYTYPE_WECHAT)) {
                                         s.setReceiptNumber(s.getWechatNick());
                                     }
+                                    intent.putExtra("data", s);
+                                    s.setCreateTime(String.valueOf(System.currentTimeMillis()));
+                                    intent.putExtra("rate", tvExchangePrice.getText().toString().split(" ")[0]);
+                                    intent.putExtra("buytype", buyType);
+                                    startActivity(intent);
                                     if (buyType.equals(PAYTYPE_ALI)) {
                                         QRUtil.decode(ExchangeActivity.this, s.getReceiptPicture(), result -> {
                                             if (!TextUtils.isEmpty(result) && result.contains("QR.ALIPAY.COM")) {
                                                 if (AliPayUtils.hasInstalledAlipayClient(ExchangeActivity.this)) {
-                                                    intent.putExtra("data", s);
-                                                    s.setCreateTime(String.valueOf(System.currentTimeMillis()));
-                                                    intent.putExtra("rate", tvExchangePrice.getText().toString().split(" ")[0]);
-                                                    intent.putExtra("buytype", buyType);
-                                                    startActivity(intent);
                                                     AliPayUtils.startAlipayClient(ExchangeActivity.this, result);
                                                 } else {
                                                     ToastUtils.showShort(R.string.installalipay);
                                                 }
+                                            } else {
+                                                ToastUtils.showShort(R.string.alipay_qrerror);
                                             }
                                         });
-                                    } else {
-                                        intent.putExtra("data", s);
-                                        s.setCreateTime(String.valueOf(System.currentTimeMillis()));
-                                        intent.putExtra("rate", tvExchangePrice.getText().toString().split(" ")[0]);
-                                        intent.putExtra("buytype", buyType);
-                                        startActivity(intent);
                                     }
                                 }, ExchangeActivity.this::handleApiError);
                     });
