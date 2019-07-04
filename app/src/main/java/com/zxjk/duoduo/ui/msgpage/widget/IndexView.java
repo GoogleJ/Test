@@ -31,9 +31,9 @@ public class IndexView extends View {
     private int DEFAULT_TEXT_COLOR = 0xFF999999;
 
     private static final String[] WORDS = new String[]{
-            "↑", "☆", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
+            "#", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
             "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W",
-            "X", "Y", "Z", "#"
+            "X", "Y", "Z"
     };
 
     private OnTouchingLetterChangedListener mOnTouchingLetterChangedListener;

@@ -14,9 +14,9 @@ import androidx.annotation.Nullable;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.bean.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.bean.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
@@ -43,18 +43,16 @@ public class ModifyNotesActivity extends BaseActivity {
         ButterKnife.bind(this);
         TextView tv_title = findViewById(R.id.tv_title);
         TextView tv_commit = findViewById(R.id.tv_commit);
+        String currentName = getIntent().getStringExtra("name");
         tv_title.setText(getString(R.string.note));
         tv_commit.setVisibility(View.VISIBLE);
         tv_commit.setText(getString(R.string.queding));
         tv_commit.setOnClickListener(v -> {
             String s = modifyNotesEdit.getText().toString();
-            if (TextUtils.isEmpty(s)) {
-                ToastUtils.showShort(R.string.input_skin);
-                return;
-            }
             updateRemark(getIntent().getStringExtra("friendId"), s);
         });
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());
+        modifyNotesEdit.setText(currentName);
     }
 
     public void updateRemark(String friendId, String remark) {
@@ -74,7 +72,11 @@ public class ModifyNotesActivity extends BaseActivity {
                         }
                     }
                     Intent intent = new Intent();
-                    intent.putExtra("remark", remark);
+                    if (TextUtils.isEmpty(remark)) {
+                        intent.putExtra("remark", getIntent().getStringExtra("nick"));
+                    } else {
+                        intent.putExtra("remark", remark);
+                    }
                     setResult(1, intent);
                     finish();
                 }, this::handleApiError);

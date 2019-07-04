@@ -189,6 +189,8 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                 popupWindow.dismiss();
                 Intent intent1 = new Intent(FriendDetailsActivity.this, ModifyNotesActivity.class);
                 intent1.putExtra("friendId", friendInfoResponse.getId());
+                intent1.putExtra("name", TextUtils.isEmpty(friendInfoResponse.getRemark()) ? friendInfoResponse.getNick() : friendInfoResponse.getRemark());
+                intent1.putExtra("nick", friendInfoResponse.getNick());
                 startActivityForResult(intent1, 1);
                 break;
             case R.id.recommend_to_friend:

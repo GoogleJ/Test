@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color"
-    android:orientation="vertical"
-    tools:ignore="all">
+    android:orientation="vertical">
 
     <include layout="@layout/layout_title_back" />
 
@@ -20,8 +18,50 @@
             android:gravity="center_vertical"
             android:hint="@string/search" />
 
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@id/m_contact_search_edit_1"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:background="#dedede" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/line"
+            android:gravity="center_vertical"
+            android:onClick="addPhoneContract"
+            android:paddingStart="12dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="16dp">
+
+            <ImageView
+                android:id="@+id/iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_newfriend_phone" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:text="@string/add_phone_contract"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_go" />
+
+        </LinearLayout>
+
     </RelativeLayout>
-    
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

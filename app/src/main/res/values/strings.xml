@@ -960,4 +960,5 @@
     <string name="popmap_map2">高德地图</string>
     <string name="popmap_map3">百度地图</string>
     <string name="alipay_qrerror">无法识别卖家收款码，请手动转账</string>
+    <string name="add_phone_contract">添加手机联系人</string>
 </resources>

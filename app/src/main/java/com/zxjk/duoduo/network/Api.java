@@ -16,6 +16,7 @@ import com.zxjk.duoduo.bean.response.GetBetConutBygroupIdResponse;
 import com.zxjk.duoduo.bean.response.GetBetInfoDetailsResponse;
 import com.zxjk.duoduo.bean.response.GetDuoBaoIntegralDetailsResponse;
 import com.zxjk.duoduo.bean.response.GetExtractRecordResponse;
+import com.zxjk.duoduo.bean.response.GetFriendsByMobilesResponse;
 import com.zxjk.duoduo.bean.response.GetGameClassResponse;
 import com.zxjk.duoduo.bean.response.GetGameInfoByGroupIdResponse;
 import com.zxjk.duoduo.bean.response.GetGroupGameParameterResponse;
@@ -624,4 +625,8 @@ public interface Api {
     @POST("duoduo/group/game/getGroupOwnerTrend")
     @FormUrlEncoded
     Observable<BaseResponse<GetGroupOwnerTrendResponse>> getGroupOwnerTrend(@Field("groupId") String groupId);
+
+    @POST("duoduo/friend/getFriendsByMobiles")
+    @FormUrlEncoded
+    Observable<BaseResponse<List<GetFriendsByMobilesResponse>>> getFriendsByMobiles(@Field("mobiles") String mobiles, @Field("data") String data);
 }

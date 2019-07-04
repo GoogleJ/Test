@@ -166,12 +166,12 @@ public class PhoneContactActivity extends BaseActivity implements TextWatcher {
      * @return
      */
     private List<PhoneInfo> search(String str) {
-        List<PhoneInfo> filterList = new ArrayList<PhoneInfo>();// 过滤后的list
+        List<PhoneInfo> filterList = new ArrayList<>();// 过滤后的list
         if (str.matches("^([0-9]|[/+]).*")) {// 正则表达式 匹配以数字或者加号开头的字符串(包括了带空格及-分割的号码)
             String simpleStr = str.replaceAll("\\-|\\s", "");
             for (PhoneInfo contact : list) {
                 if (contact.getName() != null) {
-                    if (contact.getName().contains(simpleStr) || contact.getName().contains(str)) {
+                    if (contact.getName().contains(simpleStr) || contact.getNumber().contains(simpleStr)) {
                         if (!filterList.contains(contact)) {
                             filterList.add(contact);
                         }

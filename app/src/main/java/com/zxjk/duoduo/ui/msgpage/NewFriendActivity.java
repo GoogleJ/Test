@@ -65,7 +65,6 @@ public class NewFriendActivity extends BaseActivity {
 
     List<FriendInfoResponse> list = new ArrayList<>();
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @SuppressLint("WrongConstant")
     protected void initUI() {
         TextView tv_title = findViewById(R.id.tv_title);
@@ -84,14 +83,11 @@ public class NewFriendActivity extends BaseActivity {
             switch (view.getId()) {
                 case R.id.m_item_new_friend_type_btn:
                     if (isTrue) {
-                        item.setStatus("2");
-                        adapter.notifyItemChanged(position);
-                        addFriend(mAdapter.getData().get(position).getId(), item.getNick(), item);
+                        addFriend(position, item.getNick(), item);
                     }
                     break;
                 case R.id.m_add_btn_layout:
-                    if (isTrue) {
-                    } else {
+                    if (!isTrue) {
                         Intent intent = new Intent(NewFriendActivity.this, FriendDetailsActivity.class);
                         intent.putExtra("friendResponse", mAdapter.getData().get(position));
                         startActivity(intent);
@@ -99,7 +95,6 @@ public class NewFriendActivity extends BaseActivity {
                     break;
                 default:
             }
-            mAdapter.notifyDataSetChanged();
         });
 
         if (mAdapter.getData().size() == 0) {
@@ -126,18 +121,17 @@ public class NewFriendActivity extends BaseActivity {
 
     /**
      * 同意添加
-     *
-     * @param friendId
-     * @param markName
-     * @param item
      */
-    public void addFriend(String friendId, String markName, FriendInfoResponse item) {
+    public void addFriend(int position, String markName, FriendInfoResponse item) {
+        String friendId = mAdapter.getData().get(position).getId();
         ServiceFactory.getInstance().getBaseService(Api.class)
-                .addFriend(friendId, markName)
+                .addFriend(mAdapter.getData().get(position).getId(), markName)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(NewFriendActivity.this)))
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(s -> {
+                    item.setStatus("2");
+                    mAdapter.notifyItemChanged(position);
                     RongUserInfoManager.getInstance().setUserInfo(new UserInfo(item.getId(), item.getNick(), Uri.parse(item.getHeadPortrait())));
                     ToastUtils.showShort(getString(R.string.add_friend_successful));
                     InformationNotificationMessage message = InformationNotificationMessage.obtain(getString(R.string.new_friend1));
@@ -161,6 +155,10 @@ public class NewFriendActivity extends BaseActivity {
                         }
                     });
                 }, this::handleApiError);
+    }
+
+    public void addPhoneContract(View view) {
+        startActivity(new Intent(this, AddPhoneContractActivity.class));
     }
 
     @Override
