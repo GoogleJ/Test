@@ -3,18 +3,28 @@ package com.zxjk.duoduo.ui.msgpage;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.shehuan.nicedialog.BaseNiceDialog;
 import com.shehuan.nicedialog.NiceDialog;
 import com.shehuan.nicedialog.ViewConvertListener;
@@ -23,27 +33,27 @@ import com.trello.rxlifecycle3.android.ActivityEvent;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.request.GroupGamebettingRequeust;
-import com.zxjk.duoduo.network.Api;
-import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.bean.response.BaseResponse;
 import com.zxjk.duoduo.bean.response.GetBetConutBygroupIdResponse;
+import com.zxjk.duoduo.bean.response.GetGroupOwnerTrendResponse;
 import com.zxjk.duoduo.bean.response.GroupResponse;
+import com.zxjk.duoduo.network.Api;
+import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxException;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.EnlargeImageActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.ChatInformationActivity;
 import com.zxjk.duoduo.ui.grouppage.GroupChatInformationActivity;
-import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.AudioVideoPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIM.BasePluginExtensionModule;
 import com.zxjk.duoduo.ui.msgpage.rongIM.message.BusinessCardMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIM.message.RedPacketMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIM.message.TransferMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.AudioVideoPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.BusinessCardPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.PhotoSelectorPlugin;
-import com.zxjk.duoduo.ui.msgpage.rongIM.message.RedPacketMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.RedPacketPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.SightPlugin;
-import com.zxjk.duoduo.ui.msgpage.rongIM.rongTab.SampleTab;
-import com.zxjk.duoduo.ui.msgpage.rongIM.message.TransferMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.TransferPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.game.GameDownScorePlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.game.GameDuobaoPlugin;
@@ -52,6 +62,7 @@ import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.game.GameRecordPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.game.GameRulesPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.game.GameStartPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.game.GameUpScorePlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIM.rongTab.SampleTab;
 import com.zxjk.duoduo.ui.msgpage.widget.GamePopupWindow;
 import com.zxjk.duoduo.ui.widget.dialog.ExpiredEnvelopesDialog;
 import com.zxjk.duoduo.ui.widget.dialog.RedEvelopesDialog;
@@ -90,6 +101,8 @@ import io.rong.imlib.typingmessage.TypingStatus;
 import io.rong.message.InformationNotificationMessage;
 import io.rong.message.TextMessage;
 import io.rong.message.VoiceMessage;
+import razerdp.basepopup.QuickPopupBuilder;
+import razerdp.basepopup.QuickPopupConfig;
 
 import static com.zxjk.duoduo.Constant.CODE_SUCCESS;
 import static com.zxjk.duoduo.Constant.CODE_UNLOGIN;
@@ -101,6 +114,9 @@ import static com.zxjk.duoduo.Constant.CODE_UNLOGIN;
  */
 @SuppressLint("CheckResult")
 public class ConversationActivity extends BaseActivity {
+    private ConversationFragment fragment;
+    private MessageListAdapter messageAdapter;
+
     private Disposable gameWindowDisposable;
 
     private TextView tvTitle;
@@ -117,6 +133,14 @@ public class ConversationActivity extends BaseActivity {
     private GamePopupWindow gamePopupWindow;
     public ArrayList<String> memberIds;
 
+    private LineChart chart;
+    private TextView tvChartTitle;
+    private LinearLayout llChart;
+    private ArrayList<String> niuniuRules;
+    private ArrayList<String> otherRules;
+    //1:牛牛 2:其他
+    private int currentOwnerGameType = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,6 +149,8 @@ public class ConversationActivity extends BaseActivity {
 
         setContentView(R.layout.activity_conversation);
 
+        llChart = findViewById(R.id.llChart);
+        tvChartTitle = findViewById(R.id.tvChartTitle);
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());
         RelativeLayout rl_end = findViewById(R.id.rl_end);
         rl_end.setVisibility(View.VISIBLE);
@@ -538,6 +564,10 @@ public class ConversationActivity extends BaseActivity {
 
                         if (groupInfo.getGroupInfo().getGroupType().equals("1")) {
                             //游戏plugin
+
+                            //显示chart
+                            initChart();
+
                             Iterator<IPluginModule> iterator = pluginModules.iterator();
                             while (iterator.hasNext()) {
                                 IPluginModule next = iterator.next();
@@ -820,10 +850,32 @@ public class ConversationActivity extends BaseActivity {
         }
     }
 
-    private ConversationFragment fragment;
-    private MessageListAdapter messageAdapter;
+    private void detail() {
+        if (groupResponse.getGroupInfo().getGroupType().equals("1")) {
+            QuickPopupBuilder.with(this)
+                    .contentView(R.layout.popup_conversation)
+                    .config(new QuickPopupConfig()
+                            .withClick(R.id.tv1, v -> handlePopwindow(1), true)
+                            .withClick(R.id.tv2, v -> handlePopwindow(2), true)
+                            .backgroundColor(Color.TRANSPARENT)
+                            .gravity(Gravity.BOTTOM)
+                            .withShowAnimation(AnimationUtils.loadAnimation(this, R.anim.push_scale_in))
+                            .withDismissAnimation(AnimationUtils.loadAnimation(this, R.anim.push_scale_out)))
+                    .show(R.id.rl_end);
+        } else {
+            handleNormalDetail();
+        }
+    }
 
-    public void detail() {
+    private void handlePopwindow(int flag) {
+        if (flag == 1) {
+            handleNormalDetail();
+        } else {
+            initChart();
+        }
+    }
+
+    private void handleNormalDetail() {
         if (groupResponse != null && groupResponse.getGroupInfo().getIsDelete().equals("1")) {
             ToastUtils.showShort(R.string.deleted_group);
             return;
@@ -850,6 +902,132 @@ public class ConversationActivity extends BaseActivity {
         tvTitle = findViewById(R.id.tv_title);
         tvTitle.setText(targetUserInfo == null ? (groupResponse.getGroupInfo().getGroupNikeName() + "(" + groupResponse.getCustomers().size() + ")") : targetUserInfo.getName());
         registerOnTitleChange();
+    }
+
+    private void initChart() {
+        llChart.setVisibility(llChart.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+        if (llChart.getVisibility() == View.GONE) {
+            return;
+        }
+        chart = findViewById(R.id.chart);
+        chart.setNoDataText("暂无数据");
+
+        initRules();
+
+        getChartData();
+    }
+
+    public void switchChart(View view) {
+        currentOwnerGameType = currentOwnerGameType == 1 ? 2 : 1;
+        setupChart(chart, getData(getGroupOwnerTrendResponse));
+    }
+
+    private GetGroupOwnerTrendResponse getGroupOwnerTrendResponse;
+
+    private void getChartData() {
+        ServiceFactory.getInstance().getBaseService(Api.class)
+                .getGroupOwnerTrend(targetId)
+                .compose(bindToLifecycle())
+                .compose(RxSchedulers.ioObserver())
+                .compose(RxSchedulers.normalTrans())
+                .subscribe(s -> {
+                    getGroupOwnerTrendResponse = s;
+                    setupChart(chart, getData(s));
+                }, this::handleApiError);
+    }
+
+    private void initRules() {
+        niuniuRules = new ArrayList<>();
+        niuniuRules.add("牛一");
+        niuniuRules.add("牛二");
+        niuniuRules.add("牛三");
+        niuniuRules.add("牛四");
+        niuniuRules.add("牛五");
+        niuniuRules.add("牛六");
+        niuniuRules.add("牛七");
+        niuniuRules.add("牛八");
+        niuniuRules.add("牛九");
+        niuniuRules.add("牛牛");
+        niuniuRules.add("金牛");
+        niuniuRules.add("对子");
+        niuniuRules.add("正顺");
+        niuniuRules.add("倒顺");
+        niuniuRules.add("满牛");
+        niuniuRules.add("豹子");
+
+        otherRules = new ArrayList<>();
+        otherRules.add("零点");
+        otherRules.add("一点");
+        otherRules.add("二点");
+        otherRules.add("三点");
+        otherRules.add("四点");
+        otherRules.add("五点");
+        otherRules.add("六点");
+        otherRules.add("七点");
+        otherRules.add("八点");
+        otherRules.add("九点");
+    }
+
+    private void setupChart(LineChart chart, LineData data) {
+        if (data == null) {
+            return;
+        }
+
+        chart.getDescription().setEnabled(false);
+        chart.setDrawGridBackground(false);
+        chart.setTouchEnabled(true);
+        chart.setDragEnabled(true);
+        chart.setScaleEnabled(true);
+        chart.setScaleYEnabled(false);
+        chart.setPinchZoom(false);
+
+        chart.setData(data);
+
+        chart.getLegend().setEnabled(false);
+        chart.getAxisLeft().setEnabled(false);
+        chart.getAxisRight().setEnabled(false);
+        chart.getXAxis().setEnabled(false);
+        chart.setDoubleTapToZoomEnabled(false);
+
+        chart.notifyDataSetChanged();
+        chart.setVisibleXRangeMaximum(6);
+        chart.moveViewToX(data.getEntryCount());
+
+    }
+
+    private LineData getData(GetGroupOwnerTrendResponse r) {
+        if (r == null) {
+            return null;
+        }
+
+        ArrayList<Entry> values = new ArrayList<>();
+
+        for (int i = 0; i < (currentOwnerGameType == 1 ? r.getNiuNiuTrend().size() : r.getBandDTrend().size()); i++) {
+            values.add(new Entry(i, currentOwnerGameType == 1 ?
+                    r.getNiuNiuTrend().get(i).getPoints() :
+                    r.getBandDTrend().get(i).getPoints()));
+        }
+
+        tvChartTitle.setText(currentOwnerGameType == 1 ? "牛牛" : "大小单、百家乐");
+        LineDataSet set = new LineDataSet(values, "");
+        set.setLineWidth(1.75f);
+        set.setCircleRadius(8f);
+        set.setCircleHoleRadius(3f);
+        set.setColor(ContextCompat.getColor(this, R.color.colorTheme));
+        set.setCircleColor(ContextCompat.getColor(this, R.color.colorTheme));
+        set.setCircleHoleColor(ContextCompat.getColor(this, R.color.colorTheme));
+        set.setDrawValues(true);
+        set.setValueTextSize(10);
+        set.setHighlightEnabled(false);
+        set.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float v) {
+                return currentOwnerGameType == 1 ?
+                        niuniuRules.get((int) v - 1) : otherRules.get((int) v);
+            }
+        });
+
+        return new LineData(set);
     }
 
     @Override

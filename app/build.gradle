@@ -194,4 +194,7 @@ dependencies {
     //华为推送
     implementation 'com.huawei.android.hms:base:2.6.3.306'
     implementation 'com.huawei.android.hms:push:2.6.3.306'
+
+    //Chart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

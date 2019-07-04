@@ -22,6 +22,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
@@ -90,42 +91,47 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
     protected void onResume() {
         cleanBadge();
         Observable.timer(1, TimeUnit.SECONDS)
-                .subscribe(aLong -> RongIM.setOnReceiveMessageListener((message, i) -> {
-                    //update badge
-                    if (!AppUtils.isAppForeground()) {
-                        BadgeNumberManager.from(this).setBadgeNumber(++Constant.messageCount);
+                .subscribe(aLong -> {
+                    if (ActivityUtils.getTopActivity() != this) {
+                        return;
                     }
-                    //handle command(delete add newfriend)
-                    if (message.getContent() instanceof CommandMessage) {
-                        CommandMessage commandMessage = (CommandMessage) message.getContent();
-                        if (commandMessage.getName().equals("deleteFriend")) {
-                            RongIM.getInstance().clearMessages(Conversation.ConversationType.PRIVATE, message.getSenderUserId(), null);
-                            RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE, message.getSenderUserId(), null);
-                        } else if (commandMessage.getName().equals("addFriend")) {
-                            runOnUiThread(() -> {
-                                long newFriendCount = MMKVUtils.getInstance().decodeLong("newFriendCount");
-                                newFriendCount += 1;
-                                MMKVUtils.getInstance().enCode("newFriendCount", newFriendCount);
-                                if (newFriendCount == 0) {
-                                    badgeItem2.hide();
-                                } else {
-                                    badgeItem2.show(true);
-                                    if (newFriendCount >= 100) {
-                                        badgeItem2.setText("99+");
-                                    } else {
-                                        badgeItem2.setText(String.valueOf(newFriendCount));
-                                    }
-                                }
-                                if (contactFragment.getDotNewFriend() != null) {
-                                    contactFragment.getDotNewFriend().setVisibility(View.VISIBLE);
-                                }
-                            });
-                        } else if (commandMessage.getName().equals("agreeFriend")) {
-                            //同意添加好友 刷新通讯录
+                    RongIM.setOnReceiveMessageListener((message, i) -> {
+                        //update badge
+                        if (!AppUtils.isAppForeground()) {
+                            BadgeNumberManager.from(this).setBadgeNumber(++Constant.messageCount);
                         }
-                    }
-                    return false;
-                }));
+                        //handle command(delete add newfriend)
+                        if (message.getContent() instanceof CommandMessage) {
+                            CommandMessage commandMessage = (CommandMessage) message.getContent();
+                            if (commandMessage.getName().equals("deleteFriend")) {
+                                RongIM.getInstance().clearMessages(Conversation.ConversationType.PRIVATE, message.getSenderUserId(), null);
+                                RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE, message.getSenderUserId(), null);
+                            } else if (commandMessage.getName().equals("addFriend")) {
+                                runOnUiThread(() -> {
+                                    long newFriendCount = MMKVUtils.getInstance().decodeLong("newFriendCount");
+                                    newFriendCount += 1;
+                                    MMKVUtils.getInstance().enCode("newFriendCount", newFriendCount);
+                                    if (newFriendCount == 0) {
+                                        badgeItem2.hide();
+                                    } else {
+                                        badgeItem2.show(true);
+                                        if (newFriendCount >= 100) {
+                                            badgeItem2.setText("99+");
+                                        } else {
+                                            badgeItem2.setText(String.valueOf(newFriendCount));
+                                        }
+                                    }
+                                    if (contactFragment.getDotNewFriend() != null) {
+                                        contactFragment.getDotNewFriend().setVisibility(View.VISIBLE);
+                                    }
+                                });
+                            } else if (commandMessage.getName().equals("agreeFriend")) {
+                                //同意添加好友 刷新通讯录
+                            }
+                        }
+                        return false;
+                    });
+                });
         super.onResume();
     }
 

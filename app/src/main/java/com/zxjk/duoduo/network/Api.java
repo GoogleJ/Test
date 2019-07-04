@@ -22,6 +22,7 @@ import com.zxjk.duoduo.bean.response.GetGroupGameParameterResponse;
 import com.zxjk.duoduo.bean.response.GetGroupMemberDuoBaoBetInfoResponse;
 import com.zxjk.duoduo.bean.response.GetGroupMemberPointsResponse;
 import com.zxjk.duoduo.bean.response.GetGroupOwnerDuoBaoBetInfoResponse;
+import com.zxjk.duoduo.bean.response.GetGroupOwnerTrendResponse;
 import com.zxjk.duoduo.bean.response.GetGroupRedPackageInfoResponse;
 import com.zxjk.duoduo.bean.response.GetIntegralDetailsResponse;
 import com.zxjk.duoduo.bean.response.GetNumbeOfTransactionResponse;
@@ -619,4 +620,8 @@ public interface Api {
     @POST("duoduo/customer/thirdPartyPayment")
     @FormUrlEncoded
     Observable<BaseResponse<ThirdPartyPaymentResponse>> thirdPartyPayment(@Field("data") String data, @Field("payPwd") String payPwd);
+
+    @POST("duoduo/group/game/getGroupOwnerTrend")
+    @FormUrlEncoded
+    Observable<BaseResponse<GetGroupOwnerTrendResponse>> getGroupOwnerTrend(@Field("groupId") String groupId);
 }

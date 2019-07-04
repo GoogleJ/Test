@@ -2,6 +2,7 @@ package com.zxjk.duoduo.ui.minepage;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
@@ -67,7 +68,8 @@ public class NearByActivity extends BaseActivity {
                         new LatLng(l.getLatitude(), l.getLongitude()));
 
                 helper.setText(R.id.tvName, item.getNick())
-                        .setText(R.id.tvDistence, parseDistance(distance));
+                        .setText(R.id.tvSign, "个性签名：" + (TextUtils.isEmpty(item.getSignature()) ? "暂无" : item.getSignature()))
+                        .setText(R.id.tvDistance, parseDistance(distance));
 
                 GlideUtil.loadCornerImg(helper.getView(R.id.ivHead), item.getHeadPortrait(), 3);
 
@@ -101,8 +103,7 @@ public class NearByActivity extends BaseActivity {
                         .withClick(R.id.tv1, v -> handlePopwindow(1), true)
                         .withClick(R.id.tv2, v -> handlePopwindow(2), true)
                         .withClick(R.id.tv3, v -> handlePopwindow(3), true)
-                        .withClick(R.id.tv4, v -> handlePopwindow(4), true)
-                )
+                        .withClick(R.id.tv4, v -> handlePopwindow(4), true))
                 .show();
     }
 
@@ -150,9 +151,9 @@ public class NearByActivity extends BaseActivity {
 
     private String parseDistance(float distance) {
         if (distance <= 1) {
-            return "1m";
+            return "< 1m";
         } else if (distance <= 100) {
-            return ((int) (distance)) + "m";
+            return "< " + ((int) (distance)) + "m";
         } else if (distance > 100 && distance < 1000) {
             return ((int) (distance / 100)) + "00m内";
         } else {

@@ -104,7 +104,6 @@ public class OverOrderActivity extends BaseActivity {
                             ToastUtils.showShort(R.string.judgefinish);
                             finish();
                         }, this::handleApiError);
-
             }
         });
     }
