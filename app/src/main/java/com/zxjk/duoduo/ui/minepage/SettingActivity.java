@@ -171,7 +171,7 @@ public class SettingActivity extends BaseActivity {
         findViewById(R.id.rl_onlineCustomerService).setOnClickListener(v ->
                 startActivity(new Intent(SettingActivity.this, OnlineServiceActivity.class)));
         //退出
-        findViewById(R.id.rl_logout).setOnClickListener(v -> NiceDialog.init().setLayoutId(R.layout.layout_general_dialog).setConvertListener(new ViewConvertListener() {
+        findViewById(R.id.tv_login).setOnClickListener(v -> NiceDialog.init().setLayoutId(R.layout.layout_general_dialog).setConvertListener(new ViewConvertListener() {
             @Override
             protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
                 holder.setText(R.id.tv_title, "提示");

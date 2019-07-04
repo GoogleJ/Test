@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_marginTop="4dp"
     android:background="@drawable/ic_msg_popwindow_bg"
-    android:orientation="vertical"
-    tools:ignore="all">
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/send_group_chat"
@@ -110,7 +109,6 @@
 
     </RelativeLayout>
 
-
     <RelativeLayout
         android:id="@+id/collection_and_payment"
         android:layout_width="150dp"
@@ -136,8 +134,6 @@
             android:textColor="@android:color/white"
             android:textSize="16sp" />
 
-
     </RelativeLayout>
-
 
 </LinearLayout>

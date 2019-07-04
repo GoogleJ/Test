@@ -18,7 +18,8 @@
 
             <RelativeLayout
                 android:id="@+id/rl_account_number"
-                style="@style/RLayoutStyle">
+                style="@style/RLayoutStyle"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     style="@style/textStyle"
@@ -29,8 +30,6 @@
                 <ImageView style="@style/ImageEnter" />
 
             </RelativeLayout>
-
-            <include layout="@layout/layout_line10" />
 
             <RelativeLayout
                 android:id="@+id/rl_newMessage"
@@ -102,7 +101,8 @@
 
             <RelativeLayout
                 android:id="@+id/rl_collectionInformation"
-                style="@style/RLayoutStyle">
+                style="@style/RLayoutStyle"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     style="@style/textStyle"
@@ -123,8 +123,6 @@
                     style="@style/ImageEnter" />
 
             </RelativeLayout>
-
-            <include layout="@layout/layout_line10" />
 
             <RelativeLayout
                 android:id="@+id/rl_helpCenter"
@@ -203,18 +201,10 @@
 
             </RelativeLayout>
 
-            <include layout="@layout/layout_line10" />
-
-            <RelativeLayout
-                android:id="@+id/rl_logout"
-                style="@style/RLayoutStyle">
-
-                <TextView
-                    style="@style/textStyle"
-                    android:layout_centerInParent="true"
-                    android:text="@string/logout" />
-
-            </RelativeLayout>
+            <TextView
+                android:id="@+id/tv_login"
+                style="@style/BtnStyle"
+                android:text="@string/logout" />
 
         </LinearLayout>
 

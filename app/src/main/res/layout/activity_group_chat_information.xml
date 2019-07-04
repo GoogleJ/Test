@@ -9,7 +9,6 @@
 
     <include layout="@layout/layout_title_back" />
 
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -251,17 +250,10 @@
 
             </RelativeLayout>
 
-            <include layout="@layout/layout_line10" />
-
             <TextView
                 android:id="@+id/dissolution_group"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@color/white"
-                android:gravity="center"
-                android:onClick="dissolutionGroup"
-                android:textColor="@color/theme_color"
-                android:textSize="16sp" />
+                style="@style/BtnStyle"
+                android:onClick="dissolutionGroup" />
 
         </LinearLayout>
 

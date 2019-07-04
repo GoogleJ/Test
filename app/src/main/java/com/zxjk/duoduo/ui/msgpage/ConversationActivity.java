@@ -858,7 +858,7 @@ public class ConversationActivity extends BaseActivity {
     }
 
     private void detail() {
-        if (groupResponse.getGroupInfo().getGroupType().equals("1")) {
+        if (groupResponse != null && groupResponse.getGroupInfo().getGroupType().equals("1")) {
             QuickPopupBuilder.with(this)
                     .contentView(R.layout.popup_conversation)
                     .config(new QuickPopupConfig()

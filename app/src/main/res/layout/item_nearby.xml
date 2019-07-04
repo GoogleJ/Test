@@ -12,8 +12,8 @@
 
         <ImageView
             android:id="@+id/ivHead"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
             android:layout_marginEnd="16dp" />
 
         <TextView
@@ -22,7 +22,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="6dp"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="15sp" />
 
         <LinearLayout
             android:id="@+id/ll"
@@ -41,7 +42,8 @@
                 android:layout_marginEnd="2dp"
                 android:ellipsize="end"
                 android:lines="1"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="15sp" />
 
             <ImageView
                 android:id="@+id/ivSex"
@@ -60,8 +62,7 @@
             android:layout_marginTop="2dp"
             android:layout_toEndOf="@id/ivHead"
             android:gravity="bottom"
-            android:textColor="@color/textcolor3"
-            android:textSize="13sp" />
+            android:textColor="@color/textcolor3" />
 
     </RelativeLayout>
 

@@ -124,9 +124,9 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
         tvDistrict.setText(getString(R.string.district) + " " + friendInfoResponse.getAddress());
         String mobile = friendInfoResponse.getMobile();
         tvPhoneNumber.setText(mobile.substring(0, 3) + "****" + mobile.substring(7));
-        tvEmail.setText(friendInfoResponse.getEmail());
-        tvSignature.setText(friendInfoResponse.getSignature());
-        tvWalletAddress.setText(friendInfoResponse.getWalletAddress());
+        tvEmail.setText(TextUtils.isEmpty(friendInfoResponse.getEmail()) ? "暂无" : friendInfoResponse.getEmail());
+        tvSignature.setText(TextUtils.isEmpty(friendInfoResponse.getSignature()) ? "暂无" : friendInfoResponse.getSignature());
+        tvWalletAddress.setText(TextUtils.isEmpty(friendInfoResponse.getWalletAddress()) ? "暂无" : friendInfoResponse.getWalletAddress());
         if (sex.equals(friendInfoResponse.getSex())) {
             ivGender.setImageDrawable(getDrawable(R.drawable.icon_gender_man));
         } else {
