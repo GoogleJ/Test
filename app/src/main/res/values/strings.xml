@@ -956,4 +956,7 @@
     <string name="pay_success1">支付成功</string>
     <string name="export_firstlogin">该账号尚未完成注册，请先在多多中完成注册</string>
     <string name="real_name1">真实姓名:已隐藏</string>
+    <string name="popmap_map1">腾讯地图</string>
+    <string name="popmap_map2">高德地图</string>
+    <string name="popmap_map3">百度地图</string>
 </resources>

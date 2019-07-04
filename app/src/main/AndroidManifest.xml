@@ -56,6 +56,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ui.msgpage.MessageLocationActivity"></activity>
         <activity
             android:name=".export.ExportLoginActivty"
             android:launchMode="singleTop"
@@ -773,11 +774,10 @@
 
         <service
             android:name="com.huawei.updatesdk.service.deamon.download.DownloadService"
-            android:exported="false" />
-
-        <!-- 第三方相关 :接收Push消息（注册、Push消息、Push连接状态）广播 -->
-        <receiver android:name="io.rong.push.platform.hms.HMSReceiver" >
+            android:exported="false" /> <!-- 第三方相关 :接收Push消息（注册、Push消息、Push连接状态）广播 -->
+        <receiver android:name="io.rong.push.platform.hms.HMSReceiver">
             <intent-filter>
+
                 <!-- 必须,用于接收token -->
                 <action android:name="com.huawei.android.push.intent.REGISTRATION" />
                 <!-- 必须，用于接收消息 -->

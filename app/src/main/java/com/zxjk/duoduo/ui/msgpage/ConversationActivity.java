@@ -99,6 +99,7 @@ import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
 import io.rong.imlib.typingmessage.TypingStatus;
 import io.rong.message.InformationNotificationMessage;
+import io.rong.message.LocationMessage;
 import io.rong.message.TextMessage;
 import io.rong.message.VoiceMessage;
 import razerdp.basepopup.QuickPopupBuilder;
@@ -660,6 +661,12 @@ public class ConversationActivity extends BaseActivity {
             @Override
             public boolean onMessageClick(Context context, View view, Message message) {
                 switch (message.getObjectName()) {
+                    case "RC:LBSMsg":
+                        LocationMessage locationMessage = (LocationMessage) message.getContent();
+                        Intent intent6 = new Intent(context, MessageLocationActivity.class);
+                        intent6.putExtra("location", locationMessage);
+                        startActivity(intent6);
+                        return true;
                     case "MMyCardMsg":
                         BusinessCardMessage businessCardMessage = (BusinessCardMessage) message.getContent();
                         CommonUtils.resolveFriendList(ConversationActivity.this, businessCardMessage.getUserId());
