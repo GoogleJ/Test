@@ -41,6 +41,15 @@ public class ReleaseSaleResponse implements Serializable {
     private String openBank;
     private String mobile;
     private String defaultLimitTransactions;
+    private String alyQR;
+
+    public String getAlyQR() {
+        return alyQR;
+    }
+
+    public void setAlyQR(String alyQR) {
+        this.alyQR = alyQR;
+    }
 
     public String getDefaultLimitTransactions() {
         return defaultLimitTransactions;

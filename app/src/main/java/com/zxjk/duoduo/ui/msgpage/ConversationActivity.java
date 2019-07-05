@@ -925,6 +925,10 @@ public class ConversationActivity extends BaseActivity {
         setupChart(chart, getData(getGroupOwnerTrendResponse));
     }
 
+    public void refreshChart(View view) {
+        getChartData();
+    }
+
     private GetGroupOwnerTrendResponse getGroupOwnerTrendResponse;
 
     private void getChartData() {
@@ -995,7 +999,11 @@ public class ConversationActivity extends BaseActivity {
         chart.notifyDataSetChanged();
         chart.setVisibleXRangeMaximum(12);
         chart.moveViewToX(data.getEntryCount());
-
+        if (data.getEntryCount() <= 2) {
+            return;
+        }
+        int animTime = data.getEntryCount() > 13 ? 1800 : (data.getEntryCount() * 150 - 150);
+        chart.animateX(animTime);
     }
 
     private LineData getData(GetGroupOwnerTrendResponse r) {
@@ -1020,7 +1028,7 @@ public class ConversationActivity extends BaseActivity {
         set.setCircleColor(ContextCompat.getColor(this, R.color.colorTheme));
         set.setCircleHoleColor(ContextCompat.getColor(this, R.color.colorTheme));
         set.setDrawValues(true);
-        set.setValueTextSize(8);
+        set.setValueTextSize(10);
         set.setHighlightEnabled(false);
         set.setValueFormatter(new ValueFormatter() {
             @Override

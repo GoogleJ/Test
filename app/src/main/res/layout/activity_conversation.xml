@@ -18,23 +18,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerVertical="true"
+                android:onClick="switchChart"
+                android:padding="4dp"
+                android:src="@drawable/ic_trend_switch" />
+
             <TextView
                 android:id="@+id/tvChartTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:textColor="@color/colorTheme" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:onClick="switchChart"
-                android:padding="6dp"
-                android:text="切换"
                 android:textColor="@color/colorTheme"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textSize="15sp" />
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:onClick="refreshChart"
+                android:padding="4dp"
+                android:src="@drawable/ic_trend_refresh" />
 
         </RelativeLayout>
 

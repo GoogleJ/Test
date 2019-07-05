@@ -53,6 +53,7 @@ public class ModifyNotesActivity extends BaseActivity {
         });
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());
         modifyNotesEdit.setText(currentName);
+        modifyNotesEdit.setSelection(currentName.length());
     }
 
     public void updateRemark(String friendId, String remark) {

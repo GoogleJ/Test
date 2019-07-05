@@ -18,16 +18,17 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.bumptech.glide.Glide;
 import com.shehuan.nicedialog.BaseNiceDialog;
 import com.shehuan.nicedialog.NiceDialog;
 import com.shehuan.nicedialog.ViewConvertListener;
 import com.shehuan.nicedialog.ViewHolder;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.Api;
-import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.bean.response.GetNumbeOfTransactionResponse;
 import com.zxjk.duoduo.bean.response.PayInfoResponse;
 import com.zxjk.duoduo.bean.response.ReleaseSaleResponse;
+import com.zxjk.duoduo.network.Api;
+import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.widget.dialog.SelectPopupWindow;
@@ -36,13 +37,13 @@ import com.zxjk.duoduo.utils.ArithUtils;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.DataUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
-import com.zxjk.duoduo.utils.QRUtil;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bingoogolapple.qrcode.zxing.QRCodeDecoder;
 import io.reactivex.ObservableSource;
 import io.reactivex.functions.Function;
 
@@ -332,10 +333,24 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                     //确认购买
                     holder.setOnClickListener(R.id.tv_confirm, v -> {
                         Api api = ServiceFactory.getInstance().getBaseService(Api.class);
-                        api.isConfine().compose(bindToLifecycle())
+                        api.isConfine()
+                                .compose(bindToLifecycle())
                                 .compose(RxSchedulers.normalTrans())
-                                .flatMap((Function<String, ObservableSource<ReleaseSaleResponse>>) s -> api.releaseSale(etExchangeChooseCount.getText().toString(), totalPrice,
+                                .flatMap((Function<String, ObservableSource<ReleaseSaleResponse>>) s ->
+                                        api.releaseSale(etExchangeChooseCount.getText().toString(), totalPrice,
                                         "1", buyType).compose(RxSchedulers.normalTrans()))
+                                .map(r -> {
+                                    if (!buyType.equals(PAYTYPE_ALI)) {
+                                        return r;
+                                    }
+                                    String s = QRCodeDecoder.syncDecodeQRCode(
+                                            Glide.with(ExchangeActivity.this)
+                                                    .asBitmap()
+                                                    .load(r.getReceiptPicture())
+                                                    .submit().get());
+                                    r.setAlyQR(s);
+                                    return r;
+                                })
                                 .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(ExchangeActivity.this)))
                                 .subscribe(s -> {
                                     //购买
@@ -349,18 +364,16 @@ public class ExchangeActivity extends BaseActivity implements RadioGroup.OnCheck
                                     intent.putExtra("rate", tvExchangePrice.getText().toString().split(" ")[0]);
                                     intent.putExtra("buytype", buyType);
                                     startActivity(intent);
-                                    if (buyType.equals(PAYTYPE_ALI)) {
-                                        QRUtil.decode(ExchangeActivity.this, s.getReceiptPicture(), result -> {
-                                            if (!TextUtils.isEmpty(result) && result.contains("QR.ALIPAY.COM")) {
-                                                if (AliPayUtils.hasInstalledAlipayClient(ExchangeActivity.this)) {
-                                                    AliPayUtils.startAlipayClient(ExchangeActivity.this, result);
-                                                } else {
-                                                    ToastUtils.showShort(R.string.installalipay);
-                                                }
-                                            } else {
-                                                ToastUtils.showShort(R.string.alipay_qrerror);
-                                            }
-                                        });
+
+                                    String alyQR = s.getAlyQR();
+                                    if (!TextUtils.isEmpty(alyQR) && alyQR.contains("QR.ALIPAY.COM")) {
+                                        if (AliPayUtils.hasInstalledAlipayClient(ExchangeActivity.this)) {
+                                            AliPayUtils.startAlipayClient(ExchangeActivity.this, alyQR);
+                                        } else {
+                                            ToastUtils.showShort(R.string.installalipay);
+                                        }
+                                    } else {
+                                        ToastUtils.showShort(R.string.alipay_qrerror);
                                     }
                                 }, ExchangeActivity.this::handleApiError);
                     });

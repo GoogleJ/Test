@@ -101,7 +101,10 @@ public class NewFriendActivity extends BaseActivity {
         }
         textView.setOnClickListener(v -> startActivity(new Intent(NewFriendActivity.this, GlobalSearchActivity.class)));
 
-        getPermisson(findViewById(R.id.llPhoneContract), g -> startActivity(new Intent(NewFriendActivity.this, AddPhoneContractActivity.class)), Manifest.permission.READ_CONTACTS);
+        getPermisson(findViewById(R.id.llPhoneContract), g -> {
+            if (!g) return;
+            startActivity(new Intent(NewFriendActivity.this, AddPhoneContractActivity.class));
+        }, Manifest.permission.READ_CONTACTS);
     }
 
     /**
