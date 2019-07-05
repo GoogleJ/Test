@@ -963,4 +963,5 @@
     <string name="add_phone_contract">添加手机联系人</string>
     <string name="file">文件</string>
     <string name="real_name_noauthentication">真实姓名:未实名</string>
+    <string name="remove_from_conversationlist">从会话列表中移除</string>
 </resources>

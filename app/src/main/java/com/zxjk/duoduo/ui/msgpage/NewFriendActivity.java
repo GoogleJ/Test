@@ -17,9 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.bean.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.bean.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.NewFriendAdapter;
@@ -34,7 +34,6 @@ import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imlib.IRongCallback;
-import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
@@ -102,12 +101,7 @@ public class NewFriendActivity extends BaseActivity {
         }
         textView.setOnClickListener(v -> startActivity(new Intent(NewFriendActivity.this, GlobalSearchActivity.class)));
 
-        getPermisson(findViewById(R.id.llPhoneContract), new PermissionResult() {
-            @Override
-            public void onResult(boolean granted) {
-
-            }
-        }, Manifest.permission.READ_CONTACTS);
+        getPermisson(findViewById(R.id.llPhoneContract), g -> startActivity(new Intent(NewFriendActivity.this, AddPhoneContractActivity.class)), Manifest.permission.READ_CONTACTS);
     }
 
     /**
@@ -144,27 +138,8 @@ public class NewFriendActivity extends BaseActivity {
                     RongIM.getInstance().sendDirectionalMessage(Conversation.ConversationType.PRIVATE, friendId, message, new String[]{friendId}, null, null, null);
                     CommandMessage commandMessage = CommandMessage.obtain("agreeFriend", "");
                     Message message1 = Message.obtain(friendId, Conversation.ConversationType.PRIVATE, commandMessage);
-                    RongIM.getInstance().sendMessage(message1, "", "", new IRongCallback.ISendMessageCallback() {
-                        @Override
-                        public void onAttached(Message message) {
-
-                        }
-
-                        @Override
-                        public void onSuccess(Message message) {
-
-                        }
-
-                        @Override
-                        public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-
-                        }
-                    });
+                    RongIM.getInstance().sendMessage(message1, "", "", (IRongCallback.ISendMessageCallback) null);
                 }, this::handleApiError);
-    }
-
-    public void addPhoneContract(View view) {
-        startActivity(new Intent(this, AddPhoneContractActivity.class));
     }
 
     @Override

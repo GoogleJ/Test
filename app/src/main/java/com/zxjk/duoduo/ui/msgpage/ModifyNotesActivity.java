@@ -63,7 +63,7 @@ public class ModifyNotesActivity extends BaseActivity {
                 .compose(RxSchedulers.normalTrans())
                 .subscribe(r -> {
                     RongUserInfoManager.getInstance().setUserInfo(new UserInfo(r.getId(),
-                            remark, Uri.parse(r.getHeadPortrait())));
+                            TextUtils.isEmpty(remark) ? getIntent().getStringExtra("nick") : remark, Uri.parse(r.getHeadPortrait())));
                     ToastUtils.showShort(getString(R.string.successfully_modified));
                     for (FriendInfoResponse f : Constant.friendsList) {
                         if (f.getId().equals(friendId)) {

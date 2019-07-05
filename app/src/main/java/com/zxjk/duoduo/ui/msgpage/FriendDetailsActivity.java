@@ -22,9 +22,9 @@ import com.shehuan.nicedialog.ViewConvertListener;
 import com.shehuan.nicedialog.ViewHolder;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.bean.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.bean.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.HomeActivity;
 import com.zxjk.duoduo.ui.ZoomActivity;
@@ -40,8 +40,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imlib.IRongCallback;
-import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.message.CommandMessage;
@@ -104,15 +104,15 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                     .compose(RxSchedulers.normalTrans())
                     .subscribe(r -> {
                         friendInfoResponse = r;
-                        handData();
+                        handleData();
                     }, this::handleApiError);
         } else {
-            handData();
+            handleData();
         }
     }
 
     @SuppressLint("SetTextI18n")
-    private void handData() {
+    private void handleData() {
         imageUrl = friendInfoResponse.getHeadPortrait();
         GlideUtil.loadCornerImg(ivHeadPortrait, friendInfoResponse.getHeadPortrait(), 5);
         tvDuoDuoNumber.setText(getString(R.string.duoduo_acount) + " " + friendInfoResponse.getDuoduoId());
@@ -191,7 +191,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                 popupWindow.dismiss();
                 Intent intent1 = new Intent(FriendDetailsActivity.this, ModifyNotesActivity.class);
                 intent1.putExtra("friendId", friendInfoResponse.getId());
-                intent1.putExtra("name", TextUtils.isEmpty(friendInfoResponse.getRemark()) ? friendInfoResponse.getNick() : friendInfoResponse.getRemark());
+                intent1.putExtra("name", RongUserInfoManager.getInstance().getUserInfo(friendInfoResponse.getId()).getName());
                 intent1.putExtra("nick", friendInfoResponse.getNick());
                 startActivityForResult(intent1, 1);
                 break;
@@ -251,21 +251,7 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
                             , friendId, null);
                     CommandMessage commandMessage = CommandMessage.obtain("deleteFriend", "");
                     Message deleteFriend = Message.obtain(friendId, Conversation.ConversationType.PRIVATE, commandMessage);
-                    RongIM.getInstance().sendMessage(deleteFriend, "", "", new IRongCallback.ISendMessageCallback() {
-                        @Override
-                        public void onAttached(Message message) {
-                        }
-
-                        @Override
-                        public void onSuccess(Message message) {
-
-                        }
-
-                        @Override
-                        public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-
-                        }
-                    });
+                    RongIM.getInstance().sendMessage(deleteFriend, "", "", (IRongCallback.ISendMessageCallback) null);
                     Intent intent = new Intent(FriendDetailsActivity.this, HomeActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
@@ -280,5 +266,13 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
             if (!TextUtils.isEmpty(remark))
                 tvNickname.setText(remark);
         }
+    }
+
+    @Override
+    public void finish() {
+        Intent intent = new Intent();
+        intent.putExtra("remark", tvNickname.getText().toString());
+        setResult(1000, intent);
+        super.finish();
     }
 }

@@ -42,6 +42,7 @@ public class ChatInformationActivity extends BaseActivity {
     private UserInfo userInfo;
     private Switch switch1;
     private Switch switch2;
+    private TextView tv_name;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,7 +51,7 @@ public class ChatInformationActivity extends BaseActivity {
         TextView tv_title = findViewById(R.id.tv_title);
         tv_title.setText(getString(R.string.lqxx));
         ImageView iv_head = findViewById(R.id.iv_head);
-        TextView tv_name = findViewById(R.id.tv_name);
+        tv_name = findViewById(R.id.tv_name);
         tv_qm = findViewById(R.id.tv_qm);
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());
         switch1 = findViewById(R.id.switch1);
@@ -107,40 +108,57 @@ public class ChatInformationActivity extends BaseActivity {
         findViewById(R.id.rl_info).setOnClickListener(v -> {
             Intent intent = new Intent(ChatInformationActivity.this, FriendDetailsActivity.class);
             intent.putExtra("friendId", userInfo.getUserId());
-            startActivity(intent);
+            startActivityForResult(intent, 1000);
         });
         findViewById(R.id.rl_add).setOnClickListener(v -> {
             Intent intent = new Intent(ChatInformationActivity.this, CreateGroupActivity.class);
             intent.putExtra("eventType", 1);
             startActivity(intent);
         });
-        findViewById(R.id.rl_qk).setOnClickListener(v -> NiceDialog.init().setLayoutId(R.layout.layout_general_dialog).setConvertListener(new ViewConvertListener() {
-            @Override
-            protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
-                holder.setText(R.id.tv_title, "提示");
-                holder.setText(R.id.tv_content, "确定要清空当前聊天记录吗？");
-                holder.setText(R.id.tv_cancel, "取消");
-                holder.setText(R.id.tv_notarize, "确认");
-                holder.setOnClickListener(R.id.tv_cancel, v1 -> dialog.dismiss());
-                holder.setOnClickListener(R.id.tv_notarize, v12 -> RongIM.getInstance().clearMessages(Conversation.ConversationType.PRIVATE
-                        , userInfo.getUserId(), new RongIMClient.ResultCallback<Boolean>() {
-                            @Override
-                            public void onSuccess(Boolean aBoolean) {
-                                dialog.dismiss();
-                                Intent intent = new Intent(ChatInformationActivity.this, HomeActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
-                            }
+        findViewById(R.id.rl_qk).setOnClickListener(v ->
+                NiceDialog.init().setLayoutId(R.layout.layout_general_dialog).setConvertListener(new ViewConvertListener() {
+                    @Override
+                    protected void convertView(ViewHolder holder, BaseNiceDialog dialog) {
+                        holder.setText(R.id.tv_title, "提示");
+                        holder.setText(R.id.tv_content, "确定要清空当前聊天记录吗？");
+                        holder.setText(R.id.tv_cancel, "取消");
+                        holder.setText(R.id.tv_notarize, "确认");
+                        holder.setOnClickListener(R.id.tv_cancel, v1 -> dialog.dismiss());
+                        holder.setOnClickListener(R.id.tv_notarize, v12 -> RongIM.getInstance().clearMessages(Conversation.ConversationType.PRIVATE
+                                , userInfo.getUserId(), new RongIMClient.ResultCallback<Boolean>() {
+                                    @Override
+                                    public void onSuccess(Boolean aBoolean) {
+                                        dialog.dismiss();
+                                        Intent intent = new Intent(ChatInformationActivity.this, HomeActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
+                                    }
 
-                            @Override
-                            public void onError(RongIMClient.ErrorCode errorCode) {
-                                dialog.dismiss();
-                                ToastUtils.showShort(R.string.function_fail);
-                            }
-                        }));
-            }
-        }).setDimAmount(0.5f).setOutCancel(false).show(getSupportFragmentManager()));
+                                    @Override
+                                    public void onError(RongIMClient.ErrorCode errorCode) {
+                                        dialog.dismiss();
+                                        ToastUtils.showShort(R.string.function_fail);
+                                    }
+                                }));
+                    }
+                }).setDimAmount(0.5f).setOutCancel(false).show(getSupportFragmentManager()));
         findViewById(R.id.rl_juBao).setOnClickListener(v -> startActivity(new Intent(ChatInformationActivity.this, SkinReportActivity.class)));
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1000 && resultCode == 1000) {
+            String remark = data.getStringExtra("remark");
+            tv_name.setText(remark);
+        }
+    }
+
+    @Override
+    public void finish() {
+        Intent intent = new Intent();
+        intent.putExtra("title", tv_name.getText().toString());
+        setResult(1000, intent);
+        super.finish();
     }
 }

@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -566,9 +567,6 @@ public class ConversationActivity extends BaseActivity {
                         if (groupInfo.getGroupInfo().getGroupType().equals("1")) {
                             //游戏plugin
 
-                            //显示chart
-                            initChart();
-
                             Iterator<IPluginModule> iterator = pluginModules.iterator();
                             while (iterator.hasNext()) {
                                 IPluginModule next = iterator.next();
@@ -852,14 +850,11 @@ public class ConversationActivity extends BaseActivity {
             }
         }
 
-        if (null != Constant.changeGroupName) {
-            tvTitle.setText(Constant.changeGroupName + "(" + groupResponse.getCustomers().size() + ")");
-            Constant.changeGroupName = null;
-        }
     }
 
     private void detail() {
-        if (groupResponse != null && groupResponse.getGroupInfo().getGroupType().equals("1")) {
+        if (groupResponse != null && groupResponse.getGroupInfo().getGroupType().equals("1")
+                && !groupResponse.getGroupInfo().getGameType().equals("4")) {
             QuickPopupBuilder.with(this)
                     .contentView(R.layout.popup_conversation)
                     .config(new QuickPopupConfig()
@@ -895,14 +890,14 @@ public class ConversationActivity extends BaseActivity {
         intent.putExtra("bean", targetUserInfo);
 
         if (conversationType.equals("private")) {
-            startActivity(intent);
+            startActivityForResult(intent, 1000);
         } else {
             if (groupResponse == null) {
                 return;
             }
             Intent intent1 = new Intent(this, GroupChatInformationActivity.class);
             intent1.putExtra("group", groupResponse);
-            startActivityForResult(intent1, 1);
+            startActivityForResult(intent1, 1000);
         }
     }
 
@@ -998,13 +993,13 @@ public class ConversationActivity extends BaseActivity {
         chart.setDoubleTapToZoomEnabled(false);
 
         chart.notifyDataSetChanged();
-        chart.setVisibleXRangeMaximum(6);
+        chart.setVisibleXRangeMaximum(12);
         chart.moveViewToX(data.getEntryCount());
 
     }
 
     private LineData getData(GetGroupOwnerTrendResponse r) {
-        if (r == null) {
+        if (r == null || r.getNiuNiuTrend().size() == 0) {
             return null;
         }
 
@@ -1018,14 +1013,14 @@ public class ConversationActivity extends BaseActivity {
 
         tvChartTitle.setText(currentOwnerGameType == 1 ? "牛牛" : "大小单、百家乐");
         LineDataSet set = new LineDataSet(values, "");
-        set.setLineWidth(1.75f);
-        set.setCircleRadius(8f);
-        set.setCircleHoleRadius(3f);
+        set.setLineWidth(1f);
+        set.setCircleRadius(3f);
+        set.setCircleHoleRadius(1f);
         set.setColor(ContextCompat.getColor(this, R.color.colorTheme));
         set.setCircleColor(ContextCompat.getColor(this, R.color.colorTheme));
         set.setCircleHoleColor(ContextCompat.getColor(this, R.color.colorTheme));
         set.setDrawValues(true);
-        set.setValueTextSize(10);
+        set.setValueTextSize(8);
         set.setHighlightEnabled(false);
         set.setValueFormatter(new ValueFormatter() {
             @Override
@@ -1036,6 +1031,18 @@ public class ConversationActivity extends BaseActivity {
         });
 
         return new LineData(set);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1000 && resultCode == 1000) {
+            if (groupResponse != null) {
+                tvTitle.setText(data.getStringExtra("title") + "(" + groupResponse.getCustomers().size() + ")");
+            } else {
+                tvTitle.setText(data.getStringExtra("title"));
+            }
+        }
     }
 
     @Override

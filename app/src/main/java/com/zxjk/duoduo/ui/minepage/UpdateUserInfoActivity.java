@@ -128,7 +128,6 @@ public class UpdateUserInfoActivity extends BaseActivity {
                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(UpdateUserInfoActivity.this)))
                     .compose(RxSchedulers.normalTrans())
                     .subscribe(groupResponse -> {
-                        Constant.changeGroupName = sign; // hardcode 用于返回conversation时更新title
                         RongUserInfoManager.getInstance().setGroupInfo(new Group(groupResponse.getId(),
                                 groupResponse.getGroupNikeName(), Uri.parse(groupResponse.getHeadPortrait())));
                         Intent intent = new Intent();

@@ -48,19 +48,19 @@ import io.rong.imlib.model.Conversation;
 @SuppressLint("CheckResult")
 public class GroupChatInformationActivity extends BaseActivity {
 
-    TextView groupChatName;
-    TextView see_more_group_members;
-    RecyclerView groupChatRecyclerView;
+    private TextView groupChatName;
+    private TextView see_more_group_members;
+    private RecyclerView groupChatRecyclerView;
 
     //群公告
-    TextView announcement;
+    private TextView announcement;
     //解散群
-    TextView dissolutionGroup;
+    private TextView dissolutionGroup;
 
-    AllGroupMemebersAdapter mAdapter;
+    private AllGroupMemebersAdapter mAdapter;
 
-    Intent intent;
-    TextView tv_title;
+    private Intent intent;
+    private TextView tv_title;
     private GroupResponse group;
 
     private boolean isGameGroup;
@@ -347,6 +347,14 @@ public class GroupChatInformationActivity extends BaseActivity {
         } else {
             ToastUtils.showShort(getString(R.string.no_update_nick));
         }
+    }
+
+    @Override
+    public void finish() {
+        Intent intent = new Intent();
+        intent.putExtra("title", groupChatName.getText().toString());
+        setResult(1000, intent);
+        super.finish();
     }
 
     @Override
