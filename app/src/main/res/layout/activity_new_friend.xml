@@ -28,11 +28,11 @@
             android:background="#dedede" />
 
         <LinearLayout
+            android:id="@+id/llPhoneContract"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/line"
             android:gravity="center_vertical"
-            android:onClick="addPhoneContract"
             android:paddingStart="12dp"
             android:paddingTop="16dp"
             android:paddingEnd="12dp"

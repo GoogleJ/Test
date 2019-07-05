@@ -51,6 +51,7 @@ import com.zxjk.duoduo.ui.msgpage.rongIM.message.RedPacketMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIM.message.TransferMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.AudioVideoPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.BusinessCardPlugin;
+import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.FilePlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.PhotoSelectorPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.RedPacketPlugin;
 import com.zxjk.duoduo.ui.msgpage.rongIM.plugin.SightPlugin;
@@ -494,7 +495,6 @@ public class ConversationActivity extends BaseActivity {
         RongIMClient.setTypingStatusListener(typingStatusListener);
     }
 
-    @NotNull
     private String resolvePlugin() {
         //获取聊天类型（单聊、群聊）
         List<String> pathSegments = getIntent().getData().getPathSegments();
@@ -602,6 +602,7 @@ public class ConversationActivity extends BaseActivity {
                                     extension.addPlugin(new GameStartPlugin());
                                 }
                                 extension.addPlugin(new GameJiaoYiPlugin());
+                                extension.addPlugin(new FilePlugin());
                                 extension.addPlugin(gameRulesPlugin);
                             }
                             Constant.ownerIdForGameChat = groupInfo.getGroupInfo().getGroupOwnerId();

@@ -118,8 +118,10 @@ public class FriendDetailsActivity extends BaseActivity implements View.OnClickL
         tvDuoDuoNumber.setText(getString(R.string.duoduo_acount) + " " + friendInfoResponse.getDuoduoId());
         if (friendInfoResponse.getIsShowRealname().equals("0")) {
             tvRealName.setText(R.string.real_name1);
+        } else if (TextUtils.isEmpty(friendInfoResponse.getRealname())) {
+            tvRealName.setText(getString(R.string.real_name_noauthentication));
         } else {
-            tvRealName.setText(getString(R.string.real_name) + " " + friendInfoResponse.getRealname());
+            tvRealName.setText(getString(R.string.real_name) + friendInfoResponse.getRealname());
         }
         tvDistrict.setText(getString(R.string.district) + " " + friendInfoResponse.getAddress());
         String mobile = friendInfoResponse.getMobile();

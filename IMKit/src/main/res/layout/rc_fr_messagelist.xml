@@ -40,7 +40,7 @@
             android:layout_marginLeft="3dp"
             android:layout_marginRight="5dp"
             android:text="@string/rc_new_messages"
-            android:textColor="#0195ff"
+            android:textColor="#08C1BC"
             android:textSize="14sp"/>
     </LinearLayout>
 

@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import io.rong.imlib.model.Message;
 
 public class Constant {
-    public static boolean isVerify = true;
+    public static boolean isVerify = false;
     //省市区数据
     public static final String CITY_DATA = "china_city_data.json";
     //阿里OSS上传地址

@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.msgpage;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
@@ -65,13 +66,11 @@ public class NewFriendActivity extends BaseActivity {
 
     List<FriendInfoResponse> list = new ArrayList<>();
 
-    @SuppressLint("WrongConstant")
     protected void initUI() {
         TextView tv_title = findViewById(R.id.tv_title);
         tv_title.setText(getString(R.string.new_friend));
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());
         LinearLayoutManager manager = new LinearLayoutManager(this);
-        manager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
         mAdapter = new NewFriendAdapter();
         getMyFriendsWaiting();
@@ -102,6 +101,13 @@ public class NewFriendActivity extends BaseActivity {
             mAdapter.setEmptyView(view);
         }
         textView.setOnClickListener(v -> startActivity(new Intent(NewFriendActivity.this, GlobalSearchActivity.class)));
+
+        getPermisson(findViewById(R.id.llPhoneContract), new PermissionResult() {
+            @Override
+            public void onResult(boolean granted) {
+
+            }
+        }, Manifest.permission.READ_CONTACTS);
     }
 
     /**

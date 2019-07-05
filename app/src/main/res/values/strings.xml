@@ -961,4 +961,6 @@
     <string name="popmap_map3">百度地图</string>
     <string name="alipay_qrerror">无法识别卖家收款码，请手动转账</string>
     <string name="add_phone_contract">添加手机联系人</string>
+    <string name="file">文件</string>
+    <string name="real_name_noauthentication">真实姓名:未实名</string>
 </resources>
