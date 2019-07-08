@@ -61,7 +61,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         ivMineAuthSign = view.findViewById(R.id.ivMineAuthSign);
         tv_nickName = view.findViewById(R.id.tv_nickName);
         tvMineSign = view.findViewById(R.id.tvMineSign);
-        ImageView iv_QRCode = view.findViewById(R.id.iv_QRCode);
         tv_DuoDuoNumber.setText(getString(R.string.duoduo_acount) + Constant.currentUser.getDuoduoId());
 
         rl_balance.setOnClickListener(this);
@@ -69,8 +68,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         rl_collectionCode.setOnClickListener(this);
         rl_setting.setOnClickListener(this);
         cv_Info.setOnClickListener(this);
-        iv_QRCode.setOnClickListener(this);
         rl_exchange.setOnClickListener(this);
+        tv_nickName.setOnClickListener(this);
 
         if (Constant.isVerify) {
             rl_balance.setVisibility(View.GONE);
@@ -128,7 +127,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             //二维码
-            case R.id.iv_QRCode:
+            case R.id.tv_nickName:
                 startActivity(new Intent(getContext(), MyQrCodeActivity.class));
                 break;
             //个人信息

@@ -155,9 +155,9 @@ public class NearByActivity extends BaseActivity {
         } else if (distance <= 100) {
             return "< " + ((int) (distance)) + "m";
         } else if (distance > 100 && distance < 1000) {
-            return ((int) (distance / 100)) + "00m内";
+            return ("< " + (int) (distance / 100)) + "00m";
         } else {
-            return (((int) (distance - distance % 1000)) / 1000) + "km内";
+            return ("< " + ((int) (distance - distance % 1000)) / 1000) + "km";
         }
     }
 

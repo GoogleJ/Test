@@ -89,6 +89,7 @@ public class SettingActivity extends BaseActivity {
             Intent mItent = new Intent();
             mItent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
             mItent.setData(Uri.fromParts("package", getPackageName(), null));
+            mItent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(mItent);
         });
 

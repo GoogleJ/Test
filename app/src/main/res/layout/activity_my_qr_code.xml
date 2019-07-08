@@ -45,10 +45,12 @@
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@id/m_my_qr_code_header_icon"
                     android:layout_marginTop="5dp"
+                    android:layout_marginEnd="15dp"
                     android:layout_toEndOf="@id/m_my_qr_code_header_icon"
+                    android:ellipsize="end"
+                    android:lines="1"
                     android:textColor="@color/text_color3"
-                    android:textSize="16sp"
-                    tools:ignore="RtlCompat" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/m_my_qr_code_signature_label"
@@ -61,8 +63,7 @@
                     android:ellipsize="end"
                     android:gravity="bottom"
                     android:lines="1"
-                    android:textColor="@color/text_color2"
-                    android:textSize="14sp" />
+                    android:textColor="@color/text_color2" />
 
             </RelativeLayout>
 

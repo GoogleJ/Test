@@ -113,7 +113,7 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
                     return;
                 }
 
-                CommonUtils.resolveFriendList(this, userId);
+                CommonUtils.resolveFriendList(this, userId, true);
             } else if (action.equals("action3")) {
                 BaseUri<GroupQRActivity.GroupQRData> uri = new Gson().fromJson(result, new TypeToken<BaseUri<GroupQRActivity.GroupQRData>>() {
                 }.getType());

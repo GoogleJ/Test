@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_color"
-    android:orientation="vertical"
-    tools:ignore="all">
+    android:orientation="vertical">
 
     <include layout="@layout/layout_title" />
 
@@ -31,7 +28,7 @@
                     android:id="@+id/cv_Info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
+                    android:layout_margin="16dp"
                     android:background="@color/white"
                     app:cardCornerRadius="5dp"
                     app:cardElevation="5dp">
@@ -40,56 +37,31 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="25dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginBottom="14dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp"
                         android:orientation="vertical">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
-                            <TextView
-                                android:id="@+id/tv_nickName"
-                                style="@style/textStyle4"
-                                android:gravity="center" />
-
-                            <ImageView
-                                android:id="@+id/iv_QRCode"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignTop="@id/tv_nickName"
-                                android:layout_alignBottom="@id/tv_nickName"
-                                android:layout_marginStart="7dp"
-                                android:layout_toEndOf="@id/tv_nickName"
-                                app:srcCompat="@drawable/icon_qr_code" />
-
-                            <TextView
-                                android:id="@+id/tv_DuoDuoNumber"
-                                style="@style/textStyle16"
-                                android:layout_below="@id/tv_nickName"
-                                android:layout_marginTop="38dp"
-                                android:text="多多号" />
-
                             <FrameLayout
                                 android:id="@+id/flMineHeadImgParent"
-                                android:layout_width="77dp"
-                                android:layout_height="76dp"
-                                android:layout_alignTop="@id/tv_nickName"
-                                android:layout_alignParentEnd="true"
-                                android:clipChildren="false">
+                                android:layout_width="78dp"
+                                android:layout_height="78dp"
+                                android:layout_alignParentEnd="true">
 
                                 <ImageView
                                     android:id="@+id/ivMineHeadImg"
-                                    android:layout_width="70dp"
-                                    android:layout_height="70dp"
-                                    android:scaleType="centerCrop"
-                                    app:srcCompat="@color/default_placeholder" />
+                                    android:layout_width="72dp"
+                                    android:layout_height="72dp"
+                                    android:scaleType="centerCrop" />
 
                                 <ImageView
                                     android:id="@+id/ivMineAuthSign"
-                                    android:layout_width="21dp"
-                                    android:layout_height="21dp"
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
                                     android:layout_gravity="end|bottom"
                                     android:src="@drawable/ic_mine_authenticate"
                                     android:visibility="invisible" />
@@ -97,12 +69,27 @@
                             </FrameLayout>
 
                             <TextView
+                                android:id="@+id/tv_nickName"
+                                style="@style/textStyle4"
+                                android:layout_alignParentStart="true"
+                                android:drawableEnd="@drawable/icon_qr_code"
+                                android:drawablePadding="4dp"
+                                android:lines="1"
+                                android:maxLength="9" />
+
+                            <TextView
+                                android:id="@+id/tv_DuoDuoNumber"
+                                style="@style/textStyle16"
+                                android:layout_below="@id/tv_nickName"
+                                android:layout_marginTop="48dp"
+                                android:text="@string/duoduo_acount" />
+
+                            <TextView
                                 android:id="@+id/tv_signature"
                                 style="@style/textStyle16"
                                 android:layout_below="@+id/tv_DuoDuoNumber"
-                                android:layout_marginTop="12dp"
+                                android:layout_marginTop="16dp"
                                 android:text="@string/personalized_signature" />
-
 
                             <TextView
                                 android:id="@+id/tvMineSign"
@@ -113,12 +100,14 @@
                                 android:layout_toStartOf="@+id/flMineHeadImgParent"
                                 android:layout_toEndOf="@id/tv_signature"
                                 android:ellipsize="end"
-                                android:lines="2"
-                                android:text="" />
+                                android:lines="1" />
 
                         </RelativeLayout>
+
                     </LinearLayout>
+
                 </androidx.cardview.widget.CardView>
+
             </LinearLayout>
 
             <include layout="@layout/layout_line10" />

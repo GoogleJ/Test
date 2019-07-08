@@ -140,7 +140,7 @@ public class CommonUtils {
         return name;
     }
 
-    public static void resolveFriendList(BaseActivity activity, String friendId) {
+    public static void resolveFriendList(BaseActivity activity, String friendId, boolean finish) {
         if (Constant.friendsList == null) {
             LifecycleProvider<Lifecycle.Event> provider = AndroidLifecycle.createLifecycleProvider(activity);
             ServiceFactory.getInstance().getBaseService(Api.class)
@@ -153,14 +153,21 @@ public class CommonUtils {
                         for (FriendInfoResponse f : friendInfoResponses) {
                             RongUserInfoManager.getInstance().setUserInfo(new UserInfo(f.getId(), TextUtils.isEmpty(f.getRemark()) ? f.getNick() : f.getRemark(), Uri.parse(f.getHeadPortrait())));
                         }
-                        handleFriendList(activity, friendId);
+                        handleFriendList(activity, friendId, finish);
                     }, activity::handleApiError);
         } else {
-            handleFriendList(activity, friendId);
+            handleFriendList(activity, friendId, finish);
         }
     }
 
-    private static void handleFriendList(BaseActivity activity, String userId) {
+    public static void resolveFriendList(BaseActivity activity, String friendId) {
+        resolveFriendList(activity, friendId, false);
+    }
+
+    private static void handleFriendList(BaseActivity activity, String userId, boolean finish) {
+        if (finish) {
+            activity.finish();
+        }
         if (userId.equals(Constant.userId)) {
             //扫到了自己
             Intent intent = new Intent(activity, FriendDetailsActivity.class);
