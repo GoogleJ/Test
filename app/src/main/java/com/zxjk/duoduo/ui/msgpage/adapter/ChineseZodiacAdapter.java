@@ -9,18 +9,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.response.DuobaoParameterResponse;
-
 import java.util.List;
 
-/**
- * *********************
- * Administrator
- * *********************
- * 2019/6/5
- * *********************
- * 12生肖
- * *********************
- */
+
 public class ChineseZodiacAdapter extends BaseQuickAdapter<DuobaoParameterResponse.ChineseZodiacBean, BaseViewHolder> {
     public ChineseZodiacAdapter(int layoutResId, @Nullable List<DuobaoParameterResponse.ChineseZodiacBean> data) {
         super(layoutResId, data);

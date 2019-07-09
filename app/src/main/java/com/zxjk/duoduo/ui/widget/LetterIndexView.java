@@ -8,16 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-
 import com.zxjk.duoduo.R;
-
-/**
- * 这是选择国家代码的索引
- * Demo class
- *
- * @author keriezhang
- * @date 2016/10/31
- */
 
 
 public class LetterIndexView extends View{

@@ -42,11 +42,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * author L
- * create at 2019/5/7
- * description: 编辑个人信息
- */
+
 public class EditPersonalInformationFragment extends BaseActivity {
 
     private JDCityPicker cityPicker;

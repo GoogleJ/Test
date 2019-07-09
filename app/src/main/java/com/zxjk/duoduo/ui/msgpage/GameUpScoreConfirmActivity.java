@@ -8,11 +8,6 @@ import android.widget.TextView;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 
-/**
- * author L
- * create at 2019/5/9
- * description: 上分成功
- */
 public class GameUpScoreConfirmActivity extends BaseActivity {
 
     @SuppressLint("SetTextI18n")

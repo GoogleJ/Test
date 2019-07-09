@@ -21,11 +21,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * author L
- * create at 2019/5/7
- * description: 添加联系人
- */
 public class AddContactActivity extends BaseActivity {
     @BindView(R.id.tv_title)
     TextView tvTitle;

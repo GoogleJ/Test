@@ -13,9 +13,7 @@ import io.rong.common.ParcelUtils;
 import io.rong.imlib.MessageTag;
 import io.rong.imlib.model.MessageContent;
 
-/**
- * @author Administrator
- */
+
 @SuppressLint("ParcelCreator")
 @MessageTag(value = "MRedPackageMsg", flag = MessageTag.ISCOUNTED | MessageTag.ISPERSISTED)
 public class RedPacketMessage extends MessageContent {

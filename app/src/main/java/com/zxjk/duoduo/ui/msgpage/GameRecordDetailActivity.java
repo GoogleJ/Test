@@ -30,11 +30,6 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTit
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
 
-/**
- * author L
- * create at 2019/5/8
- * description: 游戏详情
- */
 @SuppressLint("CheckResult")
 public class GameRecordDetailActivity extends BaseActivity {
 

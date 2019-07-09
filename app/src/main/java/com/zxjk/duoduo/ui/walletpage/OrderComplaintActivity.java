@@ -13,21 +13,10 @@ import com.zxjk.duoduo.bean.response.GetOverOrderResponse;
 import com.zxjk.duoduo.ui.ProofComplaintActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.DataUtils;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * *********************
- * Administrator
- * *********************
- * 2019/5/22
- * *********************
- * 订单正在申诉
- * 订单申诉成功
- * *********************
- */
 public class OrderComplaintActivity extends BaseActivity {
     //标题
     @BindView(R.id.tv_title)

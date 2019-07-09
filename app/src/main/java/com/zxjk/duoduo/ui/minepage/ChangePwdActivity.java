@@ -19,12 +19,8 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
 import com.zxjk.duoduo.utils.MMKVUtils;
-
 import io.rong.imkit.RongIM;
 
-/**
- * @author Administrator
- */
 @SuppressLint("CheckResult")
 public class ChangePwdActivity extends BaseActivity {
 

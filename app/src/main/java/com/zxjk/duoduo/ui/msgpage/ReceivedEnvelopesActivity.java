@@ -7,9 +7,6 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 
 import androidx.annotation.Nullable;
 
-/**
- * @author Administrator
- */
 public class ReceivedEnvelopesActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

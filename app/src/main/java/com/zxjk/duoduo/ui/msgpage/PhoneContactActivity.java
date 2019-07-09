@@ -26,20 +26,10 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.PhoneContactAdapter;
 import com.zxjk.duoduo.utils.CommonUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * *********************
- * Administrator
- * *********************
- * 2019/5/16
- * *********************
- * 手机联系人
- * *********************
- */
 public class PhoneContactActivity extends BaseActivity implements TextWatcher {
     private RecyclerView mRecyclerView;
     private List<PhoneInfo> list = new ArrayList<>();

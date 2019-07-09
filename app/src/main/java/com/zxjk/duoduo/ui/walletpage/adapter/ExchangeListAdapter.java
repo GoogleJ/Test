@@ -4,21 +4,16 @@ import android.graphics.Color;
 import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.response.GetOverOrderResponse;
 import com.zxjk.duoduo.utils.CommonUtils;
-
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
 
-/**
- * @author Administrator
- */
 public class ExchangeListAdapter extends BaseQuickAdapter<GetOverOrderResponse, BaseViewHolder> {
     private String rate;
 

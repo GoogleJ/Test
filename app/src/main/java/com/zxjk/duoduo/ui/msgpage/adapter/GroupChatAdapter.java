@@ -2,7 +2,6 @@ package com.zxjk.duoduo.ui.msgpage.adapter;
 
 import android.annotation.SuppressLint;
 import android.widget.ImageView;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.othershe.combinebitmap.CombineBitmap;
@@ -10,13 +9,9 @@ import com.othershe.combinebitmap.layout.WechatLayoutManager;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.response.GroupChatResponse;
 import com.zxjk.duoduo.utils.CommonUtils;
-
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @author Administrator
- */
 
 public class GroupChatAdapter extends BaseQuickAdapter<GroupChatResponse, BaseViewHolder> {
 

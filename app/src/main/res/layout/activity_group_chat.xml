@@ -9,7 +9,6 @@
 
     <include layout="@layout/layout_title_back" />
 
-
     <LinearLayout
         android:id="@+id/m_group_chat_edit"
         android:layout_width="match_parent"

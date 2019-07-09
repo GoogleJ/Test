@@ -21,16 +21,8 @@ import com.zxjk.duoduo.ui.msgpage.widget.CommonPopupWindow;
 import com.zxjk.duoduo.ui.walletpage.RecipetQRActivity;
 
 import butterknife.ButterKnife;
-import io.rong.imkit.RongContext;
-import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
-import io.rong.message.CommandMessage;
 
-/**
- * author L
- * create at 2019/5/7
- * description: 消息
- */
 public class MsgFragment extends BaseFragment implements View.OnClickListener, CommonPopupWindow.ViewInterface {
 
     private static final String CONVERSATIONLIST_FRAGMENT_KEY = "conversationlist_fragment_key";

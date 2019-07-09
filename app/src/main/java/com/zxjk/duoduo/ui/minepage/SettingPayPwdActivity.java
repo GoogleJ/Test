@@ -25,18 +25,8 @@ import com.zxjk.duoduo.ui.widget.KeyboardPopupWindow;
 import com.zxjk.duoduo.ui.widget.PayPsdInputView;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
-
 import butterknife.ButterKnife;
 
-/**
- * *********************
- * Administrator
- * *********************
- * 2019/5/17
- * *********************
- * 设置支付密码
- * *********************
- */
 public class SettingPayPwdActivity extends BaseActivity {
     PayPsdInputView payPsdInputView;
     TextView commmitBtn;

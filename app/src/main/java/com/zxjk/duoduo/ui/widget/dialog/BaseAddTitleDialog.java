@@ -10,16 +10,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.zxjk.duoduo.R;
 
-import androidx.annotation.NonNull;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * @author Administrator
- */
 public class BaseAddTitleDialog extends Dialog implements View.OnClickListener {
     private View view;
     Context context;

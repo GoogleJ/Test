@@ -9,9 +9,6 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.response.FriendInfoResponse;
 import com.zxjk.duoduo.utils.GlideUtil;
 
-/**
- * @author Administrator
- */
 public class GlobalSearchAdapter extends BaseQuickAdapter<FriendInfoResponse, BaseViewHolder> {
 
     private Context context;

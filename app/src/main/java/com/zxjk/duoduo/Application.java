@@ -3,9 +3,6 @@ package com.zxjk.duoduo;
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.Context;
-
-import androidx.multidex.MultiDex;
-
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
@@ -27,10 +24,8 @@ import com.zxjk.duoduo.ui.msgpage.rongIM.provider.RedPacketProvider;
 import com.zxjk.duoduo.ui.msgpage.rongIM.provider.SystemProvider;
 import com.zxjk.duoduo.ui.msgpage.rongIM.provider.TransferProvider;
 import com.zxjk.duoduo.utils.WeChatShareUtil;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import io.reactivex.schedulers.Schedulers;
 import io.rong.callkit.RongCallKit;
 import io.rong.imkit.DefaultExtensionModule;
@@ -69,8 +64,6 @@ public class Application extends android.app.Application {
 
         //OSS初始化
         new Thread(this::initOSS).start();
-
-        MultiDex.install(this);
 
         //融云推送设置
         PushConfig config = new PushConfig.Builder()

@@ -15,12 +15,6 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.MyGroupAdapter;
 
 
-/**
- *author L
- *create at 2019/5/8
- *description: 我的团队
- *
- */
 @SuppressLint("CheckResult")
 public class MyGroupActivity extends BaseActivity  {
 

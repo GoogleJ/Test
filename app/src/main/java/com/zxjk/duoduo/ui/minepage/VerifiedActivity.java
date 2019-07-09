@@ -36,16 +36,11 @@ import com.zxjk.duoduo.utils.TakePicUtil;
 
 import java.io.File;
 import java.util.Collections;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * author L
- * create at 2019/5/7
- * description: 实名认证
- */
+
 @SuppressLint("CheckResult")
 public class VerifiedActivity extends BaseActivity {
     public static final int REQUEST_TAKE = 1;

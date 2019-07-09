@@ -3,20 +3,15 @@ package com.zxjk.duoduo.ui.msgpage;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * @author Administrator
- */
+
 public class SelectContactForGroupCardActivity extends BaseActivity {
     RecyclerView card_recycler_view;
     EditText search_select_contact;

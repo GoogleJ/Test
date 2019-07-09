@@ -10,17 +10,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import io.rong.callkit.util.CallKitSearchBarListener;
 import io.rong.callkit.util.CallKitSearchBarView;
 import io.rong.callkit.util.CallKitUtils;
@@ -32,10 +29,7 @@ import io.rong.imkit.widget.AsyncImageView;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 
-/**
- * @author dengxudong
- * @version $Rev$
- */
+
 public class CallSelectMemberActivity extends BaseNoActionBarActivity {
 
     ArrayList<String> selectedMember;
@@ -49,7 +43,6 @@ public class CallSelectMemberActivity extends BaseNoActionBarActivity {
     ListView mList;
     RongCallCommon.CallMediaType mMediaType;
     private Conversation.ConversationType conversationType;
-    private EditText searchView;
     private ArrayList<String> allMembers = null;
 
     private HashMap<String, String> tempNickmembers = new HashMap<>();

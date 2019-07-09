@@ -25,11 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * author L
- * create at 2019/5/13
- * description: 选择联系人
- */
 @SuppressLint("CheckResult")
 public class SelectContactActivity extends BaseActivity implements TextWatcher {
 

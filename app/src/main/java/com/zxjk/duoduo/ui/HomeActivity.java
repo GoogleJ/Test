@@ -62,9 +62,7 @@ import io.rong.pushperm.RongPushPremissionsCheckHelper;
 
 import static com.ashokvarma.bottomnavigation.BottomNavigationBar.BACKGROUND_STYLE_STATIC;
 
-/**
- * @author Administrator
- */
+
 public class HomeActivity extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
 
     BottomNavigationBar m_bottom_bar;

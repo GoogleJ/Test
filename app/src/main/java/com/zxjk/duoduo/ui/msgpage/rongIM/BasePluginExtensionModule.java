@@ -22,9 +22,6 @@ import io.rong.imkit.emoticon.IEmoticonTab;
 import io.rong.imkit.plugin.IPluginModule;
 import io.rong.imlib.model.Conversation;
 
-/**
- * @author Administrator
- */
 public class BasePluginExtensionModule extends DefaultExtensionModule {
     private EditText mEditText;
     private List<IEmoticonTab> list;

@@ -9,11 +9,9 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -22,22 +20,14 @@ import com.zxjk.duoduo.bean.response.GroupChatResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.GroupChatAdapter;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
 
-/**
- * author L
- * create at 2019/5/7
- * description: 群聊
- */
 public class GroupChatActivity extends BaseActivity implements TextWatcher {
-
     @BindView(R.id.m_group_chat_edit_1)
     EditText mGroupChatEdit1;
     @BindView(R.id.m_group_chat_edit)
@@ -51,7 +41,6 @@ public class GroupChatActivity extends BaseActivity implements TextWatcher {
 
     List<GroupChatResponse> list = new ArrayList<>();
 
-    @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,10 +68,7 @@ public class GroupChatActivity extends BaseActivity implements TextWatcher {
         groupChatAdapter.setEmptyView(emptyView);
         mGroupChatRecyclerView.setAdapter(groupChatAdapter);
 
-        groupChatAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-
-            RongIM.getInstance().startGroupChat(this, groupChatAdapter.getData().get(position).getId(), groupChatAdapter.getData().get(position).getGroupNikeName());
-        });
+        groupChatAdapter.setOnItemChildClickListener((adapter, view, position) -> RongIM.getInstance().startGroupChat(this, groupChatAdapter.getData().get(position).getId(), groupChatAdapter.getData().get(position).getGroupNikeName()));
     }
 
     @SuppressLint("CheckResult")

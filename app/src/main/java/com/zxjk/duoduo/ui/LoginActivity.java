@@ -35,14 +35,9 @@ import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
-
 import static com.zxjk.duoduo.utils.MD5Utils.getMD5;
 
-/**
- * author L
- * create at 2019/5/8
- * description: 登录
- */
+
 public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.login_country)

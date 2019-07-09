@@ -1,15 +1,6 @@
 package com.zxjk.duoduo.bean;
 
 
-/**
- * *********************
- * Administrator
- * *********************
- * 2019/5/24
- * *********************
- * 身份证正面信息Bean
- * *********************
- */
 public class CardFaceBean {
 
     /**

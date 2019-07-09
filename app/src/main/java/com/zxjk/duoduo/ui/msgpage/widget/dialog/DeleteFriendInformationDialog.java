@@ -9,17 +9,15 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
 
 import com.zxjk.duoduo.R;
 
-import androidx.annotation.NonNull;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * @author Administrator
- */
+
 public class DeleteFriendInformationDialog extends Dialog implements View.OnClickListener {
     @BindView(R.id.m_cancel_btn)
     TextView cancelBtn;
@@ -29,13 +27,10 @@ public class DeleteFriendInformationDialog extends Dialog implements View.OnClic
     TextView title;
 
     private View view;
-    private Context context;
 
     public DeleteFriendInformationDialog(@NonNull Context context) {
         super(context, R.style.dialogstyle);
         this.view = View.inflate(context, R.layout.dialog_delete_friend_information, null);
-        this.context = context;
-
     }
 
     @Override

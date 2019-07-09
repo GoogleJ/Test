@@ -38,11 +38,7 @@ import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
 
-/**
- * author L
- * create at 2019/5/13
- * description: 设置支付密码
- */
+
 @SuppressLint("CheckResult")
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class SetUpPaymentPwdActivity extends BaseActivity {

@@ -27,15 +27,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * *********************
- * Administrator
- * *********************
- * 2019/6/3
- * *********************
- * 群主上分
- * *********************
- */
 @SuppressLint({"CheckResult", "SetTextI18n"})
 public class GroupMasterPointsActivity extends BaseActivity {
 

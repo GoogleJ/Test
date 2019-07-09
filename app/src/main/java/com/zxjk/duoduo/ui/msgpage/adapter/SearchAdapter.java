@@ -8,9 +8,7 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.response.FriendInfoResponse;
 import com.zxjk.duoduo.utils.GlideUtil;
 
-/**
- * @author Administrator
- */
+
 public class SearchAdapter extends BaseQuickAdapter<FriendInfoResponse, BaseViewHolder> {
 
     public SearchAdapter() {

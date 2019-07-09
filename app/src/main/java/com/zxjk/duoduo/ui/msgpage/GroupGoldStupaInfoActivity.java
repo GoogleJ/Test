@@ -22,15 +22,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * *********************
- * Administrator
- * *********************
- * 2019/5/24
- * *********************
- * 金多宝下注详情 群主
- * *********************
- */
 public class GroupGoldStupaInfoActivity extends BaseActivity {
 
     @BindView(R.id.tv_title)

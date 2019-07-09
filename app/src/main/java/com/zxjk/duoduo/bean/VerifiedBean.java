@@ -1,8 +1,5 @@
 package com.zxjk.duoduo.bean;
 
-/**
- * @author Administrator
- */
 public class VerifiedBean {
     private String number;
     private String realName;

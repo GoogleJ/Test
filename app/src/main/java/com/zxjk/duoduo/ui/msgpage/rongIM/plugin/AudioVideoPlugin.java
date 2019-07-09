@@ -40,15 +40,6 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Discussion;
 
 
-/**
- * *********************
- * Administrator
- * *********************
- * 2019/5/20
- * *********************
- * 音视频
- * *********************
- */
 public class AudioVideoPlugin implements IPluginModule, IPluginRequestPermissionResultCallback {
     private static final String TAG = "VideoPlugin";
     private ArrayList<String> allMembers;

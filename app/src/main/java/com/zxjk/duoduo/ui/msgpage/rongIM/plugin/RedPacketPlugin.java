@@ -16,9 +16,6 @@ import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 
-/**
- * @author Administrator
- */
 public class RedPacketPlugin implements IPluginModule {
     @Override
     public Drawable obtainDrawable(Context context) {

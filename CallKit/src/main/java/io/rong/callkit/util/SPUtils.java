@@ -2,18 +2,10 @@ package io.rong.callkit.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
-
-/**
- * @author dengxudong
- * @version $Rev$
- */
 
 public class SPUtils {
     public SPUtils() {
@@ -147,11 +139,6 @@ public class SPUtils {
     }
 
 
-    /**
-     * 创建一个解决SharedPreferencesCompat.apply方法的一个兼容类
-     *
-     * @author zhy
-     */
     private static class SharedPreferencesCompat {
         private static final Method sApplyMethod = findApplyMethod();
 

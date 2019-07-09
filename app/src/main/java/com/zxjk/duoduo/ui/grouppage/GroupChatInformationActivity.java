@@ -40,11 +40,6 @@ import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 
-/**
- * author L
- * create at 2019/5/8
- * description: 群聊天信息  讨论组
- */
 @SuppressLint("CheckResult")
 public class GroupChatInformationActivity extends BaseActivity {
 

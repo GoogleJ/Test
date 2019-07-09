@@ -21,11 +21,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * author L
- * create at 2019/5/10
- * description: 个人信息【添加到通讯录】
- */
 @SuppressLint("CheckResult")
 public class AddFriendDetailsActivity extends BaseActivity {
     @BindView(R.id.tv_title)

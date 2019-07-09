@@ -12,9 +12,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * @author Administrator
- */
 public class CommitSuccessfulActivity extends BaseActivity {
     @BindView(R.id.tv_title)
     TextView tvTitle;

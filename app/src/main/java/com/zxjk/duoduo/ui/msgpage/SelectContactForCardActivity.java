@@ -46,11 +46,6 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.message.ImageMessage;
 
-/**
- * author L
- * create at 2019/5/8
- * description: 推荐给好友  选择联系人
- */
 @SuppressLint("CheckResult")
 public class SelectContactForCardActivity extends BaseActivity implements TextWatcher {
 

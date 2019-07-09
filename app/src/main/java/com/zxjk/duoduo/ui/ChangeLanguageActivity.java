@@ -6,20 +6,16 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-/**
- *author L
- *create at 2019/5/9
- *description: 语言设置选择
- *
- */
+
 public class ChangeLanguageActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.checkbox_zh_cn)
     ImageView checkBoxZhCn;

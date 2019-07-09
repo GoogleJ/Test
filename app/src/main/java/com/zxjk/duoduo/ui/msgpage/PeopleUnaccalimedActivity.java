@@ -22,14 +22,9 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.RedPackageAdapter;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
-
 import java.util.ArrayList;
 
-/**
- * author L
- * create at 2019/5/9
- * description: 红包详情 状态
- */
+
 public class PeopleUnaccalimedActivity extends BaseActivity {
 
     private TextView title;

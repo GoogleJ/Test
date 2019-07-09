@@ -3,9 +3,6 @@ package com.zxjk.duoduo.bean.response;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * @author Administrator
- */
 public class GroupResponse implements Serializable {
 
 

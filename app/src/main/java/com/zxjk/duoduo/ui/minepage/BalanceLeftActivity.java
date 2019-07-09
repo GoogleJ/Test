@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,17 +21,11 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.AuthenticationActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 
-/**
- * author L
- * create at 2019/5/7
- * description: 余额
- */
 @SuppressLint("CheckResult")
 public class BalanceLeftActivity extends BaseActivity {
 
     private TextView tv_authentication; //是否认证tv
     private TextView tv_balance; //余额
-    private TextView tv_currency; //币种
     private String otherIdCardType = "";
 
     @Override
@@ -43,7 +36,6 @@ public class BalanceLeftActivity extends BaseActivity {
         TextView tv_title = findViewById(R.id.tv_title);
         tv_title.setText(getString(R.string.balance));
         tv_balance = findViewById(R.id.tv_balance);
-        tv_currency = findViewById(R.id.tv_currency);
         tv_authentication = findViewById(R.id.tv_authentication);
 
         //返回
@@ -68,50 +60,38 @@ public class BalanceLeftActivity extends BaseActivity {
                         ImageView iv_idCard = holder.getView(R.id.iv_idCard);
                         ImageView iv_passport = holder.getView(R.id.iv_passport);
                         ImageView iv_other = holder.getView(R.id.iv_other);
-                        holder.setOnClickListener(R.id.ll_idCard, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                iv_idCard.setImageResource(R.drawable.ic_radio_select);
-                                iv_passport.setImageResource(R.drawable.ic_radio_unselect);
-                                iv_other.setImageResource(R.drawable.ic_radio_unselect);
-                                otherIdCardType = "1";
+                        holder.setOnClickListener(R.id.ll_idCard, v1 -> {
+                            iv_idCard.setImageResource(R.drawable.ic_radio_select);
+                            iv_passport.setImageResource(R.drawable.ic_radio_unselect);
+                            iv_other.setImageResource(R.drawable.ic_radio_unselect);
+                            otherIdCardType = "1";
 
-                            }
                         });
-                        holder.setOnClickListener(R.id.ll_passport, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                iv_idCard.setImageResource(R.drawable.ic_radio_unselect);
-                                iv_passport.setImageResource(R.drawable.ic_radio_select);
-                                iv_other.setImageResource(R.drawable.ic_radio_unselect);
-                                otherIdCardType = "2";
-                            }
+                        holder.setOnClickListener(R.id.ll_passport, v12 -> {
+                            iv_idCard.setImageResource(R.drawable.ic_radio_unselect);
+                            iv_passport.setImageResource(R.drawable.ic_radio_select);
+                            iv_other.setImageResource(R.drawable.ic_radio_unselect);
+                            otherIdCardType = "2";
                         });
-                        holder.setOnClickListener(R.id.ll_other, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                iv_idCard.setImageResource(R.drawable.ic_radio_unselect);
-                                iv_passport.setImageResource(R.drawable.ic_radio_unselect);
-                                iv_other.setImageResource(R.drawable.ic_radio_select);
-                                otherIdCardType = "3";
-                            }
+                        holder.setOnClickListener(R.id.ll_other, v13 -> {
+                            iv_idCard.setImageResource(R.drawable.ic_radio_unselect);
+                            iv_passport.setImageResource(R.drawable.ic_radio_unselect);
+                            iv_other.setImageResource(R.drawable.ic_radio_select);
+                            otherIdCardType = "3";
                         });
-                        holder.setOnClickListener(R.id.tv_confirm, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if (!TextUtils.isEmpty(otherIdCardType)) {
-                                    dialog.dismiss();
-                                    if (otherIdCardType.equals("1")) {
-                                        Intent intent = new Intent(BalanceLeftActivity.this, AuthenticationActivity.class);
-                                        startActivity(intent);
-                                    } else {
-                                        Intent intent = new Intent(BalanceLeftActivity.this, VerifiedActivity.class);
-                                        intent.putExtra("otherIdCardType", otherIdCardType);
-                                        startActivity(intent);
-                                    }
+                        holder.setOnClickListener(R.id.tv_confirm, v14 -> {
+                            if (!TextUtils.isEmpty(otherIdCardType)) {
+                                dialog.dismiss();
+                                if (otherIdCardType.equals("1")) {
+                                    Intent intent = new Intent(BalanceLeftActivity.this, AuthenticationActivity.class);
+                                    startActivity(intent);
                                 } else {
-                                    ToastUtils.showShort("请选择证件类型");
+                                    Intent intent = new Intent(BalanceLeftActivity.this, VerifiedActivity.class);
+                                    intent.putExtra("otherIdCardType", otherIdCardType);
+                                    startActivity(intent);
                                 }
+                            } else {
+                                ToastUtils.showShort("请选择证件类型");
                             }
                         });
 

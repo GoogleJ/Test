@@ -20,15 +20,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * *********************
- * Administrator
- * *********************
- * 2019/5/30
- * *********************
- * 高德地图定位
- * *********************
- */
 public class AMapActivity extends BaseActivity {
 
     @BindView(R.id.tv_title)

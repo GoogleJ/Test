@@ -25,13 +25,9 @@ import com.zxjk.duoduo.ui.widget.KeyboardPopupWindow;
 import com.zxjk.duoduo.ui.widget.PayPsdInputView;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
-
 import butterknife.ButterKnife;
 
 
-/**
- * @author Administrator
- */
 public class UpdatePayPwdActivity extends BaseActivity {
 
     PayPsdInputView payPsdInputView;

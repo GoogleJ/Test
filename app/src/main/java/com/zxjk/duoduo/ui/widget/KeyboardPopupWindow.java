@@ -20,9 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-/**
- * @author Administrator
- */
 public class KeyboardPopupWindow extends PopupWindow {
 
     private static final String TAG = "KeyboardPopupWindow";

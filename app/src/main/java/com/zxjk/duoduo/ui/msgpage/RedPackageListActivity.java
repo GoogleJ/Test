@@ -27,11 +27,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTit
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
 
-/**
- * author L
- * create at 2019/5/9
- * description: 红包记录
- */
+
 public class RedPackageListActivity extends BaseActivity {
 
     private MagicIndicator indicator;

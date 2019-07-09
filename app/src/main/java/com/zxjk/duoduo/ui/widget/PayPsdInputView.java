@@ -9,16 +9,13 @@ import android.graphics.RectF;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import com.zxjk.duoduo.R;
+
 import androidx.appcompat.widget.AppCompatEditText;
+
+import com.zxjk.duoduo.R;
+
 import static android.graphics.Paint.ANTI_ALIAS_FLAG;
 
-/**
- *
- * @author
- * @date 2017/5/7
- * 自定义支付密码输入框
- */
 
 public class PayPsdInputView extends AppCompatEditText {
 

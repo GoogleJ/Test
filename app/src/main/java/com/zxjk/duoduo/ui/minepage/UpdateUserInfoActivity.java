@@ -32,11 +32,6 @@ import io.rong.imlib.model.UserInfo;
 import static android.text.InputType.TYPE_CLASS_TEXT;
 import static android.text.InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS;
 
-/**
- * author L
- * create at 2019/5/8
- * description: 昵称、个性签名、邮箱、修改群名称
- */
 @SuppressLint("CheckResult")
 public class UpdateUserInfoActivity extends BaseActivity {
 

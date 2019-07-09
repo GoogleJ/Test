@@ -15,12 +15,9 @@ import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.network.rx.RxException;
 import com.zxjk.duoduo.ui.LoginActivity;
 import com.zxjk.duoduo.utils.MMKVUtils;
-
 import io.rong.imkit.RongIM;
 
-/**
- * @author Administrator
- */
+
 @SuppressLint("CheckResult")
 public class BaseFragment extends RxFragment  {
 

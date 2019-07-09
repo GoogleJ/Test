@@ -26,11 +26,7 @@ import butterknife.ButterKnife;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imlib.model.UserInfo;
 
-/**
- * author L
- * create at 2019/5/10
- * description: 备注
- */
+
 @SuppressLint("CheckResult")
 public class ModifyNotesActivity extends BaseActivity {
     @BindView(R.id.m_modify_notes_edit)

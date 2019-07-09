@@ -24,11 +24,6 @@ import com.zxjk.duoduo.utils.CommonUtils;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imlib.model.Group;
 
-/**
- * author L
- * create at 2019/5/8
- * description: 群公告
- */
 @SuppressLint("CheckResult")
 public class GroupAnnouncementActivity extends BaseActivity {
 

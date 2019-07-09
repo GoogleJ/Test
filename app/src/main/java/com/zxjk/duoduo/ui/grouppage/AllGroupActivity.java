@@ -32,11 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * author L
- * create at 2019/5/7
- * description: 一起游戏
- */
+
 @SuppressLint("SetTextI18n")
 public class AllGroupActivity extends BaseActivity {
 

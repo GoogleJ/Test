@@ -46,11 +46,6 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.message.CommandMessage;
 
-/**
- * author L
- * create at 2019/5/7
- * description: 个人信息
- */
 @SuppressLint("CheckResult")
 public class FriendDetailsActivity extends BaseActivity implements View.OnClickListener, CommonPopupWindow.ViewInterface {
 

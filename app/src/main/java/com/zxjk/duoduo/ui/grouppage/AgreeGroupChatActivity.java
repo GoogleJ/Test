@@ -32,11 +32,6 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.message.InformationNotificationMessage;
 
-/**
- * author L
- * create at 2019/5/13
- * description: 群聊邀请
- */
 public class AgreeGroupChatActivity extends BaseActivity {
     ImageView groupHeader;
     TextView tvGroupName;

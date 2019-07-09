@@ -46,15 +46,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * *********************
- * Administrator
- * *********************
- * 2019/6/5
- * *********************
- * 金多宝游戏
- * *********************
- */
 public class JinDuoBaoActivity extends BaseActivity implements SelectPopupWindow.OnPopWindowClickListener {
     //标题
     @BindView(R.id.tv_title)

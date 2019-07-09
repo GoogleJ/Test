@@ -33,14 +33,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
-
 import static com.zxjk.duoduo.utils.MD5Utils.getMD5;
 
-/**
- * author L
- * create at 2019/5/9
- * description: 注冊
- */
+
 @SuppressLint("CheckResult")
 public class RegisterActivity extends BaseActivity implements View.OnClickListener {
 

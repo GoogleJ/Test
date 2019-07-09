@@ -13,9 +13,6 @@ import com.zxjk.duoduo.ui.msgpage.SelectContactForCardActivity;
 import io.rong.imkit.RongExtension;
 import io.rong.imkit.plugin.IPluginModule;
 
-/**
- * @author Administrator
- */
 public class BusinessCardPlugin implements IPluginModule {
     @Override
     public Drawable obtainDrawable(Context context) {

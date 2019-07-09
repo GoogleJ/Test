@@ -110,11 +110,6 @@ import razerdp.basepopup.QuickPopupConfig;
 import static com.zxjk.duoduo.Constant.CODE_SUCCESS;
 import static com.zxjk.duoduo.Constant.CODE_UNLOGIN;
 
-/**
- * author L
- * create at 2019/5/8
- * description:  聊天页面 群组讨论聊天页面
- */
 @SuppressLint("CheckResult")
 public class ConversationActivity extends BaseActivity {
     private ConversationFragment fragment;

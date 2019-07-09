@@ -2,9 +2,6 @@ package com.zxjk.duoduo.bean;
 
 import java.util.Objects;
 
-/**
- * @author Administrator
- */
 public class PhoneInfo {
     private String name;
     private String number;

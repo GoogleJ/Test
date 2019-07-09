@@ -25,13 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * Demo class
- * 这个是国家代码选择的类
- *
- * @author keriezhang
- * @date 2016/10/31
- */
+
 public class CountrySelectActivity extends BaseActivity {
 
     RecyclerView lv_list;

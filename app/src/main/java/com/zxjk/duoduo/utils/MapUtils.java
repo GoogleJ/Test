@@ -3,9 +3,12 @@ package com.zxjk.duoduo.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+
 import androidx.annotation.StringDef;
+
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ToastUtils;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -40,7 +43,7 @@ public class MapUtils {
     }
 
     public void openMap(Context context, @MapType String map) {
-        if (!isAvilible(map)) {
+        if (!isAvailable(map)) {
             ToastUtils.showShort(TIP_ERROR);
             return;
         }
@@ -58,7 +61,7 @@ public class MapUtils {
         }
     }
 
-    private boolean isAvilible(@MapType String map) {
+    private boolean isAvailable(String map) {
         return AppUtils.isAppInstalled(map);
     }
 

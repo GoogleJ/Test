@@ -9,7 +9,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
@@ -25,17 +24,11 @@ import com.zxjk.duoduo.ui.widget.dialog.SelectPopupWindow;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
 import com.zxjk.duoduo.utils.MoneyValueFilter;
-
 import java.text.DecimalFormat;
-
 import io.reactivex.ObservableSource;
 import io.reactivex.functions.Function;
 
-/**
- * author L
- * create at 2019/5/8
- * description: 下分
- */
+
 @SuppressLint("CheckResult")
 public class GameDownScoreActivity extends BaseActivity {
 

@@ -30,11 +30,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * author L
- * create at 2019/5/8
- * description: 上分
- */
 @SuppressLint({"CheckResult", "SetTextI18n"})
 public class GameUpScoreActivity extends BaseActivity {
 

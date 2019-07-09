@@ -9,9 +9,6 @@ import com.zxjk.duoduo.bean.response.AllGroupMembersResponse;
 import com.zxjk.duoduo.utils.GlideUtil;
 
 
-/**
- * @author Administrator
- */
 public class ChooseNewOwnerAdapter extends BaseQuickAdapter<AllGroupMembersResponse, BaseViewHolder> {
     public ChooseNewOwnerAdapter() {
         super(R.layout.item_choose_new_owner);

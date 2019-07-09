@@ -11,9 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
-
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -35,20 +33,15 @@ import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.utils.MMKVUtils;
 import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
-
 import java.io.File;
 import java.util.Collections;
-
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
 
-/**
- * author L
- * create at 2019/5/7
- * description: 个人资料
- */
 @SuppressLint("CheckResult")
 public class UserInfoActivity extends BaseActivity {
+    private static final int REQUEST_TAKE = 1;
+    private static final int REQUEST_ALBUM = 2;
 
     private TextView tvUserInfoSex;
     private TextView tv_DuoDuoNumber;
@@ -60,8 +53,6 @@ public class UserInfoActivity extends BaseActivity {
     private ImageView iv_headPortrait;
     private TextView tv_nickname;
 
-    private static final int REQUEST_TAKE = 1;
-    private static final int REQUEST_ALBUM = 2;
     String type = "type";
     int changeNick = 2;
     int changeSign = 1;

@@ -26,18 +26,9 @@ import com.zxjk.duoduo.ui.widget.dialog.SafeInputDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.MD5Utils;
 import com.zxjk.duoduo.utils.MoneyValueFilter;
-
 import java.text.DecimalFormat;
 
-/**
- * *********************
- * Administrator
- * *********************
- * 2019/5/17
- * *********************
- * 划转
- * *********************
- */
+
 public class HuaZhuanActivity extends BaseActivity implements SafeInputDialog.OnFinishListener {
 
     private String type = "3"; //币种类型，2：HK->HKB，3：HKB->HK

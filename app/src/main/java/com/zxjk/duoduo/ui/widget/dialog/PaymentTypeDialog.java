@@ -12,17 +12,15 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.zxjk.duoduo.R;
 
-import androidx.annotation.NonNull;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * @author Administrator
- * 支付宝或者微信的类型
- */
+
 public class PaymentTypeDialog extends Dialog implements View.OnClickListener {
     private View view;
     Context context;
@@ -32,13 +30,9 @@ public class PaymentTypeDialog extends Dialog implements View.OnClickListener {
     @BindView(R.id.edit_information)
     EditText editInformation;
 
-
     String wechat="1";
     String alipay="2";
     String bank="3";
-    String openBank="4";
-
-    String editContent;
 
     public PaymentTypeDialog(@NonNull Context context) {
 
@@ -80,8 +74,6 @@ public class PaymentTypeDialog extends Dialog implements View.OnClickListener {
         layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
         window.setAttributes(layoutParams);
 
-
-
     }
 
 
@@ -106,7 +98,6 @@ public class PaymentTypeDialog extends Dialog implements View.OnClickListener {
 
     public OnClickListener onClickListener;
     public interface OnClickListener{
-
         void determine(String editContent);
     }
     public void setOnClickListener(OnClickListener onClickListener){

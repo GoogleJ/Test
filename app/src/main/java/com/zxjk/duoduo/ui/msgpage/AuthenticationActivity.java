@@ -48,16 +48,6 @@ import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 import okhttp3.RequestBody;
 
-/**
- * *********************
- * Administrator
- * *********************
- * 2019/5/23
- * *********************
- * 实名认证
- * 大陆身份证信息
- * *********************
- */
 public class AuthenticationActivity extends BaseActivity {
     //标题
     @BindView(R.id.tv_title)

@@ -14,10 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
-import com.zxjk.duoduo.network.Api;
-import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.bean.response.FriendInfoResponse;
 import com.zxjk.duoduo.bean.response.GroupResponse;
+import com.zxjk.duoduo.network.Api;
+import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.HomeActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
@@ -35,9 +35,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
@@ -45,14 +48,8 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.message.InformationNotificationMessage;
 
-/**
- * author L
- * create at 2019/5/8
- * description: 群添加成员  添加联系人 我的游戏群 新建游戏群
- */
 @SuppressLint("CheckResult")
 public class CreateGroupActivity extends BaseActivity {
-
     private List<String> selectedIds = new ArrayList<>();
 
     private RecyclerView recycler1;
@@ -178,7 +175,6 @@ public class CreateGroupActivity extends BaseActivity {
         recycler2.setItemAnimator(null);
 
         adapter2.setOnClickListener((item, check, position) -> {
-
             int realPosition = data1.indexOf(item);
             if (data1.contains(item)) {
                 item.setChecked(!item.isChecked());
@@ -186,23 +182,17 @@ public class CreateGroupActivity extends BaseActivity {
                 selectedIds.remove(item.getId());
                 data1.remove(item);
                 adapter1.notifyItemRemoved(realPosition);
-
                 tv_commit.setText(confirmText + "(" + data1.size() + ")");
                 adapter2.notifyDataSetChanged();
             } else {
-                if (adapter1.getItemCount() < 5) {
-                    item.setChecked(!item.isChecked());
-                    adapter2.notifyItemChanged(position);
-                    selectedIds.add(item.getId());
-                    data1.add(item);
-                    adapter1.notifyItemInserted(data.size() - 1);
-                    tv_commit.setText(confirmText + "(" + data1.size() + ")");
-                    adapter2.notifyDataSetChanged();
-                } else {
-                    ToastUtils.showShort("群聊邀请每次最多可邀请五名好友");
-                }
+                item.setChecked(!item.isChecked());
+                adapter2.notifyItemChanged(position);
+                selectedIds.add(item.getId());
+                data1.add(item);
+                adapter1.notifyItemInserted(data.size() - 1);
+                tv_commit.setText(confirmText + "(" + data1.size() + ")");
+                adapter2.notifyDataSetChanged();
             }
-
         });
         adapter2.setData1(data2);
         initData();
@@ -329,26 +319,23 @@ public class CreateGroupActivity extends BaseActivity {
         groupCardMessage.setInviterId(Constant.userId);
         groupCardMessage.setName(Constant.currentUser.getNick());
         groupCardMessage.setGroupName(group.getGroupInfo().getGroupNikeName());
-        for (FriendInfoResponse f : data1) {
-            Message message = Message.obtain(f.getId(), Conversation.ConversationType.PRIVATE, groupCardMessage);
-            RongIM.getInstance().sendMessage(message, null, null, new IRongCallback.ISendMessageCallback() {
-                @Override
-                public void onAttached(Message message) {
 
-                }
-
-                @Override
-                public void onSuccess(Message message) {
-
-                }
-
-                @Override
-                public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-
-                }
-            });
-        }
-        finish();
+        Observable.interval(0, 250, TimeUnit.MILLISECONDS)
+                .take(data1.size())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(d -> CommonUtils.initDialog(CreateGroupActivity.this, getString(R.string.inviting)).show())
+                .doOnError(t -> CommonUtils.destoryDialog())
+                .doOnDispose(CommonUtils::destoryDialog)
+                .doOnComplete(() -> {
+                    ToastUtils.showShort(R.string.invite_success);
+                    CommonUtils.destoryDialog();
+                    finish();
+                })
+                .compose(bindToLifecycle())
+                .subscribe(l -> {
+                    Message message = Message.obtain(data1.get(l.intValue()).getId(), Conversation.ConversationType.PRIVATE, groupCardMessage);
+                    RongIM.getInstance().sendMessage(message, null, null, (IRongCallback.ISendMessageCallback) null);
+                });
     }
 
     private void deleteMember() {

@@ -15,11 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * author L
- * create at 2019/5/80
- * description: 群管理
- */
+
 public class GroupManagementActivity extends BaseActivity {
     @BindView(R.id.tv_title)
     TextView tvTitle;

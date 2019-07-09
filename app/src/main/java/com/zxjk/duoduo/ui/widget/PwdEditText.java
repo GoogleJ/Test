@@ -16,9 +16,7 @@ import com.zxjk.duoduo.R;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Administrator
- */
+
 @SuppressLint("AppCompatCustomView")
 public class PwdEditText extends EditText {
 

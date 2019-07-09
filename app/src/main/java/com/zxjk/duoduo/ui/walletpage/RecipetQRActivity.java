@@ -13,7 +13,6 @@ import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.shehuan.nicedialog.BaseNiceDialog;
@@ -30,17 +29,11 @@ import com.zxjk.duoduo.ui.minepage.scanuri.BaseUri;
 import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.utils.MoneyValueFilter;
 import com.zxjk.duoduo.utils.QRCodeEncoder;
-
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-/**
- * author L
- * create at 2019/5/7
- * description: 收款码
- */
 public class RecipetQRActivity extends BaseActivity {
 
     private ImageView ivRecipetImg;

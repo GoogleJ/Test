@@ -3,16 +3,12 @@ package com.zxjk.duoduo.ui.msgpage.adapter;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.response.FriendInfoResponse;
 import com.zxjk.duoduo.utils.GlideUtil;
 
-/**
- * @author Administrator
- */
 public class BaseContactAdapter extends BaseQuickAdapter<FriendInfoResponse, BaseViewHolder> {
     public BaseContactAdapter() {
         super(R.layout.item_consatnt_friend);

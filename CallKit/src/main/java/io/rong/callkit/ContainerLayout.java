@@ -6,15 +6,10 @@ import android.view.SurfaceView;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
-
 import androidx.annotation.NonNull;
-
 import cn.rongcloud.rtc.engine.view.RongRTCVideoView;
 import cn.rongcloud.rtc.utils.FinLog;
 
-/**
- * Created by Administrator on 2017/3/30.
- */
 
 public class ContainerLayout extends RelativeLayout {
     private final String TAG = ContainerLayout.class.getSimpleName();

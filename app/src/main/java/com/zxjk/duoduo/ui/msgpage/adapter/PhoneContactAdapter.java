@@ -8,15 +8,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.PhoneInfo;
 
-/**
- * *********************
- * Administrator
- * *********************
- * 2019/5/16
- * *********************
- * 手机联系人
- * *********************
- */
 public class PhoneContactAdapter extends BaseQuickAdapter<PhoneInfo, BaseViewHolder> {
     private Context context;
 

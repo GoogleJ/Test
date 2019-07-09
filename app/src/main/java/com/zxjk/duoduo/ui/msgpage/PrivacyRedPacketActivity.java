@@ -39,11 +39,6 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
 
-/**
- * author L
- * create at 2019/5/9
- * description: 个人发红包
- */
 public class PrivacyRedPacketActivity extends BaseActivity implements SelectPopupWindow.OnPopWindowClickListener {
 
     TextView sendMessageBtn;

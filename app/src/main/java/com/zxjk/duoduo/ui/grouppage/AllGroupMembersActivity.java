@@ -17,13 +17,10 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.adapter.AllGroupMemebersAdapter1;
 import com.zxjk.duoduo.utils.CommonUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author Administrator
- */
+
 @SuppressLint("CheckResult")
 public class AllGroupMembersActivity extends BaseActivity {
     RecyclerView mRecyclerView;

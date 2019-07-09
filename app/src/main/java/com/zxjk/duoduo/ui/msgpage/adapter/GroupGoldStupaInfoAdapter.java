@@ -8,18 +8,8 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.response.GetGroupOwnerDuoBaoBetInfoResponse;
 import com.zxjk.duoduo.utils.DataUtils;
-
 import java.util.ArrayList;
 
-/**
- * *********************
- * Administrator
- * *********************
- * 2019/5/24
- * *********************
- * 金多宝下注详情 群主
- * *********************
- */
 public class GroupGoldStupaInfoAdapter extends BaseQuickAdapter<GetGroupOwnerDuoBaoBetInfoResponse, BaseViewHolder> {
     public GroupGoldStupaInfoAdapter() {
         super(R.layout.item_game_record, new ArrayList<>());

@@ -9,9 +9,7 @@ import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.response.FriendInfoResponse;
 import com.zxjk.duoduo.utils.GlideUtil;
 
-/**
- * @author Administrator
- */
+
 public class SelectContactAdapter extends BaseQuickAdapter<FriendInfoResponse, BaseViewHolder> {
     public SelectContactAdapter() {
         super(R.layout.item_add_group);

@@ -9,18 +9,11 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
-
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 
-/**
- * author L
- * create at 2019/5/9
- * description: 客服
- */
 @SuppressLint("JavascriptInterface")
 public class OnlineServiceActivity extends BaseActivity {
     WebView webView;

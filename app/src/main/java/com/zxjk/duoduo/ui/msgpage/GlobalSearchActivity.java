@@ -10,10 +10,8 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
@@ -23,15 +21,9 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.adapter.GlobalSearchAdapter;
 import com.zxjk.duoduo.utils.CommonUtils;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * author L
- * create at 2019/5/7
- * description:搜索
- */
 @SuppressLint("CheckResult")
 public class GlobalSearchActivity extends BaseActivity {
     @BindView(R.id.m_search_edit)

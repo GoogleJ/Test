@@ -19,14 +19,8 @@ import com.zxjk.duoduo.bean.response.GroupResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseFragment;
 import com.zxjk.duoduo.utils.CommonUtils;
-
 import java.text.DecimalFormat;
 
-/**
- * author L
- * create at 2019/5/8
- * description:代理返佣
- */
 public class GameRecordDaiLiFragment extends BaseFragment {
 
     String groupId;

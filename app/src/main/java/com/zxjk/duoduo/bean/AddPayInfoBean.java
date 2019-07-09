@@ -1,8 +1,5 @@
 package com.zxjk.duoduo.bean;
 
-/**
- * @author Administrator
- */
 public class AddPayInfoBean {
 
     private String payType;

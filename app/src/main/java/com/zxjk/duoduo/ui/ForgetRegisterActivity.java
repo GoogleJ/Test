@@ -27,14 +27,8 @@ import com.zxjk.duoduo.utils.CommonUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 import static com.zxjk.duoduo.utils.MD5Utils.getMD5;
-/**
- *author L
- *create at 2019/5/9
- *description: 忘记密码
- *
- */
+
 @SuppressLint("CheckResult")
 public class ForgetRegisterActivity extends BaseActivity implements View.OnClickListener {
 

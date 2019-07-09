@@ -29,11 +29,6 @@ import com.zxjk.duoduo.utils.MMKVUtils;
 
 import io.rong.imkit.RongIM;
 
-/**
- * author L
- * create at 2019/5/7
- * description:设置
- */
 
 @SuppressLint("CheckResult")
 public class SettingActivity extends BaseActivity {

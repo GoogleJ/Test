@@ -64,15 +64,6 @@ import cn.bingoogolapple.qrcode.zxing.QRCodeDecoder;
 import io.rong.imlib.model.Message;
 import io.rong.message.ImageMessage;
 
-/**
- * *********************
- * Administrator
- * *********************
- * 2019/5/17
- * *********************
- * 头像放大
- * *********************
- */
 public class EnlargeImageActivity extends BaseActivity {
 
     @BindView(R.id.iv)

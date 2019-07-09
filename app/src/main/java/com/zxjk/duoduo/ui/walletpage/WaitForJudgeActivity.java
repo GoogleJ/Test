@@ -32,11 +32,6 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.rong.imkit.RongIM;
 
-/**
- * author L
- * create at 2019/5/10
- * description: 等待审核
- */
 @SuppressLint({"CheckResult", "SimpleDateFormat", "SetTextI18n"})
 public class WaitForJudgeActivity extends BaseActivity {
 

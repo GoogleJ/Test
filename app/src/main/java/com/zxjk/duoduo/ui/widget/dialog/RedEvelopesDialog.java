@@ -10,17 +10,15 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.msgpage.rongIM.message.RedPacketMessage;
 import com.zxjk.duoduo.utils.GlideUtil;
 
-import androidx.annotation.NonNull;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
 
-/**
- * @author Administrator
- */
 public class RedEvelopesDialog extends Dialog implements View.OnClickListener {
     ImageView redOpenBtn;
     ImageView redCloseBtn;
@@ -29,9 +27,6 @@ public class RedEvelopesDialog extends Dialog implements View.OnClickListener {
     TextView m_red_envelopes_signature_text;
 
     private View view;
-    private Context context;
-
-    private Message message;
 
     private OnOpenListener onOpenListener;
 
@@ -46,7 +41,6 @@ public class RedEvelopesDialog extends Dialog implements View.OnClickListener {
     public RedEvelopesDialog(@NonNull Context context) {
         super(context, R.style.dialogstyle);
         this.view = View.inflate(context, R.layout.dialog_red_evelopes, null);
-        this.context = context;
 
         setContentView(view);
         setCancelable(false);
@@ -71,7 +65,6 @@ public class RedEvelopesDialog extends Dialog implements View.OnClickListener {
     }
 
     public void show(Message message, UserInfo userInfo) {
-        this.message = message;
         GlideUtil.loadCornerImg(m_transfer_envelopes_heard, userInfo.getPortraitUri().toString(), 5);
         m_red_envelopes_user.setText(userInfo.getName() + "的红包");
         RedPacketMessage m = (RedPacketMessage) message.getContent();

@@ -14,9 +14,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * @author Administrator
- */
 public class ExchangeListTypeActivity extends BaseActivity {
     ImageView icon;
     TextView description;

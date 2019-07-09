@@ -9,15 +9,6 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * *********************
- * Administrator
- * *********************
- * 2019/5/21
- * *********************
- * 工具类
- * *********************
- */
 public class DataUtils {
 
     /**

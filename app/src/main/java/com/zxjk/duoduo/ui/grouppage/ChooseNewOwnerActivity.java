@@ -4,11 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.blankj.utilcode.util.ToastUtils;
 import com.shehuan.nicedialog.BaseNiceDialog;
 import com.shehuan.nicedialog.NiceDialog;
@@ -23,11 +21,6 @@ import com.zxjk.duoduo.ui.grouppage.adapter.ChooseNewOwnerAdapter;
 import com.zxjk.duoduo.ui.msgpage.ConversationActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 
-/**
- * author L
- * create at 2019/5/7
- * description:选择新群主
- */
 @SuppressLint("CheckResult")
 public class ChooseNewOwnerActivity extends BaseActivity {
     RecyclerView mRecyclerView;

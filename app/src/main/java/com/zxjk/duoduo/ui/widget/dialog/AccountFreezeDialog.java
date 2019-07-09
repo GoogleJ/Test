@@ -8,23 +8,14 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-
 import com.zxjk.duoduo.R;
 
 
-/**
- * @author Administrator\
- *
- */
 public class AccountFreezeDialog extends Dialog implements View.OnClickListener {
     private View view;
-    private Context context;
-    //这里的view其实可以替换直接传layout过来的 因为各种原因没传(lan)
     public AccountFreezeDialog(Context context) {
         super(context, R.style.dialogstyle);
         this.view = View.inflate(context, R.layout.dialog_account_freeze, null);
-        this.context = context;
-
     }
 
     @Override
@@ -44,13 +35,7 @@ public class AccountFreezeDialog extends Dialog implements View.OnClickListener 
 
     private void initUI() {
         ImageView closeBtn=view.findViewById(R.id.m_dialog_account_freeze_close_btn);
-        closeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
-
+        closeBtn.setOnClickListener(v -> dismiss());
     }
 
 
@@ -63,7 +48,6 @@ public class AccountFreezeDialog extends Dialog implements View.OnClickListener 
                 default:
                     dismiss();
                     break;
-
         }
     }
 }

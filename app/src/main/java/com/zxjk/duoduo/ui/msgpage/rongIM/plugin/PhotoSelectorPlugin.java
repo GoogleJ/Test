@@ -2,15 +2,10 @@ package com.zxjk.duoduo.ui.msgpage.rongIM.plugin;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-
-import com.zxjk.duoduo.R;
-
 import androidx.core.content.ContextCompat;
+import com.zxjk.duoduo.R;
 import io.rong.imkit.plugin.ImagePlugin;
 
-/**
- * @author Administrator
- */
 public class PhotoSelectorPlugin extends ImagePlugin {
     @Override
     public Drawable obtainDrawable(Context context) {

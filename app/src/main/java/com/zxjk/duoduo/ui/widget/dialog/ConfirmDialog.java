@@ -6,14 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-
 import com.zxjk.duoduo.R;
 
-/**
- * @author Administrator
- */
+
 public class ConfirmDialog extends Dialog {
 
     private TextView tvDialogTitle;
@@ -55,13 +51,4 @@ public class ConfirmDialog extends Dialog {
         tvDialogCancel.setOnClickListener(v -> dismiss());
 
     }
-
-    public void setPoText(int poText) {
-        tvDialogConfirm.setText(poText);
-    }
-
-    public void setNegText(int negText) {
-        tvDialogCancel.setText(negText);
-    }
-
 }

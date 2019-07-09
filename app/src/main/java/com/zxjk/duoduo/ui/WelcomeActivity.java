@@ -28,11 +28,7 @@ import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
 
-/**
- * author L
- * create at 2019/5/13
- * description: 启动页
- */
+
 public class WelcomeActivity extends BaseActivity {
 
     @SuppressLint("CheckResult")

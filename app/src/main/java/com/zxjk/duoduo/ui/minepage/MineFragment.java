@@ -30,11 +30,7 @@ import com.zxjk.duoduo.ui.walletpage.RecipetQRActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 
-/**
- * author L
- * create at 2019/5/7
- * description: 我的
- */
+
 public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     private ImageView ivMineHeadImg;

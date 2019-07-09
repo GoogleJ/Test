@@ -2,15 +2,6 @@ package com.zxjk.duoduo.utils;
 
 import java.math.BigDecimal;
 
-/**
- * *********************
- * Administrator
- * *********************
- * 2019/5/21
- * *********************
- * 解决double精度（加减乘除）
- * *********************
- */
 public class ArithUtils {
     private static final int DEF_DIV_SCALE = 10;
 

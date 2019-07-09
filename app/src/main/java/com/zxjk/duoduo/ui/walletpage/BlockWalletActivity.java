@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
@@ -20,19 +19,12 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
-
 import java.text.DecimalFormat;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
 
-/**
- * author L
- * create at 2019/5/7
- * description: 数字钱包
- */
 @SuppressLint("CheckResult")
 public class BlockWalletActivity extends BaseActivity {
 
@@ -42,7 +34,6 @@ public class BlockWalletActivity extends BaseActivity {
     ImageView ivEnd;
     @BindView(R.id.rl_end)
     RelativeLayout rlEnd;
-
 
     private ImageView ivBlockWalletHeadImg;
     private TextView tvBlockWalletAddress;

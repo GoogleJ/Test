@@ -29,11 +29,7 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.message.ImageMessage;
 
-/**
- * @author Administrator
- */
 public class TakePhotoPlugin implements IPluginModule {
-    private Context context;
     public static final int REQUEST_ALBUM = 1;
     String userId;
     Conversation.ConversationType conversationType;
@@ -47,7 +43,6 @@ public class TakePhotoPlugin implements IPluginModule {
 
     @Override
     public String obtainTitle(Context context) {
-        this.context = context;
         return context.getString(R.string.shotting_image_title);
     }
 

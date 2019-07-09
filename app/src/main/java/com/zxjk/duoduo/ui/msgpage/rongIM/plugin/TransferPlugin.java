@@ -14,9 +14,6 @@ import io.rong.imkit.plugin.IPluginModule;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imlib.model.UserInfo;
 
-/**
- * @author Administrator
- */
 public class TransferPlugin implements IPluginModule {
     @Override
     public Drawable obtainDrawable(Context context) {

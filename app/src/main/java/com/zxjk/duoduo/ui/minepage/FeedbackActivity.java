@@ -1,22 +1,15 @@
 package com.zxjk.duoduo.ui.minepage;
 
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
-
 import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 
-/**
- * author L
- * create at 2019/5/7
- * description:意见反馈
- */
+
 public class FeedbackActivity extends BaseActivity {
     EditText feedbackEdit;
 
