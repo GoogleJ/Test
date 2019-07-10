@@ -45,18 +45,32 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.ContactFragment;
 import com.zxjk.duoduo.ui.minepage.MineFragment;
 import com.zxjk.duoduo.ui.msgpage.MsgFragment;
+import com.zxjk.duoduo.ui.msgpage.ShareGroupQRActivity;
+import com.zxjk.duoduo.ui.msgpage.rongIM.message.GameResultMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIM.message.RedPacketMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIM.message.SystemMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIM.message.TransferMessage;
 import com.zxjk.duoduo.utils.MMKVUtils;
 import com.zxjk.duoduo.utils.badge.BadgeNumberManager;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.RongMessageItemLongClickActionManager;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
+import io.rong.imkit.widget.provider.MessageItemLongClickAction;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Message;
+import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
 import io.rong.message.CommandMessage;
+import io.rong.message.NotificationMessage;
+import io.rong.message.VoiceMessage;
 import io.rong.pushperm.ResultCallback;
 import io.rong.pushperm.RongPushPremissionsCheckHelper;
 
@@ -152,6 +166,79 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
         getNewFriendCount();
 
         //checkPermission(); 检测是否开启自启动和通知
+
+        initMessageLongClickAction();
+
+    }
+
+    private void initMessageLongClickAction() {
+        MessageItemLongClickAction action1 = new MessageItemLongClickAction.Builder()
+                .title("转发")
+                .showFilter(message -> {
+                    MessageContent messageContent = message.getContent();
+                    return !(messageContent instanceof NotificationMessage)
+                            && !(messageContent instanceof VoiceMessage)
+                            && !(messageContent instanceof RedPacketMessage)
+                            && !(messageContent instanceof TransferMessage)
+                            && !(messageContent instanceof SystemMessage)
+                            && !(messageContent instanceof GameResultMessage)
+                            && message.getSentStatus() != Message.SentStatus.FAILED
+                            && message.getSentStatus() != Message.SentStatus.CANCELED;
+                })
+                .actionListener((context, message) -> {
+                    RongIMClient.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
+                        @Override
+                        public void onSuccess(List<Conversation> conversations) {
+                            Intent intent = new Intent(HomeActivity.this, ShareGroupQRActivity.class);
+                            intent.putParcelableArrayListExtra("data", (ArrayList<Conversation>) conversations);
+                            intent.putExtra("action", "transfer");
+                            intent.putExtra("messagecontent", message.getContent());
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void onError(RongIMClient.ErrorCode errorCode) {
+
+                        }
+                    });
+                    return true;
+                })
+                .build();
+        MessageItemLongClickAction action2 = new MessageItemLongClickAction.Builder()
+                .title("多选")
+                .showFilter(message -> {
+                    MessageContent messageContent = message.getContent();
+                    return !(messageContent instanceof NotificationMessage)
+                            && !(messageContent instanceof VoiceMessage)
+                            && !(messageContent instanceof RedPacketMessage)
+                            && !(messageContent instanceof TransferMessage)
+                            && !(messageContent instanceof SystemMessage)
+                            && !(messageContent instanceof GameResultMessage)
+                            && message.getSentStatus() != Message.SentStatus.FAILED
+                            && message.getSentStatus() != Message.SentStatus.CANCELED;
+                })
+                .actionListener((context, message) -> {
+                    RongIMClient.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
+                        @Override
+                        public void onSuccess(List<Conversation> conversations) {
+//                            Intent intent = new Intent(HomeActivity.this, MultiSelectListActivity.class);
+//                            intent.putParcelableArrayListExtra("data", (ArrayList<Conversation>) conversations);
+//                            intent.putExtra("action", "transfer");
+//                            intent.putExtra("messagecontent", message.getContent());
+//                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void onError(RongIMClient.ErrorCode errorCode) {
+
+                        }
+                    });
+                    return true;
+                })
+                .build();
+
+        RongMessageItemLongClickActionManager.getInstance().addMessageItemLongClickAction(action1, 0);
+        RongMessageItemLongClickActionManager.getInstance().addMessageItemLongClickAction(action2, 1);
     }
 
     private void createChannel() {

@@ -44,7 +44,8 @@ public class CusConversationListAdapter extends ConversationListAdapter {
     protected void bindView(View v, int position, UIConversation data) {
         super.bindView(v, position, data);
 
-        if (data.getConversationType().equals(Conversation.ConversationType.SYSTEM)) {
+        if (data.getConversationTargetId().equals("147")) {
+            v.findViewById(R.id.rc_left).setVisibility(View.INVISIBLE);
             ImageView imageView = v.findViewById(R.id.rc_mask);
             imageView.setVisibility(View.VISIBLE);
             imageView.setImageResource(R.mipmap.ic_launcher);
@@ -53,9 +54,18 @@ public class CusConversationListAdapter extends ConversationListAdapter {
                 RongUserInfoManager.getInstance().setUserInfo(new UserInfo(data.getConversationTargetId(), "支付凭证", null));
             }
             return;
-        }
-
-        if (data.getConversationType() != Conversation.ConversationType.GROUP) {
+        } else if (data.getConversationTargetId().equals("349")) {
+            v.findViewById(R.id.rc_left).setVisibility(View.INVISIBLE);
+            ImageView imageView = v.findViewById(R.id.rc_mask);
+            imageView.setVisibility(View.VISIBLE);
+            imageView.setImageResource(R.mipmap.ic_launcher);
+            UserInfo u = RongUserInfoManager.getInstance().getUserInfo(data.getConversationTargetId());
+            if (u == null) {
+                RongUserInfoManager.getInstance().setUserInfo(new UserInfo(data.getConversationTargetId(), "对局结果", null));
+            }
+            return;
+        } else if (data.getConversationType() != Conversation.ConversationType.GROUP){
+            v.findViewById(R.id.rc_left).setVisibility(View.VISIBLE);
             ImageView imageView = v.findViewById(R.id.rc_mask);
             ImageView game_mask = v.findViewById(R.id.game_mask);
             imageView.setVisibility(View.GONE);

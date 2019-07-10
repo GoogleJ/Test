@@ -3,6 +3,7 @@ package com.zxjk.duoduo;
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.Context;
+
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
@@ -14,18 +15,22 @@ import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.ui.msgpage.rongIM.BasePluginExtensionModule;
 import com.zxjk.duoduo.ui.msgpage.rongIM.message.BusinessCardMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIM.message.GameResultMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIM.message.GroupCardMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIM.message.RedPacketMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIM.message.SystemMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIM.message.TransferMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIM.provider.BusinessCardProvider;
+import com.zxjk.duoduo.ui.msgpage.rongIM.provider.GameResultMessageProvider;
 import com.zxjk.duoduo.ui.msgpage.rongIM.provider.GroupCardProvider;
 import com.zxjk.duoduo.ui.msgpage.rongIM.provider.RedPacketProvider;
 import com.zxjk.duoduo.ui.msgpage.rongIM.provider.SystemProvider;
 import com.zxjk.duoduo.ui.msgpage.rongIM.provider.TransferProvider;
 import com.zxjk.duoduo.utils.WeChatShareUtil;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import io.reactivex.schedulers.Schedulers;
 import io.rong.callkit.RongCallKit;
 import io.rong.imkit.DefaultExtensionModule;
@@ -49,11 +54,11 @@ public class Application extends android.app.Application {
 
     private static final String APP_ID = "wx95412ba899539c33";
 
-    @SuppressLint("CheckResult")
     @Override
     public void onCreate() {
         super.onCreate();
 
+        //init MMKV
         MMKV.initialize(this);
 
         //微信分享
@@ -66,13 +71,23 @@ public class Application extends android.app.Application {
         new Thread(this::initOSS).start();
 
         //融云推送设置
+        initRongPush();
+
+        //融云初始化
+        initRongSDK();
+
+    }
+
+    private void initRongPush() {
         PushConfig config = new PushConfig.Builder()
                 .enableMiPush("2882303761517995445", "5101799544445")
                 .enableHWPush(true)
                 .build();
         RongPushClient.setPushConfig(config);
+    }
 
-        //融云初始化
+    @SuppressLint("CheckResult")
+    private void initRongSDK() {
         RongIM.init(this);
         RongIM.registerMessageType(RedPacketMessage.class);
         RongIM.registerMessageType(BusinessCardMessage.class);
@@ -80,26 +95,26 @@ public class Application extends android.app.Application {
         RongIM.registerMessageType(GroupCardMessage.class);
         RongIM.registerMessageType(SystemMessage.class);
         RongIM.registerMessageType(SightMessage.class);
+        RongIM.registerMessageType(GameResultMessage.class);
         RongIM.registerMessageTemplate(new SightMessageItemProvider());
         RongIM.registerMessageTemplate(new RedPacketProvider());
         RongIM.registerMessageTemplate(new TransferProvider());
         RongIM.registerMessageTemplate(new BusinessCardProvider());
         RongIM.registerMessageTemplate(new GroupCardProvider());
         RongIM.registerMessageTemplate(new SystemProvider());
+        RongIM.registerMessageTemplate(new GameResultMessageProvider());
         RongIM.getInstance().setMessageAttachedUserInfo(true);
         RongIM.getInstance().enableNewComingMessageIcon(true);//显示新消息提醒
         RongIM.getInstance().enableUnreadMessageIcon(true);//显示未读消息数目
         setMyExtensionModule();
         RongCallKit.setGroupMemberProvider((groupId, result) -> {
-            //返回群组成员userId的集合
             ServiceFactory.getInstance().getBaseService(Api.class)
                     .getGroupByGroupId(groupId)
                     .subscribeOn(Schedulers.io())
-                    .subscribe(response -> {
-                        ArrayList<String> strings = new ArrayList<>();
-                        GroupResponse data = response.data;
-                        for (GroupResponse.CustomersBean bean : data.getCustomers()) {
-                            strings.add(bean.getId());
+                    .subscribe(r -> {
+                        ArrayList<String> strings = new ArrayList<>(r.data.getCustomers().size());
+                        for (GroupResponse.CustomersBean b : r.data.getCustomers()) {
+                            strings.add(b.getId());
                         }
                         result.onGotMemberList(strings);
                     }, t -> {

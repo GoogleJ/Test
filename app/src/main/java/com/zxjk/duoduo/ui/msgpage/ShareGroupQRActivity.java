@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,10 +34,12 @@ import java.util.Locale;
 
 import io.rong.imkit.RongIM;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
+import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.Message;
+import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
 import io.rong.message.ImageMessage;
 
@@ -46,11 +49,17 @@ public class ShareGroupQRActivity extends BaseActivity {
     private RecyclerView recycler;
     private ShareGroupQRAdapter adapter;
     private ArrayList<Conversation> data;
+    private boolean isTransfer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share_group_qr);
+
+        String action = getIntent().getStringExtra("action");
+        if (action != null && action.equals("transfer")) {
+            isTransfer = true;
+        }
 
         data = getIntent().getParcelableArrayListExtra("data");
         if (data == null) {
@@ -111,35 +120,68 @@ public class ShareGroupQRActivity extends BaseActivity {
         recycler.setLayoutManager(new LinearLayoutManager(this));
 
         adapter.setOnItemChildClickListener((adapter, view, position) -> {
-            CommonUtils.initDialog(this).show();
-            saveBitmapFile(Constant.shareGroupQR);
-            Uri uri = Uri.fromFile(new File(getExternalCacheDir(), "1.jpg"));
-            ImageMessage obtain = ImageMessage.obtain(uri, uri, false);
-            Message obtain1 = Message.obtain(data.get(position).getTargetId(), data.get(position).getConversationType(), obtain);
+            if (isTransfer) {
+                //消息转发
+                handleTransfer(position);
+            } else {
+                //分享(群名片、游戏群名片)
+                handleShare(position);
+            }
+        });
+    }
 
-            RongIM.getInstance().sendImageMessage(obtain1, null, null, new RongIMClient.SendImageMessageCallback() {
-                @Override
-                public void onAttached(Message message) {
+    private void handleTransfer(int position) {
+        MessageContent messageContent = getIntent().getParcelableExtra("messagecontent");
+        Message message = Message.obtain(data.get(position).getTargetId(), data.get(position).getConversationType(), messageContent);
+        RongIM.getInstance().sendMessage(message, "", "", new IRongCallback.ISendMessageCallback() {
+            @Override
+            public void onAttached(Message message) {
 
-                }
+            }
 
-                @Override
-                public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-                    CommonUtils.destoryDialog();
-                }
+            @Override
+            public void onSuccess(Message message) {
+                ToastUtils.showShort(R.string.transfermessagesuccess);
+                finish();
+            }
 
-                @Override
-                public void onSuccess(Message message) {
-                    CommonUtils.destoryDialog();
-                    ToastUtils.showShort(R.string.share_success);
-                    finish();
-                }
+            @Override
+            public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+                ToastUtils.showShort(R.string.transfermessagefail);
+                finish();
+            }
+        });
+    }
 
-                @Override
-                public void onProgress(Message message, int i) {
+    private void handleShare(int position) {
+        CommonUtils.initDialog(this).show();
+        saveBitmapFile(Constant.shareGroupQR);
+        Uri uri = Uri.fromFile(new File(getExternalCacheDir(), "1.jpg"));
+        ImageMessage obtain = ImageMessage.obtain(uri, uri, false);
+        Message obtain1 = Message.obtain(data.get(position).getTargetId(), data.get(position).getConversationType(), obtain);
+        RongIM.getInstance().sendImageMessage(obtain1, null, null, new RongIMClient.SendImageMessageCallback() {
+            @Override
+            public void onAttached(Message message) {
 
-                }
-            });
+            }
+
+            @Override
+            public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+                CommonUtils.destoryDialog();
+            }
+
+            @Override
+            public void onSuccess(Message message) {
+                Constant.shareGroupQR = null;
+                CommonUtils.destoryDialog();
+                ToastUtils.showShort(R.string.share_success);
+                finish();
+            }
+
+            @Override
+            public void onProgress(Message message, int i) {
+
+            }
         });
     }
 
@@ -157,7 +199,12 @@ public class ShareGroupQRActivity extends BaseActivity {
     public void createNewChat(View view) {
         Intent intent = new Intent(this, SelectContactForCardActivity.class);
         intent.putExtra("fromShare", true);
+        if (isTransfer) {
+            intent.putExtra("action", "transfer");
+            intent.putExtra("messagecontent", (Parcelable) getIntent().getParcelableExtra("messagecontent"));
+        }
         startActivity(intent);
+        finish();
     }
 
     public void saveBitmapFile(Bitmap bitmap) {

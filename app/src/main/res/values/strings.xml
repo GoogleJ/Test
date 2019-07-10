@@ -967,4 +967,6 @@
     <string name="loading">加载中</string>
     <string name="invite_success">已成功发出邀请</string>
     <string name="inviting">正在邀请，请稍等</string>
+    <string name="transfermessagesuccess">转发成功</string>
+    <string name="transfermessagefail">转发失败</string>
 </resources>

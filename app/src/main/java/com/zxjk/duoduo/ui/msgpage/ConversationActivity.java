@@ -158,7 +158,14 @@ public class ConversationActivity extends BaseActivity {
         if (conversationType.equals("system")) {
             rl_end.setVisibility(View.INVISIBLE);
             tvTitle = findViewById(R.id.tv_title);
-            tvTitle.setText("支付凭证");
+            targetId = getIntent().getData().getQueryParameter("targetId");
+            if (targetId.equals("147")) {
+                tvTitle.setText("支付凭证");
+            } else if (targetId.equals("349")) {
+                tvTitle.setText("对局结果");
+            } else {
+                tvTitle.setText("系统消息");
+            }
             extension.removeAllViews();
             return;
         }

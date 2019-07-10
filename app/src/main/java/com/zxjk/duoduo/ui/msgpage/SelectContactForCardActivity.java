@@ -44,6 +44,7 @@ import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
+import io.rong.imlib.model.MessageContent;
 import io.rong.message.ImageMessage;
 
 @SuppressLint("CheckResult")
@@ -79,39 +80,73 @@ public class SelectContactForCardActivity extends BaseActivity implements TextWa
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             boolean fromShare = getIntent().getBooleanExtra("fromShare", false);
             if (fromShare) {
-                //分享群二维码
-                CommonUtils.initDialog(this).show();
-                saveBitmapFile(Constant.shareGroupQR);
-                Uri uri = Uri.fromFile(new File(getExternalCacheDir(), "1.jpg"));
-                ImageMessage obtain = ImageMessage.obtain(uri, uri, false);
-                Message obtain1 = Message.obtain(list.get(position).getId(), Conversation.ConversationType.PRIVATE, obtain);
-
-                RongIM.getInstance().sendImageMessage(obtain1, null, null, new RongIMClient.SendImageMessageCallback() {
-                    @Override
-                    public void onAttached(Message message) {
-
-                    }
-
-                    @Override
-                    public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-                        CommonUtils.destoryDialog();
-                    }
-
-                    @Override
-                    public void onSuccess(Message message) {
-                        CommonUtils.destoryDialog();
-                        ToastUtils.showShort(R.string.share_success);
-                        finish();
-                    }
-
-                    @Override
-                    public void onProgress(Message message, int i) {
-
-                    }
-                });
-                return;
+                String action = getIntent().getStringExtra("action");
+                if (action != null && action.equals("transfer")) {
+                    //消息转发
+                    handleTransfer(position);
+                } else {
+                    //分享群二维码
+                    handleShareQR(position);
+                }
+            } else {
+                shareCard(position);
             }
-            shareCard(position);
+        });
+    }
+
+    private void handleTransfer(int position) {
+        MessageContent content = getIntent().getParcelableExtra("messagecontent");
+        Message message = Message.obtain(list.get(position).getId(), Conversation.ConversationType.PRIVATE, content);
+        RongIM.getInstance().sendMessage(message, "", "", new IRongCallback.ISendMessageCallback() {
+            @Override
+            public void onAttached(Message message) {
+
+            }
+
+            @Override
+            public void onSuccess(Message message) {
+                ToastUtils.showShort(R.string.transfermessagesuccess);
+                finish();
+            }
+
+            @Override
+            public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+                ToastUtils.showShort(R.string.transfermessagefail);
+                finish();
+            }
+        });
+    }
+
+    private void handleShareQR(int position) {
+        CommonUtils.initDialog(this).show();
+        saveBitmapFile(Constant.shareGroupQR);
+        Uri uri = Uri.fromFile(new File(getExternalCacheDir(), "1.jpg"));
+        ImageMessage obtain = ImageMessage.obtain(uri, uri, false);
+        Message obtain1 = Message.obtain(list.get(position).getId(), Conversation.ConversationType.PRIVATE, obtain);
+
+        RongIM.getInstance().sendImageMessage(obtain1, null, null, new RongIMClient.SendImageMessageCallback() {
+            @Override
+            public void onAttached(Message message) {
+
+            }
+
+            @Override
+            public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+                CommonUtils.destoryDialog();
+            }
+
+            @Override
+            public void onSuccess(Message message) {
+                Constant.shareGroupQR = null;
+                CommonUtils.destoryDialog();
+                ToastUtils.showShort(R.string.share_success);
+                finish();
+            }
+
+            @Override
+            public void onProgress(Message message, int i) {
+
+            }
         });
     }
 
