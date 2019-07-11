@@ -3,12 +3,17 @@ package com.zxjk.duoduo.ui.msgpage;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -28,6 +33,7 @@ import com.zxjk.duoduo.ui.msgpage.adapter.GroupMemberAdapter;
 import com.zxjk.duoduo.ui.msgpage.adapter.GroupMemberTopAdapter;
 import com.zxjk.duoduo.ui.msgpage.rongIM.message.GroupCardMessage;
 import com.zxjk.duoduo.ui.msgpage.widget.IndexView;
+import com.zxjk.duoduo.ui.widget.MaxWidthRecyclerView;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.PinYinUtils;
 
@@ -35,9 +41,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -49,10 +55,11 @@ import io.rong.imlib.model.Message;
 import io.rong.message.InformationNotificationMessage;
 
 @SuppressLint("CheckResult")
-public class CreateGroupActivity extends BaseActivity {
+public class CreateGroupActivity extends BaseActivity implements TextWatcher {
+    private EditText etSearch;
     private List<String> selectedIds = new ArrayList<>();
 
-    private RecyclerView recycler1;
+    private MaxWidthRecyclerView recycler1;
     private RecyclerView recycler2;
     private CreateGroupTopAdapter adapter1; //建群适配器（顶部）
     private CreateGroupAdapter adapter2; //建群列表适配器
@@ -85,11 +92,12 @@ public class CreateGroupActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
-        ButterKnife.bind(this);
         tv_commit = findViewById(R.id.tv_commit);
+        etSearch = findViewById(R.id.etSearch);
+        etSearch.addTextChangedListener(this);
+        TextView tv_title = findViewById(R.id.tv_title);
         tv_commit.setVisibility(View.VISIBLE);
         tv_commit.setText(getString(R.string.ok));
-        TextView tv_title = findViewById(R.id.tv_title);
         tv_title.setText(getString(R.string.select_contacts));
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());
 
@@ -137,7 +145,23 @@ public class CreateGroupActivity extends BaseActivity {
     private void handleDeleteMember() {
         initData2();
         addFirstLetterForList1(data2);
-        recycler1.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        recycler1.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false) {
+            @Override
+            public void smoothScrollToPosition(RecyclerView recyclerView,
+                                               RecyclerView.State state, final int position) {
+
+                LinearSmoothScroller smoothScroller =
+                        new LinearSmoothScroller(recyclerView.getContext()) {
+                            @Override
+                            protected float calculateSpeedPerPixel(DisplayMetrics displayMetrics) {
+                                return 150f / displayMetrics.densityDpi;
+                            }
+                        };
+
+                smoothScroller.setTargetPosition(position);
+                startSmoothScroll(smoothScroller);
+            }
+        });
         recycler2.setLayoutManager(new LinearLayoutManager(this));
         recycler2.setItemAnimator(null);
         adapter3 = new GroupMemberTopAdapter();
@@ -147,16 +171,15 @@ public class CreateGroupActivity extends BaseActivity {
         adapter4.setData(data2);
         adapter3.setData(data3);
         adapter4.setOnClickListener((item, check, position) -> {
-
-            int realPosition = data3.indexOf(item);
             if (data3.contains(item)) {
                 selectedIds.remove(item.getId());
                 data3.remove(item);
-                adapter3.notifyItemRemoved(realPosition);
+                adapter3.notifyDataSetChanged();
             } else {
                 selectedIds.add(item.getId());
                 data3.add(item);
-                adapter3.notifyItemInserted(data2.size() - 1);
+                adapter3.notifyItemInserted(data3.size() - 1);
+                recycler1.smoothScrollToPosition(data3.size() - 1);
             }
             tv_commit.setText(confirmText + "(" + data3.size() + ")");
         });
@@ -165,7 +188,23 @@ public class CreateGroupActivity extends BaseActivity {
     //添加成员逻辑
     private void handleAddMember() {
         initData2();
-        recycler1.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        recycler1.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false) {
+            @Override
+            public void smoothScrollToPosition(RecyclerView recyclerView,
+                                               RecyclerView.State state, final int position) {
+
+                LinearSmoothScroller smoothScroller =
+                        new LinearSmoothScroller(recyclerView.getContext()) {
+                            @Override
+                            protected float calculateSpeedPerPixel(DisplayMetrics displayMetrics) {
+                                return 150f / displayMetrics.densityDpi;
+                            }
+                        };
+
+                smoothScroller.setTargetPosition(position);
+                startSmoothScroll(smoothScroller);
+            }
+        });
         adapter1 = new CreateGroupTopAdapter();
         recycler1.setAdapter(adapter1);
 
@@ -175,32 +214,45 @@ public class CreateGroupActivity extends BaseActivity {
         recycler2.setItemAnimator(null);
 
         adapter2.setOnClickListener((item, check, position) -> {
-            int realPosition = data1.indexOf(item);
+            item.setChecked(!item.isChecked());
+            adapter2.notifyItemChanged(position);
             if (data1.contains(item)) {
-                item.setChecked(!item.isChecked());
-                adapter2.notifyItemChanged(position);
                 selectedIds.remove(item.getId());
                 data1.remove(item);
-                adapter1.notifyItemRemoved(realPosition);
-                tv_commit.setText(confirmText + "(" + data1.size() + ")");
-                adapter2.notifyDataSetChanged();
+                adapter1.notifyDataSetChanged();
             } else {
-                item.setChecked(!item.isChecked());
-                adapter2.notifyItemChanged(position);
                 selectedIds.add(item.getId());
                 data1.add(item);
-                adapter1.notifyItemInserted(data.size() - 1);
-                tv_commit.setText(confirmText + "(" + data1.size() + ")");
-                adapter2.notifyDataSetChanged();
+                adapter1.notifyItemInserted(data1.size() - 1);
+                recycler1.smoothScrollToPosition(data1.size() - 1);
             }
+
+            tv_commit.setText(confirmText + "(" + data1.size() + ")");
         });
+
         adapter2.setData1(data2);
         initData();
     }
 
     //创建群逻辑
     private void handleCreateGroup() {
-        recycler1.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        recycler1.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false) {
+            @Override
+            public void smoothScrollToPosition(RecyclerView recyclerView,
+                                               RecyclerView.State state, final int position) {
+
+                LinearSmoothScroller smoothScroller =
+                        new LinearSmoothScroller(recyclerView.getContext()) {
+                            @Override
+                            protected float calculateSpeedPerPixel(DisplayMetrics displayMetrics) {
+                                return 150f / displayMetrics.densityDpi;
+                            }
+                        };
+
+                smoothScroller.setTargetPosition(position);
+                startSmoothScroll(smoothScroller);
+            }
+        });
         adapter1 = new CreateGroupTopAdapter();
         recycler1.setAdapter(adapter1);
 
@@ -210,16 +262,17 @@ public class CreateGroupActivity extends BaseActivity {
         recycler2.setItemAnimator(null);
 
         adapter2.setOnClickListener((item, check, position) -> {
-            int realPosition = data1.indexOf(item);
             if (data1.contains(item)) {
                 selectedIds.remove(item.getId());
                 data1.remove(item);
-                adapter1.notifyItemRemoved(realPosition);
+                adapter1.notifyDataSetChanged();
             } else {
                 selectedIds.add(item.getId());
                 data1.add(item);
-                adapter1.notifyItemInserted(data.size() - 1);
+                adapter1.notifyItemInserted(data1.size() - 1);
+                recycler1.smoothScrollToPosition(data1.size() - 1);
             }
+
             tv_commit.setText(confirmText + "(" + data1.size() + ")");
         });
 
@@ -405,6 +458,99 @@ public class CreateGroupActivity extends BaseActivity {
             case R.id.rl_newGameGroup:
                 startActivity(new Intent(this, CreateGameGroupActivity.class));
                 break;
+        }
+    }
+
+    private void search1(String str) {
+        List<FriendInfoResponse> filterList = new ArrayList<>(data.size());// 过滤后的list
+        if (str.matches("^([0-9]|[/+]).*")) {// 正则表达式 匹配以数字或者加号开头的字符串(包括了带空格及-分割的号码)
+            String simpleStr = str.replaceAll("\\-|\\s", "");
+            for (FriendInfoResponse contact : data) {
+                if (contact.getNick() != null) {
+                    if (contact.getNick().contains(simpleStr) || contact.getNick().contains(str) ||
+                            contact.getMobile().contains(simpleStr) || contact.getMobile().contains(str) ||
+                            contact.getRemark().contains(simpleStr) || contact.getRemark().contains(str)) {
+                        if (!filterList.contains(contact)) {
+                            filterList.add(contact);
+                        }
+                    }
+                }
+            }
+        } else {
+            for (FriendInfoResponse contact : data) {
+                if (contact.getNick() != null) {
+                    //姓名全匹配,姓名首字母简拼匹配,姓名全字母匹配
+                    boolean isNameContains = contact.getNick().toLowerCase(Locale.CHINESE)
+                            .contains(str.toLowerCase(Locale.CHINESE));
+                    if (isNameContains) {
+                        if (!filterList.contains(contact)) {
+                            filterList.add(contact);
+                        }
+                    }
+                }
+            }
+        }
+        adapter2.setData(filterList);
+        adapter2.notifyDataSetChanged();
+    }
+
+    private void search2(String str) {
+        List<GroupResponse.CustomersBean> filterList = new ArrayList<>(data2.size());// 过滤后的list
+        if (str.matches("^([0-9]|[/+]).*")) {// 正则表达式 匹配以数字或者加号开头的字符串(包括了带空格及-分割的号码)
+            String simpleStr = str.replaceAll("\\-|\\s", "");
+            for (GroupResponse.CustomersBean contact : data2) {
+                if (contact.getNick() != null) {
+                    if (contact.getNick().contains(simpleStr) || contact.getNick().contains(str) ||
+                            contact.getMobile().contains(simpleStr) || contact.getMobile().contains(str) ||
+                            contact.getRemark().contains(simpleStr) || contact.getRemark().contains(str)) {
+                        if (!filterList.contains(contact)) {
+                            filterList.add(contact);
+                        }
+                    }
+                }
+            }
+        } else {
+            for (GroupResponse.CustomersBean contact : data2) {
+                if (contact.getNick() != null) {
+                    //姓名全匹配,姓名首字母简拼匹配,姓名全字母匹配
+                    boolean isNameContains = contact.getNick().toLowerCase(Locale.CHINESE)
+                            .contains(str.toLowerCase(Locale.CHINESE));
+                    if (isNameContains) {
+                        if (!filterList.contains(contact)) {
+                            filterList.add(contact);
+                        }
+                    }
+                }
+            }
+        }
+        adapter4.setData(filterList);
+        adapter4.notifyDataSetChanged();
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        if (TextUtils.isEmpty(etSearch.getText().toString().trim())) {
+            if (adapter2 != null) {
+                adapter2.setData(data);
+            } else {
+                adapter4.setData(data2);
+            }
+        } else {
+            if (adapter2 != null) {
+                search1(etSearch.getText().toString().trim());
+            } else {
+                search2(etSearch.getText().toString().trim());
+            }
         }
     }
 }

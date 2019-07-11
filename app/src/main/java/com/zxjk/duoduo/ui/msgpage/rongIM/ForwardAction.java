@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -12,7 +13,9 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.HomeActivity;
 import com.zxjk.duoduo.ui.msgpage.ShareGroupQRActivity;
+import com.zxjk.duoduo.ui.msgpage.rongIM.message.GroupCardMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIM.message.RedPacketMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIM.message.SystemMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIM.message.TransferMessage;
 
 import java.util.ArrayList;
@@ -24,6 +27,7 @@ import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.message.TextMessage;
+import io.rong.message.VoiceMessage;
 
 public class ForwardAction implements IClickActions {
 
@@ -37,7 +41,10 @@ public class ForwardAction implements IClickActions {
         for (Message msg : messages) {
             boolean cantForward = msg.getContent() instanceof RedPacketMessage ||
                     msg.getContent() instanceof TransferMessage ||
-                    (msg.getContent() instanceof TextMessage && ((TextMessage) msg.getContent()).getExtra().equals("start"));
+                    msg.getContent() instanceof SystemMessage ||
+                    msg.getContent() instanceof VoiceMessage ||
+                    msg.getContent() instanceof GroupCardMessage ||
+                    (msg.getContent() instanceof TextMessage && !TextUtils.isEmpty(((TextMessage) msg.getContent()).getExtra()) && ((TextMessage) msg.getContent()).getExtra().equals("start"));
             if (cantForward) {
                 ToastUtils.showShort(R.string.cant_forward);
                 return;

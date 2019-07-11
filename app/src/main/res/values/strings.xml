@@ -971,5 +971,5 @@
     <string name="transfermessagefail">转发失败</string>
     <string name="forwarding">转发中</string>
     <string name="forward_success">转发成功</string>
-    <string name="cant_forward">无法转发红包、转账、下注等消息</string>
+    <string name="cant_forward">无法转发语音、红包、转账、下注、群名片、系统等消息</string>
 </resources>

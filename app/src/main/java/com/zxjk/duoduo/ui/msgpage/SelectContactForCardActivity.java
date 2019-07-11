@@ -242,7 +242,7 @@ public class SelectContactForCardActivity extends BaseActivity implements TextWa
      * @return
      */
     private List<FriendInfoResponse> search(String str) {
-        List<FriendInfoResponse> filterList = new ArrayList<FriendInfoResponse>();// 过滤后的list
+        List<FriendInfoResponse> filterList = new ArrayList<>();// 过滤后的list
         if (str.matches("^([0-9]|[/+]).*")) {// 正则表达式 匹配以数字或者加号开头的字符串(包括了带空格及-分割的号码)
             String simpleStr = str.replaceAll("\\-|\\s", "");
             for (FriendInfoResponse contact : list) {
