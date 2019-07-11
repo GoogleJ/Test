@@ -48,7 +48,7 @@ public class CusConversationListAdapter extends ConversationListAdapter {
             v.findViewById(R.id.rc_left).setVisibility(View.INVISIBLE);
             ImageView imageView = v.findViewById(R.id.rc_mask);
             imageView.setVisibility(View.VISIBLE);
-            imageView.setImageResource(R.mipmap.ic_launcher);
+            imageView.setImageResource(R.drawable.ic_portrait_payment);
             UserInfo u = RongUserInfoManager.getInstance().getUserInfo(data.getConversationTargetId());
             if (u == null) {
                 RongUserInfoManager.getInstance().setUserInfo(new UserInfo(data.getConversationTargetId(), "支付凭证", null));
@@ -58,7 +58,7 @@ public class CusConversationListAdapter extends ConversationListAdapter {
             v.findViewById(R.id.rc_left).setVisibility(View.INVISIBLE);
             ImageView imageView = v.findViewById(R.id.rc_mask);
             imageView.setVisibility(View.VISIBLE);
-            imageView.setImageResource(R.mipmap.ic_launcher);
+            imageView.setImageResource(R.drawable.ic_portrait_notice);
             UserInfo u = RongUserInfoManager.getInstance().getUserInfo(data.getConversationTargetId());
             if (u == null) {
                 RongUserInfoManager.getInstance().setUserInfo(new UserInfo(data.getConversationTargetId(), "对局结果", null));

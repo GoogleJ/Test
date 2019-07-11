@@ -1,5 +1,6 @@
 package com.zxjk.duoduo.ui.msgpage;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -31,7 +32,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imlib.IRongCallback;
@@ -130,8 +134,30 @@ public class ShareGroupQRActivity extends BaseActivity {
         });
     }
 
+    @SuppressLint("CheckResult")
     private void handleTransfer(int position) {
         MessageContent messageContent = getIntent().getParcelableExtra("messagecontent");
+        if (messageContent == null) {
+            ArrayList<Message> messagelist = getIntent().getParcelableArrayListExtra("messagelist");
+            Observable.interval(0, 250, TimeUnit.MILLISECONDS)
+                    .take(messagelist.size())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSubscribe(d -> CommonUtils.initDialog(ShareGroupQRActivity.this, getString(R.string.forwarding)).show())
+                    .doOnError(t -> CommonUtils.destoryDialog())
+                    .doOnDispose(CommonUtils::destoryDialog)
+                    .doOnComplete(() -> {
+                        ToastUtils.showShort(R.string.forward_success);
+                        CommonUtils.destoryDialog();
+                        finish();
+                    })
+                    .compose(bindToLifecycle())
+                    .subscribe(l -> {
+                        MessageContent content = messagelist.get(l.intValue()).getContent();
+                        Message message = Message.obtain(data.get(position).getTargetId(), data.get(position).getConversationType(), content);
+                        RongIM.getInstance().sendMessage(message, null, null, (IRongCallback.ISendMessageCallback) null);
+                    });
+            return;
+        }
         Message message = Message.obtain(data.get(position).getTargetId(), data.get(position).getConversationType(), messageContent);
         RongIM.getInstance().sendMessage(message, "", "", new IRongCallback.ISendMessageCallback() {
             @Override

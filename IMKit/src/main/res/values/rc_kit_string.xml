@@ -49,7 +49,7 @@
     <string name="rc_dialog_item_message_delete">删除消息</string>
     <string name="rc_dialog_item_message_copy">复制消息</string>
     <string name="rc_dialog_item_message_recall">撤回消息</string>
-    <string name="rc_dialog_item_message_more">更多&#8230;</string>
+    <string name="rc_dialog_item_message_more">多选</string>
     <string name="rc_recall_failed">撤回失败</string>
     <string name="rc_you_recalled_a_message">你撤回了一条消息</string>
     <string name="rc_admin_recalled_a_message">管理员撤回了一条消息</string>

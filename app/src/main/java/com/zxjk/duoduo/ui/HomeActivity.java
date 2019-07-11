@@ -204,41 +204,8 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                     return true;
                 })
                 .build();
-        MessageItemLongClickAction action2 = new MessageItemLongClickAction.Builder()
-                .title("多选")
-                .showFilter(message -> {
-                    MessageContent messageContent = message.getContent();
-                    return !(messageContent instanceof NotificationMessage)
-                            && !(messageContent instanceof VoiceMessage)
-                            && !(messageContent instanceof RedPacketMessage)
-                            && !(messageContent instanceof TransferMessage)
-                            && !(messageContent instanceof SystemMessage)
-                            && !(messageContent instanceof GameResultMessage)
-                            && message.getSentStatus() != Message.SentStatus.FAILED
-                            && message.getSentStatus() != Message.SentStatus.CANCELED;
-                })
-                .actionListener((context, message) -> {
-                    RongIMClient.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
-                        @Override
-                        public void onSuccess(List<Conversation> conversations) {
-//                            Intent intent = new Intent(HomeActivity.this, MultiSelectListActivity.class);
-//                            intent.putParcelableArrayListExtra("data", (ArrayList<Conversation>) conversations);
-//                            intent.putExtra("action", "transfer");
-//                            intent.putExtra("messagecontent", message.getContent());
-//                            startActivity(intent);
-                        }
 
-                        @Override
-                        public void onError(RongIMClient.ErrorCode errorCode) {
-
-                        }
-                    });
-                    return true;
-                })
-                .build();
-
-        RongMessageItemLongClickActionManager.getInstance().addMessageItemLongClickAction(action1, 0);
-        RongMessageItemLongClickActionManager.getInstance().addMessageItemLongClickAction(action2, 1);
+        RongMessageItemLongClickActionManager.getInstance().addMessageItemLongClickAction(action1);
     }
 
     private void createChannel() {

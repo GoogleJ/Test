@@ -13,12 +13,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.github.mikephil.charting.charts.LineChart;
@@ -47,6 +45,7 @@ import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.grouppage.ChatInformationActivity;
 import com.zxjk.duoduo.ui.grouppage.GroupChatInformationActivity;
 import com.zxjk.duoduo.ui.msgpage.rongIM.BasePluginExtensionModule;
+import com.zxjk.duoduo.ui.msgpage.rongIM.CusConversationFragment;
 import com.zxjk.duoduo.ui.msgpage.rongIM.message.BusinessCardMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIM.message.RedPacketMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIM.message.TransferMessage;
@@ -69,16 +68,13 @@ import com.zxjk.duoduo.ui.msgpage.widget.GamePopupWindow;
 import com.zxjk.duoduo.ui.widget.dialog.ExpiredEnvelopesDialog;
 import com.zxjk.duoduo.ui.widget.dialog.RedEvelopesDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
-
 import org.jetbrains.annotations.NotNull;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -87,7 +83,6 @@ import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongExtension;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
-import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imkit.plugin.IPluginModule;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imkit.widget.adapter.MessageListAdapter;
@@ -112,7 +107,7 @@ import static com.zxjk.duoduo.Constant.CODE_UNLOGIN;
 
 @SuppressLint("CheckResult")
 public class ConversationActivity extends BaseActivity {
-    private ConversationFragment fragment;
+    private CusConversationFragment fragment;
     private MessageListAdapter messageAdapter;
 
     private Disposable gameWindowDisposable;
@@ -181,8 +176,9 @@ public class ConversationActivity extends BaseActivity {
         handleClickMsg();
 
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        fragment = (ConversationFragment) fragments.get(0);
+        fragment = (CusConversationFragment) fragments.get(0);
         messageAdapter = fragment.getMessageAdapter();
+        messageAdapter.setMaxMessageSelectedCount(9);
     }
 
     private void registerSendMessageListener() {
