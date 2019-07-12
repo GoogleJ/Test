@@ -83,7 +83,8 @@ public class EnlargeImageActivity extends BaseActivity {
         getWindow().getDecorView().setBackgroundColor(Color.BLACK);
         ButterKnife.bind(this);
         String imageUrl = getIntent().getStringExtra("image");
-        if (imageUrl.equals("GameRules")) {
+
+        if (imageUrl.equals("GameRules") || imageUrl.equals("GameRules2")) {
             CommonUtils.initDialog(this).show();
             iv.setVisibility(View.VISIBLE);
             iv.setOnImageEventListener(new SubsamplingScaleImageView.DefaultOnImageEventListener() {
@@ -93,24 +94,7 @@ public class EnlargeImageActivity extends BaseActivity {
                     CommonUtils.destoryDialog();
                 }
             });
-            currentBitmap = ImageUtils.drawable2Bitmap(getDrawable(R.drawable.gamerules));
-            float initImageScale = getInitImageScale(currentBitmap);
-            iv.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CUSTOM);
-            iv.setMinScale(initImageScale);//最小显示比例
-            iv.setMaxScale(initImageScale + 2.0f);//最大显示比例
-            iv.setImage((ImageSource.bitmap(currentBitmap)), new ImageViewState(initImageScale, new PointF(0, 0), 0));
-            iv.setOnClickListener(v -> finishAfterTransition());
-        } else if (imageUrl.equals("GameRules2")) {
-            CommonUtils.initDialog(this).show();
-            iv.setVisibility(View.VISIBLE);
-            iv.setOnImageEventListener(new SubsamplingScaleImageView.DefaultOnImageEventListener() {
-                @Override
-                public void onReady() {
-                    super.onReady();
-                    CommonUtils.destoryDialog();
-                }
-            });
-            currentBitmap = ImageUtils.drawable2Bitmap(getDrawable(R.drawable.gamerules2));
+            currentBitmap = ImageUtils.drawable2Bitmap(ContextCompat.getDrawable(this, (imageUrl.equals("GameRules") ? R.drawable.gamerules : R.drawable.gamerules2)));
             float initImageScale = getInitImageScale(currentBitmap);
             iv.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CUSTOM);
             iv.setMinScale(initImageScale);//最小显示比例

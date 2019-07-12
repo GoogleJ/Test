@@ -201,7 +201,9 @@ public class AddPhoneContractActivity extends BaseActivity {
         }
 
         cursor.close();
-
+        if (stringBuilder.length() >= 0) {
+            return "";
+        }
         return stringBuilder.substring(0, stringBuilder.length() - 1);
     }
 }

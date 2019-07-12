@@ -35,6 +35,7 @@
             android:inputType="text"
             android:maxLines="1"
             android:minWidth="64dp"
+            android:paddingStart="4dp"
             android:textSize="15sp" />
 
     </LinearLayout>

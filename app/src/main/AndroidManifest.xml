@@ -407,6 +407,7 @@
         <activity
             android:name=".ui.msgpage.PhoneContactActivity"
             android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan|stateHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.msgpage.PrivacyRedPacketActivity"

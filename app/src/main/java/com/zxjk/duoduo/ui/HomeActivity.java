@@ -46,6 +46,7 @@ import com.zxjk.duoduo.ui.grouppage.ContactFragment;
 import com.zxjk.duoduo.ui.minepage.MineFragment;
 import com.zxjk.duoduo.ui.msgpage.MsgFragment;
 import com.zxjk.duoduo.ui.msgpage.ShareGroupQRActivity;
+import com.zxjk.duoduo.ui.msgpage.rongIM.message.DuoDuoMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIM.message.GameResultMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIM.message.RedPacketMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIM.message.SystemMessage;
@@ -182,6 +183,7 @@ public class HomeActivity extends BaseActivity implements BottomNavigationBar.On
                             && !(messageContent instanceof TransferMessage)
                             && !(messageContent instanceof SystemMessage)
                             && !(messageContent instanceof GameResultMessage)
+                            && !(messageContent instanceof DuoDuoMessage)
                             && message.getSentStatus() != Message.SentStatus.FAILED
                             && message.getSentStatus() != Message.SentStatus.CANCELED;
                 })

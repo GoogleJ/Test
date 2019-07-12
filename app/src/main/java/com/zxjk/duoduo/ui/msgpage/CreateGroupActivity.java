@@ -44,7 +44,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.rong.imkit.RongIM;
@@ -55,7 +54,7 @@ import io.rong.imlib.model.Message;
 import io.rong.message.InformationNotificationMessage;
 
 @SuppressLint("CheckResult")
-public class CreateGroupActivity extends BaseActivity implements TextWatcher {
+public class CreateGroupActivity extends BaseActivity implements TextWatcher, View.OnClickListener {
     private EditText etSearch;
     private List<String> selectedIds = new ArrayList<>();
 
@@ -118,27 +117,36 @@ public class CreateGroupActivity extends BaseActivity implements TextWatcher {
         indexCreateGroup.setShowTextDialog(tv_hit_letter);
         indexCreateGroup.setOnTouchingLetterChangedListener(letter -> recycler2.scrollToPosition(getScrollPosition(letter)));
 
+        RelativeLayout rl_myGameGroup = findViewById(R.id.rl_myGameGroup);
+        RelativeLayout rl_newGameGroup = findViewById(R.id.rl_newGameGroup);
+        rl_myGameGroup.setOnClickListener(this);
+        rl_newGameGroup.setOnClickListener(this);
+        if (Constant.isVerify) {
+            rl_myGameGroup.setVisibility(View.GONE);
+            rl_newGameGroup.setVisibility(View.GONE);
+        }
+
         if (eventType == EVENT_CREATEGROUP) {
+            rl_myGameGroup.setVisibility(View.VISIBLE);
+            rl_newGameGroup.setVisibility(View.VISIBLE);
             handleCreateGroup();
         }
 
         if (eventType == EVENT_ADDMENBER) {
+            rl_myGameGroup.setVisibility(View.GONE);
+            rl_newGameGroup.setVisibility(View.GONE);
             handleAddMember();
         }
 
         if (eventType == EVENT_DELETEMEMBER) {
+            rl_myGameGroup.setVisibility(View.GONE);
+            rl_newGameGroup.setVisibility(View.GONE);
             tv_title.setText(R.string.remove_from_group);
             handleDeleteMember();
         }
 
         tv_commit.setOnClickListener(v -> confirm());
 
-        RelativeLayout rl_myGameGroup = findViewById(R.id.rl_myGameGroup);
-        RelativeLayout rl_newGameGroup = findViewById(R.id.rl_newGameGroup);
-        if (Constant.isVerify) {
-            rl_myGameGroup.setVisibility(View.GONE);
-            rl_newGameGroup.setVisibility(View.GONE);
-        }
     }
 
     //删除成员逻辑
@@ -447,20 +455,6 @@ public class CreateGroupActivity extends BaseActivity implements TextWatcher {
                 }, this::handleApiError);
     }
 
-    @OnClick({R.id.rl_myGameGroup, R.id.rl_newGameGroup})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            //我的游戏群
-            case R.id.rl_myGameGroup:
-                startActivity(new Intent(this, AllGroupActivity.class));
-                break;
-            //新建游戏群
-            case R.id.rl_newGameGroup:
-                startActivity(new Intent(this, CreateGameGroupActivity.class));
-                break;
-        }
-    }
-
     private void search1(String str) {
         List<FriendInfoResponse> filterList = new ArrayList<>(data.size());// 过滤后的list
         if (str.matches("^([0-9]|[/+]).*")) {// 正则表达式 匹配以数字或者加号开头的字符串(包括了带空格及-分割的号码)
@@ -551,6 +545,20 @@ public class CreateGroupActivity extends BaseActivity implements TextWatcher {
             } else {
                 search2(etSearch.getText().toString().trim());
             }
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            //我的游戏群
+            case R.id.rl_myGameGroup:
+                startActivity(new Intent(this, AllGroupActivity.class));
+                break;
+            //新建游戏群
+            case R.id.rl_newGameGroup:
+                startActivity(new Intent(this, CreateGameGroupActivity.class));
+                break;
         }
     }
 }

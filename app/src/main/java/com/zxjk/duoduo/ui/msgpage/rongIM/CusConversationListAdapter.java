@@ -1,7 +1,9 @@
 package com.zxjk.duoduo.ui.msgpage.rongIM;
 
 import android.annotation.SuppressLint;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
@@ -51,7 +53,8 @@ public class CusConversationListAdapter extends ConversationListAdapter {
             imageView.setImageResource(R.drawable.ic_portrait_payment);
             UserInfo u = RongUserInfoManager.getInstance().getUserInfo(data.getConversationTargetId());
             if (u == null) {
-                RongUserInfoManager.getInstance().setUserInfo(new UserInfo(data.getConversationTargetId(), "支付凭证", null));
+                RongUserInfoManager.getInstance().setUserInfo(new UserInfo(data.getConversationTargetId(), "支付凭证",
+                        getUriFromDrawableRes(v.getContext(),R.drawable.ic_portrait_payment)));
             }
             return;
         } else if (data.getConversationTargetId().equals("349")) {
@@ -61,10 +64,22 @@ public class CusConversationListAdapter extends ConversationListAdapter {
             imageView.setImageResource(R.drawable.ic_portrait_notice);
             UserInfo u = RongUserInfoManager.getInstance().getUserInfo(data.getConversationTargetId());
             if (u == null) {
-                RongUserInfoManager.getInstance().setUserInfo(new UserInfo(data.getConversationTargetId(), "对局结果", null));
+                RongUserInfoManager.getInstance().setUserInfo(new UserInfo(data.getConversationTargetId(), "对局结果",
+                        getUriFromDrawableRes(v.getContext(),R.drawable.ic_portrait_notice)));
             }
             return;
-        } else if (data.getConversationType() != Conversation.ConversationType.GROUP){
+        } else if (data.getConversationTargetId().equals("355")) {
+            v.findViewById(R.id.rc_left).setVisibility(View.INVISIBLE);
+            ImageView imageView = v.findViewById(R.id.rc_mask);
+            imageView.setVisibility(View.VISIBLE);
+            imageView.setImageResource(R.drawable.ic_portrait_system);
+            UserInfo u = RongUserInfoManager.getInstance().getUserInfo(data.getConversationTargetId());
+            if (u == null) {
+                RongUserInfoManager.getInstance().setUserInfo(new UserInfo(data.getConversationTargetId(), "多多官方",
+                        getUriFromDrawableRes(v.getContext(),R.drawable.ic_portrait_system)));
+            }
+            return;
+        } else if (data.getConversationType() != Conversation.ConversationType.GROUP) {
             v.findViewById(R.id.rc_left).setVisibility(View.VISIBLE);
             ImageView imageView = v.findViewById(R.id.rc_mask);
             ImageView game_mask = v.findViewById(R.id.game_mask);
@@ -149,5 +164,14 @@ public class CusConversationListAdapter extends ConversationListAdapter {
                     }, t -> {
                     });
         }
+    }
+
+    private Uri getUriFromDrawableRes(Context context, int id) {
+        Resources resources = context.getResources();
+        String path = ContentResolver.SCHEME_ANDROID_RESOURCE + "://"
+                + resources.getResourcePackageName(id) + "/"
+                + resources.getResourceTypeName(id) + "/"
+                + resources.getResourceEntryName(id);
+        return Uri.parse(path);
     }
 }

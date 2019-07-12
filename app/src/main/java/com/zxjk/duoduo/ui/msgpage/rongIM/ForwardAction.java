@@ -13,6 +13,8 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.HomeActivity;
 import com.zxjk.duoduo.ui.msgpage.ShareGroupQRActivity;
+import com.zxjk.duoduo.ui.msgpage.rongIM.message.DuoDuoMessage;
+import com.zxjk.duoduo.ui.msgpage.rongIM.message.GameResultMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIM.message.GroupCardMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIM.message.RedPacketMessage;
 import com.zxjk.duoduo.ui.msgpage.rongIM.message.SystemMessage;
@@ -42,6 +44,8 @@ public class ForwardAction implements IClickActions {
             boolean cantForward = msg.getContent() instanceof RedPacketMessage ||
                     msg.getContent() instanceof TransferMessage ||
                     msg.getContent() instanceof SystemMessage ||
+                    msg.getContent() instanceof GameResultMessage ||
+                    msg.getContent() instanceof DuoDuoMessage ||
                     msg.getContent() instanceof VoiceMessage ||
                     msg.getContent() instanceof GroupCardMessage ||
                     (msg.getContent() instanceof TextMessage && !TextUtils.isEmpty(((TextMessage) msg.getContent()).getExtra()) && ((TextMessage) msg.getContent()).getExtra().equals("start"));

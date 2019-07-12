@@ -53,10 +53,8 @@ public class UpdateUserInfoActivity extends BaseActivity {
 
         initView();
 
-
         etChangeSign = findViewById(R.id.etChangeSign);
         tvChangeSign = findViewById(R.id.tvChangeSign);
-
 
         etChangeSign.addTextChangedListener(new TextWatcher() {
             @Override

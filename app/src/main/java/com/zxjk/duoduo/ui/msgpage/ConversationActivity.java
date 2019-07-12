@@ -13,10 +13,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.github.mikephil.charting.charts.LineChart;
@@ -68,13 +70,16 @@ import com.zxjk.duoduo.ui.msgpage.widget.GamePopupWindow;
 import com.zxjk.duoduo.ui.widget.dialog.ExpiredEnvelopesDialog;
 import com.zxjk.duoduo.ui.widget.dialog.RedEvelopesDialog;
 import com.zxjk.duoduo.utils.CommonUtils;
+
 import org.jetbrains.annotations.NotNull;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -158,6 +163,8 @@ public class ConversationActivity extends BaseActivity {
                 tvTitle.setText("支付凭证");
             } else if (targetId.equals("349")) {
                 tvTitle.setText("对局结果");
+            } else if (targetId.equals("355")) {
+                tvTitle.setText("多多官方");
             } else {
                 tvTitle.setText("系统消息");
             }
@@ -1053,6 +1060,10 @@ public class ConversationActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
+        if (onReceiveMessageListener == null) {
+            super.onDestroy();
+            return;
+        }
         onReceiveMessageListener = null;
         onSendMessageListener = null;
         typingStatusListener = null;
