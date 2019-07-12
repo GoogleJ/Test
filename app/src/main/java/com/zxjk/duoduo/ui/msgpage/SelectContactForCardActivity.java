@@ -21,9 +21,9 @@ import com.shehuan.nicedialog.ViewConvertListener;
 import com.shehuan.nicedialog.ViewHolder;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.bean.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.bean.response.FriendInfoResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.HomeActivity;
 import com.zxjk.duoduo.ui.base.BaseActivity;
@@ -38,7 +38,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
@@ -95,8 +98,29 @@ public class SelectContactForCardActivity extends BaseActivity implements TextWa
     }
 
     private void handleTransfer(int position) {
-        MessageContent content = getIntent().getParcelableExtra("messagecontent");
-        Message message = Message.obtain(list.get(position).getId(), Conversation.ConversationType.PRIVATE, content);
+        MessageContent messageContent = getIntent().getParcelableExtra("messagecontent");
+        if (null == messageContent) {
+            ArrayList<Message> messagelist = getIntent().getParcelableArrayListExtra("messagelist");
+            Observable.interval(0, 250, TimeUnit.MILLISECONDS)
+                    .take(messagelist.size())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSubscribe(d -> CommonUtils.initDialog(SelectContactForCardActivity.this, getString(R.string.forwarding)).show())
+                    .doOnError(t -> CommonUtils.destoryDialog())
+                    .doOnDispose(CommonUtils::destoryDialog)
+                    .doOnComplete(() -> {
+                        ToastUtils.showShort(R.string.forward_success);
+                        CommonUtils.destoryDialog();
+                        finish();
+                    })
+                    .compose(bindToLifecycle())
+                    .subscribe(l -> {
+                        MessageContent content = messagelist.get(l.intValue()).getContent();
+                        Message message = Message.obtain(list.get(position).getId(), Conversation.ConversationType.PRIVATE, content);
+                        RongIM.getInstance().sendMessage(message, null, null, (IRongCallback.ISendMessageCallback) null);
+                    });
+            return;
+        }
+        Message message = Message.obtain(list.get(position).getId(), Conversation.ConversationType.PRIVATE, messageContent);
         RongIM.getInstance().sendMessage(message, "", "", new IRongCallback.ISendMessageCallback() {
             @Override
             public void onAttached(Message message) {

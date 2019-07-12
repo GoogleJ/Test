@@ -227,7 +227,11 @@ public class ShareGroupQRActivity extends BaseActivity {
         intent.putExtra("fromShare", true);
         if (isTransfer) {
             intent.putExtra("action", "transfer");
-            intent.putExtra("messagecontent", (Parcelable) getIntent().getParcelableExtra("messagecontent"));
+            if (null != intent.getParcelableExtra("messagecontent")) {
+                intent.putExtra("messagecontent", (Parcelable) getIntent().getParcelableExtra("messagecontent"));
+            } else {
+                intent.putParcelableArrayListExtra("messagelist", getIntent().getParcelableArrayListExtra("messagelist"));
+            }
         }
         startActivity(intent);
         finish();
