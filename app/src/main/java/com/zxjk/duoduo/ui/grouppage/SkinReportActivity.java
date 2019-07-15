@@ -15,7 +15,6 @@ public class SkinReportActivity extends AppCompatActivity {
 
     private EditText feedback_edit;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

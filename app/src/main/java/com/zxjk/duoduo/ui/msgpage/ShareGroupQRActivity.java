@@ -117,7 +117,7 @@ public class ShareGroupQRActivity extends BaseActivity {
         app_type.setImageResource(R.drawable.icon_no_search);
         app_prompt_text.setText(getString(R.string.no_search));
 
-        adapter = new ShareGroupQRAdapter(this);
+        adapter = new ShareGroupQRAdapter();
         adapter.setNewData(data);
         adapter.setEmptyView(emptyView);
         recycler.setAdapter(adapter);

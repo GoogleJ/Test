@@ -32,7 +32,6 @@ import static com.zxjk.duoduo.utils.MD5Utils.getMD5;
 @SuppressLint("CheckResult")
 public class ForgetRegisterActivity extends BaseActivity implements View.OnClickListener {
 
-
     @BindView(R.id.login_country)
     TextView login_country;
 

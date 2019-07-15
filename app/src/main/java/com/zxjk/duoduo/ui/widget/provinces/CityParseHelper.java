@@ -153,7 +153,7 @@ public class CityParseHelper {
      */
     public void initData(Context context) {
 
-        String cityJson = utils.getJson(context, Constant.CITY_DATA);
+        String cityJson = Utils.getJson(context, Constant.CITY_DATA);
         Type type = new TypeToken<ArrayList<ProvinceBean>>() {
         }.getType();
 

@@ -42,7 +42,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-
 public class EditPersonalInformationFragment extends BaseActivity {
 
     private JDCityPicker cityPicker;

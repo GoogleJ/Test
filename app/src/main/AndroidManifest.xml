@@ -373,10 +373,6 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.grouppage.GroupManagementActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.minepage.PaySettingActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
@@ -424,10 +420,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.msgpage.TransferInfoActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.msgpage.ReceivedEnvelopesActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity

@@ -61,12 +61,12 @@ public class GlideUtil {
                 return RequestOptions.bitmapTransform(new CircleCrop());
             case LOAD_CORNER:
                 return new RequestOptions()
-                        .error(R.drawable.ic_launcher)
+                        .error(R.mipmap.ic_launcher)
                         .transform(new CenterCrop(), new RoundedCorners(CommonUtils.dip2px(context, radius)));
             case LOAD_SOURCE:
-                return new RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE).error(R.drawable.ic_launcher);
+                return new RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE).error(R.mipmap.ic_launcher);
             default:
-                return new RequestOptions().error(R.drawable.ic_launcher);
+                return new RequestOptions().error(R.mipmap.ic_launcher);
         }
     }
 }

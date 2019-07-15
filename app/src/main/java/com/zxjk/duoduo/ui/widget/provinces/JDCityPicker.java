@@ -115,11 +115,11 @@ public class JDCityPicker {
         popwindow.setOutsideTouchable(false);
         popwindow.setFocusable(true);
 
-        popwindow.setOnDismissListener(() -> utils.setBackgroundAlpha(context, 1.0f));
+        popwindow.setOnDismissListener(() -> Utils.setBackgroundAlpha(context, 1.0f));
 
         mCloseImg.setOnClickListener(v -> {
             hidePop();
-            utils.setBackgroundAlpha(context, 1.0f);
+            Utils.setBackgroundAlpha(context, 1.0f);
             if (mBaseListener != null) {
                 mBaseListener.onCancel();
             }
@@ -163,7 +163,7 @@ public class JDCityPicker {
 
         mCityListView.setOnItemClickListener((parent, view, position, id) -> selectedList(position));
 
-        utils.setBackgroundAlpha(context, 0.5f);
+        Utils.setBackgroundAlpha(context, 0.5f);
         updateIndicator();
         updateTabsStyle(INDEX_INVALID);
         setProvinceListData();

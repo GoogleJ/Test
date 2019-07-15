@@ -19,7 +19,7 @@ import java.io.InputStreamReader;
  * QQ ：275137657
  */
 
-public class utils {
+public class Utils {
     //读取方法
     public static String getJson(Context context, String fileName) {
         StringBuilder stringBuilder = new StringBuilder();

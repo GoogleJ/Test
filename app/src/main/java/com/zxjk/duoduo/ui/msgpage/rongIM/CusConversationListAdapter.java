@@ -10,18 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import androidx.core.content.ContextCompat;
-
-import com.othershe.combinebitmap.CombineBitmap;
-import com.othershe.combinebitmap.layout.WechatLayoutManager;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
-import com.zxjk.duoduo.utils.CommonUtils;
-
-import java.util.Arrays;
-import java.util.List;
+import com.zxjk.duoduo.utils.ImageUtil;
 
 import io.rong.imkit.model.UIConversation;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
@@ -54,7 +47,7 @@ public class CusConversationListAdapter extends ConversationListAdapter {
             UserInfo u = RongUserInfoManager.getInstance().getUserInfo(data.getConversationTargetId());
             if (u == null) {
                 RongUserInfoManager.getInstance().setUserInfo(new UserInfo(data.getConversationTargetId(), "支付凭证",
-                        getUriFromDrawableRes(v.getContext(),R.drawable.ic_portrait_payment)));
+                        getUriFromDrawableRes(v.getContext(), R.drawable.ic_portrait_payment)));
             }
             return;
         } else if (data.getConversationTargetId().equals("349")) {
@@ -65,7 +58,7 @@ public class CusConversationListAdapter extends ConversationListAdapter {
             UserInfo u = RongUserInfoManager.getInstance().getUserInfo(data.getConversationTargetId());
             if (u == null) {
                 RongUserInfoManager.getInstance().setUserInfo(new UserInfo(data.getConversationTargetId(), "对局结果",
-                        getUriFromDrawableRes(v.getContext(),R.drawable.ic_portrait_notice)));
+                        getUriFromDrawableRes(v.getContext(), R.drawable.ic_portrait_notice)));
             }
             return;
         } else if (data.getConversationTargetId().equals("355")) {
@@ -76,7 +69,7 @@ public class CusConversationListAdapter extends ConversationListAdapter {
             UserInfo u = RongUserInfoManager.getInstance().getUserInfo(data.getConversationTargetId());
             if (u == null) {
                 RongUserInfoManager.getInstance().setUserInfo(new UserInfo(data.getConversationTargetId(), "多多官方",
-                        getUriFromDrawableRes(v.getContext(),R.drawable.ic_portrait_system)));
+                        getUriFromDrawableRes(v.getContext(), R.drawable.ic_portrait_system)));
             }
             return;
         } else if (data.getConversationType() != Conversation.ConversationType.GROUP) {
@@ -97,26 +90,8 @@ public class CusConversationListAdapter extends ConversationListAdapter {
         holder.leftImageView.setVisibility(View.GONE);
 
         Group groupInfo = RongUserInfoManager.getInstance().getGroupInfo(data.getConversationTargetId());
-        groupInfo = null;
         if (groupInfo != null && !TextUtils.isEmpty(groupInfo.getPortraitUri().toString())) {
-            String s = groupInfo.getPortraitUri().toString();
-            String[] split = s.split(",");
-            if (split.length > 9) {
-                List<String> strings = Arrays.asList(split);
-                List<String> strings1 = strings.subList(0, 9);
-                split = new String[strings1.size()];
-                for (int i = 0; i < strings1.size(); i++) {
-                    split[i] = strings1.get(i);
-                }
-            }
-            CombineBitmap.init(v.getContext())
-                    .setLayoutManager(new WechatLayoutManager()) // 必选， 设置图片的组合形式，支持WechatLayoutManager、DingLayoutManager
-                    .setGapColor(ContextCompat.getColor(v.getContext(), R.color.grey)) // 单个图片间距的颜色，默认白色
-                    .setSize(CommonUtils.dip2px(v.getContext(), 48)) // 必选，组合后Bitmap的尺寸，单位dp
-                    .setGap(CommonUtils.dip2px(v.getContext(), 2)) // 单个Bitmap之间的距离，单位dp，默认0dp
-                    .setUrls(split) // 要加载的图片url数组
-                    .setImageView(imageView) // 直接设置要显示图片的ImageView
-                    .build();
+            ImageUtil.loadGroupPortrait(imageView, groupInfo.getPortraitUri().toString());
         } else {
             ServiceFactory.getInstance().getBaseService(Api.class)
                     .getGroupByGroupId(data.getConversationTargetId())
@@ -128,6 +103,7 @@ public class CusConversationListAdapter extends ConversationListAdapter {
                         } else {
                             game_mask.setVisibility(View.VISIBLE);
                         }
+
                         String s = "";
 
                         StringBuilder stringBuilder = new StringBuilder();
@@ -144,23 +120,7 @@ public class CusConversationListAdapter extends ConversationListAdapter {
                             RongUserInfoManager.getInstance().setGroupInfo(group);
                         }
 
-                        String[] split = s.split(",");
-                        if (split.length > 9) {
-                            List<String> strings = Arrays.asList(split);
-                            List<String> strings1 = strings.subList(0, 9);
-                            split = new String[strings1.size()];
-                            for (int i = 0; i < strings1.size(); i++) {
-                                split[i] = strings1.get(i);
-                            }
-                        }
-                        CombineBitmap.init(v.getContext())
-                                .setLayoutManager(new WechatLayoutManager()) // 必选， 设置图片的组合形式，支持WechatLayoutManager、DingLayoutManager
-                                .setGapColor(ContextCompat.getColor(v.getContext(), R.color.grey)) // 单个图片间距的颜色，默认白色
-                                .setSize(CommonUtils.dip2px(v.getContext(), 48)) // 必选，组合后Bitmap的尺寸，单位dp
-                                .setGap(CommonUtils.dip2px(v.getContext(), 2)) // 单个Bitmap之间的距离，单位dp，默认0dp
-                                .setUrls(split) // 要加载的图片url数组
-                                .setImageView(imageView) // 直接设置要显示图片的ImageView
-                                .build();
+                        ImageUtil.loadGroupPortrait(imageView, s);
                     }, t -> {
                     });
         }

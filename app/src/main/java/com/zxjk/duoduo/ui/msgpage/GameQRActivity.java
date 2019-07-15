@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,8 +20,6 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.google.gson.Gson;
-import com.othershe.combinebitmap.CombineBitmap;
-import com.othershe.combinebitmap.layout.WechatLayoutManager;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.response.BaseResponse;
@@ -34,11 +31,11 @@ import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.minepage.scanuri.BaseUri;
 import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.utils.ImageUtil;
 import com.zxjk.duoduo.utils.SaveImageUtil;
 import com.zxjk.duoduo.utils.WeChatShareUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import cn.bingoogolapple.qrcode.zxing.QRCodeEncoder;
@@ -254,7 +251,6 @@ public class GameQRActivity extends BaseActivity {
     }
 
     private void loadHead(GroupResponse data) {
-        String[] split;
 
         String s = "";
         StringBuilder stringBuilder = new StringBuilder();
@@ -266,22 +262,6 @@ public class GameQRActivity extends BaseActivity {
             }
         }
 
-        split = s.split(",");
-        if (split.length > 9) {
-            List<String> strings = Arrays.asList(split);
-            List<String> strings1 = strings.subList(0, 9);
-            split = new String[strings1.size()];
-            for (int i = 0; i < strings1.size(); i++) {
-                split[i] = strings1.get(i);
-            }
-        }
-        CombineBitmap.init(this)
-                .setLayoutManager(new WechatLayoutManager()) // 必选， 设置图片的组合形式，支持WechatLayoutManager、DingLayoutManager
-                .setGapColor(ContextCompat.getColor(this, R.color.grey)) // 单个图片间距的颜色，默认白色
-                .setSize(CommonUtils.dip2px(this, 80)) // 必选，组合后Bitmap的尺寸，单位dp
-                .setGap(CommonUtils.dip2px(this, 3)) // 单个Bitmap之间的距离，单位dp，默认0dp
-                .setUrls(split) // 要加载的图片url数组
-                .setImageView(ivGroupHead) // 直接设置要显示图片的ImageView
-                .build();
+        ImageUtil.loadGroupPortrait(ivGroupHead, s, 80, 3);
     }
 }

@@ -9,14 +9,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.othershe.combinebitmap.CombineBitmap;
-import com.othershe.combinebitmap.layout.WechatLayoutManager;
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.bean.response.GetAllPlayGroupResponse;
-import com.zxjk.duoduo.utils.CommonUtils;
+import com.zxjk.duoduo.utils.ImageUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import io.rong.imkit.RongIM;
@@ -70,25 +67,7 @@ public class AllGroupAdapter extends RecyclerView.Adapter<AllGroupAdapter.ViewHo
             });
         }
 
-
-        String[] split = data.get(position).getHeadPortrait().split(",");
-        if (split.length > 9) {
-            List<String> strings = Arrays.asList(split);
-            List<String> strings1 = strings.subList(0, 9);
-            split = new String[strings1.size()];
-            for (int i = 0; i < strings1.size(); i++) {
-                split[i] = strings1.get(i);
-            }
-        }
-
-        CombineBitmap.init(holder.itemView.getContext())
-                .setLayoutManager(new WechatLayoutManager()) // 必选， 设置图片的组合形式，支持WechatLayoutManager、DingLayoutManager
-                .setGapColor(holder.itemView.getContext().getResources().getColor(R.color.grey)) // 单个图片间距的颜色，默认白色
-                .setSize(CommonUtils.dip2px(holder.itemView.getContext(), 56)) // 必选，组合后Bitmap的尺寸，单位dp
-                .setGap(CommonUtils.dip2px(holder.itemView.getContext(), 2)) // 单个Bitmap之间的距离，单位dp，默认0dp
-                .setUrls(split) // 要加载的图片url数组
-                .setImageView(holder.nineImg) // 直接设置要显示图片的ImageView
-                .build();
+        ImageUtil.loadGroupPortrait(holder.nineImg, data.get(position).getHeadPortrait(), 56, 2);
     }
 
     @Override

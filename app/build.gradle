@@ -113,7 +113,7 @@ dependencies {
     //AliyunOSS
     implementation 'com.aliyun.dpa:oss-android-sdk:+'
 
-    //utils
+    //Utils
     implementation 'com.blankj:utilcodex:1.23.7'
 
     //Loading
@@ -146,9 +146,6 @@ dependencies {
     //通用适配器
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
 
-    //平滑按钮
-    implementation 'com.github.zcweng:switch-button:0.0.3@aar'
-
     //popwindow
     implementation 'com.github.razerdp:BasePopup:2.1.9'
 
@@ -179,7 +176,7 @@ dependencies {
     implementation 'com.github.xiaohaibin:PageMenuLayout:0.3.0'
 
     //leakcanary
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-1'
+//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-1'
 
     //京东地区选择
     implementation 'org.jsoup:jsoup:1.11.2'

@@ -19,15 +19,14 @@ import com.zxjk.duoduo.BuildConfig;
 import java.io.File;
 
 public class TakePicUtil {
-    public static Uri imageUri = null;
     public static File file = null;
 
     public static void takePicture(Activity activity, int requestCode) {
         if (hasSdcard()) {
-            file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DuoDuo/images/" + System.currentTimeMillis() + ".png");
+            file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DuoDuoyoushe/portraits/" + System.currentTimeMillis() + ".png");
             file.getParentFile().mkdirs();
             Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            imageUri = getUriForFile(activity, file);
+            Uri imageUri = getUriForFile(activity, file);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 intentCamera.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             }
@@ -42,14 +41,14 @@ public class TakePicUtil {
         activity.startActivityForResult(photoPickerIntent, requestCode);
     }
 
-    public static Uri getUriForFile(Context context, File file) {
+    private static Uri getUriForFile(Context context, File file) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             return FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".FileProvider", file);
         }
         return Uri.fromFile(file);
     }
 
-    public static boolean hasSdcard() {
+    private static boolean hasSdcard() {
         String state = Environment.getExternalStorageState();
         return state.equals(Environment.MEDIA_MOUNTED);
     }
@@ -107,18 +106,13 @@ public class TakePicUtil {
     }
 
     private static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
-        Cursor cursor = null;
         final String column = "_data";
         final String[] projection = {column};
-        try {
-            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
+        try (Cursor cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 final int column_index = cursor.getColumnIndexOrThrow(column);
                 return cursor.getString(column_index);
             }
-        } finally {
-            if (cursor != null)
-                cursor.close();
         }
         return null;
     }

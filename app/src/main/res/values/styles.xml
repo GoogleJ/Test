@@ -8,30 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="EnlargeTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/theme_color</item>
-        <item name="colorPrimaryDark">@color/theme_color</item>
-        <item name="colorAccent">@color/theme_color</item>
-    </style>
-
     <style name="RedPackageTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#FA9219</item>
         <item name="colorPrimaryDark">#FA9219</item>
         <item name="colorAccent">#FA9219</item>
-    </style>
-
-    <style name="share_pop_style">
-        <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
-        <item name="android:windowExitAnimation">@anim/push_buttom_out</item>
-    </style>
-
-    <style name="view_shadow_style">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:background">#000000</item>
-        <item name="android:visibility">gone</item>
     </style>
 
     <style name="listview_common_style">
@@ -46,55 +27,10 @@
         <item name="android:listSelector">@android:color/transparent</item>
     </style>
 
-    //这是国家选择代码的ListView的适配器的Item Style
-
-    <style name="tv_common_column_title_style">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/text_select_color</item>
-        <item name="android:gravity">center</item>
-        <item name="android:drawablePadding">5dp</item>
-        <item name="android:textSize">15dp</item>
-        <item name="android:layout_centerVertical">true</item>
-    </style>
-
-    //这里是国家代码的头部吧标题的
-
-    <style name="rl_head_bg_style">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">50dp</item>
-        <item name="android:minHeight">50dp</item>
-    </style>
-    //这里是searchHeader中的属性
-
-    <style name="edt_common_style">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@color/item_bg_normal</item>
-        <item name="android:textColor">@color/text_white_def</item>
-        <item name="android:textColorHint">@color/edt_common_hint_color</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:cursorVisible">true</item>
-        <item name="android:textCursorDrawable">@null</item>
-        <item name="android:paddingLeft">15dp</item>
-        <item name="android:paddingRight">15dp</item>
-        <item name="android:paddingTop">10dp</item>
-        <item name="android:paddingBottom">10dp</item>
-        <item name="android:textSize">16dp</item>
-        <item name="android:drawablePadding">10dp</item>
-        <item name="android:layout_marginLeft">50dp</item>
-        <item name="android:layout_marginRight">50dp</item>
-    </style>
     //首页进来的图标
-
     <style name="AppTheme.Theme_Splash">
         <item name="android:windowBackground">@drawable/splash</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:fitsSystemWindows">true</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:clipToPadding">true</item>
     </style>
-    //dialog的基本属性
 
     <style name="dialogstyle" parent="AppTheme">
         <item name="android:windowBackground">@android:color/transparent</item> 
@@ -102,67 +38,7 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowIsTranslucent">true</item>
-        <!--<item name="android:windowAnimationStyle">@style/bottom</item>-->
     </style>
-    //dialog进来时的动画
-    <!--<style name="bottom">-->
-    <!--<item name="android:windowEnterAnimation">@anim/dialog_enter</item>-->
-    <!--&lt;!&ndash;<item name="android:windowExitAnimation">@anim/dialog_exit</item>&lt;!&ndash;//退出时的动画&ndash;&gt;&ndash;&gt;-->
-    <!--</style>-->
-    //自定义标题的线的颜色
-
-    <style name="line">
-        <item name="android:layout_height">1dp</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:background">#000</item>
-    </style>
-    //这是关于旧的标题栏的属性
-
-    <style name="tv_head_common_style">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:layout_centerVertical">true</item>
-        <item name="android:background">@null</item>
-        <item name="android:gravity">center</item>
-        <item name="android:layout_marginLeft">15dp</item>
-        <item name="android:layout_marginRight">15dp</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="tv_head_title_style">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:layout_centerInParent">true</item>
-        <item name="android:gravity">center</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:textSize">18sp</item>
-    </style>
-    //会话列表界面的头部menu属性
-
-    <style name="msg_top_pop_style">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center</item>
-        <item name="android:layout_margin">16dp</item>
-        <item name="android:orientation">horizontal</item>
-    </style>
-
-    <style name="msg_top_pop_img_style">
-        <item name="android:layout_width">25dp</item>
-        <item name="android:layout_height">25dp</item>
-    </style>
-
-    <style name="msg_top_pop_text_style">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:layout_marginLeft">15dp</item>
-        <item name="android:textColor">@android:color/white</item>
-    </style>
-    //关于PopupWindow的属性
 
     <style name="AnimDown" parent="@android:style/Animation">
         <item name="android:windowEnterAnimation">@anim/push_scale_in</item>
@@ -170,8 +46,8 @@
     </style>
 
     <style name="dialog_style" parent="android:Animation">
-        <item name="@android:windowEnterAnimation">@anim/dialog_enter_psd</item>
-        <item name="@android:windowExitAnimation">@anim/dialog_exit_psd</item>
+        <item name="android:windowEnterAnimation">@anim/dialog_enter_psd</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit_psd</item>
     </style>
 
     <style name="ImageEnter">
@@ -203,22 +79,6 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/color9</item>
-    </style>
-
-
-    <style name="textStyle2">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">#666666</item>
-    </style>
-
-    <style name="textStyle3">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="textStyle4">
@@ -261,13 +121,7 @@
     <style name="CommonSwitch" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorAccent">#49A2FE</item>
     </style>
-    <!--启动页样式-->
-    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowBackground">@drawable/splash</item>
-    </style>
+
     <!--按钮样式-->
     <style name="BtnStyle">
         <item name="android:layout_width">match_parent</item>

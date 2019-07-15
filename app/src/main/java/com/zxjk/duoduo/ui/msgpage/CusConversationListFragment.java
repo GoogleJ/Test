@@ -4,12 +4,9 @@ import android.content.Context;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
-
 import androidx.fragment.app.Fragment;
-
 import com.zxjk.duoduo.R;
 import com.zxjk.duoduo.ui.msgpage.rongIM.CusConversationListAdapter;
-
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imkit.model.UIConversation;

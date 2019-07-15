@@ -26,8 +26,6 @@ public class ChangeLanguageActivity extends BaseActivity implements View.OnClick
     @BindView(R.id.checkbox_en_us)
     ImageView checkBoxEnUs;
 
-    int type = 0;
-
     public static void start(AppCompatActivity activity) {
         Intent intent = new Intent(activity, ChangeLanguageActivity.class);
         activity.startActivity(intent);
