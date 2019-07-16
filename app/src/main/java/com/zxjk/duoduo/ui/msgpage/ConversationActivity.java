@@ -549,10 +549,17 @@ public class ConversationActivity extends BaseActivity {
                     .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(this)))
                     .compose(bindToLifecycle())
                     .subscribe(groupInfo -> {
-                        if (null != RongUserInfoManager.getInstance().getGroupInfo(groupInfo.getGroupInfo().getId())
-                                && !RongUserInfoManager.getInstance().getGroupInfo(groupInfo.getGroupInfo().getId()).getName().equals(groupInfo.getGroupInfo().getGroupNikeName())) {
-                            RongUserInfoManager.getInstance().setGroupInfo(new Group(groupInfo.getGroupInfo().getId(), groupInfo.getGroupInfo().getGroupNikeName(), Uri.parse(groupInfo.getGroupInfo().getHeadPortrait())));
+                        String groupPortrait = groupInfo.getGroupInfo().getHeadPortrait();
+                        if (groupInfo.getGroupInfo().getGameType().equals("1")) {
+                            groupPortrait = "ISGAMEGROUP" + groupPortrait;
                         }
+                        Group ronginfo = RongUserInfoManager.getInstance().getGroupInfo(groupInfo.getGroupInfo().getId());
+                        if (null == ronginfo ||
+                                !ronginfo.getName().equals(groupInfo.getGroupInfo().getGroupNikeName()) ||
+                                (groupInfo.getGroupInfo().getGameType().equals("1") && !ronginfo.getPortraitUri().toString().contains("ISGAMEGROUP"))) {
+                            RongUserInfoManager.getInstance().setGroupInfo(new Group(groupInfo.getGroupInfo().getId(), groupInfo.getGroupInfo().getGroupNikeName(), Uri.parse(groupPortrait)));
+                        }
+
                         memberIds = new ArrayList<>(groupInfo.getCustomers().size());
                         for (GroupResponse.CustomersBean bean : groupInfo.getCustomers()) {
                             memberIds.add(bean.getId());
@@ -571,7 +578,6 @@ public class ConversationActivity extends BaseActivity {
 
                         if (groupInfo.getGroupInfo().getGroupType().equals("1")) {
                             //游戏plugin
-
                             Iterator<IPluginModule> iterator = pluginModules.iterator();
                             while (iterator.hasNext()) {
                                 IPluginModule next = iterator.next();

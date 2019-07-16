@@ -5,7 +5,6 @@ import androidx.core.content.ContextCompat;
 import com.othershe.combinebitmap.CombineBitmap;
 import com.othershe.combinebitmap.layout.WechatLayoutManager;
 import com.zxjk.duoduo.R;
-
 import java.util.Arrays;
 
 public class ImageUtil {
@@ -26,7 +25,7 @@ public class ImageUtil {
     }
 
     public static void loadGroupPortrait(ImageView target, String urls, int size, int gap) {
-        String[] split = urls.split(",");
+        String[] split = urls.replace("ISGAMEGROUP", "").split(",");
         if (split.length > 9) {
             split = Arrays.copyOfRange(split, 0, 9);
         }

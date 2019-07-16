@@ -64,9 +64,11 @@ public class GlideUtil {
                         .error(R.mipmap.ic_launcher)
                         .transform(new CenterCrop(), new RoundedCorners(CommonUtils.dip2px(context, radius)));
             case LOAD_SOURCE:
-                return new RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE).error(R.mipmap.ic_launcher);
+                return new RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                        .error(R.mipmap.ic_launcher);
             default:
-                return new RequestOptions().error(R.mipmap.ic_launcher);
+                return new RequestOptions()
+                        .error(R.mipmap.ic_launcher);
         }
     }
 }

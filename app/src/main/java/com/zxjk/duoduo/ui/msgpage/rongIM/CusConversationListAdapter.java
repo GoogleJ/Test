@@ -91,32 +91,38 @@ public class CusConversationListAdapter extends ConversationListAdapter {
 
         Group groupInfo = RongUserInfoManager.getInstance().getGroupInfo(data.getConversationTargetId());
         if (groupInfo != null && !TextUtils.isEmpty(groupInfo.getPortraitUri().toString())) {
+            if (groupInfo.getPortraitUri().toString().contains("ISGAMEGROUP")) {
+                game_mask.setVisibility(View.VISIBLE);
+            } else {
+                game_mask.setVisibility(View.GONE);
+            }
             ImageUtil.loadGroupPortrait(imageView, groupInfo.getPortraitUri().toString());
         } else {
             ServiceFactory.getInstance().getBaseService(Api.class)
                     .getGroupByGroupId(data.getConversationTargetId())
                     .compose(RxSchedulers.normalTrans())
                     .compose(RxSchedulers.ioObserver())
-                    .subscribe(response -> {
-                        if (TextUtils.isEmpty(response.getMaxNumber())) {
-                            game_mask.setVisibility(View.GONE);
-                        } else {
-                            game_mask.setVisibility(View.VISIBLE);
-                        }
-
+                    .subscribe(r -> {
                         String s = "";
 
                         StringBuilder stringBuilder = new StringBuilder();
-                        for (int i = 0; i < response.getCustomers().size(); i++) {
-                            stringBuilder.append(response.getCustomers().get(i).getHeadPortrait() + ",");
-                            if (i == response.getCustomers().size() - 1 || i == 8) {
+                        for (int i = 0; i < r.getCustomers().size(); i++) {
+                            stringBuilder.append(r.getCustomers().get(i).getHeadPortrait() + ",");
+                            if (i == r.getCustomers().size() - 1 || i == 8) {
                                 s = stringBuilder.substring(0, stringBuilder.length() - 1);
                                 break;
                             }
                         }
 
-                        if (null == RongUserInfoManager.getInstance().getGroupInfo(response.getGroupInfo().getId())) {
-                            Group group = new Group(response.getGroupInfo().getId(), response.getGroupInfo().getGroupNikeName(), Uri.parse(s));
+                        if (r.getGroupInfo().getGroupType().equals("1")) {
+                            s = "ISGAMEGROUP" + s;
+                            game_mask.setVisibility(View.VISIBLE);
+                        } else {
+                            game_mask.setVisibility(View.GONE);
+                        }
+
+                        if (null == RongUserInfoManager.getInstance().getGroupInfo(r.getGroupInfo().getId())) {
+                            Group group = new Group(r.getGroupInfo().getId(), r.getGroupInfo().getGroupNikeName(), Uri.parse(s));
                             RongUserInfoManager.getInstance().setGroupInfo(group);
                         }
 

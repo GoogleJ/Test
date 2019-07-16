@@ -41,7 +41,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -456,64 +455,31 @@ public class CreateGroupActivity extends BaseActivity implements TextWatcher, Vi
     }
 
     private void search1(String str) {
-        List<FriendInfoResponse> filterList = new ArrayList<>(data.size());// 过滤后的list
-        if (str.matches("^([0-9]|[/+]).*")) {// 正则表达式 匹配以数字或者加号开头的字符串(包括了带空格及-分割的号码)
-            String simpleStr = str.replaceAll("\\-|\\s", "");
-            for (FriendInfoResponse contact : data) {
-                if (contact.getNick() != null) {
-                    if (contact.getNick().contains(simpleStr) || contact.getNick().contains(str) ||
-                            contact.getMobile().contains(simpleStr) || contact.getMobile().contains(str) ||
-                            contact.getRemark().contains(simpleStr) || contact.getRemark().contains(str)) {
-                        if (!filterList.contains(contact)) {
-                            filterList.add(contact);
-                        }
-                    }
+        List<FriendInfoResponse> filterList = new ArrayList<>(data.size());
+
+        for (FriendInfoResponse contact : data) {
+            boolean isNameContains = contact.getMobile().contains(str) || contact.getNick()
+                    .contains(str) || contact.getRemark().contains(str);
+            if (isNameContains) {
+                if (!filterList.contains(contact)) {
+                    filterList.add(contact);
                 }
             }
-        } else {
-            for (FriendInfoResponse contact : data) {
-                if (contact.getNick() != null) {
-                    //姓名全匹配,姓名首字母简拼匹配,姓名全字母匹配
-                    boolean isNameContains = contact.getNick().toLowerCase(Locale.CHINESE)
-                            .contains(str.toLowerCase(Locale.CHINESE));
-                    if (isNameContains) {
-                        if (!filterList.contains(contact)) {
-                            filterList.add(contact);
-                        }
-                    }
-                }
-            }
+
         }
         adapter2.setData(filterList);
         adapter2.notifyDataSetChanged();
     }
 
     private void search2(String str) {
-        List<GroupResponse.CustomersBean> filterList = new ArrayList<>(data2.size());// 过滤后的list
-        if (str.matches("^([0-9]|[/+]).*")) {// 正则表达式 匹配以数字或者加号开头的字符串(包括了带空格及-分割的号码)
-            String simpleStr = str.replaceAll("\\-|\\s", "");
-            for (GroupResponse.CustomersBean contact : data2) {
-                if (contact.getNick() != null) {
-                    if (contact.getNick().contains(simpleStr) || contact.getNick().contains(str) ||
-                            contact.getMobile().contains(simpleStr) || contact.getMobile().contains(str) ||
-                            contact.getRemark().contains(simpleStr) || contact.getRemark().contains(str)) {
-                        if (!filterList.contains(contact)) {
-                            filterList.add(contact);
-                        }
-                    }
-                }
-            }
-        } else {
-            for (GroupResponse.CustomersBean contact : data2) {
-                if (contact.getNick() != null) {
-                    //姓名全匹配,姓名首字母简拼匹配,姓名全字母匹配
-                    boolean isNameContains = contact.getNick().toLowerCase(Locale.CHINESE)
-                            .contains(str.toLowerCase(Locale.CHINESE));
-                    if (isNameContains) {
-                        if (!filterList.contains(contact)) {
-                            filterList.add(contact);
-                        }
-                    }
+        List<GroupResponse.CustomersBean> filterList = new ArrayList<>(data2.size());
+
+        for (GroupResponse.CustomersBean contact : data2) {
+            boolean isNameContains = contact.getMobile().contains(str) || contact.getNick()
+                    .contains(str) || contact.getRemark().contains(str);
+            if (isNameContains) {
+                if (!filterList.contains(contact)) {
+                    filterList.add(contact);
                 }
             }
         }
