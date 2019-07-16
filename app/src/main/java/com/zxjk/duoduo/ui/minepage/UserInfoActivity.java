@@ -99,8 +99,12 @@ public class UserInfoActivity extends BaseActivity {
                         .compose(RxSchedulers.normalTrans())
                         .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(UserInfoActivity.this)))
                         .subscribe(s -> {
-                            Constant.currentUser.setAddress(province.getName() + city.getName() + district.getName());
-                            tvArea.setText(province.getName() + city.getName() + district.getName());
+                            String cityName = city.getName();
+                            if (city.getName().equals("省直辖县级行政单位")) {
+                                cityName = "";
+                            }
+                            Constant.currentUser.setAddress(province.getName() + cityName + district.getName());
+                            tvArea.setText(province.getName() + cityName + district.getName());
                             MMKVUtils.getInstance().enCode("login", Constant.currentUser);
                             ToastUtils.showShort(R.string.update_success);
                         }, UserInfoActivity.this::handleApiError);

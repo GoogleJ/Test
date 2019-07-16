@@ -9552,13 +9552,7 @@
           {
             "id": "500156",
             "name": "武隆区"
-          }
-        ]
-      },
-      {
-        "id": "500000",
-        "name": "省直辖县级行政单位",
-        "cityList": [
+          },
           {
             "id": "500229",
             "name": "城口县"
@@ -15475,15 +15469,12 @@
             "name": "旗山地区"
           }
         ],
-
         "id": "710600",
         "name": "高雄市"
-
       }
     ],
     "id": "710000",
     "name": "台湾省"
-
   },
   {
     "cityList": [
@@ -15611,7 +15602,8 @@
             "pinYin": "Miyun",
             "status": 0,
             "stubGroupCnt": null
-          },{
+          },
+          {
             "createAccount": null,
             "createTime": null,
             "gisBd09Lat": 0.0,
