@@ -14,8 +14,8 @@ android {
         applicationId "com.zxjk.duoduo"
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 15
-        versionName "1.9.3"
+        versionCode 16
+        versionName "1.9.3.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         ndk {

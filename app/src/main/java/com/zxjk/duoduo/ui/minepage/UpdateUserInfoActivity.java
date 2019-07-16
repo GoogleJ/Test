@@ -99,7 +99,6 @@ public class UpdateUserInfoActivity extends BaseActivity {
         tv_commit.setText(getString(R.string.save));
         findViewById(R.id.rl_back).setOnClickListener(v -> finish());
         tv_commit.setOnClickListener(v -> submit());
-
     }
 
     //保存
@@ -172,6 +171,4 @@ public class UpdateUserInfoActivity extends BaseActivity {
                     UpdateUserInfoActivity.this.finish();
                 }, this::handleApiError);
     }
-
-
 }

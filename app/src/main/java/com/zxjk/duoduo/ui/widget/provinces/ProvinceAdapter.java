@@ -52,7 +52,6 @@ public class ProvinceAdapter extends BaseAdapter {
         return mProList.get(position);
     }
 
-
     @Override
     public long getItemId(int position) {
         return Long.parseLong(mProList.get(position).getId());

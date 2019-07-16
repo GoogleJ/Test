@@ -11,7 +11,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import androidx.annotation.Nullable;
+
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -21,20 +23,27 @@ import com.shehuan.nicedialog.ViewConvertListener;
 import com.shehuan.nicedialog.ViewHolder;
 import com.zxjk.duoduo.Constant;
 import com.zxjk.duoduo.R;
+import com.zxjk.duoduo.bean.response.LoginResponse;
 import com.zxjk.duoduo.network.Api;
 import com.zxjk.duoduo.network.ServiceFactory;
-import com.zxjk.duoduo.bean.response.LoginResponse;
 import com.zxjk.duoduo.network.rx.RxSchedulers;
 import com.zxjk.duoduo.ui.base.BaseActivity;
 import com.zxjk.duoduo.ui.msgpage.MyQrCodeActivity;
 import com.zxjk.duoduo.ui.widget.dialog.ChooseSexDialog;
+import com.zxjk.duoduo.ui.widget.provinces.Interface.OnCityItemClickListener;
+import com.zxjk.duoduo.ui.widget.provinces.JDCityPicker;
+import com.zxjk.duoduo.ui.widget.provinces.bean.CityBean;
+import com.zxjk.duoduo.ui.widget.provinces.bean.DistrictBean;
+import com.zxjk.duoduo.ui.widget.provinces.bean.ProvinceBean;
 import com.zxjk.duoduo.utils.CommonUtils;
 import com.zxjk.duoduo.utils.GlideUtil;
 import com.zxjk.duoduo.utils.MMKVUtils;
 import com.zxjk.duoduo.utils.OssUtils;
 import com.zxjk.duoduo.utils.TakePicUtil;
+
 import java.io.File;
 import java.util.Collections;
+
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
 
@@ -52,6 +61,9 @@ public class UserInfoActivity extends BaseActivity {
     private TextView tv_walletAddress;
     private ImageView iv_headPortrait;
     private TextView tv_nickname;
+    private TextView tvArea;
+
+    private JDCityPicker cityPicker;
 
     String type = "type";
     int changeNick = 2;
@@ -64,12 +76,39 @@ public class UserInfoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
-        TextView tv_title = findViewById(R.id.tv_title);
-        tv_title.setText(getString(R.string.userinfo));
-        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
+
+        initPicker();
 
         initView();
 
+        initDialog();
+    }
+
+    private void initPicker() {
+        cityPicker = new JDCityPicker();
+        cityPicker.init(this);
+        cityPicker.setOnCityItemClickListener(new OnCityItemClickListener() {
+            @Override
+            public void onSelected(ProvinceBean province, CityBean city, DistrictBean district) {
+                super.onSelected(province, city, district);
+                LoginResponse update = new LoginResponse(Constant.userId);
+                update.setAddress(province.getName() + city.getName() + district.getName());
+                ServiceFactory.getInstance().getBaseService(Api.class)
+                        .updateUserInfo(GsonUtils.toJson(update))
+                        .compose(bindToLifecycle())
+                        .compose(RxSchedulers.normalTrans())
+                        .compose(RxSchedulers.ioObserver(CommonUtils.initDialog(UserInfoActivity.this)))
+                        .subscribe(s -> {
+                            Constant.currentUser.setAddress(province.getName() + city.getName() + district.getName());
+                            tvArea.setText(province.getName() + city.getName() + district.getName());
+                            MMKVUtils.getInstance().enCode("login", Constant.currentUser);
+                            ToastUtils.showShort(R.string.update_success);
+                        }, UserInfoActivity.this::handleApiError);
+            }
+        });
+    }
+
+    private void initDialog() {
         dialog = new ChooseSexDialog(this, sex -> {
             if (sex.equals(Constant.currentUser.getSex())) {
                 return;
@@ -101,6 +140,7 @@ public class UserInfoActivity extends BaseActivity {
         tv_personalizedSignature.setText(TextUtils.isEmpty(Constant.currentUser.getSignature()) ? "暂无" : Constant.currentUser.getSignature());
         tv_email.setText(TextUtils.isEmpty(Constant.currentUser.getEmail()) ? "暂无" : Constant.currentUser.getEmail());
         tv_walletAddress.setText(Constant.currentUser.getWalletAddress());
+        tvArea.setText(Constant.currentUser.getAddress());
     }
 
     @Override
@@ -139,8 +179,9 @@ public class UserInfoActivity extends BaseActivity {
     }
 
     private void initView() {
-        RelativeLayout rl_walletAddress = findViewById(R.id.rl_walletAddress);
-
+        TextView tv_title = findViewById(R.id.tv_title);
+        tv_title.setText(getString(R.string.userinfo));
+        findViewById(R.id.rl_back).setOnClickListener(v -> finish());
         iv_headPortrait = findViewById(R.id.iv_headPortrait);
         RelativeLayout rl_headPortrait = findViewById(R.id.rl_headPortrait);
         tv_nickname = findViewById(R.id.tv_nickname);
@@ -151,6 +192,7 @@ public class UserInfoActivity extends BaseActivity {
         tv_personalizedSignature = findViewById(R.id.tv_personalizedSignature);
         tv_email = findViewById(R.id.tv_email);
         tv_walletAddress = findViewById(R.id.tv_walletAddress);
+        tvArea = findViewById(R.id.tvArea);
 
         getPermisson(rl_headPortrait, result -> {
             if (result) {
@@ -193,6 +235,11 @@ public class UserInfoActivity extends BaseActivity {
         Intent intent = new Intent(this, UpdateUserInfoActivity.class);
         intent.putExtra(type, changeEmail);
         startActivity(intent);
+    }
+
+    //修改地区
+    public void chooseArea(View view) {
+        cityPicker.showCityPicker();
     }
 
     @Override

@@ -103,6 +103,39 @@
                     android:id="@+id/iv_enter2"
                     style="@style/ImageEnter" />
 
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="15dp"
+                android:background="@color/background_color" />
+
+            <RelativeLayout
+                style="@style/RLayoutStyle"
+                android:onClick="chooseArea">
+
+                <TextView
+                    android:id="@+id/tv"
+                    style="@style/textStyle"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:text="@string/m_edit_information_area_label" />
+
+                <TextView
+                    android:id="@+id/tvArea"
+                    style="@style/textStyle14"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_toStartOf="@id/iv"
+                    android:layout_toEndOf="@id/tv"
+                    android:ellipsize="end"
+                    android:gravity="end" />
+
+                <ImageView
+                    android:id="@+id/iv"
+                    style="@style/ImageEnter" />
 
             </RelativeLayout>
 
