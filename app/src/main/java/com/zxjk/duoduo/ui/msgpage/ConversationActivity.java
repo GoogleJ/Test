@@ -556,6 +556,7 @@ public class ConversationActivity extends BaseActivity {
                         Group ronginfo = RongUserInfoManager.getInstance().getGroupInfo(groupInfo.getGroupInfo().getId());
                         if (null == ronginfo ||
                                 !ronginfo.getName().equals(groupInfo.getGroupInfo().getGroupNikeName()) ||
+                                !ronginfo.getPortraitUri().equals(groupPortrait) ||
                                 (groupInfo.getGroupInfo().getGameType().equals("1") && !ronginfo.getPortraitUri().toString().contains("ISGAMEGROUP"))) {
                             RongUserInfoManager.getInstance().setGroupInfo(new Group(groupInfo.getGroupInfo().getId(), groupInfo.getGroupInfo().getGroupNikeName(), Uri.parse(groupPortrait)));
                         }
